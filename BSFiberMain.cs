@@ -29,7 +29,7 @@ namespace BSFiberConcrete
 
         private void btnCalc_Click(object sender, EventArgs e)
         {
-
+            double x = new BSFiberCalculation().Dzeta(1,2);
         }
 
         private void btnReport_Click(object sender, EventArgs e)
