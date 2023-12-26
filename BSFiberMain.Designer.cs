@@ -32,6 +32,8 @@
             this.tabParams = new System.Windows.Forms.TabPage();
             this.groupVar = new System.Windows.Forms.GroupBox();
             this.groupBeam = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.tbCoefLength = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tbLength = new System.Windows.Forms.TextBox();
             this.tabConcrete = new System.Windows.Forms.TabPage();
@@ -39,13 +41,17 @@
             this.tabStrength = new System.Windows.Forms.TabPage();
             this.btnCalc = new System.Windows.Forms.Button();
             this.btnReport = new System.Windows.Forms.Button();
-            this.tbCoefLength = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.btnRectang = new System.Windows.Forms.Button();
+            this.btnTSection = new System.Windows.Forms.Button();
+            this.btnIBeam = new System.Windows.Forms.Button();
+            this.btnRing = new System.Windows.Forms.Button();
             this.tabGeneral.SuspendLayout();
             this.tabParams.SuspendLayout();
             this.groupBeam.SuspendLayout();
             this.tabConcrete.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // tabGeneral
@@ -56,7 +62,7 @@
             this.tabGeneral.Location = new System.Drawing.Point(7, 4);
             this.tabGeneral.Name = "tabGeneral";
             this.tabGeneral.SelectedIndex = 0;
-            this.tabGeneral.Size = new System.Drawing.Size(838, 448);
+            this.tabGeneral.Size = new System.Drawing.Size(854, 369);
             this.tabGeneral.TabIndex = 0;
             // 
             // tabParams
@@ -66,7 +72,7 @@
             this.tabParams.Location = new System.Drawing.Point(4, 22);
             this.tabParams.Name = "tabParams";
             this.tabParams.Padding = new System.Windows.Forms.Padding(3);
-            this.tabParams.Size = new System.Drawing.Size(830, 422);
+            this.tabParams.Size = new System.Drawing.Size(846, 343);
             this.tabParams.TabIndex = 0;
             this.tabParams.Text = "Параметры";
             this.tabParams.UseVisualStyleBackColor = true;
@@ -94,6 +100,24 @@
             this.groupBeam.TabIndex = 0;
             this.groupBeam.TabStop = false;
             this.groupBeam.Text = "Балка";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 85);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(167, 13);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Коэффициент расчетной длины";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
+            // 
+            // tbCoefLength
+            // 
+            this.tbCoefLength.FormattingEnabled = true;
+            this.tbCoefLength.Location = new System.Drawing.Point(179, 85);
+            this.tbCoefLength.Name = "tbCoefLength";
+            this.tbCoefLength.Size = new System.Drawing.Size(119, 21);
+            this.tbCoefLength.TabIndex = 2;
             // 
             // label1
             // 
@@ -144,7 +168,7 @@
             // 
             // btnCalc
             // 
-            this.btnCalc.Location = new System.Drawing.Point(577, 467);
+            this.btnCalc.Location = new System.Drawing.Point(934, 544);
             this.btnCalc.Name = "btnCalc";
             this.btnCalc.Size = new System.Drawing.Size(75, 23);
             this.btnCalc.TabIndex = 1;
@@ -154,7 +178,7 @@
             // 
             // btnReport
             // 
-            this.btnReport.Location = new System.Drawing.Point(685, 467);
+            this.btnReport.Location = new System.Drawing.Point(1042, 544);
             this.btnReport.Name = "btnReport";
             this.btnReport.Size = new System.Drawing.Size(75, 23);
             this.btnReport.TabIndex = 2;
@@ -162,29 +186,65 @@
             this.btnReport.UseVisualStyleBackColor = true;
             this.btnReport.Click += new System.EventHandler(this.btnReport_Click);
             // 
-            // tbCoefLength
+            // dataGridView1
             // 
-            this.tbCoefLength.FormattingEnabled = true;
-            this.tbCoefLength.Location = new System.Drawing.Point(179, 85);
-            this.tbCoefLength.Name = "tbCoefLength";
-            this.tbCoefLength.Size = new System.Drawing.Size(119, 21);
-            this.tbCoefLength.TabIndex = 2;
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(11, 396);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(619, 150);
+            this.dataGridView1.TabIndex = 4;
             // 
-            // label2
+            // btnRectang
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 85);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(167, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Коэффициент расчетной длины";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
+            this.btnRectang.Location = new System.Drawing.Point(687, 399);
+            this.btnRectang.Name = "btnRectang";
+            this.btnRectang.Size = new System.Drawing.Size(123, 23);
+            this.btnRectang.TabIndex = 5;
+            this.btnRectang.Text = "Прямоугольник";
+            this.btnRectang.UseVisualStyleBackColor = true;
+            this.btnRectang.Click += new System.EventHandler(this.btnRectang_Click);
+            // 
+            // btnTSection
+            // 
+            this.btnTSection.Location = new System.Drawing.Point(687, 437);
+            this.btnTSection.Name = "btnTSection";
+            this.btnTSection.Size = new System.Drawing.Size(123, 23);
+            this.btnTSection.TabIndex = 6;
+            this.btnTSection.Text = "Тавр";
+            this.btnTSection.UseVisualStyleBackColor = true;
+            this.btnTSection.Click += new System.EventHandler(this.btnTSection_Click);
+            // 
+            // btnIBeam
+            // 
+            this.btnIBeam.Location = new System.Drawing.Point(687, 479);
+            this.btnIBeam.Name = "btnIBeam";
+            this.btnIBeam.Size = new System.Drawing.Size(123, 23);
+            this.btnIBeam.TabIndex = 7;
+            this.btnIBeam.Text = "Двутавр";
+            this.btnIBeam.UseVisualStyleBackColor = true;
+            this.btnIBeam.Click += new System.EventHandler(this.btnIBeam_Click);
+            // 
+            // btnRing
+            // 
+            this.btnRing.Location = new System.Drawing.Point(687, 523);
+            this.btnRing.Name = "btnRing";
+            this.btnRing.Size = new System.Drawing.Size(123, 23);
+            this.btnRing.TabIndex = 8;
+            this.btnRing.Text = "Кольцо";
+            this.btnRing.UseVisualStyleBackColor = true;
+            this.btnRing.Click += new System.EventHandler(this.btnRing_Click);
             // 
             // BSFiberMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(888, 529);
+            this.ClientSize = new System.Drawing.Size(1161, 597);
+            this.Controls.Add(this.btnRing);
+            this.Controls.Add(this.btnIBeam);
+            this.Controls.Add(this.btnTSection);
+            this.Controls.Add(this.btnRectang);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.btnReport);
             this.Controls.Add(this.btnCalc);
             this.Controls.Add(this.tabGeneral);
@@ -197,6 +257,7 @@
             this.groupBeam.PerformLayout();
             this.tabConcrete.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -216,6 +277,11 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ComboBox tbCoefLength;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button btnRectang;
+        private System.Windows.Forms.Button btnTSection;
+        private System.Windows.Forms.Button btnIBeam;
+        private System.Windows.Forms.Button btnRing;
     }
 }
 
