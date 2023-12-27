@@ -2,30 +2,82 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace BSFiberConcrete
 {
-    internal class BSFiberCalculation
+    // Расчет прямоугольного сечения
+    public class BSFibCalc_Rect : BSFiberCalculation
     {
         //6 Сталефибробетонные конструкции без предварительного напряжения арматуры 
+        //сопротивленияосевому растяжению 
+        private double Rfbtn;
+        //коэффициент надежности для расчета по предельным состояниям первой группы при назначении класса сталефибробетона по прочности на растяжение.
+        private double Yft;
+        // Коэфициенты условия работы
+        private double Yb1;
+        private double Yb5;
+        // числовая характеристика класса фибробетона по прочности на осевое сжатие
+        private double B;
+
+        // Упругопластический момент сопротивления
+        private double Wpl;
+        //Значение предельного момента сечения для изгибаемых сталефибробетонных элементов прямоугольного сечения
+        private  double Mult;
+
+        public override Dictionary<string, double> Results()
+        {
+            return new Dictionary<string, double>() { {"Wpl", Wpl}, { "Mult", Mult} }; 
+        }
+
+        //размеры
+        double b = 0;
+        double h = 0;
+
+        public override  void GetParams(double[] _t)
+        {         
+            (Rfbtn, Yft, Yb1, Yb5, B) = (_t[0], _t[1], _t[2], _t[3], _t[4]);             
+        }
+
+        public override void GetSize(double[] _t)
+        {            
+            (b, h) = (_t[0] / 10 , _t[1]/10);
+        }
+
+        public override void Calculate()
+        {
+            Rfbt = Rfbtn / Yft * Yb1 * Yb5;
+
+            double Y = 1.73d - 0.005d * (B - 15);
+
+            Wpl = b * h * h / 6 * Y;
+
+            Mult = Rfbt * Wpl;
+        }
+    }
+
+
+    public class BSFiberCalculation
+    {
+        public double Rfbt;
+
 
         // растяжение
-        double Rfbr3;
+        private double Rfbr3;
         // сжатие
-        double Rfb;
-        double Rfbt;
-        double Rfbt3;
+        private double Rfb;        
+        private double Rfbt3;
         // растяжение в арматуре
-        double Rs;
+        private double Rs;
         // сжатие в арматуре
-        double Rsc;
+        private double Rsc;
         // Относительная деформация
-        double Efbt;
+        private double Efbt;
 
-        double As1;
+        private double As1;
 
         private const double B = 1.0;
         private double m_Wpl;
@@ -45,12 +97,30 @@ namespace BSFiberConcrete
             Efbt = 0;
         }
 
+        public virtual void GetSize(double[] _t)
+        {
+
+        }
+
+
+        public virtual void GetParams(double[] _t)
+        {
+
+        }
+
+        public virtual void Calculate() { }
+
+        public virtual Dictionary<string, double> Results()
+        {
+            return new Dictionary<string, double>() {};
+        }
+
         public double Dzeta(double _x, double _h0) =>  _x / _h0;
 
         // упругопластический момент сопротивления сечения элемента для крайнего растянутого волокна
-        public double Wpl(double _b, double _h) => _b * Math.Pow(_h, 2) * gamma / 6;  
+        private double Wpl(double _b, double _h) => _b * Math.Pow(_h, 2) * gamma / 6;  
 
-        public double Mult() => Rfbt * m_Wpl;
+        private double Mult() => Rfbt * m_Wpl;
 
         //6.5
         // предельный изгибающий момент, который может быть воспринят сечением элемента
@@ -128,6 +198,16 @@ namespace BSFiberConcrete
             return 0;
         }
 
+        public static BSFiberCalculation construct(int _profile)
+        {
+            switch (_profile)
+            {
+                case 1:
+                    return new BSFibCalc_Rect();
+            }
+
+            return new BSFiberCalculation();
+        }
 
     }
 }

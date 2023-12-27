@@ -12,6 +12,8 @@ namespace BSFiberConcrete
 {
     public partial class BSFiberMain : Form
     {
+        private DataTable table;
+
         public BSFiberMain()
         {
             InitializeComponent();
@@ -19,7 +21,7 @@ namespace BSFiberConcrete
 
         private void BSFiberMain_Load(object sender, EventArgs e)
         {
-
+           
         }
 
         private void tabPage1_Click(object sender, EventArgs e)
@@ -29,17 +31,40 @@ namespace BSFiberConcrete
 
         private void btnCalc_Click(object sender, EventArgs e)
         {
-           var bs = new BSFiberCalculation();
+            BSFiberCalculation bsCalc =  BSFiberCalculation.construct(1);
+            BSFiberLoadData bsLoad = new BSFiberLoadData();
+            bsLoad.Load();
+            double[] prms = bsLoad.Prms;
+            
+            bsCalc.GetParams(prms);
+            
+            double[] sz = new double[2] ;            
+            foreach(DataRow r in table.Rows)
+            {
+                sz = new double[r.ItemArray.Length];
+                int idx = 0;
+                foreach (var item in r.ItemArray)
+                {
+                    sz[idx] = (double)item;
+                    idx ++;
+                }
+            }
+            bsCalc.GetSize(sz);
 
-            double x = bs.Dzeta(1,2);
-            double Mult = 0;
-            (Mult, x) = bs.Mult_withoutArm(1, 1, 1, 1, 1, 1);
+            bsCalc.Calculate();
+
+            var res = bsCalc.Results();
+            tbResultW.Text = res["Wpl"].ToString(); 
+            tbResult.Text = res["Mult"].ToString();
+
+            //double x = bs.Dzeta(1,2);
+            //double Mult = 0;
+            //(Mult, x) = bs.Mult_withoutArm(1, 1, 1, 1, 1, 1);
 
         }
 
         private void btnReport_Click(object sender, EventArgs e)
-        {
-            BSFiberLoadData.Load();
+        {            
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
@@ -59,17 +84,17 @@ namespace BSFiberConcrete
 
         private void btnRectang_Click(object sender, EventArgs e)
         {
-            DataTable table = new DataTable();
+            table = new DataTable();
             table.Columns.Add("b, mm", typeof(double));
             table.Columns.Add("h, mm", typeof(double));
 
             dataGridView1.DataSource = table;
-            table.Rows.Add(1.1d, 2.2d);
+            table.Rows.Add(800d, 600d);
         }
 
         private void btnTSection_Click(object sender, EventArgs e)
         {
-            DataTable table = new DataTable();
+            table = new DataTable();
             table.Columns.Add("b, mm", typeof(double));
             table.Columns.Add("h, mm", typeof(double));
             table.Columns.Add("b1, mm", typeof(double));
@@ -80,7 +105,7 @@ namespace BSFiberConcrete
 
         private void btnRing_Click(object sender, EventArgs e)
         {
-            DataTable table = new DataTable();
+            table = new DataTable();
             table.Columns.Add("D, mm", typeof(double));
             table.Columns.Add("d, mm", typeof(double));
             table.Columns.Add("a1, mm", typeof(double));
@@ -90,7 +115,7 @@ namespace BSFiberConcrete
 
         private void btnIBeam_Click(object sender, EventArgs e)
         {
-            DataTable table = new DataTable();
+            table = new DataTable();
             table.Columns.Add("b, mm", typeof(double));
             table.Columns.Add("h, mm", typeof(double));
             table.Columns.Add("b1, mm", typeof(double));
@@ -99,6 +124,23 @@ namespace BSFiberConcrete
             table.Columns.Add("h2, mm", typeof(double));
 
             dataGridView1.DataSource = table;
+        }
+
+        private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        private void AboutToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            BSFiberAboutBox aboutWindow = new BSFiberAboutBox();
+            aboutWindow.Show();
+        }
+
+        private void настройкиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BSFiberSetup setupWindow = new BSFiberSetup();
+            setupWindow.Show();
         }
     }
 }

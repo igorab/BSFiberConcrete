@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tabGeneral = new System.Windows.Forms.TabControl();
             this.tabParams = new System.Windows.Forms.TabPage();
             this.groupVar = new System.Windows.Forms.GroupBox();
@@ -46,12 +47,21 @@
             this.btnTSection = new System.Windows.Forms.Button();
             this.btnIBeam = new System.Windows.Forms.Button();
             this.btnRing = new System.Windows.Forms.Button();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.настройкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.оПрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.AboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tbResult = new System.Windows.Forms.TextBox();
+            this.tbResultW = new System.Windows.Forms.TextBox();
             this.tabGeneral.SuspendLayout();
             this.tabParams.SuspendLayout();
             this.groupBeam.SuspendLayout();
             this.tabConcrete.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabGeneral
@@ -59,10 +69,10 @@
             this.tabGeneral.Controls.Add(this.tabParams);
             this.tabGeneral.Controls.Add(this.tabConcrete);
             this.tabGeneral.Controls.Add(this.tabStrength);
-            this.tabGeneral.Location = new System.Drawing.Point(7, 4);
+            this.tabGeneral.Location = new System.Drawing.Point(11, 40);
             this.tabGeneral.Name = "tabGeneral";
             this.tabGeneral.SelectedIndex = 0;
-            this.tabGeneral.Size = new System.Drawing.Size(854, 369);
+            this.tabGeneral.Size = new System.Drawing.Size(850, 333);
             this.tabGeneral.TabIndex = 0;
             // 
             // tabParams
@@ -72,7 +82,7 @@
             this.tabParams.Location = new System.Drawing.Point(4, 22);
             this.tabParams.Name = "tabParams";
             this.tabParams.Padding = new System.Windows.Forms.Padding(3);
-            this.tabParams.Size = new System.Drawing.Size(846, 343);
+            this.tabParams.Size = new System.Drawing.Size(842, 307);
             this.tabParams.TabIndex = 0;
             this.tabParams.Text = "Параметры";
             this.tabParams.UseVisualStyleBackColor = true;
@@ -82,7 +92,7 @@
             // 
             this.groupVar.Location = new System.Drawing.Point(418, 31);
             this.groupVar.Name = "groupVar";
-            this.groupVar.Size = new System.Drawing.Size(390, 275);
+            this.groupVar.Size = new System.Drawing.Size(270, 275);
             this.groupVar.TabIndex = 1;
             this.groupVar.TabStop = false;
             this.groupVar.Text = "Варианты расчета";
@@ -141,7 +151,7 @@
             this.tabConcrete.Location = new System.Drawing.Point(4, 22);
             this.tabConcrete.Name = "tabConcrete";
             this.tabConcrete.Padding = new System.Windows.Forms.Padding(3);
-            this.tabConcrete.Size = new System.Drawing.Size(830, 422);
+            this.tabConcrete.Size = new System.Drawing.Size(842, 307);
             this.tabConcrete.TabIndex = 1;
             this.tabConcrete.Text = "Фибробетон";
             this.tabConcrete.UseVisualStyleBackColor = true;
@@ -161,7 +171,7 @@
             this.tabStrength.Location = new System.Drawing.Point(4, 22);
             this.tabStrength.Name = "tabStrength";
             this.tabStrength.Padding = new System.Windows.Forms.Padding(3);
-            this.tabStrength.Size = new System.Drawing.Size(830, 422);
+            this.tabStrength.Size = new System.Drawing.Size(842, 307);
             this.tabStrength.TabIndex = 2;
             this.tabStrength.Text = "Усилия";
             this.tabStrength.UseVisualStyleBackColor = true;
@@ -235,11 +245,74 @@
             this.btnRing.UseVisualStyleBackColor = true;
             this.btnRing.Click += new System.EventHandler(this.btnRing_Click);
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.настройкиToolStripMenuItem,
+            this.оПрограммеToolStripMenuItem,
+            this.справкаToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(1161, 24);
+            this.menuStrip1.TabIndex = 9;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // настройкиToolStripMenuItem
+            // 
+            this.настройкиToolStripMenuItem.Name = "настройкиToolStripMenuItem";
+            this.настройкиToolStripMenuItem.Size = new System.Drawing.Size(79, 20);
+            this.настройкиToolStripMenuItem.Text = "Настройки";
+            this.настройкиToolStripMenuItem.Click += new System.EventHandler(this.настройкиToolStripMenuItem_Click);
+            // 
+            // оПрограммеToolStripMenuItem
+            // 
+            this.оПрограммеToolStripMenuItem.Name = "оПрограммеToolStripMenuItem";
+            this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
+            this.оПрограммеToolStripMenuItem.Text = "Режимы";
+            // 
+            // справкаToolStripMenuItem
+            // 
+            this.справкаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.AboutToolStripMenuItem1});
+            this.справкаToolStripMenuItem.Name = "справкаToolStripMenuItem";
+            this.справкаToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
+            this.справкаToolStripMenuItem.Text = "Справка";
+            // 
+            // AboutToolStripMenuItem1
+            // 
+            this.AboutToolStripMenuItem1.Name = "AboutToolStripMenuItem1";
+            this.AboutToolStripMenuItem1.Size = new System.Drawing.Size(149, 22);
+            this.AboutToolStripMenuItem1.Text = "О программе";
+            this.AboutToolStripMenuItem1.Click += new System.EventHandler(this.AboutToolStripMenuItem1_Click);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
+            // 
+            // tbResult
+            // 
+            this.tbResult.Location = new System.Drawing.Point(934, 498);
+            this.tbResult.Name = "tbResult";
+            this.tbResult.Size = new System.Drawing.Size(145, 20);
+            this.tbResult.TabIndex = 10;
+            this.tbResult.Text = "Результат";
+            // 
+            // tbResultW
+            // 
+            this.tbResultW.Location = new System.Drawing.Point(934, 472);
+            this.tbResultW.Name = "tbResultW";
+            this.tbResultW.Size = new System.Drawing.Size(145, 20);
+            this.tbResultW.TabIndex = 11;
+            // 
             // BSFiberMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1161, 597);
+            this.Controls.Add(this.tbResultW);
+            this.Controls.Add(this.tbResult);
             this.Controls.Add(this.btnRing);
             this.Controls.Add(this.btnIBeam);
             this.Controls.Add(this.btnTSection);
@@ -248,6 +321,8 @@
             this.Controls.Add(this.btnReport);
             this.Controls.Add(this.btnCalc);
             this.Controls.Add(this.tabGeneral);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "BSFiberMain";
             this.Text = "Фибробетон";
             this.Load += new System.EventHandler(this.BSFiberMain_Load);
@@ -258,7 +333,10 @@
             this.tabConcrete.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -282,6 +360,14 @@
         private System.Windows.Forms.Button btnTSection;
         private System.Windows.Forms.Button btnIBeam;
         private System.Windows.Forms.Button btnRing;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem справкаToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem настройкиToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem оПрограммеToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem AboutToolStripMenuItem1;
+        private System.Windows.Forms.TextBox tbResult;
+        private System.Windows.Forms.TextBox tbResultW;
     }
 }
 
