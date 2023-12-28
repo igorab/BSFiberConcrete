@@ -34,7 +34,7 @@ namespace BSFiberConcrete
             BSFiberCalculation bsCalc =  BSFiberCalculation.construct(1);
             BSFiberLoadData bsLoad = new BSFiberLoadData();
             bsLoad.Load();
-            double[] prms = bsLoad.Prms;
+            double[] prms = bsLoad.Params;
             
             bsCalc.GetParams(prms);
             

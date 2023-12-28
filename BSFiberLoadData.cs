@@ -2,30 +2,29 @@
 using System.Globalization;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.VisualBasic.FileIO;
-using System.Runtime.ExceptionServices;
-using System.Runtime.Serialization;
+
 
 namespace BSFiberConcrete
 {
+    public class Elements
+    {
+        public double Rfbtn { get; set; }
+        public double Yft { get; set; }
+        public double Yb1 { get; set; }
+        public double Ybs { get; set; }
+        public int B { get; set; }
+    }
+
+
     internal class BSFiberLoadData
     {
+        public static string FiberConcretePath { get { return Path.Combine(Environment.CurrentDirectory, "Templates\\FiberConcrete.csv"); } }
+
         private List<double> m_Prms = new List<double>();
 
-        public double[] Prms { get { return m_Prms.ToArray(); } }
-
-
-        public class Elements
-        {
-            public double Rfbt { get; set; }
-            public double Yft { get; set; }
-            public double Yb1 { get; set; }
-            public double Yb5 { get; set; }
-        }
-
+        public double[] Params { get { return m_Prms.ToArray(); } }
+        
         private double to_double(string _num)
         {
             NumberFormatInfo formatter = new NumberFormatInfo { NumberDecimalSeparator = "." };

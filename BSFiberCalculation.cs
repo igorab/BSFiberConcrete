@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CsvHelper;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -7,8 +8,115 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
+
 namespace BSFiberConcrete
 {
+    public interface IBSFiberCalculation
+    {
+        void Calculate();
+        Dictionary<string, double> Results();
+    }
+
+    // Расчет Таврового сечения
+    public class BSFibCalc_TBeam : BSFiberCalculation
+    {
+    }
+
+    // Расчет двутаврового сечения
+    public class BSFibCalc_IBeam : BSFiberCalculation
+    {
+        private double Rfbt3;
+        private double Rfb;
+        private double Mult;
+        private double x;
+
+        public override void Calculate()
+        {
+            double bf, hf, hw, bw, b1f, h1f;
+
+            (bf, hf, hw, bw, b1f, h1f) = (80, 20, 20, 20, 80, 20);
+            //общая высота
+            double h = hf + hw + h1f;
+
+            double Yft, Yb1, Yb2, Yb3, Yb5, Rfbt3n;
+
+            (Yft, Yb1, Yb2, Yb3, Yb5, Rfbt3n) = (1.3, 0.9, 0.9, 1, 1, 30.58);
+
+            Rfbt3 = Rfbt3n / Yft * Yb1 * Yb5;
+
+            double Rfbn, Yb;
+            (Rfbn, Yb) = (224, 1.3);
+
+            Rfb = Rfbn / Yb * Yb1*Yb2*Yb3*Yb5;
+
+            Action calc_a = delegate
+            {
+                x = Rfbt3* (b1f * h1f + bw*hw + bf*hf) / (b1f * (Rfbt3 + Rfb)) ;
+
+                Mult = 0.5* Rfbt3*(b1f*(h1f - x)*(h1f+ x) + bf*hf*(hf-x+2*(hw+h1f)) + bw*hw*(hw - x * 2*h1f));
+            };
+
+            Action calc_b = delegate
+            {
+                x = Rfbt3* (bw * h1f + bw * hw + bw*h1f) / (bw * (Rfbt3 + Rfb));
+
+                Mult = Rfb*bw*(x-h1f) ;
+            };
+
+
+            bool cond = Rfbt3 * (bf * hf + bw * hw) < Rfb * b1f * h1f;
+
+            if (cond)
+            {
+                calc_a();
+            }
+            else
+            {
+                calc_b();
+            }
+        }
+        
+    }
+
+    // Расчет кольцевого сечения
+    public class BSFibCalc_Ring : BSFiberCalculation
+    {
+        private double Rfb;
+        private double Rfbt3;
+        private double Mult;
+
+        public override Dictionary<string, double> Results()
+        {
+            return new Dictionary<string, double>() { { "Rfb", Rfb }, { "Rfbt3", Rfbt3 }, { "Mult", Mult } };
+        }
+
+        public override void Calculate()
+        {
+            double r1, r2, Rfbn, Yft, Yb, Yb1, Yb2, Yb3, Yb5;
+
+            (r1, r2, Rfbn, Yft, Yb, Yb1, Yb2, Yb3, Yb5) = (25, 40, 224, 1.3, 1.3, 0.9, 0.9, 1, 1);
+
+            Rfb = Rfbn/Yb * Yb1* Yb2* Yb3* Yb5;
+
+            double Rfbt3n = 30.58;
+
+            Rfbt3 = Rfbt3n / Yft * Yb1 * Yb5;
+
+            double tr = r2 - r1;
+
+            double rm = (r1 + r2) / 2;     
+            
+            double Ar = 2 * Math.PI * rm * tr;
+
+            double ar = (0.73 * Rfbt3) * (Rfb + 2 * Rfbt3);
+
+            Mult = Ar * (Rfb * Math.Sin(Math.PI * ar) / Math.PI + 0.234 * Rfbt3) * rm;
+
+            Mult = Mult * 0.00001;
+        }
+    }
+
+
     // Расчет прямоугольного сечения
     public class BSFibCalc_Rect : BSFiberCalculation
     {
