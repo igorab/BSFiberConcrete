@@ -93,6 +93,12 @@
     <Compile Include="BSFiberSetup.Designer.cs">
       <DependentUpon>BSFiberSetup.cs</DependentUpon>
     </Compile>
+    <Compile Include="BSFormPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BSFormPanel.Designer.cs">
+      <DependentUpon>BSFormPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="BSFiberAboutBox.resx">
       <DependentUpon>BSFiberAboutBox.cs</DependentUpon>
@@ -102,6 +108,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BSFiberSetup.resx">
       <DependentUpon>BSFiberSetup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BSFormPanel.resx">
+      <DependentUpon>BSFormPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

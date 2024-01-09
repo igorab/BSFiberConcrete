@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -13,6 +15,8 @@ namespace BSFiberConcrete
     public partial class BSFiberMain : Form
     {
         private DataTable table;
+
+        public Dictionary<string, double> CalcResults { get; set; }
 
         public BSFiberMain()
         {
@@ -31,7 +35,7 @@ namespace BSFiberConcrete
 
         private void btnCalc_Click(object sender, EventArgs e)
         {
-            BSFiberCalculation bsCalc =  BSFiberCalculation.construct(1);
+            BSFiberCalculation bsCalc =  BSFiberCalculation.construct(BeamSection.Ring);
             BSFiberLoadData bsLoad = new BSFiberLoadData();
             bsLoad.Load();
             double[] prms = bsLoad.Params;
@@ -53,9 +57,11 @@ namespace BSFiberConcrete
 
             bsCalc.Calculate();
 
-            var res = bsCalc.Results();
-            tbResultW.Text = res["Wpl"].ToString(); 
-            tbResult.Text = res["Mult"].ToString();
+            CalcResults
+                = bsCalc.Results();
+
+            tbResultW.Text = CalcResults["Wpl"].ToString(); 
+            tbResult.Text = CalcResults["Mult"].ToString();
 
             //double x = bs.Dzeta(1,2);
             //double Mult = 0;
@@ -63,8 +69,44 @@ namespace BSFiberConcrete
 
         }
 
+        private string CreateReport()
+        {
+            string pathToHtmlFile = "";
+
+            using (FileStream fs = new FileStream("test.htm", FileMode.Create))
+            {
+                using (StreamWriter w = new StreamWriter(fs, Encoding.UTF8))
+                {
+                    w.WriteLine("<H1>Фибробетон</H1>");
+                    w.WriteLine("<H2>Балка</H2>");
+                    w.WriteLine("<H3>Расчет:</H3>");
+                    w.WriteLine("<Table>");
+                    w.WriteLine("<tr><th>Параметр </th><th>Величина </th></tr>");
+                    string prm = "Напряжение";
+                    double val = 1.0;
+                    w.WriteLine($"<tr><td>{prm}</td><td>{val}</td></tr>");
+                    w.WriteLine("</Table>");                    
+                }
+
+                pathToHtmlFile = fs.Name;
+            }
+
+            return pathToHtmlFile;
+        }
+
+
         private void btnReport_Click(object sender, EventArgs e)
-        {            
+        {
+            try
+            {
+                string pathToHtmlFile = CreateReport();
+
+                System.Diagnostics.Process.Start(pathToHtmlFile);
+            }
+            catch
+            {
+                //System.Windows.
+            }
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)

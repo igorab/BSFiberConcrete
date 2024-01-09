@@ -11,6 +11,17 @@ using System.Threading.Tasks;
 
 namespace BSFiberConcrete
 {
+    /// <summary>
+    /// Сечение балки
+    /// </summary>
+    public enum BeamSection
+    {
+        TBeam = 1, 
+        IBeam = 2, 
+        Ring = 3, 
+        Rect = 4
+    } 
+
     public interface IBSFiberCalculation
     {
         void Calculate();
@@ -306,11 +317,17 @@ namespace BSFiberConcrete
             return 0;
         }
 
-        public static BSFiberCalculation construct(int _profile)
+        public static BSFiberCalculation construct(BeamSection _profile)
         {
             switch (_profile)
             {
-                case 1:
+                case BeamSection.TBeam:
+                    return new BSFibCalc_TBeam();
+                case BeamSection.IBeam: 
+                    return new BSFibCalc_IBeam();
+                case BeamSection.Ring:
+                    return new BSFibCalc_Ring();
+                case BeamSection.Rect:
                     return new BSFibCalc_Rect();
             }
 

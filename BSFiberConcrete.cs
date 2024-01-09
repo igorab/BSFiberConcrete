@@ -16,6 +16,8 @@ namespace BSFiberConcrete
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            //Application.Run(new BSFormPanel());
             Application.Run(new BSFiberMain());
         }
     }

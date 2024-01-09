@@ -10,6 +10,8 @@ namespace BSFiberConcrete
 {
     public partial class BSFiberSetup : Form
     {
+        public BeamSection BeamSection { get; set; }
+
         public BSFiberSetup()
         {
             InitializeComponent();            
@@ -37,9 +39,14 @@ namespace BSFiberConcrete
             }
             finally
             {
-                dataGridView1.DataSource = records;
+                if (BeamSection == BeamSection.Ring) 
+                {
+                    records.Add(new Elements { Rfbtn = 224, B = 30, Yb1 = 0.9, Ybs = 1, Yft = 1.3 });
+                }
+                else
+                    records.Add(new Elements { Rfbtn = 1, B = 30, Yb1 = 1, Ybs = 2, Yft = 3 });
 
-                records.Add(new Elements { Rfbtn = 1, B = 30, Yb1 = 1, Ybs = 2, Yft = 3 });
+                dataGridView1.DataSource = records;                
             }
         }
 
