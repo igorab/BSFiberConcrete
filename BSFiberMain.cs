@@ -9,14 +9,18 @@ using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace BSFiberConcrete
 {
     public partial class BSFiberMain : Form
     {
-        private DataTable table;
-
-        public Dictionary<string, double> CalcResults { get; set; }
+        private DataTable m_Table;
+        private Dictionary<string, double> m_Coeffs;
+        private Dictionary<string, double> m_PhysParams;
+        private Dictionary<string, double> m_GeomParams;
+        private Dictionary<string, double> m_CalcResults;
+        BeamSection m_BeamSection;
 
         public BSFiberMain()
         {
@@ -25,7 +29,8 @@ namespace BSFiberConcrete
 
         private void BSFiberMain_Load(object sender, EventArgs e)
         {
-           
+            m_Table = new DataTable();
+            m_BeamSection = BeamSection.Ring;
         }
 
         private void tabPage1_Click(object sender, EventArgs e)
@@ -35,57 +40,120 @@ namespace BSFiberConcrete
 
         private void btnCalc_Click(object sender, EventArgs e)
         {
-            BSFiberCalculation bsCalc =  BSFiberCalculation.construct(BeamSection.Ring);
-            BSFiberLoadData bsLoad = new BSFiberLoadData();
-            bsLoad.Load();
-            double[] prms = bsLoad.Params;
-            
-            bsCalc.GetParams(prms);
-            
-            double[] sz = new double[2] ;            
-            foreach(DataRow r in table.Rows)
+            try
             {
-                sz = new double[r.ItemArray.Length];
-                int idx = 0;
-                foreach (var item in r.ItemArray)
+                BSFiberCalculation bsCalc = BSFiberCalculation.construct(m_BeamSection);
+                BSFiberLoadData bsLoad = new BSFiberLoadData();
+                bsLoad.Load();
+                double[] prms = bsLoad.Params;
+
+                bsCalc.GetParams(prms);
+                
+                m_PhysParams = bsCalc.PhysParams;
+                m_Coeffs = bsCalc.Coeffs;
+                m_GeomParams = bsCalc.GeomParams();
+               
+                double[] sz = new double[2];
+                foreach (DataRow r in m_Table.Rows)
                 {
-                    sz[idx] = (double)item;
-                    idx ++;
+                    sz = new double[r.ItemArray.Length];
+                    int idx = 0;
+                    foreach (var item in r.ItemArray)
+                    {
+                        sz[idx] = (double)item;
+                        idx++;
+                    }
                 }
+                bsCalc.GetSize(sz);
+                bsCalc.Calculate();
+
+                m_CalcResults = bsCalc.Results();
+
+                if (m_CalcResults.TryGetValue("Wpl", out double _wpl))
+                    tbResultW.Text = _wpl.ToString();
+
+                if (m_CalcResults.TryGetValue("Mult", out double _mult))
+                    tbResult.Text = _mult.ToString();                
             }
-            bsCalc.GetSize(sz);
-
-            bsCalc.Calculate();
-
-            CalcResults
-                = bsCalc.Results();
-
-            tbResultW.Text = CalcResults["Wpl"].ToString(); 
-            tbResult.Text = CalcResults["Mult"].ToString();
-
-            //double x = bs.Dzeta(1,2);
-            //double Mult = 0;
-            //(Mult, x) = bs.Mult_withoutArm(1, 1, 1, 1, 1, 1);
-
+            catch
+            {
+                MessageBox.Show("Ошибка в расчете");
+            }
         }
 
         private string CreateReport()
         {
             string pathToHtmlFile = "";
-
+            
             using (FileStream fs = new FileStream("test.htm", FileMode.Create))
             {
                 using (StreamWriter w = new StreamWriter(fs, Encoding.UTF8))
                 {
+                    w.WriteLine("<html>");
                     w.WriteLine("<H1>Фибробетон</H1>");
-                    w.WriteLine("<H2>Балка</H2>");
-                    w.WriteLine("<H3>Расчет:</H3>");
-                    w.WriteLine("<Table>");
-                    w.WriteLine("<tr><th>Параметр </th><th>Величина </th></tr>");
-                    string prm = "Напряжение";
-                    double val = 1.0;
-                    w.WriteLine($"<tr><td>{prm}</td><td>{val}</td></tr>");
-                    w.WriteLine("</Table>");                    
+                    
+                    if (m_PhysParams != null)
+                    {
+                        w.WriteLine("<Table>");
+                        w.WriteLine("<caption>Физические характеристики</caption>");
+                        foreach (var _prm in m_PhysParams.Keys)
+                            w.WriteLine($"<th>{_prm}</th>");
+                        w.WriteLine("<tr>");
+                        foreach (var _val in m_PhysParams.Values)
+                            w.WriteLine($"<td>{_val}</td>");
+                        w.WriteLine("</tr>");
+                        w.WriteLine("</Table>");
+                    }
+                    
+                    if (m_Coeffs != null)
+                    {
+                        w.WriteLine("<Table>");
+                        w.WriteLine("<caption>Коэффициенты</caption>");
+                        foreach (var _prm in m_Coeffs.Keys)
+                            w.WriteLine($"<th>{_prm}</th>");
+                        w.WriteLine("<tr>");
+                        foreach (var _val in m_Coeffs.Values)
+                            w.WriteLine($"<td>{_val}</td>");
+                        w.WriteLine("</tr>");
+                        w.WriteLine("</Table>");
+                    }
+
+                    w.WriteLine($"<H2>Балка {m_BeamSection}</H2>");
+                    if (m_GeomParams != null)
+                    {
+                        w.WriteLine("<Table>");
+                        w.WriteLine("<caption>Геометрия</caption>");
+                        foreach (var _prm in m_GeomParams.Keys)                        
+                            w.WriteLine($"<th>{_prm}</th>");
+                        w.WriteLine("<tr>");
+                        foreach (var _val in m_GeomParams.Values)                        
+                            w.WriteLine($"<td>{_val}</td>");
+                        w.WriteLine("</tr>");
+                        w.WriteLine("</Table>");
+                    }
+                    w.WriteLine("<H3>Расчет:</H3>");                    
+                    if (m_CalcResults != null) 
+                    {
+                        w.WriteLine("<Table>");
+                        w.WriteLine("<tr>");
+                        foreach (var _prm in m_CalcResults.Keys)
+                        {
+                            w.WriteLine($"<th>{_prm}</th>");
+                        }
+                        w.WriteLine("</tr>");
+                        w.WriteLine("<tr>");
+                        foreach (var _val in m_CalcResults.Values)
+                        {
+                            w.WriteLine($"<td>{_val}</td>");
+                        }
+                        w.WriteLine("</tr>");
+                        w.WriteLine("</Table>");
+                    }
+                    else
+                    {
+                        w.WriteLine("<th>Расчет не выполнен</th>");
+                    }
+                    w.WriteLine("</html>");
                 }
 
                 pathToHtmlFile = fs.Name;
@@ -105,7 +173,7 @@ namespace BSFiberConcrete
             }
             catch
             {
-                //System.Windows.
+                MessageBox.Show("Ошибка в отчете");
             }
         }
 
@@ -124,48 +192,62 @@ namespace BSFiberConcrete
 
         }
 
+        // прямоугольное сечение
         private void btnRectang_Click(object sender, EventArgs e)
         {
-            table = new DataTable();
-            table.Columns.Add("b, mm", typeof(double));
-            table.Columns.Add("h, mm", typeof(double));
+            m_BeamSection = BeamSection.Rect;
 
-            dataGridView1.DataSource = table;
-            table.Rows.Add(800d, 600d);
+            m_Table = new DataTable();
+            m_Table.Columns.Add("b, cm", typeof(double));
+            m_Table.Columns.Add("h, cm", typeof(double));
+
+            dataGridView1.DataSource = m_Table;
+            m_Table.Rows.Add(80d, 60d);
         }
 
+        // тавровое сечение
         private void btnTSection_Click(object sender, EventArgs e)
         {
-            table = new DataTable();
-            table.Columns.Add("b, mm", typeof(double));
-            table.Columns.Add("h, mm", typeof(double));
-            table.Columns.Add("b1, mm", typeof(double));
-            table.Columns.Add("h1, mm", typeof(double));
+            m_BeamSection = BeamSection.TBeam;
 
-            dataGridView1.DataSource = table;
+            m_Table = new DataTable();
+            m_Table.Columns.Add("b, cm", typeof(double));
+            m_Table.Columns.Add("h, cm", typeof(double));
+            m_Table.Columns.Add("b1, cm", typeof(double));
+            m_Table.Columns.Add("h1, cm", typeof(double));
+
+            dataGridView1.DataSource = m_Table;
+            m_Table.Rows.Add(80d, 20d, 20d, 20d);
         }
 
+        // кольцевое сечение
         private void btnRing_Click(object sender, EventArgs e)
         {
-            table = new DataTable();
-            table.Columns.Add("D, mm", typeof(double));
-            table.Columns.Add("d, mm", typeof(double));
-            table.Columns.Add("a1, mm", typeof(double));
-            
-            dataGridView1.DataSource = table;
+            m_BeamSection = BeamSection.Ring;
+
+            m_Table = new DataTable();
+            m_Table.Columns.Add("r1, cm", typeof(double));
+            m_Table.Columns.Add("r2, cm", typeof(double));
+                        
+            dataGridView1.DataSource = m_Table;
+            m_Table.Rows.Add(25d, 40d);
         }
 
+        // двутавровое сечение
         private void btnIBeam_Click(object sender, EventArgs e)
         {
-            table = new DataTable();
-            table.Columns.Add("b, mm", typeof(double));
-            table.Columns.Add("h, mm", typeof(double));
-            table.Columns.Add("b1, mm", typeof(double));
-            table.Columns.Add("h1, mm", typeof(double));
-            table.Columns.Add("b2, mm", typeof(double));
-            table.Columns.Add("h2, mm", typeof(double));
+            m_BeamSection = BeamSection.IBeam;
 
-            dataGridView1.DataSource = table;
+            m_Table = new DataTable();
+            m_Table.Columns.Add("bf, cm", typeof(double));
+            m_Table.Columns.Add("hf, cm", typeof(double));
+            m_Table.Columns.Add("hw, cm", typeof(double));
+            m_Table.Columns.Add("bw, cm", typeof(double));
+            m_Table.Columns.Add("b1f, cm", typeof(double));
+            m_Table.Columns.Add("h1f, cm", typeof(double));
+
+            dataGridView1.DataSource = m_Table;
+            m_Table.Rows.Add(80d, 20d, 20d, 20d, 80d, 20d);
         }
 
         private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)

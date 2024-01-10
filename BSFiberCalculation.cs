@@ -92,9 +92,27 @@ namespace BSFiberConcrete
     // Расчет кольцевого сечения
     public class BSFibCalc_Ring : BSFiberCalculation
     {
+        private double r1, r2, Rfbn, Yb;
+
         private double Rfb;
         private double Rfbt3;
         private double Mult;
+        
+
+        public override void GetParams(double[] _t)
+        {
+            base.GetParams(_t);
+
+            (r1, r2, Rfbn, Yft, Yb, Yb1, Yb2, Yb3, Yb5) = (25, 40, 224, 1.3, 1.3, 0.9, 0.9, 1, 1);            
+        }
+
+        public override Dictionary<string, double> GeomParams()
+        {
+            Dictionary<string, double> geom = base.GeomParams();
+            geom.Add("r1", r1);
+            geom.Add("r2", r2);
+            return geom;
+        }
 
         public override Dictionary<string, double> Results()
         {
@@ -102,15 +120,9 @@ namespace BSFiberConcrete
         }
 
         public override void Calculate()
-        {
-            double r1, r2, Rfbn, Yft, Yb, Yb1, Yb2, Yb3, Yb5;
-
-            (r1, r2, Rfbn, Yft, Yb, Yb1, Yb2, Yb3, Yb5) = (25, 40, 224, 1.3, 1.3, 0.9, 0.9, 1, 1);
-
+        {                                    
             Rfb = Rfbn/Yb * Yb1* Yb2* Yb3* Yb5;
-
-            double Rfbt3n = 30.58;
-
+            
             Rfbt3 = Rfbt3n / Yft * Yb1 * Yb5;
 
             double tr = r2 - r1;
@@ -124,7 +136,7 @@ namespace BSFiberConcrete
             Mult = Ar * (Rfb * Math.Sin(Math.PI * ar) / Math.PI + 0.234 * Rfbt3) * rm;
 
             Mult = Mult * 0.00001;
-        }
+        }        
     }
 
 
@@ -134,30 +146,32 @@ namespace BSFiberConcrete
         //6 Сталефибробетонные конструкции без предварительного напряжения арматуры 
         //сопротивленияосевому растяжению 
         private double Rfbtn;
-        //коэффициент надежности для расчета по предельным состояниям первой группы при назначении класса сталефибробетона по прочности на растяжение.
-        private double Yft;
-        // Коэфициенты условия работы
-        private double Yb1;
-        private double Yb5;
-        // числовая характеристика класса фибробетона по прочности на осевое сжатие
-        private double B;
-
+                
         // Упругопластический момент сопротивления
         private double Wpl;
         //Значение предельного момента сечения для изгибаемых сталефибробетонных элементов прямоугольного сечения
         private  double Mult;
 
+        //размеры, см
+        private double b = 60;
+        private double h = 80;
+
+        public override Dictionary<string, double> GeomParams()
+        {
+            Dictionary<string, double> geom = base.GeomParams();
+            geom.Add("b", b);
+            geom.Add("h", h);
+            return geom;
+        }
+
         public override Dictionary<string, double> Results()
         {
             return new Dictionary<string, double>() { {"Wpl", Wpl}, { "Mult", Mult} }; 
         }
-
-        //размеры
-        double b = 0;
-        double h = 0;
-
+        
         public override  void GetParams(double[] _t)
-        {         
+        {
+            base.GetParams(_t);
             (Rfbtn, Yft, Yb1, Yb5, B) = (_t[0], _t[1], _t[2], _t[3], _t[4]);             
         }
 
@@ -168,26 +182,26 @@ namespace BSFiberConcrete
 
         public override void Calculate()
         {
-            Rfbt = Rfbtn / Yft * Yb1 * Yb5;
+            base.Rfbt3n = Rfbtn / Yft * Yb1 * Yb5;
 
             double Y = 1.73d - 0.005d * (B - 15);
 
             Wpl = b * h * h / 6 * Y;
 
-            Mult = Rfbt * Wpl;
+            Mult = base.Rfbt3n * Wpl;
         }
     }
 
 
     public class BSFiberCalculation
     {
-        public double Rfbt;
-
-
+        // Нормативное остаточное сопротивления осевому растяжению кг/см2 
+        protected double Rfbt3n;
+        protected double B;
         // растяжение
         private double Rfbr3;
         // сжатие
-        private double Rfb;        
+        private double Rfbn;        
         private double Rfbt3;
         // растяжение в арматуре
         private double Rs;
@@ -197,34 +211,61 @@ namespace BSFiberConcrete
         private double Efbt;
 
         private double As1;
-
-        private const double B = 1.0;
-        private double m_Wpl;
-        private double gamma = 1.73 - 0.005 * (B - 15);
         
+        private double m_Wpl;
+        private double gamma;
+
+        //коэффициент надежности для расчета по предельным состояниям первой группы при назначении класса сталефибробетона по прочности на растяжение.
+        protected double Yft;
+        // Коэфициенты условия работы
+        protected double Yb1;
+        protected double Yb2;
+        protected double Yb3;
+        protected double Yb5;
+
+
         // Площадь сжатой зоны бетона        
         private double Ab;
         // случайный эксцентриситет, принимаемый по СП 63.13330
         private double e0;
 
+        public Dictionary<string, double> Coeffs { get; internal set; }
+        public Dictionary<string, double> PhysParams { get; internal set; }
+
         public BSFiberCalculation()
         {
-            Rfbr3 = 0;
-            Rfb = 0;
+            Rfbt3n = 30.58;
+            B = 30;
+            Rfbn = 224;
+            Rfbr3 = 0;           
             Rs = 0;            
             Rsc = 0;
             Efbt = 0;
+            gamma = 1.73 - 0.005 * (B - 15);
+
+            // коэффициенты
+            Yft = 1.3d;
+            Yb1 = 0.9;
+            Yb2 = 0.9;
+            Yb3 = 1;
+            Yb5 = 1;            
         }
+
+        public virtual Dictionary<string, double> GeomParams()
+        {
+            return new Dictionary<string, double>() { };
+        }
+
 
         public virtual void GetSize(double[] _t)
         {
 
         }
 
-
         public virtual void GetParams(double[] _t)
         {
-
+            PhysParams = new Dictionary<string, double>() { { "Rfbt3n", Rfbt3n }, { "B", B }, { "Rfbn", Rfbn } };
+            Coeffs = new Dictionary<string, double>() { { "Yft", Yft }, { "Yb1", Yb1 }, { "Yb2", Yb2 }, { "Yb3", Yb3 }, { "Yb5", Yb5 } };
         }
 
         public virtual void Calculate() { }
@@ -239,20 +280,20 @@ namespace BSFiberConcrete
         // упругопластический момент сопротивления сечения элемента для крайнего растянутого волокна
         private double Wpl(double _b, double _h) => _b * Math.Pow(_h, 2) * gamma / 6;  
 
-        private double Mult() => Rfbt * m_Wpl;
+        private double Mult() => Rfbt3n * m_Wpl;
 
         //6.5
         // предельный изгибающий момент, который может быть воспринят сечением элемента
         public double Mult_arm(double _b, double _h0,  double _x, double _h, double _a, double _a1)
         {
-            double res = Rfb * _b * _x * (_h0 - 0.5 * _x) - Rfbt3 * _b * (_h - _x) * ((_h - _x)/2 - _a) + Rsc * As1* (_h0 - _a1) ;
+            double res = Rfbn * _b * _x * (_h0 - 0.5 * _x) - Rfbt3 * _b * (_h - _x) * ((_h - _x)/2 - _a) + Rsc * As1* (_h0 - _a1) ;
             return res;
         }
 
         // высота сжатой зоны
         public double calc_x(double _bf1, double _hf1, double _bw, double _hw, double _bf, double _hf)
         {
-            double res_x = Rfbt3 * (_bf1 * _hf1 + _bw * _hw + _bf * _hf) / (_bf1 * (Rfbr3 + Rfb));
+            double res_x = Rfbt3 * (_bf1 * _hf1 + _bw * _hw + _bf * _hf) / (_bf1 * (Rfbr3 + Rfbn));
 
             return res_x;
         }
@@ -275,14 +316,14 @@ namespace BSFiberConcrete
             //если граница проходит в полке
             if (condition < 0)
             {
-                res_Mult = Rfb * _b * _x * (_h0 - 0.5 * _x) - Rfbt3 * _b * (_h - _x) * ((_h - _x) / 2 - _a) + Rsc * As1 * (_h0 - _a1);
+                res_Mult = Rfbn * _b * _x * (_h0 - 0.5 * _x) - Rfbt3 * _b * (_h - _x) * ((_h - _x) / 2 - _a) + Rsc * As1 * (_h0 - _a1);
                 
                 x = Rfbr3 * (bf1*hf1 + bw * hw + bf*hf );
             }
             else
             {
                 // если граница проходит в ребре
-                res_Mult = Rfb * _b * _x * (_h0 - 0.5 * _x) - Rfbt3 * _b * (_h - _x) * ((_h - _x) / 2 - _a) + Rsc * As1 * (_h0 - _a1);
+                res_Mult = Rfbn * _b * _x * (_h0 - 0.5 * _x) - Rfbt3 * _b * (_h - _x) * ((_h - _x) / 2 - _a) + Rsc * As1 * (_h0 - _a1);
 
                 x = Rfbr3 * (bf1 * hf1 + bw * hw + bf * hf);
             }
@@ -297,7 +338,7 @@ namespace BSFiberConcrete
         /// <returns>Результат проверки </returns>
         public bool checkN(double _N)
         {
-            var res = _N <= Rfb* Ab;
+            var res = _N <= Rfbn* Ab;
             return res;
         }
 
