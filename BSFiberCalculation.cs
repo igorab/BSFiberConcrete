@@ -1,39 +1,42 @@
 ﻿using CsvHelper;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 
 
 namespace BSFiberConcrete
 {
     /// <summary>
     /// Сечение балки
-    /// </summary>
+    /// </summary>    
     public enum BeamSection
     {
-        TBeam = 1, 
-        IBeam = 2, 
-        Ring = 3, 
+        [Description("Тавр")]
+        TBeam = 1,
+        [Description("Двутавр")]
+        IBeam = 2,
+        [Description("Кольцо")]
+        Ring = 3,
+        [Description("Прямоугольник")]
         Rect = 4
     } 
 
     public interface IBSFiberCalculation
     {
+        void GetParams(double[] _t);
+
+        Dictionary<string, double> GeomParams();
+
         void Calculate();
         Dictionary<string, double> Results();
     }
 
-    // Расчет Таврового сечения
+    [BSFiberCalculationAttribute(Descr = "Расчет балки таврового сечения")]
     public class BSFibCalc_TBeam : BSFiberCalculation
     {
     }
 
-    // Расчет двутаврового сечения
+    [BSFiberCalculationAttribute(Descr = "Расчет балки двутаврового сечения")]
     public class BSFibCalc_IBeam : BSFiberCalculation
     {
         private double Rfbt3;
@@ -41,11 +44,32 @@ namespace BSFiberConcrete
         private double Mult;
         private double x;
 
-        public override void Calculate()
+        private double bf, hf, hw, bw, b1f, h1f;
+
+        public override void GetParams(double[] _t)
         {
-            double bf, hf, hw, bw, b1f, h1f;
+            base.GetParams(_t);
 
             (bf, hf, hw, bw, b1f, h1f) = (80, 20, 20, 20, 80, 20);
+        }
+
+        public override Dictionary<string, double> GeomParams()
+        {
+            Dictionary<string, double> geom = base.GeomParams();
+            geom.Add("bf", bf);
+            geom.Add("hf", hf);            
+            geom.Add("hw", hf);
+            geom.Add("bw", bw);
+            geom.Add("b1f", b1f);
+            geom.Add("h1f", h1f);
+
+            return geom;
+        }
+
+
+        public override void Calculate()
+        {
+                        
             //общая высота
             double h = hf + hw + h1f;
 
@@ -89,7 +113,7 @@ namespace BSFiberConcrete
         
     }
 
-    // Расчет кольцевого сечения
+    [BSFiberCalculationAttribute(Descr = "Расчет балки кольцевого сечения")]
     public class BSFibCalc_Ring : BSFiberCalculation
     {
         private double r1, r2, Rfbn, Yb;
@@ -125,36 +149,37 @@ namespace BSFiberConcrete
             
             Rfbt3 = Rfbt3n / Yft * Yb1 * Yb5;
 
+            //толщина стенки кольца см
             double tr = r2 - r1;
 
-            double rm = (r1 + r2) / 2;     
-            
+            //радиус срединной поверхности стенки кольцевого элемента, определяемый по ф. (6.19)
+            double rm = (r1 + r2) / 2;
+
+            //Общая площадь кольцевого сечения, определяемая по формуле (6.18)
             double Ar = 2 * Math.PI * rm * tr;
 
             double ar = (0.73 * Rfbt3) * (Rfb + 2 * Rfbt3);
 
-            Mult = Ar * (Rfb * Math.Sin(Math.PI * ar) / Math.PI + 0.234 * Rfbt3) * rm;
+            //Предельный момент сечения
+            Mult = Ar * (Rfb * Math.Sin(Math.PI * ar) / Math.PI + 0.234d * Rfbt3) * rm;
 
+            //Предельный момент сечения  (т*м)
             Mult = Mult * 0.00001;
         }        
     }
 
 
-    // Расчет прямоугольного сечения
+    [BSFiberCalculationAttribute(Descr = "Расчет балки прямоугольного сечения")]
     public class BSFibCalc_Rect : BSFiberCalculation
-    {
-        //6 Сталефибробетонные конструкции без предварительного напряжения арматуры 
-        //сопротивленияосевому растяжению 
-        private double Rfbtn;
-                
+    {                        
         // Упругопластический момент сопротивления
         private double Wpl;
         //Значение предельного момента сечения для изгибаемых сталефибробетонных элементов прямоугольного сечения
         private  double Mult;
 
         //размеры, см
-        private double b = 60;
-        private double h = 80;
+        private double b;
+        private double h;
 
         public override Dictionary<string, double> GeomParams()
         {
@@ -172,7 +197,10 @@ namespace BSFiberConcrete
         public override  void GetParams(double[] _t)
         {
             base.GetParams(_t);
-            (Rfbtn, Yft, Yb1, Yb5, B) = (_t[0], _t[1], _t[2], _t[3], _t[4]);             
+
+            b = 60;
+            h = 80;
+            (Rfbt3n, Yft, Yb1, Yb5, B) = (_t[0], _t[1], _t[2], _t[3], _t[4]);             
         }
 
         public override void GetSize(double[] _t)
@@ -182,31 +210,49 @@ namespace BSFiberConcrete
 
         public override void Calculate()
         {
-            base.Rfbt3n = Rfbtn / Yft * Yb1 * Yb5;
+            //Расчетное остаточное остаточного сопротивления осевому растяжению
+            double Rfbt3 = (Rfbt3n / Yft) * Yb1 * Yb5;
 
+            //коэффициент, учитывающий неупругие свойства фибробетона растянутой зоны сечения
             double Y = 1.73d - 0.005d * (B - 15);
 
+            //Упругопластический момент сопротивления  Ф.(6.3)
             Wpl = b * h * h / 6 * Y;
 
-            Mult = base.Rfbt3n * Wpl;
+            //Значение пердльнолго момента сечения для изгибаемых сталефибробетонных элементов прямоугольного сечения определяют по формуле (6.3) (кг*см)
+            Mult = Rfbt3 * Wpl;
+
+            //Предельный момент сечения  (т*м)
+            Mult = Mult * 0.00001;
         }
     }
 
-
-    public class BSFiberCalculation
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Field | AttributeTargets.Property, Inherited = true)]
+    class BSFiberCalculationAttribute : Attribute
     {
-        // Нормативное остаточное сопротивления осевому растяжению кг/см2 
+        public string Name { get; set; }
+        public string Descr { get; set; }
+    }
+
+    [BSFiberCalculationAttribute(Name = "Сталефибробетонные конструкции без предварительного напряжения арматуры")]
+    public class BSFiberCalculation : IBSFiberCalculation
+    {
+        [BSFiberCalculation(Name = "Нормативное остаточное сопротивления осевому растяжению кг/см2")] 
         protected double Rfbt3n;
+        [BSFiberCalculation(Name = "числовая характеристика класса фибробетона по прочности на осевое сжатие")]
         protected double B;
         // растяжение
         private double Rfbr3;
         // сжатие
         private double Rfbn;        
         private double Rfbt3;
+
+        //TODO - арматуру - в отдельный класс 
         // растяжение в арматуре
         private double Rs;
         // сжатие в арматуре
         private double Rsc;
+
         // Относительная деформация
         private double Efbt;
 
@@ -215,9 +261,9 @@ namespace BSFiberConcrete
         private double m_Wpl;
         private double gamma;
 
-        //коэффициент надежности для расчета по предельным состояниям первой группы при назначении класса сталефибробетона по прочности на растяжение.
+        [BSFiberCalculation(Name = "Коэффициент надежности для расчета по предельным состояниям первой группы при назначении класса сталефибробетона по прочности на растяжение")]
         protected double Yft;
-        // Коэфициенты условия работы
+        [BSFiberCalculation(Name = "Коэффициенты условия работы")]
         protected double Yb1;
         protected double Yb2;
         protected double Yb3;
