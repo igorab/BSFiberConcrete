@@ -55,6 +55,9 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tbResult = new System.Windows.Forms.TextBox();
             this.tbResultW = new System.Windows.Forms.TextBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.lblResult = new System.Windows.Forms.Label();
+            this.lblRes0 = new System.Windows.Forms.Label();
             this.tabGeneral.SuspendLayout();
             this.tabParams.SuspendLayout();
             this.groupBeam.SuspendLayout();
@@ -100,6 +103,7 @@
             // 
             // groupBeam
             // 
+            this.groupBeam.Controls.Add(this.checkBox1);
             this.groupBeam.Controls.Add(this.label2);
             this.groupBeam.Controls.Add(this.tbCoefLength);
             this.groupBeam.Controls.Add(this.label1);
@@ -301,16 +305,47 @@
             // 
             // tbResultW
             // 
-            this.tbResultW.Location = new System.Drawing.Point(934, 472);
+            this.tbResultW.Location = new System.Drawing.Point(934, 437);
             this.tbResultW.Name = "tbResultW";
             this.tbResultW.Size = new System.Drawing.Size(145, 20);
             this.tbResultW.TabIndex = 11;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(179, 138);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(95, 17);
+            this.checkBox1.TabIndex = 0;
+            this.checkBox1.Text = "Армирование";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // lblResult
+            // 
+            this.lblResult.Location = new System.Drawing.Point(931, 470);
+            this.lblResult.MinimumSize = new System.Drawing.Size(50, 0);
+            this.lblResult.Name = "lblResult";
+            this.lblResult.Size = new System.Drawing.Size(148, 13);
+            this.lblResult.TabIndex = 12;
+            this.lblResult.Text = "res               ";
+            this.lblResult.Click += new System.EventHandler(this.label3_Click);
+            // 
+            // lblRes0
+            // 
+            this.lblRes0.AutoSize = true;
+            this.lblRes0.Location = new System.Drawing.Point(934, 408);
+            this.lblRes0.Name = "lblRes0";
+            this.lblRes0.Size = new System.Drawing.Size(27, 13);
+            this.lblRes0.TabIndex = 13;
+            this.lblRes0.Text = "res0";
             // 
             // BSFiberMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1161, 597);
+            this.Controls.Add(this.lblRes0);
+            this.Controls.Add(this.lblResult);
             this.Controls.Add(this.tbResultW);
             this.Controls.Add(this.tbResult);
             this.Controls.Add(this.btnRing);
@@ -368,6 +403,9 @@
         private System.Windows.Forms.ToolStripMenuItem AboutToolStripMenuItem1;
         private System.Windows.Forms.TextBox tbResult;
         private System.Windows.Forms.TextBox tbResultW;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Label lblResult;
+        private System.Windows.Forms.Label lblRes0;
     }
 }
 

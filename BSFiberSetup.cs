@@ -41,10 +41,10 @@ namespace BSFiberConcrete
             {
                 if (BeamSection == BeamSection.Ring) 
                 {
-                    records.Add(new Elements { Rfbtn = 224, B = 30, Yb1 = 0.9, Ybs = 1, Yft = 1.3 });
+                    records.Add(new Elements { Rfbtn = 30.58, B = 30, Yb1 = 0.9, Ybs = 1, Yft = 1.3 });
                 }
                 else
-                    records.Add(new Elements { Rfbtn = 1, B = 30, Yb1 = 1, Ybs = 2, Yft = 3 });
+                    records.Add(new Elements { Rfbtn = 30.58, B = 30, Yb1 = 0.9, Ybs = 1, Yft = 1.3 });
 
                 dataGridView1.DataSource = records;                
             }
@@ -52,7 +52,7 @@ namespace BSFiberConcrete
 
         private void BSFiberSetup_Load(object sender, EventArgs e)
         {
-            //InitSetupTable();
+            InitSetupTable();
         }
 
         private void btnLoad_Click(object sender, EventArgs e)

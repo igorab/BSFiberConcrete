@@ -44,6 +44,8 @@ namespace BSFiberConcrete
         private double Mult;
         private double x;
 
+        private double Rfbn, Yb;
+
         private double bf, hf, hw, bw, b1f, h1f;
 
         public override void GetParams(double[] _t)
@@ -51,6 +53,8 @@ namespace BSFiberConcrete
             base.GetParams(_t);
 
             (bf, hf, hw, bw, b1f, h1f) = (80, 20, 20, 20, 80, 20);
+            (Yft, Yb1, Yb2, Yb3, Yb5, Rfbt3n) = (1.3, 0.9, 0.9, 1, 1, 30.58);
+            (Rfbn, Yb) = (224, 1.3);
         }
 
         public override Dictionary<string, double> GeomParams()
@@ -58,7 +62,7 @@ namespace BSFiberConcrete
             Dictionary<string, double> geom = base.GeomParams();
             geom.Add("bf", bf);
             geom.Add("hf", hf);            
-            geom.Add("hw", hf);
+            geom.Add("hw", hw);
             geom.Add("bw", bw);
             geom.Add("b1f", b1f);
             geom.Add("h1f", h1f);
@@ -72,23 +76,16 @@ namespace BSFiberConcrete
                         
             //общая высота
             double h = hf + hw + h1f;
-
-            double Yft, Yb1, Yb2, Yb3, Yb5, Rfbt3n;
-
-            (Yft, Yb1, Yb2, Yb3, Yb5, Rfbt3n) = (1.3, 0.9, 0.9, 1, 1, 30.58);
-
-            Rfbt3 = Rfbt3n / Yft * Yb1 * Yb5;
-
-            double Rfbn, Yb;
-            (Rfbn, Yb) = (224, 1.3);
-
+                        
+            Rfbt3 = (Rfbt3n / Yft) * Yb1 * Yb5;
+                        
             Rfb = Rfbn / Yb * Yb1*Yb2*Yb3*Yb5;
 
             Action calc_a = delegate
             {
                 x = Rfbt3* (b1f * h1f + bw*hw + bf*hf) / (b1f * (Rfbt3 + Rfb)) ;
 
-                Mult = 0.5* Rfbt3*(b1f*(h1f - x)*(h1f+ x) + bf*hf*(hf-x+2*(hw+h1f)) + bw*hw*(hw - x * 2*h1f));
+                Mult = 0.5* Rfbt3*(b1f*(h1f - x)*(h1f + x) + bf*hf*(hf-x+2*(hw+h1f)) + bw * hw * (hw - x * 2 * h1f));
             };
 
             Action calc_b = delegate
@@ -109,6 +106,8 @@ namespace BSFiberConcrete
             {
                 calc_b();
             }
+
+            Mult = Mult * 0.00001d;
         }
         
     }
@@ -158,7 +157,7 @@ namespace BSFiberConcrete
             //Общая площадь кольцевого сечения, определяемая по формуле (6.18)
             double Ar = 2 * Math.PI * rm * tr;
 
-            double ar = (0.73 * Rfbt3) * (Rfb + 2 * Rfbt3);
+            double ar = (0.73d * Rfbt3) / (Rfb + 2 * Rfbt3);
 
             //Предельный момент сечения
             Mult = Ar * (Rfb * Math.Sin(Math.PI * ar) / Math.PI + 0.234d * Rfbt3) * rm;
@@ -205,7 +204,7 @@ namespace BSFiberConcrete
 
         public override void GetSize(double[] _t)
         {            
-            (b, h) = (_t[0] / 10 , _t[1]/10);
+            (b, h) = (_t[0] , _t[1]);
         }
 
         public override void Calculate()

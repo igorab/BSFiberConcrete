@@ -70,10 +70,16 @@ namespace BSFiberConcrete
                 m_CalcResults = bsCalc.Results();
 
                 if (m_CalcResults.TryGetValue("Wpl", out double _wpl))
+                {
+                    lblRes0.Text = "Wpl";
                     tbResultW.Text = _wpl.ToString();
+                }
 
                 if (m_CalcResults.TryGetValue("Mult", out double _mult))
-                    tbResult.Text = _mult.ToString();                
+                {
+                    lblResult.Text = "Mult";
+                    tbResult.Text = _mult.ToString();
+                }
             }
             catch
             {
@@ -265,6 +271,11 @@ namespace BSFiberConcrete
         {
             BSFiberSetup setupWindow = new BSFiberSetup();
             setupWindow.Show();
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
