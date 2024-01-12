@@ -79,6 +79,7 @@
       <DependentUpon>BSFiberAboutBox.cs</DependentUpon>
     </Compile>
     <Compile Include="BSFiberCalculation.cs" />
+    <Compile Include="BSFiberCocreteLib.cs" />
     <Compile Include="BSFiberLoadData.cs" />
     <Compile Include="BSFiberMain.cs">
       <SubType>Form</SubType>
@@ -141,6 +142,9 @@
     <Content Include="Templates\FiberConcrete.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Templates\BSBeton.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

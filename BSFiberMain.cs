@@ -31,6 +31,13 @@ namespace BSFiberConcrete
         {
             m_Table = new DataTable();
             m_BeamSection = BeamSection.Ring;
+
+            cmbBetonClass.DataSource = BSFiberCocreteLib.betonList;
+            cmbBetonClass.DisplayMember = "Name";
+            cmbBetonClass.ValueMember = "Id";
+
+            //cmbBetonClass.SelectedIndexChanged += cmbBetonClass_SelectedIndexChanged;
+
         }
 
         private void tabPage1_Click(object sender, EventArgs e)
@@ -73,6 +80,12 @@ namespace BSFiberConcrete
                 {
                     lblRes0.Text = "Wpl";
                     tbResultW.Text = _wpl.ToString();
+                }
+
+                if (m_CalcResults.TryGetValue("x", out double _x))
+                {
+                    lblRes0.Text = "x";
+                    tbResultW.Text = _x.ToString();
                 }
 
                 if (m_CalcResults.TryGetValue("Mult", out double _mult))
@@ -209,6 +222,8 @@ namespace BSFiberConcrete
 
             dataGridView1.DataSource = m_Table;
             m_Table.Rows.Add(80d, 60d);
+
+            picBeton.Image = global::BSFiberConcrete.Properties.Resources.FiberBeton;
         }
 
         // тавровое сечение
@@ -237,6 +252,8 @@ namespace BSFiberConcrete
                         
             dataGridView1.DataSource = m_Table;
             m_Table.Rows.Add(25d, 40d);
+
+            picBeton.Image = global::BSFiberConcrete.Properties.Resources.Ring;
         }
 
         // двутавровое сечение
@@ -254,6 +271,9 @@ namespace BSFiberConcrete
 
             dataGridView1.DataSource = m_Table;
             m_Table.Rows.Add(80d, 20d, 20d, 20d, 80d, 20d);
+
+            picBeton.Image = global::BSFiberConcrete.Properties.Resources.IBeam;
+            picBeton.SizeMode = PictureBoxSizeMode.StretchImage;
         }
 
         private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
@@ -276,6 +296,25 @@ namespace BSFiberConcrete
         private void label3_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void comboBetonType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmbBetonClass_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                // получаем id выделенного объекта
+                int id = (int)cmbBetonClass.SelectedValue;
+
+                // получаем весь выделенный объект
+                BSFiberBeton beton = (BSFiberBeton)cmbBetonClass.SelectedItem;
+                MessageBox.Show(id.ToString() + ". " + beton.Name);
+            }
+            catch { }
         }
     }
 }

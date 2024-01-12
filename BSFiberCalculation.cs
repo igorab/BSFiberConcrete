@@ -39,10 +39,12 @@ namespace BSFiberConcrete
     [BSFiberCalculationAttribute(Descr = "Расчет балки двутаврового сечения")]
     public class BSFibCalc_IBeam : BSFiberCalculation
     {
-        private double Rfbt3;
+        //private double Rfbt3;
         private double Rfb;
-        private double Mult;
+        [BSFiberCalculation(Name = "высота сжатой зоны")]
         private double x;
+        private double Mult;
+        
 
         private double Rfbn, Yb;
 
@@ -53,7 +55,7 @@ namespace BSFiberConcrete
             base.GetParams(_t);
 
             (bf, hf, hw, bw, b1f, h1f) = (80, 20, 20, 20, 80, 20);
-            (Yft, Yb1, Yb2, Yb3, Yb5, Rfbt3n) = (1.3, 0.9, 0.9, 1, 1, 30.58);
+            //(Yft, Yb1, Yb2, Yb3, Yb5, Rfbt3n) = (1.3, 0.9, 0.9, 1, 1, 30.58);
             (Rfbn, Yb) = (224, 1.3);
         }
 
@@ -109,7 +111,13 @@ namespace BSFiberConcrete
 
             Mult = Mult * 0.00001d;
         }
-        
+
+        public override Dictionary<string, double> Results()
+        {
+            return new Dictionary<string, double>() { { "x", x }, { "Mult", Mult } };
+        }
+
+
     }
 
     [BSFiberCalculationAttribute(Descr = "Расчет балки кольцевого сечения")]
@@ -243,8 +251,8 @@ namespace BSFiberConcrete
         // растяжение
         private double Rfbr3;
         // сжатие
-        private double Rfbn;        
-        private double Rfbt3;
+        protected double Rfbn;        
+        protected double Rfbt3;
 
         //TODO - арматуру - в отдельный класс 
         // растяжение в арматуре
@@ -268,10 +276,9 @@ namespace BSFiberConcrete
         protected double Yb3;
         protected double Yb5;
 
-
-        // Площадь сжатой зоны бетона        
+        [BSFiberCalculation(Name = "Площадь сжатой зоны бетона")]        
         private double Ab;
-        // случайный эксцентриситет, принимаемый по СП 63.13330
+        [BSFiberCalculation(Name = "случайный эксцентриситет, принимаемый по СП 63.13330")]
         private double e0;
 
         public Dictionary<string, double> Coeffs { get; internal set; }

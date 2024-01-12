@@ -33,12 +33,16 @@
             this.tabParams = new System.Windows.Forms.TabPage();
             this.groupVar = new System.Windows.Forms.GroupBox();
             this.groupBeam = new System.Windows.Forms.GroupBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.tbCoefLength = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tbLength = new System.Windows.Forms.TextBox();
             this.tabConcrete = new System.Windows.Forms.TabPage();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.cmbBetonClass = new System.Windows.Forms.ComboBox();
+            this.lblBetonClass = new System.Windows.Forms.Label();
+            this.lblBetonType = new System.Windows.Forms.Label();
+            this.comboBetonType = new System.Windows.Forms.ComboBox();
             this.tabStrength = new System.Windows.Forms.TabPage();
             this.btnCalc = new System.Windows.Forms.Button();
             this.btnReport = new System.Windows.Forms.Button();
@@ -55,16 +59,16 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tbResult = new System.Windows.Forms.TextBox();
             this.tbResultW = new System.Windows.Forms.TextBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.lblResult = new System.Windows.Forms.Label();
             this.lblRes0 = new System.Windows.Forms.Label();
+            this.picBeton = new System.Windows.Forms.PictureBox();
             this.tabGeneral.SuspendLayout();
             this.tabParams.SuspendLayout();
             this.groupBeam.SuspendLayout();
             this.tabConcrete.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picBeton)).BeginInit();
             this.SuspendLayout();
             // 
             // tabGeneral
@@ -115,6 +119,16 @@
             this.groupBeam.TabStop = false;
             this.groupBeam.Text = "Балка";
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(179, 138);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(95, 17);
+            this.checkBox1.TabIndex = 0;
+            this.checkBox1.Text = "Армирование";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -151,7 +165,11 @@
             // 
             // tabConcrete
             // 
-            this.tabConcrete.Controls.Add(this.pictureBox1);
+            this.tabConcrete.Controls.Add(this.cmbBetonClass);
+            this.tabConcrete.Controls.Add(this.lblBetonClass);
+            this.tabConcrete.Controls.Add(this.lblBetonType);
+            this.tabConcrete.Controls.Add(this.comboBetonType);
+            this.tabConcrete.Controls.Add(this.picBeton);
             this.tabConcrete.Location = new System.Drawing.Point(4, 22);
             this.tabConcrete.Name = "tabConcrete";
             this.tabConcrete.Padding = new System.Windows.Forms.Padding(3);
@@ -160,15 +178,45 @@
             this.tabConcrete.Text = "Фибробетон";
             this.tabConcrete.UseVisualStyleBackColor = true;
             // 
-            // pictureBox1
+            // cmbBetonClass
             // 
-            this.pictureBox1.ErrorImage = null;
-            this.pictureBox1.Image = global::BSFiberConcrete.Properties.Resources.FiberBeton;
-            this.pictureBox1.Location = new System.Drawing.Point(455, 167);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(328, 209);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
+            this.cmbBetonClass.FormattingEnabled = true;
+            this.cmbBetonClass.Location = new System.Drawing.Point(92, 93);
+            this.cmbBetonClass.Name = "cmbBetonClass";
+            this.cmbBetonClass.Size = new System.Drawing.Size(121, 21);
+            this.cmbBetonClass.TabIndex = 4;
+            this.cmbBetonClass.SelectedIndexChanged += new System.EventHandler(this.cmbBetonClass_SelectedIndexChanged);
+            // 
+            // lblBetonClass
+            // 
+            this.lblBetonClass.AutoSize = true;
+            this.lblBetonClass.Location = new System.Drawing.Point(10, 93);
+            this.lblBetonClass.Name = "lblBetonClass";
+            this.lblBetonClass.Size = new System.Drawing.Size(76, 13);
+            this.lblBetonClass.TabIndex = 3;
+            this.lblBetonClass.Text = "Класс бетона";
+            // 
+            // lblBetonType
+            // 
+            this.lblBetonType.AutoSize = true;
+            this.lblBetonType.Location = new System.Drawing.Point(7, 54);
+            this.lblBetonType.Name = "lblBetonType";
+            this.lblBetonType.Size = new System.Drawing.Size(64, 13);
+            this.lblBetonType.TabIndex = 2;
+            this.lblBetonType.Text = "Вид бетона";
+            // 
+            // comboBetonType
+            // 
+            this.comboBetonType.FormattingEnabled = true;
+            this.comboBetonType.Items.AddRange(new object[] {
+            "Тяжелый",
+            "Мелкозернистый",
+            "Легкий"});
+            this.comboBetonType.Location = new System.Drawing.Point(92, 54);
+            this.comboBetonType.Name = "comboBetonType";
+            this.comboBetonType.Size = new System.Drawing.Size(121, 21);
+            this.comboBetonType.TabIndex = 1;
+            this.comboBetonType.SelectedIndexChanged += new System.EventHandler(this.comboBetonType_SelectedIndexChanged);
             // 
             // tabStrength
             // 
@@ -310,16 +358,6 @@
             this.tbResultW.Size = new System.Drawing.Size(145, 20);
             this.tbResultW.TabIndex = 11;
             // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(179, 138);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(95, 17);
-            this.checkBox1.TabIndex = 0;
-            this.checkBox1.Text = "Армирование";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
             // lblResult
             // 
             this.lblResult.Location = new System.Drawing.Point(931, 470);
@@ -338,6 +376,16 @@
             this.lblRes0.Size = new System.Drawing.Size(27, 13);
             this.lblRes0.TabIndex = 13;
             this.lblRes0.Text = "res0";
+            // 
+            // picBeton
+            // 
+            this.picBeton.ErrorImage = null;
+            this.picBeton.Image = global::BSFiberConcrete.Properties.Resources.FiberBeton;
+            this.picBeton.Location = new System.Drawing.Point(371, 43);
+            this.picBeton.Name = "picBeton";
+            this.picBeton.Size = new System.Drawing.Size(335, 228);
+            this.picBeton.TabIndex = 0;
+            this.picBeton.TabStop = false;
             // 
             // BSFiberMain
             // 
@@ -366,10 +414,11 @@
             this.groupBeam.ResumeLayout(false);
             this.groupBeam.PerformLayout();
             this.tabConcrete.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.tabConcrete.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picBeton)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -387,7 +436,7 @@
         private System.Windows.Forms.TextBox tbLength;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupVar;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox picBeton;
         private System.Windows.Forms.ComboBox tbCoefLength;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DataGridView dataGridView1;
@@ -406,6 +455,10 @@
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Label lblResult;
         private System.Windows.Forms.Label lblRes0;
+        private System.Windows.Forms.ComboBox comboBetonType;
+        private System.Windows.Forms.ComboBox cmbBetonClass;
+        private System.Windows.Forms.Label lblBetonClass;
+        private System.Windows.Forms.Label lblBetonType;
     }
 }
 
