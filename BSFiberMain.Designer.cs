@@ -62,6 +62,22 @@
             this.lblResult = new System.Windows.Forms.Label();
             this.lblRes0 = new System.Windows.Forms.Label();
             this.picBeton = new System.Windows.Forms.PictureBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.numRfbt3n = new System.Windows.Forms.NumericUpDown();
+            this.numRfbn = new System.Windows.Forms.NumericUpDown();
+            this.numYft = new System.Windows.Forms.NumericUpDown();
+            this.numYb1 = new System.Windows.Forms.NumericUpDown();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.numYb2 = new System.Windows.Forms.NumericUpDown();
+            this.label8 = new System.Windows.Forms.Label();
+            this.numYb3 = new System.Windows.Forms.NumericUpDown();
+            this.label9 = new System.Windows.Forms.Label();
+            this.numYb5 = new System.Windows.Forms.NumericUpDown();
             this.tabGeneral.SuspendLayout();
             this.tabParams.SuspendLayout();
             this.groupBeam.SuspendLayout();
@@ -69,6 +85,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBeton)).BeginInit();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numRfbt3n)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numRfbn)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numYft)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numYb1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numYb2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numYb3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numYb5)).BeginInit();
             this.SuspendLayout();
             // 
             // tabGeneral
@@ -79,7 +104,7 @@
             this.tabGeneral.Location = new System.Drawing.Point(11, 40);
             this.tabGeneral.Name = "tabGeneral";
             this.tabGeneral.SelectedIndex = 0;
-            this.tabGeneral.Size = new System.Drawing.Size(850, 333);
+            this.tabGeneral.Size = new System.Drawing.Size(1106, 333);
             this.tabGeneral.TabIndex = 0;
             // 
             // tabParams
@@ -89,7 +114,7 @@
             this.tabParams.Location = new System.Drawing.Point(4, 22);
             this.tabParams.Name = "tabParams";
             this.tabParams.Padding = new System.Windows.Forms.Padding(3);
-            this.tabParams.Size = new System.Drawing.Size(842, 307);
+            this.tabParams.Size = new System.Drawing.Size(1098, 307);
             this.tabParams.TabIndex = 0;
             this.tabParams.Text = "Параметры";
             this.tabParams.UseVisualStyleBackColor = true;
@@ -103,7 +128,6 @@
             this.groupVar.TabIndex = 1;
             this.groupVar.TabStop = false;
             this.groupVar.Text = "Варианты расчета";
-            this.groupVar.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // groupBeam
             // 
@@ -137,7 +161,6 @@
             this.label2.Size = new System.Drawing.Size(167, 13);
             this.label2.TabIndex = 3;
             this.label2.Text = "Коэффициент расчетной длины";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // tbCoefLength
             // 
@@ -165,6 +188,8 @@
             // 
             // tabConcrete
             // 
+            this.tabConcrete.Controls.Add(this.groupBox2);
+            this.tabConcrete.Controls.Add(this.groupBox1);
             this.tabConcrete.Controls.Add(this.cmbBetonClass);
             this.tabConcrete.Controls.Add(this.lblBetonClass);
             this.tabConcrete.Controls.Add(this.lblBetonType);
@@ -173,7 +198,7 @@
             this.tabConcrete.Location = new System.Drawing.Point(4, 22);
             this.tabConcrete.Name = "tabConcrete";
             this.tabConcrete.Padding = new System.Windows.Forms.Padding(3);
-            this.tabConcrete.Size = new System.Drawing.Size(842, 307);
+            this.tabConcrete.Size = new System.Drawing.Size(1098, 307);
             this.tabConcrete.TabIndex = 1;
             this.tabConcrete.Text = "Фибробетон";
             this.tabConcrete.UseVisualStyleBackColor = true;
@@ -181,7 +206,7 @@
             // cmbBetonClass
             // 
             this.cmbBetonClass.FormattingEnabled = true;
-            this.cmbBetonClass.Location = new System.Drawing.Point(92, 93);
+            this.cmbBetonClass.Location = new System.Drawing.Point(332, 19);
             this.cmbBetonClass.Name = "cmbBetonClass";
             this.cmbBetonClass.Size = new System.Drawing.Size(121, 21);
             this.cmbBetonClass.TabIndex = 4;
@@ -190,7 +215,7 @@
             // lblBetonClass
             // 
             this.lblBetonClass.AutoSize = true;
-            this.lblBetonClass.Location = new System.Drawing.Point(10, 93);
+            this.lblBetonClass.Location = new System.Drawing.Point(250, 19);
             this.lblBetonClass.Name = "lblBetonClass";
             this.lblBetonClass.Size = new System.Drawing.Size(76, 13);
             this.lblBetonClass.TabIndex = 3;
@@ -199,7 +224,7 @@
             // lblBetonType
             // 
             this.lblBetonType.AutoSize = true;
-            this.lblBetonType.Location = new System.Drawing.Point(7, 54);
+            this.lblBetonType.Location = new System.Drawing.Point(7, 19);
             this.lblBetonType.Name = "lblBetonType";
             this.lblBetonType.Size = new System.Drawing.Size(64, 13);
             this.lblBetonType.TabIndex = 2;
@@ -212,7 +237,7 @@
             "Тяжелый",
             "Мелкозернистый",
             "Легкий"});
-            this.comboBetonType.Location = new System.Drawing.Point(92, 54);
+            this.comboBetonType.Location = new System.Drawing.Point(92, 19);
             this.comboBetonType.Name = "comboBetonType";
             this.comboBetonType.Size = new System.Drawing.Size(121, 21);
             this.comboBetonType.TabIndex = 1;
@@ -269,6 +294,7 @@
             // 
             // btnTSection
             // 
+            this.btnTSection.Enabled = false;
             this.btnTSection.Location = new System.Drawing.Point(687, 437);
             this.btnTSection.Name = "btnTSection";
             this.btnTSection.Size = new System.Drawing.Size(123, 23);
@@ -381,11 +407,197 @@
             // 
             this.picBeton.ErrorImage = null;
             this.picBeton.Image = global::BSFiberConcrete.Properties.Resources.FiberBeton;
-            this.picBeton.Location = new System.Drawing.Point(371, 43);
+            this.picBeton.Location = new System.Drawing.Point(757, 43);
             this.picBeton.Name = "picBeton";
             this.picBeton.Size = new System.Drawing.Size(335, 228);
             this.picBeton.TabIndex = 0;
             this.picBeton.TabStop = false;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.label9);
+            this.groupBox1.Controls.Add(this.numYb5);
+            this.groupBox1.Controls.Add(this.label8);
+            this.groupBox1.Controls.Add(this.numYb3);
+            this.groupBox1.Controls.Add(this.label7);
+            this.groupBox1.Controls.Add(this.numYb2);
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.numYb1);
+            this.groupBox1.Controls.Add(this.numYft);
+            this.groupBox1.Location = new System.Drawing.Point(10, 150);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(725, 133);
+            this.groupBox1.TabIndex = 5;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Коэффициенты";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.label4);
+            this.groupBox2.Controls.Add(this.label3);
+            this.groupBox2.Controls.Add(this.numRfbn);
+            this.groupBox2.Controls.Add(this.numRfbt3n);
+            this.groupBox2.Location = new System.Drawing.Point(9, 53);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(726, 80);
+            this.groupBox2.TabIndex = 6;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Характеристики";
+            // 
+            // numRfbt3n
+            // 
+            this.numRfbt3n.DecimalPlaces = 2;
+            this.numRfbt3n.Location = new System.Drawing.Point(59, 34);
+            this.numRfbt3n.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+            this.numRfbt3n.Name = "numRfbt3n";
+            this.numRfbt3n.Size = new System.Drawing.Size(120, 20);
+            this.numRfbt3n.TabIndex = 0;
+            // 
+            // numRfbn
+            // 
+            this.numRfbn.DecimalPlaces = 2;
+            this.numRfbn.Location = new System.Drawing.Point(226, 33);
+            this.numRfbn.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+            this.numRfbn.Name = "numRfbn";
+            this.numRfbn.Size = new System.Drawing.Size(120, 20);
+            this.numRfbn.TabIndex = 1;
+            // 
+            // numYft
+            // 
+            this.numYft.DecimalPlaces = 1;
+            this.numYft.Location = new System.Drawing.Point(43, 48);
+            this.numYft.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+            this.numYft.Name = "numYft";
+            this.numYft.Size = new System.Drawing.Size(85, 20);
+            this.numYft.TabIndex = 0;
+            // 
+            // numYb1
+            // 
+            this.numYb1.DecimalPlaces = 1;
+            this.numYb1.Location = new System.Drawing.Point(174, 48);
+            this.numYb1.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+            this.numYb1.Name = "numYb1";
+            this.numYb1.Size = new System.Drawing.Size(88, 20);
+            this.numYb1.TabIndex = 1;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(185, 33);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(30, 13);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "Rfbn";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(19, 33);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(39, 13);
+            this.label4.TabIndex = 3;
+            this.label4.Text = "Rfbt3n";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(17, 49);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(20, 13);
+            this.label5.TabIndex = 2;
+            this.label5.Text = "Yft";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(142, 49);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(26, 13);
+            this.label6.TabIndex = 3;
+            this.label6.Text = "Yb1";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(276, 47);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(26, 13);
+            this.label7.TabIndex = 5;
+            this.label7.Text = "Yb2";
+            // 
+            // numYb2
+            // 
+            this.numYb2.DecimalPlaces = 1;
+            this.numYb2.Location = new System.Drawing.Point(308, 46);
+            this.numYb2.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+            this.numYb2.Name = "numYb2";
+            this.numYb2.Size = new System.Drawing.Size(88, 20);
+            this.numYb2.TabIndex = 4;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(422, 46);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(26, 13);
+            this.label8.TabIndex = 7;
+            this.label8.Text = "Yb3";
+            // 
+            // numYb3
+            // 
+            this.numYb3.DecimalPlaces = 1;
+            this.numYb3.Location = new System.Drawing.Point(454, 45);
+            this.numYb3.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+            this.numYb3.Name = "numYb3";
+            this.numYb3.Size = new System.Drawing.Size(88, 20);
+            this.numYb3.TabIndex = 6;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(559, 45);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(26, 13);
+            this.label9.TabIndex = 9;
+            this.label9.Text = "Yb5";
+            // 
+            // numYb5
+            // 
+            this.numYb5.DecimalPlaces = 1;
+            this.numYb5.Location = new System.Drawing.Point(591, 44);
+            this.numYb5.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+            this.numYb5.Name = "numYb5";
+            this.numYb5.Size = new System.Drawing.Size(88, 20);
+            this.numYb5.TabIndex = 8;
             // 
             // BSFiberMain
             // 
@@ -419,6 +631,17 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBeton)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numRfbt3n)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numRfbn)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numYft)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numYb1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numYb2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numYb3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numYb5)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -436,7 +659,6 @@
         private System.Windows.Forms.TextBox tbLength;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupVar;
-        private System.Windows.Forms.PictureBox picBeton;
         private System.Windows.Forms.ComboBox tbCoefLength;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DataGridView dataGridView1;
@@ -459,6 +681,23 @@
         private System.Windows.Forms.ComboBox cmbBetonClass;
         private System.Windows.Forms.Label lblBetonClass;
         private System.Windows.Forms.Label lblBetonType;
+        private System.Windows.Forms.PictureBox picBeton;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.NumericUpDown numRfbn;
+        private System.Windows.Forms.NumericUpDown numRfbt3n;
+        private System.Windows.Forms.NumericUpDown numYb1;
+        private System.Windows.Forms.NumericUpDown numYft;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.NumericUpDown numYb5;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.NumericUpDown numYb3;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.NumericUpDown numYb2;
     }
 }
 

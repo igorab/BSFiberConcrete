@@ -15,12 +15,14 @@ namespace BSFiberConcrete
 {
     public partial class BSFiberMain : Form
     {
-        private DataTable m_Table;
+        private DataTable m_Table { get; set; }
+
+        public Dictionary<string, double> m_Beam { get; private set; }
         private Dictionary<string, double> m_Coeffs;
         private Dictionary<string, double> m_PhysParams;
         private Dictionary<string, double> m_GeomParams;
         private Dictionary<string, double> m_CalcResults;
-        BeamSection m_BeamSection;
+        private BeamSection m_BeamSection;
 
         public BSFiberMain()
         {
@@ -29,6 +31,7 @@ namespace BSFiberConcrete
 
         private void BSFiberMain_Load(object sender, EventArgs e)
         {
+            m_Beam = new Dictionary<string, double>();
             m_Table = new DataTable();
             m_BeamSection = BeamSection.Ring;
 
@@ -36,7 +39,18 @@ namespace BSFiberConcrete
             cmbBetonClass.DisplayMember = "Name";
             cmbBetonClass.ValueMember = "Id";
 
+            numRfbt3n.Value = (decimal)BSFiberCocreteLib.PhysElements.Rfbt3n;
+            numRfbn.Value = (decimal)BSFiberCocreteLib.PhysElements.Rfbn;
+
+            numYft.Value =  (decimal)BSFiberCocreteLib.PhysElements.Yft;
+            numYb1.Value = (decimal)BSFiberCocreteLib.PhysElements.Yb1;
+            numYb2.Value = (decimal)BSFiberCocreteLib.PhysElements.Yb2;
+            numYb3.Value = (decimal)BSFiberCocreteLib.PhysElements.Yb3;
+            numYb5.Value = (decimal)BSFiberCocreteLib.PhysElements.Yb5;
+
+
             //cmbBetonClass.SelectedIndexChanged += cmbBetonClass_SelectedIndexChanged;
+
 
         }
 
@@ -56,6 +70,7 @@ namespace BSFiberConcrete
 
                 bsCalc.GetParams(prms);
                 
+                m_Beam.Clear();
                 m_PhysParams = bsCalc.PhysParams;
                 m_Coeffs = bsCalc.Coeffs;
                 m_GeomParams = bsCalc.GeomParams();
@@ -72,9 +87,21 @@ namespace BSFiberConcrete
                     }
                 }
                 bsCalc.GetSize(sz);
+
+                double.TryParse(tbLength.Text, out double lgth);
+                m_Beam.Add("Длина элемента",  lgth);
+                double.TryParse(tbCoefLength.Text, out double coeflgth);
+                m_Beam.Add("Коэффициет расчетной длины", coeflgth);
+
                 bsCalc.Calculate();
 
                 m_CalcResults = bsCalc.Results();
+
+                if (m_CalcResults.TryGetValue("Rfbt3", out double _rfbt3))
+                {
+                    lblRes0.Text = "Rfbt3";
+                    tbResultW.Text = _rfbt3.ToString();
+                }
 
                 if (m_CalcResults.TryGetValue("Wpl", out double _wpl))
                 {
@@ -94,91 +121,25 @@ namespace BSFiberConcrete
                     tbResult.Text = _mult.ToString();
                 }
             }
-            catch
+            catch (Exception _e)
             {
-                MessageBox.Show("Ошибка в расчете");
+                MessageBox.Show("Ошибка в расчете: " + _e.Message);
             }
         }
 
         private string CreateReport()
         {
-            string pathToHtmlFile = "";
-            
-            using (FileStream fs = new FileStream("test.htm", FileMode.Create))
-            {
-                using (StreamWriter w = new StreamWriter(fs, Encoding.UTF8))
-                {
-                    w.WriteLine("<html>");
-                    w.WriteLine("<H1>Фибробетон</H1>");
-                    
-                    if (m_PhysParams != null)
-                    {
-                        w.WriteLine("<Table>");
-                        w.WriteLine("<caption>Физические характеристики</caption>");
-                        foreach (var _prm in m_PhysParams.Keys)
-                            w.WriteLine($"<th>{_prm}</th>");
-                        w.WriteLine("<tr>");
-                        foreach (var _val in m_PhysParams.Values)
-                            w.WriteLine($"<td>{_val}</td>");
-                        w.WriteLine("</tr>");
-                        w.WriteLine("</Table>");
-                    }
-                    
-                    if (m_Coeffs != null)
-                    {
-                        w.WriteLine("<Table>");
-                        w.WriteLine("<caption>Коэффициенты</caption>");
-                        foreach (var _prm in m_Coeffs.Keys)
-                            w.WriteLine($"<th>{_prm}</th>");
-                        w.WriteLine("<tr>");
-                        foreach (var _val in m_Coeffs.Values)
-                            w.WriteLine($"<td>{_val}</td>");
-                        w.WriteLine("</tr>");
-                        w.WriteLine("</Table>");
-                    }
+            string path = "";
+            BSFiberReport report = new BSFiberReport();
 
-                    w.WriteLine($"<H2>Балка {m_BeamSection}</H2>");
-                    if (m_GeomParams != null)
-                    {
-                        w.WriteLine("<Table>");
-                        w.WriteLine("<caption>Геометрия</caption>");
-                        foreach (var _prm in m_GeomParams.Keys)                        
-                            w.WriteLine($"<th>{_prm}</th>");
-                        w.WriteLine("<tr>");
-                        foreach (var _val in m_GeomParams.Values)                        
-                            w.WriteLine($"<td>{_val}</td>");
-                        w.WriteLine("</tr>");
-                        w.WriteLine("</Table>");
-                    }
-                    w.WriteLine("<H3>Расчет:</H3>");                    
-                    if (m_CalcResults != null) 
-                    {
-                        w.WriteLine("<Table>");
-                        w.WriteLine("<tr>");
-                        foreach (var _prm in m_CalcResults.Keys)
-                        {
-                            w.WriteLine($"<th>{_prm}</th>");
-                        }
-                        w.WriteLine("</tr>");
-                        w.WriteLine("<tr>");
-                        foreach (var _val in m_CalcResults.Values)
-                        {
-                            w.WriteLine($"<td>{_val}</td>");
-                        }
-                        w.WriteLine("</tr>");
-                        w.WriteLine("</Table>");
-                    }
-                    else
-                    {
-                        w.WriteLine("<th>Расчет не выполнен</th>");
-                    }
-                    w.WriteLine("</html>");
-                }
+            report.m_Beam = m_Beam;
+            report.m_Coeffs = m_Coeffs;
+            report.m_GeomParams = m_GeomParams;
+            report.m_PhysParams = m_PhysParams;
+            report.m_BeamSection = m_BeamSection;
 
-                pathToHtmlFile = fs.Name;
-            }
-
-            return pathToHtmlFile;
+            path = report.CreateReport();
+            return path;
         }
 
 
@@ -195,22 +156,7 @@ namespace BSFiberConcrete
                 MessageBox.Show("Ошибка в отчете");
             }
         }
-
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void propertyGrid1_Click(object sender, EventArgs e)
-        {
-
-        }
-
+               
         // прямоугольное сечение
         private void btnRectang_Click(object sender, EventArgs e)
         {
@@ -224,6 +170,7 @@ namespace BSFiberConcrete
             m_Table.Rows.Add(80d, 60d);
 
             picBeton.Image = global::BSFiberConcrete.Properties.Resources.FiberBeton;
+            picBeton.SizeMode = PictureBoxSizeMode.StretchImage;
         }
 
         // тавровое сечение
@@ -239,6 +186,9 @@ namespace BSFiberConcrete
 
             dataGridView1.DataSource = m_Table;
             m_Table.Rows.Add(80d, 20d, 20d, 20d);
+
+            picBeton.Image = global::BSFiberConcrete.Properties.Resources.IBeam;
+            picBeton.SizeMode = PictureBoxSizeMode.StretchImage;
         }
 
         // кольцевое сечение
@@ -291,6 +241,8 @@ namespace BSFiberConcrete
         {
             BSFiberSetup setupWindow = new BSFiberSetup();
             setupWindow.Show();
+
+            //setupWindow.Records;
         }
 
         private void label3_Click(object sender, EventArgs e)
@@ -315,6 +267,11 @@ namespace BSFiberConcrete
                 MessageBox.Show(id.ToString() + ". " + beton.Name);
             }
             catch { }
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -55,7 +55,7 @@ namespace BSFiberConcrete
             base.GetParams(_t);
 
             (bf, hf, hw, bw, b1f, h1f) = (80, 20, 20, 20, 80, 20);
-            //(Yft, Yb1, Yb2, Yb3, Yb5, Rfbt3n) = (1.3, 0.9, 0.9, 1, 1, 30.58);
+            
             (Rfbn, Yb) = (224, 1.3);
         }
 
@@ -72,6 +72,10 @@ namespace BSFiberConcrete
             return geom;
         }
 
+        public override void GetSize(double[] _t)
+        {
+            (bf, hf, hw, bw, b1f, h1f) = (_t[0], _t[1], _t[2], _t[3], _t[4], _t[5]);
+        }
 
         public override void Calculate()
         {
@@ -145,6 +149,11 @@ namespace BSFiberConcrete
             return geom;
         }
 
+        public override void GetSize(double[] _t)
+        {
+            (r1, r2) = (_t[0], _t[1]);
+        }
+
         public override Dictionary<string, double> Results()
         {
             return new Dictionary<string, double>() { { "Rfb", Rfb }, { "Rfbt3", Rfbt3 }, { "Mult", Mult } };
@@ -158,6 +167,10 @@ namespace BSFiberConcrete
 
             //толщина стенки кольца см
             double tr = r2 - r1;
+
+            if (tr < 0)
+                throw new Exception("r2-r1 < 0");
+
 
             //радиус срединной поверхности стенки кольцевого элемента, определяемый по ф. (6.19)
             double rm = (r1 + r2) / 2;

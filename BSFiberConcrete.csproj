@@ -88,6 +88,7 @@
       <DependentUpon>BSFiberMain.cs</DependentUpon>
     </Compile>
     <Compile Include="BSFiberConcrete.cs" />
+    <Compile Include="BSFiberReport.cs" />
     <Compile Include="BSFiberSetup.cs">
       <SubType>Form</SubType>
     </Compile>

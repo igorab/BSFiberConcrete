@@ -6,17 +6,7 @@ using Microsoft.VisualBasic.FileIO;
 
 
 namespace BSFiberConcrete
-{
-    public class Elements
-    {
-        public double Rfbtn { get; set; }
-        public double Yft { get; set; }
-        public double Yb1 { get; set; }
-        public double Ybs { get; set; }
-        public int B { get; set; }
-    }
-
-
+{    
     internal class BSFiberLoadData
     {
         public static string FiberConcretePath { get { return Path.Combine(Environment.CurrentDirectory, "Templates\\FiberConcrete.csv"); } }
