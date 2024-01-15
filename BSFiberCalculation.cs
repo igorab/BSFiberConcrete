@@ -39,23 +39,31 @@ namespace BSFiberConcrete
     [BSFiberCalculationAttribute(Descr = "Расчет балки двутаврового сечения")]
     public class BSFibCalc_IBeam : BSFiberCalculation
     {
-        //private double Rfbt3;
-        private double Rfb;
+        [DisplayName("Ширина нижней полки двутавра")]
+        public double bf { get; set;}
+        [DisplayName("Высота нижней полки двутавра")]
+        private double hf { get; set; }
+        [DisplayName("Высота стенки двутавра")]
+        private double hw { get; set; }
+        [DisplayName("Ширина стенки двутавра")]
+        private double bw { get; set; }
+        [DisplayName("Ширина верхней полки двутавра")]
+        private double b1f { get; set; }
+        [DisplayName("Высота верхней полки двутавра")]
+        private double h1f { get; set; }
+
         [BSFiberCalculation(Name = "высота сжатой зоны")]
         private double x;
+
         private double Mult;
         
-
         private double Rfbn, Yb;
 
-        private double bf, hf, hw, bw, b1f, h1f;
-
+       
         public override void GetParams(double[] _t)
         {
             base.GetParams(_t);
-
-            (bf, hf, hw, bw, b1f, h1f) = (80, 20, 20, 20, 80, 20);
-            
+                        
             (Rfbn, Yb) = (224, 1.3);
         }
 
@@ -85,7 +93,7 @@ namespace BSFiberConcrete
                         
             Rfbt3 = (Rfbt3n / Yft) * Yb1 * Yb5;
                         
-            Rfb = Rfbn / Yb * Yb1*Yb2*Yb3*Yb5;
+            double Rfb = Rfbn / Yb * Yb1*Yb2*Yb3*Yb5;
 
             Action calc_a = delegate
             {

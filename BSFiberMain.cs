@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,8 @@ namespace BSFiberConcrete
     public partial class BSFiberMain : Form
     {
         private DataTable m_Table { get; set; }
+
+        private BSFiberCalculation bsCalc;
 
         public Dictionary<string, double> m_Beam { get; private set; }
         private Dictionary<string, double> m_Coeffs;
@@ -63,7 +66,7 @@ namespace BSFiberConcrete
         {
             try
             {
-                BSFiberCalculation bsCalc = BSFiberCalculation.construct(m_BeamSection);
+                bsCalc = BSFiberCalculation.construct(m_BeamSection);
                 BSFiberLoadData bsLoad = new BSFiberLoadData();
                 bsLoad.Load();
                 double[] prms = bsLoad.Params;
@@ -94,7 +97,7 @@ namespace BSFiberConcrete
                 m_Beam.Add("Коэффициет расчетной длины", coeflgth);
 
                 bsCalc.Calculate();
-
+                
                 m_CalcResults = bsCalc.Results();
 
                 if (m_CalcResults.TryGetValue("Rfbt3", out double _rfbt3))
@@ -137,6 +140,15 @@ namespace BSFiberConcrete
             report.m_GeomParams = m_GeomParams;
             report.m_PhysParams = m_PhysParams;
             report.m_BeamSection = m_BeamSection;
+            report.m_CalcResults = m_CalcResults;
+
+            var publicProperties = typeof(BSFibCalc_IBeam).GetProperties();
+            foreach (PropertyInfo property in publicProperties)
+            {
+                var attr = property.GetCustomAttributes();
+
+                string s = property.Name;
+            }
 
             path = report.CreateReport();
             return path;

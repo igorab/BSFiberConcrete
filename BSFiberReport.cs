@@ -30,14 +30,13 @@ namespace BSFiberConcrete
                     w.WriteLine("<H4>Расчет выполнен по СП 360.1325800.2017</H4>");
 
 
-                    if (m_PhysParams != null)
+                    if (m_Beam != null)
                     {
-                        w.WriteLine("<Table border=1 bordercolor = darkblue>");
-                        w.WriteLine("<caption>Физические характеристики</caption>");
-                        foreach (var _prm in m_PhysParams.Keys)
+                        w.WriteLine("<Table border=1 bordercolor = darkblue>");                        
+                        foreach (var _prm in m_Beam.Keys)
                             w.WriteLine($"<th>{_prm}</th>");
                         w.WriteLine("<tr>");
-                        foreach (var _val in m_PhysParams.Values)
+                        foreach (var _val in m_Beam.Values)
                             w.WriteLine($"<td>{_val}</td>");
                         w.WriteLine("</tr>");
                         w.WriteLine("</Table>");
