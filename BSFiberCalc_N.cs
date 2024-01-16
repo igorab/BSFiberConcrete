@@ -46,10 +46,52 @@ namespace BSFiberConcrete
         [DisplayName("коэффициент ф.")]
         public double k_b { get; private set; }
 
+        double Yft, Yb1, Yb2, Yb3, Yb5;
+        double Rfbn, Yb;
+        double fi = 0.9;
+        double Ef, //для фибры из тонкой низкоуглеродистой проволоки МП п.п  кг/см2 
+               Eb; //Начальный модуль упругости бетона-матрицы B30 СП63
+        //коэффициент фибрового армирования по объему
+        double mu_fv;
+        //Модуль упругости сталефибробетона п.п. (5.2.7)
+        double Efb;
+        // жесткость элемента в предельной по прочности стадии,определяемая по формуле (6.25)
+        double D;
+        //условная критическая сила, определяемая по формуле (6.24)
+        double Ncr;
+        //коэффициент, учитывающий влияние продольного изгиба (прогиба) элемента на его несущую способность и определяемый по формуле(6.23)
+        double eta;
+        //площадь сжатой зоны бетона ф. (6.22)
+        double Ab;
 
         public void Calculate()
         {
-            //throw new NotImplementedException(); 
+            M1 = 1;
+            Ml1 = 1;
+            fi1 = 1 + Ml1 / M1;
+            delta_e = e0 / h;
+
+            if (delta_e <= 0.15) 
+                { delta_e = 0.15; }
+            else if (delta_e >= 1.5) 
+                { delta_e = 1.5; }
+
+            k_b = 0.15 / (fi1 * (0.3d + delta_e));
+                       
+            Efb = Eb * (1 - mu_fv) + Ef * mu_fv;
+
+            D = k_b * Efb * I;
+
+            Ncr = Math.PI * Math.PI * D / Math.Pow(l0, 2);
+
+            eta = 1 / (1 - N / Ncr);
+
+            Ab = b * h * (1 - 2 * e0 * eta / h);
+
+            double Rfb = Rfbn / Yb * Yb1 * Yb2 * Yb3 * Yb5;
+
+            double Nult = fi * Rfb * A;
+
         }
 
         public Dictionary<string, double> GeomParams()
@@ -59,7 +101,12 @@ namespace BSFiberConcrete
 
         public void GetParams(double[] _t)
         {
-            throw new NotImplementedException();
+            A = b * h;
+            e0 = 2;
+            I = b * h*h*h/12;
+            Ef = 1936799;
+            Eb = 331294;
+            mu_fv = 0.005;
         }
 
         public void GetSize(double[] _t)
