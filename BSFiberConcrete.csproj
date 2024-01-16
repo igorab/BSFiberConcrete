@@ -79,6 +79,9 @@
       <DependentUpon>BSFiberAboutBox.cs</DependentUpon>
     </Compile>
     <Compile Include="BSFiberCalculation.cs" />
+    <Compile Include="BSFiberCalc_M.cs" />
+    <Compile Include="BSFiberCalc_N.cs" />
+    <Compile Include="BSFiberCalc_Q.cs" />
     <Compile Include="BSFiberCocreteLib.cs" />
     <Compile Include="BSFiberLoadData.cs" />
     <Compile Include="BSFiberMain.cs">
@@ -134,6 +137,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Content Include="Resources\EffortsSign.PNG">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\IBeam.PNG">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -151,9 +157,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\FiberBeton.PNG">
+    <Content Include="Resources\FiberBeton.PNG">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

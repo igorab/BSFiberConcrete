@@ -25,6 +25,8 @@ namespace BSFiberConcrete
     {
         void GetParams(double[] _t);
 
+        void GetSize(double[] _t);
+
         Dictionary<string, double> GeomParams();
 
         void Calculate();

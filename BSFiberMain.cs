@@ -10,6 +10,7 @@ using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace BSFiberConcrete
@@ -36,7 +37,8 @@ namespace BSFiberConcrete
         {
             m_Beam = new Dictionary<string, double>();
             m_Table = new DataTable();
-            m_BeamSection = BeamSection.Ring;
+            
+            LoadRectangle();
 
             cmbBetonClass.DataSource = BSFiberCocreteLib.betonList;
             cmbBetonClass.DisplayMember = "Name";
@@ -93,7 +95,7 @@ namespace BSFiberConcrete
 
                 double.TryParse(tbLength.Text, out double lgth);
                 m_Beam.Add("Длина элемента",  lgth);
-                double.TryParse(tbCoefLength.Text, out double coeflgth);
+                double.TryParse(cmbEffectiveLengthFactor.Text, out double coeflgth);
                 m_Beam.Add("Коэффициет расчетной длины", coeflgth);
 
                 bsCalc.Calculate();
@@ -168,9 +170,9 @@ namespace BSFiberConcrete
                 MessageBox.Show("Ошибка в отчете");
             }
         }
-               
-        // прямоугольное сечение
-        private void btnRectang_Click(object sender, EventArgs e)
+            
+        
+        private void LoadRectangle()
         {
             m_BeamSection = BeamSection.Rect;
 
@@ -183,6 +185,12 @@ namespace BSFiberConcrete
 
             picBeton.Image = global::BSFiberConcrete.Properties.Resources.FiberBeton;
             picBeton.SizeMode = PictureBoxSizeMode.StretchImage;
+        }
+
+        // прямоугольное сечение
+        private void btnRectang_Click(object sender, EventArgs e)
+        {
+            LoadRectangle();
         }
 
         // тавровое сечение
@@ -284,6 +292,46 @@ namespace BSFiberConcrete
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void lblRes0_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox3_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tbLength_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!double.TryParse(tbLength.Text + e.KeyChar.ToString(), out double a) && e.KeyChar != 8)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void btnCalcM_Click(object sender, EventArgs e)
+        {
+            BSFiberCalc_M fiberCalc = new BSFiberCalc_M();
+            fiberCalc.Calculate();
+        }
+
+        private void btnCalcQ_Click(object sender, EventArgs e)
+        {
+            BSFiberCalc_Q  fiberCalc = new BSFiberCalc_Q();
+            fiberCalc.Calculate();
+        }
+
+        private void btnCalcN_Click(object sender, EventArgs e)
+        {
+            var value = gridEfforts.Rows[0].Cells[1].Value;
+
+                                  
+
+            BSFiberCalc_N fiberCalc = new BSFiberCalc_N();
+            fiberCalc.Calculate();
         }
     }
 }
