@@ -228,8 +228,8 @@ namespace BSFiberConcrete
         {
             base.GetParams(_t);
 
-            b = 60;
-            h = 80;
+            //b = 60;
+            //h = 80;
             (Rfbt3n, Yft, Yb1, Yb5, B) = (_t[0], _t[1], _t[2], _t[3], _t[4]);             
         }
 

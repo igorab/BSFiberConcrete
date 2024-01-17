@@ -20,7 +20,7 @@ namespace BSFiberConcrete
         private DataTable m_Table { get; set; }
 
         private BSFiberCalculation bsCalc;
-
+        private BSFiberLoadData m_BSLoadData;
         public Dictionary<string, double> m_Beam { get; private set; }
         private Dictionary<string, double> m_Coeffs;
         private Dictionary<string, double> m_PhysParams;
@@ -37,7 +37,10 @@ namespace BSFiberConcrete
         {
             m_Beam = new Dictionary<string, double>();
             m_Table = new DataTable();
-            
+
+            m_BSLoadData = new BSFiberLoadData();
+            m_BSLoadData.Load();
+
             LoadRectangle();
 
             cmbBetonClass.DataSource = BSFiberCocreteLib.betonList;
@@ -59,19 +62,32 @@ namespace BSFiberConcrete
 
         }
 
-        private void tabPage1_Click(object sender, EventArgs e)
+        private double[] BeamSizes(double _length = 0)
         {
+            double[] sz = new double[2];
+            foreach (DataRow r in m_Table.Rows)
+            {
+                sz = new double[r.ItemArray.Length + 1];
+                int idx = 0;
+                foreach (var item in r.ItemArray)
+                {
+                    sz[idx] = (double)item;
+                    idx++;
+                }
+                sz[idx] = _length;
+            }
 
+            return sz;
         }
 
+        
         private void btnCalc_Click(object sender, EventArgs e)
         {
             try
             {
                 bsCalc = BSFiberCalculation.construct(m_BeamSection);
-                BSFiberLoadData bsLoad = new BSFiberLoadData();
-                bsLoad.Load();
-                double[] prms = bsLoad.Params;
+                
+                double[] prms = m_BSLoadData.Params;
 
                 bsCalc.GetParams(prms);
                 
@@ -79,19 +95,8 @@ namespace BSFiberConcrete
                 m_PhysParams = bsCalc.PhysParams;
                 m_Coeffs = bsCalc.Coeffs;
                 m_GeomParams = bsCalc.GeomParams();
-               
-                double[] sz = new double[2];
-                foreach (DataRow r in m_Table.Rows)
-                {
-                    sz = new double[r.ItemArray.Length];
-                    int idx = 0;
-                    foreach (var item in r.ItemArray)
-                    {
-                        sz[idx] = (double)item;
-                        idx++;
-                    }
-                }
-                bsCalc.GetSize(sz);
+                               
+                bsCalc.GetSize(BeamSizes());
 
                 double.TryParse(tbLength.Text, out double lgth);
                 m_Beam.Add("Длина элемента",  lgth);
@@ -137,12 +142,12 @@ namespace BSFiberConcrete
             string path = "";
             BSFiberReport report = new BSFiberReport();
 
-            report.m_Beam = m_Beam;
-            report.m_Coeffs = m_Coeffs;
-            report.m_GeomParams = m_GeomParams;
-            report.m_PhysParams = m_PhysParams;
-            report.m_BeamSection = m_BeamSection;
-            report.m_CalcResults = m_CalcResults;
+            report.Beam = m_Beam;
+            report.Coeffs = m_Coeffs;
+            report.GeomParams = m_GeomParams;
+            report.PhysParams = m_PhysParams;
+            report.BeamSection = m_BeamSection;
+            report.CalcResults = m_CalcResults;
 
             var publicProperties = typeof(BSFibCalc_IBeam).GetProperties();
             foreach (PropertyInfo property in publicProperties)
@@ -327,11 +332,33 @@ namespace BSFiberConcrete
         private void btnCalcN_Click(object sender, EventArgs e)
         {
             var value = gridEfforts.Rows[0].Cells[1].Value;
-
-                                  
-
+            
             BSFiberCalc_N fiberCalc = new BSFiberCalc_N();
-            fiberCalc.Calculate();
+            try
+            {
+                fiberCalc.GetParams(m_BSLoadData.Params);
+
+                double beamLngth = double.Parse(tbLength.Text);
+
+                double[] sz = BeamSizes(beamLngth);
+
+                fiberCalc.GetSize(sz);
+                fiberCalc.Calculate();
+
+                m_CalcResults = fiberCalc.Results();
+            }
+            catch (Exception ex)
+            {
+            }
+            finally
+            {
+                BSFiberReport_N report = new BSFiberReport_N();
+                report.Init(fiberCalc);
+                report.CalcResults = m_CalcResults;
+                string pathToHtmlFile = report.CreateReport();
+
+                System.Diagnostics.Process.Start(pathToHtmlFile);
+            }
         }
     }
 }

@@ -29,24 +29,57 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabGeneral = new System.Windows.Forms.TabControl();
             this.tabParams = new System.Windows.Forms.TabPage();
+            this.groupBoxResult = new System.Windows.Forms.GroupBox();
+            this.lblRes0 = new System.Windows.Forms.Label();
+            this.tbResult = new System.Windows.Forms.TextBox();
+            this.tbResultW = new System.Windows.Forms.TextBox();
+            this.lblResult = new System.Windows.Forms.Label();
             this.groupVar = new System.Windows.Forms.GroupBox();
-            this.groupBeam = new System.Windows.Forms.GroupBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.groupBeam = new System.Windows.Forms.GroupBox();
+            this.labelExtremeFlexibility = new System.Windows.Forms.Label();
+            this.cmbExtremeFlexibility = new System.Windows.Forms.ComboBox();
+            this.labelRandomEccentricity = new System.Windows.Forms.Label();
+            this.numRandomEccentricity = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.cmbEffectiveLengthFactor = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tbLength = new System.Windows.Forms.TextBox();
             this.tabConcrete = new System.Windows.Forms.TabPage();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.numRfbn = new System.Windows.Forms.NumericUpDown();
+            this.numRfbt3n = new System.Windows.Forms.NumericUpDown();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.numYb5 = new System.Windows.Forms.NumericUpDown();
+            this.label8 = new System.Windows.Forms.Label();
+            this.numYb3 = new System.Windows.Forms.NumericUpDown();
+            this.label7 = new System.Windows.Forms.Label();
+            this.numYb2 = new System.Windows.Forms.NumericUpDown();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.numYb1 = new System.Windows.Forms.NumericUpDown();
+            this.numYft = new System.Windows.Forms.NumericUpDown();
             this.cmbBetonClass = new System.Windows.Forms.ComboBox();
             this.lblBetonClass = new System.Windows.Forms.Label();
             this.lblBetonType = new System.Windows.Forms.Label();
             this.comboBetonType = new System.Windows.Forms.ComboBox();
+            this.picBeton = new System.Windows.Forms.PictureBox();
             this.tabStrength = new System.Windows.Forms.TabPage();
+            this.gridEfforts = new System.Windows.Forms.DataGridView();
+            this.M = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.N = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Q = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.labelEffortSigns = new System.Windows.Forms.Label();
+            this.picEffortsSign = new System.Windows.Forms.PictureBox();
             this.btnCalc = new System.Windows.Forms.Button();
             this.btnReport = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
@@ -60,67 +93,34 @@
             this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.tbResult = new System.Windows.Forms.TextBox();
-            this.tbResultW = new System.Windows.Forms.TextBox();
-            this.lblResult = new System.Windows.Forms.Label();
-            this.lblRes0 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.numRfbt3n = new System.Windows.Forms.NumericUpDown();
-            this.numRfbn = new System.Windows.Forms.NumericUpDown();
-            this.numYft = new System.Windows.Forms.NumericUpDown();
-            this.numYb1 = new System.Windows.Forms.NumericUpDown();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.numYb2 = new System.Windows.Forms.NumericUpDown();
-            this.label8 = new System.Windows.Forms.Label();
-            this.numYb3 = new System.Windows.Forms.NumericUpDown();
-            this.label9 = new System.Windows.Forms.Label();
-            this.numYb5 = new System.Windows.Forms.NumericUpDown();
             this.panelCalc = new System.Windows.Forms.Panel();
-            this.labelCalculation = new System.Windows.Forms.Label();
-            this.btnCalcM = new System.Windows.Forms.Button();
-            this.btnCalcQ = new System.Windows.Forms.Button();
-            this.groupBoxResult = new System.Windows.Forms.GroupBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.numRandomEccentricity = new System.Windows.Forms.NumericUpDown();
-            this.labelRandomEccentricity = new System.Windows.Forms.Label();
-            this.cmbExtremeFlexibility = new System.Windows.Forms.ComboBox();
-            this.labelExtremeFlexibility = new System.Windows.Forms.Label();
             this.btnCalcN = new System.Windows.Forms.Button();
-            this.picBeton = new System.Windows.Forms.PictureBox();
-            this.picEffortsSign = new System.Windows.Forms.PictureBox();
-            this.labelEffortSigns = new System.Windows.Forms.Label();
-            this.gridEfforts = new System.Windows.Forms.DataGridView();
-            this.M = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.N = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Q = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnCalcQ = new System.Windows.Forms.Button();
+            this.btnCalcM = new System.Windows.Forms.Button();
+            this.labelCalculation = new System.Windows.Forms.Label();
             this.tabGeneral.SuspendLayout();
             this.tabParams.SuspendLayout();
+            this.groupBoxResult.SuspendLayout();
             this.groupVar.SuspendLayout();
             this.groupBeam.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numRandomEccentricity)).BeginInit();
             this.tabConcrete.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numRfbn)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numRfbt3n)).BeginInit();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numYb5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numYb3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numYb2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numYb1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numYft)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picBeton)).BeginInit();
             this.tabStrength.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridEfforts)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picEffortsSign)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numRfbt3n)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numRfbn)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numYft)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numYb1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numYb2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numYb3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numYb5)).BeginInit();
             this.panelCalc.SuspendLayout();
-            this.groupBoxResult.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numRandomEccentricity)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picBeton)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picEffortsSign)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridEfforts)).BeginInit();
             this.SuspendLayout();
             // 
             // tabGeneral
@@ -146,7 +146,54 @@
             this.tabParams.TabIndex = 0;
             this.tabParams.Text = "Параметры";
             this.tabParams.UseVisualStyleBackColor = true;
-            this.tabParams.Click += new System.EventHandler(this.tabPage1_Click);
+            // 
+            // groupBoxResult
+            // 
+            this.groupBoxResult.Controls.Add(this.lblRes0);
+            this.groupBoxResult.Controls.Add(this.tbResult);
+            this.groupBoxResult.Controls.Add(this.tbResultW);
+            this.groupBoxResult.Controls.Add(this.lblResult);
+            this.groupBoxResult.Location = new System.Drawing.Point(738, 31);
+            this.groupBoxResult.Name = "groupBoxResult";
+            this.groupBoxResult.Size = new System.Drawing.Size(223, 222);
+            this.groupBoxResult.TabIndex = 2;
+            this.groupBoxResult.TabStop = false;
+            this.groupBoxResult.Text = "Результаты расчета";
+            this.groupBoxResult.Enter += new System.EventHandler(this.groupBox3_Enter);
+            // 
+            // lblRes0
+            // 
+            this.lblRes0.AutoSize = true;
+            this.lblRes0.Location = new System.Drawing.Point(37, 41);
+            this.lblRes0.Name = "lblRes0";
+            this.lblRes0.Size = new System.Drawing.Size(27, 13);
+            this.lblRes0.TabIndex = 13;
+            this.lblRes0.Text = "res0";
+            this.lblRes0.Click += new System.EventHandler(this.lblRes0_Click);
+            // 
+            // tbResult
+            // 
+            this.tbResult.Location = new System.Drawing.Point(37, 96);
+            this.tbResult.Name = "tbResult";
+            this.tbResult.Size = new System.Drawing.Size(145, 20);
+            this.tbResult.TabIndex = 10;
+            // 
+            // tbResultW
+            // 
+            this.tbResultW.Location = new System.Drawing.Point(37, 57);
+            this.tbResultW.Name = "tbResultW";
+            this.tbResultW.Size = new System.Drawing.Size(145, 20);
+            this.tbResultW.TabIndex = 11;
+            // 
+            // lblResult
+            // 
+            this.lblResult.Location = new System.Drawing.Point(37, 80);
+            this.lblResult.MinimumSize = new System.Drawing.Size(50, 0);
+            this.lblResult.Name = "lblResult";
+            this.lblResult.Size = new System.Drawing.Size(148, 13);
+            this.lblResult.TabIndex = 12;
+            this.lblResult.Text = "res               ";
+            this.lblResult.Click += new System.EventHandler(this.label3_Click);
             // 
             // groupVar
             // 
@@ -158,6 +205,26 @@
             this.groupVar.TabIndex = 1;
             this.groupVar.TabStop = false;
             this.groupVar.Text = "Варианты расчета";
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Location = new System.Drawing.Point(15, 75);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(175, 17);
+            this.checkBox2.TabIndex = 1;
+            this.checkBox2.Text = "Расчет по трещиностойкости";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(15, 37);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(95, 17);
+            this.checkBox1.TabIndex = 0;
+            this.checkBox1.Text = "Армирование";
+            this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // groupBeam
             // 
@@ -176,15 +243,47 @@
             this.groupBeam.TabStop = false;
             this.groupBeam.Text = "Балка";
             // 
-            // checkBox1
+            // labelExtremeFlexibility
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(15, 37);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(95, 17);
-            this.checkBox1.TabIndex = 0;
-            this.checkBox1.Text = "Армирование";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.labelExtremeFlexibility.AutoSize = true;
+            this.labelExtremeFlexibility.Location = new System.Drawing.Point(9, 173);
+            this.labelExtremeFlexibility.Name = "labelExtremeFlexibility";
+            this.labelExtremeFlexibility.Size = new System.Drawing.Size(118, 13);
+            this.labelExtremeFlexibility.TabIndex = 7;
+            this.labelExtremeFlexibility.Text = "Предельная гибкость";
+            // 
+            // cmbExtremeFlexibility
+            // 
+            this.cmbExtremeFlexibility.Items.AddRange(new object[] {
+            "бетонные элементы",
+            "железобетонные элементы",
+            "колонны, являющиеся элементами зданий"});
+            this.cmbExtremeFlexibility.Location = new System.Drawing.Point(179, 173);
+            this.cmbExtremeFlexibility.Name = "cmbExtremeFlexibility";
+            this.cmbExtremeFlexibility.Size = new System.Drawing.Size(121, 21);
+            this.cmbExtremeFlexibility.TabIndex = 6;
+            // 
+            // labelRandomEccentricity
+            // 
+            this.labelRandomEccentricity.AutoSize = true;
+            this.labelRandomEccentricity.Location = new System.Drawing.Point(9, 133);
+            this.labelRandomEccentricity.Name = "labelRandomEccentricity";
+            this.labelRandomEccentricity.Size = new System.Drawing.Size(146, 13);
+            this.labelRandomEccentricity.TabIndex = 5;
+            this.labelRandomEccentricity.Text = "Случайный эксцентриситет";
+            // 
+            // numRandomEccentricity
+            // 
+            this.numRandomEccentricity.DecimalPlaces = 2;
+            this.numRandomEccentricity.Location = new System.Drawing.Point(179, 127);
+            this.numRandomEccentricity.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+            this.numRandomEccentricity.Name = "numRandomEccentricity";
+            this.numRandomEccentricity.Size = new System.Drawing.Size(120, 20);
+            this.numRandomEccentricity.TabIndex = 4;
             // 
             // label2
             // 
@@ -230,6 +329,7 @@
             this.tbLength.Name = "tbLength";
             this.tbLength.Size = new System.Drawing.Size(119, 20);
             this.tbLength.TabIndex = 0;
+            this.tbLength.Text = "1";
             this.tbLength.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbLength_KeyPress);
             // 
             // tabConcrete
@@ -248,6 +348,192 @@
             this.tabConcrete.TabIndex = 1;
             this.tabConcrete.Text = "Фибробетон";
             this.tabConcrete.UseVisualStyleBackColor = true;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.label4);
+            this.groupBox2.Controls.Add(this.label3);
+            this.groupBox2.Controls.Add(this.numRfbn);
+            this.groupBox2.Controls.Add(this.numRfbt3n);
+            this.groupBox2.Location = new System.Drawing.Point(9, 53);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(726, 80);
+            this.groupBox2.TabIndex = 6;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Характеристики";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(19, 33);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(39, 13);
+            this.label4.TabIndex = 3;
+            this.label4.Text = "Rfbt3n";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(185, 33);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(30, 13);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "Rfbn";
+            // 
+            // numRfbn
+            // 
+            this.numRfbn.DecimalPlaces = 2;
+            this.numRfbn.Location = new System.Drawing.Point(226, 33);
+            this.numRfbn.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+            this.numRfbn.Name = "numRfbn";
+            this.numRfbn.Size = new System.Drawing.Size(120, 20);
+            this.numRfbn.TabIndex = 1;
+            // 
+            // numRfbt3n
+            // 
+            this.numRfbt3n.DecimalPlaces = 2;
+            this.numRfbt3n.Location = new System.Drawing.Point(59, 34);
+            this.numRfbt3n.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+            this.numRfbt3n.Name = "numRfbt3n";
+            this.numRfbt3n.Size = new System.Drawing.Size(120, 20);
+            this.numRfbt3n.TabIndex = 0;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.label9);
+            this.groupBox1.Controls.Add(this.numYb5);
+            this.groupBox1.Controls.Add(this.label8);
+            this.groupBox1.Controls.Add(this.numYb3);
+            this.groupBox1.Controls.Add(this.label7);
+            this.groupBox1.Controls.Add(this.numYb2);
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.numYb1);
+            this.groupBox1.Controls.Add(this.numYft);
+            this.groupBox1.Location = new System.Drawing.Point(10, 150);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(725, 133);
+            this.groupBox1.TabIndex = 5;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Коэффициенты условий работы бетона";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(559, 45);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(26, 13);
+            this.label9.TabIndex = 9;
+            this.label9.Text = "Yb5";
+            // 
+            // numYb5
+            // 
+            this.numYb5.DecimalPlaces = 1;
+            this.numYb5.Location = new System.Drawing.Point(591, 44);
+            this.numYb5.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+            this.numYb5.Name = "numYb5";
+            this.numYb5.Size = new System.Drawing.Size(88, 20);
+            this.numYb5.TabIndex = 8;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(422, 46);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(26, 13);
+            this.label8.TabIndex = 7;
+            this.label8.Text = "Yb3";
+            // 
+            // numYb3
+            // 
+            this.numYb3.DecimalPlaces = 1;
+            this.numYb3.Location = new System.Drawing.Point(454, 45);
+            this.numYb3.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+            this.numYb3.Name = "numYb3";
+            this.numYb3.Size = new System.Drawing.Size(88, 20);
+            this.numYb3.TabIndex = 6;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(276, 47);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(26, 13);
+            this.label7.TabIndex = 5;
+            this.label7.Text = "Yb2";
+            // 
+            // numYb2
+            // 
+            this.numYb2.DecimalPlaces = 1;
+            this.numYb2.Location = new System.Drawing.Point(308, 46);
+            this.numYb2.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+            this.numYb2.Name = "numYb2";
+            this.numYb2.Size = new System.Drawing.Size(88, 20);
+            this.numYb2.TabIndex = 4;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(142, 49);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(26, 13);
+            this.label6.TabIndex = 3;
+            this.label6.Text = "Yb1";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(17, 49);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(20, 13);
+            this.label5.TabIndex = 2;
+            this.label5.Text = "Yft";
+            // 
+            // numYb1
+            // 
+            this.numYb1.DecimalPlaces = 1;
+            this.numYb1.Location = new System.Drawing.Point(174, 48);
+            this.numYb1.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+            this.numYb1.Name = "numYb1";
+            this.numYb1.Size = new System.Drawing.Size(88, 20);
+            this.numYb1.TabIndex = 1;
+            // 
+            // numYft
+            // 
+            this.numYft.DecimalPlaces = 1;
+            this.numYft.Location = new System.Drawing.Point(43, 48);
+            this.numYft.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+            this.numYft.Name = "numYft";
+            this.numYft.Size = new System.Drawing.Size(85, 20);
+            this.numYft.TabIndex = 0;
             // 
             // cmbBetonClass
             // 
@@ -291,6 +577,16 @@
             this.comboBetonType.TabIndex = 1;
             this.comboBetonType.SelectedIndexChanged += new System.EventHandler(this.comboBetonType_SelectedIndexChanged);
             // 
+            // picBeton
+            // 
+            this.picBeton.ErrorImage = null;
+            this.picBeton.Image = global::BSFiberConcrete.Properties.Resources.FiberBeton;
+            this.picBeton.Location = new System.Drawing.Point(757, 43);
+            this.picBeton.Name = "picBeton";
+            this.picBeton.Size = new System.Drawing.Size(335, 228);
+            this.picBeton.TabIndex = 0;
+            this.picBeton.TabStop = false;
+            // 
             // tabStrength
             // 
             this.tabStrength.Controls.Add(this.gridEfforts);
@@ -303,6 +599,61 @@
             this.tabStrength.TabIndex = 2;
             this.tabStrength.Text = "Усилия";
             this.tabStrength.UseVisualStyleBackColor = true;
+            // 
+            // gridEfforts
+            // 
+            this.gridEfforts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridEfforts.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.M,
+            this.N,
+            this.Q});
+            this.gridEfforts.Location = new System.Drawing.Point(285, 33);
+            this.gridEfforts.Name = "gridEfforts";
+            this.gridEfforts.Size = new System.Drawing.Size(697, 150);
+            this.gridEfforts.TabIndex = 2;
+            // 
+            // M
+            // 
+            dataGridViewCellStyle1.Format = "N2";
+            dataGridViewCellStyle1.NullValue = null;
+            this.M.DefaultCellStyle = dataGridViewCellStyle1;
+            this.M.HeaderText = "M";
+            this.M.Name = "M";
+            // 
+            // N
+            // 
+            dataGridViewCellStyle2.Format = "N2";
+            dataGridViewCellStyle2.NullValue = null;
+            this.N.DefaultCellStyle = dataGridViewCellStyle2;
+            this.N.HeaderText = "N";
+            this.N.Name = "N";
+            // 
+            // Q
+            // 
+            dataGridViewCellStyle3.Format = "N2";
+            dataGridViewCellStyle3.NullValue = null;
+            this.Q.DefaultCellStyle = dataGridViewCellStyle3;
+            this.Q.HeaderText = "Q";
+            this.Q.Name = "Q";
+            // 
+            // labelEffortSigns
+            // 
+            this.labelEffortSigns.AutoSize = true;
+            this.labelEffortSigns.Location = new System.Drawing.Point(16, 17);
+            this.labelEffortSigns.Name = "labelEffortSigns";
+            this.labelEffortSigns.Size = new System.Drawing.Size(76, 13);
+            this.labelEffortSigns.TabIndex = 1;
+            this.labelEffortSigns.Text = "Знаки усилий";
+            // 
+            // picEffortsSign
+            // 
+            this.picEffortsSign.Image = global::BSFiberConcrete.Properties.Resources.EffortsSign;
+            this.picEffortsSign.Location = new System.Drawing.Point(19, 33);
+            this.picEffortsSign.Name = "picEffortsSign";
+            this.picEffortsSign.Size = new System.Drawing.Size(179, 154);
+            this.picEffortsSign.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picEffortsSign.TabIndex = 0;
+            this.picEffortsSign.TabStop = false;
             // 
             // btnCalc
             // 
@@ -420,226 +771,6 @@
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
             // 
-            // tbResult
-            // 
-            this.tbResult.Location = new System.Drawing.Point(37, 96);
-            this.tbResult.Name = "tbResult";
-            this.tbResult.Size = new System.Drawing.Size(145, 20);
-            this.tbResult.TabIndex = 10;
-            // 
-            // tbResultW
-            // 
-            this.tbResultW.Location = new System.Drawing.Point(37, 57);
-            this.tbResultW.Name = "tbResultW";
-            this.tbResultW.Size = new System.Drawing.Size(145, 20);
-            this.tbResultW.TabIndex = 11;
-            // 
-            // lblResult
-            // 
-            this.lblResult.Location = new System.Drawing.Point(37, 80);
-            this.lblResult.MinimumSize = new System.Drawing.Size(50, 0);
-            this.lblResult.Name = "lblResult";
-            this.lblResult.Size = new System.Drawing.Size(148, 13);
-            this.lblResult.TabIndex = 12;
-            this.lblResult.Text = "res               ";
-            this.lblResult.Click += new System.EventHandler(this.label3_Click);
-            // 
-            // lblRes0
-            // 
-            this.lblRes0.AutoSize = true;
-            this.lblRes0.Location = new System.Drawing.Point(37, 41);
-            this.lblRes0.Name = "lblRes0";
-            this.lblRes0.Size = new System.Drawing.Size(27, 13);
-            this.lblRes0.TabIndex = 13;
-            this.lblRes0.Text = "res0";
-            this.lblRes0.Click += new System.EventHandler(this.lblRes0_Click);
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.label9);
-            this.groupBox1.Controls.Add(this.numYb5);
-            this.groupBox1.Controls.Add(this.label8);
-            this.groupBox1.Controls.Add(this.numYb3);
-            this.groupBox1.Controls.Add(this.label7);
-            this.groupBox1.Controls.Add(this.numYb2);
-            this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.numYb1);
-            this.groupBox1.Controls.Add(this.numYft);
-            this.groupBox1.Location = new System.Drawing.Point(10, 150);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(725, 133);
-            this.groupBox1.TabIndex = 5;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Коэффициенты условий работы бетона";
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.label4);
-            this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Controls.Add(this.numRfbn);
-            this.groupBox2.Controls.Add(this.numRfbt3n);
-            this.groupBox2.Location = new System.Drawing.Point(9, 53);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(726, 80);
-            this.groupBox2.TabIndex = 6;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Характеристики";
-            // 
-            // numRfbt3n
-            // 
-            this.numRfbt3n.DecimalPlaces = 2;
-            this.numRfbt3n.Location = new System.Drawing.Point(59, 34);
-            this.numRfbt3n.Maximum = new decimal(new int[] {
-            10000000,
-            0,
-            0,
-            0});
-            this.numRfbt3n.Name = "numRfbt3n";
-            this.numRfbt3n.Size = new System.Drawing.Size(120, 20);
-            this.numRfbt3n.TabIndex = 0;
-            // 
-            // numRfbn
-            // 
-            this.numRfbn.DecimalPlaces = 2;
-            this.numRfbn.Location = new System.Drawing.Point(226, 33);
-            this.numRfbn.Maximum = new decimal(new int[] {
-            10000000,
-            0,
-            0,
-            0});
-            this.numRfbn.Name = "numRfbn";
-            this.numRfbn.Size = new System.Drawing.Size(120, 20);
-            this.numRfbn.TabIndex = 1;
-            // 
-            // numYft
-            // 
-            this.numYft.DecimalPlaces = 1;
-            this.numYft.Location = new System.Drawing.Point(43, 48);
-            this.numYft.Maximum = new decimal(new int[] {
-            10000000,
-            0,
-            0,
-            0});
-            this.numYft.Name = "numYft";
-            this.numYft.Size = new System.Drawing.Size(85, 20);
-            this.numYft.TabIndex = 0;
-            // 
-            // numYb1
-            // 
-            this.numYb1.DecimalPlaces = 1;
-            this.numYb1.Location = new System.Drawing.Point(174, 48);
-            this.numYb1.Maximum = new decimal(new int[] {
-            10000000,
-            0,
-            0,
-            0});
-            this.numYb1.Name = "numYb1";
-            this.numYb1.Size = new System.Drawing.Size(88, 20);
-            this.numYb1.TabIndex = 1;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(185, 33);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(30, 13);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Rfbn";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(19, 33);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(39, 13);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "Rfbt3n";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(17, 49);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(20, 13);
-            this.label5.TabIndex = 2;
-            this.label5.Text = "Yft";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(142, 49);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(26, 13);
-            this.label6.TabIndex = 3;
-            this.label6.Text = "Yb1";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(276, 47);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(26, 13);
-            this.label7.TabIndex = 5;
-            this.label7.Text = "Yb2";
-            // 
-            // numYb2
-            // 
-            this.numYb2.DecimalPlaces = 1;
-            this.numYb2.Location = new System.Drawing.Point(308, 46);
-            this.numYb2.Maximum = new decimal(new int[] {
-            10000000,
-            0,
-            0,
-            0});
-            this.numYb2.Name = "numYb2";
-            this.numYb2.Size = new System.Drawing.Size(88, 20);
-            this.numYb2.TabIndex = 4;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(422, 46);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(26, 13);
-            this.label8.TabIndex = 7;
-            this.label8.Text = "Yb3";
-            // 
-            // numYb3
-            // 
-            this.numYb3.DecimalPlaces = 1;
-            this.numYb3.Location = new System.Drawing.Point(454, 45);
-            this.numYb3.Maximum = new decimal(new int[] {
-            10000000,
-            0,
-            0,
-            0});
-            this.numYb3.Name = "numYb3";
-            this.numYb3.Size = new System.Drawing.Size(88, 20);
-            this.numYb3.TabIndex = 6;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(559, 45);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(26, 13);
-            this.label9.TabIndex = 9;
-            this.label9.Text = "Yb5";
-            // 
-            // numYb5
-            // 
-            this.numYb5.DecimalPlaces = 1;
-            this.numYb5.Location = new System.Drawing.Point(591, 44);
-            this.numYb5.Maximum = new decimal(new int[] {
-            10000000,
-            0,
-            0,
-            0});
-            this.numYb5.Name = "numYb5";
-            this.numYb5.Size = new System.Drawing.Size(88, 20);
-            this.numYb5.TabIndex = 8;
-            // 
             // panelCalc
             // 
             this.panelCalc.Controls.Add(this.btnCalcN);
@@ -653,24 +784,15 @@
             this.panelCalc.Size = new System.Drawing.Size(258, 167);
             this.panelCalc.TabIndex = 14;
             // 
-            // labelCalculation
+            // btnCalcN
             // 
-            this.labelCalculation.AutoSize = true;
-            this.labelCalculation.Location = new System.Drawing.Point(64, 1);
-            this.labelCalculation.Name = "labelCalculation";
-            this.labelCalculation.Size = new System.Drawing.Size(45, 13);
-            this.labelCalculation.TabIndex = 3;
-            this.labelCalculation.Text = "Расчет:";
-            // 
-            // btnCalcM
-            // 
-            this.btnCalcM.Location = new System.Drawing.Point(67, 45);
-            this.btnCalcM.Name = "btnCalcM";
-            this.btnCalcM.Size = new System.Drawing.Size(75, 23);
-            this.btnCalcM.TabIndex = 4;
-            this.btnCalcM.Text = "M";
-            this.btnCalcM.UseVisualStyleBackColor = true;
-            this.btnCalcM.Click += new System.EventHandler(this.btnCalcM_Click);
+            this.btnCalcN.Location = new System.Drawing.Point(67, 104);
+            this.btnCalcN.Name = "btnCalcN";
+            this.btnCalcN.Size = new System.Drawing.Size(75, 23);
+            this.btnCalcN.TabIndex = 6;
+            this.btnCalcN.Text = "N";
+            this.btnCalcN.UseVisualStyleBackColor = true;
+            this.btnCalcN.Click += new System.EventHandler(this.btnCalcN_Click);
             // 
             // btnCalcQ
             // 
@@ -682,146 +804,24 @@
             this.btnCalcQ.UseVisualStyleBackColor = true;
             this.btnCalcQ.Click += new System.EventHandler(this.btnCalcQ_Click);
             // 
-            // groupBoxResult
+            // btnCalcM
             // 
-            this.groupBoxResult.Controls.Add(this.lblRes0);
-            this.groupBoxResult.Controls.Add(this.tbResult);
-            this.groupBoxResult.Controls.Add(this.tbResultW);
-            this.groupBoxResult.Controls.Add(this.lblResult);
-            this.groupBoxResult.Location = new System.Drawing.Point(738, 31);
-            this.groupBoxResult.Name = "groupBoxResult";
-            this.groupBoxResult.Size = new System.Drawing.Size(223, 222);
-            this.groupBoxResult.TabIndex = 2;
-            this.groupBoxResult.TabStop = false;
-            this.groupBoxResult.Text = "Результаты расчета";
-            this.groupBoxResult.Enter += new System.EventHandler(this.groupBox3_Enter);
+            this.btnCalcM.Location = new System.Drawing.Point(67, 45);
+            this.btnCalcM.Name = "btnCalcM";
+            this.btnCalcM.Size = new System.Drawing.Size(75, 23);
+            this.btnCalcM.TabIndex = 4;
+            this.btnCalcM.Text = "M";
+            this.btnCalcM.UseVisualStyleBackColor = true;
+            this.btnCalcM.Click += new System.EventHandler(this.btnCalcM_Click);
             // 
-            // checkBox2
+            // labelCalculation
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(15, 75);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(175, 17);
-            this.checkBox2.TabIndex = 1;
-            this.checkBox2.Text = "Расчет по трещиностойкости";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            // 
-            // numRandomEccentricity
-            // 
-            this.numRandomEccentricity.DecimalPlaces = 2;
-            this.numRandomEccentricity.Location = new System.Drawing.Point(179, 127);
-            this.numRandomEccentricity.Maximum = new decimal(new int[] {
-            10000000,
-            0,
-            0,
-            0});
-            this.numRandomEccentricity.Name = "numRandomEccentricity";
-            this.numRandomEccentricity.Size = new System.Drawing.Size(120, 20);
-            this.numRandomEccentricity.TabIndex = 4;
-            // 
-            // labelRandomEccentricity
-            // 
-            this.labelRandomEccentricity.AutoSize = true;
-            this.labelRandomEccentricity.Location = new System.Drawing.Point(9, 133);
-            this.labelRandomEccentricity.Name = "labelRandomEccentricity";
-            this.labelRandomEccentricity.Size = new System.Drawing.Size(146, 13);
-            this.labelRandomEccentricity.TabIndex = 5;
-            this.labelRandomEccentricity.Text = "Случайный эксцентриситет";
-            // 
-            // cmbExtremeFlexibility
-            // 
-            this.cmbExtremeFlexibility.Items.AddRange(new object[] {
-            "бетонные элементы",
-            "железобетонные элементы",
-            "колонны, являющиеся элементами зданий"});
-            this.cmbExtremeFlexibility.Location = new System.Drawing.Point(179, 173);
-            this.cmbExtremeFlexibility.Name = "cmbExtremeFlexibility";
-            this.cmbExtremeFlexibility.Size = new System.Drawing.Size(121, 21);
-            this.cmbExtremeFlexibility.TabIndex = 6;
-            // 
-            // labelExtremeFlexibility
-            // 
-            this.labelExtremeFlexibility.AutoSize = true;
-            this.labelExtremeFlexibility.Location = new System.Drawing.Point(9, 173);
-            this.labelExtremeFlexibility.Name = "labelExtremeFlexibility";
-            this.labelExtremeFlexibility.Size = new System.Drawing.Size(118, 13);
-            this.labelExtremeFlexibility.TabIndex = 7;
-            this.labelExtremeFlexibility.Text = "Предельная гибкость";
-            // 
-            // btnCalcN
-            // 
-            this.btnCalcN.Location = new System.Drawing.Point(67, 104);
-            this.btnCalcN.Name = "btnCalcN";
-            this.btnCalcN.Size = new System.Drawing.Size(75, 23);
-            this.btnCalcN.TabIndex = 6;
-            this.btnCalcN.Text = "N";
-            this.btnCalcN.UseVisualStyleBackColor = true;
-            this.btnCalcN.Click += new System.EventHandler(this.btnCalcN_Click);
-            // 
-            // picBeton
-            // 
-            this.picBeton.ErrorImage = null;
-            this.picBeton.Image = global::BSFiberConcrete.Properties.Resources.FiberBeton;
-            this.picBeton.Location = new System.Drawing.Point(757, 43);
-            this.picBeton.Name = "picBeton";
-            this.picBeton.Size = new System.Drawing.Size(335, 228);
-            this.picBeton.TabIndex = 0;
-            this.picBeton.TabStop = false;
-            // 
-            // picEffortsSign
-            // 
-            this.picEffortsSign.Image = global::BSFiberConcrete.Properties.Resources.EffortsSign;
-            this.picEffortsSign.Location = new System.Drawing.Point(19, 33);
-            this.picEffortsSign.Name = "picEffortsSign";
-            this.picEffortsSign.Size = new System.Drawing.Size(179, 154);
-            this.picEffortsSign.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.picEffortsSign.TabIndex = 0;
-            this.picEffortsSign.TabStop = false;
-            // 
-            // labelEffortSigns
-            // 
-            this.labelEffortSigns.AutoSize = true;
-            this.labelEffortSigns.Location = new System.Drawing.Point(16, 17);
-            this.labelEffortSigns.Name = "labelEffortSigns";
-            this.labelEffortSigns.Size = new System.Drawing.Size(76, 13);
-            this.labelEffortSigns.TabIndex = 1;
-            this.labelEffortSigns.Text = "Знаки усилий";
-            // 
-            // gridEfforts
-            // 
-            this.gridEfforts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridEfforts.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.M,
-            this.N,
-            this.Q});
-            this.gridEfforts.Location = new System.Drawing.Point(285, 33);
-            this.gridEfforts.Name = "gridEfforts";
-            this.gridEfforts.Size = new System.Drawing.Size(697, 150);
-            this.gridEfforts.TabIndex = 2;
-            // 
-            // M
-            // 
-            dataGridViewCellStyle4.Format = "N2";
-            dataGridViewCellStyle4.NullValue = null;
-            this.M.DefaultCellStyle = dataGridViewCellStyle4;
-            this.M.HeaderText = "M";
-            this.M.Name = "M";
-            // 
-            // N
-            // 
-            dataGridViewCellStyle5.Format = "N2";
-            dataGridViewCellStyle5.NullValue = null;
-            this.N.DefaultCellStyle = dataGridViewCellStyle5;
-            this.N.HeaderText = "N";
-            this.N.Name = "N";
-            // 
-            // Q
-            // 
-            dataGridViewCellStyle6.Format = "N2";
-            dataGridViewCellStyle6.NullValue = null;
-            this.Q.DefaultCellStyle = dataGridViewCellStyle6;
-            this.Q.HeaderText = "Q";
-            this.Q.Name = "Q";
+            this.labelCalculation.AutoSize = true;
+            this.labelCalculation.Location = new System.Drawing.Point(64, 1);
+            this.labelCalculation.Name = "labelCalculation";
+            this.labelCalculation.Size = new System.Drawing.Size(45, 13);
+            this.labelCalculation.TabIndex = 3;
+            this.labelCalculation.Text = "Расчет:";
             // 
             // BSFiberMain
             // 
@@ -842,36 +842,36 @@
             this.Load += new System.EventHandler(this.BSFiberMain_Load);
             this.tabGeneral.ResumeLayout(false);
             this.tabParams.ResumeLayout(false);
+            this.groupBoxResult.ResumeLayout(false);
+            this.groupBoxResult.PerformLayout();
             this.groupVar.ResumeLayout(false);
             this.groupVar.PerformLayout();
             this.groupBeam.ResumeLayout(false);
             this.groupBeam.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numRandomEccentricity)).EndInit();
             this.tabConcrete.ResumeLayout(false);
             this.tabConcrete.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numRfbn)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numRfbt3n)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numYb5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numYb3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numYb2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numYb1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numYft)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picBeton)).EndInit();
             this.tabStrength.ResumeLayout(false);
             this.tabStrength.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridEfforts)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picEffortsSign)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numRfbt3n)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numRfbn)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numYft)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numYb1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numYb2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numYb3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numYb5)).EndInit();
             this.panelCalc.ResumeLayout(false);
             this.panelCalc.PerformLayout();
-            this.groupBoxResult.ResumeLayout(false);
-            this.groupBoxResult.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numRandomEccentricity)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picBeton)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picEffortsSign)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridEfforts)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

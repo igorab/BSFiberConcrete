@@ -1,21 +1,81 @@
 ﻿using System;
+using System.Reflection;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace BSFiberConcrete
 {
+    public class BSFiberReport_N : BSFiberReport
+    {
+        private BSFiberCalc_N fiberCalc;
+        private Dictionary<string, string> dattr = new Dictionary<string, string>();
+
+        public void Init(BSFiberCalc_N _fiberCalc)
+        {
+            fiberCalc = _fiberCalc;
+
+            GetAttr();
+
+            InitFromAttr();
+        }
+
+        private void GetAttr()
+        {            
+            PropertyInfo[] props = typeof(BSFiberCalc_N).GetProperties();
+            foreach (PropertyInfo prop in props)
+            {
+                var attribute = prop.GetCustomAttributes(typeof(DisplayNameAttribute), true);
+                DisplayNameAttribute attr = attribute.Cast<DisplayNameAttribute>().Single();                
+                string displayName= attr.DisplayName;
+
+                dattr.Add(prop.Name, displayName);
+            }            
+        }
+
+        private void InitFromAttr()
+        {
+            m_GeomParams = new Dictionary<string, double>();
+
+            foreach (var attr in dattr)
+            {
+                m_GeomParams.Add(attr.Key, 1 );
+            }
+        }
+
+
+    }
+
+
+    /// <summary>
+    /// Построитель отчета
+    /// </summary>
     public class BSFiberReport
     {
-        public Dictionary<string, double> m_Beam{ get; set; }
-        public Dictionary<string, double> m_Coeffs { get; set; }
-        public Dictionary<string, double> m_PhysParams { get; set; }
-        public Dictionary<string, double> m_GeomParams { get; set; }
-        public Dictionary<string, double> m_CalcResults { get; set; }
+        public Dictionary<string, double> Beam {set{m_Beam = value;}}
+        public Dictionary<string, double> Coeffs {set { m_Coeffs = value; } }
+        public Dictionary<string, double> PhysParams {set { m_PhysParams = value; } }
+        public Dictionary<string, double> GeomParams {set { m_GeomParams = value; } }
+        public Dictionary<string, double> CalcResults {set { m_CalcResults = value; } }
+        public BeamSection BeamSection { set { m_BeamSection = value; } }
 
-        public BeamSection m_BeamSection { get; set; }
+
+        protected Dictionary<string, double> m_Beam;
+        protected Dictionary<string, double> m_Coeffs;
+        protected Dictionary<string, double> m_PhysParams;
+        protected Dictionary<string, double> m_GeomParams;
+        protected Dictionary<string, double> m_CalcResults;
+        protected BeamSection m_BeamSection;
+
+        private void Header(StreamWriter w)
+        {
+            w.WriteLine("<H1>Сопротивление сечения из фибробетона</H1>");
+            w.WriteLine("<H4>Расчет выполнен по СП 360.1325800.2017</H4>");
+        }
+
 
         public string CreateReport()
         {
@@ -26,9 +86,8 @@ namespace BSFiberConcrete
                 using (StreamWriter w = new StreamWriter(fs, Encoding.UTF8))
                 {
                     w.WriteLine("<html>");
-                    w.WriteLine("<H1>Сопротивление сечения из фибробетона</H1>");
-                    w.WriteLine("<H4>Расчет выполнен по СП 360.1325800.2017</H4>");
 
+                    Header(w);
 
                     if (m_Beam != null)
                     {

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BSFiberConcrete
 {
-    internal class BSFiberCalc_N : IBSFiberCalculation
+    public class BSFiberCalc_N : IBSFiberCalculation
     {
         [DisplayName("Высота сечения, см")]
         public double h { get; private set; }
@@ -46,8 +46,10 @@ namespace BSFiberConcrete
         [DisplayName("коэффициент ф.")]
         public double k_b { get; private set; }
 
-        double Yft, Yb1, Yb2, Yb3, Yb5;
-        double Rfbn, Yb;
+        double Rfbt3n;
+        double B;
+        double Yft, Yb, Yb1, Yb2, Yb3, Yb5;
+        double Rfbn;
         double fi = 0.9;
         double Ef, //для фибры из тонкой низкоуглеродистой проволоки МП п.п  кг/см2 
                Eb; //Начальный модуль упругости бетона-матрицы B30 СП63
@@ -64,11 +66,21 @@ namespace BSFiberConcrete
         //площадь сжатой зоны бетона ф. (6.22)
         double Ab;
 
+        double Rfb;
+        double N_ult;
+
         public void Calculate()
         {
+            //Момент от действия полной нагрузки
             M1 = 1;
+
+            //Момент от действия постянных и длительных нагрузок нагрузок
             Ml1 = 1;
+
+            //Коэффициент, учитывающий влияние длительности действия нагрузки, определяют по формуле (6.27)
             fi1 = 1 + Ml1 / M1;
+
+            //относительное значение эксцентриситета продольной силы
             delta_e = e0 / h;
 
             if (delta_e <= 0.15) 
@@ -76,21 +88,34 @@ namespace BSFiberConcrete
             else if (delta_e >= 1.5) 
                 { delta_e = 1.5; }
 
+            // Коэфициент ф.(6.26)
             k_b = 0.15 / (fi1 * (0.3d + delta_e));
-                       
+
+            // Модуль упругости сталефибробетона п.п. (5.2.7)
             Efb = Eb * (1 - mu_fv) + Ef * mu_fv;
 
+            //жесткость элемента в предельной по прочности стадии,определяемая по формуле (6.25)
             D = k_b * Efb * I;
 
+            // условная критическая сила, определяемая по формуле (6.24)
             Ncr = Math.PI * Math.PI * D / Math.Pow(l0, 2);
 
             eta = 1 / (1 - N / Ncr);
 
             Ab = b * h * (1 - 2 * e0 * eta / h);
 
-            double Rfb = Rfbn / Yb * Yb1 * Yb2 * Yb3 * Yb5;
+            Rfb = Rfbn / Yb * Yb1 * Yb2 * Yb3 * Yb5;
 
-            double Nult = fi * Rfb * A;
+            N_ult = fi * Rfb * A;
+
+            double flex = l0 / h;
+
+            if (e0 <= h / 30 && l0 <= 20 * h)
+            {
+                N_ult = fi * Rfb * A;
+            }
+            else
+                N_ult = Rfb * Ab;
 
         }
 
@@ -101,9 +126,11 @@ namespace BSFiberConcrete
 
         public void GetParams(double[] _t)
         {
-            A = b * h;
+
+            (Rfbt3n, Rfbn, Yft, Yb1, Yb2, Yb3, Yb5, B) = (_t[0], _t[1], _t[2], _t[3], _t[4], _t[5], _t[6], _t[7]);
+           
             e0 = 2;
-            I = b * h*h*h/12;
+            Yb = 1.3;
             Ef = 1936799;
             Eb = 331294;
             mu_fv = 0.005;
@@ -111,12 +138,16 @@ namespace BSFiberConcrete
 
         public void GetSize(double[] _t)
         {
-            throw new NotImplementedException();
+            (b, h, l0) = (_t[0], _t[1], _t[2]);
+
+            A = b * h;
+
+            I = b * h * h * h / 12;
         }
 
         public Dictionary<string, double> Results()
         {
-            throw new NotImplementedException();
+            return new Dictionary<string, double>() { { "Rfb", Rfb }, { "N_ult", N_ult } };
         }
     }
 }
