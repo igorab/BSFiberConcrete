@@ -93,13 +93,15 @@ namespace BSFiberConcrete
             if (m_Beam != null)
             {
                 w.WriteLine("<Table border=1 bordercolor = darkblue>");
-                foreach (var _prm in m_Beam.Keys)
-                    w.WriteLine($"<th>{_prm}</th>");
-                w.WriteLine("<tr>");
-                foreach (var _val in m_Beam.Values)
-                    w.WriteLine($"<td>{_val}</td>");
-                w.WriteLine("</tr>");
+                foreach (var _pair in m_Beam)
+                {
+                    w.WriteLine("<tr>");
+                    w.WriteLine($"<td>{_pair.Key}</td>");
+                    w.WriteLine($"<td>{_pair.Value}</td>");
+                    w.WriteLine("</tr>");
+                }                
                 w.WriteLine("</Table>");
+                w.WriteLine("<br>");
             }
         }
 
@@ -109,13 +111,16 @@ namespace BSFiberConcrete
             {
                 w.WriteLine("<Table border=1 bordercolor = darkblue>");
                 w.WriteLine("<caption>Физические характеристики</caption>");
-                foreach (var _prm in m_PhysParams.Keys)
-                    w.WriteLine($"<th>{_prm}</th>");
-                w.WriteLine("<tr>");
-                foreach (var _val in m_PhysParams.Values)
-                    w.WriteLine($"<td>{_val}</td>");
-                w.WriteLine("</tr>");
+                foreach (var _pair in m_PhysParams)
+                {
+                    w.WriteLine("<tr>");
+                    w.WriteLine($"<td>{_pair.Key}</td>");
+                    w.WriteLine($"<td>{_pair.Value}</td>");
+                    w.WriteLine("</tr>");
+                }
+               
                 w.WriteLine("</Table>");
+                w.WriteLine("<br>");
             }
 
             if (m_Coeffs != null)
@@ -129,6 +134,7 @@ namespace BSFiberConcrete
                     w.WriteLine($"<td>{_val}</td>");
                 w.WriteLine("</tr>");
                 w.WriteLine("</Table>");
+                w.WriteLine("<br>");
             }
             
             if (m_GeomParams != null)
@@ -142,6 +148,7 @@ namespace BSFiberConcrete
                     w.WriteLine($"<td>{_val}</td>");
                 w.WriteLine("</tr>");
                 w.WriteLine("</Table>");
+                w.WriteLine("<br>");
             }
         }
 
@@ -164,6 +171,7 @@ namespace BSFiberConcrete
                 }
                 w.WriteLine("</tr>");
                 w.WriteLine("</Table>");
+                w.WriteLine("<br>");
             }
             else
             {

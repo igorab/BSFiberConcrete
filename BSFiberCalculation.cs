@@ -333,7 +333,7 @@ namespace BSFiberConcrete
 
         public Dictionary<string, double> Coeffs {
             get {
-                return  new Dictionary<string, double>() { { "Yft", Yft }, { "Yb1", Yb1 }, { "Yb2", Yb2 }, { "Yb3", Yb3 }, { "Yb5", Yb5 } };
+                return  new Dictionary<string, double>() { { "Yft", Yft }, { "Yb", Yb }, { "Yb1", Yb1 }, { "Yb2", Yb2 }, { "Yb3", Yb3 }, { "Yb5", Yb5 } };
             }             
         }
         public Dictionary<string, double> PhysParams {
