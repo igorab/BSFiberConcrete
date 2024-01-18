@@ -46,11 +46,13 @@ namespace BSFiberConcrete
             cmbBetonClass.DataSource = BSFiberCocreteLib.betonList;
             cmbBetonClass.DisplayMember = "Name";
             cmbBetonClass.ValueMember = "Id";
+            cmbBetonClass.SelectedValue = 30;
 
             numRfbt3n.Value = (decimal)BSFiberCocreteLib.PhysElements.Rfbt3n;
             numRfbn.Value = (decimal)BSFiberCocreteLib.PhysElements.Rfbn;
 
             numYft.Value =  (decimal)BSFiberCocreteLib.PhysElements.Yft;
+            numYb.Value = (decimal)BSFiberCocreteLib.PhysElements.Yb;
             numYb1.Value = (decimal)BSFiberCocreteLib.PhysElements.Yb1;
             numYb2.Value = (decimal)BSFiberCocreteLib.PhysElements.Yb2;
             numYb3.Value = (decimal)BSFiberCocreteLib.PhysElements.Yb3;
@@ -58,8 +60,6 @@ namespace BSFiberConcrete
 
 
             //cmbBetonClass.SelectedIndexChanged += cmbBetonClass_SelectedIndexChanged;
-
-
         }
 
         private double[] BeamSizes(double _length = 0)
@@ -80,6 +80,21 @@ namespace BSFiberConcrete
             return sz;
         }
 
+        private void InitUserParams(double[] prms)
+        {
+            if (prms.Length >= 8)
+            {
+                prms[0] = Convert.ToDouble(numRfbt3n.Value);
+                prms[1] = Convert.ToDouble(numRfbn.Value);
+                prms[2] = Convert.ToDouble(numYft.Value);
+                prms[3] = Convert.ToDouble(numYb.Value);
+                prms[4] = Convert.ToDouble(numYb1.Value);
+                prms[5] = Convert.ToDouble(numYb2.Value);
+                prms[6] = Convert.ToDouble(numYb3.Value);
+                prms[7] = Convert.ToDouble(numYb5.Value);
+                prms[8] = Convert.ToDouble(cmbBetonClass.SelectedValue);
+            }
+        }
         
         private void btnCalc_Click(object sender, EventArgs e)
         {
@@ -88,12 +103,10 @@ namespace BSFiberConcrete
                 bsCalc = BSFiberCalculation.construct(m_BeamSection);
                 
                 double[] prms = m_BSLoadData.Params;
-
-                bsCalc.GetParams(prms);
-                
-                m_Beam.Clear();
-                m_PhysParams = bsCalc.PhysParams;
-                m_Coeffs = bsCalc.Coeffs;                                               
+                InitUserParams(prms);
+                                                                    
+                bsCalc.GetParams(prms);                
+                m_Beam.Clear();                                                       
                 bsCalc.GetSize(BeamSizes());                
 
                 double.TryParse(tbLength.Text, out double lgth);
@@ -103,32 +116,30 @@ namespace BSFiberConcrete
 
                 bsCalc.Calculate();
 
+                m_PhysParams = bsCalc.PhysParams;
+                m_Coeffs = bsCalc.Coeffs;
                 m_GeomParams = bsCalc.GeomParams();
                 m_CalcResults = bsCalc.Results();
 
-                if (m_CalcResults.TryGetValue("Rfbt3", out double _rfbt3))
+                int ires = 0;
+                foreach (var res in m_CalcResults)
                 {
-                    lblRes0.Text = "Rfbt3";
-                    tbResultW.Text = _rfbt3.ToString();
-                }
+                    if (ires == 0)
+                    {
+                        lblRes0.Text = res.Key;
+                        tbResultW.Text = res.Value.ToString();
+                    }
+                    else if (ires == 1)
+                    {
+                        lblResult.Text = res.Key;
+                        tbResult.Text = res.Value.ToString();
+                    }
+                    else 
+                        break;
 
-                if (m_CalcResults.TryGetValue("Wpl", out double _wpl))
-                {
-                    lblRes0.Text = "Wpl";
-                    tbResultW.Text = _wpl.ToString();
+                    ires++;
                 }
-
-                if (m_CalcResults.TryGetValue("x", out double _x))
-                {
-                    lblRes0.Text = "x";
-                    tbResultW.Text = _x.ToString();
-                }
-
-                if (m_CalcResults.TryGetValue("Mult", out double _mult))
-                {
-                    lblResult.Text = "Mult";
-                    tbResult.Text = _mult.ToString();
-                }
+                
             }
             catch (Exception _e)
             {
@@ -144,18 +155,10 @@ namespace BSFiberConcrete
             report.Beam = m_Beam;
             report.Coeffs = m_Coeffs;
             report.GeomParams = m_GeomParams;
-            report.PhysParams = m_PhysParams;
+            report.PhysParams = bsCalc.PhysicalParameters();
             report.BeamSection = m_BeamSection;
             report.CalcResults = m_CalcResults;
-
-            var publicProperties = typeof(BSFibCalc_IBeam).GetProperties();
-            foreach (PropertyInfo property in publicProperties)
-            {
-                var attr = property.GetCustomAttributes();
-
-                string s = property.Name;
-            }
-
+            
             path = report.CreateReport();
             return path;
         }
@@ -288,7 +291,7 @@ namespace BSFiberConcrete
 
                 // получаем весь выделенный объект
                 BSFiberBeton beton = (BSFiberBeton)cmbBetonClass.SelectedItem;
-                MessageBox.Show(id.ToString() + ". " + beton.Name);
+                //MessageBox.Show(id.ToString() + ". " + beton.Name);
             }
             catch { }
         }

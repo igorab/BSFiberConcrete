@@ -3,6 +3,7 @@ using System;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Runtime.Remoting.Messaging;
 
 namespace BSFiberConcrete
 {    
@@ -39,55 +40,59 @@ namespace BSFiberConcrete
     [BSFiberCalculationAttribute(Descr = "Расчет балки двутаврового сечения")]
     public class BSFibCalc_IBeam : BSFiberCalculation
     {
+        // размеры:
         [DisplayName("Ширина нижней полки двутавра")]
-        public double bf { get; set;}
+        public double bf { get; private set;}
         [DisplayName("Высота нижней полки двутавра")]
-        private double hf { get; set; }
+        public double hf { get; private set; }
         [DisplayName("Высота стенки двутавра")]
-        private double hw { get; set; }
+        public double hw { get; private set; }
         [DisplayName("Ширина стенки двутавра")]
-        private double bw { get; set; }
+        public double bw { get; private set; }
         [DisplayName("Ширина верхней полки двутавра")]
-        private double b1f { get; set; }
+        public double b1f { get; private set; }
         [DisplayName("Высота верхней полки двутавра")]
-        private double h1f { get; set; }
+        public double h1f { get; private set; }
 
-        [BSFiberCalculation(Name = "высота сжатой зоны")]
-        private double x;
+        // физ. характеристики бетона
+        [DisplayName("Расчетные значения сопротивления на сжатиие по СП63 кг/см2")]
+        public new double Rfbn { get; private set; }
+        [DisplayName("Значения коэффициента надежности по бетону при сжатии СП63")]
+        public double Yb { get; private set; }
 
-        private double Mult;
-        
-        private double Rfbn, Yb;
+        // Результаты
+        [DisplayName("Высота сжатой зоны")]
+        public double x { get; private set; }
 
-       
+        [DisplayName("Предельный момент сечения")]
+        public double Mult { get; private set; }
+               
         public override void GetParams(double[] _t)
         {
             base.GetParams(_t);
-                        
-            (Rfbn, Yb) = (224, 1.3);
+
+            (Rfbt3n, Rfbn, Yft, Yb, Yb1, Yb2, Yb3, Yb5) = (_t[0], _t[1], _t[2], _t[3], _t[4], _t[5], _t[6], _t[7]);
         }
 
         public override Dictionary<string, double> GeomParams()
         {
             Dictionary<string, double> geom = base.GeomParams();
-            geom.Add("bf", bf);
-            geom.Add("hf", hf);            
-            geom.Add("hw", hw);
-            geom.Add("bw", bw);
-            geom.Add("b1f", b1f);
-            geom.Add("h1f", h1f);
-
+            geom.Add(DN(typeof(BSFibCalc_IBeam), "bf"), bf);
+            geom.Add(DN(typeof(BSFibCalc_IBeam), "hf"), hf);            
+            geom.Add(DN(typeof(BSFibCalc_IBeam), "hw"), hw);
+            geom.Add(DN(typeof(BSFibCalc_IBeam), "bw"), bw);
+            geom.Add(DN(typeof(BSFibCalc_IBeam), "b1f"), b1f);
+            geom.Add(DN(typeof(BSFibCalc_IBeam), "h1f"), h1f);
             return geom;
         }
-
+        
         public override void GetSize(double[] _t)
         {
             (bf, hf, hw, bw, b1f, h1f) = (_t[0], _t[1], _t[2], _t[3], _t[4], _t[5]);
         }
 
         public override void Calculate()
-        {
-                        
+        {                        
             //общая высота
             double h = hf + hw + h1f;
                         
@@ -126,10 +131,11 @@ namespace BSFiberConcrete
 
         public override Dictionary<string, double> Results()
         {
-            return new Dictionary<string, double>() { { "x", x }, { "Mult", Mult } };
+            return new Dictionary<string, double>() { 
+                { DN(typeof(BSFibCalc_IBeam), "x"), x }, 
+                { DN(typeof(BSFibCalc_IBeam), "Mult") , Mult } 
+            };
         }
-
-
     }
 
     [DisplayName("Расчет прочности изгибаемого элемента кольцевого сечения")]
@@ -161,14 +167,14 @@ namespace BSFiberConcrete
         {
             base.GetParams(_t);
 
-            (r1, r2, Rfbn, Yft, Yb, Yb1, Yb2, Yb3, Yb5) = (25, 40, 224, 1.3, 1.3, 0.9, 0.9, 1, 1);            
+            (Rfbt3n, Rfbn, Yft, Yb, Yb1, Yb2, Yb3, Yb5) = (_t[0], _t[1], _t[2], _t[3], _t[4], _t[5], _t[6], _t[7]);            
         }
 
         public override Dictionary<string, double> GeomParams()
         {
             Dictionary<string, double> geom = base.GeomParams();
-            geom.Add(typeof(BSFibCalc_Ring).GetProperty("r1").GetCustomAttribute<DisplayNameAttribute>().DisplayName, r1);
-            geom.Add(typeof(BSFibCalc_Ring).GetProperty("r2").GetCustomAttribute<DisplayNameAttribute>().DisplayName, r2);
+            geom.Add(DN(typeof(BSFibCalc_Ring), "r1"), r1);
+            geom.Add(DN(typeof(BSFibCalc_Ring), "r2"), r2);
             return geom;
         }
 
@@ -179,10 +185,9 @@ namespace BSFiberConcrete
 
         public override Dictionary<string, double> Results()
         {
-            return new Dictionary<string, double>() { 
-                { typeof(BSFibCalc_Ring).GetProperty("Rfb").GetCustomAttribute<DisplayNameAttribute>().DisplayName, Rfb }, 
-                { typeof(BSFibCalc_Ring).GetProperty("Rfbt3").GetCustomAttribute<DisplayNameAttribute>().DisplayName, Rfbt3 }, 
-                { typeof(BSFibCalc_Ring).GetProperty("Mult").GetCustomAttribute<DisplayNameAttribute>().DisplayName, Mult } 
+            return new Dictionary<string, double>() {                 
+                { DN(typeof(BSFibCalc_Ring), "Rfbt3"), Rfbt3 }, 
+                { DN(typeof(BSFibCalc_Ring), "Mult"), Mult } 
             };
         }
 
@@ -197,7 +202,6 @@ namespace BSFiberConcrete
 
             if (tr < 0)
                 throw new Exception("r2-r1 < 0");
-
 
             //радиус срединной поверхности стенки кольцевого элемента, определяемый по ф. (6.19)
             double rm = (r1 + r2) / 2;
@@ -216,7 +220,7 @@ namespace BSFiberConcrete
     }
 
 
-    [BSFiberCalculationAttribute(Descr = "Расчет балки прямоугольного сечения")]
+    [DisplayName("Расчет прочности изгибаемого элемента прямоугольного сечения")]
     public class BSFibCalc_Rect : BSFiberCalculation
     {
         //размеры, см
@@ -232,16 +236,16 @@ namespace BSFiberConcrete
         public override Dictionary<string, double> GeomParams()
         {
             Dictionary<string, double> geom = base.GeomParams();
-            geom.Add(typeof(BSFibCalc_Rect).GetProperty("h").GetCustomAttribute<DisplayNameAttribute>().DisplayName, b);
-            geom.Add(typeof(BSFibCalc_Rect).GetProperty("b").GetCustomAttribute<DisplayNameAttribute>().DisplayName, h);
+            geom.Add(DN(typeof(BSFibCalc_Rect), "b"), b);
+            geom.Add(DN(typeof(BSFibCalc_Rect), "h"), h);
             return geom;
         }
 
         public override Dictionary<string, double> Results()
         {
             return new Dictionary<string, double>() { 
-                    { typeof(BSFibCalc_Rect).GetProperty("Wpl").GetCustomAttribute<DisplayNameAttribute>().DisplayName, Wpl}, 
-                    { typeof(BSFibCalc_Rect).GetProperty("Mult").GetCustomAttribute<DisplayNameAttribute>().DisplayName, Mult} 
+                    { DN(typeof(BSFibCalc_Rect), "Wpl"), Wpl}, 
+                    { DN(typeof(BSFibCalc_Rect), "Mult"), Mult} 
             }; 
         }
         
@@ -249,7 +253,7 @@ namespace BSFiberConcrete
         {
             base.GetParams(_t);
             
-            (Rfbt3n, Yft, Yb1, Yb5, B) = (_t[0], _t[1], _t[2], _t[3], _t[4]);             
+            (Rfbt3n, Rfbn, Yft, Yb, Yb1, Yb2, Yb3, Yb5) = (_t[0], _t[1], _t[2], _t[3], _t[4], _t[5], _t[6], _t[7]);
         }
 
         public override void GetSize(double[] _t)
@@ -283,17 +287,20 @@ namespace BSFiberConcrete
         public string Descr { get; set; }
     }
 
-    [BSFiberCalculationAttribute(Name = "Сталефибробетонные конструкции без предварительного напряжения арматуры")]
+    [DisplayName("Сталефибробетонные конструкции без предварительного напряжения арматуры")]
     public class BSFiberCalculation : IBSFiberCalculation
     {
-        [BSFiberCalculation(Name = "Нормативное остаточное сопротивления осевому растяжению кг/см2")] 
-        protected double Rfbt3n;
-        [BSFiberCalculation(Name = "числовая характеристика класса фибробетона по прочности на осевое сжатие")]
-        protected double B;
+        [DisplayName("Нормативное остаточное сопротивления осевому растяжению кг/см2")]
+        public double Rfbt3n { get; set; }
+
+        [DisplayName("числовая характеристика класса фибробетона по прочности на осевое сжатие")]
+        public double B { get; set; }
+
+        [DisplayName("Расчетные значения сопротивления  на сжатиие по СП63 кг/см2")]
+        public double Rfbn { get; set; }
+
         // растяжение
-        private double Rfbr3;
-        // сжатие
-        protected double Rfbn;        
+        private double Rfbr3;        
         protected double Rfbt3;
 
         //TODO - арматуру - в отдельный класс 
@@ -306,26 +313,37 @@ namespace BSFiberConcrete
         private double Efbt;
 
         private double As1;
-        
+
         private double m_Wpl;
         private double gamma;
 
         [BSFiberCalculation(Name = "Коэффициент надежности для расчета по предельным состояниям первой группы при назначении класса сталефибробетона по прочности на растяжение")]
         protected double Yft;
         [BSFiberCalculation(Name = "Коэффициенты условия работы")]
+        protected double Yb;
         protected double Yb1;
         protected double Yb2;
         protected double Yb3;
         protected double Yb5;
 
-        [BSFiberCalculation(Name = "Площадь сжатой зоны бетона")]        
+        [BSFiberCalculation(Name = "Площадь сжатой зоны бетона")]
         private double Ab;
         [BSFiberCalculation(Name = "случайный эксцентриситет, принимаемый по СП 63.13330")]
         private double e0;
 
-        public Dictionary<string, double> Coeffs { get; internal set; }
-        public Dictionary<string, double> PhysParams { get; internal set; }
+        public Dictionary<string, double> Coeffs {
+            get {
+                return  new Dictionary<string, double>() { { "Yft", Yft }, { "Yb1", Yb1 }, { "Yb2", Yb2 }, { "Yb3", Yb3 }, { "Yb5", Yb5 } };
+            }             
+        }
+        public Dictionary<string, double> PhysParams {
+            get {
+                return new Dictionary<string, double> { { "Rfbt3n", Rfbt3n }, { "B", B }, { "Rfbn", Rfbn } };
+                }            
+        }
 
+        public string DN(Type _T, string _property) => _T.GetProperty(_property).GetCustomAttribute<DisplayNameAttribute>().DisplayName;
+        
         public BSFiberCalculation()
         {
             Rfbt3n = 30.58;
@@ -354,19 +372,27 @@ namespace BSFiberConcrete
             return new Dictionary<string, double>() { };
         }
 
+        public virtual Dictionary<string, double> PhysicalParameters()
+        {
+            Dictionary<string, double> phys = new Dictionary<string, double>();
+
+            phys.Add(DN(typeof(BSFiberCalculation), "Rfbt3n"), Rfbt3n);
+            phys.Add(DN(typeof(BSFiberCalculation), "B"), B);
+            phys.Add(DN(typeof(BSFiberCalculation), "Rfbn"), Rfbn);            
+
+            return phys;
+        }
+
         /// <summary>
         /// Принимает характерные размеры сечения
         /// </summary>
         /// <param name="_t">Массив - размеры сечения</param>
         public virtual void GetSize(double[] _t)
         {
-
         }
 
         public virtual void GetParams(double[] _t)
-        {
-            PhysParams = new Dictionary<string, double>() { { "Rfbt3n", Rfbt3n }, { "B", B }, { "Rfbn", Rfbn } };
-            Coeffs = new Dictionary<string, double>() { { "Yft", Yft }, { "Yb1", Yb1 }, { "Yb2", Yb2 }, { "Yb3", Yb3 }, { "Yb5", Yb5 } };
+        {            
         }
 
         public virtual void Calculate() { }

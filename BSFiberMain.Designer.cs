@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabGeneral = new System.Windows.Forms.TabControl();
             this.tabParams = new System.Windows.Forms.TabPage();
             this.groupBoxResult = new System.Windows.Forms.GroupBox();
@@ -98,6 +98,8 @@
             this.btnCalcQ = new System.Windows.Forms.Button();
             this.btnCalcM = new System.Windows.Forms.Button();
             this.labelCalculation = new System.Windows.Forms.Label();
+            this.labelYb = new System.Windows.Forms.Label();
+            this.numYb = new System.Windows.Forms.NumericUpDown();
             this.tabGeneral.SuspendLayout();
             this.tabParams.SuspendLayout();
             this.groupBoxResult.SuspendLayout();
@@ -121,6 +123,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.panelCalc.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numYb)).BeginInit();
             this.SuspendLayout();
             // 
             // tabGeneral
@@ -408,6 +411,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.labelYb);
+            this.groupBox1.Controls.Add(this.numYb);
             this.groupBox1.Controls.Add(this.label9);
             this.groupBox1.Controls.Add(this.numYb5);
             this.groupBox1.Controls.Add(this.label8);
@@ -428,7 +433,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(559, 45);
+            this.label9.Location = new System.Drawing.Point(567, 87);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(26, 13);
             this.label9.TabIndex = 9;
@@ -437,7 +442,7 @@
             // numYb5
             // 
             this.numYb5.DecimalPlaces = 1;
-            this.numYb5.Location = new System.Drawing.Point(591, 44);
+            this.numYb5.Location = new System.Drawing.Point(599, 86);
             this.numYb5.Maximum = new decimal(new int[] {
             10000000,
             0,
@@ -450,7 +455,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(422, 46);
+            this.label8.Location = new System.Drawing.Point(430, 88);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(26, 13);
             this.label8.TabIndex = 7;
@@ -459,7 +464,7 @@
             // numYb3
             // 
             this.numYb3.DecimalPlaces = 1;
-            this.numYb3.Location = new System.Drawing.Point(454, 45);
+            this.numYb3.Location = new System.Drawing.Point(462, 87);
             this.numYb3.Maximum = new decimal(new int[] {
             10000000,
             0,
@@ -472,7 +477,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(276, 47);
+            this.label7.Location = new System.Drawing.Point(284, 89);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(26, 13);
             this.label7.TabIndex = 5;
@@ -481,7 +486,7 @@
             // numYb2
             // 
             this.numYb2.DecimalPlaces = 1;
-            this.numYb2.Location = new System.Drawing.Point(308, 46);
+            this.numYb2.Location = new System.Drawing.Point(316, 88);
             this.numYb2.Maximum = new decimal(new int[] {
             10000000,
             0,
@@ -494,7 +499,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(142, 49);
+            this.label6.Location = new System.Drawing.Point(150, 91);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(26, 13);
             this.label6.TabIndex = 3;
@@ -503,7 +508,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(17, 49);
+            this.label5.Location = new System.Drawing.Point(32, 50);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(20, 13);
             this.label5.TabIndex = 2;
@@ -512,7 +517,7 @@
             // numYb1
             // 
             this.numYb1.DecimalPlaces = 1;
-            this.numYb1.Location = new System.Drawing.Point(174, 48);
+            this.numYb1.Location = new System.Drawing.Point(182, 90);
             this.numYb1.Maximum = new decimal(new int[] {
             10000000,
             0,
@@ -525,7 +530,7 @@
             // numYft
             // 
             this.numYft.DecimalPlaces = 1;
-            this.numYft.Location = new System.Drawing.Point(43, 48);
+            this.numYft.Location = new System.Drawing.Point(58, 49);
             this.numYft.Maximum = new decimal(new int[] {
             10000000,
             0,
@@ -614,25 +619,25 @@
             // 
             // M
             // 
-            dataGridViewCellStyle4.Format = "N2";
-            dataGridViewCellStyle4.NullValue = null;
-            this.M.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle16.Format = "N2";
+            dataGridViewCellStyle16.NullValue = null;
+            this.M.DefaultCellStyle = dataGridViewCellStyle16;
             this.M.HeaderText = "M";
             this.M.Name = "M";
             // 
             // N
             // 
-            dataGridViewCellStyle5.Format = "N2";
-            dataGridViewCellStyle5.NullValue = null;
-            this.N.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle17.Format = "N2";
+            dataGridViewCellStyle17.NullValue = null;
+            this.N.DefaultCellStyle = dataGridViewCellStyle17;
             this.N.HeaderText = "N";
             this.N.Name = "N";
             // 
             // Q
             // 
-            dataGridViewCellStyle6.Format = "N2";
-            dataGridViewCellStyle6.NullValue = null;
-            this.Q.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle18.Format = "N2";
+            dataGridViewCellStyle18.NullValue = null;
+            this.Q.DefaultCellStyle = dataGridViewCellStyle18;
             this.Q.HeaderText = "Q";
             this.Q.Name = "Q";
             // 
@@ -823,6 +828,28 @@
             this.labelCalculation.TabIndex = 3;
             this.labelCalculation.Text = "Расчет:";
             // 
+            // labelYb
+            // 
+            this.labelYb.AutoSize = true;
+            this.labelYb.Location = new System.Drawing.Point(32, 92);
+            this.labelYb.Name = "labelYb";
+            this.labelYb.Size = new System.Drawing.Size(20, 13);
+            this.labelYb.TabIndex = 11;
+            this.labelYb.Text = "Yb";
+            // 
+            // numYb
+            // 
+            this.numYb.DecimalPlaces = 1;
+            this.numYb.Location = new System.Drawing.Point(58, 91);
+            this.numYb.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+            this.numYb.Name = "numYb";
+            this.numYb.Size = new System.Drawing.Size(85, 20);
+            this.numYb.TabIndex = 10;
+            // 
             // BSFiberMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -872,6 +899,7 @@
             this.menuStrip1.PerformLayout();
             this.panelCalc.ResumeLayout(false);
             this.panelCalc.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numYb)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -945,6 +973,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn M;
         private System.Windows.Forms.DataGridViewTextBoxColumn N;
         private System.Windows.Forms.DataGridViewTextBoxColumn Q;
+        private System.Windows.Forms.Label labelYb;
+        private System.Windows.Forms.NumericUpDown numYb;
     }
 }
 

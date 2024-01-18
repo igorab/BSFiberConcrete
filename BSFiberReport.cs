@@ -130,7 +130,6 @@ namespace BSFiberConcrete
                 w.WriteLine("</tr>");
                 w.WriteLine("</Table>");
             }
-
             
             if (m_GeomParams != null)
             {
@@ -171,9 +170,21 @@ namespace BSFiberConcrete
                 w.WriteLine("<th>Расчет не выполнен</th>");
             }
         }
+        private string MakeImageSrcData(string filename)
+        {
+            if (filename == "") return "";
+
+            FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read);
+            byte[] filebytes = new byte[fs.Length];
+            fs.Read(filebytes, 0, Convert.ToInt32(fs.Length));
+            return "data:image/png;base64," + Convert.ToBase64String(filebytes, Base64FormattingOptions.None);
+        }
 
         protected virtual void Footer(StreamWriter w)
         {
+            string path = ""; // global::BSFiberConcrete.Properties.Resources.FiberBeton;
+            //w.WriteLine($"<img src={MakeImageSrcData(path)}/>");
+
             w.WriteLine("</html>");            
         }
 

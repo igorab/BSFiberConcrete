@@ -127,11 +127,9 @@ namespace BSFiberConcrete
 
         public void GetParams(double[] _t)
         {
-
-            (Rfbt3n, Rfbn, Yft, Yb1, Yb2, Yb3, Yb5, B) = (_t[0], _t[1], _t[2], _t[3], _t[4], _t[5], _t[6], _t[7]);
+            (Rfbt3n, Rfbn, Yb, Yft, Yb1, Yb2, Yb3, Yb5, B) = (_t[0], _t[1], _t[2], _t[3], _t[4], _t[5], _t[6], _t[7], _t[8]);
            
-            e0 = 2;
-            Yb = 1.3;
+            e0 = 2;         
             Ef = 1936799;
             Eb = 331294;
             mu_fv = 0.005;
