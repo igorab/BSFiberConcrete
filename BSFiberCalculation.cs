@@ -2,22 +2,20 @@
 using System;
 using System.ComponentModel;
 using System.Collections.Generic;
-
+using System.Reflection;
 
 namespace BSFiberConcrete
-{
-    /// <summary>
-    /// Сечение балки
-    /// </summary>    
+{    
+    [Description("Сечение балки")]
     public enum BeamSection
     {
-        [Description("Тавр")]
+        [Description("Тавровое сечение")]
         TBeam = 1,
-        [Description("Двутавр")]
+        [Description("Двутавровое сечение")]
         IBeam = 2,
-        [Description("Кольцо")]
+        [Description("Кольцевое сечение")]
         Ring = 3,
-        [Description("Прямоугольник")]
+        [Description("Прямоугольное сечение")]
         Rect = 4
     } 
 
@@ -134,15 +132,30 @@ namespace BSFiberConcrete
 
     }
 
-    [BSFiberCalculationAttribute(Descr = "Расчет балки кольцевого сечения")]
+    [DisplayName("Расчет прочности изгибаемого элемента кольцевого сечения")]
     public class BSFibCalc_Ring : BSFiberCalculation
     {
-        private double r1, r2, Rfbn, Yb;
+        [DisplayName("Радиус внутренней грани, см")]
+        public double r1 { get; private set; }        
 
-        private double Rfb;
-        private double Rfbt3;
-        private double Mult;
-        
+        [DisplayName("Радиус наружней грани, см")]
+        public double r2 { get; private set; }
+
+        [DisplayName("Расчетные значения сопротивления  на сжатиие по B30 СП63 кг/см2")]
+        public  double Rfbn { get; private set; }
+
+        [DisplayName("Значения коэффициента надежности по бетону при сжатии СП63")]
+        public double Yb { get; private set; }
+
+        [DisplayName("Расчетное значение сопротивления на сжатиие по B30 СП63 СП360")]
+        public double Rfb { get; private set; }
+
+        [DisplayName("Расчетное значение остаточного сопротивления осевому растяжению")]
+        public new double Rfbt3 { get; private set; }
+
+        [DisplayName("Предельный момент сечения") ]
+        public double Mult { get; private set; }
+
 
         public override void GetParams(double[] _t)
         {
@@ -154,8 +167,8 @@ namespace BSFiberConcrete
         public override Dictionary<string, double> GeomParams()
         {
             Dictionary<string, double> geom = base.GeomParams();
-            geom.Add("r1", r1);
-            geom.Add("r2", r2);
+            geom.Add(typeof(BSFibCalc_Ring).GetProperty("r1").GetCustomAttribute<DisplayNameAttribute>().DisplayName, r1);
+            geom.Add(typeof(BSFibCalc_Ring).GetProperty("r2").GetCustomAttribute<DisplayNameAttribute>().DisplayName, r2);
             return geom;
         }
 
@@ -166,7 +179,11 @@ namespace BSFiberConcrete
 
         public override Dictionary<string, double> Results()
         {
-            return new Dictionary<string, double>() { { "Rfb", Rfb }, { "Rfbt3", Rfbt3 }, { "Mult", Mult } };
+            return new Dictionary<string, double>() { 
+                { typeof(BSFibCalc_Ring).GetProperty("Rfb").GetCustomAttribute<DisplayNameAttribute>().DisplayName, Rfb }, 
+                { typeof(BSFibCalc_Ring).GetProperty("Rfbt3").GetCustomAttribute<DisplayNameAttribute>().DisplayName, Rfbt3 }, 
+                { typeof(BSFibCalc_Ring).GetProperty("Mult").GetCustomAttribute<DisplayNameAttribute>().DisplayName, Mult } 
+            };
         }
 
         public override void Calculate()
@@ -201,35 +218,37 @@ namespace BSFiberConcrete
 
     [BSFiberCalculationAttribute(Descr = "Расчет балки прямоугольного сечения")]
     public class BSFibCalc_Rect : BSFiberCalculation
-    {                        
-        // Упругопластический момент сопротивления
-        private double Wpl;
-        //Значение предельного момента сечения для изгибаемых сталефибробетонных элементов прямоугольного сечения
-        private  double Mult;
-
+    {
         //размеры, см
-        private double b;
-        private double h;
+        [DisplayName("Высота сечения, см")]
+        public double h { get; private set; }
+        [DisplayName("Ширина сечения, см")]
+        public double b { get; private set; }
+        [DisplayName("Упругопластический момент сопротивления")]
+        public double Wpl { get; private set; }
+        [DisplayName("Предельный момент сечения для изгибаемых сталефибробетонных элементов")]
+        public double Mult { get; private set; }
 
         public override Dictionary<string, double> GeomParams()
         {
             Dictionary<string, double> geom = base.GeomParams();
-            geom.Add("b", b);
-            geom.Add("h", h);
+            geom.Add(typeof(BSFibCalc_Rect).GetProperty("h").GetCustomAttribute<DisplayNameAttribute>().DisplayName, b);
+            geom.Add(typeof(BSFibCalc_Rect).GetProperty("b").GetCustomAttribute<DisplayNameAttribute>().DisplayName, h);
             return geom;
         }
 
         public override Dictionary<string, double> Results()
         {
-            return new Dictionary<string, double>() { {"Wpl", Wpl}, { "Mult", Mult} }; 
+            return new Dictionary<string, double>() { 
+                    { typeof(BSFibCalc_Rect).GetProperty("Wpl").GetCustomAttribute<DisplayNameAttribute>().DisplayName, Wpl}, 
+                    { typeof(BSFibCalc_Rect).GetProperty("Mult").GetCustomAttribute<DisplayNameAttribute>().DisplayName, Mult} 
+            }; 
         }
         
         public override  void GetParams(double[] _t)
         {
             base.GetParams(_t);
-
-            //b = 60;
-            //h = 80;
+            
             (Rfbt3n, Yft, Yb1, Yb5, B) = (_t[0], _t[1], _t[2], _t[3], _t[4]);             
         }
 
@@ -326,12 +345,19 @@ namespace BSFiberConcrete
             Yb5 = 1;            
         }
 
+        /// <summary>
+        /// Возвращает результаты расчета геометрических характеристик балки
+        /// </summary>
+        /// <returns>Описание геометрии балки</returns>
         public virtual Dictionary<string, double> GeomParams()
         {
             return new Dictionary<string, double>() { };
         }
 
-
+        /// <summary>
+        /// Принимает характерные размеры сечения
+        /// </summary>
+        /// <param name="_t">Массив - размеры сечения</param>
         public virtual void GetSize(double[] _t)
         {
 

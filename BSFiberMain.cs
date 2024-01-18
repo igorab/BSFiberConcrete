@@ -93,10 +93,8 @@ namespace BSFiberConcrete
                 
                 m_Beam.Clear();
                 m_PhysParams = bsCalc.PhysParams;
-                m_Coeffs = bsCalc.Coeffs;
-                m_GeomParams = bsCalc.GeomParams();
-                               
-                bsCalc.GetSize(BeamSizes());
+                m_Coeffs = bsCalc.Coeffs;                                               
+                bsCalc.GetSize(BeamSizes());                
 
                 double.TryParse(tbLength.Text, out double lgth);
                 m_Beam.Add("Длина элемента",  lgth);
@@ -104,7 +102,8 @@ namespace BSFiberConcrete
                 m_Beam.Add("Коэффициет расчетной длины", coeflgth);
 
                 bsCalc.Calculate();
-                
+
+                m_GeomParams = bsCalc.GeomParams();
                 m_CalcResults = bsCalc.Results();
 
                 if (m_CalcResults.TryGetValue("Rfbt3", out double _rfbt3))
@@ -343,18 +342,22 @@ namespace BSFiberConcrete
                 double[] sz = BeamSizes(beamLngth);
 
                 fiberCalc.GetSize(sz);
+
                 fiberCalc.Calculate();
 
                 m_CalcResults = fiberCalc.Results();
             }
-            catch (Exception ex)
+            catch (Exception _ex)
             {
+                MessageBox.Show("Ошибка расчета: " + _ex.Message);
             }
             finally
             {
                 BSFiberReport_N report = new BSFiberReport_N();
+
+                report.BeamSection = m_BeamSection;
                 report.Init(fiberCalc);
-                report.CalcResults = m_CalcResults;
+                
                 string pathToHtmlFile = report.CreateReport();
 
                 System.Diagnostics.Process.Start(pathToHtmlFile);

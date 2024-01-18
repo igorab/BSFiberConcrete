@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
+using System.Linq.Expressions;
+using System.Windows.Forms;
 
 namespace BSFiberConcrete
 {
@@ -17,6 +19,7 @@ namespace BSFiberConcrete
         public void Init(BSFiberCalc_N _fiberCalc)
         {
             fiberCalc = _fiberCalc;
+            m_CalcResults = fiberCalc.Results();
 
             GetAttr();
 
@@ -37,16 +40,23 @@ namespace BSFiberConcrete
         }
 
         private void InitFromAttr()
-        {
+        {            
             m_GeomParams = new Dictionary<string, double>();
 
+            Type myType = typeof(BSFiberCalc_N);
             foreach (var attr in dattr)
             {
-                m_GeomParams.Add(attr.Key, 1 );
+                PropertyInfo prop = myType.GetProperty(attr.Key);
+
+                object value = prop?.GetValue(fiberCalc);
+
+                string s = attr.Value.ToString();
+                if (double.TryParse(value.ToString(), out double _d))
+                {
+                    m_GeomParams.Add(attr.Value,  _d);
+                }                
             }
         }
-
-
     }
 
 
@@ -70,103 +80,129 @@ namespace BSFiberConcrete
         protected Dictionary<string, double> m_CalcResults;
         protected BeamSection m_BeamSection;
 
-        private void Header(StreamWriter w)
+        protected virtual void Header(StreamWriter w)
         {
+            w.WriteLine("<html>");
             w.WriteLine("<H1>Сопротивление сечения из фибробетона</H1>");
             w.WriteLine("<H4>Расчет выполнен по СП 360.1325800.2017</H4>");
+
+            string beamDescr = typeof(BeamSection).GetCustomAttribute<DescriptionAttribute > (true).Description;
+            string beamSection = BSFiberCalcHelper.EnumDescription(m_BeamSection);
+            w.WriteLine($"<H2>{beamDescr}: {beamSection}</H2>");
+
+            if (m_Beam != null)
+            {
+                w.WriteLine("<Table border=1 bordercolor = darkblue>");
+                foreach (var _prm in m_Beam.Keys)
+                    w.WriteLine($"<th>{_prm}</th>");
+                w.WriteLine("<tr>");
+                foreach (var _val in m_Beam.Values)
+                    w.WriteLine($"<td>{_val}</td>");
+                w.WriteLine("</tr>");
+                w.WriteLine("</Table>");
+            }
         }
 
+        protected virtual void ReportBody(StreamWriter w)
+        {            
+            if (m_PhysParams != null)
+            {
+                w.WriteLine("<Table border=1 bordercolor = darkblue>");
+                w.WriteLine("<caption>Физические характеристики</caption>");
+                foreach (var _prm in m_PhysParams.Keys)
+                    w.WriteLine($"<th>{_prm}</th>");
+                w.WriteLine("<tr>");
+                foreach (var _val in m_PhysParams.Values)
+                    w.WriteLine($"<td>{_val}</td>");
+                w.WriteLine("</tr>");
+                w.WriteLine("</Table>");
+            }
+
+            if (m_Coeffs != null)
+            {
+                w.WriteLine("<Table border=1 bordercolor = darkblue>");
+                w.WriteLine("<caption>Коэффициенты</caption>");
+                foreach (var _prm in m_Coeffs.Keys)
+                    w.WriteLine($"<th>{_prm}</th>");
+                w.WriteLine("<tr>");
+                foreach (var _val in m_Coeffs.Values)
+                    w.WriteLine($"<td>{_val}</td>");
+                w.WriteLine("</tr>");
+                w.WriteLine("</Table>");
+            }
+
+            
+            if (m_GeomParams != null)
+            {
+                w.WriteLine("<Table border=1 bordercolor = darkblue>");
+                w.WriteLine("<caption>Геометрия</caption>");
+                foreach (var _prm in m_GeomParams.Keys)
+                    w.WriteLine($"<th>{_prm}</th>");
+                w.WriteLine("<tr>");
+                foreach (var _val in m_GeomParams.Values)
+                    w.WriteLine($"<td>{_val}</td>");
+                w.WriteLine("</tr>");
+                w.WriteLine("</Table>");
+            }
+        }
+
+        protected virtual void ReportResult(StreamWriter w)
+        {
+            w.WriteLine("<H3>Расчет:</H3>");
+            if (m_CalcResults != null)
+            {
+                w.WriteLine("<Table border=1 bordercolor = darkblue>");
+                w.WriteLine("<tr>");
+                foreach (var _prm in m_CalcResults.Keys)
+                {
+                    w.WriteLine($"<th>{_prm}</th>");
+                }
+                w.WriteLine("</tr>");
+                w.WriteLine("<tr>");
+                foreach (var _val in m_CalcResults.Values)
+                {
+                    w.WriteLine($"<td>{_val}</td>");
+                }
+                w.WriteLine("</tr>");
+                w.WriteLine("</Table>");
+            }
+            else
+            {
+                w.WriteLine("<th>Расчет не выполнен</th>");
+            }
+        }
+
+        protected virtual void Footer(StreamWriter w)
+        {
+            w.WriteLine("</html>");            
+        }
 
         public string CreateReport()
         {
             string pathToHtmlFile = "";
 
-            using (FileStream fs = new FileStream("test.htm", FileMode.Create))
+            try
             {
-                using (StreamWriter w = new StreamWriter(fs, Encoding.UTF8))
+                using (FileStream fs = new FileStream("test.htm", FileMode.Create))
                 {
-                    w.WriteLine("<html>");
-
-                    Header(w);
-
-                    if (m_Beam != null)
+                    using (StreamWriter w = new StreamWriter(fs, Encoding.UTF8))
                     {
-                        w.WriteLine("<Table border=1 bordercolor = darkblue>");                        
-                        foreach (var _prm in m_Beam.Keys)
-                            w.WriteLine($"<th>{_prm}</th>");
-                        w.WriteLine("<tr>");
-                        foreach (var _val in m_Beam.Values)
-                            w.WriteLine($"<td>{_val}</td>");
-                        w.WriteLine("</tr>");
-                        w.WriteLine("</Table>");
+                        Header(w);
+
+                        ReportBody(w);
+
+                        ReportResult(w);
+
+                        Footer(w);
                     }
 
-
-                    if (m_PhysParams != null)
-                    {
-                        w.WriteLine("<Table border=1 bordercolor = darkblue>");
-                        w.WriteLine("<caption>Физические характеристики</caption>");
-                        foreach (var _prm in m_PhysParams.Keys)
-                            w.WriteLine($"<th>{_prm}</th>");
-                        w.WriteLine("<tr>");
-                        foreach (var _val in m_PhysParams.Values)
-                            w.WriteLine($"<td>{_val}</td>");
-                        w.WriteLine("</tr>");
-                        w.WriteLine("</Table>");
-                    }
-
-                    if (m_Coeffs != null)
-                    {
-                        w.WriteLine("<Table border=1 bordercolor = darkblue>");
-                        w.WriteLine("<caption>Коэффициенты</caption>");
-                        foreach (var _prm in m_Coeffs.Keys)
-                            w.WriteLine($"<th>{_prm}</th>");
-                        w.WriteLine("<tr>");
-                        foreach (var _val in m_Coeffs.Values)
-                            w.WriteLine($"<td>{_val}</td>");
-                        w.WriteLine("</tr>");
-                        w.WriteLine("</Table>");
-                    }
-
-                    w.WriteLine($"<H2>Балка {m_BeamSection}</H2>");
-                    if (m_GeomParams != null)
-                    {
-                        w.WriteLine("<Table border=1 bordercolor = darkblue>");
-                        w.WriteLine("<caption>Геометрия</caption>");
-                        foreach (var _prm in m_GeomParams.Keys)
-                            w.WriteLine($"<th>{_prm}</th>");
-                        w.WriteLine("<tr>");
-                        foreach (var _val in m_GeomParams.Values)
-                            w.WriteLine($"<td>{_val}</td>");
-                        w.WriteLine("</tr>");
-                        w.WriteLine("</Table>");
-                    }
-                    w.WriteLine("<H3>Расчет:</H3>");
-                    if (m_CalcResults != null)
-                    {
-                        w.WriteLine("<Table border=1 bordercolor = darkblue>");
-                        w.WriteLine("<tr>");
-                        foreach (var _prm in m_CalcResults.Keys)
-                        {
-                            w.WriteLine($"<th>{_prm}</th>");
-                        }
-                        w.WriteLine("</tr>");
-                        w.WriteLine("<tr>");
-                        foreach (var _val in m_CalcResults.Values)
-                        {
-                            w.WriteLine($"<td>{_val}</td>");
-                        }
-                        w.WriteLine("</tr>");
-                        w.WriteLine("</Table>");
-                    }
-                    else
-                    {
-                        w.WriteLine("<th>Расчет не выполнен</th>");
-                    }
-                    w.WriteLine("</html>");
+                    pathToHtmlFile = fs.Name;
                 }
-
-                pathToHtmlFile = fs.Name;
+            }
+            catch (Exception _e)
+            {
+                MessageBox.Show("Ошибка при формировании отчета: " + _e.Message);
+                pathToHtmlFile = "";
             }
 
             return pathToHtmlFile;

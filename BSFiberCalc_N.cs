@@ -115,8 +115,9 @@ namespace BSFiberConcrete
                 N_ult = fi * Rfb * A;
             }
             else
+            {
                 N_ult = Rfb * Ab;
-
+            }
         }
 
         public Dictionary<string, double> GeomParams()
