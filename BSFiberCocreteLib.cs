@@ -11,6 +11,14 @@ namespace BSFiberConcrete
         public int Id { get; set; }
         public string Name { get; set; }
         public int Type { get; set; }
+        /// <summary>
+        /// значения сопротивления сталефибробетона растяжению при классе сталефибробетона по остаточной прочности на растяжение, МПа
+        /// </summary>
+        public double Rfbt3 { get; set; }
+        /// <summary>
+        /// Сжатие осевое
+        /// </summary>
+        public double Rfbn { get; set; }
     }
 
     public class Elements
@@ -30,22 +38,22 @@ namespace BSFiberConcrete
     {
         public static List<BSFiberBeton> betonList = new List<BSFiberBeton>
         {
-            new BSFiberBeton{Id = 2, Name = "B2.5", Type = 4 },
-            new BSFiberBeton{Id = 3, Name = "B3.5", Type = 4 },
-            new BSFiberBeton{Id = 5, Name = "B5", Type = 4 },            
-            new BSFiberBeton{Id = 7, Name = "B7.5", Type = 4 },
-            new BSFiberBeton{Id = 10, Name = "B10", Type = 0 },
-            new BSFiberBeton{Id = 12, Name = "B12.5",Type = 0},
-            new BSFiberBeton{Id = 15, Name = "B15", Type = 0 },
-            new BSFiberBeton{Id = 20, Name = "B20", Type = 0 },
-            new BSFiberBeton{Id = 25, Name = "B25", Type = 1 },
-            new BSFiberBeton{Id = 30, Name = "B30", Type = 2 },
-            new BSFiberBeton{Id = 35, Name = "B35", Type = 2 },
-            new BSFiberBeton{Id = 40, Name = "B40", Type = 2 },
-            new BSFiberBeton{Id = 45, Name = "B45", Type = 2 },
-            new BSFiberBeton{Id = 50, Name = "B50", Type = 2 },
-            new BSFiberBeton{Id = 55, Name = "B55", Type = 2 },
-            new BSFiberBeton{Id = 60, Name = "B60", Type = 2 }
+            new BSFiberBeton{Id = 2, Name = "B2.5", Type = 4, Rfbt3 = 0, Rfbn = 0 },
+            new BSFiberBeton{Id = 3, Name = "B3.5", Type = 4, Rfbt3 = 0, Rfbn = 2.7 },
+            new BSFiberBeton{Id = 5, Name = "B5", Type = 4, Rfbt3 = 0, Rfbn = 3.5 },            
+            new BSFiberBeton{Id = 7, Name = "B7.5", Type = 4, Rfbt3 = 0, Rfbn = 5.5 },
+            new BSFiberBeton{Id = 10, Name = "B1i", Type = 2, Rfbt3 = 1.0, Rfbn = 7.5 },
+            new BSFiberBeton{Id = 12, Name = "B1.25i",Type = 2, Rfbt3 = 1.25, Rfbn = 9.5},
+            new BSFiberBeton{Id = 15, Name = "B1.5i", Type = 2, Rfbt3 = 1.5, Rfbn = 11 },
+            new BSFiberBeton{Id = 20, Name = "B2i", Type = 2, Rfbt3 = 2.0, Rfbn = 15 },
+            new BSFiberBeton{Id = 25, Name = "B2.5i", Type = 2, Rfbt3 = 2.5, Rfbn = 18.5 },
+            new BSFiberBeton{Id = 30, Name = "B3i", Type = 2, Rfbt3 = 3.0, Rfbn = 22.0 },
+            new BSFiberBeton{Id = 35, Name = "B3.5i", Type = 2, Rfbt3 = 3.5, Rfbn = 25.5 },
+            new BSFiberBeton{Id = 40, Name = "B4i", Type = 2, Rfbt3 = 4.0, Rfbn = 29.0 },
+            new BSFiberBeton{Id = 45, Name = "B4.5i", Type = 2, Rfbt3 = 4.5, Rfbn = 32.0 },
+            new BSFiberBeton{Id = 50, Name = "B5i", Type = 2, Rfbt3 = 5.0, Rfbn = 36.0 },
+            new BSFiberBeton{Id = 55, Name = "B5.5i", Type = 2 , Rfbt3 = 5.5, Rfbn = 39.5},
+            new BSFiberBeton{Id = 60, Name = "B6i", Type = 2, Rfbt3 = 6.0, Rfbn = 43 }
         };
 
         public static Elements PhysElements = new Elements { 

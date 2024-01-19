@@ -149,18 +149,28 @@ namespace BSFiberConcrete
 
         private string CreateReport()
         {
-            string path = "";
-            BSFiberReport report = new BSFiberReport();
+            try
+            {
+                if (bsCalc is null)
+                    throw new Exception("Не выполнен расчет");
 
-            report.Beam = m_Beam;
-            report.Coeffs = m_Coeffs;
-            report.GeomParams = m_GeomParams;
-            report.PhysParams = bsCalc.PhysicalParameters();
-            report.BeamSection = m_BeamSection;
-            report.CalcResults = m_CalcResults;
-            
-            path = report.CreateReport();
-            return path;
+                string path = "";
+                BSFiberReport report = new BSFiberReport();
+
+                report.Beam = m_Beam;
+                report.Coeffs = m_Coeffs;
+                report.GeomParams = m_GeomParams;
+                report.PhysParams = bsCalc.PhysicalParameters();
+                report.BeamSection = m_BeamSection;
+                report.CalcResults = m_CalcResults;
+
+                path = report.CreateReport();
+                return path;
+            }
+            catch (Exception _e)
+            {
+                throw _e;
+            }
         }
 
 
@@ -172,9 +182,9 @@ namespace BSFiberConcrete
 
                 System.Diagnostics.Process.Start(pathToHtmlFile);
             }
-            catch
+            catch (Exception _e)
             {
-                MessageBox.Show("Ошибка в отчете");
+                MessageBox.Show("Ошибка в отчете " + _e.Message);
             }
         }
             
@@ -291,7 +301,12 @@ namespace BSFiberConcrete
 
                 // получаем весь выделенный объект
                 BSFiberBeton beton = (BSFiberBeton)cmbBetonClass.SelectedItem;
+                
+                numRfbt3n.Value = Convert.ToDecimal( BSFiberCalcHelper.MPA2kgsm2(beton.Rfbt3));
+                numRfbn.Value = Convert.ToDecimal(BSFiberCalcHelper.MPA2kgsm2(beton.Rfbn));
                 //MessageBox.Show(id.ToString() + ". " + beton.Name);
+
+
             }
             catch { }
         }
@@ -365,6 +380,11 @@ namespace BSFiberConcrete
 
                 System.Diagnostics.Process.Start(pathToHtmlFile);
             }
+        }
+
+        private void numRfbn_ValueChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

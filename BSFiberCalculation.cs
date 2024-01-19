@@ -104,7 +104,7 @@ namespace BSFiberConcrete
             {
                 x = Rfbt3* (b1f * h1f + bw*hw + bf*hf) / (b1f * (Rfbt3 + Rfb)) ;
 
-                Mult = 0.5* Rfbt3*(b1f*(h1f - x)*(h1f + x) + bf*hf*(hf-x+2*(hw+h1f)) + bw * hw * (hw - x * 2 * h1f));
+                Mult = 0.5* Rfbt3*(b1f*(h1f - x)*(h1f + x) + bf*hf*(hf-x + 2*(hw + h1f)) + bw * hw * (hw - x + 2*h1f));
             };
 
             Action calc_b = delegate

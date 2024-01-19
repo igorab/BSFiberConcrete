@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabGeneral = new System.Windows.Forms.TabControl();
             this.tabParams = new System.Windows.Forms.TabPage();
             this.groupBoxResult = new System.Windows.Forms.GroupBox();
@@ -53,11 +53,18 @@
             this.tbLength = new System.Windows.Forms.TextBox();
             this.tabConcrete = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.numRfbn = new System.Windows.Forms.NumericUpDown();
             this.numRfbt3n = new System.Windows.Forms.NumericUpDown();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.labelYb = new System.Windows.Forms.Label();
+            this.numYb = new System.Windows.Forms.NumericUpDown();
             this.label9 = new System.Windows.Forms.Label();
             this.numYb5 = new System.Windows.Forms.NumericUpDown();
             this.label8 = new System.Windows.Forms.Label();
@@ -98,8 +105,6 @@
             this.btnCalcQ = new System.Windows.Forms.Button();
             this.btnCalcM = new System.Windows.Forms.Button();
             this.labelCalculation = new System.Windows.Forms.Label();
-            this.labelYb = new System.Windows.Forms.Label();
-            this.numYb = new System.Windows.Forms.NumericUpDown();
             this.tabGeneral.SuspendLayout();
             this.tabParams.SuspendLayout();
             this.groupBoxResult.SuspendLayout();
@@ -111,6 +116,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numRfbn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numRfbt3n)).BeginInit();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numYb)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numYb5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numYb3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numYb2)).BeginInit();
@@ -123,7 +129,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.panelCalc.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numYb)).BeginInit();
             this.SuspendLayout();
             // 
             // tabGeneral
@@ -158,7 +163,7 @@
             this.groupBoxResult.Controls.Add(this.lblResult);
             this.groupBoxResult.Location = new System.Drawing.Point(738, 31);
             this.groupBoxResult.Name = "groupBoxResult";
-            this.groupBoxResult.Size = new System.Drawing.Size(223, 222);
+            this.groupBoxResult.Size = new System.Drawing.Size(338, 222);
             this.groupBoxResult.TabIndex = 2;
             this.groupBoxResult.TabStop = false;
             this.groupBoxResult.Text = "Результаты расчета";
@@ -354,21 +359,41 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label11);
+            this.groupBox2.Controls.Add(this.label10);
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.numRfbn);
             this.groupBox2.Controls.Add(this.numRfbt3n);
             this.groupBox2.Location = new System.Drawing.Point(9, 53);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(726, 80);
+            this.groupBox2.Size = new System.Drawing.Size(742, 80);
             this.groupBox2.TabIndex = 6;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Характеристики";
             // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(6, 16);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(370, 13);
+            this.label11.TabIndex = 5;
+            this.label11.Text = "Нормативное остаточное сопротивления осевому растяжению кг/см2 ";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(6, 52);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(340, 13);
+            this.label10.TabIndex = 4;
+            this.label10.Text = "Расчетные значения сопротивления  на сжатиие по СП63 кг/см2";
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(19, 33);
+            this.label4.Location = new System.Drawing.Point(382, 18);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(39, 13);
             this.label4.TabIndex = 3;
@@ -377,7 +402,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(185, 33);
+            this.label3.Location = new System.Drawing.Point(382, 52);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(30, 13);
             this.label3.TabIndex = 2;
@@ -386,7 +411,7 @@
             // numRfbn
             // 
             this.numRfbn.DecimalPlaces = 2;
-            this.numRfbn.Location = new System.Drawing.Point(226, 33);
+            this.numRfbn.Location = new System.Drawing.Point(431, 50);
             this.numRfbn.Maximum = new decimal(new int[] {
             10000000,
             0,
@@ -395,11 +420,12 @@
             this.numRfbn.Name = "numRfbn";
             this.numRfbn.Size = new System.Drawing.Size(120, 20);
             this.numRfbn.TabIndex = 1;
+            this.numRfbn.ValueChanged += new System.EventHandler(this.numRfbn_ValueChanged);
             // 
             // numRfbt3n
             // 
             this.numRfbt3n.DecimalPlaces = 2;
-            this.numRfbt3n.Location = new System.Drawing.Point(59, 34);
+            this.numRfbt3n.Location = new System.Drawing.Point(431, 16);
             this.numRfbt3n.Maximum = new decimal(new int[] {
             10000000,
             0,
@@ -411,6 +437,9 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label14);
+            this.groupBox1.Controls.Add(this.label13);
+            this.groupBox1.Controls.Add(this.label12);
             this.groupBox1.Controls.Add(this.labelYb);
             this.groupBox1.Controls.Add(this.numYb);
             this.groupBox1.Controls.Add(this.label9);
@@ -425,15 +454,65 @@
             this.groupBox1.Controls.Add(this.numYft);
             this.groupBox1.Location = new System.Drawing.Point(10, 150);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(725, 133);
+            this.groupBox1.Size = new System.Drawing.Size(741, 133);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Коэффициенты условий работы бетона";
+            this.groupBox1.Text = "Коэффициенты";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(35, 92);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(164, 13);
+            this.label14.TabIndex = 14;
+            this.label14.Text = "Коэфициенты условия работы ";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(32, 64);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(313, 13);
+            this.label13.TabIndex = 13;
+            this.label13.Text = "Значения коэффициента надежности по бетону при сжатии ";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(55, 18);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(662, 13);
+            this.label12.TabIndex = 12;
+            this.label12.Text = "для расчета по предельным состояниям первой группы при назначении класса сталефиб" +
+    "робетона по прочности на растяжение";
+            // 
+            // labelYb
+            // 
+            this.labelYb.AutoSize = true;
+            this.labelYb.Location = new System.Drawing.Point(290, 63);
+            this.labelYb.Name = "labelYb";
+            this.labelYb.Size = new System.Drawing.Size(20, 13);
+            this.labelYb.TabIndex = 11;
+            this.labelYb.Text = "Yb";
+            // 
+            // numYb
+            // 
+            this.numYb.DecimalPlaces = 1;
+            this.numYb.Location = new System.Drawing.Point(358, 64);
+            this.numYb.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+            this.numYb.Name = "numYb";
+            this.numYb.Size = new System.Drawing.Size(85, 20);
+            this.numYb.TabIndex = 10;
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(567, 87);
+            this.label9.Location = new System.Drawing.Point(615, 92);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(26, 13);
             this.label9.TabIndex = 9;
@@ -442,7 +521,7 @@
             // numYb5
             // 
             this.numYb5.DecimalPlaces = 1;
-            this.numYb5.Location = new System.Drawing.Point(599, 86);
+            this.numYb5.Location = new System.Drawing.Point(647, 91);
             this.numYb5.Maximum = new decimal(new int[] {
             10000000,
             0,
@@ -455,7 +534,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(430, 88);
+            this.label8.Location = new System.Drawing.Point(489, 94);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(26, 13);
             this.label8.TabIndex = 7;
@@ -464,7 +543,7 @@
             // numYb3
             // 
             this.numYb3.DecimalPlaces = 1;
-            this.numYb3.Location = new System.Drawing.Point(462, 87);
+            this.numYb3.Location = new System.Drawing.Point(521, 92);
             this.numYb3.Maximum = new decimal(new int[] {
             10000000,
             0,
@@ -477,7 +556,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(284, 89);
+            this.label7.Location = new System.Drawing.Point(349, 94);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(26, 13);
             this.label7.TabIndex = 5;
@@ -486,7 +565,7 @@
             // numYb2
             // 
             this.numYb2.DecimalPlaces = 1;
-            this.numYb2.Location = new System.Drawing.Point(316, 88);
+            this.numYb2.Location = new System.Drawing.Point(395, 91);
             this.numYb2.Maximum = new decimal(new int[] {
             10000000,
             0,
@@ -499,7 +578,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(150, 91);
+            this.label6.Location = new System.Drawing.Point(225, 94);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(26, 13);
             this.label6.TabIndex = 3;
@@ -508,7 +587,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(32, 50);
+            this.label5.Location = new System.Drawing.Point(32, 35);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(20, 13);
             this.label5.TabIndex = 2;
@@ -517,7 +596,7 @@
             // numYb1
             // 
             this.numYb1.DecimalPlaces = 1;
-            this.numYb1.Location = new System.Drawing.Point(182, 90);
+            this.numYb1.Location = new System.Drawing.Point(257, 91);
             this.numYb1.Maximum = new decimal(new int[] {
             10000000,
             0,
@@ -530,7 +609,7 @@
             // numYft
             // 
             this.numYft.DecimalPlaces = 1;
-            this.numYft.Location = new System.Drawing.Point(58, 49);
+            this.numYft.Location = new System.Drawing.Point(58, 34);
             this.numYft.Maximum = new decimal(new int[] {
             10000000,
             0,
@@ -580,6 +659,7 @@
             this.comboBetonType.Name = "comboBetonType";
             this.comboBetonType.Size = new System.Drawing.Size(121, 21);
             this.comboBetonType.TabIndex = 1;
+            this.comboBetonType.Text = "Тяжелый";
             this.comboBetonType.SelectedIndexChanged += new System.EventHandler(this.comboBetonType_SelectedIndexChanged);
             // 
             // picBeton
@@ -619,25 +699,25 @@
             // 
             // M
             // 
-            dataGridViewCellStyle16.Format = "N2";
-            dataGridViewCellStyle16.NullValue = null;
-            this.M.DefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle1.Format = "N2";
+            dataGridViewCellStyle1.NullValue = null;
+            this.M.DefaultCellStyle = dataGridViewCellStyle1;
             this.M.HeaderText = "M";
             this.M.Name = "M";
             // 
             // N
             // 
-            dataGridViewCellStyle17.Format = "N2";
-            dataGridViewCellStyle17.NullValue = null;
-            this.N.DefaultCellStyle = dataGridViewCellStyle17;
+            dataGridViewCellStyle2.Format = "N2";
+            dataGridViewCellStyle2.NullValue = null;
+            this.N.DefaultCellStyle = dataGridViewCellStyle2;
             this.N.HeaderText = "N";
             this.N.Name = "N";
             // 
             // Q
             // 
-            dataGridViewCellStyle18.Format = "N2";
-            dataGridViewCellStyle18.NullValue = null;
-            this.Q.DefaultCellStyle = dataGridViewCellStyle18;
+            dataGridViewCellStyle3.Format = "N2";
+            dataGridViewCellStyle3.NullValue = null;
+            this.Q.DefaultCellStyle = dataGridViewCellStyle3;
             this.Q.HeaderText = "Q";
             this.Q.Name = "Q";
             // 
@@ -828,28 +908,6 @@
             this.labelCalculation.TabIndex = 3;
             this.labelCalculation.Text = "Расчет:";
             // 
-            // labelYb
-            // 
-            this.labelYb.AutoSize = true;
-            this.labelYb.Location = new System.Drawing.Point(32, 92);
-            this.labelYb.Name = "labelYb";
-            this.labelYb.Size = new System.Drawing.Size(20, 13);
-            this.labelYb.TabIndex = 11;
-            this.labelYb.Text = "Yb";
-            // 
-            // numYb
-            // 
-            this.numYb.DecimalPlaces = 1;
-            this.numYb.Location = new System.Drawing.Point(58, 91);
-            this.numYb.Maximum = new decimal(new int[] {
-            10000000,
-            0,
-            0,
-            0});
-            this.numYb.Name = "numYb";
-            this.numYb.Size = new System.Drawing.Size(85, 20);
-            this.numYb.TabIndex = 10;
-            // 
             // BSFiberMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -884,6 +942,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numRfbt3n)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numYb)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numYb5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numYb3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numYb2)).EndInit();
@@ -899,7 +958,6 @@
             this.menuStrip1.PerformLayout();
             this.panelCalc.ResumeLayout(false);
             this.panelCalc.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numYb)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -975,6 +1033,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Q;
         private System.Windows.Forms.Label labelYb;
         private System.Windows.Forms.NumericUpDown numYb;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label12;
     }
 }
 

@@ -10,6 +10,8 @@ namespace BSFiberConcrete
 {
     public class BSFiberCalcHelper
     {
+        public static double MPA2kgsm2(double _mpa) => 10.197162d * _mpa;
+
         public static string EnumDescription(Enum myEnumVariable)
         {
             string desc = myEnumVariable.GetAttributeOfType<DescriptionAttribute>().Description;
