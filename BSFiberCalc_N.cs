@@ -69,10 +69,16 @@ namespace BSFiberConcrete
         double Rfb;
         double N_ult;
 
+        private Dictionary<char, double> m_Efforts = new Dictionary<char, double>();
+
         public void Calculate()
         {
+            N = m_Efforts['N'];
+
+            double Q = m_Efforts['Q'];
+
             //Момент от действия полной нагрузки
-            M1 = 1;
+            M1 = m_Efforts['M'];
 
             //Момент от действия постянных и длительных нагрузок нагрузок
             Ml1 = 1;
@@ -142,6 +148,11 @@ namespace BSFiberConcrete
             A = b * h;
 
             I = b * h * h * h / 12;
+        }
+
+        public void GetEfforts(Dictionary<char, double> _efforts)
+        {
+            m_Efforts = _efforts;
         }
 
         public Dictionary<string, double> Results()

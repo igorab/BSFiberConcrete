@@ -333,26 +333,27 @@ namespace BSFiberConcrete
                 e.Handled = true;
             }
         }
-
-        private void btnCalcM_Click(object sender, EventArgs e)
-        {
-            BSFiberCalc_M fiberCalc = new BSFiberCalc_M();
-            fiberCalc.Calculate();
-        }
-
-        private void btnCalcQ_Click(object sender, EventArgs e)
-        {
-            BSFiberCalc_Q  fiberCalc = new BSFiberCalc_Q();
-            fiberCalc.Calculate();
-        }
-
+        
         private void btnCalcN_Click(object sender, EventArgs e)
         {
-            var value = gridEfforts.Rows[0].Cells[1].Value;
-            
             BSFiberCalc_N fiberCalc = new BSFiberCalc_N();
+            Dictionary<char, double> MNQ = new Dictionary<char, double>();
+            char[] F = new char[] { 'M', 'N', 'Q' };
+
             try
             {
+                DataGridViewRowCollection rows = gridEfforts.Rows;
+                var row = rows[0];
+
+                for (int i=0; i<3; i++ )
+                {                    
+                    var x = Convert.ToDouble(row.Cells[i].Value);
+                    MNQ.Add(F[i], x);
+                }
+                
+                //if (effortsMNQ == null)
+                //    throw new Exception("Не заданы усилия");
+                
                 fiberCalc.GetParams(m_BSLoadData.Params);
 
                 double beamLngth = double.Parse(tbLength.Text);
@@ -360,6 +361,8 @@ namespace BSFiberConcrete
                 double[] sz = BeamSizes(beamLngth);
 
                 fiberCalc.GetSize(sz);
+
+                fiberCalc.GetEfforts(MNQ);
 
                 fiberCalc.Calculate();
 
@@ -380,11 +383,6 @@ namespace BSFiberConcrete
 
                 System.Diagnostics.Process.Start(pathToHtmlFile);
             }
-        }
-
-        private void numRfbn_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
+        }        
     }
 }

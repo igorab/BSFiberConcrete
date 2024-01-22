@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabGeneral = new System.Windows.Forms.TabControl();
             this.tabParams = new System.Windows.Forms.TabPage();
             this.groupBoxResult = new System.Windows.Forms.GroupBox();
@@ -102,8 +102,6 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.panelCalc = new System.Windows.Forms.Panel();
             this.btnCalcN = new System.Windows.Forms.Button();
-            this.btnCalcQ = new System.Windows.Forms.Button();
-            this.btnCalcM = new System.Windows.Forms.Button();
             this.labelCalculation = new System.Windows.Forms.Label();
             this.tabGeneral.SuspendLayout();
             this.tabParams.SuspendLayout();
@@ -419,8 +417,7 @@
             0});
             this.numRfbn.Name = "numRfbn";
             this.numRfbn.Size = new System.Drawing.Size(120, 20);
-            this.numRfbn.TabIndex = 1;
-            this.numRfbn.ValueChanged += new System.EventHandler(this.numRfbn_ValueChanged);
+            this.numRfbn.TabIndex = 1;            
             // 
             // numRfbt3n
             // 
@@ -699,25 +696,25 @@
             // 
             // M
             // 
-            dataGridViewCellStyle1.Format = "N2";
-            dataGridViewCellStyle1.NullValue = null;
-            this.M.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle7.Format = "N2";
+            dataGridViewCellStyle7.NullValue = null;
+            this.M.DefaultCellStyle = dataGridViewCellStyle7;
             this.M.HeaderText = "M";
             this.M.Name = "M";
             // 
             // N
             // 
-            dataGridViewCellStyle2.Format = "N2";
-            dataGridViewCellStyle2.NullValue = null;
-            this.N.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle8.Format = "N2";
+            dataGridViewCellStyle8.NullValue = null;
+            this.N.DefaultCellStyle = dataGridViewCellStyle8;
             this.N.HeaderText = "N";
             this.N.Name = "N";
             // 
             // Q
             // 
-            dataGridViewCellStyle3.Format = "N2";
-            dataGridViewCellStyle3.NullValue = null;
-            this.Q.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle9.Format = "N2";
+            dataGridViewCellStyle9.NullValue = null;
+            this.Q.DefaultCellStyle = dataGridViewCellStyle9;
             this.Q.HeaderText = "Q";
             this.Q.Name = "Q";
             // 
@@ -859,45 +856,23 @@
             // panelCalc
             // 
             this.panelCalc.Controls.Add(this.btnCalcN);
-            this.panelCalc.Controls.Add(this.btnCalcQ);
-            this.panelCalc.Controls.Add(this.btnCalcM);
             this.panelCalc.Controls.Add(this.labelCalculation);
             this.panelCalc.Controls.Add(this.btnCalc);
             this.panelCalc.Controls.Add(this.btnReport);
             this.panelCalc.Location = new System.Drawing.Point(855, 379);
             this.panelCalc.Name = "panelCalc";
-            this.panelCalc.Size = new System.Drawing.Size(258, 167);
+            this.panelCalc.Size = new System.Drawing.Size(258, 108);
             this.panelCalc.TabIndex = 14;
             // 
             // btnCalcN
             // 
-            this.btnCalcN.Location = new System.Drawing.Point(67, 104);
+            this.btnCalcN.Location = new System.Drawing.Point(67, 55);
             this.btnCalcN.Name = "btnCalcN";
-            this.btnCalcN.Size = new System.Drawing.Size(75, 23);
+            this.btnCalcN.Size = new System.Drawing.Size(169, 23);
             this.btnCalcN.TabIndex = 6;
-            this.btnCalcN.Text = "N";
+            this.btnCalcN.Text = "Усилия ( M N Q )";
             this.btnCalcN.UseVisualStyleBackColor = true;
             this.btnCalcN.Click += new System.EventHandler(this.btnCalcN_Click);
-            // 
-            // btnCalcQ
-            // 
-            this.btnCalcQ.Location = new System.Drawing.Point(67, 74);
-            this.btnCalcQ.Name = "btnCalcQ";
-            this.btnCalcQ.Size = new System.Drawing.Size(75, 23);
-            this.btnCalcQ.TabIndex = 5;
-            this.btnCalcQ.Text = "Q";
-            this.btnCalcQ.UseVisualStyleBackColor = true;
-            this.btnCalcQ.Click += new System.EventHandler(this.btnCalcQ_Click);
-            // 
-            // btnCalcM
-            // 
-            this.btnCalcM.Location = new System.Drawing.Point(67, 45);
-            this.btnCalcM.Name = "btnCalcM";
-            this.btnCalcM.Size = new System.Drawing.Size(75, 23);
-            this.btnCalcM.TabIndex = 4;
-            this.btnCalcM.Text = "M";
-            this.btnCalcM.UseVisualStyleBackColor = true;
-            this.btnCalcM.Click += new System.EventHandler(this.btnCalcM_Click);
             // 
             // labelCalculation
             // 
@@ -1015,8 +990,6 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.NumericUpDown numYb2;
         private System.Windows.Forms.Panel panelCalc;
-        private System.Windows.Forms.Button btnCalcQ;
-        private System.Windows.Forms.Button btnCalcM;
         private System.Windows.Forms.Label labelCalculation;
         private System.Windows.Forms.GroupBox groupBoxResult;
         private System.Windows.Forms.CheckBox checkBox2;
