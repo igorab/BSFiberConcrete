@@ -46,6 +46,8 @@ namespace BSFiberConcrete
         [DisplayName("коэффициент ф.")]
         public double k_b { get; private set; }
 
+        private Fiber m_Fiber;
+
         double Rfbt3n;
         double B;
         double Yft, Yb, Yb1, Yb2, Yb3, Yb5;
@@ -71,6 +73,16 @@ namespace BSFiberConcrete
 
         private Dictionary<char, double> m_Efforts = new Dictionary<char, double>();
 
+        public void GetFiberParamsFromJson(Fiber _fiber)
+        {
+            m_Fiber = _fiber;
+
+            e0 = _fiber.e0;
+            Ef = _fiber.Ef;
+            Eb = _fiber.Eb;
+            mu_fv = _fiber.mu_fv;
+        }
+
         public void Calculate()
         {
             N = m_Efforts['N'];
@@ -84,7 +96,7 @@ namespace BSFiberConcrete
             Ml1 = 1;
 
             //Коэффициент, учитывающий влияние длительности действия нагрузки, определяют по формуле (6.27)
-            fi1 = 1 + Ml1 / M1;
+            fi1 = (M1!=0) ? 1 + Ml1 / M1 : 1.0;
 
             //относительное значение эксцентриситета продольной силы
             delta_e = e0 / h;
@@ -133,12 +145,7 @@ namespace BSFiberConcrete
 
         public void GetParams(double[] _t)
         {
-            (Rfbt3n, Rfbn, Yb, Yft, Yb1, Yb2, Yb3, Yb5, B) = (_t[0], _t[1], _t[2], _t[3], _t[4], _t[5], _t[6], _t[7], _t[8]);
-           
-            e0 = 2;         
-            Ef = 1936799;
-            Eb = 331294;
-            mu_fv = 0.005;
+            (Rfbt3n, Rfbn, Yb, Yft, Yb1, Yb2, Yb3, Yb5, B) = (_t[0], _t[1], _t[2], _t[3], _t[4], _t[5], _t[6], _t[7], _t[8]);                      
         }
 
         public void GetSize(double[] _t)

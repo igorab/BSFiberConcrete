@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabGeneral = new System.Windows.Forms.TabControl();
             this.tabParams = new System.Windows.Forms.TabPage();
             this.groupBoxResult = new System.Windows.Forms.GroupBox();
@@ -325,9 +325,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(6, 52);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(106, 13);
+            this.label1.Size = new System.Drawing.Size(112, 13);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Длина элемента, м";
+            this.label1.Text = "Длина элемента, см";
             // 
             // tbLength
             // 
@@ -335,7 +335,7 @@
             this.tbLength.Name = "tbLength";
             this.tbLength.Size = new System.Drawing.Size(119, 20);
             this.tbLength.TabIndex = 0;
-            this.tbLength.Text = "10";
+            this.tbLength.Text = "600";
             this.tbLength.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbLength_KeyPress);
             // 
             // tabConcrete
@@ -417,7 +417,7 @@
             0});
             this.numRfbn.Name = "numRfbn";
             this.numRfbn.Size = new System.Drawing.Size(120, 20);
-            this.numRfbn.TabIndex = 1;            
+            this.numRfbn.TabIndex = 1;
             // 
             // numRfbt3n
             // 
@@ -689,34 +689,39 @@
             this.M,
             this.N,
             this.Q});
+            this.gridEfforts.GridColor = System.Drawing.SystemColors.ControlDarkDark;
             this.gridEfforts.Location = new System.Drawing.Point(285, 33);
             this.gridEfforts.Name = "gridEfforts";
             this.gridEfforts.Size = new System.Drawing.Size(697, 150);
             this.gridEfforts.TabIndex = 2;
+            this.gridEfforts.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridEfforts_CellContentClick);
             // 
             // M
             // 
-            dataGridViewCellStyle7.Format = "N2";
-            dataGridViewCellStyle7.NullValue = null;
-            this.M.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle1.Format = "N2";
+            dataGridViewCellStyle1.NullValue = null;
+            this.M.DefaultCellStyle = dataGridViewCellStyle1;
             this.M.HeaderText = "M";
             this.M.Name = "M";
+            this.M.ToolTipText = "Изгибающий момент";
             // 
             // N
             // 
-            dataGridViewCellStyle8.Format = "N2";
-            dataGridViewCellStyle8.NullValue = null;
-            this.N.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle2.Format = "N2";
+            dataGridViewCellStyle2.NullValue = null;
+            this.N.DefaultCellStyle = dataGridViewCellStyle2;
             this.N.HeaderText = "N";
             this.N.Name = "N";
+            this.N.ToolTipText = "Продольная сила";
             // 
             // Q
             // 
-            dataGridViewCellStyle9.Format = "N2";
-            dataGridViewCellStyle9.NullValue = null;
-            this.Q.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle3.Format = "N2";
+            dataGridViewCellStyle3.NullValue = null;
+            this.Q.DefaultCellStyle = dataGridViewCellStyle3;
             this.Q.HeaderText = "Q";
             this.Q.Name = "Q";
+            this.Q.ToolTipText = "Поперечная сила";
             // 
             // labelEffortSigns
             // 
@@ -1001,9 +1006,6 @@
         private System.Windows.Forms.PictureBox picEffortsSign;
         private System.Windows.Forms.Label labelEffortSigns;
         private System.Windows.Forms.DataGridView gridEfforts;
-        private System.Windows.Forms.DataGridViewTextBoxColumn M;
-        private System.Windows.Forms.DataGridViewTextBoxColumn N;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Q;
         private System.Windows.Forms.Label labelYb;
         private System.Windows.Forms.NumericUpDown numYb;
         private System.Windows.Forms.Label label10;
@@ -1011,6 +1013,9 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.DataGridViewTextBoxColumn M;
+        private System.Windows.Forms.DataGridViewTextBoxColumn N;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Q;
     }
 }
 

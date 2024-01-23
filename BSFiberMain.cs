@@ -32,7 +32,7 @@ namespace BSFiberConcrete
         {
             InitializeComponent();
         }
-
+        
         private void BSFiberMain_Load(object sender, EventArgs e)
         {
             m_Beam = new Dictionary<string, double>();
@@ -42,6 +42,8 @@ namespace BSFiberConcrete
             m_BSLoadData.Load();
 
             LoadRectangle();
+
+            m_BSLoadData.ReadParamsFromJson();
 
             cmbBetonClass.DataSource = BSFiberCocreteLib.betonList;
             cmbBetonClass.DisplayMember = "Name";
@@ -58,6 +60,11 @@ namespace BSFiberConcrete
             numYb3.Value = (decimal)BSFiberCocreteLib.PhysElements.Yb3;
             numYb5.Value = (decimal)BSFiberCocreteLib.PhysElements.Yb5;
 
+            double[] mnq = { 1.0, 50000, 3.0 }; //MNQ
+            
+            gridEfforts.Rows[0].Cells[0].Value = mnq[0];
+            gridEfforts.Rows[0].Cells[1].Value = mnq[1];
+            gridEfforts.Rows[0].Cells[2].Value = mnq[2];
 
             //cmbBetonClass.SelectedIndexChanged += cmbBetonClass_SelectedIndexChanged;
         }
@@ -350,11 +357,15 @@ namespace BSFiberConcrete
                     var x = Convert.ToDouble(row.Cells[i].Value);
                     MNQ.Add(F[i], x);
                 }
-                
+
                 //if (effortsMNQ == null)
                 //    throw new Exception("Не заданы усилия");
-                
-                fiberCalc.GetParams(m_BSLoadData.Params);
+
+                double[] prms = m_BSLoadData.Params;
+
+                InitUserParams(prms);
+
+                fiberCalc.GetParams(prms);
 
                 double beamLngth = double.Parse(tbLength.Text);
 
@@ -363,6 +374,8 @@ namespace BSFiberConcrete
                 fiberCalc.GetSize(sz);
 
                 fiberCalc.GetEfforts(MNQ);
+
+                fiberCalc.GetFiberParamsFromJson(m_BSLoadData.Fiber);
 
                 fiberCalc.Calculate();
 
@@ -383,6 +396,11 @@ namespace BSFiberConcrete
 
                 System.Diagnostics.Process.Start(pathToHtmlFile);
             }
-        }        
+        }
+
+        private void gridEfforts_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

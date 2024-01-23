@@ -6,6 +6,20 @@ using System.Threading.Tasks;
 
 namespace BSFiberConcrete
 {
+    public class Fiber
+    {
+        public double e0 { get; set; }
+        public double Ef { get; set; }
+        public double Eb { get; set; }
+        public double mu_fv { get; set; }
+    }
+
+    public class BSFiberParams
+    {
+        public Fiber Fiber { get; set; }
+    }
+
+
     class BSFiberBeton
     {
         public int Id { get; set; }
