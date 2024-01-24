@@ -26,15 +26,7 @@ namespace BSFiberConcrete
         }
         
         public override void Calculate()
-        {           
-            double Q = m_Efforts['Q'];
-
-            //Момент от действия полной нагрузки
-            M1 = m_Efforts['M'];
-
-            //Момент от действия постянных и длительных нагрузок нагрузок
-            Ml1 = 1;
-
+        {                       
             //Коэффициент, учитывающий влияние длительности действия нагрузки, определяют по формуле (6.27)
             fi1 = (M1 != 0) ? 1 + Ml1 / M1 : 1.0;
 
@@ -206,7 +198,7 @@ namespace BSFiberConcrete
         protected double Rfb;
         protected double N_ult;
 
-        protected Dictionary<char, double> m_Efforts = new Dictionary<char, double>();
+        protected Dictionary<string, double> m_Efforts = new Dictionary<string, double>();
 
         public static BSFiberCalc_MNQ Construct(BeamSection _BeamSection)
         {
@@ -257,10 +249,18 @@ namespace BSFiberConcrete
 
         public virtual void GetSize(double[] _t) {}
 
-        public void GetEfforts(Dictionary<char, double> _efforts)
+        public void GetEfforts(Dictionary<string, double> _efforts)
         {
             m_Efforts = _efforts;
-            N = m_Efforts['N'];
+
+            //Продольное усилие кг
+            N = m_Efforts["N"];
+            // Поперечная сила
+            double Q = m_Efforts["Q"];
+            //Момент от действия полной нагрузки
+            M1 = m_Efforts["M"];
+            //Момент от действия постянных и длительных нагрузок нагрузок
+            Ml1 = m_Efforts["Ml"];
         }
 
         public Dictionary<string, double> Results()

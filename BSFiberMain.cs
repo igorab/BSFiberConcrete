@@ -305,9 +305,9 @@ namespace BSFiberConcrete
             }
         }
 
-        private void InitEfforts(ref Dictionary<char, double> MNQ)
+        private void InitEfforts(ref Dictionary<string, double> MNQ)
         {
-            char[] F = new char[] { 'M', 'N', 'Q' };
+            string[] F = new string[] { "M", "N", "Q", "Ml"};
             DataGridViewRowCollection rows = gridEfforts.Rows;
             var row = rows[0];
 
@@ -325,7 +325,7 @@ namespace BSFiberConcrete
         {
             BSFiberCalc_MNQ fiberCalc = BSFiberCalc_MNQ.Construct(m_BeamSection);
 
-            Dictionary<char, double> MNQ = new Dictionary<char, double>();
+            Dictionary<string, double> MNQ = new Dictionary<string, double>();
             
             try
             {

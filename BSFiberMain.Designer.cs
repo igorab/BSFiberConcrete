@@ -82,9 +82,6 @@
             this.picBeton = new System.Windows.Forms.PictureBox();
             this.tabStrength = new System.Windows.Forms.TabPage();
             this.gridEfforts = new System.Windows.Forms.DataGridView();
-            this.M = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.N = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Q = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.labelEffortSigns = new System.Windows.Forms.Label();
             this.picEffortsSign = new System.Windows.Forms.PictureBox();
             this.btnCalc = new System.Windows.Forms.Button();
@@ -103,6 +100,10 @@
             this.panelCalc = new System.Windows.Forms.Panel();
             this.btnCalcN = new System.Windows.Forms.Button();
             this.labelCalculation = new System.Windows.Forms.Label();
+            this.M = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.N = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Q = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Ml = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabGeneral.SuspendLayout();
             this.tabParams.SuspendLayout();
             this.groupBoxResult.SuspendLayout();
@@ -684,39 +685,13 @@
             this.gridEfforts.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.M,
             this.N,
-            this.Q});
+            this.Q,
+            this.Ml});
             this.gridEfforts.GridColor = System.Drawing.SystemColors.ControlDarkDark;
             this.gridEfforts.Location = new System.Drawing.Point(285, 33);
             this.gridEfforts.Name = "gridEfforts";
             this.gridEfforts.Size = new System.Drawing.Size(697, 150);
-            this.gridEfforts.TabIndex = 2;            
-            // 
-            // M
-            // 
-            dataGridViewCellStyle1.Format = "N2";
-            dataGridViewCellStyle1.NullValue = null;
-            this.M.DefaultCellStyle = dataGridViewCellStyle1;
-            this.M.HeaderText = "M";
-            this.M.Name = "M";
-            this.M.ToolTipText = "Изгибающий момент";
-            // 
-            // N
-            // 
-            dataGridViewCellStyle2.Format = "N2";
-            dataGridViewCellStyle2.NullValue = null;
-            this.N.DefaultCellStyle = dataGridViewCellStyle2;
-            this.N.HeaderText = "N";
-            this.N.Name = "N";
-            this.N.ToolTipText = "Продольная сила";
-            // 
-            // Q
-            // 
-            dataGridViewCellStyle3.Format = "N2";
-            dataGridViewCellStyle3.NullValue = null;
-            this.Q.DefaultCellStyle = dataGridViewCellStyle3;
-            this.Q.HeaderText = "Q";
-            this.Q.Name = "Q";
-            this.Q.ToolTipText = "Поперечная сила";
+            this.gridEfforts.TabIndex = 2;
             // 
             // labelEffortSigns
             // 
@@ -882,6 +857,39 @@
             this.labelCalculation.TabIndex = 3;
             this.labelCalculation.Text = "Расчет:";
             // 
+            // M
+            // 
+            dataGridViewCellStyle1.Format = "N2";
+            dataGridViewCellStyle1.NullValue = null;
+            this.M.DefaultCellStyle = dataGridViewCellStyle1;
+            this.M.HeaderText = "M";
+            this.M.Name = "M";
+            this.M.ToolTipText = "Момент от действия полной нагрузки";
+            // 
+            // N
+            // 
+            dataGridViewCellStyle2.Format = "N2";
+            dataGridViewCellStyle2.NullValue = null;
+            this.N.DefaultCellStyle = dataGridViewCellStyle2;
+            this.N.HeaderText = "N";
+            this.N.Name = "N";
+            this.N.ToolTipText = "Продольная сила";
+            // 
+            // Q
+            // 
+            dataGridViewCellStyle3.Format = "N2";
+            dataGridViewCellStyle3.NullValue = null;
+            this.Q.DefaultCellStyle = dataGridViewCellStyle3;
+            this.Q.HeaderText = "Q";
+            this.Q.Name = "Q";
+            this.Q.ToolTipText = "Поперечная сила";
+            // 
+            // Ml
+            // 
+            this.Ml.HeaderText = "Ml";
+            this.Ml.Name = "Ml";
+            this.Ml.ToolTipText = "Момент от действия постянных и длительных нагрузок нагрузок";
+            // 
             // BSFiberMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1010,6 +1018,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn M;
         private System.Windows.Forms.DataGridViewTextBoxColumn N;
         private System.Windows.Forms.DataGridViewTextBoxColumn Q;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Ml;
     }
 }
 

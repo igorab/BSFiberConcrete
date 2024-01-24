@@ -53,6 +53,9 @@ namespace BSFiberConcrete
         [DisplayName("Момент инерции прямоугольного сечения")]
         public override double I_s() => b * Math.Pow(h, 3) / 12;
 
+        [DisplayName("Расстояние от центра тяжести сечения сталефибробетонного элемента до наиболее растянутого волокна, см")]
+        public double y_t() => h / 2.0; 
+
     }
 
     /// <summary>
