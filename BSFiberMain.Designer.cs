@@ -165,17 +165,15 @@
             this.groupBoxResult.TabIndex = 2;
             this.groupBoxResult.TabStop = false;
             this.groupBoxResult.Text = "Результаты расчета";
-            this.groupBoxResult.Enter += new System.EventHandler(this.groupBox3_Enter);
             // 
             // lblRes0
             // 
             this.lblRes0.AutoSize = true;
             this.lblRes0.Location = new System.Drawing.Point(37, 41);
             this.lblRes0.Name = "lblRes0";
-            this.lblRes0.Size = new System.Drawing.Size(27, 13);
+            this.lblRes0.Size = new System.Drawing.Size(13, 13);
             this.lblRes0.TabIndex = 13;
-            this.lblRes0.Text = "res0";
-            this.lblRes0.Click += new System.EventHandler(this.lblRes0_Click);
+            this.lblRes0.Text = "=";
             // 
             // tbResult
             // 
@@ -198,8 +196,7 @@
             this.lblResult.Name = "lblResult";
             this.lblResult.Size = new System.Drawing.Size(148, 13);
             this.lblResult.TabIndex = 12;
-            this.lblResult.Text = "res               ";
-            this.lblResult.Click += new System.EventHandler(this.label3_Click);
+            this.lblResult.Text = "=       ";
             // 
             // groupVar
             // 
@@ -657,7 +654,6 @@
             this.comboBetonType.Size = new System.Drawing.Size(121, 21);
             this.comboBetonType.TabIndex = 1;
             this.comboBetonType.Text = "Тяжелый";
-            this.comboBetonType.SelectedIndexChanged += new System.EventHandler(this.comboBetonType_SelectedIndexChanged);
             // 
             // picBeton
             // 
@@ -693,8 +689,7 @@
             this.gridEfforts.Location = new System.Drawing.Point(285, 33);
             this.gridEfforts.Name = "gridEfforts";
             this.gridEfforts.Size = new System.Drawing.Size(697, 150);
-            this.gridEfforts.TabIndex = 2;
-            this.gridEfforts.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridEfforts_CellContentClick);
+            this.gridEfforts.TabIndex = 2;            
             // 
             // M
             // 
@@ -856,7 +851,6 @@
             // 
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
-            this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
             // 
             // panelCalc
             // 

@@ -81,6 +81,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BSBeam.cs" />
     <Compile Include="BSFiberAboutBox.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -90,7 +91,7 @@
     <Compile Include="BSFiberCalcHelper.cs" />
     <Compile Include="BSFiberCalculation.cs" />
     <Compile Include="BSFiberCalc_M.cs" />
-    <Compile Include="BSFiberCalc_N.cs" />
+    <Compile Include="BSFiberCalc_MNQ.cs" />
     <Compile Include="BSFiberCalc_Q.cs" />
     <Compile Include="BSFiberCocreteLib.cs" />
     <Compile Include="BSFiberLoadData.cs" />
@@ -114,6 +115,7 @@
     <Compile Include="BSFormPanel.Designer.cs">
       <DependentUpon>BSFormPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="BSMaterial.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="BSFiberAboutBox.resx">
       <DependentUpon>BSFiberAboutBox.cs</DependentUpon>

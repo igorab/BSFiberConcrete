@@ -270,11 +270,6 @@ namespace BSFiberConcrete
             picBeton.SizeMode = PictureBoxSizeMode.StretchImage;
         }
 
-        private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
-        {
-
-        }
-
         private void AboutToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             BSFiberAboutBox aboutWindow = new BSFiberAboutBox();
@@ -285,54 +280,23 @@ namespace BSFiberConcrete
         {
             BSFiberSetup setupWindow = new BSFiberSetup();
             setupWindow.Show();
-
-            //setupWindow.Records;
         }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void comboBetonType_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
+        
         private void cmbBetonClass_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
-            {
-                // получаем id выделенного объекта
+            {                
                 int id = (int)cmbBetonClass.SelectedValue;
-
-                // получаем весь выделенный объект
+             
                 BSFiberBeton beton = (BSFiberBeton)cmbBetonClass.SelectedItem;
                 
                 numRfbt3n.Value = Convert.ToDecimal( BSFiberCalcHelper.MPA2kgsm2(beton.Rfbt3));
                 numRfbn.Value = Convert.ToDecimal(BSFiberCalcHelper.MPA2kgsm2(beton.Rfbn));
-                //MessageBox.Show(id.ToString() + ". " + beton.Name);
-
-
+                
             }
             catch { }
         }
-
-        private void checkBox2_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lblRes0_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void groupBox3_Enter(object sender, EventArgs e)
-        {
-
-        }
-
+                
         private void tbLength_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!double.TryParse(tbLength.Text + e.KeyChar.ToString(), out double a) && e.KeyChar != 8)
@@ -340,27 +304,33 @@ namespace BSFiberConcrete
                 e.Handled = true;
             }
         }
-        
+
+        private void InitEfforts(ref Dictionary<char, double> MNQ)
+        {
+            char[] F = new char[] { 'M', 'N', 'Q' };
+            DataGridViewRowCollection rows = gridEfforts.Rows;
+            var row = rows[0];
+
+            for (int i = 0; i < 3; i++)
+            {
+                var x = Convert.ToDouble(row.Cells[i].Value);
+                MNQ.Add(F[i], x);
+            }
+
+            //if (effortsMNQ == null)
+            //    throw new Exception("Не заданы усилия");
+        }
+
         private void btnCalcN_Click(object sender, EventArgs e)
         {
-            BSFiberCalc_N fiberCalc = new BSFiberCalc_N();
-            Dictionary<char, double> MNQ = new Dictionary<char, double>();
-            char[] F = new char[] { 'M', 'N', 'Q' };
+            BSFiberCalc_MNQ fiberCalc = BSFiberCalc_MNQ.Construct(m_BeamSection);
 
+            Dictionary<char, double> MNQ = new Dictionary<char, double>();
+            
             try
             {
-                DataGridViewRowCollection rows = gridEfforts.Rows;
-                var row = rows[0];
-
-                for (int i=0; i<3; i++ )
-                {                    
-                    var x = Convert.ToDouble(row.Cells[i].Value);
-                    MNQ.Add(F[i], x);
-                }
-
-                //if (effortsMNQ == null)
-                //    throw new Exception("Не заданы усилия");
-
+                InitEfforts(ref MNQ);    
+                
                 double[] prms = m_BSLoadData.Params;
 
                 InitUserParams(prms);
@@ -398,9 +368,5 @@ namespace BSFiberConcrete
             }
         }
 
-        private void gridEfforts_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
     }
 }

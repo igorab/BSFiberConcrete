@@ -13,10 +13,10 @@ namespace BSFiberConcrete
 {
     public class BSFiberReport_N : BSFiberReport
     {
-        private BSFiberCalc_N fiberCalc;
+        private BSFiberCalc_MNQ fiberCalc;
         private Dictionary<string, string> dattr = new Dictionary<string, string>();
 
-        public void Init(BSFiberCalc_N _fiberCalc)
+        public void Init(BSFiberCalc_MNQ _fiberCalc)
         {
             fiberCalc = _fiberCalc;
             m_CalcResults = fiberCalc.Results();
@@ -28,7 +28,7 @@ namespace BSFiberConcrete
 
         private void GetAttr()
         {            
-            PropertyInfo[] props = typeof(BSFiberCalc_N).GetProperties();
+            PropertyInfo[] props = typeof(BSFiberCalc_MNQ).GetProperties();
             foreach (PropertyInfo prop in props)
             {
                 var attribute = prop.GetCustomAttributes(typeof(DisplayNameAttribute), true);
@@ -43,7 +43,7 @@ namespace BSFiberConcrete
         {            
             m_GeomParams = new Dictionary<string, double>();
 
-            Type myType = typeof(BSFiberCalc_N);
+            Type myType = typeof(BSFiberCalc_MNQ);
             foreach (var attr in dattr)
             {
                 PropertyInfo prop = myType.GetProperty(attr.Key);
