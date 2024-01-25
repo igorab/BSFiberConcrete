@@ -32,6 +32,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabGeneral = new System.Windows.Forms.TabControl();
             this.tabParams = new System.Windows.Forms.TabPage();
             this.groupBoxResult = new System.Windows.Forms.GroupBox();
@@ -40,8 +41,8 @@
             this.tbResultW = new System.Windows.Forms.TextBox();
             this.lblResult = new System.Windows.Forms.Label();
             this.groupVar = new System.Windows.Forms.GroupBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.checkBoxFissure = new System.Windows.Forms.CheckBox();
+            this.checkBoxRebar = new System.Windows.Forms.CheckBox();
             this.groupBeam = new System.Windows.Forms.GroupBox();
             this.labelExtremeFlexibility = new System.Windows.Forms.Label();
             this.cmbExtremeFlexibility = new System.Windows.Forms.ComboBox();
@@ -82,6 +83,10 @@
             this.picBeton = new System.Windows.Forms.PictureBox();
             this.tabStrength = new System.Windows.Forms.TabPage();
             this.gridEfforts = new System.Windows.Forms.DataGridView();
+            this.M = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.N = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Q = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Ml = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.labelEffortSigns = new System.Windows.Forms.Label();
             this.picEffortsSign = new System.Windows.Forms.PictureBox();
             this.btnCalc = new System.Windows.Forms.Button();
@@ -98,12 +103,10 @@
             this.AboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.panelCalc = new System.Windows.Forms.Panel();
-            this.btnCalcN = new System.Windows.Forms.Button();
+            this.btnCalcMNQ = new System.Windows.Forms.Button();
             this.labelCalculation = new System.Windows.Forms.Label();
-            this.M = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.N = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Q = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Ml = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.numNEccentricity = new System.Windows.Forms.NumericUpDown();
+            this.lblNEccentricity = new System.Windows.Forms.Label();
             this.tabGeneral.SuspendLayout();
             this.tabParams.SuspendLayout();
             this.groupBoxResult.SuspendLayout();
@@ -128,6 +131,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.panelCalc.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numNEccentricity)).BeginInit();
             this.SuspendLayout();
             // 
             // tabGeneral
@@ -201,8 +205,8 @@
             // 
             // groupVar
             // 
-            this.groupVar.Controls.Add(this.checkBox2);
-            this.groupVar.Controls.Add(this.checkBox1);
+            this.groupVar.Controls.Add(this.checkBoxFissure);
+            this.groupVar.Controls.Add(this.checkBoxRebar);
             this.groupVar.Location = new System.Drawing.Point(418, 31);
             this.groupVar.Name = "groupVar";
             this.groupVar.Size = new System.Drawing.Size(270, 275);
@@ -210,25 +214,25 @@
             this.groupVar.TabStop = false;
             this.groupVar.Text = "Варианты расчета";
             // 
-            // checkBox2
+            // checkBoxFissure
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(15, 75);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(175, 17);
-            this.checkBox2.TabIndex = 1;
-            this.checkBox2.Text = "Расчет по трещиностойкости";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBoxFissure.AutoSize = true;
+            this.checkBoxFissure.Location = new System.Drawing.Point(15, 75);
+            this.checkBoxFissure.Name = "checkBoxFissure";
+            this.checkBoxFissure.Size = new System.Drawing.Size(175, 17);
+            this.checkBoxFissure.TabIndex = 1;
+            this.checkBoxFissure.Text = "Расчет по трещиностойкости";
+            this.checkBoxFissure.UseVisualStyleBackColor = true;
             // 
-            // checkBox1
+            // checkBoxRebar
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(15, 37);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(95, 17);
-            this.checkBox1.TabIndex = 0;
-            this.checkBox1.Text = "Армирование";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBoxRebar.AutoSize = true;
+            this.checkBoxRebar.Location = new System.Drawing.Point(15, 37);
+            this.checkBoxRebar.Name = "checkBoxRebar";
+            this.checkBoxRebar.Size = new System.Drawing.Size(95, 17);
+            this.checkBoxRebar.TabIndex = 0;
+            this.checkBoxRebar.Text = "Армирование";
+            this.checkBoxRebar.UseVisualStyleBackColor = true;
             // 
             // groupBeam
             // 
@@ -668,6 +672,8 @@
             // 
             // tabStrength
             // 
+            this.tabStrength.Controls.Add(this.lblNEccentricity);
+            this.tabStrength.Controls.Add(this.numNEccentricity);
             this.tabStrength.Controls.Add(this.gridEfforts);
             this.tabStrength.Controls.Add(this.labelEffortSigns);
             this.tabStrength.Controls.Add(this.picEffortsSign);
@@ -692,6 +698,42 @@
             this.gridEfforts.Name = "gridEfforts";
             this.gridEfforts.Size = new System.Drawing.Size(697, 150);
             this.gridEfforts.TabIndex = 2;
+            // 
+            // M
+            // 
+            dataGridViewCellStyle1.Format = "N2";
+            dataGridViewCellStyle1.NullValue = "0";
+            this.M.DefaultCellStyle = dataGridViewCellStyle1;
+            this.M.HeaderText = "M";
+            this.M.Name = "M";
+            this.M.ToolTipText = "Момент от действия полной нагрузки";
+            // 
+            // N
+            // 
+            dataGridViewCellStyle2.Format = "N2";
+            dataGridViewCellStyle2.NullValue = "0";
+            this.N.DefaultCellStyle = dataGridViewCellStyle2;
+            this.N.HeaderText = "N";
+            this.N.Name = "N";
+            this.N.ToolTipText = "Продольная сила";
+            // 
+            // Q
+            // 
+            dataGridViewCellStyle3.Format = "N2";
+            dataGridViewCellStyle3.NullValue = "0";
+            this.Q.DefaultCellStyle = dataGridViewCellStyle3;
+            this.Q.HeaderText = "Q";
+            this.Q.Name = "Q";
+            this.Q.ToolTipText = "Поперечная сила";
+            // 
+            // Ml
+            // 
+            dataGridViewCellStyle4.Format = "N2";
+            dataGridViewCellStyle4.NullValue = "0";
+            this.Ml.DefaultCellStyle = dataGridViewCellStyle4;
+            this.Ml.HeaderText = "Ml";
+            this.Ml.Name = "Ml";
+            this.Ml.ToolTipText = "Момент от действия постянных и длительных нагрузок нагрузок";
             // 
             // labelEffortSigns
             // 
@@ -829,7 +871,7 @@
             // 
             // panelCalc
             // 
-            this.panelCalc.Controls.Add(this.btnCalcN);
+            this.panelCalc.Controls.Add(this.btnCalcMNQ);
             this.panelCalc.Controls.Add(this.labelCalculation);
             this.panelCalc.Controls.Add(this.btnCalc);
             this.panelCalc.Controls.Add(this.btnReport);
@@ -838,15 +880,15 @@
             this.panelCalc.Size = new System.Drawing.Size(258, 108);
             this.panelCalc.TabIndex = 14;
             // 
-            // btnCalcN
+            // btnCalcMNQ
             // 
-            this.btnCalcN.Location = new System.Drawing.Point(67, 55);
-            this.btnCalcN.Name = "btnCalcN";
-            this.btnCalcN.Size = new System.Drawing.Size(169, 23);
-            this.btnCalcN.TabIndex = 6;
-            this.btnCalcN.Text = "Усилия ( M N Q )";
-            this.btnCalcN.UseVisualStyleBackColor = true;
-            this.btnCalcN.Click += new System.EventHandler(this.btnCalcN_Click);
+            this.btnCalcMNQ.Location = new System.Drawing.Point(67, 55);
+            this.btnCalcMNQ.Name = "btnCalcMNQ";
+            this.btnCalcMNQ.Size = new System.Drawing.Size(169, 23);
+            this.btnCalcMNQ.TabIndex = 6;
+            this.btnCalcMNQ.Text = "Усилия ( M N Q )";
+            this.btnCalcMNQ.UseVisualStyleBackColor = true;
+            this.btnCalcMNQ.Click += new System.EventHandler(this.btnCalcMNQ_Click);
             // 
             // labelCalculation
             // 
@@ -857,38 +899,21 @@
             this.labelCalculation.TabIndex = 3;
             this.labelCalculation.Text = "Расчет:";
             // 
-            // M
+            // numNEccentricity
             // 
-            dataGridViewCellStyle1.Format = "N2";
-            dataGridViewCellStyle1.NullValue = null;
-            this.M.DefaultCellStyle = dataGridViewCellStyle1;
-            this.M.HeaderText = "M";
-            this.M.Name = "M";
-            this.M.ToolTipText = "Момент от действия полной нагрузки";
+            this.numNEccentricity.Location = new System.Drawing.Point(285, 231);
+            this.numNEccentricity.Name = "numNEccentricity";
+            this.numNEccentricity.Size = new System.Drawing.Size(120, 20);
+            this.numNEccentricity.TabIndex = 3;
             // 
-            // N
+            // lblNEccentricity
             // 
-            dataGridViewCellStyle2.Format = "N2";
-            dataGridViewCellStyle2.NullValue = null;
-            this.N.DefaultCellStyle = dataGridViewCellStyle2;
-            this.N.HeaderText = "N";
-            this.N.Name = "N";
-            this.N.ToolTipText = "Продольная сила";
-            // 
-            // Q
-            // 
-            dataGridViewCellStyle3.Format = "N2";
-            dataGridViewCellStyle3.NullValue = null;
-            this.Q.DefaultCellStyle = dataGridViewCellStyle3;
-            this.Q.HeaderText = "Q";
-            this.Q.Name = "Q";
-            this.Q.ToolTipText = "Поперечная сила";
-            // 
-            // Ml
-            // 
-            this.Ml.HeaderText = "Ml";
-            this.Ml.Name = "Ml";
-            this.Ml.ToolTipText = "Момент от действия постянных и длительных нагрузок нагрузок";
+            this.lblNEccentricity.AutoSize = true;
+            this.lblNEccentricity.Location = new System.Drawing.Point(96, 233);
+            this.lblNEccentricity.Name = "lblNEccentricity";
+            this.lblNEccentricity.Size = new System.Drawing.Size(183, 13);
+            this.lblNEccentricity.TabIndex = 4;
+            this.lblNEccentricity.Text = "Эксцентриситет приложения силы";
             // 
             // BSFiberMain
             // 
@@ -940,6 +965,7 @@
             this.menuStrip1.PerformLayout();
             this.panelCalc.ResumeLayout(false);
             this.panelCalc.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numNEccentricity)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -972,7 +998,7 @@
         private System.Windows.Forms.ToolStripMenuItem AboutToolStripMenuItem1;
         private System.Windows.Forms.TextBox tbResult;
         private System.Windows.Forms.TextBox tbResultW;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox checkBoxRebar;
         private System.Windows.Forms.Label lblResult;
         private System.Windows.Forms.Label lblRes0;
         private System.Windows.Forms.ComboBox comboBetonType;
@@ -999,12 +1025,12 @@
         private System.Windows.Forms.Panel panelCalc;
         private System.Windows.Forms.Label labelCalculation;
         private System.Windows.Forms.GroupBox groupBoxResult;
-        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.CheckBox checkBoxFissure;
         private System.Windows.Forms.Label labelRandomEccentricity;
         private System.Windows.Forms.NumericUpDown numRandomEccentricity;
         private System.Windows.Forms.Label labelExtremeFlexibility;
         private System.Windows.Forms.ComboBox cmbExtremeFlexibility;
-        private System.Windows.Forms.Button btnCalcN;
+        private System.Windows.Forms.Button btnCalcMNQ;
         private System.Windows.Forms.PictureBox picEffortsSign;
         private System.Windows.Forms.Label labelEffortSigns;
         private System.Windows.Forms.DataGridView gridEfforts;
@@ -1019,6 +1045,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn N;
         private System.Windows.Forms.DataGridViewTextBoxColumn Q;
         private System.Windows.Forms.DataGridViewTextBoxColumn Ml;
+        private System.Windows.Forms.Label lblNEccentricity;
+        private System.Windows.Forms.NumericUpDown numNEccentricity;
     }
 }
 

@@ -103,6 +103,7 @@
     </Compile>
     <Compile Include="BSFiberConcrete.cs" />
     <Compile Include="BSFiberReport.cs" />
+    <Compile Include="BSFiberReport_MNQ.cs" />
     <Compile Include="BSFiberSetup.cs">
       <SubType>Form</SubType>
     </Compile>

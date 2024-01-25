@@ -39,6 +39,7 @@ namespace BSFiberConcrete
     /// <summary>
     /// Прямоугольник
     /// </summary>
+    [Description("size")]
     public class BSBeam_Rect : BSBeam
     {
         //размеры, см
@@ -61,6 +62,7 @@ namespace BSFiberConcrete
     /// <summary>
     /// Кольцо
     /// </summary>
+    [Description("size")]
     public class BSBeam_Ring : BSBeam
     {
         [DisplayName("Радиус внутренней грани, см")]
@@ -89,6 +91,7 @@ namespace BSFiberConcrete
     /// <summary>
     /// Тавровое-Двутавровое сечение
     /// </summary>
+    [Description("size")]
     public class BSBeam_IT : BSBeam
     {
         // размеры:

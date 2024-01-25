@@ -10,7 +10,7 @@ namespace BSFiberConcrete
     /// <summary>
     /// Расчет по прочности сталефибробетонных элементов при действии поперечных сил
     /// </summary>
-    internal class BSFiberCalc_Q : IBSFiberCalculation
+    public class BSFiberCalc_Q : BSFiberCalc_MNQ
     {
         // высота и ширина сечения, см
         private double h, b;
@@ -62,17 +62,6 @@ namespace BSFiberConcrete
             }
 
         }
-
-        Dictionary<string, double> IBSFiberCalculation.GeomParams()
-        {
-            return new Dictionary<string, double>();
-        }
-
         
-
-        Dictionary<string, double> IBSFiberCalculation.Results()
-        {
-            return new Dictionary<string, double>();
-        }
     }
 }

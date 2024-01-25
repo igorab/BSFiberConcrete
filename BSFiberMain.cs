@@ -60,11 +60,12 @@ namespace BSFiberConcrete
             numYb3.Value = (decimal)BSFiberCocreteLib.PhysElements.Yb3;
             numYb5.Value = (decimal)BSFiberCocreteLib.PhysElements.Yb5;
 
-            double[] mnq = { 1.0, 50000, 3.0 }; //MNQ
+            double[] mnq = { 1.0, 50000, 3.0, 1.0 }; //MNQ Ml
             
             gridEfforts.Rows[0].Cells[0].Value = mnq[0];
             gridEfforts.Rows[0].Cells[1].Value = mnq[1];
             gridEfforts.Rows[0].Cells[2].Value = mnq[2];
+            gridEfforts.Rows[0].Cells[3].Value = mnq[3];
 
             //cmbBetonClass.SelectedIndexChanged += cmbBetonClass_SelectedIndexChanged;
         }
@@ -311,45 +312,52 @@ namespace BSFiberConcrete
             DataGridViewRowCollection rows = gridEfforts.Rows;
             var row = rows[0];
 
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < F.Length; i++)
             {
                 var x = Convert.ToDouble(row.Cells[i].Value);
                 MNQ.Add(F[i], x);
             }
 
-            //if (effortsMNQ == null)
-            //    throw new Exception("Не заданы усилия");
+            if (MNQ.Count == 0)
+                throw new Exception("Не заданы усилия");
         }
 
-        private void btnCalcN_Click(object sender, EventArgs e)
+        private void FiberCalc_MNQ(out BSFiberCalc_MNQ fiberCalc, bool _rebar, bool _fissurre)
         {
-            BSFiberCalc_MNQ fiberCalc = BSFiberCalc_MNQ.Construct(m_BeamSection);
+            fiberCalc = BSFiberCalc_MNQ.Construct(m_BeamSection);
 
             Dictionary<string, double> MNQ = new Dictionary<string, double>();
-            
+
+            InitEfforts(ref MNQ);
+
+            double[] prms = m_BSLoadData.Params;
+
+            InitUserParams(prms);
+
+            fiberCalc.GetParams(prms);
+
+            double beamLngth = double.Parse(tbLength.Text);
+
+            double[] sz = BeamSizes(beamLngth);
+
+            fiberCalc.GetSize(sz);
+
+            fiberCalc.GetEfforts(MNQ);
+
+            fiberCalc.GetFiberParamsFromJson(m_BSLoadData.Fiber);
+
+            fiberCalc.Calculate();
+
+            m_CalcResults = fiberCalc.Results();
+        }
+
+        private void btnCalcMNQ_Click(object sender, EventArgs e)
+        {
+            BSFiberCalc_MNQ fiberCalc = new BSFiberCalc_MNQ();
+
             try
             {
-                InitEfforts(ref MNQ);    
-                
-                double[] prms = m_BSLoadData.Params;
-
-                InitUserParams(prms);
-
-                fiberCalc.GetParams(prms);
-
-                double beamLngth = double.Parse(tbLength.Text);
-
-                double[] sz = BeamSizes(beamLngth);
-
-                fiberCalc.GetSize(sz);
-
-                fiberCalc.GetEfforts(MNQ);
-
-                fiberCalc.GetFiberParamsFromJson(m_BSLoadData.Fiber);
-
-                fiberCalc.Calculate();
-
-                m_CalcResults = fiberCalc.Results();
+                FiberCalc_MNQ(out fiberCalc, checkBoxRebar.Checked, checkBoxFissure.Checked);
             }
             catch (Exception _ex)
             {
@@ -357,7 +365,7 @@ namespace BSFiberConcrete
             }
             finally
             {
-                BSFiberReport_N report = new BSFiberReport_N();
+                BSFiberReport_MNQ report = new BSFiberReport_MNQ();
 
                 report.BeamSection = m_BeamSection;
                 report.Init(fiberCalc);
