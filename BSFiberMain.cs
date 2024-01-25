@@ -322,9 +322,17 @@ namespace BSFiberConcrete
                 throw new Exception("Не заданы усилия");
         }
 
+        /// <summary>
+        /// Усилия
+        /// </summary>
+        /// <param name="fiberCalc"></param>
+        /// <param name="_rebar">Армирование</param>
+        /// <param name="_fissurre">Расчет на трещиностойкость</param>
         private void FiberCalc_MNQ(out BSFiberCalc_MNQ fiberCalc, bool _rebar, bool _fissurre)
         {
             fiberCalc = BSFiberCalc_MNQ.Construct(m_BeamSection);
+            fiberCalc.Rebar = _rebar;
+            fiberCalc.Fissure = _fissurre;
 
             Dictionary<string, double> MNQ = new Dictionary<string, double>();
 

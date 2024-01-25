@@ -18,6 +18,8 @@ namespace BSFiberConcrete
     { 
         public BSBeam_Rect beam { get; set; }
 
+        private double y_t;
+
         public BSFiberCalc_MNQ_Rect()
         {
             this.beam = new BSBeam_Rect();
@@ -30,15 +32,17 @@ namespace BSFiberConcrete
             A = beam.Area();
 
             I = beam.I_s();
+
+            y_t = beam.y_t();
         }
-        
-        public override void Calculate()
-        {                       
+
+        private void Calculate0()
+        {
             //Коэффициент, учитывающий влияние длительности действия нагрузки, определяют по формуле (6.27)
             fi1 = (M1 != 0) ? 1 + Ml1 / M1 : 1.0;
 
             //относительное значение эксцентриситета продольной силы
-            delta_e = e0 / h;
+            delta_e = e0 / beam.h;
 
             if (delta_e <= 0.15)
             { delta_e = 0.15; }
@@ -59,7 +63,7 @@ namespace BSFiberConcrete
 
             eta = 1 / (1 - N / Ncr);
 
-            Ab = b * h * (1 - 2 * e0 * eta / h);
+            Ab = beam.b * beam.h * (1 - 2 * e0 * eta / beam.h);
 
             Rfb = Rfbn / Yb * Yb1 * Yb2 * Yb3 * Yb5;
 
@@ -67,7 +71,7 @@ namespace BSFiberConcrete
 
             double flex = l0 / h;
 
-            if (e0 <= h / 30 && l0 <= 20 * h)
+            if (e0 <= h / 30 && flex <= 20)
             {
                 N_ult = fi * Rfb * A;
             }
@@ -79,6 +83,66 @@ namespace BSFiberConcrete
             N_ult *= 0.001;
         }
 
+        public override void Calculate()
+        {
+            if (Rebar )
+            {
+                Calculate1();
+            }
+            else
+            {
+                Calculate0();
+            }
+        }
+
+        // Расчет внецентренно сжатых сталефибробетонных элементов без рабочей арматуры при
+        //расположении продольной сжимающей силы за пределами поперечного сечения элемента и внецентренно сжатых сталефибробетонных элементов без рабочей арматуры при расположении продольной
+        // сжимающей силы в пределах поперечного сечения элемента, в которых по условиям эксплуатации не
+        // допускается образование трещин
+        private void Calculate1()
+        {
+            //Коэффициент, учитывающий влияние длительности действия нагрузки (6.27)
+            fi1 = (M1 != 0) ? 1 + Ml1 / M1 : 1.0;
+
+            //относительное значение эксцентриситета продольной силы
+            delta_e = e0 / beam.h;
+
+            // проверка условия 0.15 .. 1.5
+            if (delta_e <= 0.15)
+            { delta_e = 0.15; }
+            else if (delta_e >= 1.5)
+            { delta_e = 1.5; }
+
+            // Коэфициент ф.(6.26)
+            k_b = 0.15 / (fi1 * (0.3d + delta_e));
+
+            // Модуль упругости сталефибробетона п.п. (5.2.7)
+            Efb = Eb * (1 - mu_fv) + Ef * mu_fv;
+
+            //Модуль упругости арматуры
+            double Es = 0;
+            // Момент инерции продольной арматуры соответственно относительно оси, проходящей через центр тяжести поперечного сечения элемента
+            double ls = 0;
+            //жесткость элемента в предельной по прочности стадии, определяемая по формуле (6.31)
+            D = k_b * Efb * I + 0.7 * Es*ls ;
+
+            // условная критическая сила, определяемая по формуле (6.24)
+            Ncr = Math.PI * Math.PI * D / Math.Pow(beam.Length, 2);
+
+            //коэффициент, учитывающий влияние продольного изгиба элемента на его несущую способность (6.23) 6.1.13
+            eta = 1 / (1 - N / Ncr);
+
+            Ab = beam.b * beam.h * (1 - 2 * e0 * eta / beam.h);
+
+            //Расчетные значения сопротивления осевому растяжению
+            double Rfbt = Rfbtn / Yft * Yb1 * Yb5;
+
+            // Предельная сила сечения
+            N_ult = fi * Rfbt * A;
+
+            
+            N_ult *= 0.001;
+        }
     }
 
     public class BSFiberCalc_MNQ_Ring : BSFiberCalc_MNQ
@@ -103,6 +167,7 @@ namespace BSFiberConcrete
             e_N = 25;           
         }
 
+        
         public override void Calculate()
         {
             double Ar = beam.Area();
@@ -148,7 +213,7 @@ namespace BSFiberConcrete
 
     [DisplayName("Расчет элементов на действие сил и моментов")]
     public class BSFiberCalc_MNQ : IBSFiberCalculation
-    {
+    {        
         [DisplayName("Высота сечения, см"), Description("Geom")]        
         public double h { get; protected set; }
 
@@ -206,8 +271,9 @@ namespace BSFiberConcrete
         public double Yb3 { get; protected set; }
         [DisplayName("Коэффициент условия работы Yb5"), Description("Coef")]
         public double Yb5 { get; protected set; }
-
-
+        
+        public bool Rebar { get; set; }
+        public bool Fissure{ get; set; }
 
         private Fiber m_Fiber;
 
@@ -234,6 +300,7 @@ namespace BSFiberConcrete
         protected double Q;
 
         protected double Rfb;
+        protected double Rfbtn;
         protected double N_ult;
 
         protected Dictionary<string, double> m_Efforts = new Dictionary<string, double>();
@@ -280,7 +347,8 @@ namespace BSFiberConcrete
 
         public virtual void GetParams(double[] _t)
         {
-            (Rfbt3n, Rfbn, Yb, Yft, Yb1, Yb2, Yb3, Yb5, B) = (_t[0], _t[1], _t[2], _t[3], _t[4], _t[5], _t[6], _t[7], _t[8]);                      
+            (Rfbt3n, Rfbn, Yb, Yft, Yb1, Yb2, Yb3, Yb5, B) = (_t[0], _t[1], _t[2], _t[3], _t[4], _t[5], _t[6], _t[7], _t[8]);
+            Rfbtn = Rfbt3n;
         }
 
         public virtual void GetSize(double[] _t) {}

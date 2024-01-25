@@ -11,7 +11,8 @@ namespace BSFiberConcrete
     public class BSFiberReport_MNQ : BSFiberReport
     {
         private BSFiberCalc_MNQ fiberCalc;
-        private Dictionary<string, string> geomAttr = new Dictionary<string, string>();
+        // атрибуты свойств
+        private Dictionary<string, string> propAttr = new Dictionary<string, string>();
 
         public BSFiberReport_MNQ()
         {
@@ -39,21 +40,27 @@ namespace BSFiberConcrete
             foreach (PropertyInfo prop in props)
             {
                 var attrs = prop.GetCustomAttributes(typeof(DescriptionAttribute), true);
-                DescriptionAttribute attrDescr = attrs.Cast<DescriptionAttribute>().Single();
-                string descr = attrDescr.Description;
+                if (attrs.Length > 0)
+                { 
+                    DescriptionAttribute attrDescr = attrs.Cast<DescriptionAttribute>().Single();
+                    string descr = attrDescr.Description;
 
-                var attribute = prop.GetCustomAttributes(typeof(DisplayNameAttribute), true);
-                DisplayNameAttribute attr = attribute.Cast<DisplayNameAttribute>().Single();
-                string displayName = attr.DisplayName;
+                    var attributes = prop.GetCustomAttributes(typeof(DisplayNameAttribute), true);
+                    if (attributes.Length > 0)
+                    {
+                        DisplayNameAttribute attr = attributes.Cast<DisplayNameAttribute>().Single();
+                        string displayName = attr.DisplayName;
 
-                geomAttr.Add(prop.Name, displayName + '@' + descr);                
+                        propAttr.Add(prop.Name, displayName + '@' + descr);
+                    }                    
+                }
             }            
         }
 
         private void InitFromAttr()
         {            
             Type myType = typeof(BSFiberCalc_MNQ);
-            foreach (var attr in geomAttr)
+            foreach (var attr in propAttr)
             {
                 PropertyInfo prop = myType.GetProperty(attr.Key);
 
