@@ -88,7 +88,7 @@
     <Compile Include="BSFiberAboutBox.Designer.cs">
       <DependentUpon>BSFiberAboutBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="BSFiberCalcHelper.cs" />
+    <Compile Include="BSHelper.cs" />
     <Compile Include="BSFiberCalculation.cs" />
     <Compile Include="BSFiberCalc_M.cs" />
     <Compile Include="BSFiberCalc_MNQ.cs" />
@@ -154,6 +154,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\IBeam.PNG">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Rebar.PNG">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Ring.PNG">

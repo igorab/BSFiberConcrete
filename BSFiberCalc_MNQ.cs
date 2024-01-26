@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -42,7 +43,7 @@ namespace BSFiberConcrete
             fi1 = (M1 != 0) ? 1 + Ml1 / M1 : 1.0;
 
             //относительное значение эксцентриситета продольной силы
-            delta_e = e0 / beam.h;
+            delta_e = m_Fiber.e0 / beam.h;
 
             if (delta_e <= 0.15)
             { delta_e = 0.15; }
@@ -53,7 +54,7 @@ namespace BSFiberConcrete
             k_b = 0.15 / (fi1 * (0.3d + delta_e));
 
             // Модуль упругости сталефибробетона п.п. (5.2.7)
-            Efb = Eb * (1 - mu_fv) + Ef * mu_fv;
+            Efb = m_Fiber.Eb * (1 - m_Fiber.mu_fv) + m_Fiber.Ef * m_Fiber.mu_fv;
 
             //жесткость элемента в предельной по прочности стадии,определяемая по формуле (6.25)
             D = k_b * Efb * I;
@@ -63,7 +64,7 @@ namespace BSFiberConcrete
 
             eta = 1 / (1 - N / Ncr);
 
-            Ab = beam.b * beam.h * (1 - 2 * e0 * eta / beam.h);
+            Ab = beam.b * beam.h * (1 - 2 * m_Fiber.e0 * eta / beam.h);
 
             Rfb = Rfbn / Yb * Yb1 * Yb2 * Yb3 * Yb5;
 
@@ -80,19 +81,7 @@ namespace BSFiberConcrete
                 N_ult = Rfb * Ab;
             }
 
-            N_ult *= 0.001;
-        }
-
-        public override void Calculate()
-        {
-            if (Rebar )
-            {
-                Calculate1();
-            }
-            else
-            {
-                Calculate0();
-            }
+            N_ult = BSHelper.Kg2T(N_ult);
         }
 
         // Расчет внецентренно сжатых сталефибробетонных элементов без рабочей арматуры при
@@ -105,7 +94,7 @@ namespace BSFiberConcrete
             fi1 = (M1 != 0) ? 1 + Ml1 / M1 : 1.0;
 
             //относительное значение эксцентриситета продольной силы
-            delta_e = e0 / beam.h;
+            delta_e = m_Fiber.e0 / beam.h;
 
             // проверка условия 0.15 .. 1.5
             if (delta_e <= 0.15)
@@ -117,14 +106,14 @@ namespace BSFiberConcrete
             k_b = 0.15 / (fi1 * (0.3d + delta_e));
 
             // Модуль упругости сталефибробетона п.п. (5.2.7)
-            Efb = Eb * (1 - mu_fv) + Ef * mu_fv;
+            Efb = m_Fiber.Eb * (1 - m_Fiber.mu_fv) + m_Fiber.Ef * m_Fiber.mu_fv;
 
             //Модуль упругости арматуры
             double Es = 0;
             // Момент инерции продольной арматуры соответственно относительно оси, проходящей через центр тяжести поперечного сечения элемента
             double ls = 0;
             //жесткость элемента в предельной по прочности стадии, определяемая по формуле (6.31)
-            D = k_b * Efb * I + 0.7 * Es*ls ;
+            D = k_b * Efb * I + 0.7 * Es * ls;
 
             // условная критическая сила, определяемая по формуле (6.24)
             Ncr = Math.PI * Math.PI * D / Math.Pow(beam.Length, 2);
@@ -132,7 +121,7 @@ namespace BSFiberConcrete
             //коэффициент, учитывающий влияние продольного изгиба элемента на его несущую способность (6.23) 6.1.13
             eta = 1 / (1 - N / Ncr);
 
-            Ab = beam.b * beam.h * (1 - 2 * e0 * eta / beam.h);
+            Ab = beam.b * beam.h * (1 - 2 * m_Fiber.e0 * eta / beam.h);
 
             //Расчетные значения сопротивления осевому растяжению
             double Rfbt = Rfbtn / Yft * Yb1 * Yb5;
@@ -140,9 +129,44 @@ namespace BSFiberConcrete
             // Предельная сила сечения
             N_ult = fi * Rfbt * A;
 
-            
-            N_ult *= 0.001;
+            N_ult = BSHelper.Kg2T(N_ult);
         }
+
+        private void CalculateQ()
+        {
+            // Растояние до цента тяжести арматуры растянутой арматуры, см
+            double a = 4;
+
+            // рабочая высота сечения по растянутой арматуре
+            double h0 = h - a;
+
+            // Расчетные значения сопротивления  на сжатиие по B30 СП63
+            Rfb = Rfbn / Yb * Yb1 * Yb2 * Yb3 * Yb5;
+
+            // Предельная перерезывающая сила по полосе между наклонными сечениями
+            double Q_ult = 0.3 * Rfb * b * h0;
+
+            Q_ult = BSHelper.Kg2T(Q_ult);
+            
+        }
+
+        public override void Calculate()
+        {
+            if (Rebar )
+            {
+                Calculate1();
+            }
+            else if (Shear)
+            {
+                CalculateQ();
+            }
+            else
+            {
+                Calculate0();
+            }
+        }
+
+       
     }
 
     public class BSFiberCalc_MNQ_Ring : BSFiberCalc_MNQ
@@ -274,8 +298,9 @@ namespace BSFiberConcrete
         
         public bool Rebar { get; set; }
         public bool Fissure{ get; set; }
+        public bool Shear { get; set; }
 
-        private Fiber m_Fiber;
+        protected Fiber m_Fiber;
 
         protected double Rfbt3n;
         protected double B;
@@ -365,6 +390,8 @@ namespace BSFiberConcrete
             M1 = m_Efforts["M"];
             //Момент от действия постянных и длительных нагрузок нагрузок
             Ml1 = m_Efforts["Ml"];
+            // Эксцентриситет приложения N
+            e_N = m_Efforts["eN"];
         }
 
         public Dictionary<string, double> Results()

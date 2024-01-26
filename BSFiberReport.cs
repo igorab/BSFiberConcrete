@@ -44,7 +44,7 @@ namespace BSFiberConcrete
             w.WriteLine("<H4>Расчет выполнен по СП 360.1325800.2017</H4>");
 
             string beamDescr = typeof(BeamSection).GetCustomAttribute<DescriptionAttribute > (true).Description;
-            string beamSection = BSFiberCalcHelper.EnumDescription(m_BeamSection);
+            string beamSection = BSHelper.EnumDescription(m_BeamSection);
             w.WriteLine($"<H2>{beamDescr}: {beamSection}</H2>");
 
             if (m_Beam != null)
