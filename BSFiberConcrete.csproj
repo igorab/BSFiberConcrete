@@ -82,6 +82,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BSBeam.cs" />
+    <Compile Include="BSFactors.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BSFactors.Designer.cs">
+      <DependentUpon>BSFactors.cs</DependentUpon>
+    </Compile>
     <Compile Include="BSFiberAboutBox.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -118,6 +124,9 @@
     </Compile>
     <Compile Include="BSMaterial.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="BSFactors.resx">
+      <DependentUpon>BSFactors.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="BSFiberAboutBox.resx">
       <DependentUpon>BSFiberAboutBox.cs</DependentUpon>
     </EmbeddedResource>

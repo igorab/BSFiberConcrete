@@ -29,15 +29,16 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle31 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle32 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle33 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle34 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle35 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle36 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle37 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle38 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle39 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle40 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabGeneral = new System.Windows.Forms.TabControl();
             this.tabParams = new System.Windows.Forms.TabPage();
             this.groupBoxResult = new System.Windows.Forms.GroupBox();
@@ -93,6 +94,16 @@
             this.Ml = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.eN = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.labelEffortSigns = new System.Windows.Forms.Label();
+            this.tabRebar = new System.Windows.Forms.TabPage();
+            this.label16 = new System.Windows.Forms.Label();
+            this.gridTRebar = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Sw = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.lblLongitudinalReinforcement = new System.Windows.Forms.Label();
+            this.gridLRebar = new System.Windows.Forms.DataGridView();
+            this.D = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Qty = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnCalc = new System.Windows.Forms.Button();
             this.btnReport = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
@@ -110,19 +121,11 @@
             this.btnCalc_Q = new System.Windows.Forms.Button();
             this.btnCalcMNQ = new System.Windows.Forms.Button();
             this.labelCalculation = new System.Windows.Forms.Label();
-            this.tabRebar = new System.Windows.Forms.TabPage();
-            this.gridLRebar = new System.Windows.Forms.DataGridView();
-            this.lblLongitudinalReinforcement = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.gridTRebar = new System.Windows.Forms.DataGridView();
-            this.D = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.Qty = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Sw = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnCalc_M = new System.Windows.Forms.Button();
             this.picBeton = new System.Windows.Forms.PictureBox();
             this.picEffortsSign = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.btnFactors = new System.Windows.Forms.Button();
             this.tabGeneral.SuspendLayout();
             this.tabParams.SuspendLayout();
             this.groupBoxResult.SuspendLayout();
@@ -142,12 +145,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.numYft)).BeginInit();
             this.tabStrength.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridEfforts)).BeginInit();
+            this.tabRebar.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridTRebar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridLRebar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.panelCalc.SuspendLayout();
-            this.tabRebar.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridLRebar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridTRebar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picBeton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picEffortsSign)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -682,6 +685,7 @@
             // 
             // tabStrength
             // 
+            this.tabStrength.Controls.Add(this.btnFactors);
             this.tabStrength.Controls.Add(this.gridEfforts);
             this.tabStrength.Controls.Add(this.labelEffortSigns);
             this.tabStrength.Controls.Add(this.picEffortsSign);
@@ -711,45 +715,45 @@
             // 
             // M
             // 
-            dataGridViewCellStyle1.Format = "N2";
-            dataGridViewCellStyle1.NullValue = "0";
-            this.M.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle31.Format = "N2";
+            dataGridViewCellStyle31.NullValue = "0";
+            this.M.DefaultCellStyle = dataGridViewCellStyle31;
             this.M.HeaderText = "M";
             this.M.Name = "M";
             this.M.ToolTipText = "Момент от действия полной нагрузки";
             // 
             // N
             // 
-            dataGridViewCellStyle2.Format = "N2";
-            dataGridViewCellStyle2.NullValue = "0";
-            this.N.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle32.Format = "N2";
+            dataGridViewCellStyle32.NullValue = "0";
+            this.N.DefaultCellStyle = dataGridViewCellStyle32;
             this.N.HeaderText = "N";
             this.N.Name = "N";
             this.N.ToolTipText = "Продольная сила";
             // 
             // Q
             // 
-            dataGridViewCellStyle3.Format = "N2";
-            dataGridViewCellStyle3.NullValue = "0";
-            this.Q.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle33.Format = "N2";
+            dataGridViewCellStyle33.NullValue = "0";
+            this.Q.DefaultCellStyle = dataGridViewCellStyle33;
             this.Q.HeaderText = "Q";
             this.Q.Name = "Q";
             this.Q.ToolTipText = "Поперечная сила";
             // 
             // Ml
             // 
-            dataGridViewCellStyle4.Format = "N2";
-            dataGridViewCellStyle4.NullValue = "0";
-            this.Ml.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle34.Format = "N2";
+            dataGridViewCellStyle34.NullValue = "0";
+            this.Ml.DefaultCellStyle = dataGridViewCellStyle34;
             this.Ml.HeaderText = "Ml";
             this.Ml.Name = "Ml";
             this.Ml.ToolTipText = "Момент от действия постянных и длительных нагрузок нагрузок";
             // 
             // eN
             // 
-            dataGridViewCellStyle5.Format = "N2";
-            dataGridViewCellStyle5.NullValue = "0";
-            this.eN.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle35.Format = "N2";
+            dataGridViewCellStyle35.NullValue = "0";
+            this.eN.DefaultCellStyle = dataGridViewCellStyle35;
             this.eN.HeaderText = "eN";
             this.eN.Name = "eN";
             this.eN.ToolTipText = "Эксцентриситет приложения силы";
@@ -762,6 +766,106 @@
             this.labelEffortSigns.Size = new System.Drawing.Size(76, 13);
             this.labelEffortSigns.TabIndex = 1;
             this.labelEffortSigns.Text = "Знаки усилий";
+            // 
+            // tabRebar
+            // 
+            this.tabRebar.Controls.Add(this.pictureBox1);
+            this.tabRebar.Controls.Add(this.label16);
+            this.tabRebar.Controls.Add(this.gridTRebar);
+            this.tabRebar.Controls.Add(this.lblLongitudinalReinforcement);
+            this.tabRebar.Controls.Add(this.gridLRebar);
+            this.tabRebar.Location = new System.Drawing.Point(4, 22);
+            this.tabRebar.Name = "tabRebar";
+            this.tabRebar.Padding = new System.Windows.Forms.Padding(3);
+            this.tabRebar.Size = new System.Drawing.Size(1098, 307);
+            this.tabRebar.TabIndex = 3;
+            this.tabRebar.Text = "Армирование";
+            this.tabRebar.UseVisualStyleBackColor = true;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(364, 20);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(119, 13);
+            this.label16.TabIndex = 3;
+            this.label16.Text = "Поперечная арматура";
+            // 
+            // gridTRebar
+            // 
+            this.gridTRebar.AllowUserToAddRows = false;
+            this.gridTRebar.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridTRebar.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn1,
+            this.Sw,
+            this.dataGridViewTextBoxColumn2});
+            this.gridTRebar.Location = new System.Drawing.Point(364, 39);
+            this.gridTRebar.Name = "gridTRebar";
+            this.gridTRebar.Size = new System.Drawing.Size(358, 102);
+            this.gridTRebar.TabIndex = 2;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            dataGridViewCellStyle36.Format = "N0";
+            dataGridViewCellStyle36.NullValue = "0";
+            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle36;
+            this.dataGridViewTextBoxColumn1.HeaderText = "D мм";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // Sw
+            // 
+            dataGridViewCellStyle37.Format = "N2";
+            dataGridViewCellStyle37.NullValue = "0";
+            this.Sw.DefaultCellStyle = dataGridViewCellStyle37;
+            this.Sw.HeaderText = "Шаг (Sw y)";
+            this.Sw.Name = "Sw";
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            dataGridViewCellStyle38.Format = "N0";
+            dataGridViewCellStyle38.NullValue = "0";
+            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle38;
+            this.dataGridViewTextBoxColumn2.HeaderText = "Шт";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            // 
+            // lblLongitudinalReinforcement
+            // 
+            this.lblLongitudinalReinforcement.AutoSize = true;
+            this.lblLongitudinalReinforcement.Location = new System.Drawing.Point(24, 20);
+            this.lblLongitudinalReinforcement.Name = "lblLongitudinalReinforcement";
+            this.lblLongitudinalReinforcement.Size = new System.Drawing.Size(188, 13);
+            this.lblLongitudinalReinforcement.TabIndex = 1;
+            this.lblLongitudinalReinforcement.Text = "Продольная арматура (первый ряд)";
+            // 
+            // gridLRebar
+            // 
+            this.gridLRebar.AllowUserToAddRows = false;
+            this.gridLRebar.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridLRebar.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.D,
+            this.Qty});
+            this.gridLRebar.Location = new System.Drawing.Point(24, 39);
+            this.gridLRebar.Name = "gridLRebar";
+            this.gridLRebar.Size = new System.Drawing.Size(266, 102);
+            this.gridLRebar.TabIndex = 0;
+            // 
+            // D
+            // 
+            dataGridViewCellStyle39.Format = "N2";
+            dataGridViewCellStyle39.NullValue = "0";
+            this.D.DefaultCellStyle = dataGridViewCellStyle39;
+            this.D.HeaderText = "D мм";
+            this.D.Name = "D";
+            this.D.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // Qty
+            // 
+            dataGridViewCellStyle40.Format = "N0";
+            dataGridViewCellStyle40.NullValue = "0";
+            this.Qty.DefaultCellStyle = dataGridViewCellStyle40;
+            this.Qty.HeaderText = "Шт";
+            this.Qty.Name = "Qty";
             // 
             // btnCalc
             // 
@@ -880,6 +984,7 @@
             // 
             // panelCalc
             // 
+            this.panelCalc.Controls.Add(this.btnCalc_M);
             this.panelCalc.Controls.Add(this.btnCalc_Q);
             this.panelCalc.Controls.Add(this.btnCalcMNQ);
             this.panelCalc.Controls.Add(this.labelCalculation);
@@ -892,17 +997,17 @@
             // 
             // btnCalc_Q
             // 
-            this.btnCalc_Q.Location = new System.Drawing.Point(67, 97);
+            this.btnCalc_Q.Location = new System.Drawing.Point(67, 75);
             this.btnCalc_Q.Name = "btnCalc_Q";
             this.btnCalc_Q.Size = new System.Drawing.Size(169, 23);
             this.btnCalc_Q.TabIndex = 7;
-            this.btnCalc_Q.Text = "Накл сечение";
+            this.btnCalc_Q.Text = "Накл сечение - Q ";
             this.btnCalc_Q.UseVisualStyleBackColor = true;
             this.btnCalc_Q.Click += new System.EventHandler(this.btnCalc_Q_Click);
             // 
             // btnCalcMNQ
             // 
-            this.btnCalcMNQ.Location = new System.Drawing.Point(67, 55);
+            this.btnCalcMNQ.Location = new System.Drawing.Point(67, 46);
             this.btnCalcMNQ.Name = "btnCalcMNQ";
             this.btnCalcMNQ.Size = new System.Drawing.Size(169, 23);
             this.btnCalcMNQ.TabIndex = 6;
@@ -919,110 +1024,15 @@
             this.labelCalculation.TabIndex = 3;
             this.labelCalculation.Text = "Расчет:";
             // 
-            // tabRebar
+            // btnCalc_M
             // 
-            this.tabRebar.Controls.Add(this.pictureBox1);
-            this.tabRebar.Controls.Add(this.label16);
-            this.tabRebar.Controls.Add(this.gridTRebar);
-            this.tabRebar.Controls.Add(this.lblLongitudinalReinforcement);
-            this.tabRebar.Controls.Add(this.gridLRebar);
-            this.tabRebar.Location = new System.Drawing.Point(4, 22);
-            this.tabRebar.Name = "tabRebar";
-            this.tabRebar.Padding = new System.Windows.Forms.Padding(3);
-            this.tabRebar.Size = new System.Drawing.Size(1098, 307);
-            this.tabRebar.TabIndex = 3;
-            this.tabRebar.Text = "Армирование";
-            this.tabRebar.UseVisualStyleBackColor = true;
-            // 
-            // gridLRebar
-            // 
-            this.gridLRebar.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridLRebar.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.D,
-            this.Qty});
-            this.gridLRebar.Location = new System.Drawing.Point(24, 39);
-            this.gridLRebar.Name = "gridLRebar";
-            this.gridLRebar.Size = new System.Drawing.Size(266, 102);
-            this.gridLRebar.TabIndex = 0;
-            // 
-            // lblLongitudinalReinforcement
-            // 
-            this.lblLongitudinalReinforcement.AutoSize = true;
-            this.lblLongitudinalReinforcement.Location = new System.Drawing.Point(24, 20);
-            this.lblLongitudinalReinforcement.Name = "lblLongitudinalReinforcement";
-            this.lblLongitudinalReinforcement.Size = new System.Drawing.Size(120, 13);
-            this.lblLongitudinalReinforcement.TabIndex = 1;
-            this.lblLongitudinalReinforcement.Text = "Продольная арматура";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(364, 20);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(119, 13);
-            this.label16.TabIndex = 3;
-            this.label16.Text = "Поперечная арматура";
-            // 
-            // gridTRebar
-            // 
-            this.gridTRebar.AllowUserToAddRows = false;
-            this.gridTRebar.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridTRebar.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn1,
-            this.Sw,
-            this.dataGridViewTextBoxColumn2});
-            this.gridTRebar.Location = new System.Drawing.Point(364, 39);
-            this.gridTRebar.Name = "gridTRebar";
-            this.gridTRebar.Size = new System.Drawing.Size(358, 102);
-            this.gridTRebar.TabIndex = 2;
-            // 
-            // D
-            // 
-            this.D.HeaderText = "D";
-            this.D.Items.AddRange(new object[] {
-            "10",
-            "12",
-            "14",
-            "18",
-            "16",
-            "20",
-            ""});
-            this.D.Name = "D";
-            this.D.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.D.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // Qty
-            // 
-            dataGridViewCellStyle9.Format = "N0";
-            dataGridViewCellStyle9.NullValue = "0";
-            this.Qty.DefaultCellStyle = dataGridViewCellStyle9;
-            this.Qty.HeaderText = "Шт";
-            this.Qty.Name = "Qty";
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            dataGridViewCellStyle6.Format = "N0";
-            dataGridViewCellStyle6.NullValue = "0";
-            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle6;
-            this.dataGridViewTextBoxColumn1.HeaderText = "D";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // Sw
-            // 
-            dataGridViewCellStyle7.Format = "N2";
-            dataGridViewCellStyle7.NullValue = "0";
-            this.Sw.DefaultCellStyle = dataGridViewCellStyle7;
-            this.Sw.HeaderText = "Шаг";
-            this.Sw.Name = "Sw";
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            dataGridViewCellStyle8.Format = "N0";
-            dataGridViewCellStyle8.NullValue = "0";
-            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle8;
-            this.dataGridViewTextBoxColumn2.HeaderText = "Шт";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.btnCalc_M.Location = new System.Drawing.Point(69, 106);
+            this.btnCalc_M.Name = "btnCalc_M";
+            this.btnCalc_M.Size = new System.Drawing.Size(166, 26);
+            this.btnCalc_M.TabIndex = 8;
+            this.btnCalc_M.Text = "Накл сечение - M";
+            this.btnCalc_M.UseVisualStyleBackColor = true;
+            this.btnCalc_M.Click += new System.EventHandler(this.btnCalc_M_Click);
             // 
             // picBeton
             // 
@@ -1053,6 +1063,16 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 4;
             this.pictureBox1.TabStop = false;
+            // 
+            // btnFactors
+            // 
+            this.btnFactors.Location = new System.Drawing.Point(19, 210);
+            this.btnFactors.Name = "btnFactors";
+            this.btnFactors.Size = new System.Drawing.Size(75, 23);
+            this.btnFactors.TabIndex = 3;
+            this.btnFactors.Text = "Факторы";
+            this.btnFactors.UseVisualStyleBackColor = true;
+            this.btnFactors.Click += new System.EventHandler(this.btnFactors_Click);
             // 
             // BSFiberMain
             // 
@@ -1097,15 +1117,15 @@
             this.tabStrength.ResumeLayout(false);
             this.tabStrength.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridEfforts)).EndInit();
+            this.tabRebar.ResumeLayout(false);
+            this.tabRebar.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridTRebar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridLRebar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.panelCalc.ResumeLayout(false);
             this.panelCalc.PerformLayout();
-            this.tabRebar.ResumeLayout(false);
-            this.tabRebar.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridLRebar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridTRebar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picBeton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picEffortsSign)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -1195,12 +1215,14 @@
         private System.Windows.Forms.DataGridView gridTRebar;
         private System.Windows.Forms.Label lblLongitudinalReinforcement;
         private System.Windows.Forms.DataGridView gridLRebar;
-        private System.Windows.Forms.DataGridViewComboBoxColumn D;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Qty;
+        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Sw;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn D;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Qty;
+        private System.Windows.Forms.Button btnCalc_M;
+        private System.Windows.Forms.Button btnFactors;
     }
 }
 

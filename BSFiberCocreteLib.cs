@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace BSFiberConcrete
 {
+    /// <summary>
+    /// Фибробетон, параметры
+    /// </summary>
     public class Fiber
     {
         public double e0 { get; set; }
@@ -14,9 +17,22 @@ namespace BSFiberConcrete
         public double mu_fv { get; set; }
     }
 
+    /// <summary>
+    /// Арматура, параметры
+    /// </summary>
+    public class Rebar
+    {
+        public double Rs { get; set; }    
+        public double As { get; set; }    
+        public double Rsw { get; set; }    
+        public double Asw { get; set; }
+        public double s_w { get; set; }
+    }
+
     public class BSFiberParams
     {
         public Fiber Fiber { get; set; }
+        public Rebar Rebar { get; set; }
     }
 
 

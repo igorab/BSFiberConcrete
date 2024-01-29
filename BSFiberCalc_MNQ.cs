@@ -6,6 +6,7 @@ using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Security.Authentication;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -69,6 +70,8 @@ namespace BSFiberConcrete
             Rfb = Rfbn / Yb * Yb1 * Yb2 * Yb3 * Yb5;
 
             N_ult = fi * Rfb * A;
+
+            
 
             double flex = l0 / h;
 
@@ -146,19 +149,101 @@ namespace BSFiberConcrete
             // Предельная перерезывающая сила по полосе между наклонными сечениями
             double Q_ult = 0.3 * Rfb * b * h0;
 
+            Q_ult = BSHelper.Kg2T(Q_ult);                    
+        }
+
+
+        private void CalculateM()
+        {
+            // Растояние до цента тяжести арматуры растянутой арматуры, см
+            double a = 4;
+
+            // рабочая высота сечения по растянутой арматуре
+            double h0 = h - a;
+
+            // Нормативное остаточное сопротивления осевому растяжению кг/см2
+            double Rfbt3 = Rfbt3n / Yft * Yb1 * Yb5;
+
+            // Площадь растянутой арматуры см2
+            double As = Rebar.As;
+
+            // Расчетное сопротивление поперечной арматры  
+            double Rsw = Rebar.Rsw;
+
+            // Площадь арматуры
+            double Asw = Rebar.Asw;
+
+            // шаг попреречной арматуры
+            double sw = Rebar.s_w;
+
+            // усилие в поперечной арматуре на единицу длины элемента
+            double q_sw = Rsw * Asw / sw;
+
+            if (q_sw < 0.25 * Rfbt3 * b)
+                q_sw = 0;
+
+            double c_min = h0;
+            double c_max = 4 * h0;
+            double c0_max = 2 * h0;
+
+            double[] c_x = new double[10];
+            double Q_sw, M_sw;
+            double M_fbt = 0;
+
+            double Q_fbt3 = 0;
+
+            foreach (double x in c_x)
+            {
+                
+                if (x > c0_max)
+                {
+                    Q_sw = q_sw * x;
+                    M_sw = 0.5 * Q_sw * c0_max;
+                }
+                else
+                {
+                    Q_sw = q_sw * x;
+                    M_sw = 0.5 * Q_sw * x;
+                }
+
+                M_fbt = 0.5 * Q_fbt3 * x;
+            }                        
+
+            //  Усилие в поперечной арматуре:
+            Q_sw = new double();
+            M_sw = new double();
+
+            // усилие в продольной растянутой арматуре
+            double N_s = Rsw * A;
+
+            double z_S = 0.9 * h0;
+
+            // момент, воспринимаемый продольной арматурой, пересекающей наклонное сечение, относительно противоположного конца наклонного сечения
+            double Ms = N_s * z_S;
+
+            // расчет по наклонным сечениям; условие : M <= M_ult (Ms - продольная, Msw - поперечная, М_fbt - фибробетон)
+            double M_ult = Ms + M_sw + M_fbt;
+
+            M_ult = BSHelper.Kg2T(M_ult);
+
+            // Предельная перерезывающая сила по полосе между наклонными сечениями
+            double Q_ult = 0.3 * Rfb * b * h0;
+
             Q_ult = BSHelper.Kg2T(Q_ult);
-            
+
         }
 
         public override void Calculate()
         {
-            if (Rebar )
+            if (UseRebar )
             {
                 Calculate1();
             }
             else if (Shear)
             {
                 CalculateQ();
+
+                CalculateM();
             }
             else
             {
@@ -237,8 +322,8 @@ namespace BSFiberConcrete
 
     [DisplayName("Расчет элементов на действие сил и моментов")]
     public class BSFiberCalc_MNQ : IBSFiberCalculation
-    {        
-        [DisplayName("Высота сечения, см"), Description("Geom")]        
+    {
+        [DisplayName("Высота сечения, см"), Description("Geom")]
         public double h { get; protected set; }
 
         [DisplayName("Ширина сечения, см"), Description("Geom")]
@@ -261,7 +346,7 @@ namespace BSFiberConcrete
 
         [DisplayName("Продольное усилие, кг"), Description("Phys")]
         public double N { get; protected set; }
-        
+
         [DisplayName("Cлучайный эксцентриситет, принимаемый по СП 63"), Description("Phys")]
         public double e0 { get; private set; }
 
@@ -279,7 +364,7 @@ namespace BSFiberConcrete
 
         [DisplayName("Коэффициент ф."), Description("Coef")]
         public double k_b { get; protected set; }
-        
+
         [DisplayName("Коэффициент, учитывающий влияние длительности действия нагрузки  (6.27)"), Description("Coef")]
         public double fi1 { get; protected set; }
 
@@ -295,8 +380,9 @@ namespace BSFiberConcrete
         public double Yb3 { get; protected set; }
         [DisplayName("Коэффициент условия работы Yb5"), Description("Coef")]
         public double Yb5 { get; protected set; }
-        
-        public bool Rebar { get; set; }
+
+        public Rebar Rebar {get; set;}
+        public bool UseRebar { get; set; }
         public bool Fissure{ get; set; }
         public bool Shear { get; set; }
 
@@ -361,7 +447,7 @@ namespace BSFiberConcrete
             Ef = _fiber.Ef;
             Eb = _fiber.Eb;
             mu_fv = _fiber.mu_fv;
-        }
+        }        
 
         public virtual void Calculate() {}
 
