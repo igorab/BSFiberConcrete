@@ -64,7 +64,7 @@ namespace BSFiberConcrete
                 numYb3.Value = (decimal)BSFiberCocreteLib.PhysElements.Yb3;
                 numYb5.Value = (decimal)BSFiberCocreteLib.PhysElements.Yb5;
 
-                double[] mnq = { 1.0, 50000, 3.0, 1.0, 37 }; //MNQ Ml
+                double[] mnq = { 1.0, 3.0, 5000, 1.0, 37 }; //MNQ Ml
                 gridEfforts.Rows.Add(mnq);
                 for (int i = 0; i < mnq.Length; i++)
                 {
@@ -455,6 +455,11 @@ namespace BSFiberConcrete
         {
             BSFactors bsFactors = new BSFactors();
             bsFactors.Show();
+        }
+
+        private void tabStrength_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

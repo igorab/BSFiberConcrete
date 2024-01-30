@@ -94,6 +94,7 @@
     <Compile Include="BSFiberAboutBox.Designer.cs">
       <DependentUpon>BSFiberAboutBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="BSFiberCalc_InclinedSections.cs" />
     <Compile Include="BSHelper.cs" />
     <Compile Include="BSFiberCalculation.cs" />
     <Compile Include="BSFiberCalc_M.cs" />
