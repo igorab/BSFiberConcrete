@@ -172,6 +172,11 @@ namespace BSFiberConcrete
         protected double Rfbtn;
         protected double N_ult;
 
+        // параметры продольной арматуры
+        protected double[] l_rebar;
+        // параметры поперечной арматуры
+        protected double[] t_rebar;
+
         protected Dictionary<string, double> m_Efforts = new Dictionary<string, double>();
 
         public static BSFiberCalc_MNQ Construct(BeamSection _BeamSection)
@@ -205,7 +210,14 @@ namespace BSFiberConcrete
             Ef = _fiber.Ef;
             Eb = _fiber.Eb;
             mu_fv = _fiber.mu_fv;
-        }        
+        } 
+        
+        // параметры арматуры
+        public void GetRebarParams(double[] _l_rebar, double[] _t_rebar)
+        {
+            l_rebar = _l_rebar;
+            t_rebar = _t_rebar;
+        }
 
         public virtual void Calculate() {}
 

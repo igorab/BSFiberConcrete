@@ -17,8 +17,8 @@ namespace BSFiberConcrete
         public double[] Params { get { return m_Prms.ToArray(); } }
 
         private BSFiberParams m_FiberParams;
-        public Fiber Fiber { get { return m_FiberParams.Fiber; } }
-        public Rebar Rebar { get { return m_FiberParams.Rebar; } }
+        public Fiber Fiber { get { return m_FiberParams?.Fiber; } }
+        public Rebar Rebar { get { return m_FiberParams?.Rebar; } }
 
         private double to_double(string _num)
         {

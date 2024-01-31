@@ -78,7 +78,7 @@ namespace BSFiberConcrete
                     gridTRebar.Rows[0].Cells[i].Value = t_rebar[i];
                 }
 
-                double[] long_rebar = { 16, 2 }; // продольная арматура
+                double[] long_rebar = { 16, 2, 4 }; // продольная арматура
                 gridLRebar.Rows.Add(long_rebar);
                 for (int i = 0; i < long_rebar.Length; i++)
                 {
@@ -177,6 +177,18 @@ namespace BSFiberConcrete
             {
                 MessageBox.Show("Ошибка в расчете: " + _e.Message);
             }
+
+            try
+            {
+                string pathToHtmlFile = CreateReport();
+
+                System.Diagnostics.Process.Start(pathToHtmlFile);
+            }
+            catch (Exception _e)
+            {
+                MessageBox.Show("Ошибка в отчете " + _e.Message);
+            }
+
         }
 
         private string CreateReport()
@@ -365,7 +377,11 @@ namespace BSFiberConcrete
 
             if (_shear /* && _rebar*/)
             {
-                InitRebar();
+                InitLRebar(out double[] t_r);
+
+                InitTRebar(out double[] l_r);
+
+                fiberCalc.GetRebarParams(t_r, l_r);
             }
 
             double[] prms = m_BSLoadData.Params;
@@ -425,12 +441,13 @@ namespace BSFiberConcrete
             FiberCalculateMNQ_Report();
         }
 
-        void InitRebar()
-        {
-            DataGridViewRowCollection rows = gridTRebar.Rows;
-            var row = rows[0];
+        // поперечная арматура
+        private void InitTRebar(out double[] t_rebar)
+        {            
+            DataGridViewRowCollection rows_t = gridTRebar.Rows;
+            var row = rows_t[0];
 
-            double[] t_rebar = new double[row.Cells.Count];
+            t_rebar = new double[row.Cells.Count];
             for (int i = 0; i < t_rebar.Length; i++)
             {
                 double x = Convert.ToDouble(row.Cells[i].Value);
@@ -438,28 +455,33 @@ namespace BSFiberConcrete
             }
         }
 
+        // продольная арматура
+        private void InitLRebar(out double[] l_rebar)
+        {
+            DataGridViewRowCollection rows_l = gridLRebar.Rows;
+            var row = rows_l[0];
+
+            l_rebar = new double[row.Cells.Count];
+            for (int i = 0; i < l_rebar.Length; i++)
+            {
+                double x = Convert.ToDouble(row.Cells[i].Value);
+                l_rebar[i] = x;
+            }
+        }
+
 
         // Расчет элементов по полосе между наклонными сечениями
+        // Расчет на действие момента и поперечной силы
         private void btnCalc_Q_Click(object sender, EventArgs e)
         {                        
             FiberCalculateMNQ_Report(_shear: true);
         }
-
-        // Расчет на действие момент
-        private void btnCalc_M_Click(object sender, EventArgs e)
-        {
-            FiberCalculateMNQ_Report(_shear: true);
-        }
-
+        
         private void btnFactors_Click(object sender, EventArgs e)
         {
             BSFactors bsFactors = new BSFactors();
             bsFactors.Show();
         }
-
-        private void tabStrength_Click(object sender, EventArgs e)
-        {
-
-        }
+        
     }
 }
