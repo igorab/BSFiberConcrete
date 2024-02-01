@@ -405,6 +405,25 @@ namespace BSFiberConcrete
             fiberCalc.Calculate();
 
             m_CalcResults = fiberCalc.Results();
+            
+            int ires = 0;
+            foreach (var res in m_CalcResults)
+            {
+                if (ires == 0)
+                {
+                    lblRes0.Text = res.Key;
+                    tbResultW.Text = res.Value.ToString();
+                }
+                else if (ires == 1)
+                {
+                    lblResult.Text = res.Key;
+                    tbResult.Text = res.Value.ToString();
+                }
+                else
+                    break;
+
+                ires++;
+            }
         }
 
         /// <summary>
@@ -482,6 +501,11 @@ namespace BSFiberConcrete
             BSFactors bsFactors = new BSFactors();
             bsFactors.Show();
         }
-        
+
+        private void btnCalc_Deform_Click(object sender, EventArgs e)
+        {
+            BSFiberCalc_Deform fiberCalc_Deform = new BSFiberCalc_Deform();
+            fiberCalc_Deform.Calculate();
+        }
     }
 }

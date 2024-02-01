@@ -18,6 +18,8 @@ namespace BSFiberConcrete
 
     public class BSBeam : IBeamGeometry
     {
+        // количество стержней арматуры
+        public int Rods {get; set;}
         public double Length { get; set; }
 
         public virtual double Area()

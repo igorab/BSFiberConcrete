@@ -106,6 +106,9 @@
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lblLongitudinalReinforcement = new System.Windows.Forms.Label();
             this.gridLRebar = new System.Windows.Forms.DataGridView();
+            this.D = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Qty = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.a = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnCalc = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.btnRectang = new System.Windows.Forms.Button();
@@ -119,13 +122,10 @@
             this.AboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.panelCalc = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnCalc_Deform = new System.Windows.Forms.Button();
             this.btnCalc_Q = new System.Windows.Forms.Button();
             this.btnCalcMNQ = new System.Windows.Forms.Button();
             this.labelCalculation = new System.Windows.Forms.Label();
-            this.D = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Qty = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.a = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabGeneral.SuspendLayout();
             this.tabParams.SuspendLayout();
             this.groupBoxResult.SuspendLayout();
@@ -891,6 +891,29 @@
             this.gridLRebar.Size = new System.Drawing.Size(345, 102);
             this.gridLRebar.TabIndex = 0;
             // 
+            // D
+            // 
+            dataGridViewCellStyle9.Format = "N2";
+            dataGridViewCellStyle9.NullValue = "0";
+            this.D.DefaultCellStyle = dataGridViewCellStyle9;
+            this.D.HeaderText = "D мм";
+            this.D.Name = "D";
+            this.D.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // Qty
+            // 
+            dataGridViewCellStyle10.Format = "N0";
+            dataGridViewCellStyle10.NullValue = "0";
+            this.Qty.DefaultCellStyle = dataGridViewCellStyle10;
+            this.Qty.HeaderText = "Шт";
+            this.Qty.Name = "Qty";
+            // 
+            // a
+            // 
+            this.a.HeaderText = "a, см";
+            this.a.Name = "a";
+            this.a.ToolTipText = "Расстояние до ц.т.";
+            // 
             // btnCalc
             // 
             this.btnCalc.Location = new System.Drawing.Point(38, 17);
@@ -998,7 +1021,7 @@
             // 
             // panelCalc
             // 
-            this.panelCalc.Controls.Add(this.button1);
+            this.panelCalc.Controls.Add(this.btnCalc_Deform);
             this.panelCalc.Controls.Add(this.btnCalc_Q);
             this.panelCalc.Controls.Add(this.btnCalcMNQ);
             this.panelCalc.Controls.Add(this.labelCalculation);
@@ -1008,14 +1031,15 @@
             this.panelCalc.Size = new System.Drawing.Size(258, 181);
             this.panelCalc.TabIndex = 14;
             // 
-            // button1
+            // btnCalc_Deform
             // 
-            this.button1.Location = new System.Drawing.Point(38, 104);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(169, 26);
-            this.button1.TabIndex = 9;
-            this.button1.Text = "Нелинейная деф модель";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnCalc_Deform.Location = new System.Drawing.Point(38, 104);
+            this.btnCalc_Deform.Name = "btnCalc_Deform";
+            this.btnCalc_Deform.Size = new System.Drawing.Size(169, 26);
+            this.btnCalc_Deform.TabIndex = 9;
+            this.btnCalc_Deform.Text = "Нелинейная деф модель";
+            this.btnCalc_Deform.UseVisualStyleBackColor = true;
+            this.btnCalc_Deform.Click += new System.EventHandler(this.btnCalc_Deform_Click);
             // 
             // btnCalc_Q
             // 
@@ -1045,29 +1069,6 @@
             this.labelCalculation.Size = new System.Drawing.Size(45, 13);
             this.labelCalculation.TabIndex = 3;
             this.labelCalculation.Text = "Расчет:";
-            // 
-            // D
-            // 
-            dataGridViewCellStyle9.Format = "N2";
-            dataGridViewCellStyle9.NullValue = "0";
-            this.D.DefaultCellStyle = dataGridViewCellStyle9;
-            this.D.HeaderText = "D мм";
-            this.D.Name = "D";
-            this.D.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // Qty
-            // 
-            dataGridViewCellStyle10.Format = "N0";
-            dataGridViewCellStyle10.NullValue = "0";
-            this.Qty.DefaultCellStyle = dataGridViewCellStyle10;
-            this.Qty.HeaderText = "Шт";
-            this.Qty.Name = "Qty";
-            // 
-            // a
-            // 
-            this.a.HeaderText = "a, см";
-            this.a.Name = "a";
-            this.a.ToolTipText = "Расстояние до ц.т.";
             // 
             // BSFiberMain
             // 
@@ -1214,7 +1215,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Sw;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.Button btnFactors;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnCalc_Deform;
         private System.Windows.Forms.DataGridViewTextBoxColumn D;
         private System.Windows.Forms.DataGridViewTextBoxColumn Qty;
         private System.Windows.Forms.DataGridViewTextBoxColumn a;

@@ -18,11 +18,7 @@ namespace BSFiberConcrete
     public class BSFiberCalc_MNQ_Rect : BSFiberCalc_MNQ
     {
         public BSBeam_Rect beam { get; set; }
-
-        public double Q_ult { get; set; }
-
-        public double M_ult { get; set; }
-
+        
         private double y_t;
 
         private Dictionary<string, double> m_Result;  
@@ -366,14 +362,9 @@ namespace BSFiberConcrete
             }
         }
 
-        public  Dictionary<string, double> Results()
+        public override Dictionary<string, double> Results()
         {
-            return new Dictionary<string, double>() { { "Rfb", Rfb }, {"M_ult", M_ult },  { "N_ult", N_ult }, {"Q_ult", Q_ult}  };
+            return new Dictionary<string, double>() { {"M_ult", M_ult }, { "Q_ult", Q_ult }, { "N_ult", N_ult } };
         }
-
-
     }
-
-
-
 }

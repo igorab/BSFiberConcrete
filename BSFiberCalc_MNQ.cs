@@ -139,6 +139,16 @@ namespace BSFiberConcrete
         [DisplayName("Коэффициент условия работы Yb5"), Description("Coef")]
         public double Yb5 { get; protected set; }
 
+        [DisplayName("Предельный момент"), Description("Res")]
+        public double M_ult { get; protected set; }
+
+        [DisplayName("Предельная поперечная сила"), Description("Res")]
+        public double Q_ult { get; protected set; }
+
+        [DisplayName("Предельная продольная сила"), Description("Res")]
+        public double N_ult { get; protected set; }
+
+
         public Rebar Rebar {get; set;}
         public bool UseRebar { get; set; }
         public bool Fissure{ get; set; }
@@ -170,8 +180,7 @@ namespace BSFiberConcrete
 
         protected double Rfb;
         protected double Rfbtn;
-        protected double N_ult;
-
+      
         // параметры продольной арматуры
         protected double[] l_rebar;
         // параметры поперечной арматуры
@@ -250,7 +259,7 @@ namespace BSFiberConcrete
             e_N = m_Efforts["eN"];
         }
 
-        public Dictionary<string, double> Results()
+        public virtual Dictionary<string, double> Results()
         {
             return new Dictionary<string, double>() { { "Rfb", Rfb }, { "N_ult", N_ult } };
         }

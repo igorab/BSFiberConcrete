@@ -19,12 +19,13 @@ namespace BSFiberConcrete
             m_GeomParams = new Dictionary<string, double>();
             m_Coeffs = new Dictionary<string, double>();
             m_PhysParams = new Dictionary<string, double>();
+            m_CalcResults = new Dictionary<string, double>();
         }
 
         public void Init(BSFiberCalc_MNQ _fiberCalc)
         {
             fiberCalc = _fiberCalc;
-            m_CalcResults = fiberCalc.Results();
+            //m_CalcResults = fiberCalc.Results();
 
             ReportName = typeof(BSFiberCalc_MNQ).GetCustomAttribute<DisplayNameAttribute>().DisplayName;
 
@@ -85,13 +86,18 @@ namespace BSFiberConcrete
                         case "Phys":
                             m_PhysParams.Add(attrValue, _d) ;
                             break;
+                        case "Res":
+                            m_CalcResults.Add(attrValue, _d);
+                            break;
+                        case "Beam":
+                            m_Beam.Add(attrValue, _d);
+                            break;
                     }                        
                 }
             }
 
             /*
          m_Beam;                  
-         m_CalcResults;
             */
         }
     }
