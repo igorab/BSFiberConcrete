@@ -26,9 +26,10 @@ namespace BSFiberConcrete
 
         private const int I = 3;
 
-        private BSBeam beam = new BSBeam();
-        private readonly BSMatFiber matFiber = new BSMatFiber();
-        private readonly BSMatRod matRod = new BSMatRod();
+        public BSBeam m_Beam { get; set; }
+
+        private readonly BSMatFiber m_Fiber = new BSMatFiber();
+        private readonly BSMatRod m_Rod = new BSMatRod();
         
         // радиусы кривизны продольной оси в плоскостях действия моментов
         private double rx, ry;
@@ -37,63 +38,118 @@ namespace BSFiberConcrete
 
         // жесткостные характеристики
         private Matrix<double> D = DenseMatrix.OfArray( new double[,] {{0,0,0}, {0,0,0}, {0,0,0}} );
-        private Vector<double> Zfbx;
+        // площадь ц.т. участка фибробетона
+        private Vector<double> Ab;
+        // площадь ц.т. участка арматуры
+        private Vector<double> As;
+        // координаты ц.т. участка фибробетона
+        private Vector<double> Zfbx;        
         private Vector<double> Zfby;
+        // координаты ц.т. участка арматуры
+        private Vector<double> Zsx;        
+        private Vector<double> Zsy;
+
+        // напряжение на уровне ц.т. фибробетона
         private Vector<double> sigma_fb;
+        // напряжение на уровне ц.т. арматуры
+        private Vector<double> sigma_s;
 
         // деформации бетона
         private Vector<double> epsilon_fb;
         // деформации арматуры
-        private Vector<double> epsilon_sj;
+        private Vector<double> epsilon_s;
         // коэффициенты упругости стержней арматуры
-        private Vector<double> nu_sj;
+        private Vector<double> nu_s;
 
         // коэффициенты упругости сталефибробетона
         private Vector<double> nu_fb;
 
+        private Dictionary<string, double> Res = new Dictionary<string, double>();
+
         public BSFiberCalc_Deform (double _Mx = 0, double _My = 0, double _N = 0)
         {
+            m_Beam = new BSBeam_Rect() { h = 80, b = 60, Length = 100, Rods = 12 };
+
             Mx = _Mx;
             My = _My;
             N  = _N;
+
+            rx = 1;
+            ry = 1;
+            eps_0 = 1;
 
             InitVectors();
         }
 
         private void InitVectors()
-        {            
+        {
+            Ab = Vector<double>.Build.Dense(I);
+            As = Vector<double>.Build.Dense(I);
+
             Zfbx = Vector<double>.Build.Dense(I);
             Zfby = Vector<double>.Build.Dense(I);
             sigma_fb = Vector<double>.Build.Dense(I);
+            sigma_s = Vector<double>.Build.Dense(I);
             nu_fb = Vector<double>.Build.Dense(I);
-            nu_sj = Vector<double>.Build.Dense(I);
+            nu_s = Vector<double>.Build.Dense(I);
+            epsilon_fb = Vector<double>.Build.Dense(I);
+            epsilon_s = Vector<double>.Build.Dense(I);
         }
         
+        private void CalcD()
+        {
+            int I1 = 0, I2 = 1, I3 = 2;
+            int i = 0;
+            int j = 0;
+
+            D[I1, I1] += Ab[i] * Math.Pow(Zfbx[i], 2) * m_Fiber.Efb * nu_fb[i];
+            D[I1, I1] += As[j] * Math.Pow(Zsx[j], 2) * m_Rod.Es * nu_s[j];
+
+            D[I2, I2] += Ab[i] * Math.Pow(Zfby[i], 2) * m_Fiber.Efb * nu_fb[i];
+            D[I2, I2] += As[j] * Math.Pow(Zsx[j], 2) * m_Rod.Es * nu_s[j];
+
+            D[I1, I2] += Ab[i] * Zfbx[i] * Zfby[i] * m_Fiber.Efb * nu_fb[i];
+            D[I1, I2] += As[j] * Zsx[j] * Zsy[j] * m_Rod.Es * nu_s[j];
+
+            D[I1, I3] += Ab[i] * Zfbx[i] * m_Fiber.Efb * nu_fb[i];
+            D[I1, I3] += As[j] * Zsx[j] * Zsx[j] * m_Rod.Es * nu_s[j];
+
+            D[I2, I3] += Ab[i] * Zfby[i] * m_Fiber.Efb * nu_fb[i];
+            D[I2, I3] += As[j] * Zsy[j] * m_Rod.Es * nu_s[i];
+
+            D[I3, I3] += Ab[i] * m_Fiber.Efb * nu_fb[i];
+            D[I3, I3] += As[j] * m_Rod.Es * nu_s[i];
+        }
+
 
         private void CalcMN()
         {
-            double Mx = D[1,1] * 1/rx + D[1, 2] * 1/ry + D[1, I] * eps_0;
-            double My = D[1, 2] * 1 / ry + D[2, 2] * 1 / ry + D[2, I] * eps_0; 
-            double N = D[1, I] * 1 / rx + D[2, I] * 1/ry + D[I, I] * eps_0; 
-
+            int I1=0, I2=1, I3=2;
+           
+            double M_x = D[I1,I1] * 1/rx + D[I1, I2] * 1/ry + D[I1, I3] * eps_0;
+            double M_y = D[I1, I2] * 1 / ry + D[I2, I2] * 1 / ry + D[I2, I3] * eps_0; 
+            double N_ = D[I1, I3] * 1 / rx + D[I2, I3] * 1/ry + D[I3, I3] * eps_0; 
         }
 
-
+        // Рассчитать
         public void Calculate()
         {
-            int j = beam.Rods;
+            int j = m_Beam.Rods;
+
+            CalcD();
 
             CalcMN();            
 
             for (int i = 0; i < I; i++) 
             {
-                nu_fb[i] = sigma_fb[i] / (matFiber.Efb * epsilon_fb[i]);
+                nu_fb[i] = sigma_fb[i] / (m_Fiber.Efb * epsilon_fb[i]);
             }
 
-            bool res_fb = epsilon_fb.AbsoluteMaximum() <=  matFiber.Eps_fb_ult;
+            bool res_fb = epsilon_fb.AbsoluteMaximum() <=  m_Fiber.Eps_fb_ult;
+            Res.Add("res_fb", Convert.ToDouble(res_fb));
 
-            bool res_s = epsilon_sj.AbsoluteMaximum() <= matRod.Eps_s_ult;
-
+            bool res_s = epsilon_s.AbsoluteMaximum() <= m_Rod.Eps_s_ult;
+            Res.Add("res_s", Convert.ToDouble(res_s));
         }
 
         public Dictionary<string, double> GeomParams()
@@ -111,10 +167,10 @@ namespace BSFiberConcrete
             throw new NotImplementedException();
         }
 
+        // Вернуть результат
         public Dictionary<string, double> Results()
         {
-
-            throw new NotImplementedException();
+            return Res;
         }
     }
 }
