@@ -22,6 +22,7 @@ namespace BSFiberConcrete
     /// </summary>
     public class Rebar
     {
+        public string ID { get; set; }
         public double Rs { get; set; }    
         public double As { get; set; }    
         public double Rsw { get; set; }    

@@ -13,6 +13,9 @@ namespace BSFiberConcrete
         string Name { get; }        
     }
 
+    /// <summary>
+    ///  Свойства обычного бетона
+    /// </summary>
     public class BSMatConcrete : IMaterial
     {
         public string Name => "Бетон";
@@ -25,12 +28,46 @@ namespace BSFiberConcrete
         {
             BT = "B30";
         }
-
     }
 
+    /// <summary>
+    ///  Материал стержня арматуры
+    /// </summary>
+    public class BSMatRod : IMaterial
+    {
+        public string Name => "Стержень арматуры";
+
+        /// <summary>
+        /// модуль упругости
+        /// </summary>
+        public double Es { get; set; }
+
+        /// <summary>
+        /// коэффициент упругости
+        /// </summary>
+        public double n_sj { get; set; }
+
+        public double Eps_s_ult { get; set; } 
+    }
+
+    /// <summary>
+    /// Свойства фибробетона
+    /// </summary>
     public class BSMatFiber : IMaterial
     {
         public string Name => "Фибробетон";
+
+        /// <summary>
+        /// Начальный модуль упругости
+        /// </summary>
+        public double Efb { get; set; }
+
+        /// <summary>
+        /// Коэффициент упругости
+        /// </summary>
+        public double n_fb { get; set; }
+
+        public double Eps_fb_ult { get; set; }
 
         public string BT { get; set; }
 
@@ -42,8 +79,7 @@ namespace BSFiberConcrete
 
         public BSMatFiber()
         {            
-        }
-       
+        }       
     }
 
 }

@@ -77,6 +77,12 @@ namespace BSFiberConcrete
             listView.Sorting = SortOrder.Ascending;
 
             // Create items and sets of subitems for each item.
+            ListViewItem item0 = new ListViewItem("A400", 0);
+            item0.Checked = true;
+            item0.SubItems.Add("");
+            item0.SubItems.Add("Класс арматуры");
+            item0.SubItems.Add("");
+
             ListViewItem item1 = new ListViewItem("Rs", 0);            
             item1.Checked = true;
             item1.SubItems.Add(_rebar.Rs.ToString());
@@ -115,7 +121,7 @@ namespace BSFiberConcrete
             listView.Columns.Add("Ед. изм.", 100, HorizontalAlignment.Center);
 
             //Add the items to the ListView.
-            listView.Items.AddRange(new ListViewItem[] { item1, item2, item3, item4, item5 });            
+            listView.Items.AddRange(new ListViewItem[] { item0, item1, item2, item3, item4, item5 });            
         }
 
         private void BSFiberSetup_Load(object sender, EventArgs e)
