@@ -68,6 +68,8 @@ namespace BSFiberConcrete
     {
         public string Name => "Стержень арматуры";
 
+        public string RClass { get; set; }
+
         /// <summary>
         /// модуль упругости
         /// </summary>

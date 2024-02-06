@@ -24,12 +24,15 @@ namespace BSFiberConcrete
         // продольная сила от внешней нагрузки
         public double N { get; set; }
 
+        public BSBeam Beam { get {return m_Beam; } set { m_Beam = value; } }
+        public BSMatFiber MatFiber { get { return m_Fiber; } set { m_Fiber = value; } }
+        public BSMatRod MatRebar { get { return m_Rod; } set { m_Rod = value; } }
+
+
         private const int I = 3;
-
-        public BSBeam m_Beam { get; set; }
-
-        private readonly BSMatFiber m_Fiber = new BSMatFiber();
-        private readonly BSMatRod m_Rod = new BSMatRod();
+        private  BSBeam m_Beam { get; set; }
+        private  BSMatFiber m_Fiber = new BSMatFiber();
+        private  BSMatRod m_Rod = new BSMatRod();
         
         // радиусы кривизны продольной оси в плоскостях действия моментов
         private double rx, ry;
@@ -65,11 +68,14 @@ namespace BSFiberConcrete
         private Vector<double> nu_fb;
 
         private Dictionary<string, double> Res = new Dictionary<string, double>();
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="_Mx">кНм</param>
+        /// <param name="_My">кНм</param>
+        /// <param name="_N">кН</param>
         public BSFiberCalc_Deform (double _Mx = 0, double _My = 0, double _N = 0)
-        {
-            m_Beam = new BSBeam_Rect() { h = 80, b = 60, Length = 100, Rods = 12 };
-
+        {            
             Mx = _Mx;
             My = _My;
             N  = _N;
@@ -134,7 +140,9 @@ namespace BSFiberConcrete
         // Рассчитать
         public void Calculate()
         {
-            int j = m_Beam.Rods;
+            int j = m_Beam.RodsQty;
+
+            CalculationScheme();
 
             CalcD();
 
@@ -150,6 +158,16 @@ namespace BSFiberConcrete
 
             bool res_s = epsilon_s.AbsoluteMaximum() <= m_Rod.Eps_s_ult;
             Res.Add("res_s", Convert.ToDouble(res_s));
+        }
+
+        private void CalculationScheme()
+        {
+            BSBeam_Rect beam = (BSBeam_Rect) m_Beam;
+            double dB =  beam.b / 100;
+            double dH = beam.h / 100;
+
+            List<double> bs = new List<double>();
+
         }
 
         public Dictionary<string, double> GeomParams()

@@ -16,11 +16,30 @@ namespace BSFiberConcrete
         double W_s();
     }
 
+    // конечный элемент
+    public class BSElement
+    {
+        public int Num;
+        public double X;
+        public double Y;        
+    }
+
+
+    public class BSRod
+    {
+        public double X;
+        public double Y;
+        public BSMatRod MatRod { get; set; }
+    }
+
 
     public class BSBeam : IBeamGeometry
-    {
+    {        
         // количество стержней арматуры
-        public int Rods {get; set;}
+        public int RodsQty {get; set;}
+
+        public List<BSRod> Rods { get; set; }  
+
         public double Length { get; set; }
 
         public virtual double Area()
@@ -36,7 +55,10 @@ namespace BSFiberConcrete
         public virtual double I_s()
         {
             return 0;
+        }
 
+        public BSBeam()
+        {            
         }
     }
     /// <summary>
@@ -61,7 +83,12 @@ namespace BSFiberConcrete
         public double y_t() => h / 2.0;
 
         // Центр тяжести сечения
-        public (double, double) CG() => (b/2, h/2);        
+        public (double, double) CG() => (b/2, h/2);
+        
+        public BSBeam_Rect()
+        {
+
+        }
 
     }
 

@@ -503,8 +503,20 @@ namespace BSFiberConcrete
         }
 
         private void btnCalc_Deform_Click(object sender, EventArgs e)
-        {
-            BSFiberCalc_Deform fiberCalc_Deform = new BSFiberCalc_Deform();
+        {           
+            BSFiberCalc_Deform fiberCalc_Deform = new BSFiberCalc_Deform(_Mx: 40, _My: 95 );
+
+            fiberCalc_Deform.MatRebar = new BSMatRod() { RClass = "A400" };
+
+            List<BSRod> rods = new List<BSRod>();
+            double[,] rdYdX = { { 40, 80 }, { 300, 80 }, { 40, 120 }, { 300, 120 }, { 40, 640 }, { 300, 640 }, {40, 1115 }, {300, 1115}};
+            int rows = rdYdX.GetUpperBound(0) + 1;    // количество строк            
+            for (int i = 0; i < rows; i++)
+                rods.Add(new BSRod() { X = rdYdX[i, 0], Y = rdYdX[i, 1], MatRod = fiberCalc_Deform.MatRebar});
+
+            fiberCalc_Deform.MatFiber = new BSMatFiber() { BT = "B3.5" };
+            fiberCalc_Deform.Beam = new BSBeam_Rect() { h = 119.5, b = 34, Length = 100, RodsQty = 12, Rods = rods };
+                        
             fiberCalc_Deform.Calculate();
         }
         
