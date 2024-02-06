@@ -99,6 +99,8 @@
     </Compile>
     <Compile Include="BSFiberCalc_Deform.cs" />
     <Compile Include="BSFiberCalc_InclinedSections.cs" />
+    <Compile Include="BSFiberCalc_Norm.cs" />
+    <Compile Include="BSFiberCalc_NormRods.cs" />
     <Compile Include="BSHelper.cs" />
     <Compile Include="BSFiberCalculation.cs" />
     <Compile Include="BSFiberCalc_M.cs" />

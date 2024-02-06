@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MathNet.Numerics.Integration;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -57,7 +58,10 @@ namespace BSFiberConcrete
         public override double I_s() => b * Math.Pow(h, 3) / 12;
 
         [DisplayName("Расстояние от центра тяжести сечения сталефибробетонного элемента до наиболее растянутого волокна, см")]
-        public double y_t() => h / 2.0; 
+        public double y_t() => h / 2.0;
+
+        // Центр тяжести сечения
+        public (double, double) CG() => (b/2, h/2);        
 
     }
 

@@ -71,14 +71,14 @@ namespace BSFiberConcrete
                     gridEfforts.Rows[0].Cells[i].Value = mnq[i];
                 }
 
-                double[] t_rebar = { 6, 2, 4 }; // поперечная арматура
+                double[] t_rebar = { 6, 2, 4, 400, 1}; // поперечная арматура
                 gridTRebar.Rows.Add(t_rebar);
                 for (int i = 0; i < t_rebar.Length; i++)
                 {
                     gridTRebar.Rows[0].Cells[i].Value = t_rebar[i];
                 }
 
-                double[] long_rebar = { 16, 2, 4 }; // продольная арматура
+                double[] long_rebar = { 16, 2, 4, 400, 1 }; // продольная арматура
                 gridLRebar.Rows.Add(long_rebar);
                 for (int i = 0; i < long_rebar.Length; i++)
                 {
@@ -507,5 +507,6 @@ namespace BSFiberConcrete
             BSFiberCalc_Deform fiberCalc_Deform = new BSFiberCalc_Deform();
             fiberCalc_Deform.Calculate();
         }
+        
     }
 }

@@ -53,12 +53,30 @@ namespace BSFiberConcrete
                 foreach (var _pair in m_Beam)
                 {
                     w.WriteLine("<tr>");
-                    w.WriteLine($"<td>{_pair.Key}</td>");
-                    w.WriteLine($"<td>{_pair.Value}</td>");
+                    w.WriteLine($"<td><b>{_pair.Key}</b></td>");
+                    w.WriteLine($"<td colspan=2>| {_pair.Value} </td>");
                     w.WriteLine("</tr>");
                 }                
                 w.WriteLine("</Table>");
                 w.WriteLine("<br>");
+
+                if (m_GeomParams != null)
+                {
+                    w.WriteLine("<Table border=1 bordercolor = darkblue>");
+                    w.WriteLine("<caption>Геометрия</caption>");
+
+                    foreach (var _pair in m_GeomParams)
+                    {
+                        w.WriteLine("<tr>");
+                        w.WriteLine($"<td><b>{_pair.Key}</b></td>");
+                        w.WriteLine($"<td>| {_pair.Value}</td>");
+                        w.WriteLine("</tr>");
+                    }
+
+                    w.WriteLine("</tr>");
+                    w.WriteLine("</Table>");
+                    w.WriteLine("<br>");
+                }
             }
         }
 
@@ -72,7 +90,7 @@ namespace BSFiberConcrete
                 {
                     w.WriteLine("<tr>");
                     w.WriteLine($"<td>{_pair.Key}</td>");
-                    w.WriteLine($"<td>{_pair.Value}</td>");
+                    w.WriteLine($"<td>| {_pair.Value} </td>");
                     w.WriteLine("</tr>");
                 }
                
@@ -88,26 +106,14 @@ namespace BSFiberConcrete
                 {
                     w.WriteLine("<tr>");
                     w.WriteLine($"<td>{_pair.Key}</td>");
-                    w.WriteLine($"<td>{_pair.Value}</td>");
+                    w.WriteLine($"<td>| {_pair.Value} </td>");
                     w.WriteLine("</tr>");
                 }                                
                 w.WriteLine("</Table>");
                 w.WriteLine("<br>");
             }
             
-            if (m_GeomParams != null)
-            {
-                w.WriteLine("<Table border=1 bordercolor = darkblue>");
-                w.WriteLine("<caption>Геометрия</caption>");
-                foreach (var _prm in m_GeomParams.Keys)
-                    w.WriteLine($"<th>{_prm}</th>");
-                w.WriteLine("<tr>");
-                foreach (var _val in m_GeomParams.Values)
-                    w.WriteLine($"<td>{_val}</td>");
-                w.WriteLine("</tr>");
-                w.WriteLine("</Table>");
-                w.WriteLine("<br>");
-            }
+            
         }
 
         protected virtual void ReportResult(StreamWriter w)
@@ -117,16 +123,15 @@ namespace BSFiberConcrete
             {
                 w.WriteLine("<Table border=1 bordercolor = darkblue>");
                 w.WriteLine("<tr>");
-                foreach (var _prm in m_CalcResults.Keys)
+
+                foreach (var _pair in m_CalcResults)
                 {
-                    w.WriteLine($"<th>{_prm}</th>");
+                    w.WriteLine("<tr>");
+                    w.WriteLine($"<td><b>{_pair.Key}</b></td>");
+                    w.WriteLine($"<td colspan=2>| {_pair.Value} </td>");
+                    w.WriteLine("</tr>");
                 }
-                w.WriteLine("</tr>");
-                w.WriteLine("<tr>");
-                foreach (var _val in m_CalcResults.Values)
-                {
-                    w.WriteLine($"<td>{_val}</td>");
-                }
+                
                 w.WriteLine("</tr>");
                 w.WriteLine("</Table>");
                 w.WriteLine("<br>");
