@@ -23,15 +23,30 @@ namespace BSFiberConcrete
         // Номер
         public int Num;
 
-        public double X;
-        public double Y;
-        public double Area() => X * Y;
+        // Координаты Ц.Т.
+        public double Z_X { get; }
+        public double Z_Y { get; }
+        // Площадь Ц.Т.
+        public double Ab {  get => Area(); } 
+
+        // напряжение на уровне Ц.Т.
+        public double Sigma { get; set; }
+
+        // модуль упругости
+        public double E { get; set; }
+
+        // относительная деформация
+        public double Epsilon { get; set; }
+
+        public double Nu { get => Sigma / (E * Epsilon) ;  }
+
+        private double Area() => Z_X * Z_Y;
 
         public BSElement (int _N, double _X, double _Y)
         {
             Num = _N;
-            X = _X;
-            Y = _Y;            
+            Z_X = _X;
+            Z_Y = _Y;            
         }
     }
 
@@ -43,8 +58,8 @@ namespace BSFiberConcrete
         public List<BSRod> Rods { get; set; }
 
         // Координаты Ц.Т.
-        public double X0 { get; set; }
-        public double Y0 { get; set; }
+        public double Zfb_X { get; set; }
+        public double Z_fb_Y { get; set; }
 
         public double Length { get; set; }
 
@@ -95,8 +110,8 @@ namespace BSFiberConcrete
         {
             b = _b;
             h = _h;
-            X0 = _b/2;
-            Y0 = _h/2;
+            Zfb_X = _b/2;
+            Z_fb_Y = _h/2;
         }
 
     }

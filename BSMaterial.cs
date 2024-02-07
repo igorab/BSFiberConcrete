@@ -72,16 +72,27 @@ namespace BSFiberConcrete
         public string RCls { get; set; }
 
         /// <summary>
-        /// модуль упругости
+        /// модуль упругости, МПа
         /// </summary>
         public double Es { get; set; }
 
         /// <summary>
         /// коэффициент упругости
         /// </summary>
-        public double n_sj { get; set; }
+        public double Nju_s { get; set; }
 
         public double Eps_s_ult { get; set; } 
+
+        public BSMatRod()
+        {
+
+        }
+        
+        public BSMatRod(double _Es)
+        {
+            Es = _Es;
+        }
+
     }
 
     /// <summary>
@@ -90,6 +101,8 @@ namespace BSFiberConcrete
     public class BSMatFiber : IMaterial
     {
         public string Name => "Фибробетон";
+
+        public double Eb { get => Efb; }
 
         /// <summary>
         /// Начальный модуль упругости
@@ -150,7 +163,13 @@ namespace BSFiberConcrete
 
         public BSMatFiber()
         {            
-        }       
+        }
+
+        public BSMatFiber(double _Eb)
+        {
+            Efb = _Eb;
+        }
+
     }
 
 }

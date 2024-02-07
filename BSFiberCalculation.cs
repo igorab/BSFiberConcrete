@@ -22,9 +22,9 @@ namespace BSFiberConcrete
 
     public interface IBSFiberCalculation
     {
-        void GetParams(double[] _t);
+        void GetParams(double[] _t = null);
 
-        void GetSize(double[] _t);
+        void GetSize(double[] _t = null);
 
         Dictionary<string, double> GeomParams();
 

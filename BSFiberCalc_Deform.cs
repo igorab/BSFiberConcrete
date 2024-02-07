@@ -25,8 +25,11 @@ namespace BSFiberConcrete
         // продольная сила от внешней нагрузки
         public double N { get; set; }
 
+        // балка
         public BSBeam Beam { get {return m_Beam; } set { m_Beam = value; } }
+        // свойства бетона
         public BSMatFiber MatFiber { get { return m_Fiber; } set { m_Fiber = value; } }
+        // свойства арматуры
         public BSMatRod MatRebar { get { return m_Rod; } set { m_Rod = value; } }
 
 
@@ -37,6 +40,7 @@ namespace BSFiberConcrete
 
         // расчетная схема сечения
         private List<BSElement> m_BS = new List<BSElement>();
+        private List<BSRod> m_Rods = new List<BSRod>();
 
         // радиусы кривизны продольной оси в плоскостях действия моментов
         private double rx, ry;
@@ -87,52 +91,116 @@ namespace BSFiberConcrete
             rx = 1;
             ry = 1;
             eps_0 = 1;
-
-            InitVectors();
+            
         }
 
-        private void InitVectors()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="_I">количество элементов</param>
+        /// <param name="_J">количество стержней</param>
+        public void InitVectors(int _I, int _J)
         {
-            Ab = Vector<double>.Build.Dense(I);
-            As = Vector<double>.Build.Dense(I);
+            // площади
+            Ab = Vector<double>.Build.Dense(_I);
+            As = Vector<double>.Build.Dense(_J);
 
-            Zfbx = Vector<double>.Build.Dense(I);
-            Zfby = Vector<double>.Build.Dense(I);
-            sigma_fb = Vector<double>.Build.Dense(I);
-            sigma_s = Vector<double>.Build.Dense(I);
-            nu_fb = Vector<double>.Build.Dense(I);
-            nu_s = Vector<double>.Build.Dense(I);
-            epsilon_fb = Vector<double>.Build.Dense(I);
-            epsilon_s = Vector<double>.Build.Dense(I);
+            // координаты ЦТ
+            Zfbx = Vector<double>.Build.Dense(_I);            
+            Zfby = Vector<double>.Build.Dense(_I);
+
+            Zsx = Vector<double>.Build.Dense(_J);
+            Zsy = Vector<double>.Build.Dense(_J);
+
+            // напряжения
+            sigma_fb = Vector<double>.Build.Dense(_I);
+            sigma_s = Vector<double>.Build.Dense(_J);
+
+            // коэффициенты упругости
+            nu_fb = Vector<double>.Build.Dense(_I);
+            nu_s = Vector<double>.Build.Dense(_J);
+
+            // отн деформации
+            epsilon_fb = Vector<double>.Build.Dense(_I);
+            epsilon_s = Vector<double>.Build.Dense(_J);
+
+            foreach (var bs in m_BS)
+            {
+                Ab[bs.Num] = bs.Ab;
+                nu_fb[bs.Num] = 1;
+            }
         }
-        
+
+
+        public void GetSize(double[] _t = null)
+        {                                   
+            // цикл по элементам
+            foreach (var elem in m_BS)
+            {
+                int i = elem.Num;
+
+                Zfbx[i] = elem.Z_X;
+                Zfby[i] = elem.Z_Y;
+                Ab[i] = elem.Ab;
+            }
+
+            // цикл по стержням
+            foreach (var rod in m_Rods)
+            {
+                int j = rod.Num;
+
+                Zsx[j] = rod.Z_X;
+                Zfby[j] = rod.Z_Y;
+                As[j] = rod.As;
+            }
+        }
+
+        public void GetParams(double[] _t = null)
+        {
+            for (int i = 0; i < m_BS.Count; i++)
+            {
+                nu_fb[i] = sigma_fb[i] / (m_Fiber.Efb * epsilon_fb[i]);
+            }
+
+            for (int j = 0; j < m_Rods.Count; j++)
+            {
+                nu_s[j] = sigma_s[j] / (m_Rod.Es * epsilon_s[j]);
+            }
+        }
+
         /// <summary>
         /// Рассчитать жесткости D
         /// </summary>
         /// <param name="_i"></param>
-        private void Calc_D(int _i)
+        private void Calc_D(int _i, int _j = -1)
         {
             int I1 = 0, I2 = 1, I3 = 2;
             int i = _i;
             int j = 0;
 
             D[I1, I1] += Ab[i] * Math.Pow(Zfbx[i], 2) * m_Fiber.Efb * nu_fb[i];
-            D[I1, I1] += As[j] * Math.Pow(Zsx[j], 2) * m_Rod.Es * nu_s[j];
+            if (j > 0)
+                D[I1, I1] += As[j] * Math.Pow(Zsx[j], 2) * m_Rod.Es * nu_s[j];
 
             D[I2, I2] += Ab[i] * Math.Pow(Zfby[i], 2) * m_Fiber.Efb * nu_fb[i];
-            D[I2, I2] += As[j] * Math.Pow(Zsx[j], 2) * m_Rod.Es * nu_s[j];
+            if (j > 0)
+                D[I2, I2] += As[j] * Math.Pow(Zsx[j], 2) * m_Rod.Es * nu_s[j];
 
             D[I1, I2] += Ab[i] * Zfbx[i] * Zfby[i] * m_Fiber.Efb * nu_fb[i];
-            D[I1, I2] += As[j] * Zsx[j] * Zsy[j] * m_Rod.Es * nu_s[j];
+            if (j > 0)
+                D[I1, I2] += As[j] * Zsx[j] * Zsy[j] * m_Rod.Es * nu_s[j];
 
             D[I1, I3] += Ab[i] * Zfbx[i] * m_Fiber.Efb * nu_fb[i];
-            D[I1, I3] += As[j] * Zsx[j] * Zsx[j] * m_Rod.Es * nu_s[j];
+            if (j > 0)
+                D[I1, I3] += As[j] * Zsx[j] * Zsx[j] * m_Rod.Es * nu_s[j];
 
             D[I2, I3] += Ab[i] * Zfby[i] * m_Fiber.Efb * nu_fb[i];
-            D[I2, I3] += As[j] * Zsy[j] * m_Rod.Es * nu_s[i];
+            if (j > 0)
+                D[I2, I3] += As[j] * Zsy[j] * m_Rod.Es * nu_s[j];
 
             D[I3, I3] += Ab[i] * m_Fiber.Efb * nu_fb[i];
-            D[I3, I3] += As[j] * m_Rod.Es * nu_s[i];
+            if (j > 0)
+                D[I3, I3] += As[j] * m_Rod.Es * nu_s[j];
         }
 
 
@@ -155,24 +223,24 @@ namespace BSFiberConcrete
         // Рассчитать
         public void Calculate()
         {
-            int j = m_Beam.RodsQty;
-
             CalculationScheme();
 
-            int qtyEl = m_BS.Count;
+            int qty_J = m_Beam.RodsQty; // количество стержней           
+            int qty_I = m_BS.Count; // количество элементов сечения
 
-            for (int i = 0; i < qtyEl; i++)
+            InitVectors(qty_I, qty_J);
+           
+            GetSize();
+
+            GetParams();
+            
+            for (int i = 0; i < qty_I; i++)
             {
                 Calc_D(i);
             }
 
             Calc_MxMyN();            
-
-            for (int i = 0; i < I; i++) 
-            {
-                nu_fb[i] = sigma_fb[i] / (m_Fiber.Efb * epsilon_fb[i]);
-            }
-
+            
             CalcResult();
 
             bool res_fb = epsilon_fb.AbsoluteMaximum() <=  m_Fiber.Eps_fb_ult;
@@ -207,6 +275,8 @@ namespace BSFiberConcrete
                     num ++;
                 }                    
             }
+
+            m_BS = bs;
         }
 
         public Dictionary<string, double> GeomParams()
@@ -214,16 +284,7 @@ namespace BSFiberConcrete
             throw new NotImplementedException();
         }
 
-        public void GetParams(double[] _t)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void GetSize(double[] _t)
-        {
-            throw new NotImplementedException();
-        }
-
+              
         // Вернуть результат
         public Dictionary<string, double> Results()
         {

@@ -503,18 +503,20 @@ namespace BSFiberConcrete
         }
 
         private void btnCalc_Deform_Click(object sender, EventArgs e)
-        {           
-            BSFiberCalc_Deform fiberCalc_Deform = new BSFiberCalc_Deform(_Mx: 40, _My: 95 );
+        {
+            double cEb = 6100;
+            double cEs = 200000; // Мпа
 
+            BSFiberCalc_Deform fiberCalc_Deform = new BSFiberCalc_Deform(_Mx: 40, _My: 95 );
             // задать тип арматуры
-            fiberCalc_Deform.MatRebar = new BSMatRod() { RCls = "A400" };
+            fiberCalc_Deform.MatRebar = new BSMatRod(cEs) { RCls = "A400" };
 
             // расстановка арматурных стержней
             List<BSRod> rods = new List<BSRod>();
             double[,] rdYdX = { { 40, 80 }, { 300, 80 }, { 40, 120 }, { 300, 120 }, { 40, 640 }, { 300, 640 }, {40, 1115 }, {300, 1115}};
             int rows = rdYdX.GetUpperBound(0) + 1;    // количество строк            
             for (int i = 0; i < rows; i++)
-                rods.Add(new BSRod() { X = rdYdX[i, 0], Y = rdYdX[i, 1], MatRod = fiberCalc_Deform.MatRebar});
+                rods.Add(new BSRod() { Z_X = rdYdX[i, 0], Z_Y = rdYdX[i, 1], MatRod = fiberCalc_Deform.MatRebar});
 
             // задать усилия
             Dictionary<string, double> MNQ = new Dictionary<string, double>();
@@ -524,11 +526,11 @@ namespace BSFiberConcrete
             fiberCalc_Deform.N = MNQ["N"];
 
             // задать свойства бетона
-            fiberCalc_Deform.MatFiber = new BSMatFiber() { BTCls = "B3.5" };
+            fiberCalc_Deform.MatFiber = new BSMatFiber(cEb) { BTCls = "B3.5" };
 
             // задать размеры балки
             fiberCalc_Deform.Beam = new BSBeam_Rect(34, 119.5) {Length = 100, RodsQty = 12, Rods = rods };
-                        
+            
             // рассчитать
             fiberCalc_Deform.Calculate();
 

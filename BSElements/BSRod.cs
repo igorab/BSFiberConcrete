@@ -1,4 +1,6 @@
-﻿namespace BSFiberConcrete
+﻿using System;
+
+namespace BSFiberConcrete
 {
     /// <summary>
     /// Тип арматуры : продольная / поперечная
@@ -9,18 +11,27 @@
         Transverse = 1
     }
 
-    // арматурный стержень
+
+    /// <summary>
+    /// арматурный стержень
+    /// </summary>
     public class BSRod
     {
         // номер стержня
-        public double Num { get; set; } = 0;
+        public int Num { get; set; } = 0;
 
         // Координаты Ц.Т.
-        public double X { get; set; }
-        public double Y { get; set; }
+        public double Z_X { get; set; }
+        public double Z_Y { get; set; }
+
+        // напряжение в стержне
+        public double Sigma_s { get; set; }
 
         // Диаметр стержня
         public double D { get; set; }
+
+        // Площадь стержня
+        public double As { get => Math.PI * Math.Pow(D, 2) / 4; }
 
         public RebarLTType LTType { get; set; }
 
