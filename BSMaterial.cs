@@ -66,9 +66,10 @@ namespace BSFiberConcrete
     /// </summary>
     public class BSMatRod : IMaterial
     {
-        public string Name => "Стержень арматуры";
+        public string Name => "Сталь";
 
-        public string RClass { get; set; }
+        // Класс
+        public string RCls { get; set; }
 
         /// <summary>
         /// модуль упругости
@@ -102,7 +103,8 @@ namespace BSFiberConcrete
 
         public double Eps_fb_ult { get; set; }
 
-        public string BT { get; set; }
+        // Класс бетона
+        public string BTCls { get; set; }
 
         [DisplayName("Сопротивление на сжатие")]
         public double Rfbn { get; set; }

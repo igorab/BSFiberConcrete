@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,26 +20,31 @@ namespace BSFiberConcrete
     // конечный элемент
     public class BSElement
     {
+        // Номер
         public int Num;
-        public double X;
-        public double Y;        
-    }
 
-
-    public class BSRod
-    {
         public double X;
         public double Y;
-        public BSMatRod MatRod { get; set; }
+        public double Area() => X * Y;
+
+        public BSElement (int _N, double _X, double _Y)
+        {
+            Num = _N;
+            X = _X;
+            Y = _Y;            
+        }
     }
 
-
+    
     public class BSBeam : IBeamGeometry
     {        
         // количество стержней арматуры
         public int RodsQty {get; set;}
+        public List<BSRod> Rods { get; set; }
 
-        public List<BSRod> Rods { get; set; }  
+        // Координаты Ц.Т.
+        public double X0 { get; set; }
+        public double Y0 { get; set; }
 
         public double Length { get; set; }
 
@@ -48,7 +54,7 @@ namespace BSFiberConcrete
         }
 
         public virtual double W_s()
-        {
+        {            
             return 0;
         }
 
@@ -85,9 +91,12 @@ namespace BSFiberConcrete
         // Центр тяжести сечения
         public (double, double) CG() => (b/2, h/2);
         
-        public BSBeam_Rect()
+        public BSBeam_Rect(double _b = 0, double _h = 0)
         {
-
+            b = _b;
+            h = _h;
+            X0 = _b/2;
+            Y0 = _h/2;
         }
 
     }

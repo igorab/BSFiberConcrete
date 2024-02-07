@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Text;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,7 +34,10 @@ namespace BSFiberConcrete
         private  BSBeam m_Beam { get; set; }
         private  BSMatFiber m_Fiber = new BSMatFiber();
         private  BSMatRod m_Rod = new BSMatRod();
-        
+
+        // расчетная схема сечения
+        private List<BSElement> m_BS = new List<BSElement>();
+
         // радиусы кривизны продольной оси в плоскостях действия моментов
         private double rx, ry;
         // относительная деформация волокна, расположенная на пересечении выбранных осей
@@ -102,10 +106,14 @@ namespace BSFiberConcrete
             epsilon_s = Vector<double>.Build.Dense(I);
         }
         
-        private void CalcD()
+        /// <summary>
+        /// Рассчитать жесткости D
+        /// </summary>
+        /// <param name="_i"></param>
+        private void Calc_D(int _i)
         {
             int I1 = 0, I2 = 1, I3 = 2;
-            int i = 0;
+            int i = _i;
             int j = 0;
 
             D[I1, I1] += Ab[i] * Math.Pow(Zfbx[i], 2) * m_Fiber.Efb * nu_fb[i];
@@ -128,13 +136,20 @@ namespace BSFiberConcrete
         }
 
 
-        private void CalcMN()
+        //Рассчитать усилия
+        private void Calc_MxMyN()
         {
             int I1=0, I2=1, I3=2;
            
             double M_x = D[I1,I1] * 1/rx + D[I1, I2] * 1/ry + D[I1, I3] * eps_0;
             double M_y = D[I1, I2] * 1 / ry + D[I2, I2] * 1 / ry + D[I2, I3] * eps_0; 
             double N_ = D[I1, I3] * 1 / rx + D[I2, I3] * 1/ry + D[I3, I3] * eps_0; 
+        }
+
+        private void CalcResult()
+        {
+            double kx = 1/rx, ky = 1/ry;
+            Dictionary<string, double> res = new Dictionary<string, double>() { { "e0", eps_0 }, {"kx", kx }, {"ky", ky } };
         }
 
         // Рассчитать
@@ -144,14 +159,21 @@ namespace BSFiberConcrete
 
             CalculationScheme();
 
-            CalcD();
+            int qtyEl = m_BS.Count;
 
-            CalcMN();            
+            for (int i = 0; i < qtyEl; i++)
+            {
+                Calc_D(i);
+            }
+
+            Calc_MxMyN();            
 
             for (int i = 0; i < I; i++) 
             {
                 nu_fb[i] = sigma_fb[i] / (m_Fiber.Efb * epsilon_fb[i]);
             }
+
+            CalcResult();
 
             bool res_fb = epsilon_fb.AbsoluteMaximum() <=  m_Fiber.Eps_fb_ult;
             Res.Add("res_fb", Convert.ToDouble(res_fb));
@@ -160,14 +182,31 @@ namespace BSFiberConcrete
             Res.Add("res_s", Convert.ToDouble(res_s));
         }
 
-        private void CalculationScheme()
+        /// <summary>
+        /// Разбиваем сечение на конечные элементы
+        /// </summary>
+        /// <param name="_N">количество делений</param>
+        private void CalculationScheme(int _N = 10)
         {
             BSBeam_Rect beam = (BSBeam_Rect) m_Beam;
-            double dB =  beam.b / 100;
-            double dH = beam.h / 100;
+            double dB =  beam.b / _N;
+            double dH = beam.h / _N;
 
-            List<double> bs = new List<double>();
+            double lX = 0, lY = 0;
 
+            List <BSElement> bs = new List<BSElement>();
+            int num = 0;
+            for (int idx = 0; idx < _N; idx++) 
+            {
+                lX += dB;
+                for (int idy = 0; idy < _N; idy++)
+                {
+                    lY += dH;
+                    BSElement bsElement = new BSElement(num, lX, lY);
+                    bs.Add(bsElement);
+                    num ++;
+                }                    
+            }
         }
 
         public Dictionary<string, double> GeomParams()

@@ -64,7 +64,7 @@ namespace BSFiberConcrete
                 numYb3.Value = (decimal)BSFiberCocreteLib.PhysElements.Yb3;
                 numYb5.Value = (decimal)BSFiberCocreteLib.PhysElements.Yb5;
 
-                double[] mnq = { 1.0, 3.0, 5000, 1.0, 37 }; //MNQ Ml
+                double[] mnq = { 40.0, 95.0, 3.0, 5000, 1.0, 37 }; //MNQ Ml
                 gridEfforts.Rows.Add(mnq);
                 for (int i = 0; i < mnq.Length; i++)
                 {
@@ -344,7 +344,7 @@ namespace BSFiberConcrete
 
         private void InitEfforts(ref Dictionary<string, double> MNQ)
         {
-            string[] F = new string[] { "M", "N", "Q", "Ml", "eN"};
+            string[] F = new string[] { "Mx", "My", "N", "Q", "Ml", "eN"};
             DataGridViewRowCollection rows = gridEfforts.Rows;
             var row = rows[0];
 
@@ -506,18 +506,34 @@ namespace BSFiberConcrete
         {           
             BSFiberCalc_Deform fiberCalc_Deform = new BSFiberCalc_Deform(_Mx: 40, _My: 95 );
 
-            fiberCalc_Deform.MatRebar = new BSMatRod() { RClass = "A400" };
+            // задать тип арматуры
+            fiberCalc_Deform.MatRebar = new BSMatRod() { RCls = "A400" };
 
+            // расстановка арматурных стержней
             List<BSRod> rods = new List<BSRod>();
             double[,] rdYdX = { { 40, 80 }, { 300, 80 }, { 40, 120 }, { 300, 120 }, { 40, 640 }, { 300, 640 }, {40, 1115 }, {300, 1115}};
             int rows = rdYdX.GetUpperBound(0) + 1;    // количество строк            
             for (int i = 0; i < rows; i++)
                 rods.Add(new BSRod() { X = rdYdX[i, 0], Y = rdYdX[i, 1], MatRod = fiberCalc_Deform.MatRebar});
 
-            fiberCalc_Deform.MatFiber = new BSMatFiber() { BT = "B3.5" };
-            fiberCalc_Deform.Beam = new BSBeam_Rect() { h = 119.5, b = 34, Length = 100, RodsQty = 12, Rods = rods };
+            // задать усилия
+            Dictionary<string, double> MNQ = new Dictionary<string, double>();
+            InitEfforts(ref MNQ);
+            fiberCalc_Deform.Mx = MNQ["Mx"];
+            fiberCalc_Deform.My = MNQ["My"];
+            fiberCalc_Deform.N = MNQ["N"];
+
+            // задать свойства бетона
+            fiberCalc_Deform.MatFiber = new BSMatFiber() { BTCls = "B3.5" };
+
+            // задать размеры балки
+            fiberCalc_Deform.Beam = new BSBeam_Rect(34, 119.5) {Length = 100, RodsQty = 12, Rods = rods };
                         
+            // рассчитать
             fiberCalc_Deform.Calculate();
+
+            // получить результат
+            var res = fiberCalc_Deform.Results();
         }
         
     }

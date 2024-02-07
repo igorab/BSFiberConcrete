@@ -30,6 +30,7 @@ namespace BSFiberConcrete
         protected Dictionary<string, double> m_PhysParams;
         protected Dictionary<string, double> m_GeomParams;
         protected Dictionary<string, double> m_CalcResults;
+
         protected BeamSection m_BeamSection;
 
         public BSFiberReport()

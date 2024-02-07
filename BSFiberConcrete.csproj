@@ -84,7 +84,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BSBeam.cs" />
+    <Compile Include="BSElements\BSBeam.cs" />
     <Compile Include="BSFactors.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -130,6 +130,7 @@
       <DependentUpon>BSFormPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="BSMaterial.cs" />
+    <Compile Include="BSElements\BSRod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="BSFactors.resx">
       <DependentUpon>BSFactors.cs</DependentUpon>
