@@ -38,9 +38,12 @@ namespace BSFiberConcrete
         // относительная деформация
         public double Epsilon { get; set; }
 
-        public double Nu { get => Sigma / (E * Epsilon) ;  }
+        public double Nu { get => calcNu(); }
 
         private double Area() => Z_X * Z_Y;
+
+        public double calcNu() => Epsilon != 0 ? Sigma / (E * Epsilon) : 1;
+
 
         public BSElement (int _N, double _X, double _Y)
         {
@@ -54,7 +57,7 @@ namespace BSFiberConcrete
     public class BSBeam : IBeamGeometry
     {        
         // количество стержней арматуры
-        public int RodsQty {get; set;}
+        public int RodsQty { get { return (Rods != null) ? Rods.Count : 0; } set { RodsQty = value; } }
         public List<BSRod> Rods { get; set; }
 
         // Координаты Ц.Т.

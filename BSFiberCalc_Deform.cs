@@ -24,23 +24,27 @@ namespace BSFiberConcrete
         public double My { get; set; }
         // продольная сила от внешней нагрузки
         public double N { get; set; }
-
         // балка
-        public BSBeam Beam { get {return m_Beam; } set { m_Beam = value; } }
+        public BSBeam Beam 
+        { 
+            get {return m_Beam; } 
+            set { m_Beam = value; 
+                  m_Rods = value.Rods; } 
+        }
         // свойства бетона
         public BSMatFiber MatFiber { get { return m_Fiber; } set { m_Fiber = value; } }
         // свойства арматуры
         public BSMatRod MatRebar { get { return m_Rod; } set { m_Rod = value; } }
 
-
         private const int I = 3;
         private  BSBeam m_Beam { get; set; }
+
         private  BSMatFiber m_Fiber = new BSMatFiber();
         private  BSMatRod m_Rod = new BSMatRod();
 
         // расчетная схема сечения
-        private List<BSElement> m_BS = new List<BSElement>();
-        private List<BSRod> m_Rods = new List<BSRod>();
+        private List<BSElement> m_BElem;
+        private List<BSRod> m_Rods;
 
         // радиусы кривизны продольной оси в плоскостях действия моментов
         private double rx, ry;
@@ -48,7 +52,7 @@ namespace BSFiberConcrete
         private double eps_0;
 
         // жесткостные характеристики
-        private Matrix<double> D = DenseMatrix.OfArray( new double[,] {{0,0,0}, {0,0,0}, {0,0,0}} );
+        private Matrix<double> D = DenseMatrix.OfArray( new double[,] {{0,1,2}, {3,4,5}, {6,7,8}} );
         // площадь ц.т. участка фибробетона
         private Vector<double> Ab;
         // площадь ц.т. участка арматуры
@@ -90,8 +94,7 @@ namespace BSFiberConcrete
 
             rx = 1;
             ry = 1;
-            eps_0 = 1;
-            
+            eps_0 = 1;            
         }
 
         /// <summary>
@@ -105,10 +108,10 @@ namespace BSFiberConcrete
             Ab = Vector<double>.Build.Dense(_I);
             As = Vector<double>.Build.Dense(_J);
 
-            // координаты ЦТ
+            // координаты ЦТ элементов сечения
             Zfbx = Vector<double>.Build.Dense(_I);            
             Zfby = Vector<double>.Build.Dense(_I);
-
+            // координаты ЦТ арматуры
             Zsx = Vector<double>.Build.Dense(_J);
             Zsy = Vector<double>.Build.Dense(_J);
 
@@ -122,26 +125,21 @@ namespace BSFiberConcrete
 
             // отн деформации
             epsilon_fb = Vector<double>.Build.Dense(_I);
-            epsilon_s = Vector<double>.Build.Dense(_J);
-
-            foreach (var bs in m_BS)
-            {
-                Ab[bs.Num] = bs.Ab;
-                nu_fb[bs.Num] = 1;
-            }
+            epsilon_s = Vector<double>.Build.Dense(_J);           
         }
 
 
         public void GetSize(double[] _t = null)
         {                                   
             // цикл по элементам
-            foreach (var elem in m_BS)
+            foreach (var elem in m_BElem)
             {
                 int i = elem.Num;
 
                 Zfbx[i] = elem.Z_X;
                 Zfby[i] = elem.Z_Y;
                 Ab[i] = elem.Ab;
+                nu_fb[i] = elem.Nu;
             }
 
             // цикл по стержням
@@ -152,19 +150,20 @@ namespace BSFiberConcrete
                 Zsx[j] = rod.Z_X;
                 Zfby[j] = rod.Z_Y;
                 As[j] = rod.As;
+                nu_s[j] = rod.Nu;
             }
         }
 
         public void GetParams(double[] _t = null)
         {
-            for (int i = 0; i < m_BS.Count; i++)
+            for (int i = 0; i < m_BElem.Count; i++)
             {
-                nu_fb[i] = sigma_fb[i] / (m_Fiber.Efb * epsilon_fb[i]);
+                nu_fb[i] = m_BElem[i].Nu; // sigma_fb[i] / (m_Fiber.Efb * epsilon_fb[i]);
             }
 
             for (int j = 0; j < m_Rods.Count; j++)
             {
-                nu_s[j] = sigma_s[j] / (m_Rod.Es * epsilon_s[j]);
+                nu_s[j] = m_Rods[j].Nu; //  sigma_s[j] / (m_Rod.Es * epsilon_s[j]);
             }
         }
 
@@ -174,7 +173,7 @@ namespace BSFiberConcrete
         /// <param name="_i"></param>
         private void Calc_D(int _i, int _j = -1)
         {
-            int I1 = 0, I2 = 1, I3 = 2;
+            const int I1 = 0, I2 = 1, I3 = 2;
             int i = _i;
             int j = 0;
 
@@ -203,15 +202,27 @@ namespace BSFiberConcrete
                 D[I3, I3] += As[j] * m_Rod.Es * nu_s[j];
         }
 
-
         //Рассчитать усилия
+        //
+        //Mx = D[I1,I1] * 1/rx + D[I1, I2] * 1/ry + D[I1, I3] * eps_0;
+        //My = D[I1, I2] * 1 / ry + D[I2, I2] * 1 / ry + D[I2, I3] * eps_0; 
+        //N = D[I1, I3] * 1 / rx + D[I2, I3] * 1/ry + D[I3, I3] * eps_0;
+        //
         private void Calc_MxMyN()
         {
-            int I1=0, I2=1, I3=2;
+            const int I1=0, I2=1, I3=2;
+
+            double[] v_eff = { Mx, My, N};            
+            Vector<double> V_Eff = Vector<double>.Build.Dense(v_eff);            
+            Vector<double> X = Vector<double>.Build.Dense(3);
            
-            double M_x = D[I1,I1] * 1/rx + D[I1, I2] * 1/ry + D[I1, I3] * eps_0;
-            double M_y = D[I1, I2] * 1 / ry + D[I2, I2] * 1 / ry + D[I2, I3] * eps_0; 
-            double N_ = D[I1, I3] * 1 / rx + D[I2, I3] * 1/ry + D[I3, I3] * eps_0; 
+            X = D.Solve(V_Eff);
+
+            double kx = X[I1];
+            rx = 1 / kx;
+            double ky = X[I2];
+            ry = 1 / ky;
+            eps_0 = X[I3];  
         }
 
         private void CalcResult()
@@ -220,13 +231,29 @@ namespace BSFiberConcrete
             Dictionary<string, double> res = new Dictionary<string, double>() { { "e0", eps_0 }, {"kx", kx }, {"ky", ky } };
         }
 
+        public static void TestMatrix()
+        {
+            //var m = Matrix<double>.Build.Random(500, 500);
+
+            var M = Matrix<double>.Build;
+            var m = M.DenseOfArray(new[,] {{ 1.0,  2.0, 1.0},
+                               {-2.0, -3.0, 1.0},
+                               { 3.0,  5.0, 0.0}});
+
+            
+            var v = Vector<double>.Build.Random(500);
+            var y = m.Solve(v);
+
+        }
+
+
         // Рассчитать
         public void Calculate()
-        {
-            CalculationScheme();
+        {            
+            m_BElem = CalculationScheme();
 
             int qty_J = m_Beam.RodsQty; // количество стержней           
-            int qty_I = m_BS.Count; // количество элементов сечения
+            int qty_I = m_BElem.Count; // количество элементов сечения
 
             InitVectors(qty_I, qty_J);
            
@@ -254,8 +281,8 @@ namespace BSFiberConcrete
         /// Разбиваем сечение на конечные элементы
         /// </summary>
         /// <param name="_N">количество делений</param>
-        private void CalculationScheme(int _N = 10)
-        {
+        private List<BSElement> CalculationScheme(int _N = 10)
+        {            
             BSBeam_Rect beam = (BSBeam_Rect) m_Beam;
             double dB =  beam.b / _N;
             double dH = beam.h / _N;
@@ -271,12 +298,13 @@ namespace BSFiberConcrete
                 {
                     lY += dH;
                     BSElement bsElement = new BSElement(num, lX, lY);
+                    bsElement.E = 0; // уточнить
                     bs.Add(bsElement);
                     num ++;
                 }                    
             }
 
-            m_BS = bs;
+            return  bs;
         }
 
         public Dictionary<string, double> GeomParams()

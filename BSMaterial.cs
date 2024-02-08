@@ -76,6 +76,9 @@ namespace BSFiberConcrete
         /// </summary>
         public double Es { get; set; }
 
+        // Расчетное сопротивление
+        public double Rs { get; set; }
+
         /// <summary>
         /// коэффициент упругости
         /// </summary>
@@ -112,7 +115,7 @@ namespace BSFiberConcrete
         /// <summary>
         /// Коэффициент упругости
         /// </summary>
-        public double n_fb { get; set; }
+        public double Nu_fb { get; set; }
 
         public double Eps_fb_ult { get; set; }
 
@@ -133,6 +136,8 @@ namespace BSFiberConcrete
         [DisplayName("Нормативное остаточное сопротивление осевому растяжению")]
         public double Rfbt3 { get; set; }
 
+        // Расчетное сопротивление
+        public double Rb { get => Rfbn; }
 
         // Диаграмма состояния
         public double StateDiagram()

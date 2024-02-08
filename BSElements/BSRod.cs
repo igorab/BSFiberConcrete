@@ -17,7 +17,7 @@ namespace BSFiberConcrete
     /// </summary>
     public class BSRod
     {
-        // номер стержня
+        // Номер стержня
         public int Num { get; set; } = 0;
 
         // Координаты Ц.Т.
@@ -27,11 +27,14 @@ namespace BSFiberConcrete
         // напряжение в стержне
         public double Sigma_s { get; set; }
 
-        // Диаметр стержня
+        // Диаметр стержня, мм
         public double D { get; set; }
 
         // Площадь стержня
         public double As { get => Math.PI * Math.Pow(D, 2) / 4; }
+
+        // Коэффициент упругости
+        public double Nu { get; set; }
 
         public RebarLTType LTType { get; set; }
 
