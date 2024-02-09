@@ -509,14 +509,20 @@ namespace BSFiberConcrete
             const double cRs = 350; // МПа
             const double cEb = 6100;
             const double cEs = 200000; // Мпа
-            const double c_h = 119.5, c_b = 34;
+
+            const double c_h = 60, // см 
+                         c_b = 30; // см
+
             double c_L = Convert.ToDouble(tbLength.Text);
             const string cRCls = "B3.5";
             const double c_D_lng = 16.0;
             const double c_D_tr = 8.0;
-            
 
-            BSFiberCalc_Deform fiberCalc_Deform = new BSFiberCalc_Deform(_Mx: 40, _My: 95 );
+            const int c_Y_N = 10; // разбиение по высоте
+            const int c_X_M = 1; // разбиение по ширине
+
+
+            BSFiberCalc_Deform fiberCalc_Deform = new BSFiberCalc_Deform(_Mx: 40, _My: 95, _N: 0 );
             // задать тип арматуры
             fiberCalc_Deform.MatRebar = new BSMatRod(cEs) 
             { 
@@ -526,7 +532,10 @@ namespace BSFiberConcrete
 
             // расстановка арматурных стержней
             List<BSRod> rods = new List<BSRod>();
-            double[,] rdYdX = { { 40, 80 }, { 300, 80 }, { 40, 120 }, { 300, 120 }, { 40, 640 }, { 300, 640 }, {40, 1115 }, {300, 1115}};
+            // раскладка арматуры:
+            double[,] rdYdX = { { 4, 4 }, { 4, 15 }, { 4, 26 } };
+            //  пример фибробетон  
+            //{ { 40, 80 }, { 300, 80 }, { 40, 120 }, { 300, 120 }, { 40, 640 }, { 300, 640 }, {40, 1115 }, {300, 1115}};
             int rows = rdYdX.GetUpperBound(0) + 1;    // количество строк            
             for (int i = 0; i < rows; i++)
             {
@@ -550,17 +559,29 @@ namespace BSFiberConcrete
             fiberCalc_Deform.My = MNQ["My"];
             fiberCalc_Deform.N = MNQ["N"];
 
-            // задать свойства бетона
-            fiberCalc_Deform.MatFiber = new BSMatFiber(cEb)
+            BSMatFiber material = new BSMatFiber(cEb)
             {
                 BTCls = cBtCls,
                 Nu_fb = 1,
                 Rfbn = cRb,
             };
 
-            // задать размеры балки
-            fiberCalc_Deform.Beam = new BSBeam_Rect(c_b, c_h) {Length = c_L, Rods = rods};
-            
+            // задать свойства бетона
+            fiberCalc_Deform.MatFiber = material;
+
+            // задать размеры балки,
+            // задать материал,
+            // присвоить арматуру
+            fiberCalc_Deform.Beam = new BSBeam_Rect(c_b, c_h)
+            {
+                Length = c_L,
+                Rods = rods,
+                BSMat = material 
+            };
+
+            double[] NM = new double[] { c_Y_N, c_X_M };
+            fiberCalc_Deform.GetParams(NM);
+
             // рассчитать
             fiberCalc_Deform.Calculate();
 

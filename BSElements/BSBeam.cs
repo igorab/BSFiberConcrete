@@ -26,6 +26,10 @@ namespace BSFiberConcrete
         // Координаты Ц.Т.
         public double Z_X { get; }
         public double Z_Y { get; }
+
+        public double A { get; set; }
+        public double B { get; set; }
+
         // Площадь Ц.Т.
         public double Ab {  get => Area(); } 
 
@@ -40,7 +44,7 @@ namespace BSFiberConcrete
 
         public double Nu { get => calcNu(); }
 
-        private double Area() => Z_X * Z_Y;
+        private double Area() => A * B;
 
         public double calcNu() => Epsilon != 0 ? Sigma / (E * Epsilon) : 1;
 
@@ -54,18 +58,24 @@ namespace BSFiberConcrete
     }
 
     
+    /// <summary>
+    /// Балка
+    /// </summary>
     public class BSBeam : IBeamGeometry
     {        
         // количество стержней арматуры
         public int RodsQty { get { return (Rods != null) ? Rods.Count : 0; } set { RodsQty = value; } }
         public List<BSRod> Rods { get; set; }
 
+        // Материал балки (фибробетон, переделать на универсальный)
+        public BSMatFiber BSMat { get; set; }
+
         // Координаты Ц.Т.
         public double Zfb_X { get; set; }
         public double Z_fb_Y { get; set; }
 
         public double Length { get; set; }
-
+        
         public virtual double Area()
         {
             return 0;
@@ -116,6 +126,14 @@ namespace BSFiberConcrete
             Zfb_X = _b/2;
             Z_fb_Y = _h/2;
         }
+
+        // Моменты инерции сечения
+        public double Jx() => b * (h*h*h) / 12.0;
+        public double Jy() => (b*b*b) * h / 12.0;
+
+        //   Моменты сопротивления сечения
+        public double Wx() => b * h*h / 6.0;
+        public double Wy() => b*b * h / 6.0;
 
     }
 

@@ -35,14 +35,15 @@ namespace BSFiberConcrete
         public BSMatFiber MatFiber { get { return m_Fiber; } set { m_Fiber = value; } }
         // свойства арматуры
         public BSMatRod MatRebar { get { return m_Rod; } set { m_Rod = value; } }
-
-        private const int I = 3;
+        
         private  BSBeam m_Beam { get; set; }
 
         private  BSMatFiber m_Fiber = new BSMatFiber();
         private  BSMatRod m_Rod = new BSMatRod();
 
         // расчетная схема сечения
+        private int m_Y_N = 1; // разбиение по высоте
+        private int m_X_M = 1; // разбиение по ширине
         private List<BSElement> m_BElem;
         private List<BSRod> m_Rods;
 
@@ -156,6 +157,12 @@ namespace BSFiberConcrete
 
         public void GetParams(double[] _t = null)
         {
+            m_Y_N = (int)_t[0];
+            m_X_M = (int)_t[1];
+        }
+
+        private void InitElementParams()
+        {
             for (int i = 0; i < m_BElem.Count; i++)
             {
                 nu_fb[i] = m_BElem[i].Nu; // sigma_fb[i] / (m_Fiber.Efb * epsilon_fb[i]);
@@ -250,7 +257,7 @@ namespace BSFiberConcrete
         // Рассчитать
         public void Calculate()
         {            
-            m_BElem = CalculationScheme();
+            m_BElem = CalculationScheme(m_Y_N, m_X_M);
 
             int qty_J = m_Beam.RodsQty; // количество стержней           
             int qty_I = m_BElem.Count; // количество элементов сечения
@@ -259,7 +266,7 @@ namespace BSFiberConcrete
            
             GetSize();
 
-            GetParams();
+            InitElementParams();
             
             for (int i = 0; i < qty_I; i++)
             {
@@ -281,27 +288,36 @@ namespace BSFiberConcrete
         /// Разбиваем сечение на конечные элементы
         /// </summary>
         /// <param name="_N">количество делений</param>
-        private List<BSElement> CalculationScheme(int _N = 10)
+        private List<BSElement> CalculationScheme(int _N = 10, int _M = 1)
         {            
             BSBeam_Rect beam = (BSBeam_Rect) m_Beam;
-            double dB =  beam.b / _N;
-            double dH = beam.h / _N;
 
-            double lX = 0, lY = 0;
+            (double X0, double Y0) = beam.CG();                        
+            double dH = beam.h / _N;
+            double dB =  beam.b / _M;            
+
+            double elX = 0, 
+                   elY = 0;
 
             List <BSElement> bs = new List<BSElement>();
             int num = 0;
-            for (int idx = 0; idx < _N; idx++) 
-            {
-                lX += dB;
+            for (int idx = 0; idx < _M; idx++) 
+            {                
                 for (int idy = 0; idy < _N; idy++)
                 {
-                    lY += dH;
-                    BSElement bsElement = new BSElement(num, lX, lY);
-                    bsElement.E = 0; // уточнить
+                    // Ось X - вправо, ось Y - вниз
+                    double cgX = elX + dB / 2.0 - X0;
+                    double cgY = -1 *( elY + dH / 2.0 - Y0);
+
+                    BSElement bsElement = new BSElement(num, cgX, cgY) {A = dB, B = dH };
+                    bsElement.E = beam.BSMat.Eb; 
                     bs.Add(bsElement);
+
+                    elY += dH;
                     num ++;
-                }                    
+                }
+
+                elX += dB;
             }
 
             return  bs;
@@ -317,6 +333,6 @@ namespace BSFiberConcrete
         public Dictionary<string, double> Results()
         {
             return Res;
-        }
+        }        
     }
 }
