@@ -128,13 +128,20 @@ namespace BSFiberConcrete
         }
 
         // Моменты инерции сечения
-        public double Jx() => b * (h*h*h) / 12.0;
-        public double Jy() => (b*b*b) * h / 12.0;
+        public double Jy() => b * (h*h*h) / 12.0;
+        public double Jx() => (b*b*b) * h / 12.0;
 
         //   Моменты сопротивления сечения
         public double Wx() => b * h*h / 6.0;
         public double Wy() => b*b * h / 6.0;
 
+        // Нормальные напряжения в сечении
+        //КН, КНм, КНм  _X см, _Y см
+        public double Sigma_Z(double _N, double _Mx, double _My, double _X, double _Y)
+        {
+            double sgm_z = _N / Area() + _Mx / Jx() * _X - _My / Jy() * _Y ;
+            return sgm_z;
+        }
     }
 
     /// <summary>

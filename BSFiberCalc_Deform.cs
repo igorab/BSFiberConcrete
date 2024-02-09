@@ -149,12 +149,16 @@ namespace BSFiberConcrete
                 int j = rod.Num;
 
                 Zsx[j] = rod.Z_X;
-                Zfby[j] = rod.Z_Y;
+                Zsy[j] = rod.Z_Y;
                 As[j] = rod.As;
                 nu_s[j] = rod.Nu;
             }
         }
 
+        /// <summary>
+        ///  Параметры разбиения поперечного сечения
+        /// </summary>
+        /// <param name="_t"></param>
         public void GetParams(double[] _t = null)
         {
             m_Y_N = (int)_t[0];
@@ -163,13 +167,30 @@ namespace BSFiberConcrete
 
         private void InitElementParams()
         {
-            for (int i = 0; i < m_BElem.Count; i++)
+            BSBeam_Rect beam = (BSBeam_Rect)m_Beam;
+
+            int i = 0;
+            foreach (var elem in m_BElem)
             {
+                sigma_fb[i] = beam.Sigma_Z(N, Mx, My, elem.Z_X, elem.Z_Y);
+
+                double sgm = 0, eps = 0; 
+                m_Fiber.Eps_StateDiagram(ref sgm, ref eps);
+                                
+                epsilon_fb[i] = 1; 
+
                 nu_fb[i] = m_BElem[i].Nu; // sigma_fb[i] / (m_Fiber.Efb * epsilon_fb[i]);
+                i++;
             }
 
             for (int j = 0; j < m_Rods.Count; j++)
             {
+                MatRebar.StateDiagram(0);
+
+                sigma_s[j] = 1;
+
+                epsilon_s[j] = 1; 
+
                 nu_s[j] = m_Rods[j].Nu; //  sigma_s[j] / (m_Rod.Es * epsilon_s[j]);
             }
         }
@@ -182,13 +203,19 @@ namespace BSFiberConcrete
         {
             const int I1 = 0, I2 = 1, I3 = 2;
             int i = _i;
-            int j = 0;
+            int j = _j;
 
-            D[I1, I1] += Ab[i] * Math.Pow(Zfbx[i], 2) * m_Fiber.Efb * nu_fb[i];
+            double AZ2Eb, AZEb, AEb;
+            double Zx = Zfbx[i];
+            double Zy = Zfby[i];
+
+            AZ2Eb = Ab[i] * Math.Pow(Zfbx[i], 2) * m_Fiber.Efb;
+            D[I1, I1] += AZ2Eb * nu_fb[i];
             if (j > 0)
                 D[I1, I1] += As[j] * Math.Pow(Zsx[j], 2) * m_Rod.Es * nu_s[j];
 
-            D[I2, I2] += Ab[i] * Math.Pow(Zfby[i], 2) * m_Fiber.Efb * nu_fb[i];
+            AZ2Eb = Ab[i] * Math.Pow(Zfby[i], 2) * m_Fiber.Efb;
+            D[I2, I2] += AZ2Eb * nu_fb[i];
             if (j > 0)
                 D[I2, I2] += As[j] * Math.Pow(Zsx[j], 2) * m_Rod.Es * nu_s[j];
 
@@ -196,15 +223,18 @@ namespace BSFiberConcrete
             if (j > 0)
                 D[I1, I2] += As[j] * Zsx[j] * Zsy[j] * m_Rod.Es * nu_s[j];
 
-            D[I1, I3] += Ab[i] * Zfbx[i] * m_Fiber.Efb * nu_fb[i];
+            AZEb = Ab[i] * Zfbx[i] * m_Fiber.Efb;
+            D[I1, I3] += AZEb * nu_fb[i];
             if (j > 0)
                 D[I1, I3] += As[j] * Zsx[j] * Zsx[j] * m_Rod.Es * nu_s[j];
 
-            D[I2, I3] += Ab[i] * Zfby[i] * m_Fiber.Efb * nu_fb[i];
+            AZEb = Ab[i] * Zfby[i] * m_Fiber.Efb;
+            D[I2, I3] += AZEb  * nu_fb[i];
             if (j > 0)
                 D[I2, I3] += As[j] * Zsy[j] * m_Rod.Es * nu_s[j];
 
-            D[I3, I3] += Ab[i] * m_Fiber.Efb * nu_fb[i];
+            AEb = Ab[i] * m_Fiber.Efb;
+            D[I3, I3] += AEb * nu_fb[i];
             if (j > 0)
                 D[I3, I3] += As[j] * m_Rod.Es * nu_s[j];
         }
@@ -253,8 +283,9 @@ namespace BSFiberConcrete
 
         }
 
-
+        //
         // Рассчитать
+        //
         public void Calculate()
         {            
             m_BElem = CalculationScheme(m_Y_N, m_X_M);

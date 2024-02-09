@@ -502,18 +502,20 @@ namespace BSFiberConcrete
             bsFactors.Show();
         }
 
+        private bool UserInput = false;
+
         private void btnCalc_Deform_Click(object sender, EventArgs e)
         {
             const string cBtCls = "B3.5";
             const double cRb = 7.65; // МПа
             const double cRs = 350; // МПа
-            const double cEb = 6100;
+            const double cEb = 24000; // Мпа
             const double cEs = 200000; // Мпа
 
             const double c_h = 60, // см 
                          c_b = 30; // см
 
-            double c_L = Convert.ToDouble(tbLength.Text);
+            double c_L = Convert.ToDouble(tbLength.Text); // см
             const string cRCls = "B3.5";
             const double c_D_lng = 16.0;
             const double c_D_tr = 8.0;
@@ -521,8 +523,23 @@ namespace BSFiberConcrete
             const int c_Y_N = 10; // разбиение по высоте
             const int c_X_M = 1; // разбиение по ширине
 
+            // Mx  , My - усилия, кНм
+            double c_Mx = 0; // 45; 
+            double c_My = 200;  //95; 
+            double c_N = 0;  //0; 
 
-            BSFiberCalc_Deform fiberCalc_Deform = new BSFiberCalc_Deform(_Mx: 40, _My: 95, _N: 0 );
+            // задать усилия
+            if (UserInput)
+            {
+                Dictionary<string, double> MNQ = new Dictionary<string, double>();
+                InitEfforts(ref MNQ);
+                c_Mx = MNQ["Mx"];
+                c_My = MNQ["My"];
+                c_N = MNQ["N"];
+            }
+
+            BSFiberCalc_Deform fiberCalc_Deform = new BSFiberCalc_Deform(_Mx: c_Mx, _My: c_My, _N: c_N);
+
             // задать тип арматуры
             fiberCalc_Deform.MatRebar = new BSMatRod(cEs) 
             { 
@@ -532,8 +549,9 @@ namespace BSFiberConcrete
 
             // расстановка арматурных стержней
             List<BSRod> rods = new List<BSRod>();
-            // раскладка арматуры:
+            // раскладка арматуры X Y:, см
             double[,] rdYdX = { { 4, 4 }, { 4, 15 }, { 4, 26 } };
+            double[] rD_lng = new double[] { 2.5, 1.8, 2.5 }; // D , см
             //  пример фибробетон  
             //{ { 40, 80 }, { 300, 80 }, { 40, 120 }, { 300, 120 }, { 40, 640 }, { 300, 640 }, {40, 1115 }, {300, 1115}};
             int rows = rdYdX.GetUpperBound(0) + 1;    // количество строк            
@@ -542,7 +560,7 @@ namespace BSFiberConcrete
                 BSRod rod = new BSRod()
                 {
                     Num = i,
-                    D = c_D_lng,
+                    D = rD_lng[i],
                     Z_X = rdYdX[i, 0],
                     Z_Y = rdYdX[i, 1],
                     MatRod = fiberCalc_Deform.MatRebar,
@@ -551,14 +569,7 @@ namespace BSFiberConcrete
 
                 rods.Add(rod);
             }
-
-            // задать усилия
-            Dictionary<string, double> MNQ = new Dictionary<string, double>();
-            InitEfforts(ref MNQ);
-            fiberCalc_Deform.Mx = MNQ["Mx"];
-            fiberCalc_Deform.My = MNQ["My"];
-            fiberCalc_Deform.N = MNQ["N"];
-
+           
             BSMatFiber material = new BSMatFiber(cEb)
             {
                 BTCls = cBtCls,

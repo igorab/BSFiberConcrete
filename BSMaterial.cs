@@ -96,6 +96,30 @@ namespace BSFiberConcrete
             Es = _Es;
         }
 
+        public double StateDiagram(double e_s)
+        {
+            double sigma_s = Rs;
+            double sigma_s1 = 0.6 * Rs;
+            double e_s0 = 1;
+            double e_s1 = sigma_s1 / Es;
+            double e_s2 = 1;
+
+            if (0 <= e_s && e_s <= e_s1)
+            {
+                sigma_s = Es * e_s;
+            }
+            else if (e_s1 < e_s && e_s < e_s0)
+            {
+                sigma_s = ((1 - sigma_s1 / Rs) * (e_s - e_s1) / (e_s0 - e_s1) + sigma_s1 / Rs) * Rs;
+            }
+            else if (e_s0 <= e_s && e_s <= e_s2)
+            {
+                sigma_s = Rs;
+            }
+
+            return sigma_s;
+        }
+
     }
 
     /// <summary>
@@ -140,7 +164,7 @@ namespace BSFiberConcrete
         public double Rb { get => Rfbn; }
 
         // Диаграмма состояния
-        public double StateDiagram()
+        public double Eps_StateDiagram(ref double _sgm, ref double _eps)
         {
             double sigma_fbt = 0;
 
@@ -161,6 +185,9 @@ namespace BSFiberConcrete
             {
                 sigma_fbt = Rfbt * (1 - (1 - Rfbt3 / Rfbt2) * (e_fbt - e_fbt2) / (e_fbt3 - e_fbt2));
             }
+
+            _sgm = sigma_fbt;
+            _eps = 0;
 
             return sigma_fbt;
         }
