@@ -10,6 +10,8 @@ namespace BSFiberConcrete
 {
     public class BSHelper
     {
+        public const double Epsilon = 0.1d;
+
         public const string UnitLength = "мм";
 
         public static double Kg2T(double _kg) => _kg * 0.0001d; 

@@ -515,6 +515,10 @@ namespace BSFiberConcrete
             const double c_h = 60, // см 
                          c_b = 30; // см
 
+            // Начало координат:
+            double X0 = c_b / 2.0;
+            double Y0 = c_h / 2.0;
+
             double c_L = Convert.ToDouble(tbLength.Text); // см
             const string cRCls = "B3.5";
             const double c_D_lng = 16.0;
@@ -544,13 +548,15 @@ namespace BSFiberConcrete
             fiberCalc_Deform.MatRebar = new BSMatRod(cEs) 
             { 
                 RCls = cRCls,
-                Rs = cRs
+                Rs = cRs,
+                e_s0 = 0.00175,
+                e_s2 = 0.025
             };
 
             // расстановка арматурных стержней
             List<BSRod> rods = new List<BSRod>();
             // раскладка арматуры X Y:, см
-            double[,] rdYdX = { { 4, 4 }, { 4, 15 }, { 4, 26 } };
+            double[,] rdYdX = { { 4, 4 }, { 15, 4 }, { 26, 4 } };
             double[] rD_lng = new double[] { 2.5, 1.8, 2.5 }; // D , см
             //  пример фибробетон  
             //{ { 40, 80 }, { 300, 80 }, { 40, 120 }, { 300, 120 }, { 40, 640 }, { 300, 640 }, {40, 1115 }, {300, 1115}};
@@ -560,9 +566,10 @@ namespace BSFiberConcrete
                 BSRod rod = new BSRod()
                 {
                     Num = i,
+                    LTType = RebarLTType.Longitudinal,
                     D = rD_lng[i],
-                    Z_X = rdYdX[i, 0],
-                    Z_Y = rdYdX[i, 1],
+                    Z_X = rdYdX[i, 0] - X0,
+                    Z_Y = rdYdX[i, 1] - Y0,
                     MatRod = fiberCalc_Deform.MatRebar,
                     Nu = 1.0 // считать
                 };
@@ -574,7 +581,12 @@ namespace BSFiberConcrete
             {
                 BTCls = cBtCls,
                 Nu_fb = 1,
-                Rfbn = cRb,
+                Rfbn = cRb, //МПа
+                Rfbt = 0,  
+                Rfbt2 = 0,
+                Rfbt3 = 0,
+                e_b1 = 0.0015,
+                e_b2 =0.0035
             };
 
             // задать свойства бетона

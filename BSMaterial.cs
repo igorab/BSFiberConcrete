@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MathNet.Numerics.Integration;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -13,10 +14,16 @@ namespace BSFiberConcrete
         string Name { get; }        
     }
 
+    public interface INonlinear
+    {        
+        double Eps_StD(double _e);
+        double Eps_StateDiagram(double e_s);
+    }
+
     /// <summary>
     ///  Свойства обычного бетона
     /// </summary>
-    public class BSMatConcrete : IMaterial
+    public class BSMatConcrete : IMaterial, INonlinear
     {
         public string Name => "Бетон";
         public string BT { get; set; }
@@ -27,12 +34,12 @@ namespace BSFiberConcrete
         [DisplayName("Модуль сжатия бетона")]
         public double Eb { get; set; }
 
-        private double e_b0;
-        private double e_b1;
-        private double e_b2;
+        public double e_b0;
+        public double e_b1;
+        public double e_b2;
 
         // Диаграмма состояния
-        public  double StateDiagram(double e_b)
+        public  double Eps_StateDiagram(double e_b)
         {
             double sigma_b = Rb;
             double sigma_b1 = 0.6 * Rb;
@@ -55,6 +62,22 @@ namespace BSFiberConcrete
             return sigma_b;
         }
 
+        public double Eps_StD(double _e)
+        {
+            double sgm = 0;
+
+            if (0 <= _e && _e < e_b1)
+            {
+                sgm = Eb * _e;
+            }
+            else if (e_b1 <= _e && _e < e_b2) 
+            {
+                sgm = Rb;
+            }
+
+            return sgm;
+        }
+
         public BSMatConcrete()
         {
             BT = "B30";
@@ -64,7 +87,7 @@ namespace BSFiberConcrete
     /// <summary>
     ///  Материал стержня арматуры
     /// </summary>
-    public class BSMatRod : IMaterial
+    public class BSMatRod : IMaterial, INonlinear
     {
         public string Name => "Сталь";
 
@@ -84,7 +107,10 @@ namespace BSFiberConcrete
         /// </summary>
         public double Nju_s { get; set; }
 
-        public double Eps_s_ult { get; set; } 
+        public double Eps_s_ult { get; set; }
+
+        public double e_s0 { get; set; }
+        public double e_s2 { get; set; }
 
         public BSMatRod()
         {
@@ -96,13 +122,14 @@ namespace BSFiberConcrete
             Es = _Es;
         }
 
-        public double StateDiagram(double e_s)
+        // диаграмма состояния
+        public double Eps_StateDiagram(double e_s)
         {
             double sigma_s = Rs;
             double sigma_s1 = 0.6 * Rs;
-            double e_s0 = 1;
+            e_s0 = 1;
             double e_s1 = sigma_s1 / Es;
-            double e_s2 = 1;
+            e_s2 = 1;
 
             if (0 <= e_s && e_s <= e_s1)
             {
@@ -120,12 +147,27 @@ namespace BSFiberConcrete
             return sigma_s;
         }
 
+        public double Eps_StD(double _e)
+        {
+            double sgm = 0;
+
+            if (0 < _e && _e < e_s0)
+            {
+                sgm = Es * _e;
+            }
+            else
+            {
+                sgm = Rs;
+            }
+
+            return sgm;
+        }
     }
 
     /// <summary>
     /// Свойства фибробетона
     /// </summary>
-    public class BSMatFiber : IMaterial
+    public class BSMatFiber : IMaterial, INonlinear
     {
         public string Name => "Фибробетон";
 
@@ -163,8 +205,14 @@ namespace BSFiberConcrete
         // Расчетное сопротивление
         public double Rb { get => Rfbn; }
 
+        public double e_b0 { get; set; }
+        public double e_b1 { get; set; }
+        public double e_b2 { get; set; }
+
+        public double Eb_red { get => (e_b1 !=0) ? Rb / e_b1 : 0; }
+
         // Диаграмма состояния
-        public double Eps_StateDiagram(ref double _sgm, ref double _eps)
+        public double Eps_StateDiagram(double _eps)
         {
             double sigma_fbt = 0;
 
@@ -185,13 +233,25 @@ namespace BSFiberConcrete
             {
                 sigma_fbt = Rfbt * (1 - (1 - Rfbt3 / Rfbt2) * (e_fbt - e_fbt2) / (e_fbt3 - e_fbt2));
             }
-
-            _sgm = sigma_fbt;
-            _eps = 0;
-
+            
             return sigma_fbt;
         }
 
+        public double Eps_StD(double _e)
+        {
+            double sgm = 0;
+
+            if (0 <= _e && _e < e_b1)
+            {
+                sgm = Eb * _e;
+            }
+            else if (e_b1 <= _e && _e < e_b2)
+            {
+                sgm = Rb;
+            }
+
+            return sgm;
+        }
 
         public BSMatFiber()
         {            
