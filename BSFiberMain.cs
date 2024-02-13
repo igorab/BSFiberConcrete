@@ -510,10 +510,12 @@ namespace BSFiberConcrete
             const double cRb = 7.65; // МПа
             const double cRs = 350; // МПа
             const double cEb = 24000; // Мпа
-            const double cEs = 200000; // Мпа
+            const double cEs = 200000d; // Мпа
             const double c_eps_s0 = 0.00175; // Мпа
             const double c_eps_s2 = 0.025; // Мпа
+
             const double c_eps_b1 = 0.0015;
+            const double c_eps_b1_red = 0.0015;
             const double c_eps_b2 = 0.0035;
 
             const double c_h = 60, // см 
@@ -573,7 +575,7 @@ namespace BSFiberConcrete
                     LTType = RebarLTType.Longitudinal,
                     D = rD_lng[i],
                     Z_X = rdYdX[i, 0] - X0,
-                    Z_Y = rdYdX[i, 1] - Y0,
+                    Z_Y = -1 * (rdYdX[i, 1] - Y0),
                     MatRod = fiberCalc_Deform.MatRebar,
                     Nu = 1.0 // считать
                 };
@@ -590,6 +592,7 @@ namespace BSFiberConcrete
                 Rfbt = 0,  
                 Rfbt2 = 0,
                 Rfbt3 = 0,
+                e_b1_red = c_eps_b1_red,
                 e_b1 = c_eps_b1,
                 e_b2 = c_eps_b2 
             };

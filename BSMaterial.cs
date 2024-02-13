@@ -155,7 +155,7 @@ namespace BSFiberConcrete
             {
                 sgm = Es * _e;
             }
-            else
+            else if (e_s0 <= _e && _e <= e_s2)
             {
                 sgm = Rs;
             }
@@ -205,7 +205,7 @@ namespace BSFiberConcrete
         // Расчетное сопротивление
         public double Rb { get => Rfbn; }
 
-        public double e_b0 { get; set; }
+        public double e_b1_red { get; set; }
         public double e_b1 { get; set; }
         public double e_b2 { get; set; }
 
@@ -243,7 +243,7 @@ namespace BSFiberConcrete
 
             if (0 <= _e && _e < e_b1)
             {
-                sgm = Eb * _e;
+                sgm = Eb_red * _e;
             }
             else if (e_b1 <= _e && _e < e_b2)
             {

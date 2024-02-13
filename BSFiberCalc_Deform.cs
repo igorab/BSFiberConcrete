@@ -327,11 +327,25 @@ namespace BSFiberConcrete
             }                        
         }
 
+        private void ArraysClear()
+        {
+            epsilon_fb.Clear();
+            epsilon_s.Clear();
+
+            sigma_fb.Clear();
+            sigma_s.Clear();
+
+            Nju_fb.Clear();
+            Nju_s.Clear();
+        }
+
         private bool CalcResult()
         {
             bool doNextIter = true;
 
             double kx = 1/rx, ky = 1/ry;
+
+            ArraysClear();
 
             for (int i = 0; i < Zfby.Count; i++) 
             {
@@ -339,9 +353,9 @@ namespace BSFiberConcrete
                 epsilon_fb[i] = _e;
 
                 double sgm = MatFiber.Eps_StD( - _e);
-                sigma_fb[i] = sgm;
+                sigma_fb[i] = Math.Sign(_e) * sgm;
 
-                double nju_b = sgm / (MatFiber.Eb_red * _e);
+                double nju_b = sgm / (MatFiber.Eb * _e);
 
                 Nju_fb[i] = Math.Abs(nju_b);
             }
@@ -371,18 +385,22 @@ namespace BSFiberConcrete
                 N_calc += Fi;
             }
 
+            double Mx_s_calc = 0, My_s_calc = 0, N_s_calc = 0 ;
             for (int j = 0; j < Zsy.Count; j++)
             {
                 double Fj = sigma_s[j] * As[j];
-                Mx_calc +=  Fj * Zsx[j];
-                My_calc += Fj * Zsy[j];
-                N_calc += Fj;
+                Mx_s_calc +=  Fj * Zsx[j];
+                My_s_calc += Fj * Zsy[j];
+                N_s_calc += Fj;
             }
 
-            
-            if (Math.Abs(Mx - Mx_calc) > BSHelper.Epsilon ||
-                Math.Abs(My - My_calc) > BSHelper.Epsilon || 
-                Math.Abs(N - N_calc) > BSHelper.Epsilon)
+            Mx_calc += Mx_s_calc;
+            My_calc += My_s_calc;
+            N_calc += N_s_calc;
+
+            if (Math.Abs(Mx - Mx_calc) <= BSHelper.Epsilon &&
+                Math.Abs(My - My_calc) <= BSHelper.Epsilon && 
+                Math.Abs(N - N_calc) <= BSHelper.Epsilon)
             {
                 doNextIter = false;
             }
@@ -429,6 +447,9 @@ namespace BSFiberConcrete
 
             for (int iter = 0; iter < cIters; iter++)
             {
+                D = DenseMatrix.OfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } });
+                Db = new double[I3 + 1, I3 + 1];
+                Ds = new double[I3 + 1, I3 + 1];
                 
                 for (int i = 0; i < qty_I; i++)
                 {
