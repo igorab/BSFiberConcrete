@@ -56,7 +56,11 @@ namespace BSFiberConcrete
         private double eps_0;
 
         // жесткостные характеристики
-        private Matrix<double> D = DenseMatrix.OfArray( new double[,] {{0,1,2}, {3,4,5}, {6,7,8}} );
+        private const int I1 = 0, I2 = 1, I3 = 2;
+        private Matrix<double> D = DenseMatrix.OfArray( new double[,] {{0,0,0}, {0,0,0}, {0,0,0}} );
+        private double[,] Db = new double[I3+1, I3+1];
+        private double[,] Ds = new double[I3+1, I3+1];
+
         // площадь ц.т. участка фибробетона
         private Vector<double> Ab;
         // площадь ц.т. участка арматуры
@@ -85,7 +89,7 @@ namespace BSFiberConcrete
 
         private Dictionary<string, double> Res = new Dictionary<string, double>();
 
-        private const int I1 = 0, I2 = 1, I3 = 2;
+       
 
         /// <summary>
         /// 
@@ -212,73 +216,77 @@ namespace BSFiberConcrete
 
             double AZ2Eb, AZEb, AEb;
             double Zx = 0; 
-            if (i > 0) Zx = Zfbx[i];
+            if (i > -1) Zx = Zfbx[i];
             double Zy = 0; 
-            if (i > 0) Zy = Zfby[i];
+            if (i > -1) Zy = Zfby[i];
 
             // D(1,1) :
             if (i > -1)
             {
                 AZ2Eb = Ab[i] * Math.Pow(Zx, 2) * m_Fiber.Efb;
-                D[I1, I1] += AZ2Eb * Nju_fb[i];
+                Db[I1, I1] += AZ2Eb * Nju_fb[i];
             }
             if (j > -1)
             {
-                D[I1, I1] += As[j] * Math.Pow(Zsx[j], 2) * m_Rod.Es * Nju_s[j];
+                Ds[I1, I1] += As[j] * Math.Pow(Zsx[j], 2) * m_Rod.Es * Nju_s[j];
             }
             // D(2,2) :
             if (i > -1)
             {
                 AZ2Eb = Ab[i] * Math.Pow(Zy, 2) * m_Fiber.Efb;
-                D[I2, I2] += AZ2Eb * Nju_fb[i];
+                Db[I2, I2] += AZ2Eb * Nju_fb[i];
             }
             if (j > -1)
             {
-                D[I2, I2] += As[j] * Math.Pow(Zsy[j], 2) * m_Rod.Es * Nju_s[j];
+                Ds[I2, I2] += As[j] * Math.Pow(Zsy[j], 2) * m_Rod.Es * Nju_s[j];
             }
             // D(1,2) :
             if (i > -1)
             {
-                D[I1, I2] += Ab[i] * Zx * Zy * m_Fiber.Efb * Nju_fb[i];
+                Db[I1, I2] += Ab[i] * Zx * Zy * m_Fiber.Efb * Nju_fb[i];
             }
             if (j > -1)
             {
-                D[I1, I2] += As[j] * Zsx[j] * Zsy[j] * m_Rod.Es * Nju_s[j];
+                Ds[I1, I2] += As[j] * Zsx[j] * Zsy[j] * m_Rod.Es * Nju_s[j];
             }
             // D(1,3) :
             if (i > -1)
             {
                 AZEb = Ab[i] * Zx * m_Fiber.Efb;
-                D[I1, I3] += AZEb * Nju_fb[i];
+                Db[I1, I3] += AZEb * Nju_fb[i];
             }
             if (j > -1)
             {
-                D[I1, I3] += As[j] * Zsx[j] * m_Rod.Es * Nju_s[j];
+                Ds[I1, I3] += As[j] * Zsx[j] * m_Rod.Es * Nju_s[j];
             }
             // D(2,3) :
             if (i > -1)
             {
                 AZEb = Ab[i] * Zy * m_Fiber.Efb;
-                D[I2, I3] += AZEb * Nju_fb[i];
+                Db[I2, I3] += AZEb * Nju_fb[i];
             }
             if (j > -1)
             {
-                D[I2, I3] += As[j] * Zsy[j] * m_Rod.Es * Nju_s[j];
+                Ds[I2, I3] += As[j] * Zsy[j] * m_Rod.Es * Nju_s[j];
             }
             // D(3,3)
             if (i > -1)
             {
                 AEb = Ab[i] * m_Fiber.Efb;
-                D[I3, I3] += AEb * Nju_fb[i];
+                Db[I3, I3] += AEb * Nju_fb[i];
             }
             if (j > -1)
             {             
-                D[I3, I3] += As[j] * m_Rod.Es * Nju_s[j];
+                Ds[I3, I3] += As[j] * m_Rod.Es * Nju_s[j];
             }
 
-            D[I2, I1] = D[I1, I2];
-            D[I3, I1] = D[I1, I3];
-            D[I3, I2] = D[I2, I3];
+            Db[I2, I1] = Db[I1, I2];
+            Db[I3, I1] = Db[I1, I3];
+            Db[I3, I2] = Db[I2, I3];
+
+            Ds[I2, I1] = Ds[I1, I2];
+            Ds[I3, I1] = Ds[I1, I3];
+            Ds[I3, I2] = Ds[I2, I3];
         }
 
         //Рассчитать усилия
@@ -330,11 +338,12 @@ namespace BSFiberConcrete
                 double _e = eps_0 + ky * Zfby[i];
                 epsilon_fb[i] = _e;
 
-                double sgm = MatFiber.Eps_StD(_e);
+                double sgm = MatFiber.Eps_StD( - _e);
+                sigma_fb[i] = sgm;
 
-                double nju = sgm / (MatFiber.Eb_red * _e);
+                double nju_b = sgm / (MatFiber.Eb_red * _e);
 
-                Nju_fb[i] = Math.Abs(nju);
+                Nju_fb[i] = Math.Abs(nju_b);
             }
 
             for (int j = 0; j < Zsy.Count; j++)
@@ -343,19 +352,37 @@ namespace BSFiberConcrete
                 epsilon_s[j] = _e;
 
                 double sgm = MatRebar.Eps_StD(_e);
+                sigma_s[j] = sgm;
 
-                double nju = sgm / (MatRebar.Es * _e);
+                double nju_s = sgm / (MatRebar.Es * _e);
 
-                Nju_s[j] = Math.Abs(nju);
+                Nju_s[j] = Math.Abs(nju_s);
             }
 
-            double My_calc = D[I2-1, I2-1] * 1 / ry + D[I2-1, I3-1] * eps_0;
+            double Mx_calc = 0;
+            double My_calc = 0;
+            double N_calc = 0;
 
-            double N_calc = D[I2-1, I3-1] * 1 / ry + D[I3-1, I3-1] * eps_0;
+            for (int i = 0; i < Zfby.Count; i ++)
+            {
+                double Fi = sigma_fb[i] * Ab[i];
+                Mx_calc += Fi * Zfbx[i];
+                My_calc += Fi * Zfby[i];
+                N_calc += Fi;
+            }
 
+            for (int j = 0; j < Zsy.Count; j++)
+            {
+                double Fj = sigma_s[j] * As[j];
+                Mx_calc +=  Fj * Zsx[j];
+                My_calc += Fj * Zsy[j];
+                N_calc += Fj;
+            }
 
-            if ( Math.Abs(My - My_calc) < BSHelper.Epsilon &&
-                 Math.Abs(N - N_calc) < BSHelper.Epsilon)
+            
+            if (Math.Abs(Mx - Mx_calc) > BSHelper.Epsilon ||
+                Math.Abs(My - My_calc) > BSHelper.Epsilon || 
+                Math.Abs(N - N_calc) > BSHelper.Epsilon)
             {
                 doNextIter = false;
             }
@@ -392,6 +419,8 @@ namespace BSFiberConcrete
             int qty_J = m_Beam.RodsQty; // количество стержней           
             int qty_I = m_BElem.Count; // количество элементов сечения
 
+            double _A_s = m_Beam.AreaS(); 
+
             InitVectors(qty_I, qty_J);
            
             GetSize();
@@ -400,19 +429,36 @@ namespace BSFiberConcrete
 
             for (int iter = 0; iter < cIters; iter++)
             {
-                D = DenseMatrix.OfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } });
+                
                 for (int i = 0; i < qty_I; i++)
                 {
                     Calc_D(i);
                 }
 
-                for (int j = 0; j < qty_J; j++)
+                if (_A_s > 0)
                 {
-                    Calc_D(-1, j);
+                    for (int j = 0; j < qty_J; j++)
+                    {
+                        Calc_D(-1, j);
+                    }
                 }
 
-                Calc_MxMyN();
+                var M = Matrix<double>.Build;
+                D = M.DenseOfArray(Db);
 
+                var _Ds = M.DenseOfArray(Ds);
+                D = D.Add(_Ds);
+                
+                /*
+                D = DenseMatrix.OfArray(new double[,] 
+                { 
+                    { Db[I1,I1], Db[I1,I2], Db[I1,I3] }, 
+                    { Db[I2,I1], Db[I2,I2], Db[I2,I3] }, 
+                    { Db[I3,I1], Db[I3,I2], Db[I3,I3] } 
+                });
+                */
+
+                Calc_MxMyN();
 
                 bool doNextIter = CalcResult();
                 
@@ -450,7 +496,7 @@ namespace BSFiberConcrete
                 {
                     // Ось X - вправо, ось Y - вниз
                     double cgX = elX + dB / 2.0 - X0;
-                    double cgY = -1 *( elY + dH / 2.0 - Y0);
+                    double cgY = elY + dH / 2.0 - Y0;
 
                     BSElement bsElement = new BSElement(num, cgX, cgY) {A = dB, B = dH };
                     bsElement.E = beam.BSMat.Eb; 

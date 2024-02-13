@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
@@ -75,7 +76,14 @@ namespace BSFiberConcrete
         public double Z_fb_Y { get; set; }
 
         public double Length { get; set; }
-        
+
+        [DisplayName("Площадь армирования, см2")]
+        public double AreaS()
+        {            
+            double? _As = Rods?.Sum(x => x.As);
+            return Convert.ToDouble(_As); 
+        }
+
         public virtual double Area()
         {
             return 0;
@@ -115,7 +123,7 @@ namespace BSFiberConcrete
 
         [DisplayName("Расстояние от центра тяжести сечения сталефибробетонного элемента до наиболее растянутого волокна, см")]
         public double y_t() => h / 2.0;
-
+       
         // Центр тяжести сечения
         public (double, double) CG() => (b/2, h/2);
         

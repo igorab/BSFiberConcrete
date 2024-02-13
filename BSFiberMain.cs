@@ -511,6 +511,10 @@ namespace BSFiberConcrete
             const double cRs = 350; // МПа
             const double cEb = 24000; // Мпа
             const double cEs = 200000; // Мпа
+            const double c_eps_s0 = 0.00175; // Мпа
+            const double c_eps_s2 = 0.025; // Мпа
+            const double c_eps_b1 = 0.0015;
+            const double c_eps_b2 = 0.0035;
 
             const double c_h = 60, // см 
                          c_b = 30; // см
@@ -549,8 +553,8 @@ namespace BSFiberConcrete
             { 
                 RCls = cRCls,
                 Rs = cRs,
-                e_s0 = 0.00175,
-                e_s2 = 0.025
+                e_s0 = c_eps_s0,
+                e_s2 = c_eps_s2
             };
 
             // расстановка арматурных стержней
@@ -576,7 +580,8 @@ namespace BSFiberConcrete
 
                 rods.Add(rod);
             }
-           
+
+
             BSMatFiber material = new BSMatFiber(cEb)
             {
                 BTCls = cBtCls,
@@ -585,8 +590,8 @@ namespace BSFiberConcrete
                 Rfbt = 0,  
                 Rfbt2 = 0,
                 Rfbt3 = 0,
-                e_b1 = 0.0015,
-                e_b2 =0.0035
+                e_b1 = c_eps_b1,
+                e_b2 = c_eps_b2 
             };
 
             // задать свойства бетона
