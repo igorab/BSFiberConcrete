@@ -28,21 +28,21 @@ namespace BSFiberConcrete
         // продольная сила от внешней нагрузки
         public double N { get; set; }
         // балка
-        public BSBeam Beam 
-        { 
-            get {return m_Beam; } 
-            set { m_Beam = value; 
-                  m_Rods = value.Rods; } 
+        public BSBeam Beam
+        {
+            get { return m_Beam; }
+            set { m_Beam = value;
+                m_Rods = value.Rods; }
         }
         // свойства бетона
         public BSMatFiber MatFiber { get { return m_Fiber; } set { m_Fiber = value; } }
         // свойства арматуры
         public BSMatRod MatRebar { get { return m_Rod; } set { m_Rod = value; } }
-        
-        private  BSBeam m_Beam { get; set; }
 
-        private  BSMatFiber m_Fiber = new BSMatFiber();
-        private  BSMatRod m_Rod = new BSMatRod();
+        private BSBeam m_Beam { get; set; }
+
+        private BSMatFiber m_Fiber = new BSMatFiber();
+        private BSMatRod m_Rod = new BSMatRod();
 
         // расчетная схема сечения
         private int m_Y_N = 1; // разбиение по высоте
@@ -57,19 +57,19 @@ namespace BSFiberConcrete
 
         // жесткостные характеристики
         private const int I1 = 0, I2 = 1, I3 = 2;
-        private Matrix<double> D = DenseMatrix.OfArray( new double[,] {{0,0,0}, {0,0,0}, {0,0,0}} );
-        private double[,] Db = new double[I3+1, I3+1];
-        private double[,] Ds = new double[I3+1, I3+1];
+        private Matrix<double> D = DenseMatrix.OfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } });
+        private double[,] Db = new double[I3 + 1, I3 + 1];
+        private double[,] Ds = new double[I3 + 1, I3 + 1];
 
         // площадь ц.т. участка фибробетона
         private Vector<double> Ab;
         // площадь ц.т. участка арматуры
         private Vector<double> As;
         // координаты ц.т. участка фибробетона
-        private Vector<double> Zfbx;        
+        private Vector<double> Zfbx;
         private Vector<double> Zfby;
         // координаты ц.т. участка арматуры
-        private Vector<double> Zsx;        
+        private Vector<double> Zsx;
         private Vector<double> Zsy;
 
         // напряжение на уровне ц.т. фибробетона
@@ -89,7 +89,22 @@ namespace BSFiberConcrete
 
         private Dictionary<string, double> Res = new Dictionary<string, double>();
 
-       
+        public Dictionary<string, double> Efforts
+        {
+            get { return new Dictionary<string, double> { { "Mx", Mx }, { "My", My }, { "N", N } }; }
+        }
+
+        public Dictionary<string, double> PhysParams
+        {
+            get
+            {
+                return new Dictionary<string, double> { 
+                    { "Rfbn", m_Fiber.Rfbn }, { "Eb", m_Fiber.Eb }, { "Eps_fb_ult", m_Fiber.Eps_fb_ult },
+                    { "Rs", m_Rod.Rs }, { "Es", m_Rod.Es }, { "Eps_s_ult", m_Rod.Eps_s_ult }
+                };
+            }
+        }
+
 
         /// <summary>
         /// 
@@ -419,9 +434,7 @@ namespace BSFiberConcrete
             {
                 doNextIter = false;
             }
-
-            Dictionary<string, double> res = new Dictionary<string, double>() { { "e0", eps_0 }, {"kx", kx }, {"ky", ky } };
-
+            
             return doNextIter;
         }
 
@@ -484,16 +497,7 @@ namespace BSFiberConcrete
 
                 var _Ds = M.DenseOfArray(Ds);
                 D = D.Add(_Ds);
-                
-                /*
-                D = DenseMatrix.OfArray(new double[,] 
-                { 
-                    { Db[I1,I1], Db[I1,I2], Db[I1,I3] }, 
-                    { Db[I2,I1], Db[I2,I2], Db[I2,I3] }, 
-                    { Db[I3,I1], Db[I3,I2], Db[I3,I3] } 
-                });
-                */
-
+              
                 Calc_MxMyN();
 
                 bool doNextIter = CalcResult();
@@ -501,11 +505,15 @@ namespace BSFiberConcrete
                 if (!doNextIter) 
                     break;
             }
+            
+            Res.Add("e0", eps_0);
+            Res.Add("rx", rx);
+            Res.Add("ry", ry);
 
             bool res_fb = epsilon_fb.AbsoluteMaximum() <=  m_Fiber.Eps_fb_ult;
-            Res.Add("res_fb", Convert.ToDouble(res_fb));
-
             bool res_s = epsilon_s.AbsoluteMaximum() <= m_Rod.Eps_s_ult;
+
+            Res.Add("res_fb", Convert.ToDouble(res_fb));            
             Res.Add("res_s", Convert.ToDouble(res_s));
         }
 

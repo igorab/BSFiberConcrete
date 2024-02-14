@@ -19,6 +19,7 @@ namespace BSFiberConcrete
         public string ReportName { get; set; }
         public Dictionary<string, double> Beam {set{m_Beam = value;}}
         public Dictionary<string, double> Coeffs {set { m_Coeffs = value; } }
+        public Dictionary<string, double> Efforts { set { m_Efforts = value; } }
         public Dictionary<string, double> PhysParams {set { m_PhysParams = value; } }
         public Dictionary<string, double> GeomParams {set { m_GeomParams = value; } }
         public Dictionary<string, double> CalcResults {set { m_CalcResults = value; } }
@@ -27,6 +28,7 @@ namespace BSFiberConcrete
 
         protected Dictionary<string, double> m_Beam;
         protected Dictionary<string, double> m_Coeffs;
+        protected Dictionary<string, double> m_Efforts;
         protected Dictionary<string, double> m_PhysParams;
         protected Dictionary<string, double> m_GeomParams;
         protected Dictionary<string, double> m_CalcResults;
@@ -113,8 +115,22 @@ namespace BSFiberConcrete
                 w.WriteLine("</Table>");
                 w.WriteLine("<br>");
             }
-            
-            
+
+            if (m_Efforts != null)
+            {
+                w.WriteLine("<Table border=1 bordercolor = darkblue>");
+                w.WriteLine("<caption>Усилия</caption>");
+                foreach (var _pair in m_Efforts)
+                {
+                    w.WriteLine("<tr>");
+                    w.WriteLine($"<td>{_pair.Key}</td>");
+                    w.WriteLine($"<td>| {_pair.Value} </td>");
+                    w.WriteLine("</tr>");
+                }
+                w.WriteLine("</Table>");
+                w.WriteLine("<br>");
+            }
+
         }
 
         protected virtual void ReportResult(StreamWriter w)
