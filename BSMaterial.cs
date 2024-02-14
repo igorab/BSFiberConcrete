@@ -241,11 +241,11 @@ namespace BSFiberConcrete
         {
             double sgm = 0;
 
-            if (0 <= _e && _e < e_b1)
+            if (0 <= _e && _e < e_b1_red)
             {
                 sgm = Eb_red * _e;
             }
-            else if (e_b1 <= _e && _e < e_b2)
+            else if (e_b1_red <= _e && _e < e_b2)
             {
                 sgm = Rb;
             }

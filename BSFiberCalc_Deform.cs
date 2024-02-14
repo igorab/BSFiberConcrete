@@ -209,17 +209,26 @@ namespace BSFiberConcrete
         /// Рассчитать жесткости D
         /// </summary>
         /// <param name="_i"></param>
-        private void Calc_D(int _i, int _j = -1)
-        {            
+        private void Calc_D(int _i = -1, int _j = -1)
+        {                        
             int i = _i;
             int j = _j;
 
             double AZ2Eb, AZEb, AEb;
-            double Zx = 0; 
-            if (i > -1) Zx = Zfbx[i];
-            double Zy = 0; 
-            if (i > -1) Zy = Zfby[i];
+            double Zx = 0;
+            double Zy = 0;
 
+            if (i > -1) 
+            {
+                Zx = Zfbx[i];
+                Zy = Zfby[i];
+            }
+            else if (j > -1)
+            {
+                Zx = Zsx[j];
+                Zy = Zsy[j];
+            }
+                                                                    
             // D(1,1) :
             if (i > -1)
             {
@@ -280,13 +289,19 @@ namespace BSFiberConcrete
                 Ds[I3, I3] += As[j] * m_Rod.Es * Nju_s[j];
             }
 
-            Db[I2, I1] = Db[I1, I2];
-            Db[I3, I1] = Db[I1, I3];
-            Db[I3, I2] = Db[I2, I3];
+            if (i > -1)
+            {
+                Db[I2, I1] = Db[I1, I2];
+                Db[I3, I1] = Db[I1, I3];
+                Db[I3, I2] = Db[I2, I3];
+            }
 
-            Ds[I2, I1] = Ds[I1, I2];
-            Ds[I3, I1] = Ds[I1, I3];
-            Ds[I3, I2] = Ds[I2, I3];
+            if (j > -1)
+            {
+                Ds[I2, I1] = Ds[I1, I2];
+                Ds[I3, I1] = Ds[I1, I3];
+                Ds[I3, I2] = Ds[I2, I3];
+            }
         }
 
         //Рассчитать усилия
@@ -349,7 +364,7 @@ namespace BSFiberConcrete
 
             for (int i = 0; i < Zfby.Count; i++) 
             {
-                double _e = eps_0 + ky * Zfby[i];
+                double _e = 1000*(eps_0 + ky * Zfby[i]);
                 epsilon_fb[i] = _e;
 
                 double sgm = MatFiber.Eps_StD( - _e);
@@ -362,7 +377,7 @@ namespace BSFiberConcrete
 
             for (int j = 0; j < Zsy.Count; j++)
             {
-                double _e = eps_0 + ky * Zsy[j];
+                double _e = 1000 * (eps_0 + ky * Zsy[j]);
                 epsilon_s[j] = _e;
 
                 double sgm = MatRebar.Eps_StD(_e);
@@ -373,16 +388,16 @@ namespace BSFiberConcrete
                 Nju_s[j] = Math.Abs(nju_s);
             }
 
-            double Mx_calc = 0;
-            double My_calc = 0;
-            double N_calc = 0;
+            double Mx_b_calc = 0;
+            double My_b_calc = 0;
+            double N_b_calc = 0;
 
             for (int i = 0; i < Zfby.Count; i ++)
             {
                 double Fi = sigma_fb[i] * Ab[i];
-                Mx_calc += Fi * Zfbx[i];
-                My_calc += Fi * Zfby[i];
-                N_calc += Fi;
+                Mx_b_calc += Fi * Zfbx[i];
+                My_b_calc += Fi * Zfby[i];
+                N_b_calc += Fi;
             }
 
             double Mx_s_calc = 0, My_s_calc = 0, N_s_calc = 0 ;
@@ -394,12 +409,12 @@ namespace BSFiberConcrete
                 N_s_calc += Fj;
             }
 
-            Mx_calc += Mx_s_calc;
-            My_calc += My_s_calc;
-            N_calc += N_s_calc;
+            double Mx_calc = Mx_b_calc + Mx_s_calc;
+            double My_calc =  My_b_calc + My_s_calc;
+            double N_calc = N_b_calc + N_s_calc;
 
-            if (Math.Abs(Mx - Mx_calc) <= BSHelper.Epsilon &&
-                Math.Abs(My - My_calc) <= BSHelper.Epsilon && 
+            if (Math.Abs(Mx*1000 - Mx_calc) <= BSHelper.Epsilon &&
+                Math.Abs(My*1000 - My_calc) <= BSHelper.Epsilon && 
                 Math.Abs(N - N_calc) <= BSHelper.Epsilon)
             {
                 doNextIter = false;
@@ -430,7 +445,7 @@ namespace BSFiberConcrete
         //
         public void Calculate()
         {
-            int cIters = 10;
+            int cIters = 1000;
 
             m_BElem = CalculationScheme(m_Y_N, m_X_M);
 
