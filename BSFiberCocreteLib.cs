@@ -30,10 +30,46 @@ namespace BSFiberConcrete
         public double s_w { get; set; }
     }
 
+    /// <summary>
+    /// Таблица характеристики бетонов (СП 63.13)
+    /// </summary>
+    public class Beton2
+    {
+        public string Cls_b { get; set; }
+        public double Rb_ser { get; set; }
+        public double Rb { get; set; }
+        public double Eb { get; set; }
+        public double eps_b1 { get; set; }
+        public double eps_b1_red { get; set; }
+        public double eps_b2 { get; set; }
+    }
+
+    /// <summary>
+    /// Характеристики арматуры СП 63.13
+    /// </summary>
+    public class Rod2
+    {
+        public string Cls_s { get; set; }
+        public double Rs_ser { get; set; }
+        public double Rs { get; set; }
+        public double Rsc { get; set; }
+        public double Es { get; set; }
+        public double eps_s0 { get; set; }
+        public double eps_s2 { get; set; }
+    }
+
+
+    /// <summary>
+    /// Параметры бетонов и арматуры, считываем из json 
+    /// </summary>
     public class BSFiberParams
     {
         public Fiber Fiber { get; set; }
         public Rebar Rebar { get; set; }
+
+        public Beton2 Beton2 { get; set; }
+
+        public Rod2 Rod2 { get; set; }        
     }
 
 

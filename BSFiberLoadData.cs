@@ -5,6 +5,7 @@ using System.IO;
 using Microsoft.VisualBasic.FileIO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Windows.Forms;
 
 namespace BSFiberConcrete
 {    
@@ -19,6 +20,8 @@ namespace BSFiberConcrete
         private BSFiberParams m_FiberParams;
         public Fiber Fiber { get { return m_FiberParams?.Fiber; } }
         public Rebar Rebar { get { return m_FiberParams?.Rebar; } }
+        public Rod2 Rod2 { get { return m_FiberParams?.Rod2; } }
+        public Beton2 Beton2 { get { return m_FiberParams?.Beton2; } }
 
         private double to_double(string _num)
         {
@@ -46,6 +49,26 @@ namespace BSFiberConcrete
                 m_FiberParams = JsonSerializer.Deserialize<BSFiberParams>(fs);
             }            
         }
+
+        /// <summary>
+        /// Параметры по умолчанию
+        /// string json = @"{""Mx"":""value1"",""key2"":1}";
+        //  var values = JsonSerializer.Deserialize<Dictionary<string, object>>(json);
+        /// </summary>
+        /// <returns></returns>
+        public Dictionary<string, double> ReadInitFromJson()
+        {
+            string path = Path.Combine(Environment.CurrentDirectory, @"Templates\BSInit.json");
+            var keyValuePairs = new Dictionary<string, double>();
+
+            using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
+            {
+                keyValuePairs = JsonSerializer.Deserialize<Dictionary<string, double>>(fs);
+            }
+
+            return keyValuePairs;
+        }
+
 
         public void Load()
         {
