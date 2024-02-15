@@ -86,7 +86,7 @@ namespace BSFiberConcrete
                     gridTRebar.Rows[0].Cells[i].Value = t_rebar[i];
                 }
 
-                double[] long_rebar = { 16, 2, 4, 400, 1 }; // продольная арматура
+                double[] long_rebar = { m_Iniv["D_l"], m_Iniv["Qty_l"], m_Iniv["a_l"], m_Iniv["Cls_l"], m_Iniv["Coef_l"] }; // продольная арматура
                 gridLRebar.Rows.Add(long_rebar);
                 for (int i = 0; i < long_rebar.Length; i++)
                 {
@@ -624,7 +624,7 @@ namespace BSFiberConcrete
                     // ширина минус защитный слой слева и справа:
                     double bx = c_b - a_r - a_r;
                     // расстояние между стержнями
-                    double d_bx = bx / d_qty;   
+                    double d_bx = bx / (d_qty - 1);   
 
                     for (int r_idx = 0; r_idx < d_qty; r_idx++)
                     {
