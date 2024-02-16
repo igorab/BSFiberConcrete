@@ -43,13 +43,15 @@ namespace BSFiberConcrete
         [DisplayName("Нормативное остаточное сопротивления осевому растяжению кг/см2")]
         public double Rfbt3n { get; set; }
 
-        [DisplayName("числовая характеристика класса фибробетона по прочности на осевое сжатие")]
+        [DisplayName("Числовая характеристика класса фибробетона по прочности на осевое сжатие")]
         public double B { get; set; }
 
-        [DisplayName("Расчетные значения сопротивления  на сжатиие по СП63 кг/см2")]
+        [DisplayName("Нормативное значение сопротивления сталефибробетона на осевое сжатие по СП63 кг/см2")]
         public double Rfbn { get; set; }
-                
-        protected double Rfbt3;       
+        
+        // Остаточное сопротивление сталефибробетона осевому растяжению 
+        protected double Rfbt3; 
+        
         private double m_Wpl;
         private double gamma;
         

@@ -85,12 +85,15 @@ namespace BSFiberConcrete
                 {
                     gridTRebar.Rows[0].Cells[i].Value = t_rebar[i];
                 }
-
+                
                 double[] long_rebar = { m_Iniv["D_l"], m_Iniv["Qty_l"], m_Iniv["a_l"], m_Iniv["Cls_l"], m_Iniv["Coef_l"] }; // продольная арматура
-                gridLRebar.Rows.Add(long_rebar);
+                for (int i=0; i<3; i ++) gridLRebar.Rows.Add(long_rebar);
+                
                 for (int i = 0; i < long_rebar.Length; i++)
                 {
                     gridLRebar.Rows[0].Cells[i].Value = long_rebar[i];
+                    gridLRebar.Rows[1].Cells[i].Value =(i==1)? 0: long_rebar[i];
+                    gridLRebar.Rows[2].Cells[i].Value = (i == 1) ? 0 : long_rebar[i];
                 }
             }
             catch (Exception _ex) 
@@ -272,7 +275,7 @@ namespace BSFiberConcrete
             }
         }
             
-        
+        // Прямоугольное сечение
         private void LoadRectangle(double _b, double _h)
         {
             m_BeamSection = BeamSection.Rect;
@@ -517,14 +520,19 @@ namespace BSFiberConcrete
         // продольная арматура
         private void InitLRebar(out double[] l_rebar)
         {
+            l_rebar = new double[10];
             DataGridViewRowCollection rows_l = gridLRebar.Rows;
-            var row = rows_l[0];
 
-            l_rebar = new double[row.Cells.Count];
-            for (int i = 0; i < l_rebar.Length; i++)
+            for (int irow = 0; irow < 3; irow++)
             {
-                double x = Convert.ToDouble(row.Cells[i].Value);
-                l_rebar[i] = x;
+                var row = rows_l[irow];
+
+                l_rebar = new double[row.Cells.Count];
+                for (int i = 0; i < l_rebar.Length; i++)
+                {
+                    double x = Convert.ToDouble(row.Cells[i].Value);
+                    l_rebar[i] = x;
+                }
             }
         }
 

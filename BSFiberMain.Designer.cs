@@ -35,11 +35,11 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabGeneral = new System.Windows.Forms.TabControl();
             this.tabParams = new System.Windows.Forms.TabPage();
             this.groupBoxResult = new System.Windows.Forms.GroupBox();
@@ -103,8 +103,18 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label16 = new System.Windows.Forms.Label();
             this.gridTRebar = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Sw = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ClassRebar = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TCondFactor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lblLongitudinalReinforcement = new System.Windows.Forms.Label();
             this.gridLRebar = new System.Windows.Forms.DataGridView();
+            this.D = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Qty = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.a = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.RebarClass = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CondFactor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnCalc = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.btnRectang = new System.Windows.Forms.Button();
@@ -122,16 +132,6 @@
             this.btnCalc_Q = new System.Windows.Forms.Button();
             this.btnCalcMNQ = new System.Windows.Forms.Button();
             this.labelCalculation = new System.Windows.Forms.Label();
-            this.D = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Qty = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.a = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.RebarClass = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CondFactor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Sw = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ClassRebar = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TCondFactor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabGeneral.SuspendLayout();
             this.tabParams.SuspendLayout();
             this.groupBoxResult.SuspendLayout();
@@ -171,7 +171,7 @@
             this.tabGeneral.Location = new System.Drawing.Point(11, 40);
             this.tabGeneral.Name = "tabGeneral";
             this.tabGeneral.SelectedIndex = 0;
-            this.tabGeneral.Size = new System.Drawing.Size(1106, 333);
+            this.tabGeneral.Size = new System.Drawing.Size(1106, 337);
             this.tabGeneral.TabIndex = 0;
             // 
             // tabParams
@@ -182,7 +182,7 @@
             this.tabParams.Location = new System.Drawing.Point(4, 22);
             this.tabParams.Name = "tabParams";
             this.tabParams.Padding = new System.Windows.Forms.Padding(3);
-            this.tabParams.Size = new System.Drawing.Size(1098, 307);
+            this.tabParams.Size = new System.Drawing.Size(1098, 311);
             this.tabParams.TabIndex = 0;
             this.tabParams.Text = "Параметры";
             this.tabParams.UseVisualStyleBackColor = true;
@@ -381,7 +381,7 @@
             this.tabConcrete.Location = new System.Drawing.Point(4, 22);
             this.tabConcrete.Name = "tabConcrete";
             this.tabConcrete.Padding = new System.Windows.Forms.Padding(3);
-            this.tabConcrete.Size = new System.Drawing.Size(1098, 307);
+            this.tabConcrete.Size = new System.Drawing.Size(1098, 311);
             this.tabConcrete.TabIndex = 1;
             this.tabConcrete.Text = "Фибробетон";
             this.tabConcrete.UseVisualStyleBackColor = true;
@@ -708,7 +708,7 @@
             this.tabStrength.Location = new System.Drawing.Point(4, 22);
             this.tabStrength.Name = "tabStrength";
             this.tabStrength.Padding = new System.Windows.Forms.Padding(3);
-            this.tabStrength.Size = new System.Drawing.Size(1098, 307);
+            this.tabStrength.Size = new System.Drawing.Size(1098, 311);
             this.tabStrength.TabIndex = 2;
             this.tabStrength.Text = "Усилия";
             this.tabStrength.UseVisualStyleBackColor = true;
@@ -823,10 +823,10 @@
             this.tabRebar.Location = new System.Drawing.Point(4, 22);
             this.tabRebar.Name = "tabRebar";
             this.tabRebar.Padding = new System.Windows.Forms.Padding(3);
-            this.tabRebar.Size = new System.Drawing.Size(1098, 307);
+            this.tabRebar.Size = new System.Drawing.Size(1098, 311);
             this.tabRebar.TabIndex = 3;
             this.tabRebar.Text = "Армирование";
-            this.tabRebar.UseVisualStyleBackColor = true;
+            this.tabRebar.UseVisualStyleBackColor = true;            
             // 
             // pictureBox1
             // 
@@ -841,7 +841,7 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(21, 161);
+            this.label16.Location = new System.Drawing.Point(24, 213);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(119, 13);
             this.label16.TabIndex = 3;
@@ -857,10 +857,46 @@
             this.dataGridViewTextBoxColumn2,
             this.ClassRebar,
             this.TCondFactor});
-            this.gridTRebar.Location = new System.Drawing.Point(24, 177);
+            this.gridTRebar.Location = new System.Drawing.Point(24, 229);
             this.gridTRebar.Name = "gridTRebar";
-            this.gridTRebar.Size = new System.Drawing.Size(656, 102);
+            this.gridTRebar.Size = new System.Drawing.Size(656, 72);
             this.gridTRebar.TabIndex = 2;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            dataGridViewCellStyle7.Format = "N0";
+            dataGridViewCellStyle7.NullValue = "0";
+            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle7;
+            this.dataGridViewTextBoxColumn1.HeaderText = "D мм";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // Sw
+            // 
+            dataGridViewCellStyle8.Format = "N2";
+            dataGridViewCellStyle8.NullValue = "0";
+            this.Sw.DefaultCellStyle = dataGridViewCellStyle8;
+            this.Sw.HeaderText = "Шаг (Sw y)";
+            this.Sw.Name = "Sw";
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            dataGridViewCellStyle9.Format = "N0";
+            dataGridViewCellStyle9.NullValue = "0";
+            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle9;
+            this.dataGridViewTextBoxColumn2.HeaderText = "Шт";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            // 
+            // ClassRebar
+            // 
+            this.ClassRebar.HeaderText = "Класс";
+            this.ClassRebar.Name = "ClassRebar";
+            // 
+            // TCondFactor
+            // 
+            this.TCondFactor.HeaderText = "Коэф у р";
+            this.TCondFactor.Name = "TCondFactor";
+            this.TCondFactor.ToolTipText = "Коэффициент условий работы";
             // 
             // lblLongitudinalReinforcement
             // 
@@ -881,14 +917,48 @@
             this.a,
             this.RebarClass,
             this.CondFactor});
-            this.gridLRebar.Location = new System.Drawing.Point(24, 39);
+            this.gridLRebar.Location = new System.Drawing.Point(24, 36);
             this.gridLRebar.Name = "gridLRebar";
-            this.gridLRebar.Size = new System.Drawing.Size(656, 102);
+            this.gridLRebar.Size = new System.Drawing.Size(656, 159);
             this.gridLRebar.TabIndex = 0;
+            // 
+            // D
+            // 
+            dataGridViewCellStyle10.Format = "N2";
+            dataGridViewCellStyle10.NullValue = "0";
+            this.D.DefaultCellStyle = dataGridViewCellStyle10;
+            this.D.HeaderText = "D мм";
+            this.D.Name = "D";
+            this.D.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // Qty
+            // 
+            dataGridViewCellStyle11.Format = "N0";
+            dataGridViewCellStyle11.NullValue = "0";
+            this.Qty.DefaultCellStyle = dataGridViewCellStyle11;
+            this.Qty.HeaderText = "Шт";
+            this.Qty.Name = "Qty";
+            // 
+            // a
+            // 
+            this.a.HeaderText = "a, см";
+            this.a.Name = "a";
+            this.a.ToolTipText = "Расстояние до ц.т.";
+            // 
+            // RebarClass
+            // 
+            this.RebarClass.HeaderText = "Класс";
+            this.RebarClass.Name = "RebarClass";
+            // 
+            // CondFactor
+            // 
+            this.CondFactor.HeaderText = "Коэф у р";
+            this.CondFactor.Name = "CondFactor";
+            this.CondFactor.ToolTipText = "Коэффициент условий работы";
             // 
             // btnCalc
             // 
-            this.btnCalc.Location = new System.Drawing.Point(38, 17);
+            this.btnCalc.Location = new System.Drawing.Point(30, 51);
             this.btnCalc.Name = "btnCalc";
             this.btnCalc.Size = new System.Drawing.Size(168, 23);
             this.btnCalc.TabIndex = 1;
@@ -900,14 +970,14 @@
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(11, 396);
+            this.dataGridView1.Location = new System.Drawing.Point(29, 413);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(619, 150);
             this.dataGridView1.TabIndex = 4;
             // 
             // btnRectang
             // 
-            this.btnRectang.Location = new System.Drawing.Point(649, 396);
+            this.btnRectang.Location = new System.Drawing.Point(667, 413);
             this.btnRectang.Name = "btnRectang";
             this.btnRectang.Size = new System.Drawing.Size(123, 23);
             this.btnRectang.TabIndex = 5;
@@ -918,7 +988,7 @@
             // btnTSection
             // 
             this.btnTSection.Enabled = false;
-            this.btnTSection.Location = new System.Drawing.Point(649, 434);
+            this.btnTSection.Location = new System.Drawing.Point(667, 451);
             this.btnTSection.Name = "btnTSection";
             this.btnTSection.Size = new System.Drawing.Size(123, 23);
             this.btnTSection.TabIndex = 6;
@@ -928,7 +998,7 @@
             // 
             // btnIBeam
             // 
-            this.btnIBeam.Location = new System.Drawing.Point(649, 476);
+            this.btnIBeam.Location = new System.Drawing.Point(667, 493);
             this.btnIBeam.Name = "btnIBeam";
             this.btnIBeam.Size = new System.Drawing.Size(123, 23);
             this.btnIBeam.TabIndex = 7;
@@ -938,7 +1008,7 @@
             // 
             // btnRing
             // 
-            this.btnRing.Location = new System.Drawing.Point(649, 520);
+            this.btnRing.Location = new System.Drawing.Point(667, 537);
             this.btnRing.Name = "btnRing";
             this.btnRing.Size = new System.Drawing.Size(123, 23);
             this.btnRing.TabIndex = 8;
@@ -998,14 +1068,14 @@
             this.panelCalc.Controls.Add(this.btnCalcMNQ);
             this.panelCalc.Controls.Add(this.labelCalculation);
             this.panelCalc.Controls.Add(this.btnCalc);
-            this.panelCalc.Location = new System.Drawing.Point(855, 379);
+            this.panelCalc.Location = new System.Drawing.Point(855, 383);
             this.panelCalc.Name = "panelCalc";
-            this.panelCalc.Size = new System.Drawing.Size(258, 181);
+            this.panelCalc.Size = new System.Drawing.Size(258, 177);
             this.panelCalc.TabIndex = 14;
             // 
             // btnCalc_Deform
             // 
-            this.btnCalc_Deform.Location = new System.Drawing.Point(38, 104);
+            this.btnCalc_Deform.Location = new System.Drawing.Point(30, 138);
             this.btnCalc_Deform.Name = "btnCalc_Deform";
             this.btnCalc_Deform.Size = new System.Drawing.Size(169, 26);
             this.btnCalc_Deform.TabIndex = 9;
@@ -1015,7 +1085,7 @@
             // 
             // btnCalc_Q
             // 
-            this.btnCalc_Q.Location = new System.Drawing.Point(38, 75);
+            this.btnCalc_Q.Location = new System.Drawing.Point(30, 109);
             this.btnCalc_Q.Name = "btnCalc_Q";
             this.btnCalc_Q.Size = new System.Drawing.Size(169, 23);
             this.btnCalc_Q.TabIndex = 7;
@@ -1025,7 +1095,7 @@
             // 
             // btnCalcMNQ
             // 
-            this.btnCalcMNQ.Location = new System.Drawing.Point(38, 46);
+            this.btnCalcMNQ.Location = new System.Drawing.Point(30, 80);
             this.btnCalcMNQ.Name = "btnCalcMNQ";
             this.btnCalcMNQ.Size = new System.Drawing.Size(169, 23);
             this.btnCalcMNQ.TabIndex = 6;
@@ -1036,81 +1106,11 @@
             // labelCalculation
             // 
             this.labelCalculation.AutoSize = true;
-            this.labelCalculation.Location = new System.Drawing.Point(59, 1);
+            this.labelCalculation.Location = new System.Drawing.Point(51, 35);
             this.labelCalculation.Name = "labelCalculation";
             this.labelCalculation.Size = new System.Drawing.Size(45, 13);
             this.labelCalculation.TabIndex = 3;
             this.labelCalculation.Text = "Расчет:";
-            // 
-            // D
-            // 
-            dataGridViewCellStyle10.Format = "N2";
-            dataGridViewCellStyle10.NullValue = "0";
-            this.D.DefaultCellStyle = dataGridViewCellStyle10;
-            this.D.HeaderText = "D мм";
-            this.D.Name = "D";
-            this.D.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // Qty
-            // 
-            dataGridViewCellStyle11.Format = "N0";
-            dataGridViewCellStyle11.NullValue = "0";
-            this.Qty.DefaultCellStyle = dataGridViewCellStyle11;
-            this.Qty.HeaderText = "Шт";
-            this.Qty.Name = "Qty";
-            // 
-            // a
-            // 
-            this.a.HeaderText = "a, см";
-            this.a.Name = "a";
-            this.a.ToolTipText = "Расстояние до ц.т.";
-            // 
-            // RebarClass
-            // 
-            this.RebarClass.HeaderText = "Класс";
-            this.RebarClass.Name = "RebarClass";
-            // 
-            // CondFactor
-            // 
-            this.CondFactor.HeaderText = "Коэф у р";
-            this.CondFactor.Name = "CondFactor";
-            this.CondFactor.ToolTipText = "Коэффициент условий работы";
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            dataGridViewCellStyle7.Format = "N0";
-            dataGridViewCellStyle7.NullValue = "0";
-            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle7;
-            this.dataGridViewTextBoxColumn1.HeaderText = "D мм";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // Sw
-            // 
-            dataGridViewCellStyle8.Format = "N2";
-            dataGridViewCellStyle8.NullValue = "0";
-            this.Sw.DefaultCellStyle = dataGridViewCellStyle8;
-            this.Sw.HeaderText = "Шаг (Sw y)";
-            this.Sw.Name = "Sw";
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            dataGridViewCellStyle9.Format = "N0";
-            dataGridViewCellStyle9.NullValue = "0";
-            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle9;
-            this.dataGridViewTextBoxColumn2.HeaderText = "Шт";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            // 
-            // ClassRebar
-            // 
-            this.ClassRebar.HeaderText = "Класс";
-            this.ClassRebar.Name = "ClassRebar";
-            // 
-            // TCondFactor
-            // 
-            this.TCondFactor.HeaderText = "Коэф у р";
-            this.TCondFactor.Name = "TCondFactor";
-            this.TCondFactor.ToolTipText = "Коэффициент условий работы";
             // 
             // BSFiberMain
             // 

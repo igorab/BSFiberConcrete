@@ -89,6 +89,8 @@ namespace BSFiberConcrete
                 info = "Условие ξ <= ξR не выполнено! ";
                 info += "Требуется увеличить высоту элемента.";
             }
+
+            Mult = 10E-5d * Mult_arm(b, h0, _x, h, Rod.a, Rod.a1);
             
             if (!checkOK)
                 throw new Exception(info);
@@ -116,7 +118,7 @@ namespace BSFiberConcrete
 
         // для изгибаемых сталефибробетонных элементов таврового и двутаврового сечений с
         // полкой в сжатой зоне определяют
-        public (double, double) Mult_withoutArm(double _b, double _h0, double _x, double _h, double _a, double _a1)
+        public (double, double) Mult_WithArm(double _b, double _h0, double _x, double _h, double _a, double _a1)
         {
             double res_Mult = 0;
             double condition = -1;

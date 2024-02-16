@@ -209,7 +209,7 @@ namespace BSFiberConcrete
         [DisplayName("Упругопластический момент сопротивления")]
         public double Wpl { get; private set; }
         [DisplayName("Предельный момент сечения для изгибаемых сталефибробетонных элементов")]
-        public double Mult { get; private set; }
+        public double Mult { get; protected set; }
 
         public override Dictionary<string, double> GeomParams()
         {

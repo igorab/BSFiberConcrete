@@ -202,18 +202,18 @@ namespace BSFiberConcrete
         // Класс бетона
         public string BTCls { get; set; }
 
-        [DisplayName("Сопротивление на сжатие")]
+        [DisplayName("Сопротивление сталефибробетона осевому сжатию")]
         public double Rfbn { get; set; }
 
-        [DisplayName("Сопротивление на растяжение")]
+        [DisplayName("Сопротивление сталефибробетона осевому растяжению")]
         public double Rfbt { get; set; }
 
         // Rfbt2 Rfbt3 - остаточные сопротивления сталефибробетона растяжению (Таблица 2 СП 360)
 
-        [DisplayName("Сопротивление на растяжение")]
+        [DisplayName("Остаточное сопротивление на растяжение")]
         public double Rfbt2 { get; set; }
 
-        [DisplayName("Нормативное остаточное сопротивление осевому растяжению")]
+        [DisplayName("Остаточное сопротивление фибробетона осевому растяжению")]
         public double Rfbt3 { get; set; }
 
         // Расчетное сопротивление
@@ -255,6 +255,7 @@ namespace BSFiberConcrete
             return sigma_fbt;
         }
 
+        // Диаграмма деформирования  
         public double Eps_StD(double _e)
         {
             double sgm = 0;
@@ -271,15 +272,14 @@ namespace BSFiberConcrete
             return sgm;
         }
 
-        public BSMatFiber()
-        {            
+        public BSMatFiber() 
+        {
         }
 
         public BSMatFiber(double _Eb)
         {
             Efb = _Eb;
         }
-
     }
 
 }
