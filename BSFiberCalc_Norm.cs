@@ -239,10 +239,12 @@ namespace BSFiberConcrete
             (b, h) = (_t[0], _t[1]);
         }
 
+        protected double Rfbt_3() => (Yft != 0) ? (Rfbt3n / Yft) * Yb1* Yb5 : Rfbt3n * Yb1* Yb5;
+
         public override void Calculate()
         {
             //Расчетное остаточное остаточного сопротивления осевому растяжению
-            double Rfbt3 = (Rfbt3n / Yft) * Yb1 * Yb5;
+            Rfbt3 = Rfbt_3();
 
             //коэффициент, учитывающий неупругие свойства фибробетона растянутой зоны сечения
             double Y = 1.73d - 0.005d * (B - 15);

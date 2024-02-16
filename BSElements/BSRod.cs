@@ -33,6 +33,12 @@ namespace BSFiberConcrete
         // Площадь стержня
         public double As { get => Math.PI * Math.Pow(D, 2) / 4; }
 
+        // Расстояние до ц.т. растянутой арматуры
+        public double a { get; set; }
+
+        // Расстояние до ц.т. сжатой арматуры
+        public double a1 { get; set; }
+
         // Коэффициент упругости
         public double Nu { get; set; }
 

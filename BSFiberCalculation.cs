@@ -1,9 +1,7 @@
-﻿using CsvHelper;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Runtime.Remoting.Messaging;
 
 namespace BSFiberConcrete
 {    
@@ -31,9 +29,7 @@ namespace BSFiberConcrete
         void Calculate();
         Dictionary<string, double> Results();
     }
-
     
-
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Field | AttributeTargets.Property, Inherited = true)]
     class BSFiberCalculationAttribute : Attribute
     {
@@ -52,24 +48,12 @@ namespace BSFiberConcrete
 
         [DisplayName("Расчетные значения сопротивления  на сжатиие по СП63 кг/см2")]
         public double Rfbn { get; set; }
-
-        // растяжение
-        private double Rfbr3;        
-        protected double Rfbt3;
-
-        //TODO - арматуру - в отдельный класс 
-        // растяжение в арматуре
-        private double Rs;
-        // сжатие в арматуре
-        private double Rsc;
-
-        // Относительная деформация
-        private double Efbt;
-
-        private double As1;
-
+                
+        protected double Rfbt3;       
         private double m_Wpl;
         private double gamma;
+        
+        protected double omega = BSMatFiber.omega;
 
         [BSFiberCalculation(Name = "Коэффициент надежности для расчета по предельным состояниям первой группы при назначении класса сталефибробетона по прочности на растяжение")]
         protected double Yft;
@@ -102,11 +86,7 @@ namespace BSFiberConcrete
         {
             Rfbt3n = 30.58;
             B = 30;
-            Rfbn = 224;
-            Rfbr3 = 0;           
-            Rs = 0;            
-            Rsc = 0;
-            Efbt = 0;
+            Rfbn = 224;                      
             gamma = 1.73 - 0.005 * (B - 15);
 
             // коэффициенты
@@ -156,62 +136,12 @@ namespace BSFiberConcrete
             return new Dictionary<string, double>() {};
         }
 
-        public double Dzeta(double _x, double _h0) =>  _x / _h0;
-
         // упругопластический момент сопротивления сечения элемента для крайнего растянутого волокна
         private double Wpl(double _b, double _h) => _b * Math.Pow(_h, 2) * gamma / 6;  
 
         private double Mult() => Rfbt3n * m_Wpl;
-
-        //6.5
-        // предельный изгибающий момент, который может быть воспринят сечением элемента
-        public double Mult_arm(double _b, double _h0,  double _x, double _h, double _a, double _a1)
-        {
-            double res = Rfbn * _b * _x * (_h0 - 0.5 * _x) - Rfbt3 * _b * (_h - _x) * ((_h - _x)/2 - _a) + Rsc * As1* (_h0 - _a1) ;
-            return res;
-        }
-
-        // высота сжатой зоны
-        public double calc_x(double _bf1, double _hf1, double _bw, double _hw, double _bf, double _hf)
-        {
-            double res_x = Rfbt3 * (_bf1 * _hf1 + _bw * _hw + _bf * _hf) / (_bf1 * (Rfbr3 + Rfbn));
-
-            return res_x;
-        }
-
-        // для изгибаемых сталефибробетонных элементов таврового и двутаврового сечений с
-        // полкой в сжатой зоне определяют
-        public (double, double) Mult_withoutArm(double _b, double _h0, double _x, double _h, double _a, double _a1)
-        {
-            double res_Mult = 0;
-            double condition = -1;
-            double x = 0; // высота сжатой зоны
-
-            double bf1 = 0;
-            double hf1 = 0;
-            double bw = 0;
-            double hw = 0;
-            double bf = 0;
-            double hf = 0;
-
-            //если граница проходит в полке
-            if (condition < 0)
-            {
-                res_Mult = Rfbn * _b * _x * (_h0 - 0.5 * _x) - Rfbt3 * _b * (_h - _x) * ((_h - _x) / 2 - _a) + Rsc * As1 * (_h0 - _a1);
-                
-                x = Rfbr3 * (bf1*hf1 + bw * hw + bf*hf );
-            }
-            else
-            {
-                // если граница проходит в ребре
-                res_Mult = Rfbn * _b * _x * (_h0 - 0.5 * _x) - Rfbt3 * _b * (_h - _x) * ((_h - _x) / 2 - _a) + Rsc * As1 * (_h0 - _a1);
-
-                x = Rfbr3 * (bf1 * hf1 + bw * hw + bf * hf);
-            }
-
-            return (res_Mult, x);
-        }
-
+        
+               
         /// <summary>
         /// 6.1.13 Расчет внецентренно сжатых сталефибробетонных элементов
         /// </summary>
@@ -239,7 +169,7 @@ namespace BSFiberConcrete
             return 0;
         }
 
-        public static BSFiberCalculation construct(BeamSection _profile)
+        public static BSFiberCalculation construct(BeamSection _profile, bool _reinforcement = false)
         {
             switch (_profile)
             {
@@ -250,7 +180,10 @@ namespace BSFiberConcrete
                 case BeamSection.Ring:
                     return new BSFibCalc_Ring();
                 case BeamSection.Rect:
-                    return new BSFibCalc_Rect();
+                    if (_reinforcement)
+                        return new BSFiberCalc_RectRods();
+                    else
+                        return new BSFibCalc_Rect();
             }
 
             return new BSFiberCalculation();

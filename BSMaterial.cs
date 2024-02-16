@@ -99,8 +99,17 @@ namespace BSFiberConcrete
         /// </summary>
         public double Es { get; set; }
 
-        // Расчетное сопротивление
+        // Расчетное сопротивление растяжению кг/см2
         public double Rs { get; set; }
+
+        // Расчетное сопротивление сжатию кг/см2
+        public double Rsc { get; set; }
+
+        // Площадь растянутой арматуры
+        public double As { get; set; }
+
+        // Площадь сжатой арматуры
+        public double As1 { get; set; }
 
         /// <summary>
         /// коэффициент упругости
@@ -108,6 +117,11 @@ namespace BSFiberConcrete
         public double Nju_s { get; set; }
 
         public double Eps_s_ult { get; set; }
+
+        /// <summary>
+        /// Значения относительных деформаций арматуры для арматуры с физическим пределом текучести СП 63 п.п. 6.2.11
+        /// </summary>        
+        public double epsilon_s() => Es != 0 ? Rs / Es : 0; 
 
         public double e_s0 { get; set; }
         public double e_s2 { get; set; }
@@ -210,6 +224,10 @@ namespace BSFiberConcrete
         public double e_b2 { get; set; }
 
         public double Eb_red { get => (e_b1 !=0) ? Rb / e_b1 : 0; }
+
+        //характеристика сжатой зоны сталефибробетона, принимаемая для
+        // сталефибробетона из тяжелого бетона классов до В60 включительно равной 0,8
+        public static double omega = 0.8;
 
         // Диаграмма состояния
         public double Eps_StateDiagram(double _eps)
