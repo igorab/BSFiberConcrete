@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MathNet.Numerics.Distributions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,7 +29,7 @@ namespace BSFiberConcrete
 
         public double Dzeta_R() => omega / (1 + MatRod.epsilon_s() / MatFiber.e_b2);
 
-        private double Rfbr3 = 0;
+        public double h { get => hf + hw + h1f; }
 
         public void GetLTRebar(double[] _LRebar, double[] _TRebar)
         {
@@ -39,33 +40,14 @@ namespace BSFiberConcrete
             MatRod.Rs = 3567; // кг/см2
             MatRod.Rsc = 3567; // кг/см2
             MatRod.As = 4.52; // см2
-            MatRod.As1 = 4.52; // см2
+            MatRod.As1 = 2.262; // см2
             MatRod.Es = 2038735;
 
             Rod = new BSRod();
             Rod.a = 4;
             Rod.a1 = 4;
         }
-
-
-        public override void Calculate()
-        {
-            //общая высота
-            double h = hf + hw + h1f;
-
-            Calc_Pre();
-
-
-            Mult_WithArm(_h0 : h- Rod.a, _h:h, _a: Rod.a, _a1: Rod.a1);
-            
-            Calc_x();
-            
-
-            //граничная относительная высота сжатой зоны
-            double dzeta_R = Dzeta_R();
-
-        }
-
+        
         /// <summary>
         /// высота сжатой зоны 
         /// </summary>        
@@ -76,23 +58,43 @@ namespace BSFiberConcrete
             return res_x;
         }
 
-
         // для изгибаемых сталефибробетонных элементов таврового и двутаврового сечений с
         // полкой в сжатой зоне определяют
-        public (double, double) Mult_WithArm( double _h0, double _h, double _a, double _a1)
+        public (double, double) Calc_Mult( double _h0, double _h, double _a, double _a1)
         {
             double res_Mult;
             double condition = -1;
-            double x; // высота сжатой зоны
-           
+            double _x; // высота сжатой зоны
+
+            _x = Calc_x();
+
+            bool checkOK;
+            string info;
+
+            double dzeta = Dzeta(_x, _h0);
+
+            //граничная относительная высота сжатой зоны
+            double dzeta_R = Dzeta_R();
+
+            if (dzeta <= dzeta_R)
+            {
+                checkOK = true;
+                info = "Условие ξ <= ξR выполнено ";
+            }
+            else
+            {
+                checkOK = false;
+                info = "Условие ξ <= ξR не выполнено! ";
+                info += "Требуется увеличить высоту элемента.";
+            }
+
+            condition = (MatRod.Rs * MatRod.As + Rfbt3 * (bf * hf + bw * hw)) - (MatRod.Rsc * MatRod.As1 + Rfb * b1f * h1f);
 
             // расчет по случаю А
-            if (condition < 0)
-            {
-                x = Rfbr3 * (b1f * h1f + bw * hw + bf * hf);
-
-                res_Mult = Rfb * b1f * x * (_h0 - 0.5 * x) - 
-                           Rfbt3 * (bf * hf * (0.5 * hf - _a)  + bw * hw * (0.5 * hw + hf -_a) +  b1f * (h1f - x) * (_h0 - 0.5 * (h1f + x))) +
+            if (condition <= 0)
+            {                
+                res_Mult = Rfb * b1f * _x * (_h0 - 0.5 * _x) - 
+                           Rfbt3 * (bf * hf * (0.5 * hf - _a)  + bw * hw * (0.5 * hw + hf -_a) +  b1f * (h1f - _x) * (_h0 - 0.5 * (h1f + _x))) +
                            MatRod.Rsc * MatRod.As1 * (_h0 - _a1);
 
                 
@@ -100,18 +102,29 @@ namespace BSFiberConcrete
             else // Расчет по случаю Б
             {
 
-                x = (MatRod.Rs * MatRod.As + Rfbt3 * (b1f * h1f + bw * hw + bf * hf) - Rfb * h1f * (b1f - bw) - MatRod.Rsc * MatRod.As1) / (bw * (Rfbt3 + Rfb)) ;
+                _x = (MatRod.Rs * MatRod.As + Rfbt3 * (b1f * h1f + bw * hw + bf * hf) - Rfb * h1f * (b1f - bw) - MatRod.Rsc * MatRod.As1) / (bw * (Rfbt3 + Rfb)) ;
 
                 
-                res_Mult = Rfb * (b1f * h1f * (_h0 - 0.5 * h1f) + bw * (x-h1f) * (_h0 - 0.5*x - 0.5 * h1f) )
-                          - Rfbt3 * (bf * hf * (0.5 * hf -_a) + bw * (_h - hf - x) * (_h0 - 0.5 * (_h + x - hf))) 
-                          + MatRod.Rsc * MatRod.As1 * (_h0 - _a1);
-
-                
+                res_Mult = Rfb * (b1f * h1f * (_h0 - 0.5 * h1f) + bw * (_x-h1f) * (_h0 - 0.5*_x - 0.5 * h1f) )
+                          - Rfbt3 * (bf * hf * (0.5 * hf -_a) + bw * (_h - hf - _x) * (_h0 - 0.5 * (_h + _x - hf))) 
+                          + MatRod.Rsc * MatRod.As1 * (_h0 - _a1);                
             }
 
-            return (res_Mult, x);
+            if (!checkOK)
+                throw new Exception(info);
+
+            return (res_Mult * 1e-5, _x);
         }
-        
+
+        /// <summary>
+        /// расчет прочности двутавра с рабочей арматурой
+        /// </summary>
+        public override void Calculate()
+        {            
+            Calc_Pre();
+
+            (Mult, x) = Calc_Mult(_h0: h - Rod.a, _h: h, _a: Rod.a, _a1: Rod.a1);
+
+        }
     }
 }

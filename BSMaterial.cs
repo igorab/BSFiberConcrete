@@ -221,6 +221,9 @@ namespace BSFiberConcrete
 
         public double e_b1_red { get; set; }
         public double e_b1 { get; set; }
+
+        // относительные деформации сжатого сталефибробетона при напряжениях R/b,
+        // принимаемые по указаниям СП 63.13330 как для обычного бетона
         public double e_b2 { get; set; }
 
         public double Eb_red { get => (e_b1 !=0) ? Rb / e_b1 : 0; }

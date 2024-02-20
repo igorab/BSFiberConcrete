@@ -65,11 +65,7 @@ namespace BSFiberConcrete
             double _x = (MatRod.Rs * MatRod.As - MatRod.Rsc * MatRod.As1 + Rfbt3 * b * h ) / ((Rfbn + Rfbt3) * b);
 
             double dzeta = Dzeta(_x, h0);
-
-            //относительные деформации сжатого сталефибробетона при напряжениях R/b,
-            // принимаемые по указаниям СП 63.13330 как для обычного бетона
-            double ε_fb2 = 0.0035;
-
+                       
             //граничная относительная высота сжатой зоны
             double dzeta_R = Dzeta_R();
 
