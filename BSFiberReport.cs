@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Windows.Forms;
+using BSFiberConcrete.Properties;
+using System.Drawing;
 
 namespace BSFiberConcrete
 {    
@@ -49,6 +51,19 @@ namespace BSFiberConcrete
             string beamDescr = typeof(BeamSection).GetCustomAttribute<DescriptionAttribute > (true).Description;
             string beamSection = BSHelper.EnumDescription(m_BeamSection);
             w.WriteLine($"<H2>{beamDescr}: {beamSection}</H2>");
+
+            //
+            object pic = new object();
+            if (pic != null )
+            {
+                //insert pic
+                var pc = global::BSFiberConcrete.Properties.Resources.IBeamArm;
+
+                string path = Path.Combine($"C:\\Proj\\BSFiberConcrete\\Resources", "IBeam.PNG");
+                //var s=  "data:image/png;base64," + pc, Base64FormattingOptions.None);
+
+                w.WriteLine($"<table><tr><td> <img src={MakeImageSrcData(path)}/> </td></tr> </table>");
+            }
 
             if (m_Beam != null)
             {
@@ -158,14 +173,37 @@ namespace BSFiberConcrete
                 w.WriteLine("<th>Расчет не выполнен</th>");
             }
         }
-        private string MakeImageSrcData(string filename)
+        private string MakeImageSrcData(string _filename)
         {
-            if (filename == "") return "";
+            if (_filename == "") return "";
 
-            FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read);
-            byte[] filebytes = new byte[fs.Length];
-            fs.Read(filebytes, 0, Convert.ToInt32(fs.Length));
-            return "data:image/png;base64," + Convert.ToBase64String(filebytes, Base64FormattingOptions.None);
+            string _img = "";
+
+            using (Image img = Image.FromFile(_filename))
+            {
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    img.Save(ms, img.RawFormat);
+                    byte[] imgBytes = ms.ToArray();
+                    
+                    _img = @"<img src= ""data:image/"
+                       + Path.GetExtension(_filename).Replace(".", "").ToLower()
+                       + ";base64,"
+                       + Convert.ToBase64String(imgBytes) + @""""
+                       + @" alt = ""Loading Image"">";
+
+                }
+            }
+
+
+            //string _img = @"<img src= ""data:image/"
+            //            + Path.GetExtension(_filename).Replace(".", "").ToLower()
+            //            + ";base64,"
+            //            + Convert.ToBase64String(File.ReadAllBytes(_filename)) + @"""" 
+            //            + @" alt = ""Loading Image"">";
+
+            return _img;
+
         }
 
         protected virtual void Footer(StreamWriter w)

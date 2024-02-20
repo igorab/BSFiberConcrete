@@ -149,6 +149,10 @@ namespace BSFiberConcrete
             m_Beam.Add("Коэффициет расчетной длины", coeflgth);
         }
 
+        /// <summary>
+        /// Передать данные по армированию
+        /// </summary>
+        /// <param name="_bsCalc"></param>
         private void InitRebar(BSFiberCalculation _bsCalc)
         {
             if (_bsCalc is BSFiberCalc_RectRods)
@@ -156,13 +160,18 @@ namespace BSFiberConcrete
                 BSFiberCalc_RectRods _bsCalcRods = (BSFiberCalc_RectRods)_bsCalc;
 
                 InitLRebar(out double[] _l_rebar);
-
                 InitTRebar(out double[] _t_rebar);
+                _bsCalcRods.GetLTRebar(_l_rebar, _t_rebar);
+            }
+            else if (_bsCalc is BSFiberCalc_IBeamRods)
+            {
+                BSFiberCalc_IBeamRods _bsCalcRods = (BSFiberCalc_IBeamRods)_bsCalc;
 
+                InitLRebar(out double[] _l_rebar);
+                InitTRebar(out double[] _t_rebar);
                 _bsCalcRods.GetLTRebar(_l_rebar, _t_rebar);
             }
         }
-
         
         private void btnCalc_Click(object sender, EventArgs e)
         {

@@ -21,30 +21,30 @@ namespace BSFiberConcrete
     {
         // размеры:
         [DisplayName("Ширина нижней полки двутавра")]
-        public double bf { get; private set; }
+        public double bf { get; protected set; }
         [DisplayName("Высота нижней полки двутавра")]
-        public double hf { get; private set; }
+        public double hf { get; protected set; }
         [DisplayName("Высота стенки двутавра")]
-        public double hw { get; private set; }
+        public double hw { get; protected set; }
         [DisplayName("Ширина стенки двутавра")]
-        public double bw { get; private set; }
+        public double bw { get; protected set; }
         [DisplayName("Ширина верхней полки двутавра")]
-        public double b1f { get; private set; }
+        public double b1f { get; protected set; }
         [DisplayName("Высота верхней полки двутавра")]
-        public double h1f { get; private set; }
+        public double h1f { get; protected set; }
 
         // физ. характеристики бетона
         [DisplayName("Расчетные значения сопротивления на сжатиие по СП63 кг/см2")]
-        public new double Rfbn { get; private set; }
+        public new double Rfbn { get; protected set; }
         [DisplayName("Значения коэффициента надежности по бетону при сжатии СП63")]
-        public double Yb { get; private set; }
+        public double Yb { get; protected set; }
 
         // Результаты
         [DisplayName("Высота сжатой зоны, см")]
-        public double x { get; private set; }
+        public double x { get; protected set; }
 
         [DisplayName("Предельный момент сечения, т*м")]
-        public double Mult { get; private set; }
+        public double Mult { get; protected set; }
 
         public override void GetParams(double[] _t)
         {
@@ -70,14 +70,18 @@ namespace BSFiberConcrete
             (bf, hf, hw, bw, b1f, h1f) = (_t[0], _t[1], _t[2], _t[3], _t[4], _t[5]);
         }
 
-        public override void Calculate()
-        {
-            //общая высота
-            double h = hf + hw + h1f;
-
+        protected void Calc_Pre()
+        {            
+            //Расчетное остаточное остаточного сопротивления осевому растяжению
             Rfbt3 = (Rfbt3n / Yft) * Yb1 * Yb5;
 
-            double Rfb = Rfbn / Yb * Yb1 * Yb2 * Yb3 * Yb5;
+            //Расчетные значения сопротивления  на сжатиие по B30 СП63
+            Rfb = Rfbn / Yb * Yb1 * Yb2 * Yb3 * Yb5;
+        }
+
+        public override void Calculate()
+        {
+            Calc_Pre();
 
             Action calc_a = delegate
             {

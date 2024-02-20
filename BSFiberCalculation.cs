@@ -40,17 +40,22 @@ namespace BSFiberConcrete
     [DisplayName("Сталефибробетонные конструкции без предварительного напряжения арматуры")]
     public class BSFiberCalculation : IBSFiberCalculation
     {
+        public BSMatFiber MatFiber { get; set; }
+
         [DisplayName("Нормативное остаточное сопротивления осевому растяжению кг/см2")]
         public double Rfbt3n { get; set; }
 
         [DisplayName("Числовая характеристика класса фибробетона по прочности на осевое сжатие")]
         public double B { get; set; }
 
+        [DisplayName("Расчетные значения сопротивления  на сжатиие по B30 СП63")]
+        public double Rfb { get; set; }
+
         [DisplayName("Нормативное значение сопротивления сталефибробетона на осевое сжатие по СП63 кг/см2")]
         public double Rfbn { get; set; }
-        
-        // Остаточное сопротивление сталефибробетона осевому растяжению 
-        protected double Rfbt3; 
+
+        [DisplayName("Остаточное сопротивление сталефибробетона осевому растяжению")]
+        public double Rfbt3 { get; set; }
         
         private double m_Wpl;
         private double gamma;
@@ -96,7 +101,11 @@ namespace BSFiberConcrete
             Yb1 = 0.9;
             Yb2 = 0.9;
             Yb3 = 1;
-            Yb5 = 1;            
+            Yb5 = 1;
+
+            MatFiber = new BSMatFiber();
+            MatFiber.e_b2 = 0.0035;
+
         }
 
         /// <summary>
@@ -177,8 +186,11 @@ namespace BSFiberConcrete
             {
                 case BeamSection.TBeam:
                     return new BSFibCalc_TBeam();
-                case BeamSection.IBeam: 
-                    return new BSFibCalc_IBeam();
+                case BeamSection.IBeam:
+                    if (_reinforcement)
+                        return new BSFiberCalc_IBeamRods();
+                    else
+                        return new BSFibCalc_IBeam();
                 case BeamSection.Ring:
                     return new BSFibCalc_Ring();
                 case BeamSection.Rect:

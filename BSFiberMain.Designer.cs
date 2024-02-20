@@ -132,6 +132,8 @@
             this.btnCalc_Q = new System.Windows.Forms.Button();
             this.btnCalcMNQ = new System.Windows.Forms.Button();
             this.labelCalculation = new System.Windows.Forms.Label();
+            this.flowLayoutPanelArea = new System.Windows.Forms.FlowLayoutPanel();
+            this.flowLayoutBtns = new System.Windows.Forms.FlowLayoutPanel();
             this.tabGeneral.SuspendLayout();
             this.tabParams.SuspendLayout();
             this.groupBoxResult.SuspendLayout();
@@ -160,6 +162,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.panelCalc.SuspendLayout();
+            this.flowLayoutPanelArea.SuspendLayout();
+            this.flowLayoutBtns.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabGeneral
@@ -826,7 +830,7 @@
             this.tabRebar.Size = new System.Drawing.Size(1098, 311);
             this.tabRebar.TabIndex = 3;
             this.tabRebar.Text = "Армирование";
-            this.tabRebar.UseVisualStyleBackColor = true;            
+            this.tabRebar.UseVisualStyleBackColor = true;
             // 
             // pictureBox1
             // 
@@ -970,14 +974,14 @@
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(29, 413);
+            this.dataGridView1.Location = new System.Drawing.Point(3, 3);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(619, 150);
+            this.dataGridView1.Size = new System.Drawing.Size(649, 161);
             this.dataGridView1.TabIndex = 4;
             // 
             // btnRectang
             // 
-            this.btnRectang.Location = new System.Drawing.Point(667, 413);
+            this.btnRectang.Location = new System.Drawing.Point(3, 3);
             this.btnRectang.Name = "btnRectang";
             this.btnRectang.Size = new System.Drawing.Size(123, 23);
             this.btnRectang.TabIndex = 5;
@@ -988,7 +992,7 @@
             // btnTSection
             // 
             this.btnTSection.Enabled = false;
-            this.btnTSection.Location = new System.Drawing.Point(667, 451);
+            this.btnTSection.Location = new System.Drawing.Point(3, 32);
             this.btnTSection.Name = "btnTSection";
             this.btnTSection.Size = new System.Drawing.Size(123, 23);
             this.btnTSection.TabIndex = 6;
@@ -998,7 +1002,7 @@
             // 
             // btnIBeam
             // 
-            this.btnIBeam.Location = new System.Drawing.Point(667, 493);
+            this.btnIBeam.Location = new System.Drawing.Point(3, 61);
             this.btnIBeam.Name = "btnIBeam";
             this.btnIBeam.Size = new System.Drawing.Size(123, 23);
             this.btnIBeam.TabIndex = 7;
@@ -1008,7 +1012,7 @@
             // 
             // btnRing
             // 
-            this.btnRing.Location = new System.Drawing.Point(667, 537);
+            this.btnRing.Location = new System.Drawing.Point(3, 90);
             this.btnRing.Name = "btnRing";
             this.btnRing.Size = new System.Drawing.Size(123, 23);
             this.btnRing.TabIndex = 8;
@@ -1068,9 +1072,9 @@
             this.panelCalc.Controls.Add(this.btnCalcMNQ);
             this.panelCalc.Controls.Add(this.labelCalculation);
             this.panelCalc.Controls.Add(this.btnCalc);
-            this.panelCalc.Location = new System.Drawing.Point(855, 383);
+            this.panelCalc.Location = new System.Drawing.Point(885, 383);
             this.panelCalc.Name = "panelCalc";
-            this.panelCalc.Size = new System.Drawing.Size(258, 177);
+            this.panelCalc.Size = new System.Drawing.Size(228, 197);
             this.panelCalc.TabIndex = 14;
             // 
             // btnCalc_Deform
@@ -1112,18 +1116,34 @@
             this.labelCalculation.TabIndex = 3;
             this.labelCalculation.Text = "Расчет:";
             // 
+            // flowLayoutPanelArea
+            // 
+            this.flowLayoutPanelArea.Controls.Add(this.dataGridView1);
+            this.flowLayoutPanelArea.Location = new System.Drawing.Point(15, 383);
+            this.flowLayoutPanelArea.Name = "flowLayoutPanelArea";
+            this.flowLayoutPanelArea.Size = new System.Drawing.Size(652, 197);
+            this.flowLayoutPanelArea.TabIndex = 15;
+            // 
+            // flowLayoutBtns
+            // 
+            this.flowLayoutBtns.Controls.Add(this.btnRectang);
+            this.flowLayoutBtns.Controls.Add(this.btnTSection);
+            this.flowLayoutBtns.Controls.Add(this.btnIBeam);
+            this.flowLayoutBtns.Controls.Add(this.btnRing);
+            this.flowLayoutBtns.Location = new System.Drawing.Point(673, 383);
+            this.flowLayoutBtns.Name = "flowLayoutBtns";
+            this.flowLayoutBtns.Size = new System.Drawing.Size(206, 197);
+            this.flowLayoutBtns.TabIndex = 16;
+            // 
             // BSFiberMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1161, 597);
+            this.Controls.Add(this.flowLayoutPanelArea);
             this.Controls.Add(this.panelCalc);
-            this.Controls.Add(this.btnRing);
-            this.Controls.Add(this.btnIBeam);
-            this.Controls.Add(this.btnTSection);
-            this.Controls.Add(this.btnRectang);
-            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.tabGeneral);
+            this.Controls.Add(this.flowLayoutBtns);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "BSFiberMain";
@@ -1167,6 +1187,8 @@
             this.menuStrip1.PerformLayout();
             this.panelCalc.ResumeLayout(false);
             this.panelCalc.PerformLayout();
+            this.flowLayoutPanelArea.ResumeLayout(false);
+            this.flowLayoutBtns.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1266,6 +1288,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn a;
         private System.Windows.Forms.DataGridViewTextBoxColumn RebarClass;
         private System.Windows.Forms.DataGridViewTextBoxColumn CondFactor;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelArea;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutBtns;
     }
 }
 

@@ -6,14 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace BSFiberConcrete
-{
-    /// <summary>
-    ///  Расчет исгибаемых элементов с рабочей арматурой
-    /// </summary>
-    internal class BSFiberCalc_NormRods
-    {
-    }
-
+{   
     /// <summary>
     ///  Расчет изгибаемого прямоугольного элемента с рабочей арматурой
     /// </summary>
@@ -29,12 +22,15 @@ namespace BSFiberConcrete
         // Стержни (итого)
         private BSRod  Rod;
 
+        public double[] LRebar { get => m_LRebar; set => m_LRebar = value; }
+        public double[] TRebar { get => m_TRebar; set => m_TRebar = value; }
+
         public double Dzeta(double _x, double _h0) => (_h0 != 0) ? _x / _h0 : 0;
 
         public void GetLTRebar(double[]  _LRebar, double[] _TRebar)
         {
-            m_LRebar = _LRebar;
-            m_TRebar = _TRebar;
+            LRebar = _LRebar;
+            TRebar = _TRebar;
 
             MatRod = new BSMatRod();
             MatRod.Rs = 3567; // кг/см2
@@ -56,6 +52,8 @@ namespace BSFiberConcrete
             return res;
         }
 
+        public double Dzeta_R() => omega / (1 + MatRod.epsilon_s() / MatFiber.e_b2);
+
         public override void Calculate()
         {
             //Расчетное остаточное остаточного сопротивления осевому растяжению
@@ -73,7 +71,7 @@ namespace BSFiberConcrete
             double ε_fb2 = 0.0035;
 
             //граничная относительная высота сжатой зоны
-            double dzeta_R = omega / (1 + MatRod.epsilon_s() / ε_fb2);
+            double dzeta_R = Dzeta_R();
 
             bool checkOK;
             string info;
@@ -96,58 +94,5 @@ namespace BSFiberConcrete
                 throw new Exception(info);
         }        
     }
-
-
-    public class  BSFiberCalc_IBeamRods: BSFibCalc_IBeam
-    {
-
-        BSMatRod MatRod = new BSMatRod();
-        BSRod Rod = new BSRod();
-
-
-        double Rfbr3 = 0; // ???
-
-        // высота сжатой зоны
-        public double calc_x(double _bf1, double _hf1, double _bw, double _hw, double _bf, double _hf)
-        {
-            double res_x = Rfbt3 * (_bf1 * _hf1 + _bw * _hw + _bf * _hf) / (_bf1 * (Rfbr3 + Rfbn));
-
-            return res_x;
-        }
-
-
-        // для изгибаемых сталефибробетонных элементов таврового и двутаврового сечений с
-        // полкой в сжатой зоне определяют
-        public (double, double) Mult_WithArm(double _b, double _h0, double _x, double _h, double _a, double _a1)
-        {
-            double res_Mult = 0;
-            double condition = -1;
-            double x = 0; // высота сжатой зоны
-
-            double bf1 = 0;
-            double hf1 = 0;
-            double bw = 0;
-            double hw = 0;
-            double bf = 0;
-            double hf = 0;
-
-
-            //если граница проходит в полке
-            if (condition < 0)
-            {
-                res_Mult = Rfbn * _b * _x * (_h0 - 0.5 * _x) - Rfbt3 * _b * (_h - _x) * ((_h - _x) / 2 - _a) + MatRod.Rsc * MatRod.As1 * (_h0 - _a1);
-
-                x = Rfbr3 * (bf1 * hf1 + bw * hw + bf * hf);
-            }
-            else
-            {
-                // если граница проходит в ребре
-                res_Mult = Rfbn * _b * _x * (_h0 - 0.5 * _x) - Rfbt3 * _b * (_h - _x) * ((_h - _x) / 2 - _a) + MatRod.Rsc * MatRod.As1 * (_h0 - _a1);
-
-                x = Rfbr3 * (bf1 * hf1 + bw * hw + bf * hf);
-            }
-
-            return (res_Mult, x);
-        }
-    }
+    
 }
