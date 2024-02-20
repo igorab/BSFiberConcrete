@@ -169,7 +169,20 @@ namespace BSFiberConcrete
 
                 InitLRebar(out double[] _l_rebar);
                 InitTRebar(out double[] _t_rebar);
-                _bsCalcRods.GetLTRebar(_l_rebar, _t_rebar);
+                /*
+                MatRod.Rs = ; // кг/см2
+                MatRod.Rsc = ; // кг/см2
+                MatRod.As = ; // см2
+                MatRod.As1 =; // см2
+                MatRod.Es = ;
+
+                Rod = new BSRod();
+                Rod.a = ;
+                Rod.a1 = ;
+                */
+
+                double[] matRod = new double[] { 3567, 3567, (double)numAs.Value, (double)numAs1.Value, 2038735, 4, 4 };
+                _bsCalcRods.GetLTRebar(_l_rebar, _t_rebar, matRod);
             }
         }
         

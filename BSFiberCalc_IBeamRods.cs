@@ -31,21 +31,21 @@ namespace BSFiberConcrete
 
         public double h { get => hf + hw + h1f; }
 
-        public void GetLTRebar(double[] _LRebar, double[] _TRebar)
+        public void GetLTRebar(double[] _LRebar, double[] _TRebar, double[] _MatRod)
         {
             LRebar = _LRebar;
             TRebar = _TRebar;
 
             MatRod = new BSMatRod();
-            MatRod.Rs = 3567; // кг/см2
-            MatRod.Rsc = 3567; // кг/см2
-            MatRod.As = 4.52; // см2
-            MatRod.As1 = 2.262; // см2
+            MatRod.Rs = _MatRod[0]; // кг/см2
+            MatRod.Rsc = _MatRod[1]; // кг/см2
+            MatRod.As = _MatRod[2]; // см2
+            MatRod.As1 = _MatRod[3]; // см2
             MatRod.Es = 2038735;
 
             Rod = new BSRod();
-            Rod.a = 4;
-            Rod.a1 = 4;
+            Rod.a = _MatRod[4];
+            Rod.a1 = _MatRod[5];
         }
         
         /// <summary>
