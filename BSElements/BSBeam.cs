@@ -71,7 +71,7 @@ namespace BSFiberConcrete
         public BSMatRod MatRod { get { return Rods?.First().MatRod; } }
 
         // Материал балки (фибробетон, переделать на универсальный)
-        public BSMatFiber BSMat { get; set; }
+        public BSMatFiber Mat { get; set; }
 
         // Координаты Ц.Т.
         public double Zfb_X { get; set; }

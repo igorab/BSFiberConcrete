@@ -543,7 +543,7 @@ namespace BSFiberConcrete
                     double cgY = elY + dH / 2.0 - Y0;
 
                     BSElement bsElement = new BSElement(num, cgX, cgY) {A = dB, B = dH };
-                    bsElement.E = beam.BSMat.Eb; 
+                    bsElement.E = beam.Mat.Eb; 
                     bs.Add(bsElement);
 
                     elY += dH;

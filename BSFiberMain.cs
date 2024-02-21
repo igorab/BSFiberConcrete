@@ -731,7 +731,7 @@ namespace BSFiberConcrete
                 {
                     Length = c_L,
                     Rods = rods,
-                    BSMat = material
+                    Mat = material
                 };
 
                 double[] NM = new double[] { c_Y_N, c_X_M };
