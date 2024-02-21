@@ -36,16 +36,17 @@ namespace BSFiberConcrete
             LRebar = _LRebar;
             TRebar = _TRebar;
 
+            int idx = -1;
             MatRod = new BSMatRod();
-            MatRod.Rs = _MatRod[0]; // кг/см2
-            MatRod.Rsc = _MatRod[1]; // кг/см2
-            MatRod.As = _MatRod[2]; // см2
-            MatRod.As1 = _MatRod[3]; // см2
-            MatRod.Es = 2038735;
+            MatRod.Rs = _MatRod[++idx]; // кг/см2
+            MatRod.Rsc = _MatRod[++idx]; // кг/см2
+            MatRod.As = _MatRod[++idx]; // см2
+            MatRod.As1 = _MatRod[++idx]; // см2
+            MatRod.Es = _MatRod[++idx];
 
             Rod = new BSRod();
-            Rod.a = _MatRod[4];
-            Rod.a1 = _MatRod[5];
+            Rod.a = _MatRod[++idx];
+            Rod.a1 = _MatRod[++idx];
         }
         
         /// <summary>

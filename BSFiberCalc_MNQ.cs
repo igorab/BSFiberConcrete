@@ -11,7 +11,48 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace BSFiberConcrete
-{    
+{
+    /// <summary>
+    ///  Расчет прочности кольцевых сеченний колонн с кобинированным армированием
+    /// </summary>
+    public class BSFiberCalc_MNQ_Ring_Rods : BSFiberCalc_MNQ_Ring
+    {        
+
+        public override void Calculate()
+        {
+            BSMatRod matRod =  beam.MatRod;
+
+            base.Calculate();
+
+            double As_tot = matRod.As + matRod.As1;
+
+            double Ar = beam.Area();
+
+            // относительная площадь сжатой зоны бетона по ф. (6.41)
+            double dzeta_cir = (N + matRod.Rs * As_tot + Rfbt3 * Ar) / ((matRod.Rsc + 1.7* matRod.Rs) * As_tot +  (Rfb + Rfbt3)*Ar );
+
+            // Коэфициент по п8.1.5 Сп63
+            double k_s = 0.7;
+
+            //коэффициент, учитывающий влияние длительности действия нагрузки п8.1.5 Сп63
+            double fi_1 = 2.0;
+
+            // относительное значение эксцентриситета продольной силы Сп63 п8.1.5
+            //относительное значение эксцентриситета продольной силы
+            delta_e = Delta_e(m_Fiber.e0 / beam.r2);
+
+            // Коэфициент ф.(6.26)
+            k_b = K_b(fi1, delta_e);
+
+            // Начальный модуль упругости бетона-матрицы B30 СП63
+            Eb = beam.BSMat.Eb;
+
+            Efb = beam.BSMat.Efb;
+        }
+    }
+
+
+
     public class BSFiberCalc_MNQ_Ring : BSFiberCalc_MNQ
     {
         public BSBeam_Ring beam { get; set; }
@@ -148,7 +189,6 @@ namespace BSFiberConcrete
         [DisplayName("Предельная продольная сила"), Description("Res")]
         public double N_ult { get; protected set; }
 
-
         public Rebar Rebar {get; set;}
         public bool UseRebar { get; set; }
         public bool Fissure{ get; set; }
@@ -156,7 +196,12 @@ namespace BSFiberConcrete
 
         protected Fiber m_Fiber;
 
+        //Нормативное остаточное сопротивления осевому растяжению кг/см2 табл.2
         protected double Rfbt3n;
+
+        //Расчетное остаточное остаточного сопротивления осевому растяжению 
+        protected double Rfbt3;
+
         protected double B;
        
         protected double Rfbn;
@@ -187,6 +232,26 @@ namespace BSFiberConcrete
         protected double[] t_rebar;
 
         protected Dictionary<string, double> m_Efforts = new Dictionary<string, double>();
+
+        public double Delta_e(double _d_e)
+        {
+            double d_e;
+
+            if (_d_e <= 0.15)
+            {
+                d_e = 0.15;
+            }
+            else if (_d_e >= 1.5)
+            {
+                d_e = 1.5;
+            }
+            else
+                d_e = _d_e;
+
+            return d_e;
+        }
+
+        public double K_b(double _fi1, double _delta_e) => 0.15 / (_fi1 * (0.3d + _delta_e));
 
         public static BSFiberCalc_MNQ Construct(BeamSection _BeamSection)
         {
@@ -247,12 +312,14 @@ namespace BSFiberConcrete
         {
             m_Efforts = _efforts;
 
+            double Mx = m_Efforts["Mx"];
+            //Момент от действия полной нагрузки
+            M1 = m_Efforts["My"];
             //Продольное усилие кг
             N = m_Efforts["N"];
             // Поперечная сила
             Q = m_Efforts["Q"];
-            //Момент от действия полной нагрузки
-            M1 = m_Efforts["M"];
+           
             //Момент от действия постянных и длительных нагрузок нагрузок
             Ml1 = m_Efforts["Ml"];
             // Эксцентриситет приложения N

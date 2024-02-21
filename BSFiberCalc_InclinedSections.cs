@@ -18,10 +18,10 @@ namespace BSFiberConcrete
     public class BSFiberCalc_MNQ_Rect : BSFiberCalc_MNQ
     {
         public BSBeam_Rect beam { get; set; }
-        
+
         private double y_t;
 
-        private Dictionary<string, double> m_Result;  
+        private Dictionary<string, double> m_Result;
 
         public BSFiberCalc_MNQ_Rect()
         {
@@ -40,21 +40,17 @@ namespace BSFiberConcrete
             y_t = beam.y_t();
         }
 
+       
         private void Calculate0()
         {
             //Коэффициент, учитывающий влияние длительности действия нагрузки, определяют по формуле (6.27)
             fi1 = (M1 != 0) ? 1 + Ml1 / M1 : 1.0;
 
             //относительное значение эксцентриситета продольной силы
-            delta_e = m_Fiber.e0 / beam.h;
-
-            if (delta_e <= 0.15)
-            { delta_e = 0.15; }
-            else if (delta_e >= 1.5)
-            { delta_e = 1.5; }
-
+            delta_e = Delta_e( m_Fiber.e0 / beam.h );
+            
             // Коэфициент ф.(6.26)
-            k_b = 0.15 / (fi1 * (0.3d + delta_e));
+            k_b = K_b(fi1, delta_e);
 
             // Модуль упругости сталефибробетона п.п. (5.2.7)
             Efb = m_Fiber.Eb * (1 - m_Fiber.mu_fv) + m_Fiber.Ef * m_Fiber.mu_fv;

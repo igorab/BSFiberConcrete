@@ -15,6 +15,7 @@ namespace BSFiberConcrete
         public double Ef { get; set; }
         public double Eb { get; set; }
         public double mu_fv { get; set; }
+        public double omega { get; set; }
     }
 
     /// <summary>
@@ -23,7 +24,9 @@ namespace BSFiberConcrete
     public class Rebar
     {
         public string ID { get; set; }
-        public double Rs { get; set; }    
+        public double Rs { get; set; }
+        public double Rsc { get; set;}
+        public double Es { get; set; }
         public double As { get; set; }    
         public double Rsw { get; set; }    
         public double Asw { get; set; }
@@ -66,9 +69,7 @@ namespace BSFiberConcrete
     {
         public Fiber Fiber { get; set; }
         public Rebar Rebar { get; set; }
-
         public Beton2 Beton2 { get; set; }
-
         public Rod2 Rod2 { get; set; }        
     }
 
@@ -101,7 +102,7 @@ namespace BSFiberConcrete
         public int B { get; set; }
     }
 
-    internal class BSFiberCocreteLib
+    internal class BSFiberLib
     {
         public static List<BSFiberBeton> betonList = new List<BSFiberBeton>
         {

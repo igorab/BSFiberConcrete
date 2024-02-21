@@ -8,7 +8,10 @@ using System.Text.Json.Serialization;
 using System.Windows.Forms;
 
 namespace BSFiberConcrete
-{    
+{   
+    /// <summary>
+    /// Загруженные начальные параметры системы из внешних источников
+    /// </summary>
     public class BSFiberLoadData
     {
         public static string FiberConcretePath { get { return Path.Combine(Environment.CurrentDirectory, "Templates\\FiberConcrete.csv"); } }
@@ -17,10 +20,16 @@ namespace BSFiberConcrete
 
         public double[] Params { get { return m_Prms.ToArray(); } }
 
+        // serialized from Json
         private BSFiberParams m_FiberParams;
+        // Фибробетон
         public Fiber Fiber { get { return m_FiberParams?.Fiber; } }
+        // Арматура фибробетона
         public Rebar Rebar { get { return m_FiberParams?.Rebar; } }
+        // Стержни арматурные
         public Rod2 Rod2 { get { return m_FiberParams?.Rod2; } }
+
+        // Бетон, железобетон
         public Beton2 Beton2 { get { return m_FiberParams?.Beton2; } }
 
         private double to_double(string _num)

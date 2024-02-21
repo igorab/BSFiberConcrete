@@ -1,11 +1,6 @@
-﻿using MathNet.Numerics.Integration;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace BSFiberConcrete
 {
@@ -185,7 +180,11 @@ namespace BSFiberConcrete
     {
         public string Name => "Фибробетон";
 
+        // Начальный модуль упругости бетона-матрицы B30 СП63
         public double Eb { get => Efb; }
+
+        //для фибры из тонкой низкоуглеродистой проволоки МП п.п  кг/см2
+        public double Ef { get; set; }
 
         /// <summary>
         /// Начальный модуль упругости
@@ -218,7 +217,6 @@ namespace BSFiberConcrete
 
         // Расчетное сопротивление
         public double Rb { get => Rfbn; }
-
         public double e_b1_red { get; set; }
         public double e_b1 { get; set; }
 

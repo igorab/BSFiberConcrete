@@ -40,7 +40,7 @@ namespace BSFiberConcrete
         
         // глобальные настройки
         private void BSFiberMain_Load(object sender, EventArgs e)
-        {
+        {            
             try
             {
                 m_Beam = new Dictionary<string, double>();
@@ -55,23 +55,22 @@ namespace BSFiberConcrete
 
                 LoadRectangle(m_Iniv["b"], m_Iniv["h"]);
 
-                cmbBetonClass.DataSource = BSFiberCocreteLib.betonList;
+                cmbBetonClass.DataSource = BSFiberLib.betonList;
                 cmbBetonClass.DisplayMember = "Name";
                 cmbBetonClass.ValueMember = "Id";
                 cmbBetonClass.SelectedValue = 30;
 
-                numRfbt3n.Value = (decimal)BSFiberCocreteLib.PhysElements.Rfbt3n;
-                numRfbn.Value = (decimal)BSFiberCocreteLib.PhysElements.Rfbn;
+                numRfbt3n.Value = (decimal)BSFiberLib.PhysElements.Rfbt3n;
+                numRfbn.Value = (decimal)BSFiberLib.PhysElements.Rfbn;
 
-                numYft.Value = (decimal)BSFiberCocreteLib.PhysElements.Yft;
-                numYb.Value = (decimal)BSFiberCocreteLib.PhysElements.Yb;
-                numYb1.Value = (decimal)BSFiberCocreteLib.PhysElements.Yb1;
-                numYb2.Value = (decimal)BSFiberCocreteLib.PhysElements.Yb2;
-                numYb3.Value = (decimal)BSFiberCocreteLib.PhysElements.Yb3;
-                numYb5.Value = (decimal)BSFiberCocreteLib.PhysElements.Yb5;
+                numYft.Value = (decimal)BSFiberLib.PhysElements.Yft;
+                numYb.Value = (decimal)BSFiberLib.PhysElements.Yb;
+                numYb1.Value = (decimal)BSFiberLib.PhysElements.Yb1;
+                numYb2.Value = (decimal)BSFiberLib.PhysElements.Yb2;
+                numYb3.Value = (decimal)BSFiberLib.PhysElements.Yb3;
+                numYb5.Value = (decimal)BSFiberLib.PhysElements.Yb5;
 
-                
-                
+                                
                 double[] mnq = { m_Iniv["Mx"], m_Iniv["My"], m_Iniv["N"], 5000, 1.0, 37 }; //Mx My N Q Ml
                 gridEfforts.Rows.Add(mnq);
                 for (int i = 0; i < mnq.Length; i++)
@@ -79,7 +78,7 @@ namespace BSFiberConcrete
                     gridEfforts.Rows[0].Cells[i].Value = mnq[i];
                 }
 
-                double[] t_rebar = { 6, 2, 4, 400, 1}; // поперечная арматура
+                double[] t_rebar = { m_Iniv["D_t"], m_Iniv["Qty_t"], m_Iniv["a_t"], m_Iniv["Cls_t"], m_Iniv["Coef_t"] }; // поперечная арматура
                 gridTRebar.Rows.Add(t_rebar);
                 for (int i = 0; i < t_rebar.Length; i++)
                 {
@@ -95,6 +94,12 @@ namespace BSFiberConcrete
                     gridLRebar.Rows[1].Cells[i].Value =(i==1)? 0: long_rebar[i];
                     gridLRebar.Rows[2].Cells[i].Value = (i == 1) ? 0 : long_rebar[i];
                 }
+
+                numAs.Value = (decimal)m_Iniv["As"]; 
+                numAs1.Value = (decimal)m_Iniv["As1"];
+                num_a.Value = (decimal)m_Iniv["_a"]; 
+                num_a1.Value = (decimal)m_Iniv["_a_1"];
+
             }
             catch (Exception _ex) 
             {
@@ -181,7 +186,9 @@ namespace BSFiberConcrete
                 Rod.a1 = ;
                 */
 
-                double[] matRod = new double[] { 3567, 3567, (double)numAs.Value, (double)numAs1.Value, 2038735, 4, 4 };
+                double[] matRod = new double[] { m_BSLoadData.Rebar.Rs, m_BSLoadData.Rebar.Rsc, 
+                                                (double)numAs.Value, (double)numAs1.Value,  m_BSLoadData.Rebar.Es,
+                                                (double)num_a.Value, (double)num_a1.Value };
                 _bsCalcRods.GetLTRebar(_l_rebar, _t_rebar, matRod);
             }
         }
@@ -347,7 +354,7 @@ namespace BSFiberConcrete
             m_Table.Columns.Add("r2, cm", typeof(double));
                         
             dataGridView1.DataSource = m_Table;
-            m_Table.Rows.Add(25d, 40d);
+            m_Table.Rows.Add(m_Iniv["r1"], m_Iniv["r2"]);
 
             picBeton.Image = global::BSFiberConcrete.Properties.Resources.Ring;
         }
@@ -440,7 +447,7 @@ namespace BSFiberConcrete
 
             InitEfforts(ref MNQ);
 
-            if (_shear /* && _rebar*/)
+            if (_shear || _useRebar)
             {
                 InitLRebar(out double[] l_r);
 
@@ -603,7 +610,7 @@ namespace BSFiberConcrete
 
             // Mx  , My - усилия, кНм
             double c_Mx = 0; // 45; 
-            double c_My = 200;  //95; 
+            double c_My = 0;  //95; 
             double c_N = 0;  //0; 
             
             double[] l_r = new double[5]; // параметры продольной арматуры

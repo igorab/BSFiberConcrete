@@ -44,10 +44,10 @@ namespace BSFiberConcrete
             {
                 if (BeamSection == BeamSection.Ring) 
                 {
-                    Records.Add(BSFiberCocreteLib.PhysElements);
+                    Records.Add(BSFiberLib.PhysElements);
                 }
                 else
-                    Records.Add(BSFiberCocreteLib.PhysElements);
+                    Records.Add(BSFiberLib.PhysElements);
 
                 dataGridView1.DataSource = Records;                
             }
