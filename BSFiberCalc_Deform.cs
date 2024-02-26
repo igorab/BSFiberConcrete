@@ -18,8 +18,10 @@ namespace BSFiberConcrete
     /// <summary>
     /// Расчет по прочности нормальных сечений на основе нелинейной деформационной модели
     /// </summary>
-    internal class BSFiberCalc_Deform : IBSFiberCalculation
+    public class BSFiberCalc_Deform : IBSFiberCalculation
     {
+        public List<string> Msg = new List<string>();
+
         // заданные нагрузки
         // изгибающие моменты от внешней нагрузки относительно выбранных и располагаемых в пределах
         // поперечного сечения элемента координатных осей

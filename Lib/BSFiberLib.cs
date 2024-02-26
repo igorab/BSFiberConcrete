@@ -7,6 +7,20 @@ using System.Threading.Tasks;
 namespace BSFiberConcrete
 {
     /// <summary>
+    /// Единицы измерения
+    /// </summary>
+    public class Units
+    {
+        public static string R { get; set; }
+        public static string E { get; set; }
+        public static string L { get; set; }
+        public static string D { get; set; }
+        public static string A { get; set; }
+
+    }
+
+
+    /// <summary>
     /// Фибробетон, параметры
     /// </summary>
     public class Fiber
@@ -67,6 +81,7 @@ namespace BSFiberConcrete
     /// </summary>
     public class BSFiberParams
     {
+        public Units Units { get; set; }
         public Fiber Fiber { get; set; }
         public Rebar Rebar { get; set; }
         public Beton2 Beton2 { get; set; }

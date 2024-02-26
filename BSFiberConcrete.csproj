@@ -110,6 +110,11 @@
     <Compile Include="BSFiberCalc_M.cs" />
     <Compile Include="BSFiberCalc_MNQ.cs" />
     <Compile Include="BSFiberCalc_Q.cs" />
+    <Compile Include="FiberCalcMNQ\BSFiberCalc_MNQ_IT.cs" />
+    <Compile Include="FiberCalcMNQ\BSFiberCalc_MNQ_Rect.cs" />
+    <Compile Include="FiberCalcMNQ\BSFiberCalc_MNQ_Ring.cs" />
+    <Compile Include="FiberCalcMNQ\BSFiberCalc_MNQ_Ring_Rods.cs" />
+    <Compile Include="FiberCalc\IBSFiberCalculation.cs" />
     <Compile Include="Lib\BSFiberLib.cs" />
     <Compile Include="BSFiberLoadData.cs" />
     <Compile Include="BSFiberMain.cs">

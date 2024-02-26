@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Security.AccessControl;
 using System.Text;
@@ -12,7 +13,7 @@ namespace BSFiberConcrete
     {
         public const double Epsilon = 0.1d;
 
-        public const string UnitLength = "мм";
+        public string UnitLength = Units.L;
 
         public static double AreaCircle(double _D) => Math.PI * _D * _D / 4d;
 
@@ -25,6 +26,22 @@ namespace BSFiberConcrete
         {
             string desc = myEnumVariable.GetAttributeOfType<DescriptionAttribute>().Description;
             return desc; 
+        }
+
+        public static double ToDouble(string _txtNum)
+        {
+            NumberFormatInfo formatter = new NumberFormatInfo { NumberDecimalSeparator = "." };
+            double d_num;
+            try
+            {
+                d_num = Convert.ToDouble(_txtNum, formatter);
+            }
+            catch (System.FormatException)
+            {
+                formatter.NumberDecimalSeparator = ",";
+                d_num = Convert.ToDouble(_txtNum, formatter);
+            }
+            return d_num;
         }
     }
 

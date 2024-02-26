@@ -4,42 +4,12 @@ using System.Collections.Generic;
 using System.Reflection;
 
 namespace BSFiberConcrete
-{    
-    [Description("Сечение балки")]
-    public enum BeamSection
-    {
-        [Description("Тавровое сечение")]
-        TBeam = 1,
-        [Description("Двутавровое сечение")]
-        IBeam = 2,
-        [Description("Кольцевое сечение")]
-        Ring = 3,
-        [Description("Прямоугольное сечение")]
-        Rect = 4
-    } 
-
-    public interface IBSFiberCalculation
-    {
-        void GetParams(double[] _t = null);
-        
-        void GetSize(double[] _t = null);
-
-        Dictionary<string, double> GeomParams();
-
-        void Calculate();
-        Dictionary<string, double> Results();
-    }
-    
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Field | AttributeTargets.Property, Inherited = true)]
-    class BSFiberCalculationAttribute : Attribute
-    {
-        public string Name { get; set; }
-        public string Descr { get; set; }
-    }
-
+{        
     [DisplayName("Сталефибробетонные конструкции без предварительного напряжения арматуры")]
     public class BSFiberCalculation : IBSFiberCalculation
     {
+        public List<string> Msg = new List<string>();
+
         public BSMatFiber MatFiber { get; set; }
 
         [DisplayName("Нормативное остаточное сопротивления осевому растяжению кг/см2")]

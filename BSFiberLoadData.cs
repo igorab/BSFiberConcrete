@@ -14,40 +14,29 @@ namespace BSFiberConcrete
     /// </summary>
     public class BSFiberLoadData
     {
-        public static string FiberConcretePath { get { return Path.Combine(Environment.CurrentDirectory, "Templates\\FiberConcrete.csv"); } }
+        public static string FiberConcretePath { get => Path.Combine(Environment.CurrentDirectory, "Templates\\FiberConcrete.csv"); }
 
         private List<double> m_Prms = new List<double>();
 
-        public double[] Params { get { return m_Prms.ToArray(); } }
+        public double[] Params { get => m_Prms.ToArray(); }
 
         // serialized from Json
         private BSFiberParams m_FiberParams;
         // Фибробетон
-        public Fiber Fiber { get { return m_FiberParams?.Fiber; } }
+        public Fiber Fiber { get => m_FiberParams?.Fiber;  }
         // Арматура фибробетона
-        public Rebar Rebar { get { return m_FiberParams?.Rebar; } }
+        public Rebar Rebar { get => m_FiberParams?.Rebar;  }
         // Стержни арматурные
-        public Rod2 Rod2 { get { return m_FiberParams?.Rod2; } }
+        public Rod2 Rod2 { get => m_FiberParams?.Rod2;}
+        
+        // Единицы измерения
+        public Units Units { get => m_FiberParams?.Units; }
 
         // Бетон, железобетон
-        public Beton2 Beton2 { get { return m_FiberParams?.Beton2; } }
+        public Beton2 Beton2 { get => m_FiberParams?.Beton2;  }
 
-        private double to_double(string _num)
-        {
-            NumberFormatInfo formatter = new NumberFormatInfo { NumberDecimalSeparator = "." };
-            double d_num;
-            try
-            {
-                d_num = Convert.ToDouble(_num, formatter);
-            }
-            catch (System.FormatException)
-            {
-                formatter.NumberDecimalSeparator = ",";
-                d_num = Convert.ToDouble(_num, formatter);
-            }
-            return d_num;
-        }
-        
+        private double to_double(string _num) => BSHelper.ToDouble(_num);
+                
         public void ReadParamsFromJson()
         {
             string path = Path.Combine(Environment.CurrentDirectory, "Templates\\BSFiberParams.json");
@@ -77,7 +66,6 @@ namespace BSFiberConcrete
 
             return keyValuePairs;
         }
-
 
         public void Load()
         {

@@ -9,8 +9,10 @@ namespace BSFiberConcrete
     /// <summary>
     /// Расчет элементов по наклонным сечениям на действие моментов
     /// </summary>
-    internal class BSFiberCalc_M : IBSFiberCalculation
+    public class BSFiberCalc_M : IBSFiberCalculation
     {
+        public List<string> Msg = new List<string>();
+
         public void Calculate()
         {
             throw new NotImplementedException();

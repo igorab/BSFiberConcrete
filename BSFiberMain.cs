@@ -71,7 +71,7 @@ namespace BSFiberConcrete
                 numYb5.Value = (decimal)BSFiberLib.PhysElements.Yb5;
 
                                 
-                double[] mnq = { m_Iniv["Mx"], m_Iniv["My"], m_Iniv["N"], 5000, 1.0, 37 }; //Mx My N Q Ml
+                double[] mnq = { m_Iniv["Mx"], m_Iniv["My"], m_Iniv["N"], m_Iniv["Q"], m_Iniv["Ml"], m_Iniv["eN"] }; //Mx My N Q Ml
                 gridEfforts.Rows.Add(mnq);
                 for (int i = 0; i < mnq.Length; i++)
                 {
@@ -107,7 +107,7 @@ namespace BSFiberConcrete
             }
         }
 
-        //  размеры балки
+        //  размеры балки (поперечное сечение + длина)
         private double[] BeamSizes(double _length = 0)
         {
             double[] sz = new double[2];
@@ -449,11 +449,14 @@ namespace BSFiberConcrete
 
             if (_shear || _useRebar)
             {
+                // Армирование
+                fiberCalc.Rebar = m_BSLoadData.Rebar;
+
                 InitLRebar(out double[] l_r);
 
                 InitTRebar(out double[] t_r);
 
-                fiberCalc.GetRebarParams(t_r, l_r);
+                fiberCalc.GetRebarParams(l_r, t_r);
             }
 
             double[] prms = m_BSLoadData.Params;
@@ -462,7 +465,7 @@ namespace BSFiberConcrete
 
             fiberCalc.GetParams(prms);
 
-            double beamLngth = double.Parse(tbLength.Text);
+            double beamLngth = BSHelper.ToDouble(tbLength.Text);
 
             double[] sz = BeamSizes(beamLngth);
 
@@ -471,9 +474,7 @@ namespace BSFiberConcrete
             fiberCalc.GetEfforts(MNQ);
 
             fiberCalc.GetFiberParamsFromJson(m_BSLoadData.Fiber);
-            // Армирование
-            fiberCalc.Rebar = m_BSLoadData.Rebar; 
-
+           
             fiberCalc.Calculate();
 
             m_CalcResults = fiberCalc.Results();
@@ -768,6 +769,15 @@ namespace BSFiberConcrete
                 MessageBox.Show("Ошибка в отчете " + _e.Message);
             }
         }
-        
+
+        private void numRandomEccentricity_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmbEffectiveLengthFactor_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
