@@ -37,6 +37,7 @@ namespace BSFiberConcrete
 
         // Моменты инерции сечения
         public double Jy() => b * (h * h * h) / 12.0;
+
         public double Jx() => (b * b * b) * h / 12.0;
 
         //   Моменты сопротивления сечения

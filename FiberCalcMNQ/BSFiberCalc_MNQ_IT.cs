@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace BSFiberConcrete
 {
+    // Расчет балки двутаврового сечения на внецентренное сжатие
     public class BSFiberCalc_MNQ_IT : BSFiberCalc_MNQ
     {
         public BSBeam_IT beam { get; set; }
@@ -17,7 +18,10 @@ namespace BSFiberConcrete
 
         public override void Calculate()
         {
-            throw new Exception("Расчет не выполнен (нет в СП)");
+
+            base.Calculate();
+            //throw new Exception("Расчет не выполнен (нет в СП)");
+
         }
 
         public override void GetSize(double[] _t)

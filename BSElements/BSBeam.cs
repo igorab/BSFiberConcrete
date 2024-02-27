@@ -16,6 +16,9 @@ namespace BSFiberConcrete
 
         // section moment of inertia
         double W_s();
+
+        double Jy();
+        double Jx();
     }
 
     // конечный элемент
@@ -99,6 +102,16 @@ namespace BSFiberConcrete
         public virtual double I_s()
         {
             return 0;
+        }
+
+        public virtual double Jy()
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual double Jx()
+        {
+            throw new NotImplementedException();
         }
 
         public BSBeam()

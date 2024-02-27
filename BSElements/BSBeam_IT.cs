@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace BSFiberConcrete
 {
@@ -26,5 +27,46 @@ namespace BSFiberConcrete
         public double b1f { get; set; }
         [DisplayName("Высота верхней полки двутавра")]
         public double h1f { get; set; }
+
+        /// <summary>
+        ///  В обозначениях справочника проектировщика стр 357
+        /// </summary>
+
+        public double B => bf;
+        public double c_h => hf;
+        public double b => bw;
+        public double c_b => b1f;
+        public double h => hf;
+        public double a => hw;
+        public double H => c_h + c_b + h;
+        public double B1 => B - a;
+        public double b1 => b - a;
+
+        public override double Area()
+        {
+            double area = b * c_b + a * h + B * c_h;
+            return area;
+        }
+
+        public double y_h 
+        {
+            get => a*H*H + B1 * c_h*c_h + b1*c_b * (2*H - c_b) / (2 * (a*H + B1 * c_h + b1 * c_b));
+        }
+
+        double y_b => H - y_h;
+
+        double h_b => y_b - c_b;
+        double h_n => y_h - c_h;
+
+        public override double Jx()
+        {
+            double j_x =  1/3 * ( B * Math.Pow(y_h, 3) - B1 * Math.Pow(h_n, 3) + b * Math.Pow(y_b, 3)- b1* Math.Pow(h_b, 3));
+            return j_x;
+        }
+
+        public override double Jy()
+        {
+            return base.Jy();
+        }
     }
 }

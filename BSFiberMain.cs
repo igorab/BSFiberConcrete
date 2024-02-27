@@ -528,7 +528,8 @@ namespace BSFiberConcrete
             }
         }
 
-        private void btnCalcMNQ_Click(object sender, EventArgs e)
+        // Расчет на внецентренное сжатие
+        private void btnCalc_N_Click(object sender, EventArgs e)
         {
             FiberCalculateMNQ_Report();
         }
