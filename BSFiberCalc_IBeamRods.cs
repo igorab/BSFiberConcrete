@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -79,16 +80,18 @@ namespace BSFiberConcrete
 
             if (dzeta <= dzeta_R)
             {
-                checkOK = true;
+                checkOK = true;            
                 info = "Условие ξ <= ξR выполнено ";
+                Msg.Add(info);
             }
             else
             {
                 checkOK = false;
                 info = "Условие ξ <= ξR не выполнено! ";
                 info += "Требуется увеличить высоту элемента.";
+                Msg.Add(info);
             }
-
+            
             condition = (MatRod.Rs * MatRod.As + Rfbt3 * (bf * hf + bw * hw)) - (MatRod.Rsc * MatRod.As1 + Rfb * b1f * h1f);
 
             // расчет по случаю А

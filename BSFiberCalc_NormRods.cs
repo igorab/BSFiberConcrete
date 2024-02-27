@@ -76,12 +76,14 @@ namespace BSFiberConcrete
             {
                 checkOK = true;
                 info = "Условие ξ <= ξR выполнено ";
+                Msg.Add(info);
             }
             else
             {
                 checkOK = false;
                 info = "Условие ξ <= ξR не выполнено! ";
                 info += "Требуется увеличить высоту элемента.";
+                Msg.Add(info);
             }
 
             Mult = 10E-5d * Mult_arm(b, h0, _x, h, Rod.a, Rod.a1);

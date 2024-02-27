@@ -175,11 +175,17 @@ namespace BSFiberConcrete
             // Максимальный шаг поперечной арматуры см
             double s_w_max = Rfbt * b * h0 * h0 / Q;
 
-            string res = "";
+            string res;
             if (Rebar.s_w <= s_w_max)
+            {
                 res = "Условие выполнено, шаг удовлетворяет требованию 6.1.28";
+                Msg.Add(res);
+            }
             else
+            {
                 res = "Условие не выполнено, требуется уменьшить шаг поперечной арматуры";
+                Msg.Add(res);
+            }
 
             // усилие в поперечной арматуре на единицу длины элемента
             double q_sw = Rebar.Rsw * Rebar.Asw / Rebar.s_w; // 6.78 

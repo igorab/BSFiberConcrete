@@ -9,8 +9,6 @@ using System.Windows.Forms;
 using MathNet.Numerics;
 using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics.LinearAlgebra.Double;
-using Microsoft.VisualBasic;
-using Microsoft.VisualBasic.ApplicationServices;
 
 
 namespace BSFiberConcrete

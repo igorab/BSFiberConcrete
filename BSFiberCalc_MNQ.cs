@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 
-
 namespace BSFiberConcrete
-{
-    
+{    
     [DisplayName("Расчет элементов на действие сил и моментов")]
     public class BSFiberCalc_MNQ : IBSFiberCalculation
     {
