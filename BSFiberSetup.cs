@@ -6,6 +6,7 @@ using CsvHelper;
 using System.Globalization;
 using CsvHelper.Configuration;
 using System.Drawing;
+using BSFiberConcrete.Lib;
 
 namespace BSFiberConcrete
 {
@@ -25,6 +26,8 @@ namespace BSFiberConcrete
             Records = new List<Elements>();
             try
             {
+                BSData.Connect();               
+
                 using (var streamreader = new StreamReader(BSFiberLoadData.FiberConcretePath))
                 {
                     CultureInfo culture = CultureInfo.InvariantCulture;
@@ -39,6 +42,10 @@ namespace BSFiberConcrete
             catch (CsvHelper.HeaderValidationException)
             {
                 MessageBox.Show("Неверный формат файла");
+            }
+            catch (Exception _ex) 
+            {
+                MessageBox.Show(_ex.ToString() + "\n" + _ex.Message);
             }
             finally
             {

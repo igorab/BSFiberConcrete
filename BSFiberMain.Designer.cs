@@ -75,21 +75,22 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
+            this.numYb1 = new System.Windows.Forms.NumericUpDown();
+            this.numYb2 = new System.Windows.Forms.NumericUpDown();
+            this.label8 = new System.Windows.Forms.Label();
+            this.numYb3 = new System.Windows.Forms.NumericUpDown();
+            this.numYb5 = new System.Windows.Forms.NumericUpDown();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.labelYb = new System.Windows.Forms.Label();
             this.numYb = new System.Windows.Forms.NumericUpDown();
-            this.label9 = new System.Windows.Forms.Label();
-            this.numYb5 = new System.Windows.Forms.NumericUpDown();
-            this.label8 = new System.Windows.Forms.Label();
-            this.numYb3 = new System.Windows.Forms.NumericUpDown();
-            this.label7 = new System.Windows.Forms.Label();
-            this.numYb2 = new System.Windows.Forms.NumericUpDown();
-            this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.numYb1 = new System.Windows.Forms.NumericUpDown();
             this.numYft = new System.Windows.Forms.NumericUpDown();
             this.picBeton = new System.Windows.Forms.PictureBox();
             this.tabStrength = new System.Windows.Forms.TabPage();
@@ -148,7 +149,6 @@
             this.labelCalculation = new System.Windows.Forms.Label();
             this.flowLayoutPanelArea = new System.Windows.Forms.FlowLayoutPanel();
             this.flowLayoutBtns = new System.Windows.Forms.FlowLayoutPanel();
-            this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.tabGeneral.SuspendLayout();
             this.tabParams.SuspendLayout();
             this.groupBoxResult.SuspendLayout();
@@ -163,11 +163,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.numRfbn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numRfbt3n)).BeginInit();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numYb)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numYb5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numYb3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numYb2)).BeginInit();
+            this.tableLayoutPanel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numYb1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numYb2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numYb3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numYb5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numYb)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numYft)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picBeton)).BeginInit();
             this.tabStrength.SuspendLayout();
@@ -188,7 +189,6 @@
             this.panelCalc.SuspendLayout();
             this.flowLayoutPanelArea.SuspendLayout();
             this.flowLayoutBtns.SuspendLayout();
-            this.tableLayoutPanel6.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabGeneral
@@ -444,7 +444,7 @@
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 38.28829F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 61.71171F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 129F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 208F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 209F));
             this.tableLayoutPanel5.Controls.Add(this.lblBetonType, 0, 0);
             this.tableLayoutPanel5.Controls.Add(this.comboBetonType, 1, 0);
             this.tableLayoutPanel5.Controls.Add(this.lblBetonClass, 2, 0);
@@ -486,7 +486,7 @@
             // 
             this.lblBetonClass.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblBetonClass.AutoSize = true;
-            this.lblBetonClass.Location = new System.Drawing.Point(404, 10);
+            this.lblBetonClass.Location = new System.Drawing.Point(403, 10);
             this.lblBetonClass.Name = "lblBetonClass";
             this.lblBetonClass.Size = new System.Drawing.Size(76, 13);
             this.lblBetonClass.TabIndex = 3;
@@ -496,7 +496,7 @@
             // 
             this.cmbBetonClass.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.cmbBetonClass.FormattingEnabled = true;
-            this.cmbBetonClass.Location = new System.Drawing.Point(533, 6);
+            this.cmbBetonClass.Location = new System.Drawing.Point(532, 6);
             this.cmbBetonClass.Name = "cmbBetonClass";
             this.cmbBetonClass.Size = new System.Drawing.Size(202, 21);
             this.cmbBetonClass.TabIndex = 4;
@@ -517,7 +517,7 @@
             this.tableLayoutPanel4.ColumnCount = 3;
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 86.11111F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 13.88889F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 258F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 259F));
             this.tableLayoutPanel4.Controls.Add(this.numRfbn, 2, 1);
             this.tableLayoutPanel4.Controls.Add(this.numRfbt3n, 2, 0);
             this.tableLayoutPanel4.Controls.Add(this.label3, 1, 1);
@@ -536,7 +536,7 @@
             // 
             this.numRfbn.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numRfbn.DecimalPlaces = 2;
-            this.numRfbn.Location = new System.Drawing.Point(447, 38);
+            this.numRfbn.Location = new System.Drawing.Point(446, 38);
             this.numRfbn.Maximum = new decimal(new int[] {
             10000000,
             0,
@@ -550,7 +550,7 @@
             // 
             this.numRfbt3n.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numRfbt3n.DecimalPlaces = 2;
-            this.numRfbt3n.Location = new System.Drawing.Point(447, 6);
+            this.numRfbt3n.Location = new System.Drawing.Point(446, 6);
             this.numRfbt3n.Maximum = new decimal(new int[] {
             10000000,
             0,
@@ -564,7 +564,7 @@
             // 
             this.label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(386, 41);
+            this.label3.Location = new System.Drawing.Point(385, 41);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(30, 13);
             this.label3.TabIndex = 2;
@@ -584,7 +584,7 @@
             // 
             this.label4.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(386, 9);
+            this.label4.Location = new System.Drawing.Point(385, 9);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(39, 13);
             this.label4.TabIndex = 3;
@@ -617,6 +617,128 @@
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Коэффициенты";
+            // 
+            // tableLayoutPanel6
+            // 
+            this.tableLayoutPanel6.ColumnCount = 8;
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40.32258F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 59.67742F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 49F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 69F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 49F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 81F));
+            this.tableLayoutPanel6.Controls.Add(this.numYb1, 1, 0);
+            this.tableLayoutPanel6.Controls.Add(this.numYb2, 3, 0);
+            this.tableLayoutPanel6.Controls.Add(this.label8, 4, 0);
+            this.tableLayoutPanel6.Controls.Add(this.numYb3, 5, 0);
+            this.tableLayoutPanel6.Controls.Add(this.numYb5, 7, 0);
+            this.tableLayoutPanel6.Controls.Add(this.label9, 6, 0);
+            this.tableLayoutPanel6.Controls.Add(this.label6, 0, 0);
+            this.tableLayoutPanel6.Controls.Add(this.label7, 2, 0);
+            this.tableLayoutPanel6.Location = new System.Drawing.Point(35, 108);
+            this.tableLayoutPanel6.Name = "tableLayoutPanel6";
+            this.tableLayoutPanel6.RowCount = 1;
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(512, 28);
+            this.tableLayoutPanel6.TabIndex = 16;
+            // 
+            // numYb1
+            // 
+            this.numYb1.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.numYb1.DecimalPlaces = 1;
+            this.numYb1.Location = new System.Drawing.Point(52, 4);
+            this.numYb1.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+            this.numYb1.Name = "numYb1";
+            this.numYb1.Size = new System.Drawing.Size(68, 20);
+            this.numYb1.TabIndex = 1;
+            // 
+            // numYb2
+            // 
+            this.numYb2.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.numYb2.DecimalPlaces = 1;
+            this.numYb2.Location = new System.Drawing.Point(175, 4);
+            this.numYb2.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+            this.numYb2.Name = "numYb2";
+            this.numYb2.Size = new System.Drawing.Size(88, 20);
+            this.numYb2.TabIndex = 4;
+            // 
+            // label8
+            // 
+            this.label8.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(275, 7);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(26, 13);
+            this.label8.TabIndex = 7;
+            this.label8.Text = "Yb3";
+            // 
+            // numYb3
+            // 
+            this.numYb3.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.numYb3.DecimalPlaces = 1;
+            this.numYb3.Location = new System.Drawing.Point(315, 4);
+            this.numYb3.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+            this.numYb3.Name = "numYb3";
+            this.numYb3.Size = new System.Drawing.Size(62, 20);
+            this.numYb3.TabIndex = 6;
+            // 
+            // numYb5
+            // 
+            this.numYb5.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.numYb5.DecimalPlaces = 1;
+            this.numYb5.Location = new System.Drawing.Point(433, 4);
+            this.numYb5.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+            this.numYb5.Name = "numYb5";
+            this.numYb5.Size = new System.Drawing.Size(75, 20);
+            this.numYb5.TabIndex = 8;
+            // 
+            // label9
+            // 
+            this.label9.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(384, 7);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(26, 13);
+            this.label9.TabIndex = 9;
+            this.label9.Text = "Yb5";
+            // 
+            // label6
+            // 
+            this.label6.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(3, 7);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(26, 13);
+            this.label6.TabIndex = 3;
+            this.label6.Text = "Yb1";
+            // 
+            // label7
+            // 
+            this.label7.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(126, 7);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(26, 13);
+            this.label7.TabIndex = 5;
+            this.label7.Text = "Yb2";
             // 
             // label20
             // 
@@ -677,88 +799,6 @@
             this.numYb.Size = new System.Drawing.Size(85, 20);
             this.numYb.TabIndex = 10;
             // 
-            // label9
-            // 
-            this.label9.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(385, 7);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(26, 13);
-            this.label9.TabIndex = 9;
-            this.label9.Text = "Yb5";
-            // 
-            // numYb5
-            // 
-            this.numYb5.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.numYb5.DecimalPlaces = 1;
-            this.numYb5.Location = new System.Drawing.Point(434, 4);
-            this.numYb5.Maximum = new decimal(new int[] {
-            10000000,
-            0,
-            0,
-            0});
-            this.numYb5.Name = "numYb5";
-            this.numYb5.Size = new System.Drawing.Size(75, 20);
-            this.numYb5.TabIndex = 8;
-            // 
-            // label8
-            // 
-            this.label8.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(276, 7);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(26, 13);
-            this.label8.TabIndex = 7;
-            this.label8.Text = "Yb3";
-            // 
-            // numYb3
-            // 
-            this.numYb3.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.numYb3.DecimalPlaces = 1;
-            this.numYb3.Location = new System.Drawing.Point(316, 4);
-            this.numYb3.Maximum = new decimal(new int[] {
-            10000000,
-            0,
-            0,
-            0});
-            this.numYb3.Name = "numYb3";
-            this.numYb3.Size = new System.Drawing.Size(62, 20);
-            this.numYb3.TabIndex = 6;
-            // 
-            // label7
-            // 
-            this.label7.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(127, 7);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(26, 13);
-            this.label7.TabIndex = 5;
-            this.label7.Text = "Yb2";
-            // 
-            // numYb2
-            // 
-            this.numYb2.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.numYb2.DecimalPlaces = 1;
-            this.numYb2.Location = new System.Drawing.Point(176, 4);
-            this.numYb2.Maximum = new decimal(new int[] {
-            10000000,
-            0,
-            0,
-            0});
-            this.numYb2.Name = "numYb2";
-            this.numYb2.Size = new System.Drawing.Size(88, 20);
-            this.numYb2.TabIndex = 4;
-            // 
-            // label6
-            // 
-            this.label6.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(3, 7);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(26, 13);
-            this.label6.TabIndex = 3;
-            this.label6.Text = "Yb1";
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -767,20 +807,6 @@
             this.label5.Size = new System.Drawing.Size(20, 13);
             this.label5.TabIndex = 2;
             this.label5.Text = "Yft";
-            // 
-            // numYb1
-            // 
-            this.numYb1.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.numYb1.DecimalPlaces = 1;
-            this.numYb1.Location = new System.Drawing.Point(53, 4);
-            this.numYb1.Maximum = new decimal(new int[] {
-            10000000,
-            0,
-            0,
-            0});
-            this.numYb1.Name = "numYb1";
-            this.numYb1.Size = new System.Drawing.Size(68, 20);
-            this.numYb1.TabIndex = 1;
             // 
             // numYft
             // 
@@ -1358,32 +1384,6 @@
             this.flowLayoutBtns.Size = new System.Drawing.Size(206, 197);
             this.flowLayoutBtns.TabIndex = 16;
             // 
-            // tableLayoutPanel6
-            // 
-            this.tableLayoutPanel6.ColumnCount = 8;
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40.32258F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 59.67742F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 49F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 69F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 49F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            this.tableLayoutPanel6.Controls.Add(this.numYb1, 1, 0);
-            this.tableLayoutPanel6.Controls.Add(this.numYb2, 3, 0);
-            this.tableLayoutPanel6.Controls.Add(this.label8, 4, 0);
-            this.tableLayoutPanel6.Controls.Add(this.numYb3, 5, 0);
-            this.tableLayoutPanel6.Controls.Add(this.numYb5, 7, 0);
-            this.tableLayoutPanel6.Controls.Add(this.label9, 6, 0);
-            this.tableLayoutPanel6.Controls.Add(this.label6, 0, 0);
-            this.tableLayoutPanel6.Controls.Add(this.label7, 2, 0);
-            this.tableLayoutPanel6.Location = new System.Drawing.Point(35, 108);
-            this.tableLayoutPanel6.Name = "tableLayoutPanel6";
-            this.tableLayoutPanel6.RowCount = 1;
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(512, 28);
-            this.tableLayoutPanel6.TabIndex = 16;
-            // 
             // BSFiberMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1418,11 +1418,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.numRfbt3n)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numYb)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numYb5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numYb3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numYb2)).EndInit();
+            this.tableLayoutPanel6.ResumeLayout(false);
+            this.tableLayoutPanel6.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numYb1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numYb2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numYb3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numYb5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numYb)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numYft)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picBeton)).EndInit();
             this.tabStrength.ResumeLayout(false);
@@ -1448,8 +1450,6 @@
             this.panelCalc.PerformLayout();
             this.flowLayoutPanelArea.ResumeLayout(false);
             this.flowLayoutBtns.ResumeLayout(false);
-            this.tableLayoutPanel6.ResumeLayout(false);
-            this.tableLayoutPanel6.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
