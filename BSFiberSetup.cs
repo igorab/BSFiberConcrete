@@ -26,8 +26,14 @@ namespace BSFiberConcrete
             Records = new List<Elements>();
             try
             {
-                BSData.Connect();               
+                //BSData.Connect();               
 
+                //BSData.LoadConnectionString();
+
+                comboBetonType.DataSource = BSData.LoadTypes();
+
+                dataGridElements.DataSource =  BSData.LoadElements();
+                
                 using (var streamreader = new StreamReader(BSFiberLoadData.FiberConcretePath))
                 {
                     CultureInfo culture = CultureInfo.InvariantCulture;
@@ -49,6 +55,7 @@ namespace BSFiberConcrete
             }
             finally
             {
+                /*
                 if (BeamSection == BeamSection.Ring) 
                 {
                     Records.Add(BSFiberLib.PhysElements);
@@ -56,7 +63,8 @@ namespace BSFiberConcrete
                 else
                     Records.Add(BSFiberLib.PhysElements);
 
-                dataGridView1.DataSource = Records;                
+                dataGridElements.DataSource = Records;                
+                */
             }
         }
 

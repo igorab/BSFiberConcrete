@@ -28,32 +28,33 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("1");
-            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("2");
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("1");
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("2");
+            this.dataGridElements = new System.Windows.Forms.DataGridView();
             this.btnLoad = new System.Windows.Forms.Button();
-            this.tabGeneral = new System.Windows.Forms.TabControl();
+            this.tabFiber = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.comboBetonType = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.tabRebar = new System.Windows.Forms.TabPage();
             this.lvRebar = new System.Windows.Forms.ListView();
-            this.label1 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            this.tabGeneral.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridElements)).BeginInit();
+            this.tabFiber.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabRebar.SuspendLayout();
             this.SuspendLayout();
             // 
-            // dataGridView1
+            // dataGridElements
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(6, 47);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(966, 187);
-            this.dataGridView1.TabIndex = 0;
+            this.dataGridElements.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridElements.Location = new System.Drawing.Point(6, 82);
+            this.dataGridElements.Name = "dataGridElements";
+            this.dataGridElements.Size = new System.Drawing.Size(966, 152);
+            this.dataGridElements.TabIndex = 0;
             // 
             // btnLoad
             // 
-            this.btnLoad.Location = new System.Drawing.Point(761, 333);
+            this.btnLoad.Location = new System.Drawing.Point(913, 353);
             this.btnLoad.Name = "btnLoad";
             this.btnLoad.Size = new System.Drawing.Size(75, 23);
             this.btnLoad.TabIndex = 1;
@@ -61,27 +62,45 @@
             this.btnLoad.UseVisualStyleBackColor = true;
             this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
             // 
-            // tabGeneral
+            // tabFiber
             // 
-            this.tabGeneral.Controls.Add(this.tabPage1);
-            this.tabGeneral.Controls.Add(this.tabRebar);
-            this.tabGeneral.Location = new System.Drawing.Point(12, 12);
-            this.tabGeneral.Name = "tabGeneral";
-            this.tabGeneral.SelectedIndex = 0;
-            this.tabGeneral.Size = new System.Drawing.Size(986, 315);
-            this.tabGeneral.TabIndex = 2;
+            this.tabFiber.Controls.Add(this.tabPage1);
+            this.tabFiber.Controls.Add(this.tabRebar);
+            this.tabFiber.Location = new System.Drawing.Point(12, 12);
+            this.tabFiber.Name = "tabFiber";
+            this.tabFiber.SelectedIndex = 0;
+            this.tabFiber.Size = new System.Drawing.Size(986, 335);
+            this.tabFiber.TabIndex = 2;
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.comboBetonType);
             this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Controls.Add(this.dataGridView1);
+            this.tabPage1.Controls.Add(this.dataGridElements);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(978, 289);
+            this.tabPage1.Size = new System.Drawing.Size(978, 309);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Бетон";
+            this.tabPage1.Text = "Фибробетон";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // comboBetonType
+            // 
+            this.comboBetonType.FormattingEnabled = true;
+            this.comboBetonType.Location = new System.Drawing.Point(9, 25);
+            this.comboBetonType.Name = "comboBetonType";
+            this.comboBetonType.Size = new System.Drawing.Size(121, 21);
+            this.comboBetonType.TabIndex = 2;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 66);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(55, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Свойства";
             // 
             // tabRebar
             // 
@@ -89,7 +108,7 @@
             this.tabRebar.Location = new System.Drawing.Point(4, 22);
             this.tabRebar.Name = "tabRebar";
             this.tabRebar.Padding = new System.Windows.Forms.Padding(3);
-            this.tabRebar.Size = new System.Drawing.Size(978, 289);
+            this.tabRebar.Size = new System.Drawing.Size(978, 309);
             this.tabRebar.TabIndex = 1;
             this.tabRebar.Text = "Арматура";
             this.tabRebar.UseVisualStyleBackColor = true;
@@ -98,35 +117,26 @@
             // 
             this.lvRebar.HideSelection = false;
             this.lvRebar.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem7,
-            listViewItem8});
+            listViewItem1,
+            listViewItem2});
             this.lvRebar.Location = new System.Drawing.Point(19, 22);
             this.lvRebar.Name = "lvRebar";
             this.lvRebar.Size = new System.Drawing.Size(801, 229);
             this.lvRebar.TabIndex = 0;
             this.lvRebar.UseCompatibleStateImageBehavior = false;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(34, 28);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(55, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Свойства";
-            // 
             // BSFiberSetup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1062, 388);
-            this.Controls.Add(this.tabGeneral);
+            this.Controls.Add(this.tabFiber);
             this.Controls.Add(this.btnLoad);
             this.Name = "BSFiberSetup";
             this.Text = "Настройки";
             this.Load += new System.EventHandler(this.BSFiberSetup_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            this.tabGeneral.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridElements)).EndInit();
+            this.tabFiber.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             this.tabRebar.ResumeLayout(false);
@@ -136,12 +146,13 @@
 
         #endregion
 
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dataGridElements;
         private System.Windows.Forms.Button btnLoad;
-        private System.Windows.Forms.TabControl tabGeneral;
+        private System.Windows.Forms.TabControl tabFiber;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabRebar;
         private System.Windows.Forms.ListView lvRebar;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox comboBetonType;
     }
 }
