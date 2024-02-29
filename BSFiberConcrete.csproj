@@ -139,7 +139,7 @@
     <Compile Include="BSHelper.cs" />
     <Compile Include="BSFiberCalculation.cs" />
     <Compile Include="BSFiberCalc_M.cs" />
-    <Compile Include="BSFiberCalc_MNQ.cs" />
+    <Compile Include="FiberCalcMNQ\BSFiberCalc_MNQ.cs" />
     <Compile Include="BSFiberCalc_Q.cs" />
     <Compile Include="FiberCalcMNQ\BSFiberCalc_MNQ_IT.cs" />
     <Compile Include="FiberCalcMNQ\BSFiberCalc_MNQ_Rect.cs" />

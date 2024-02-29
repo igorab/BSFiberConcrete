@@ -14,19 +14,30 @@ namespace BSFiberConcrete
         public BSFiberCalc_MNQ_IT()
         {
             this.beam = new BSBeam_IT();
+
+            base.m_Beam = this.beam;
         }
 
         public override void Calculate()
         {
-
-            base.Calculate();
+            if (UseRebar)
+            {
+                Calculate_N_Out();                
+            }
+            else
+            {
+                Calculate_N();
+            }
             //throw new Exception("Расчет не выполнен (нет в СП)");
 
         }
 
         public override void GetSize(double[] _t)
         {
-            (beam.bf, beam.hf, beam.hw, beam.bw, beam.b1f, beam.h1f) = (_t[0], _t[1], _t[2], _t[3], _t[4], _t[5]);
+            (beam.bf, beam.hf, beam.hw, beam.bw, beam.b1f, beam.h1f, beam.Length) = (_t[0], _t[1], _t[2], _t[3], _t[4], _t[5], _t[6]);
+            l0 = beam.Length;
+            I = beam.Jx();
+            base.m_Beam = this.beam;
         }
     }
 }

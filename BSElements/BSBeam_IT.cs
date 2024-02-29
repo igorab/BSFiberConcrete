@@ -31,12 +31,11 @@ namespace BSFiberConcrete
         /// <summary>
         ///  В обозначениях справочника проектировщика стр 357
         /// </summary>
-
         public double B => bf;
         public double c_h => hf;
-        public double b => bw;
+        public override double b => bw;
         public double c_b => b1f;
-        public double h => hf;
+        public override double h => hf;
         public double a => hw;
         public double H => c_h + c_b + h;
         public double B1 => B - a;
@@ -50,17 +49,18 @@ namespace BSFiberConcrete
 
         public double y_h 
         {
-            get => a*H*H + B1 * c_h*c_h + b1*c_b * (2*H - c_b) / (2 * (a*H + B1 * c_h + b1 * c_b));
+            get => (a*H*H + B1 * c_h*c_h + b1*c_b*(2*H - c_b)) / (2 * (a*H + B1 * c_h + b1 * c_b));
         }
 
-        double y_b => H - y_h;
+        public double y_b => H - y_h;
 
-        double h_b => y_b - c_b;
-        double h_n => y_h - c_h;
+        public double h_b => y_b - c_b;
+
+        public double h_n => y_h - c_h;
 
         public override double Jx()
         {
-            double j_x =  1/3 * ( B * Math.Pow(y_h, 3) - B1 * Math.Pow(h_n, 3) + b * Math.Pow(y_b, 3)- b1* Math.Pow(h_b, 3));
+            double j_x =  1/3d * ( B * Math.Pow(y_h, 3) - B1 * Math.Pow(h_n, 3) + b * Math.Pow(y_b, 3) - b1 * Math.Pow(h_b, 3) );
             return j_x;
         }
 

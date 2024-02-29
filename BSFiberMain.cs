@@ -769,16 +769,6 @@ namespace BSFiberConcrete
             {
                 MessageBox.Show("Ошибка в отчете " + _e.Message);
             }
-        }
-
-        private void numRandomEccentricity_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void cmbEffectiveLengthFactor_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
+        }        
     }
 }

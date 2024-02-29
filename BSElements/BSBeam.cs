@@ -80,6 +80,9 @@ namespace BSFiberConcrete
         public double Zfb_X { get; set; }
         public double Z_fb_Y { get; set; }
 
+        public virtual double h { get; set; }
+        public virtual double b { get; set; }
+
         public double Length { get; set; }
 
         [DisplayName("Площадь армирования, см2")]

@@ -32,10 +32,35 @@ namespace BSFiberConcrete
         }
 
         // диаметр наружней грани
-        public double d_n { get => 2 * r2; }
+        public double D { get => 2 * r2; }
 
         // диаметр внутренней грани
-        public double d_v { get => 2 * r1; }
+        public double d { get => 2 * r1; }
+
+        public double alfa => d / D;
+
+        public double F => (Math.PI * D * D / 4d) * (1 - Math.Pow(alfa, 4)); 
+
+        public override double b { get => D - d; }
+
+        public override double h { get => D - d; }
+
+        public override double Jx()
+        {          
+            double jx = Math.PI * Math.Pow(D, 4) / 64d * (1 - Math.Pow(alfa, 4));
+            return jx;
+        }
+
+        public override double Jy()
+        {
+            return Jx();                
+        }
+
+        public override double W_s()
+        {
+            double wx = Math.PI * Math.Pow(D, 3) / 32d * (1 - Math.Pow(alfa, 4));
+            return wx;
+        }
 
     }
 }

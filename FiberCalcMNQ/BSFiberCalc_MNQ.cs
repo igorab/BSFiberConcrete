@@ -1,49 +1,211 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace BSFiberConcrete
-{
-    /// <summary>
-    /// Прямоугольная балка
-    /// </summary>
-    public class BSFiberCalc_MNQ_Rect : BSFiberCalc_MNQ
+{    
+    [DisplayName("Расчет элементов на действие сил и моментов")]
+    public class BSFiberCalc_MNQ : IBSFiberCalculation
     {
-        public BSBeam_Rect beam { get; set; }
+        public List<string> Msg;
 
-        private double y_t;
+        #region attributes
 
-        private Dictionary<string, double> m_Result;
+        [DisplayName("Высота сечения, см"), Description("Geom")]
+        public double h { get; protected set; }
 
-        public BSFiberCalc_MNQ_Rect()
+        [DisplayName("Ширина сечения, см"), Description("Geom")]
+        public double b { get; protected set; }
+
+        [DisplayName("Радиус внешний, см"), Description("Geom")]
+        public double r2 { get; protected set; }
+
+        [DisplayName("Радиус внутренний, см"), Description("Geom")]
+        public double r1 { get; protected set; }
+
+        [DisplayName("Расчетная длинна элемента сп63 см"), Description("Geom")]
+        public double l0 { get; protected set; }
+
+        [DisplayName("Площадь сечения, см2"), Description("Geom")]
+        public double A { get; protected set; }
+
+        [DisplayName("Момент инерции сечения"), Description("Geom")]
+        public double I { get; protected set; }
+
+        [DisplayName("Продольное усилие, кг"), Description("Phys")]
+        public double N { get; protected set; }
+
+        [DisplayName("Cлучайный эксцентриситет, принимаемый по СП 63"), Description("Phys")]
+        public double e0 { get; private set; }
+
+        [DisplayName("Эксцентриситет приложения силы N"), Description("Phys")]
+        public double e_N { get; protected set; }
+
+        [DisplayName("Относительное значение эксцентриситета продольной силы"), Description("Phys")]
+        public double delta_e { get; protected set; }
+
+        [DisplayName("Момент от действия полной нагрузки"), Description("Phys")]
+        public double M1 { get; protected set; }
+
+        [DisplayName("Момент от действия постянных и длительных нагрузок нагрузок"), Description("Phys")]
+        public double Ml1 { get; protected set; }
+
+        [DisplayName("Коэффициент ф."), Description("Coef")]
+        public double k_b { get; protected set; }
+
+        [DisplayName("Коэффициент, учитывающий влияние длительности действия нагрузки  (6.27)"), Description("Coef")]
+        public double fi1 { get; protected set; }
+
+        [DisplayName("Коэффициент надежности Yft"), Description("Coef")]
+        public double Yft { get; protected set; }
+        [DisplayName("Коэффициент условия работы Yb"), Description("Coef")]
+        public double Yb { get; protected set; }
+        [DisplayName("Коэффициент условия работы Yb1"), Description("Coef")]
+        public double Yb1 { get; protected set; }
+        [DisplayName("Коэффициент условия работы Yb2"), Description("Coef")]
+        public double Yb2 { get; protected set; }
+        [DisplayName("Коэффициент условия работы Yb3"), Description("Coef")]
+        public double Yb3 { get; protected set; }
+        [DisplayName("Коэффициент условия работы Yb5"), Description("Coef")]
+        public double Yb5 { get; protected set; }
+
+        [DisplayName("Предельный момент"), Description("Res")]
+        public double M_ult { get; protected set; }
+
+        [DisplayName("Предельная поперечная сила"), Description("Res")]
+        public double Q_ult { get; protected set; }
+
+        [DisplayName("Предельная продольная сила"), Description("Res")]
+        public double N_ult { get; protected set; }
+
+        #endregion
+
+        public Rebar Rebar {get; set;}
+        public bool UseRebar { get; set; }
+        public bool Fissure{ get; set; }
+        public bool Shear { get; set; }
+
+        protected Fiber m_Fiber;
+
+        //Нормативное остаточное сопротивления осевому растяжению кг/см2 табл.2
+        protected double Rfbt3n;
+
+        //Расчетное остаточное остаточного сопротивления осевому растяжению 
+        protected double Rfbt3;
+
+        protected double B;
+       
+        protected double Rfbn;
+        protected double fi = 0.9;
+        protected double Ef; //для фибры из тонкой низкоуглеродистой проволоки МП п.п  кг/см2 
+        protected double Eb; //Начальный модуль упругости бетона-матрицы B30 СП63
+        //коэффициент фибрового армирования по объему
+        protected double mu_fv;
+        //Модуль упругости сталефибробетона п.п. (5.2.7)
+        protected double Efb;
+        // жесткость элемента в предельной по прочности стадии,определяемая по формуле (6.25)
+        protected double D;
+        //условная критическая сила, определяемая по формуле (6.24)
+        protected double Ncr;
+        //коэффициент, учитывающий влияние продольного изгиба (прогиба) элемента на его несущую способность и определяемый по формуле(6.23)
+        protected double eta;
+        //площадь сжатой зоны бетона ф. (6.22)
+        protected double Ab;
+        //поперечная сила
+        protected double Q;
+
+        protected double Rfb;
+        protected double Rfbtn;
+      
+        // параметры продольной арматуры
+        protected double[] l_rebar;
+        // параметры поперечной арматуры
+        protected double[] t_rebar;
+
+        protected Dictionary<string, double> m_Efforts;
+
+        protected BSBeam m_Beam;
+
+        public BSFiberCalc_MNQ()
         {
-            this.beam = new BSBeam_Rect();
-            m_Result = new Dictionary<string, double>();
+            m_Beam = new BSBeam();
+            m_Efforts = new Dictionary<string, double>();
+            Msg = new List<string>();
         }
 
-        public override void GetSize(double[] _t)
+        public double Delta_e(double _d_e)
         {
-            (b, h, l0) = (beam.b, beam.h, beam.Length) = (_t[0], _t[1], _t[2]);
+            double d_e;
 
-            A = beam.Area();
+            if (_d_e <= 0.15)
+            {
+                d_e = 0.15;
+            }
+            else if (_d_e >= 1.5)
+            {
+                d_e = 1.5;
+            }
+            else
+                d_e = _d_e;
 
-            I = beam.I_s();
-
-            y_t = beam.y_t();
+            return d_e;
         }
 
-        /// <summary>
-        /// Расчет внецентренно сжатых элементов (6.1.13)
-        /// </summary>
-        private new void Calculate_N()
+        protected double R_fb() => Rfbn / Yb * Yb1 * Yb2 * Yb3 * Yb5;
+
+        public double K_b(double _fi1, double _delta_e) => 0.15 / (_fi1 * (0.3d + _delta_e));
+
+        public static BSFiberCalc_MNQ Construct(BeamSection _BeamSection)
         {
-            base.Calculate_N();
-            /*
+            BSFiberCalc_MNQ fiberCalc;
+
+            if (BeamSection.Rect == _BeamSection)
+            {
+                fiberCalc = new BSFiberCalc_MNQ_Rect();
+            }
+            else if (BeamSection.Ring == _BeamSection)
+            {
+                fiberCalc = new BSFiberCalc_MNQ_Ring();
+            }
+            else if (BeamSection.IBeam == _BeamSection)
+            {
+                fiberCalc = new BSFiberCalc_MNQ_IT();
+            }
+            else
+            {
+                throw new Exception("Сечение балки не определено");
+            }
+
+            return fiberCalc;
+        }
+
+        public void GetFiberParamsFromJson(Fiber _fiber)
+        {
+            m_Fiber = _fiber;
+            e0 = _fiber.e0;
+            Ef = _fiber.Ef;
+            Eb = _fiber.Eb;
+            mu_fv = _fiber.mu_fv;
+        } 
+        
+        // параметры арматуры
+        public void GetRebarParams(double[] _l_rebar, double[] _t_rebar)
+        {
+            l_rebar = _l_rebar;
+            t_rebar = _t_rebar;
+            
+            // Шаг поперечной арматуры
+            Rebar.s_w = _t_rebar[1];
+        }
+        
+        protected void Calculate_N()
+        {
             //Коэффициент, учитывающий влияние длительности действия нагрузки, определяют по формуле (6.27)
             fi1 = (M1 != 0) ? 1 + Ml1 / M1 : 1.0;
 
             //относительное значение эксцентриситета продольной силы
-            delta_e = Delta_e(m_Fiber.e0 / beam.h);
+            delta_e = Delta_e(m_Fiber.e0 / m_Beam.h);
 
             // Коэфициент ф.(6.26)
             k_b = K_b(fi1, delta_e);
@@ -57,9 +219,9 @@ namespace BSFiberConcrete
             // условная критическая сила, определяемая по формуле (6.24)
             Ncr = Math.PI * Math.PI * D / Math.Pow(l0, 2);
 
-            eta = 1 / (1 - N / Ncr);
+            eta = (Ncr!=0) ? 1 / (1 - N / Ncr) : 0;
 
-            Ab = beam.b * beam.h * (1 - 2 * m_Fiber.e0 * eta / beam.h);
+            Ab = m_Beam.b * m_Beam.h * (1 - 2 * m_Fiber.e0 * eta / m_Beam.h);
 
             Rfb = R_fb();
 
@@ -77,22 +239,15 @@ namespace BSFiberConcrete
             }
 
             N_ult = BSHelper.Kg2T(N_ult);
-            */
         }
 
-        // Расчет внецентренно сжатых сталефибробетонных элементов без рабочей арматуры при
-        //расположении продольной сжимающей силы за пределами поперечного сечения элемента и внецентренно сжатых сталефибробетонных элементов без рабочей арматуры при расположении продольной
-        // сжимающей силы в пределах поперечного сечения элемента, в которых по условиям эксплуатации не
-        // допускается образование трещин
-        private new void Calculate_N_Out()
+        protected void Calculate_N_Out()
         {
-            base.Calculate_N_Out();
-            /*
             //Коэффициент, учитывающий влияние длительности действия нагрузки (6.27)
             fi1 = (M1 != 0) ? 1 + Ml1 / M1 : 1.0;
 
             //относительное значение эксцентриситета продольной силы
-            delta_e = Delta_e(m_Fiber.e0 / beam.h);
+            delta_e = Delta_e(m_Fiber.e0 / m_Beam.h);
 
             // Коэфициент ф.(6.26)
             k_b = K_b(fi1, delta_e);
@@ -101,19 +256,19 @@ namespace BSFiberConcrete
             Efb = m_Fiber.Eb * (1 - m_Fiber.mu_fv) + m_Fiber.Ef * m_Fiber.mu_fv;
 
             //Модуль упругости арматуры
-            double Es = 0;
+            double Es = Rebar.Es;
             // Момент инерции продольной арматуры соответственно относительно оси, проходящей через центр тяжести поперечного сечения элемента
-            double ls = 0;
+            double ls = 1;
             //жесткость элемента в предельной по прочности стадии, определяемая по формуле (6.31)
             D = k_b * Efb * I + 0.7 * Es * ls;
 
             // условная критическая сила, определяемая по формуле (6.24)
-            Ncr = Math.PI * Math.PI * D / Math.Pow(beam.Length, 2);
+            Ncr = Math.PI * Math.PI * D / Math.Pow(m_Beam.Length, 2);
 
             //коэффициент, учитывающий влияние продольного изгиба элемента на его несущую способность (6.23) 6.1.13
             eta = 1 / (1 - N / Ncr);
 
-            Ab = beam.b * beam.h * (1 - 2 * m_Fiber.e0 * eta / beam.h);
+            Ab = m_Beam.b * m_Beam.h * (1 - 2 * m_Fiber.e0 * eta / m_Beam.h);
 
             //Расчетные значения сопротивления осевому растяжению
             double Rfbt = Rfbtn / Yft * Yb1 * Yb5;
@@ -122,16 +277,20 @@ namespace BSFiberConcrete
             N_ult = fi * Rfbt * A;
 
             N_ult = BSHelper.Kg2T(N_ult);
-            */
         }
 
-        /// <summary>
-        /// Расчет элементов по полосе между наклонными сечениями
-        /// </summary>
-        private new void CalculateQ()
+        protected void InitC(ref List<double> _lst, double _from, double _to, double _dx)
         {
-            base.CalculateQ();
-            /*
+            double val = _from;
+            while (val <= _to)
+            {
+                _lst.Add(val);
+                val += _dx;
+            }
+        }
+
+        protected void CalculateQ()
+        {
             // Растояние до цента тяжести арматуры растянутой арматуры, см
             double a = l_rebar.Length > 2 ? l_rebar[2] : 4;
 
@@ -225,28 +384,10 @@ namespace BSFiberConcrete
             }
 
             Q_ult = Qfb + Qsw; // 6.75
-            */
         }
 
-        /*
-        private void InitC(ref List<double> _lst, double _from, double _to, double _dx)
+        protected void CalculateM()
         {
-            double val = _from;
-            while (val <= _to)
-            {
-                _lst.Add(val);
-                val += _dx;
-            }
-        }
-        */
-
-        /// <summary>
-        ///  Расчет элементов по наклонным сечениям на действие моментов
-        /// </summary>
-        private new void CalculateM()
-        {
-            base.CalculateM();
-            /*
             // Растояние до цента тяжести арматуры растянутой арматуры, см
             double a = l_rebar.Length > 2 ? l_rebar[2] : 4;
 
@@ -345,30 +486,44 @@ namespace BSFiberConcrete
 
             // предельный момент сечения (т*м)
             M_ult = BSHelper.Kg2T(M_ult);
-            */
         }
 
-        public override void Calculate()
+        public virtual void Calculate() {}
+
+        public Dictionary<string, double> GeomParams()
         {
-            if (UseRebar)
-            {
-                Calculate_N_Out();
-            }
-            else if (Shear)
-            {   // Расчет на действие поперечной силы
-                CalculateQ();
-                // Расчет на действие моментов
-                CalculateM();
-            }
-            else
-            {
-                Calculate_N();
-            }
+            throw new NotImplementedException();
         }
 
-        public override Dictionary<string, double> Results()
+        public virtual void GetParams(double[] _t)
         {
-            return new Dictionary<string, double>() { { "M_ult", M_ult }, { "Q_ult", Q_ult }, { "N_ult", N_ult } };
+            (Rfbt3n, Rfbn, Yb, Yft, Yb1, Yb2, Yb3, Yb5, B) = (_t[0], _t[1], _t[2], _t[3], _t[4], _t[5], _t[6], _t[7], _t[8]);
+            Rfbtn = Rfbt3n;
+        }
+
+        public virtual void GetSize(double[] _t) {}
+
+        public void GetEfforts(Dictionary<string, double> _efforts)
+        {
+            m_Efforts = _efforts;
+
+            double Mx = m_Efforts["Mx"];
+            //Момент от действия полной нагрузки
+            M1 = m_Efforts["My"];
+            //Продольное усилие кг
+            N = m_Efforts["N"];
+            // Поперечная сила
+            Q = m_Efforts["Q"];
+           
+            //Момент от действия постянных и длительных нагрузок нагрузок
+            Ml1 = m_Efforts["Ml"];
+            // Эксцентриситет приложения N
+            e_N = m_Efforts["eN"];
+        }
+
+        public virtual Dictionary<string, double> Results()
+        {
+            return new Dictionary<string, double>() { { "Rfb", Rfb }, { "N_ult", N_ult } };
         }
     }
 }
