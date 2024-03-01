@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Dapper;
 using System.Linq.Expressions;
+using MathNet.Numerics;
 
 namespace BSFiberConcrete.Lib
 {
@@ -55,6 +56,44 @@ namespace BSFiberConcrete.Lib
                 return new List<string>();
             }
         }
+
+        public static List<Efforts> LoadEfforts()
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    var output = cnn.Query<Efforts>("select * from Efforts", new DynamicParameters());
+                    return output.ToList();
+                }
+            }
+            catch
+            {
+                return new List<Efforts>();
+            }
+        }
+
+        public static void SaveEfforts(Efforts _efforts)
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    cnn.Open();
+                    using (var tr = cnn.BeginTransaction())
+                    {                        
+                        int cnt = cnn.Execute("update Efforts set Mx = @Mx", _efforts, tr);
+                        tr.Commit();
+                    }                    
+                }
+            }
+            catch(Exception _e)
+            {
+                MessageBox.Show(_e.Message);
+            }
+        }
+
+
 
 
         public static List<Elements> LoadElements()

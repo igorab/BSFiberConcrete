@@ -68,5 +68,10 @@ namespace BSFiberConcrete
         {
             return base.Jy();
         }
+
+        public override double I_s()
+        {
+            return Jx();
+        }
     }
 }

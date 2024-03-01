@@ -50,7 +50,9 @@ namespace BSFiberConcrete
                 m_BSLoadData.Load();
 
                 m_Iniv = m_BSLoadData.ReadInitFromJson();
-                
+
+                var E = Lib.BSData.LoadEfforts();
+
                 m_BSLoadData.ReadParamsFromJson();
 
                 LoadRectangle(m_Iniv["b"], m_Iniv["h"]);
@@ -500,16 +502,44 @@ namespace BSFiberConcrete
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="_shear">Расчет по наклонному сечению на действие Q</param>
-        private void FiberCalculateMNQ_Report(bool _shear = false)
+        ///  Расчет по наклонному сечению на действие силы N
+        ///  (Внецентренное сжатие)
+        /// </summary>        
+        private void FiberCalculate_N()
         {
             BSFiberCalc_MNQ fiberCalc = new BSFiberCalc_MNQ();
 
             try
             {
-                FiberCalc_MNQ(out fiberCalc, checkBoxRebar.Checked, checkBoxFissure.Checked, _shear);
+                FiberCalc_MNQ(out fiberCalc, checkBoxRebar.Checked, checkBoxFissure.Checked);
+            }
+            catch (Exception _ex)
+            {
+                MessageBox.Show("Ошибка расчета: " + _ex.Message);
+            }
+            finally
+            {
+                BSFiberReport_MNQ report = new BSFiberReport_MNQ();
+
+                report.BeamSection = m_BeamSection;
+                report.Init(fiberCalc);
+
+                string pathToHtmlFile = report.CreateReport();
+
+                System.Diagnostics.Process.Start(pathToHtmlFile);
+            }
+        }
+
+        /// <summary>
+        ///  Расчет по наклонному сечению на действие Q
+        /// </summary>        
+        private void FiberCalculate_Shear()
+        {
+            BSFiberCalc_MNQ fiberCalc = new BSFiberCalc_MNQ();
+
+            try
+            {
+                FiberCalc_MNQ(out fiberCalc, checkBoxRebar.Checked, checkBoxFissure.Checked, _shear: true);
             }
             catch (Exception _ex)
             {
@@ -531,7 +561,7 @@ namespace BSFiberConcrete
         // Расчет на внецентренное сжатие
         private void btnCalc_N_Click(object sender, EventArgs e)
         {
-            FiberCalculateMNQ_Report();
+            FiberCalculate_N();
         }
 
         // поперечная арматура
@@ -572,7 +602,7 @@ namespace BSFiberConcrete
         // Расчет на действие момента и поперечной силы
         private void btnCalc_Q_Click(object sender, EventArgs e)
         {                        
-            FiberCalculateMNQ_Report(_shear: true);
+            FiberCalculate_Shear();
         }
         
         private void btnFactors_Click(object sender, EventArgs e)
@@ -769,6 +799,17 @@ namespace BSFiberConcrete
             {
                 MessageBox.Show("Ошибка в отчете " + _e.Message);
             }
-        }        
+        }
+
+        private void gridEfforts_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+                      
+        }
+
+        private void btnEffortsRefresh_Click(object sender, EventArgs e)
+        {
+            Efforts ef = new Efforts() { Id = 1, Mx = 2 };
+            Lib.BSData.SaveEfforts(ef);
+        }
     }
 }

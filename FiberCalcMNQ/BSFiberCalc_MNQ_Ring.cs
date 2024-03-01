@@ -13,12 +13,16 @@ namespace BSFiberConcrete
         public BSFiberCalc_MNQ_Ring()
         {
             this.beam = new BSBeam_Ring();
+            base.m_Beam = this.beam;
         }
 
         public override void GetSize(double[] _t)
         {
-            (r1, r2) = (beam.r1, beam.r2) = (_t[0], _t[1]);
+            (r1, r2, l0) = (beam.r1, beam.r2, beam.Length) = (_t[0], _t[1], _t[2]);
             A = beam.Area();
+            I = beam.I_s();
+            h = beam.h;
+            b = beam.b;
         }
 
         public override void GetParams(double[] _t)
@@ -28,8 +32,7 @@ namespace BSFiberConcrete
             e_N = 25;
         }
 
-
-        public override void Calculate()
+        private new void Calculate_N()
         {
             double Ar = beam.Area();
 
@@ -48,6 +51,25 @@ namespace BSFiberConcrete
             N_ult = Ar * (Rfb * Math.Sin(Math.PI * alfa_r) / Math.PI + Rfbt3 * (1 - 1.35 * alfa_r) * 1.6 * alfa_r) * beam.r_m / e_N;
 
             N_ult *= 0.001d;
+        }
+
+
+        public override void Calculate()
+        {
+            if (UseRebar)
+            {
+                Calculate_N_Out();
+            }
+            else if (Shear)
+            {   // Расчет на действие поперечной силы
+                CalculateQ();
+                // Расчет на действие моментов
+                CalculateM();
+            }
+            else
+            {
+                Calculate_N();
+            }
         }
     }
 }

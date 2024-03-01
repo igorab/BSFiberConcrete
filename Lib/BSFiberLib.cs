@@ -104,6 +104,7 @@ namespace BSFiberConcrete
         public double Rfbn { get; set; }
     }
 
+
     public class Elements
     {
         public double Rfbt3n { get; set; }
@@ -116,6 +117,22 @@ namespace BSFiberConcrete
         public double Yb5 { get; set; }
         public int B { get; set; }
     }
+
+
+    /// <summary>
+    /// Усилия
+    /// </summary>
+    public class Efforts
+    {
+        public int Id { get; set; }
+        public double Mx { get; set; }
+        public double My { get; set; }
+        public double N { get; set; }
+        public double Q { get; set; }
+        public double Ml { get; set; }
+        public double eN { get; set; }                
+    }
+
 
     internal class BSFiberLib
     {

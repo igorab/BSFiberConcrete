@@ -62,5 +62,9 @@ namespace BSFiberConcrete
             return wx;
         }
 
+        public override double I_s()
+        {
+            return Jx();
+        }
     }
 }

@@ -340,10 +340,10 @@ namespace BSFiberConcrete
                 lstQ_fb.Add(Qfb_i);
             }
             // Qfb - максимальная поперечная сила, воспринимаемая сталефибробетоном в наклонном сечении
-            double Qfb = lstQ_fb.Max();
+            double Qfb = (lstQ_fb.Count > 0) ? lstQ_fb.Max() : 0;
 
             // Максимальный шаг поперечной арматуры см
-            double s_w_max = Rfbt * b * h0 * h0 / Q;
+            double s_w_max = (Q > 0) ? Rfbt * b * h0 * h0 / Q : 0;
 
             string res;
             if (Rebar.s_w <= s_w_max)
@@ -384,6 +384,13 @@ namespace BSFiberConcrete
             }
 
             Q_ult = Qfb + Qsw; // 6.75
+
+            if (_Q_ult <= Q_ult)
+            {
+                res = "Перерезываюзщая сила превышает предельно допустимую в данном сечении";
+                Msg.Add(res);
+            }
+
         }
 
         protected void CalculateM()
@@ -427,7 +434,7 @@ namespace BSFiberConcrete
                    M_sw; // момент, воспр поперечной арматурой
             double M_fbt = 0; // момент, воспр сталефибробетоном
 
-            double Q_fbt3 = 1.5d * Rfbt3 * b * h0 * h0 / c_min;
+            double Q_fbt3 = (c_min!=0) ? 1.5d * Rfbt3 * b * h0 * h0 / c_min : 0;
 
             // усилие в продольной растянутой арматуре
             double N_s = Rebar.Rs * Rebar.As;
@@ -464,7 +471,7 @@ namespace BSFiberConcrete
                 lst_Q_sw.Add(Q_sw);
                 lst_M_sw.Add(M_sw);
 
-                Q_fbt3 = 1.5d * Rfbt3 * b * h0 * h0 / ci;
+                Q_fbt3 = (ci != 0) ? 1.5d * Rfbt3 * b * h0 * h0 / ci : 0;
 
                 if (Q_fbt3 >= 2.5d * Rfbt3 * b * h0)
                     Q_fbt3 = 2.5d * Rfbt3 * b * h0;
@@ -482,7 +489,7 @@ namespace BSFiberConcrete
                 lst_M_ult.Add(M_ult);
             }
 
-            M_ult = lst_M_ult.Min();
+            M_ult = (lst_M_ult.Count > 0) ? lst_M_ult.Min() : 0;
 
             // предельный момент сечения (т*м)
             M_ult = BSHelper.Kg2T(M_ult);

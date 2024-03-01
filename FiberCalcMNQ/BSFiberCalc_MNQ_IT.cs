@@ -24,6 +24,12 @@ namespace BSFiberConcrete
             {
                 Calculate_N_Out();                
             }
+            else if (Shear)
+            {   // Расчет на действие поперечной силы
+                CalculateQ();
+                // Расчет на действие моментов
+                CalculateM();
+            }
             else
             {
                 Calculate_N();
@@ -35,9 +41,11 @@ namespace BSFiberConcrete
         public override void GetSize(double[] _t)
         {
             (beam.bf, beam.hf, beam.hw, beam.bw, beam.b1f, beam.h1f, beam.Length) = (_t[0], _t[1], _t[2], _t[3], _t[4], _t[5], _t[6]);
-            l0 = beam.Length;
-            I = beam.Jx();
             base.m_Beam = this.beam;
+            l0 = beam.Length;
+            b = beam.b;
+            h = beam.h;
+            I = beam.Jx();            
         }
     }
 }
