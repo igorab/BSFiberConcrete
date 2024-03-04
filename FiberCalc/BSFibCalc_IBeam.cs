@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 namespace BSFiberConcrete
 {
-    [BSFiberCalculationAttribute(Descr = "Расчет балки двутаврового сечения")]
+    [BSFiberCalculation(Descr = "Расчет балки двутаврового сечения")]
     public class BSFibCalc_IBeam : BSFiberCalculation
     {
         // размеры:
@@ -69,6 +69,8 @@ namespace BSFiberConcrete
 
         public override void Calculate()
         {
+            string info;
+
             Calc_Pre();
 
             Action calc_a = delegate
@@ -98,6 +100,9 @@ namespace BSFiberConcrete
             }
 
             Mult = Math.Round(Mult * 0.00001d, 4);
+
+            info = "Расчет успешно выполнен!";
+            Msg.Add(info);
         }
 
         public override Dictionary<string, double> Results()

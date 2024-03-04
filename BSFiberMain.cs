@@ -31,6 +31,7 @@ namespace BSFiberConcrete
         private Dictionary<string, double> m_PhysParams;
         private Dictionary<string, double> m_GeomParams;
         private Dictionary<string, double> m_CalcResults;
+        private List<string> m_Message;
         private BeamSection m_BeamSection;
 
         public BSFiberMain()
@@ -217,6 +218,7 @@ namespace BSFiberConcrete
                 m_Coeffs = bsCalc.Coeffs;
                 m_GeomParams = bsCalc.GeomParams();
                 m_CalcResults = bsCalc.Results();
+                m_Message =  bsCalc.Msg;
 
                 int ires = 0;
                 foreach (var res in m_CalcResults)
@@ -281,6 +283,7 @@ namespace BSFiberConcrete
                 report.PhysParams = m_PhysParams;// bsCalc.PhysicalParameters();
                 report.BeamSection = m_BeamSection;
                 report.CalcResults = m_CalcResults;
+                report.Messages = m_Message;
 
                 path = report.CreateReport();
                 return path;
@@ -479,6 +482,8 @@ namespace BSFiberConcrete
            
             fiberCalc.Calculate();
 
+            fiberCalc.Msg.Add("Расчет успешно выполнен!");
+
             m_CalcResults = fiberCalc.Results();
             
             int ires = 0;
@@ -521,7 +526,7 @@ namespace BSFiberConcrete
             {
                 BSFiberReport_MNQ report = new BSFiberReport_MNQ();
 
-                report.BeamSection = m_BeamSection;
+                report.BeamSection = m_BeamSection;                
                 report.Init(fiberCalc);
 
                 string pathToHtmlFile = report.CreateReport();

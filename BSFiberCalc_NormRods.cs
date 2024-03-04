@@ -90,6 +90,9 @@ namespace BSFiberConcrete
             
             if (!checkOK)
                 throw new Exception(info);
+
+            info = "Расчет успешно выполнен!";
+            Msg.Add(info);
         }        
     }
     

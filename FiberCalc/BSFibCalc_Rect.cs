@@ -50,6 +50,8 @@ namespace BSFiberConcrete
 
         public override void Calculate()
         {
+            string info;
+
             //Расчетное остаточное остаточного сопротивления осевому растяжению
             Rfbt3 = Rfbt_3();
 
@@ -64,6 +66,9 @@ namespace BSFiberConcrete
 
             //Предельный момент сечения  (т*м)
             Mult = Math.Round(Mult * 0.00001, 4);
+
+            info = "Расчет успешно выполнен!";
+            Msg.Add(info);
         }
     }
 }

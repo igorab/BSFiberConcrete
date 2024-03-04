@@ -25,7 +25,7 @@ namespace BSFiberConcrete
         public void Init(BSFiberCalc_MNQ _fiberCalc)
         {
             fiberCalc = _fiberCalc;
-            //m_CalcResults = fiberCalc.Results();
+            m_Messages = _fiberCalc.Msg;
 
             ReportName = typeof(BSFiberCalc_MNQ).GetCustomAttribute<DisplayNameAttribute>().DisplayName;
 

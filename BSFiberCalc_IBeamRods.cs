@@ -124,10 +124,15 @@ namespace BSFiberConcrete
         /// расчет прочности двутавра с рабочей арматурой
         /// </summary>
         public override void Calculate()
-        {            
+        {
+            string info;
+            
             Calc_Pre();
 
             (Mult, x) = Calc_Mult(_h0: h - Rod.a, _h: h, _a: Rod.a, _a1: Rod.a1);
+
+            info = "Расчет успешно выполнен!";
+            Msg.Add(info);
 
         }
     }

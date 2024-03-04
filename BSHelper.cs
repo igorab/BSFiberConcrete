@@ -22,6 +22,28 @@ namespace BSFiberConcrete
         public static double Kg2T(double _kg) => _kg * 0.0001d; 
         public static double MPA2kgsm2(double _mpa) => 10.197162d * _mpa;
 
+        public static string ImgResource(BeamSection _bs)
+        {
+            string _img = "";
+
+            switch (_bs)
+            {
+                case BeamSection.Rect:
+                    _img = "FiberBeton.PNG";
+                    break;
+                case BeamSection.TBeam:
+                case BeamSection.IBeam:
+                    _img = "IBeam.PNG";
+                    break;
+                case BeamSection.Ring:
+                    _img = "Ring.PNG";
+                    break;
+            }
+
+            return _img;
+        }
+
+
         public static string EnumDescription(Enum myEnumVariable)
         {
             string desc = myEnumVariable.GetAttributeOfType<DescriptionAttribute>().Description;

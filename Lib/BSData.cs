@@ -12,11 +12,14 @@ using System.Windows.Forms;
 using Dapper;
 using System.Linq.Expressions;
 using MathNet.Numerics;
+using System.Reflection.Emit;
 
 namespace BSFiberConcrete.Lib
 {
     public class BSData
     {
+        public static string ResourcePath(string _file) => Path.Combine(Environment.CurrentDirectory, "Resources", _file);  
+
         public static string DataPath(string _file)  => Path.Combine(Environment.CurrentDirectory, "Data", _file); 
 
         //public static readonly string connectionString = $"Data Source={DataPath("Fiber.db")};";
