@@ -76,6 +76,7 @@ namespace BSFiberConcrete.Lib
             }
         }
 
+        // сохранить данные в бд по усилиям
         public static void SaveEfforts(Efforts _efforts)
         {
             try
@@ -85,7 +86,7 @@ namespace BSFiberConcrete.Lib
                     cnn.Open();
                     using (var tr = cnn.BeginTransaction())
                     {                        
-                        int cnt = cnn.Execute("update Efforts set Mx = @Mx", _efforts, tr);
+                        int cnt = cnn.Execute("update Efforts set Mx = @Mx, My = @My, N = @N, Q = @Q, Ml = @Ml, eN = @eN ", _efforts, tr);
                         tr.Commit();
                     }                    
                 }
