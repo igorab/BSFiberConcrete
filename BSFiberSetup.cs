@@ -13,9 +13,7 @@ namespace BSFiberConcrete
     public partial class BSFiberSetup : Form
     {
         public List<Elements> Records { get; set; }
-
         public BeamSection BeamSection { get; set; }
-
         public BSFiberSetup()
         {
             InitializeComponent();            
@@ -25,14 +23,12 @@ namespace BSFiberConcrete
         {
             Records = new List<Elements>();
             try
-            {
-                //BSData.Connect();               
-
-                //BSData.LoadConnectionString();
-
+            {                
                 comboBetonType.DataSource = BSData.LoadTypes();
 
                 dataGridElements.DataSource =  BSData.LoadElements();
+
+                dataGridCoeffs.DataSource = BSData.LoadCoeffs();
                 
                 using (var streamreader = new StreamReader(BSFiberLoadData.FiberConcretePath))
                 {
@@ -161,6 +157,11 @@ namespace BSFiberConcrete
             InitSetupTable();
 
             InitRebarSetup();
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

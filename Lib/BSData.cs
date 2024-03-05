@@ -60,6 +60,26 @@ namespace BSFiberConcrete.Lib
             }
         }
 
+        public static List<Coefficients> LoadCoeffs()
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    var output = cnn.Query<Coefficients>("select * from Coefficients", new DynamicParameters());
+                    return output.ToList();
+                }
+            }
+            catch
+            {
+                return new List<Coefficients>();
+            }
+        }
+
+
+
+
+
         public static List<Efforts> LoadEfforts()
         {
             try
@@ -98,8 +118,10 @@ namespace BSFiberConcrete.Lib
         }
 
 
-
-
+        /// <summary>
+        /// Данные по фибробетону из БД
+        /// </summary>
+        /// <returns></returns>
         public static List<Elements> LoadElements()
         {
             try

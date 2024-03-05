@@ -132,4 +132,17 @@
         public double Ml { get; set; }
         public double eN { get; set; }
     }
+
+    /// <summary>
+    /// Коэффициенты
+    /// </summary>
+    public class Coefficients
+    {
+        public int ID { get; set; }
+        public string Y { get; set; }
+        public double Val { get; set; }
+        public string Name { get; set; }
+        public string Descr { get; set; }
+    }
+
 }
