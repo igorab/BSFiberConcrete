@@ -51,28 +51,36 @@ namespace BSFiberConcrete
                 m_BSLoadData.Load();
 
                 m_Iniv = m_BSLoadData.ReadInitFromJson();
-
-                var E = Lib.BSData.LoadEfforts();
+                List<Efforts> eff = Lib.BSData.LoadEfforts();
+                if (eff.Count > 0)
+                {
+                    m_Iniv["Mx"] = eff[0].Mx;
+                    m_Iniv["My"] = eff[0].My;
+                    m_Iniv["N"] = eff[0].N;
+                    m_Iniv["Q"] = eff[0].Q;
+                    m_Iniv["Ml"] = eff[0].Ml;
+                    m_Iniv["eN"] = eff[0].eN;
+                }
 
                 m_BSLoadData.ReadParamsFromJson();
 
                 LoadRectangle(m_Iniv["b"], m_Iniv["h"]);
 
-                cmbBetonClass.DataSource = BSFiberLib.betonList;
+                cmbBetonClass.DataSource = BSFiberLib.BetonList;
                 cmbBetonClass.DisplayMember = "Name";
                 cmbBetonClass.ValueMember = "Id";
                 cmbBetonClass.SelectedValue = 30;
 
-                numRfbt3n.Value = (decimal)BSFiberLib.PhysElements.Rfbt3n;
-                numRfbn.Value = (decimal)BSFiberLib.PhysElements.Rfbn;
+                Elements fiberConcrete = BSFiberLib.PhysElements;
 
-                numYft.Value = (decimal)BSFiberLib.PhysElements.Yft;
-                numYb.Value = (decimal)BSFiberLib.PhysElements.Yb;
-                numYb1.Value = (decimal)BSFiberLib.PhysElements.Yb1;
-                numYb2.Value = (decimal)BSFiberLib.PhysElements.Yb2;
-                numYb3.Value = (decimal)BSFiberLib.PhysElements.Yb3;
-                numYb5.Value = (decimal)BSFiberLib.PhysElements.Yb5;
-
+                numRfbt3n.Value = (decimal)fiberConcrete.Rfbt3n;
+                numRfbn.Value = (decimal)fiberConcrete.Rfbn;
+                numYft.Value = (decimal)fiberConcrete.Yft;
+                numYb.Value = (decimal)fiberConcrete.Yb;
+                numYb1.Value = (decimal)fiberConcrete.Yb1;
+                numYb2.Value = (decimal)fiberConcrete.Yb2;
+                numYb3.Value = (decimal)fiberConcrete.Yb3;
+                numYb5.Value = (decimal)fiberConcrete.Yb5;
                                 
                 double[] mnq = { m_Iniv["Mx"], m_Iniv["My"], m_Iniv["N"], m_Iniv["Q"], m_Iniv["Ml"], m_Iniv["eN"] }; //Mx My N Q Ml
                 gridEfforts.Rows.Add(mnq);
@@ -419,8 +427,10 @@ namespace BSFiberConcrete
             }
         }
 
-        private void InitEfforts(ref Dictionary<string, double> MNQ)
+        private void InitEfforts(out Dictionary<string, double> MNQ)
         {
+            MNQ = new Dictionary<string, double>();
+
             string[] F = new string[] { "Mx", "My", "N", "Q", "Ml", "eN"};
             DataGridViewRowCollection rows = gridEfforts.Rows;
             var row = rows[0];
@@ -447,10 +457,8 @@ namespace BSFiberConcrete
             fiberCalc.UseRebar = _useRebar;
             fiberCalc.Fissure = _fissurre;
             fiberCalc.Shear = _shear;
-
-            Dictionary<string, double> MNQ = new Dictionary<string, double>();
-
-            InitEfforts(ref MNQ);
+            
+            InitEfforts(out Dictionary<string, double> MNQ);
 
             if (_shear || _useRebar)
             {
@@ -659,9 +667,8 @@ namespace BSFiberConcrete
             //использовать  пользовательские данные
             if (UserInput)
             {
-                // Усилия
-                Dictionary<string, double> MNQ = new Dictionary<string, double>();
-                InitEfforts(ref MNQ);
+                // Усилия                
+                InitEfforts(out Dictionary<string, double> MNQ);
                 c_Mx = MNQ["Mx"];
                 c_My = MNQ["My"];
                 c_N = MNQ["N"];
@@ -812,8 +819,10 @@ namespace BSFiberConcrete
         }
 
         private void btnEffortsRefresh_Click(object sender, EventArgs e)
-        {
-            Efforts ef = new Efforts() { Id = 1, Mx = 2 };
+        {            
+            InitEfforts(out Dictionary<string, double> MNQ);
+
+            Efforts ef = new Efforts() {Id = 1, Mx = MNQ["Mx"], My = MNQ["My"], N = MNQ["N"], Q = MNQ["Q"], Ml = MNQ["Ml"], eN = MNQ["eN"] };
             Lib.BSData.SaveEfforts(ef);
         }
     }

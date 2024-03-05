@@ -157,6 +157,7 @@
     <Compile Include="FiberCalc\BSFibCalc_Ring.cs" />
     <Compile Include="FiberCalc\IBSFiberCalculation.cs" />
     <Compile Include="Lib\BSData.cs" />
+    <Compile Include="Lib\BSDataStruct.cs" />
     <Compile Include="Lib\BSFiberLib.cs" />
     <Compile Include="BSFiberLoadData.cs" />
     <Compile Include="BSFiberMain.cs">

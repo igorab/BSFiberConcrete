@@ -66,7 +66,7 @@ namespace BSFiberConcrete.Lib
             {
                 using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
                 {
-                    var output = cnn.Query<Efforts>("select * from Efforts", new DynamicParameters());
+                    var output = cnn.Query<Efforts>("select * from Efforts where id = 1", new DynamicParameters());
                     return output.ToList();
                 }
             }
@@ -86,7 +86,7 @@ namespace BSFiberConcrete.Lib
                     cnn.Open();
                     using (var tr = cnn.BeginTransaction())
                     {                        
-                        int cnt = cnn.Execute("update Efforts set Mx = @Mx, My = @My, N = @N, Q = @Q, Ml = @Ml, eN = @eN ", _efforts, tr);
+                        int cnt = cnn.Execute("update Efforts set Mx = @Mx, My = @My, N = @N, Q = @Q, Ml = @Ml, eN = @eN where Id = @Id ", _efforts, tr);
                         tr.Commit();
                     }                    
                 }
@@ -106,7 +106,7 @@ namespace BSFiberConcrete.Lib
             {
                 using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
                 {
-                    var output = cnn.Query<Elements>("select Rfbt3n, Rfbn, Yb, Yft, Yb1, Yb2, Yb3, Yb5, B from FiberConcrete", new DynamicParameters());
+                    IEnumerable<Elements> output = cnn.Query<Elements>("select * from FiberConcrete where iB = 1", new DynamicParameters());
                     return output.ToList();
                 }
             }
