@@ -6,6 +6,9 @@ using System.Windows.Forms;
 
 namespace BSFiberConcrete
 {
+    /// <summary>
+    /// Расчет балок из фибробетона
+    /// </summary>
     internal static class BSFiberConcrete
     {
         /// <summary>
@@ -16,8 +19,7 @@ namespace BSFiberConcrete
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
-            //Application.Run(new BSFormPanel());
+            
             Application.Run(new BSFiberMain());
         }
     }
