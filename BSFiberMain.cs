@@ -160,7 +160,7 @@ namespace BSFiberConcrete
             m_Beam.Clear();
 
             double.TryParse(tbLength.Text, out double lgth);
-            m_Beam.Add("Длина элемента", lgth);
+            m_Beam.Add("Длина элемента, см", lgth);
             double.TryParse(cmbEffectiveLengthFactor.Text, out double coeflgth);
             m_Beam.Add("Коэффициет расчетной длины", coeflgth);
         }
@@ -171,13 +171,18 @@ namespace BSFiberConcrete
         /// <param name="_bsCalc"></param>
         private void InitRebar(BSFiberCalculation _bsCalc)
         {
+            double[] matRod = new double[] { m_BSLoadData.Rebar.Rs, m_BSLoadData.Rebar.Rsc,
+                                                (double)numAs.Value, (double)numAs1.Value,  m_BSLoadData.Rebar.Es,
+                                                (double)num_a.Value, (double)num_a1.Value };
+
             if (_bsCalc is BSFiberCalc_RectRods)
             {
                 BSFiberCalc_RectRods _bsCalcRods = (BSFiberCalc_RectRods)_bsCalc;
 
                 InitLRebar(out double[] _l_rebar);
                 InitTRebar(out double[] _t_rebar);
-                _bsCalcRods.GetLTRebar(_l_rebar, _t_rebar);
+
+                _bsCalcRods.GetLTRebar(_l_rebar, _t_rebar, matRod);
             }
             else if (_bsCalc is BSFiberCalc_IBeamRods)
             {
@@ -185,30 +190,18 @@ namespace BSFiberConcrete
 
                 InitLRebar(out double[] _l_rebar);
                 InitTRebar(out double[] _t_rebar);
-                /*
-                MatRod.Rs = ; // кг/см2
-                MatRod.Rsc = ; // кг/см2
-                MatRod.As = ; // см2
-                MatRod.As1 =; // см2
-                MatRod.Es = ;
-
-                Rod = new BSRod();
-                Rod.a = ;
-                Rod.a1 = ;
-                */
-
-                double[] matRod = new double[] { m_BSLoadData.Rebar.Rs, m_BSLoadData.Rebar.Rsc, 
-                                                (double)numAs.Value, (double)numAs1.Value,  m_BSLoadData.Rebar.Es,
-                                                (double)num_a.Value, (double)num_a1.Value };
+                               
                 _bsCalcRods.GetLTRebar(_l_rebar, _t_rebar, matRod);
             }
         }
         
         private void btnCalc_Click(object sender, EventArgs e)
         {
+            bool useReinforcement = checkBoxRebar.Checked;
+
             try
-            {                
-                bsCalc = BSFiberCalculation.construct(m_BeamSection, checkBoxRebar.Checked);
+            {               
+                bsCalc = BSFiberCalculation.construct(m_BeamSection, useReinforcement);
                                 
                 InitRebar(bsCalc);
 
@@ -260,7 +253,7 @@ namespace BSFiberConcrete
                 if (bsCalc is null)                
                     throw new Exception("Не выполнен расчет");
                 
-                string pathToHtmlFile = CreateReport();
+                string pathToHtmlFile = CreateReport(_useReinforcement: useReinforcement);
 
                 System.Diagnostics.Process.Start(pathToHtmlFile);
             }
@@ -271,7 +264,13 @@ namespace BSFiberConcrete
 
         }
 
-        private string CreateReport(string _reportName = "")
+        /// <summary>
+        ///  Сформировать отчет
+        /// </summary>
+        /// <param name="_reportName">Заголовок</param>
+        /// <param name="_useReinforcement">Используется ли арматура</param>
+        /// <returns>Путь к файлу отчета</returns>
+        private string CreateReport(string _reportName = "", bool _useReinforcement = false)
         {
             try
             {
@@ -292,6 +291,7 @@ namespace BSFiberConcrete
                 report.BeamSection = m_BeamSection;
                 report.CalcResults = m_CalcResults;
                 report.Messages = m_Message;
+                report.UseReinforcement = _useReinforcement;
 
                 path = report.CreateReport();
                 return path;
@@ -301,22 +301,7 @@ namespace BSFiberConcrete
                 throw _e;
             }
         }
-
-
-        private void btnReport_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                string pathToHtmlFile = CreateReport();
-
-                System.Diagnostics.Process.Start(pathToHtmlFile);
-            }
-            catch (Exception _e)
-            {
-                MessageBox.Show("Ошибка в отчете " + _e.Message);
-            }
-        }
-            
+                    
         // Прямоугольное сечение
         private void LoadRectangle(double _b, double _h)
         {
@@ -824,6 +809,11 @@ namespace BSFiberConcrete
 
             Efforts ef = new Efforts() {Id = 1, Mx = MNQ["Mx"], My = MNQ["My"], N = MNQ["N"], Q = MNQ["Q"], Ml = MNQ["Ml"], eN = MNQ["eN"] };
             Lib.BSData.SaveEfforts(ef);
+        }
+
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

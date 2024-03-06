@@ -29,6 +29,7 @@ namespace BSFiberConcrete
         public List<string> Messages { set { m_Messages = value; }}
         public BeamSection BeamSection { set { m_BeamSection = value; } }
 
+        public bool UseReinforcement { get; set; }
 
         protected Dictionary<string, double> m_Beam;
         protected Dictionary<string, double> m_Coeffs;
@@ -43,8 +44,12 @@ namespace BSFiberConcrete
         public BSFiberReport()
         {
             ReportName = "Сопротивление сечения из фибробетона";
+            UseReinforcement = false;
         }
 
+        /// <summary>
+        ///  Верхняя часть отчета
+        /// </summary>        
         protected virtual void Header(StreamWriter w)
         {
             w.WriteLine("<html>");
@@ -55,7 +60,7 @@ namespace BSFiberConcrete
             string beamSection = BSHelper.EnumDescription(m_BeamSection);
             w.WriteLine($"<H2>{beamDescr}: {beamSection}</H2>");
             
-            string _filename = BSHelper.ImgResource(m_BeamSection);
+            string _filename = BSHelper.ImgResource(m_BeamSection, UseReinforcement);
             if (!string.IsNullOrEmpty(_filename))
             {                
                 string path = Lib.BSData.ResourcePath(_filename);
@@ -96,6 +101,9 @@ namespace BSFiberConcrete
             }
         }
 
+        /// <summary>
+        /// Основная часть отчета
+        /// </summary>        
         protected virtual void ReportBody(StreamWriter w)
         {            
             if (m_PhysParams != null)
@@ -158,7 +166,7 @@ namespace BSFiberConcrete
                 {
                     w.WriteLine("<tr>");
                     w.WriteLine($"<td><b>{_pair.Key}</b></td>");
-                    w.WriteLine($"<td colspan=2>| {_pair.Value} </td>");
+                    w.WriteLine($"<td colspan=2>| {Math.Round(_pair.Value, 4)} </td>");
                     w.WriteLine("</tr>");
                 }
                 

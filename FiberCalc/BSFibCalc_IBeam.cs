@@ -99,7 +99,7 @@ namespace BSFiberConcrete
                 calc_b();
             }
 
-            Mult = Math.Round(Mult * 0.00001d, 4);
+            Mult = Mult * 0.00001d;
 
             info = "Расчет успешно выполнен!";
             Msg.Add(info);
@@ -108,7 +108,7 @@ namespace BSFiberConcrete
         public override Dictionary<string, double> Results()
         {
             return new Dictionary<string, double>() {
-                { DN(typeof(BSFibCalc_IBeam), "x"), Math.Round(x, 4) },
+                { DN(typeof(BSFibCalc_IBeam), "x"), x },
                 { DN(typeof(BSFibCalc_IBeam), "Mult") , Mult }
             };
         }

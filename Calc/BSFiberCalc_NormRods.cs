@@ -27,28 +27,29 @@ namespace BSFiberConcrete
 
         public double Dzeta(double _x, double _h0) => (_h0 != 0) ? _x / _h0 : 0;
 
-        public void GetLTRebar(double[]  _LRebar, double[] _TRebar)
+        public void GetLTRebar(double[]  _LRebar, double[] _TRebar, double[] _MatRod)
         {
             LRebar = _LRebar;
             TRebar = _TRebar;
-
+            
+            int idx = -1;
             MatRod = new BSMatRod();
-            MatRod.Rs = 3567; // кг/см2
-            MatRod.Rsc = 3567; // кг/см2
-            MatRod.As = 4.52; // см2
-            MatRod.As1 = 4.52; // см2
-            MatRod.Es = 2038735;
+            MatRod.Rs = _MatRod[++idx]; // кг/см2
+            MatRod.Rsc = _MatRod[++idx]; // кг/см2
+            MatRod.As = _MatRod[++idx]; // см2
+            MatRod.As1 = _MatRod[++idx]; // см2
+            MatRod.Es = _MatRod[++idx];
 
             Rod = new BSRod();
-            Rod.a = 4;
-            Rod.a1 = 4;            
+            Rod.a = _MatRod[++idx];
+            Rod.a1 = _MatRod[++idx];
         }
 
         //6.5
         // предельный изгибающий момент, который может быть воспринят сечением элемента
         protected double Mult_arm(double _b, double _h0, double _x, double _h, double _a, double _a1)
         {
-            double res = Rfbn * _b * _x * (_h0 - 0.5 * _x) - Rfbt3 * _b * (_h - _x) * ((_h - _x) / 2 - _a) + MatRod.Rsc * MatRod.As1 * (_h0 - _a1);
+            double res = Rfb * _b * _x * (_h0 - 0.5 * _x) - Rfbt3 * _b * (_h - _x) * ((_h - _x) / 2 - _a) + MatRod.Rsc * MatRod.As1 * (_h0 - _a1);
             return res;
         }
 
@@ -59,10 +60,12 @@ namespace BSFiberConcrete
             //Расчетное остаточное остаточного сопротивления осевому растяжению
             Rfbt3 = Rfbt_3();
 
+            Rfb = R_fb();
+
             // Расчетная высота сечения
             double h0 = h - Rod.a;
 
-            double _x = (MatRod.Rs * MatRod.As - MatRod.Rsc * MatRod.As1 + Rfbt3 * b * h ) / ((Rfbn + Rfbt3) * b);
+            double _x = (MatRod.Rs * MatRod.As - MatRod.Rsc * MatRod.As1 + Rfbt3 * b * h ) / ((Rfb + Rfbt3) * b);
 
             double dzeta = Dzeta(_x, h0);
                        
@@ -86,7 +89,7 @@ namespace BSFiberConcrete
                 Msg.Add(info);
             }
 
-            Mult = 10E-5d * Mult_arm(b, h0, _x, h, Rod.a, Rod.a1);
+            Mult = 1E-5d * Mult_arm(b, h0, _x, h, Rod.a, Rod.a1);
             
             if (!checkOK)
                 throw new Exception(info);

@@ -12,22 +12,9 @@ namespace BSFiberConcrete
 
         [DisplayName("Радиус наружней грани, см")]
         public double r2 { get; private set; }
-
-        [DisplayName("Расчетные значения сопротивления  на сжатиие по B30 СП63 кг/см2")]
-        public double Rfbn { get; private set; }
-
-        [DisplayName("Значения коэффициента надежности по бетону при сжатии СП63")]
-        public double Yb { get; private set; }
-
-        [DisplayName("Расчетное значение сопротивления на сжатиие по B30 СП63 СП360")]
-        public double Rfb { get; private set; }
-
-        [DisplayName("Расчетное значение остаточного сопротивления осевому растяжению")]
-        public new double Rfbt3 { get; private set; }
-
+       
         [DisplayName("Предельный момент сечения")]
         public double Mult { get; private set; }
-
 
         public override void GetParams(double[] _t)
         {
@@ -52,16 +39,16 @@ namespace BSFiberConcrete
         public override Dictionary<string, double> Results()
         {
             return new Dictionary<string, double>() {
-                { DN(typeof(BSFibCalc_Ring), "Rfbt3"), Math.Round(Rfbt3, 4) },
-                { DN(typeof(BSFibCalc_Ring), "Mult"), Math.Round(Mult, 4) }
+                { DN(typeof(BSFibCalc_Ring), "Rfbt3"), Rfbt3 },
+                { DN(typeof(BSFibCalc_Ring), "Mult"), Mult }
             };
         }
 
         public override void Calculate()
         {
-            Rfb = Rfbn / Yb * Yb1 * Yb2 * Yb3 * Yb5;
+            Rfb = R_fb();
 
-            Rfbt3 = Rfbt3n / Yft * Yb1 * Yb5;
+            Rfbt3 = R_fbt3();
 
             //толщина стенки кольца см
             double tr = r2 - r1;
@@ -81,7 +68,10 @@ namespace BSFiberConcrete
             Mult = Ar * (Rfb * Math.Sin(Math.PI * ar) / Math.PI + 0.234d * Rfbt3) * rm;
 
             //Предельный момент сечения  (т*м)
-            Mult = Math.Round(Mult * 0.00001, 4);
+            Mult = Mult * 0.00001;
+
+            string info = "Расчет успешно выполнен!";
+            Msg.Add(info);
         }
     }
 }

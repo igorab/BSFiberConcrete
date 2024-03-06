@@ -15,7 +15,7 @@ namespace BSFiberConcrete
         public double b { get; private set; }
         [DisplayName("Упругопластический момент сопротивления")]
         public double Wpl { get; private set; }
-        [DisplayName("Предельный момент сечения для изгибаемых сталефибробетонных элементов")]
+        [DisplayName("Предельный момент сечения для изгибаемых сталефибробетонных элементов, т*м")]
         public double Mult { get; protected set; }
 
         public override Dictionary<string, double> GeomParams()
@@ -47,7 +47,7 @@ namespace BSFiberConcrete
         }
 
         protected double Rfbt_3() => (Yft != 0) ? (Rfbt3n / Yft) * Yb1 * Yb5 : Rfbt3n * Yb1 * Yb5;
-
+       
         public override void Calculate()
         {
             string info;
@@ -65,7 +65,7 @@ namespace BSFiberConcrete
             Mult = Rfbt3 * Wpl;
 
             //Предельный момент сечения  (т*м)
-            Mult = Math.Round(Mult * 0.00001, 4);
+            Mult = Mult * 0.00001;
 
             info = "Расчет успешно выполнен!";
             Msg.Add(info);

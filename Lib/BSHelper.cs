@@ -22,18 +22,24 @@ namespace BSFiberConcrete
         public static double Kg2T(double _kg) => _kg * 0.0001d; 
         public static double MPA2kgsm2(double _mpa) => 10.197162d * _mpa;
 
-        public static string ImgResource(BeamSection _bs)
+        public static string ImgResource(BeamSection _bs, bool _useReinforcement = false)
         {
             string _img = "";
 
             switch (_bs)
             {
                 case BeamSection.Rect:
-                    _img = "FiberBeton.PNG";
+                    if (_useReinforcement)
+                        _img = "Rect_Rods.PNG";
+                    else
+                        _img = "FiberBeton.PNG";
                     break;
                 case BeamSection.TBeam:
                 case BeamSection.IBeam:
-                    _img = "IBeam.PNG";
+                    if (_useReinforcement)
+                        _img = "IBeamArm.PNG";
+                    else
+                        _img = "IBeam.PNG";
                     break;
                 case BeamSection.Ring:
                     _img = "Ring.PNG";
