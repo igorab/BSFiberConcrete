@@ -518,7 +518,7 @@ namespace BSFiberConcrete
             finally
             {
                 BSFiberReport_MNQ report = new BSFiberReport_MNQ();
-
+                report.ImageCalc = fiberCalc.ImageCalc();
                 report.BeamSection = m_BeamSection;                
                 report.Init(fiberCalc);
 

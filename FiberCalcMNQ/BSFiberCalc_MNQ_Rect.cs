@@ -21,6 +21,8 @@ namespace BSFiberConcrete
             m_Result = new Dictionary<string, double>();
         }
 
+        public override string ImageCalc() => "Rect_N.PNG";
+        
         public override void GetSize(double[] _t)
         {
             (b, h, l0) = (beam.b, beam.h, beam.Length) = (_t[0], _t[1], _t[2]);

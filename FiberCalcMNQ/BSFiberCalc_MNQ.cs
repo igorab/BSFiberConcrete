@@ -138,11 +138,8 @@ namespace BSFiberConcrete
         ///  Расчетная схема , рисунок
         /// </summary>
         /// <returns>Наименование файла</returns>
-        public virtual string ImageCalc()
-        {
-            return "";
-        }
-
+        public virtual string ImageCalc() => "";
+        
         public double Delta_e(double _d_e)
         {
             double d_e;

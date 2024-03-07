@@ -41,6 +41,8 @@ namespace BSFiberConcrete
 
         protected BeamSection m_BeamSection;
 
+        public string ImageCalc { get; set; }
+
         public BSFiberReport()
         {
             ReportName = "Сопротивление сечения из фибробетона";
@@ -60,12 +62,12 @@ namespace BSFiberConcrete
             string beamSection = BSHelper.EnumDescription(m_BeamSection);
             w.WriteLine($"<H2>{beamDescr}: {beamSection}</H2>");
             
-            string _filename = BSHelper.ImgResource(m_BeamSection, UseReinforcement);
+            string _filename = string.IsNullOrWhiteSpace(ImageCalc) ? BSHelper.ImgResource(m_BeamSection, UseReinforcement) : ImageCalc;
             if (!string.IsNullOrEmpty(_filename))
             {                
                 string path = Lib.BSData.ResourcePath(_filename);
-                
-                w.WriteLine($"<table><tr><td> <img src={MakeImageSrcData(path)}/> </td></tr> </table>");
+                string img = MakeImageSrcData(path);
+                w.WriteLine($"<table><tr><td> <img src={img}/> </td></tr> </table>");
             }
 
             if (m_Beam != null)
