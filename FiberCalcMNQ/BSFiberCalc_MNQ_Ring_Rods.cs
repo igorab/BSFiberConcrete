@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BSFiberConcrete.FiberCalcMNQ
+namespace BSFiberConcrete.MNQ
 {
     /// <summary>
     ///  Расчет прочности кольцевых сеченний колонн с кобинированным армированием

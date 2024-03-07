@@ -19,7 +19,7 @@ namespace BSFiberConcrete
 
         public static double mm2sm(double _mm) => _mm * 0.1d;
 
-        public static double Kg2T(double _kg) => _kg * 0.0001d; 
+        public static double Kg2T(double _kg) => _kg * 0.001d; 
         public static double MPA2kgsm2(double _mpa) => 10.197162d * _mpa;
 
         public static string ImgResource(BeamSection _bs, bool _useReinforcement = false)
@@ -45,6 +45,8 @@ namespace BSFiberConcrete
                     _img = "Ring.PNG";
                     break;
             }
+
+            //_img = "Rect_N.PNG";
 
             return _img;
         }
