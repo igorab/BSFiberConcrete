@@ -216,18 +216,24 @@ namespace BSFiberConcrete
             if (_filename == "") return "";
 
             string _img = "";
-
-            using (Image img = Image.FromFile(_filename))
+            try
             {
-                using (MemoryStream ms = new MemoryStream())
+                using (Image img = Image.FromFile(_filename))
                 {
-                    img.Save(ms, ImageFormat.Png);
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        img.Save(ms, ImageFormat.Png);
 
-                    byte[] imgBytes = ms.ToArray();
-                    string _extension = Path.GetExtension(_filename).Replace(".", "").ToLower();
+                        byte[] imgBytes = ms.ToArray();
+                        string _extension = Path.GetExtension(_filename).Replace(".", "").ToLower();
 
-                    _img = String.Format("\"data:image/{0};base64, {1}\" alt = \"{2}\" ", _extension, Convert.ToBase64String(imgBytes), _filename);
+                        _img = String.Format("\"data:image/{0};base64, {1}\" alt = \"{2}\" ", _extension, Convert.ToBase64String(imgBytes), _filename);
+                    }
                 }
+            }
+            catch (Exception _e) 
+            {
+                _img = _e.Message;
             }
             
             return _img;

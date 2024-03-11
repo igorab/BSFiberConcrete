@@ -160,6 +160,8 @@ namespace BSFiberConcrete
 
         protected double R_fb() => Rfbn / Yb * Yb1 * Yb2 * Yb3 * Yb5;
 
+        protected double R_fbt() => Rfbtn / Yft * Yb1 * Yb5;
+
         public double K_b(double _fi1, double _delta_e) => 0.15 / (_fi1 * (0.3d + _delta_e));
 
         public static BSFiberCalc_MNQ Construct(BeamSection _BeamSection)
@@ -189,7 +191,7 @@ namespace BSFiberConcrete
         public void GetFiberParamsFromJson(Fiber _fiber)
         {
             m_Fiber = _fiber;
-            e0 = _fiber.e0;
+            //e0 = _fiber.e0;
             Ef = _fiber.Ef;
             Eb = _fiber.Eb;
             mu_fv = _fiber.mu_fv;
@@ -247,13 +249,19 @@ namespace BSFiberConcrete
             N_ult = BSHelper.Kg2T(N_ult);
         }
 
+        /// <summary>
+        ///  Расчет внецентренно сжатых сталефибробетонных элементов без рабочей арматуры при
+        /// расположении продольной сжимающей силы за пределами поперечного сечения элемента и внецентренно сжатых сталефибробетонных элементов без рабочей арматуры при расположении продольной
+        /// сжимающей силы в пределах поперечного сечения элемента, в которых по условиям эксплуатации не
+        /// допускается образование трещин
+        /// </summary>
         protected void Calculate_N_Out()
         {
             //Коэффициент, учитывающий влияние длительности действия нагрузки (6.27)
             fi1 = (M1 != 0) ? 1 + Ml1 / M1 : 1.0;
 
             //относительное значение эксцентриситета продольной силы
-            delta_e = Delta_e(m_Fiber.e0 / m_Beam.h);
+            delta_e = Delta_e(e0 / m_Beam.h);
 
             // Коэфициент ф.(6.26)
             k_b = K_b(fi1, delta_e);
@@ -262,11 +270,11 @@ namespace BSFiberConcrete
             Efb = m_Fiber.Eb * (1 - m_Fiber.mu_fv) + m_Fiber.Ef * m_Fiber.mu_fv;
 
             //Модуль упругости арматуры
-            double Es = Rebar.Es;
+            double? Es = Rebar?.Es;
             // Момент инерции продольной арматуры соответственно относительно оси, проходящей через центр тяжести поперечного сечения элемента
-            double ls = 1;
+            double? ls = Rebar?.ls;
             //жесткость элемента в предельной по прочности стадии, определяемая по формуле (6.31)
-            D = k_b * Efb * I + 0.7 * Es * ls;
+            D = k_b * Efb * I + 0.7 * (Es??0) * (ls??0);
 
             // условная критическая сила, определяемая по формуле (6.24)
             Ncr = Math.PI * Math.PI * D / Math.Pow(m_Beam.Length, 2);
@@ -277,12 +285,21 @@ namespace BSFiberConcrete
             Ab = m_Beam.b * m_Beam.h * (1 - 2 * m_Fiber.e0 * eta / m_Beam.h);
 
             //Расчетные значения сопротивления осевому растяжению
-            double Rfbt = Rfbtn / Yft * Yb1 * Yb5;
+            double Rfbt = R_fbt();
 
             // Предельная сила сечения
             N_ult = fi * Rfbt * A;
 
             N_ult = BSHelper.Kg2T(N_ult);
+
+            string info;
+
+            if (N <= N_ult)
+                info = "Прочность обеспечена";
+            else
+                info = "Прочность не обеспечена";
+
+            Msg.Add(info);
         }
 
         protected void InitC(ref List<double> _lst, double _from, double _to, double _dx)
@@ -532,6 +549,7 @@ namespace BSFiberConcrete
             Ml1 = m_Efforts["Ml"];
             // Эксцентриситет приложения N
             e_N = m_Efforts["eN"];
+            e0 = e_N;
         }
 
         public virtual Dictionary<string, double> Results()

@@ -39,6 +39,7 @@
         public double Rsw { get; set; }
         public double Asw { get; set; }
         public double s_w { get; set; }
+        public double ls { get; set; }
     }
 
     /// <summary>

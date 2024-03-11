@@ -11,9 +11,9 @@ namespace BSFiberConcrete
     {
         //размеры, см
         [DisplayName("Высота сечения, см")]
-        public double h { get; set; }
+        public override double h { get; set; }
         [DisplayName("Ширина сечения, см")]
-        public double b { get; set; }
+        public override double b { get; set; }
 
         [DisplayName("Площадь сечения элемента, см2")]
         public override double Area() => b * h;

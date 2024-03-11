@@ -117,6 +117,11 @@ namespace BSFiberConcrete
             throw new NotImplementedException();
         }
 
+        public virtual double y_t()
+        {
+            return h/2;
+        }
+
         public BSBeam()
         {            
         }

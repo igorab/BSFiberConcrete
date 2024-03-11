@@ -811,9 +811,20 @@ namespace BSFiberConcrete
             Lib.BSData.SaveEfforts(ef);
         }
 
-        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        
+        private void cmbFib_i_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnSaveParams_Click(object sender, EventArgs e)
+        {
+            InitEfforts(out Dictionary<string, double> MNQ);
+
+            Dictionary<string, double> ef = new Dictionary<string, double> { 
+                ["Mx"] = MNQ["Mx"], ["My"] = MNQ["My"], ["N"] = MNQ["N"], ["Q"] = MNQ["Q"], ["Ml"] = MNQ["Ml"], ["eN"] = MNQ["eN"] };
+
+            m_BSLoadData.SaveInitToJson(ef);
         }
     }
 }

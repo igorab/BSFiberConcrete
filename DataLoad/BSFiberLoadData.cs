@@ -22,6 +22,8 @@ namespace BSFiberConcrete
 
         // serialized from Json
         private BSFiberParams m_FiberParams;
+        private Dictionary<string, double> m_FibInit;
+
         // Фибробетон
         public Fiber Fiber { get => m_FiberParams?.Fiber;  }
         // Арматура фибробетона
@@ -37,15 +39,31 @@ namespace BSFiberConcrete
 
         private double to_double(string _num) => BSHelper.ToDouble(_num);
                 
+        /// <summary>
+        /// Значения по умолчанию из файла
+        /// </summary>
         public void ReadParamsFromJson()
         {
             string path = Path.Combine(Environment.CurrentDirectory, "Templates\\BSFiberParams.json");
             m_FiberParams = new BSFiberParams();
 
-            using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
+            using (FileStream fs = new FileStream(path, FileMode.Open))
             {
                 m_FiberParams = JsonSerializer.Deserialize<BSFiberParams>(fs);
             }            
+        }
+
+        public void SaveInitToJson(Dictionary<string, double>  _val)
+        {
+            string path = Path.Combine(Environment.CurrentDirectory, "Templates\\BSInit.json");
+            Dictionary<string, double> fibInit = new Dictionary<string, double>(m_FibInit);
+            
+            fibInit["Mx"] = _val["Mx"];             
+
+            using (FileStream fs = new FileStream(path, FileMode.Truncate))
+            {
+                JsonSerializer.Serialize<Dictionary<string, double>>(fs, fibInit);
+            }
         }
 
         /// <summary>
@@ -57,13 +75,15 @@ namespace BSFiberConcrete
         public Dictionary<string, double> ReadInitFromJson()
         {
             string path = Path.Combine(Environment.CurrentDirectory, @"Templates\BSInit.json");
-            var keyValuePairs = new Dictionary<string, double>();
+            var keyValuePairs = new Dictionary<string, double>();            
 
             using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
             {
                 keyValuePairs = JsonSerializer.Deserialize<Dictionary<string, double>>(fs);
-            }
 
+                m_FibInit = keyValuePairs;
+            }
+            
             return keyValuePairs;
         }
 
