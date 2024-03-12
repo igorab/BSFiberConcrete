@@ -9,9 +9,7 @@ namespace BSFiberConcrete
     /// </summary>
     public class BSFiberCalc_MNQ_Rect : BSFiberCalc_MNQ
     {
-        //public BSBeam_Rect beam { get; set; }
-
-        private double y_t;
+        //public BSBeam_Rect beam { get; set; }        
 
         private Dictionary<string, double> m_Result;
 
@@ -31,7 +29,7 @@ namespace BSFiberConcrete
 
             I = m_Beam.I_s();
             
-            y_t = m_Beam.y_t();
+            y_t = m_Beam.y_t;
         }
 
         /// <summary>

@@ -444,7 +444,7 @@ namespace BSFiberConcrete
             fiberCalc.Shear = _shear;
             
             InitEfforts(out Dictionary<string, double> MNQ);
-
+            
             if (_shear || _useRebar)
             {
                 // Армирование
@@ -456,7 +456,7 @@ namespace BSFiberConcrete
 
                 fiberCalc.GetRebarParams(l_r, t_r);
             }
-
+            
             double[] prms = m_BSLoadData.Params;
 
             InitUserParams(prms);

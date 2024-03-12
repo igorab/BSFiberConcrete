@@ -95,7 +95,7 @@ namespace BSFiberConcrete
         protected double Rfbt3;
 
         protected double B;
-       
+        protected double y_t;
         protected double Rfbn;
         protected double fi = 0.9;
         protected double Ef; //для фибры из тонкой низкоуглеродистой проволоки МП п.п  кг/см2 
@@ -286,12 +286,12 @@ namespace BSFiberConcrete
 
             //Расчетные значения сопротивления осевому растяжению
             double Rfbt = R_fbt();
+            
+            double denom = A / I * e0 * eta * m_Beam.y_t - 1; 
 
             // Предельная сила сечения
-            N_ult = fi * Rfbt * A;
-
-            N_ult = BSHelper.Kg2T(N_ult);
-
+            N_ult = 1/denom * Rfbt * A;
+            
             string info;
 
             if (N <= N_ult)
@@ -300,6 +300,8 @@ namespace BSFiberConcrete
                 info = "Прочность не обеспечена";
 
             Msg.Add(info);
+
+            N_ult = BSHelper.Kg2T(N_ult);
         }
 
         protected void InitC(ref List<double> _lst, double _from, double _to, double _dx)

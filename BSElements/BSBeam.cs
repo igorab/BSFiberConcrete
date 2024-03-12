@@ -19,6 +19,10 @@ namespace BSFiberConcrete
 
         double Jy();
         double Jx();
+
+        double b { get; set; }
+
+        double h { get; set; }
     }
 
     // конечный элемент
@@ -117,11 +121,8 @@ namespace BSFiberConcrete
             throw new NotImplementedException();
         }
 
-        public virtual double y_t()
-        {
-            return h/2;
-        }
-
+        public virtual double y_t => h / 2; 
+        
         public BSBeam()
         {            
         }

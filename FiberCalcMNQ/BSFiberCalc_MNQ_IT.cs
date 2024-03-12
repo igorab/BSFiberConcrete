@@ -45,7 +45,9 @@ namespace BSFiberConcrete
             l0 = beam.Length;
             b = beam.b;
             h = beam.h;
-            I = beam.Jx();            
+            I = beam.Jx();
+            A = beam.Area();
+            y_t = beam.y_t;
         }
     }
 }

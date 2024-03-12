@@ -20,9 +20,16 @@ namespace BSFiberConcrete
         {
             (r1, r2, l0) = (beam.r1, beam.r2, beam.Length) = (_t[0], _t[1], _t[2]);
             A = beam.Area();
-            I = beam.I_s();
+            
             h = beam.h;
             b = beam.b;
+
+            base.m_Beam = this.beam;
+            l0 = beam.Length;
+            
+            I = beam.Jx();
+            
+            y_t = beam.y_t;
         }
 
         public override void GetParams(double[] _t)
@@ -56,7 +63,7 @@ namespace BSFiberConcrete
 
         public override void Calculate()
         {
-            if (UseRebar)
+            if (Fissure)
             {
                 Calculate_N_Out();
             }
