@@ -122,13 +122,19 @@ namespace BSFiberConcrete.Lib
         /// Данные по фибробетону из БД
         /// </summary>
         /// <returns></returns>
-        public static List<Elements> LoadElements()
+        public static List<Elements> LoadFiberConcreteTable(string _iB = "")
         {
             try
             {
                 using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
                 {
-                    IEnumerable<Elements> output = cnn.Query<Elements>("select * from FiberConcrete where iB = 1", new DynamicParameters());
+                    string query;
+                    if (_iB == "")
+                        query = "select * from FiberConcrete";
+                    else
+                        query = string.Format("select * from FiberConcrete where i_B = '{0}'", _iB);
+
+                    IEnumerable<Elements> output = cnn.Query<Elements>(query, new DynamicParameters());
                     return output.ToList();
                 }
             }

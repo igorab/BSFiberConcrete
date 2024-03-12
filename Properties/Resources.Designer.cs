@@ -143,6 +143,16 @@ namespace BSFiberConcrete.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Rect_Rods_N_out {
+            get {
+                object obj = ResourceManager.GetObject("Rect_Rods_N_out", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Ring {
             get {
                 object obj = ResourceManager.GetObject("Ring", resourceCulture);

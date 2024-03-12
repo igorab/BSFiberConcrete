@@ -15,6 +15,7 @@ using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 using System.Text.Json;
+using BSFiberConcrete.Lib;
 
 namespace BSFiberConcrete
 {
@@ -25,6 +26,8 @@ namespace BSFiberConcrete
         private Dictionary<string, double> m_Iniv ;
         private BSFiberCalculation bsCalc;
         private BSFiberLoadData m_BSLoadData;
+        private List<Elements> FiberConcrete;
+
         public Dictionary<string, double> m_Beam { get; private set; }
         private Dictionary<string, double> m_Coeffs;
         private Dictionary<string, double> m_Efforts;
@@ -50,6 +53,9 @@ namespace BSFiberConcrete
                 m_BSLoadData = new BSFiberLoadData();
                 m_BSLoadData.Load();
 
+                FiberConcrete = BSData.LoadFiberConcreteTable();
+                cmbFib_i.SelectedIndex = 0;
+
                 m_Iniv = m_BSLoadData.ReadInitFromJson();
                 List<Efforts> eff = Lib.BSData.LoadEfforts();
                 if (eff.Count > 0)
@@ -68,13 +74,13 @@ namespace BSFiberConcrete
 
                 cmbBetonClass.DataSource = BSFiberLib.BetonList;
                 cmbBetonClass.DisplayMember = "Name";
-                cmbBetonClass.ValueMember = "Id";
-                cmbBetonClass.SelectedValue = 30;
+                cmbBetonClass.ValueMember = "Name";
+                cmbBetonClass.SelectedValue = BSFiberLib.BetonList[5].Name;
 
                 Elements fiberConcrete = BSFiberLib.PhysElements;
 
-                numRfbt3n.Value = (decimal)fiberConcrete.Rfbt3n;
-                numRfbn.Value = (decimal)fiberConcrete.Rfbn;
+                //numRfbt3n.Value = (decimal)fiberConcrete.Rfbt3n;
+                //numRfbn.Value = (decimal)fiberConcrete.Rfbn;
                 numYft.Value = (decimal)fiberConcrete.Yft;
                 numYb.Value = (decimal)fiberConcrete.Yb;
                 numYb1.Value = (decimal)fiberConcrete.Yb1;
@@ -389,21 +395,28 @@ namespace BSFiberConcrete
             setupWindow.Show();
         }
         
-        private void cmbBetonClass_SelectedIndexChanged(object sender, EventArgs e)
+
+        private void SelectedFiberBetonValues()
         {
             try
-            {                
-                int id = (int)cmbBetonClass.SelectedValue;
-             
+            {
+                var b_i = Convert.ToString(cmbFib_i.SelectedItem);                                
                 BSFiberBeton beton = (BSFiberBeton)cmbBetonClass.SelectedItem;
-                
-                numRfbt3n.Value = Convert.ToDecimal( BSHelper.MPA2kgsm2(beton.Rfbt3));
-                numRfbn.Value = Convert.ToDecimal(BSHelper.MPA2kgsm2(beton.Rfbn));
-                
+                string btName = beton.Name.Replace("i", b_i) ;
+
+                var getQuery = FiberConcrete.Where(f => f.BT == btName);
+                if (getQuery?.Count() > 0)
+                {
+                    var fib = getQuery?.First();
+
+                    numRfbt3n.Value = Convert.ToDecimal(BSHelper.MPA2kgsm2(fib?.Rfbt3));
+                    numRfbn.Value = Convert.ToDecimal(BSHelper.MPA2kgsm2(fib?.Rfbn));
+                }
+
             }
             catch { }
         }
-                
+                        
         private void tbLength_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!double.TryParse(tbLength.Text + e.KeyChar.ToString(), out double a) && e.KeyChar != 8)
@@ -811,12 +824,7 @@ namespace BSFiberConcrete
             Lib.BSData.SaveEfforts(ef);
         }
 
-        
-        private void cmbFib_i_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
+                
         private void btnSaveParams_Click(object sender, EventArgs e)
         {
             InitEfforts(out Dictionary<string, double> MNQ);
@@ -825,6 +833,21 @@ namespace BSFiberConcrete
                 ["Mx"] = MNQ["Mx"], ["My"] = MNQ["My"], ["N"] = MNQ["N"], ["Q"] = MNQ["Q"], ["Ml"] = MNQ["Ml"], ["eN"] = MNQ["eN"] };
 
             m_BSLoadData.SaveInitToJson(ef);
+        }
+
+        private void tabConcrete_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmbBetonClass_SelectedValueChanged(object sender, EventArgs e)
+        {
+            SelectedFiberBetonValues();
+        }
+
+        private void cmbBetonClass_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

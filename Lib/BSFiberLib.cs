@@ -13,24 +13,22 @@ namespace BSFiberConcrete
 {
     internal class BSFiberLib
     {
+        /// <summary>
+        /// Прочности фибробетона на растяжение
+        /// </summary>
         public static List<BSFiberBeton> BetonList => new List<BSFiberBeton>
-        {
-            new BSFiberBeton{Id = 2, Name = "B2.5", Type = 4, Rfbt3 = 0, Rfbn = 0 },
-            new BSFiberBeton{Id = 3, Name = "B3.5", Type = 4, Rfbt3 = 0, Rfbn = 2.7 },
-            new BSFiberBeton{Id = 5, Name = "B5", Type = 4, Rfbt3 = 0, Rfbn = 3.5 },
-            new BSFiberBeton{Id = 7, Name = "B7.5", Type = 4, Rfbt3 = 0, Rfbn = 5.5 },
-            new BSFiberBeton{Id = 10, Name = "B1i", Type = 2, Rfbt3 = 1.0, Rfbn = 7.5 },
-            new BSFiberBeton{Id = 12, Name = "B1.25i",Type = 2, Rfbt3 = 1.25, Rfbn = 9.5},
-            new BSFiberBeton{Id = 15, Name = "B1.5i", Type = 2, Rfbt3 = 1.5, Rfbn = 11 },
-            new BSFiberBeton{Id = 20, Name = "B2i", Type = 2, Rfbt3 = 2.0, Rfbn = 15 },
-            new BSFiberBeton{Id = 25, Name = "B2.5i", Type = 2, Rfbt3 = 2.5, Rfbn = 18.5 },
-            new BSFiberBeton{Id = 30, Name = "B3i", Type = 2, Rfbt3 = 3.0, Rfbn = 22.0 },
-            new BSFiberBeton{Id = 35, Name = "B3.5i", Type = 2, Rfbt3 = 3.5, Rfbn = 25.5 },
-            new BSFiberBeton{Id = 40, Name = "B4i", Type = 2, Rfbt3 = 4.0, Rfbn = 29.0 },
-            new BSFiberBeton{Id = 45, Name = "B4.5i", Type = 2, Rfbt3 = 4.5, Rfbn = 32.0 },
-            new BSFiberBeton{Id = 50, Name = "B5i", Type = 2, Rfbt3 = 5.0, Rfbn = 36.0 },
-            new BSFiberBeton{Id = 55, Name = "B5.5i", Type = 2 , Rfbt3 = 5.5, Rfbn = 39.5},
-            new BSFiberBeton{Id = 60, Name = "B6i", Type = 2, Rfbt3 = 6.0, Rfbn = 43 }
+        {            
+            new BSFiberBeton{Id = 100, Name = "B1i", Type = 2, Rfbt3 = 1.0, Rfbn = 7.5 },
+            new BSFiberBeton{Id = 150, Name = "B1,5i",Type = 2, Rfbt3 = 1.5, Rfbn = 9.5},            
+            new BSFiberBeton{Id = 200, Name = "B2i", Type = 2, Rfbt3 = 2.0, Rfbn = 15 },
+            new BSFiberBeton{Id = 250, Name = "B2,5i", Type = 2, Rfbt3 = 2.5, Rfbn = 18.5 },
+            new BSFiberBeton{Id = 300, Name = "B3i", Type = 2, Rfbt3 = 3.0, Rfbn = 22.0 },
+            new BSFiberBeton{Id = 350, Name = "B3,5i", Type = 2, Rfbt3 = 3.5, Rfbn = 25.5 },
+            new BSFiberBeton{Id = 400, Name = "B4i", Type = 2, Rfbt3 = 4.0, Rfbn = 29.0 },
+            new BSFiberBeton{Id = 450, Name = "B4,5i", Type = 2, Rfbt3 = 4.5, Rfbn = 32.0 },
+            new BSFiberBeton{Id = 500, Name = "B5i", Type = 2, Rfbt3 = 5.0, Rfbn = 36.0 },
+            new BSFiberBeton{Id = 550, Name = "B5,5i", Type = 2 , Rfbt3 = 5.5, Rfbn = 39.5},
+            new BSFiberBeton{Id = 600, Name = "B6i", Type = 2, Rfbt3 = 6.0, Rfbn = 43 }
         };
 
         /// <summary>

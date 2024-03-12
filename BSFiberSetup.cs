@@ -26,7 +26,8 @@ namespace BSFiberConcrete
             {                
                 comboBetonType.DataSource = BSData.LoadTypes();
 
-                dataGridElements.DataSource =  BSData.LoadElements();
+                string i_b = Convert.ToString(comboBox_i.Text);
+                dataGridElements.DataSource =  BSData.LoadFiberConcreteTable(i_b);
 
                 dataGridCoeffs.DataSource = BSData.LoadCoeffs();
                 
@@ -162,6 +163,19 @@ namespace BSFiberConcrete
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void comboBox_i_SelectedValueChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                string i_b = Convert.ToString(comboBox_i.Text);
+                dataGridElements.DataSource = BSData.LoadFiberConcreteTable(i_b);
+            }
+            catch (Exception _e)
+            {
+                MessageBox.Show(_e.Message);
+            }
         }
     }
 }

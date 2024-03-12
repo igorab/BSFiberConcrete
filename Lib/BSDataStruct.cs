@@ -84,15 +84,30 @@
     }
 
 
+    /// <summary>
+    /// Таблица 2 СП360
+    /// </summary>
     class BSFiberBeton
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public int Type { get; set; }
+
+        public double Rfbt3n { get; set; }
+
+        public double Rfbt3_ser => Rfbt3n;
+
+        public double Rfbt2n { get; set; }
+
+        public double Rfbt2_ser => Rfbt2n;
+
         /// <summary>
         /// значения сопротивления сталефибробетона растяжению при классе сталефибробетона по остаточной прочности на растяжение, МПа
         /// </summary>
         public double Rfbt3 { get; set; }
+
+        public double Rfbt2 { get; set; }
+
         /// <summary>
         /// Сжатие осевое
         /// </summary>
