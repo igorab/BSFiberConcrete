@@ -157,7 +157,7 @@ namespace BSFiberConcrete
                 prms[++idx] = Convert.ToDouble(numYb2.Value);
                 prms[++idx] = Convert.ToDouble(numYb3.Value);
                 prms[++idx] = Convert.ToDouble(numYb5.Value);
-                prms[++idx] = Convert.ToDouble(cmbBetonClass.SelectedValue);
+                prms[++idx] = 0; // Convert.ToDouble(cmbBetonClass.SelectedItem.Id);
             }
         }
 
