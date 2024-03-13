@@ -58,16 +58,20 @@
             // 
             // dataGridElements
             // 
+            this.dataGridElements.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridElements.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
             this.dataGridElements.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridElements.Location = new System.Drawing.Point(6, 82);
             this.dataGridElements.Name = "dataGridElements";
-            this.dataGridElements.Size = new System.Drawing.Size(1117, 242);
+            this.dataGridElements.Size = new System.Drawing.Size(1117, 339);
             this.dataGridElements.TabIndex = 0;
             // 
             // btnLoad
             // 
-            this.btnLoad.Location = new System.Drawing.Point(950, 471);
+            this.btnLoad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnLoad.Location = new System.Drawing.Point(989, 471);
             this.btnLoad.Name = "btnLoad";
             this.btnLoad.Size = new System.Drawing.Size(75, 23);
             this.btnLoad.TabIndex = 1;
@@ -77,6 +81,9 @@
             // 
             // tabFiber
             // 
+            this.tabFiber.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabFiber.Controls.Add(this.tabPage1);
             this.tabFiber.Controls.Add(this.tabRebar);
             this.tabFiber.Controls.Add(this.tabCoeffs);
@@ -104,7 +111,7 @@
             this.tableLayoutPanel1.ColumnCount = 3;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 87.79343F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.20657F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 188F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 189F));
             this.tableLayoutPanel1.Controls.Add(this.comboBetonType, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.label_i, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.comboBox_i, 2, 0);
@@ -127,7 +134,7 @@
             // 
             this.label_i.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label_i.AutoSize = true;
-            this.label_i.Location = new System.Drawing.Point(155, 7);
+            this.label_i.Location = new System.Drawing.Point(154, 7);
             this.label_i.Name = "label_i";
             this.label_i.Size = new System.Drawing.Size(15, 13);
             this.label_i.TabIndex = 3;
@@ -135,6 +142,8 @@
             // 
             // comboBox_i
             // 
+            this.comboBox_i.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.comboBox_i.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_i.FormattingEnabled = true;
             this.comboBox_i.Items.AddRange(new object[] {
             "a",
@@ -142,11 +151,10 @@
             "c",
             "d",
             "e"});
-            this.comboBox_i.Location = new System.Drawing.Point(176, 3);
+            this.comboBox_i.Location = new System.Drawing.Point(175, 3);
             this.comboBox_i.Name = "comboBox_i";
             this.comboBox_i.Size = new System.Drawing.Size(121, 21);
             this.comboBox_i.TabIndex = 4;
-            this.comboBox_i.Text = "a";
             this.comboBox_i.SelectedValueChanged += new System.EventHandler(this.comboBox_i_SelectedValueChanged);
             // 
             // label1
@@ -171,13 +179,16 @@
             // 
             // lvRebar
             // 
+            this.lvRebar.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lvRebar.HideSelection = false;
             this.lvRebar.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem1,
             listViewItem2});
             this.lvRebar.Location = new System.Drawing.Point(19, 22);
             this.lvRebar.Name = "lvRebar";
-            this.lvRebar.Size = new System.Drawing.Size(801, 229);
+            this.lvRebar.Size = new System.Drawing.Size(1104, 377);
             this.lvRebar.TabIndex = 0;
             this.lvRebar.UseCompatibleStateImageBehavior = false;
             // 
@@ -194,6 +205,9 @@
             // 
             // dataGridCoeffs
             // 
+            this.dataGridCoeffs.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridCoeffs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridCoeffs.Location = new System.Drawing.Point(21, 24);
             this.dataGridCoeffs.Name = "dataGridCoeffs";
@@ -202,7 +216,8 @@
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(1045, 470);
+            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClose.Location = new System.Drawing.Point(1070, 471);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 3;

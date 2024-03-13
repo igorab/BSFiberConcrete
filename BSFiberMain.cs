@@ -410,7 +410,7 @@ namespace BSFiberConcrete
                     var fib = getQuery?.First();
 
                     numRfbt3n.Value = Convert.ToDecimal(BSHelper.MPA2kgsm2(fib?.Rfbt3));
-                    numRfbn.Value = Convert.ToDecimal(BSHelper.MPA2kgsm2(fib?.Rfbn));
+                    numRfbn.Value = Convert.ToDecimal(BSHelper.MPA2kgsm2(beton?.Rfbn));
                 }
 
             }

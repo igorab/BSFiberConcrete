@@ -138,6 +138,8 @@ namespace BSFiberConcrete
 
         private void BSFiberSetup_Load(object sender, EventArgs e)
         {
+            comboBox_i.SelectedIndex = 0;
+
             InitSetupTable();
 
             InitRebarSetup();

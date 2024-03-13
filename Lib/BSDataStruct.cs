@@ -129,7 +129,7 @@
         public double Yb2 { get; set; }
         public double Yb3 { get; set; }
         public double Yb5 { get; set; }
-        public int iB { get; set; }
+        public string i_B { get; set; }
         public double Rfbt3 { get; set; }
         public double Rfbt2 { get; set; }
     }
