@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MathNet.Numerics.Integration;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -80,10 +81,101 @@ namespace BSFiberConcrete
             */
         }
 
-        // Расчет внецентренно сжатых сталефибробетонных элементов без рабочей арматуры при
-        //расположении продольной сжимающей силы за пределами поперечного сечения элемента и внецентренно сжатых сталефибробетонных элементов без рабочей арматуры при расположении продольной
-        // сжимающей силы в пределах поперечного сечения элемента, в которых по условиям эксплуатации не
-        // допускается образование трещин
+        /// <summary>
+        /// Расчет внецентренно сжатых сталефибробетонных
+        /// элементов прямоугольного сечения с рабочей арматурой
+        /// </summary>
+        protected void Calculate_N_Rods()
+        {
+            BSRod rod = m_Beam.Rods[0];
+            MatRod = m_Beam.MatRod;
+            MatFiber = m_Beam.Mat;
+
+            string info;
+
+            // Расчетное остаточное остаточного сопротивления осевому растяжению
+            Rfbt3 = R_fbt3();
+
+            // Расчетные значения сопротивления  на сжатиие по B30 СП63
+            Rfb = R_fb();
+
+            // Расчетная высота сечения см
+            double h0 = h - rod.a; 
+
+            // Высота сжатой зоны
+            double x = (N  + Rebar.Rs * Rebar.As - Rebar.Rsc * Rebar.A1s +  Rfbt3 * b * h )/ ((Rfb + Rfbt3) * b); 
+
+            // относительной высоты сжатой зоны сталефибробетона
+            double dzeta = x / h0;
+
+            // характеристика сжатой зоны сталефибробетона, принимаемая для
+            // сталефибробетона из тяжелого бетона классов до В60 включительно равной 0,8
+
+            //Значения относительных деформаций арматуры для арматуры с физическим пределом текучести СП 63 п.п. 6.2.11
+            double eps =  Rebar.Epsilon_s;
+
+            double dz_R = Dzeta_R(0.8);
+
+            double x_denom = (Rfb + Rfbt3) * b + 2 * Rebar.Rs * Rebar.As / (h0 * (1 - dz_R));
+
+            delta_e = Delta_e(m_Fiber.e0 / m_Beam.h);
+
+            if (dzeta > dz_R)
+            {
+                x = (x_denom > 0) ? (N + Rebar.Rs * Rebar.As * ((1 + dz_R) / (1 - dz_R)) - Rebar.Rsc * Rebar.A1s + Rfbt3 * b * h) / x_denom : 0;
+            }
+
+            double alfa = MatRod.Es / MatFiber.Efb;
+
+            double A_red = A + alfa * Rebar.As + alfa * Rebar.A1s;
+
+            // Статический момент сечения фибробетона относительно растянутой грани
+            double S = A * h / 2;
+            // расстояние от центра тяжести приведенного сечения до растянутой в стадии эксплуатации грани Пособие к СП 52-102-2004 ф.2.12 (см)
+            double y = (A_red>0)? S + alfa * Rebar.As * rod.a + alfa * Rebar.A1s * (h - rod.a1) / A_red : 0;
+            // расстояние от центра тяжести приведенного сечения до сжатой
+            double ys = y - rod.a;
+            // расстояние от центра тяжести приведенного сечения до растянутой арматуры
+            double y1s = h - rod.a1 - y;
+
+            double Is = Rebar.As*ys*ys + Rebar.A1s *y1s*y1s;
+
+            // жесткость элемента в предельной по прочности стадии, определяемая по формуле (6.31)
+            D = k_b * Efb * I + 0.7 * Rebar.Es * Is;
+
+            // условная критическая сила, определяемая по формуле (6.24)
+            Ncr = (Math.PI * Math.PI) * D / Math.Pow(l0, 2);
+
+            // коэффициент, учитывающий влияние продольного изгиба (прогиба) элемента
+            // на его несущую способность и определяемый по формуле(6.23)6.1.13
+            eta =  1 / (1 - N / Ncr);
+
+            // расстояние отточки приложения продольной силы N до центра тяжести сечения растянутой арматуры ф.6.33 см
+            double e = e0 * eta + (h0 - rod.a) / 2;
+
+            M_ult = Rfb * b * x * (h0 - 0.5 * x) - Rfbt3 * b * (h - x) * ((h - x) / 2 - rod.a) + Rebar.Rsc * Rebar.A1s * (h0 - rod.a1);
+
+            N_ult = M_ult / e;
+
+            if (N*e <= M_ult)
+                info = "Прочность обеспечена";
+            else
+                info = "Прочность не обеспечена";
+
+            Msg.Add(info);
+
+            N_ult = 0;
+            
+            M_ult = BSHelper.Kg2T(M_ult); 
+            N_ult = BSHelper.Kg2T(N_ult);
+        }
+
+        /// <summary>
+        /// Расчет внецентренно сжатых сталефибробетонных элементов без рабочей арматуры при
+        /// расположении продольной сжимающей силы за пределами поперечного сечения элемента и внецентренно сжатых сталефибробетонных элементов без рабочей арматуры при расположении продольной
+        /// сжимающей силы в пределах поперечного сечения элемента, в которых по условиям эксплуатации не
+        /// допускается образование трещин
+        /// </summary>
         private new void Calculate_N_Out()
         {
             base.Calculate_N_Out();            
@@ -191,19 +283,7 @@ namespace BSFiberConcrete
             Q_ult = Qfb + Qsw; // 6.75
             */
         }
-
-        /*
-        private void InitC(ref List<double> _lst, double _from, double _to, double _dx)
-        {
-            double val = _from;
-            while (val <= _to)
-            {
-                _lst.Add(val);
-                val += _dx;
-            }
-        }
-        */
-
+       
         /// <summary>
         ///  Расчет элементов по наклонным сечениям на действие моментов
         /// </summary>
@@ -312,6 +392,9 @@ namespace BSFiberConcrete
             */
         }
 
+        /// <summary>
+        ///  Вычислить
+        /// </summary>
         public override void Calculate()
         {
             if (Fissure)
@@ -323,6 +406,10 @@ namespace BSFiberConcrete
                 CalculateQ();
                 // Расчет на действие моментов
                 CalculateM();
+            }
+            else if (UseRebar)
+            {
+                Calculate_N_Rods();
             }
             else
             {

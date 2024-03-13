@@ -32,14 +32,25 @@
     public class Rebar
     {
         public string ID { get; set; }
+
+        //Расчетное сопротивление арматуры
         public double Rs { get; set; }
+        //Расчетное сопротивление арматуры сжатию
         public double Rsc { get; set; }
+        //Значения модуля упругости арматуры
         public double Es { get; set; }
+
+        // Площадь растянутой арматуры
         public double As { get; set; }
+
+        // Площадь сжатой арматуры
+        public double A1s { get; set; }
         public double Rsw { get; set; }
         public double Asw { get; set; }
         public double s_w { get; set; }
         public double ls { get; set; }
+
+        public double Epsilon_s => (Es > 0 ) ? Rs / Es : 0;
     }
 
     /// <summary>

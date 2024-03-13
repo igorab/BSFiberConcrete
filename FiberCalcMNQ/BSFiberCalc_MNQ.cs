@@ -88,6 +88,9 @@ namespace BSFiberConcrete
 
         protected Fiber m_Fiber;
 
+        public BSMatRod MatRod { get; set; }
+        public BSMatFiber MatFiber { get; set; }
+
         //Нормативное остаточное сопротивления осевому растяжению кг/см2 табл.2
         protected double Rfbt3n;
 
@@ -161,6 +164,10 @@ namespace BSFiberConcrete
         protected double R_fb() => Rfbn / Yb * Yb1 * Yb2 * Yb3 * Yb5;
 
         protected double R_fbt() => Rfbtn / Yft * Yb1 * Yb5;
+
+        protected double R_fbt3() => Rfbt3n / Yft * Yb1 * Yb5;
+
+        public double Dzeta_R(double omega) => omega / (1 + MatRod.epsilon_s() / MatFiber.e_b2);
 
         public double K_b(double _fi1, double _delta_e) => 0.15 / (_fi1 * (0.3d + _delta_e));
 
