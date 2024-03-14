@@ -117,6 +117,10 @@ namespace BSFiberConcrete
 
             delta_e = Delta_e(e0 / m_Beam.h);
 
+            fi1 = Fi1(); 
+
+            k_b = K_b(fi1, delta_e);
+
             if (dzeta > dz_R)
             {
                 x = (x_denom > 0) ? (N + Rebar.Rs * Rebar.As * ((1 + dz_R) / (1 - dz_R)) - Rebar.Rsc * Rebar.A1s + Rfbt3 * b * h) / x_denom : 0;
@@ -160,9 +164,7 @@ namespace BSFiberConcrete
                 info = "Прочность не обеспечена";
 
             Msg.Add(info);
-
-            N_ult = 0;
-            
+                        
             M_ult = BSHelper.Kg2T(M_ult); 
             N_ult = BSHelper.Kg2T(N_ult);
         }

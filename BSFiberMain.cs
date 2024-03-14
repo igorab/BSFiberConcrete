@@ -415,6 +415,13 @@ namespace BSFiberConcrete
 
                     numRfbt3n.Value = Convert.ToDecimal(BSHelper.MPA2kgsm2(fib?.Rfbt3n));
                     numRfbn.Value = Convert.ToDecimal(BSHelper.MPA2kgsm2(beton?.Rfbn));
+
+                    numYft.Value = Convert.ToDecimal(fib?.Yft);
+                    numYb.Value = Convert.ToDecimal(fib?.Yb);                    
+                    numYb1.Value = Convert.ToDecimal(fib?.Yb1);
+                    numYb2.Value = Convert.ToDecimal(fib?.Yb2);
+                    numYb3.Value = Convert.ToDecimal(fib?.Yb3);
+                    numYb5.Value = Convert.ToDecimal(fib?.Yb5);
                 }
 
             }

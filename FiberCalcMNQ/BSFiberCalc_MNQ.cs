@@ -70,13 +70,13 @@ namespace BSFiberConcrete
         [DisplayName("Коэффициент условия работы Yb5"), Description("Coef")]
         public double Yb5 { get; protected set; }
 
-        [DisplayName("Предельный момент"), Description("Res")]
+        [DisplayName("Предельный момент, Т*м"), Description("Res")]
         public double M_ult { get; protected set; }
 
         [DisplayName("Предельная поперечная сила"), Description("Res")]
         public double Q_ult { get; protected set; }
 
-        [DisplayName("Предельная продольная сила"), Description("Res")]
+        [DisplayName("Предельная продольная сила, Т"), Description("Res")]
         public double N_ult { get; protected set; }
 
         #endregion
@@ -161,6 +161,8 @@ namespace BSFiberConcrete
             return d_e;
         }
 
+        public double Fi1() => (M1 != 0) ? 1 + Ml1 / M1 : 1.0;
+
         protected double R_fb() => Rfbn / Yb * Yb1 * Yb2 * Yb3 * Yb5;
 
         protected double R_fbt() => Rfbtn / Yft * Yb1 * Yb5;
@@ -217,7 +219,7 @@ namespace BSFiberConcrete
         protected void Calculate_N()
         {
             //Коэффициент, учитывающий влияние длительности действия нагрузки, определяют по формуле (6.27)
-            fi1 = (M1 != 0) ? 1 + Ml1 / M1 : 1.0;
+            fi1 = Fi1();
 
             //относительное значение эксцентриситета продольной силы
             delta_e = Delta_e(m_Fiber.e0 / m_Beam.h);
