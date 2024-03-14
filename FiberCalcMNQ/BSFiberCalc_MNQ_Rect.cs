@@ -10,8 +10,7 @@ namespace BSFiberConcrete
     /// </summary>
     public class BSFiberCalc_MNQ_Rect : BSFiberCalc_MNQ
     {
-        //public BSBeam_Rect beam { get; set; }        
-
+        private string m_ImgCalc;
         private Dictionary<string, double> m_Result;
 
         public BSFiberCalc_MNQ_Rect()
@@ -20,7 +19,17 @@ namespace BSFiberConcrete
             m_Result = new Dictionary<string, double>();
         }
 
-        public override string ImageCalc() => (Fissure) ? "Rect_N_out.PNG" : "Rect_N.PNG";
+        /// <summary>
+        /// Вернуть изрображение расчетной схемы
+        /// </summary>
+        /// <returns></returns>
+        public override string ImageCalc()
+        {
+            if (!string.IsNullOrEmpty(m_ImgCalc))
+                return m_ImgCalc;
+
+            return (Fissure) ? "Rect_N_out.PNG" : "Rect_N.PNG";
+        } 
         
         public override void GetSize(double[] _t)
         {
@@ -86,7 +95,9 @@ namespace BSFiberConcrete
         /// элементов прямоугольного сечения с рабочей арматурой
         /// </summary>
         protected void Calculate_N_Rods()
-        {                        
+        {
+            m_ImgCalc = "Rect_Rods_N_out.PNG";
+
             Efb = m_Fiber.Efb;
             string info;
 
