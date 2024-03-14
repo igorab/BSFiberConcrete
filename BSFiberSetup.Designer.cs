@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("1");
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("2");
+            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem("1");
+            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("2");
             this.dataGridElements = new System.Windows.Forms.DataGridView();
             this.btnLoad = new System.Windows.Forms.Button();
             this.tabFiber = new System.Windows.Forms.TabControl();
@@ -39,31 +39,31 @@
             this.comboBetonType = new System.Windows.Forms.ComboBox();
             this.label_i = new System.Windows.Forms.Label();
             this.comboBox_i = new System.Windows.Forms.ComboBox();
+            this.num_omega = new System.Windows.Forms.NumericUpDown();
+            this.num_eps_fb2 = new System.Windows.Forms.NumericUpDown();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tabRebar = new System.Windows.Forms.TabPage();
             this.lvRebar = new System.Windows.Forms.ListView();
             this.tabCoeffs = new System.Windows.Forms.TabPage();
             this.dataGridCoeffs = new System.Windows.Forms.DataGridView();
-            this.bSDataBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.btnClose = new System.Windows.Forms.Button();
-            this.num_omega = new System.Windows.Forms.NumericUpDown();
-            this.num_eps_fb2 = new System.Windows.Forms.NumericUpDown();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.tabBeton = new System.Windows.Forms.TabPage();
             this.dataGridBeton = new System.Windows.Forms.DataGridView();
+            this.bSDataBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.btnClose = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridElements)).BeginInit();
             this.tabFiber.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.num_omega)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.num_eps_fb2)).BeginInit();
             this.tabRebar.SuspendLayout();
             this.tabCoeffs.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridCoeffs)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bSDataBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.num_omega)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.num_eps_fb2)).BeginInit();
             this.tabBeton.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridBeton)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bSDataBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridElements
@@ -126,7 +126,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 46F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 152F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 151F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 153F));
             this.tableLayoutPanel1.Controls.Add(this.comboBetonType, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.label_i, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.comboBox_i, 2, 0);
@@ -143,17 +143,19 @@
             // 
             // comboBetonType
             // 
+            this.comboBetonType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBetonType.FormattingEnabled = true;
             this.comboBetonType.Location = new System.Drawing.Point(3, 3);
             this.comboBetonType.Name = "comboBetonType";
             this.comboBetonType.Size = new System.Drawing.Size(121, 21);
             this.comboBetonType.TabIndex = 2;
+            this.comboBetonType.SelectedIndexChanged += new System.EventHandler(this.comboBetonType_SelectedIndexChanged);
             // 
             // label_i
             // 
             this.label_i.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label_i.AutoSize = true;
-            this.label_i.Location = new System.Drawing.Point(177, 7);
+            this.label_i.Location = new System.Drawing.Point(175, 7);
             this.label_i.Name = "label_i";
             this.label_i.Size = new System.Drawing.Size(15, 13);
             this.label_i.TabIndex = 3;
@@ -170,11 +172,47 @@
             "c",
             "d",
             "e"});
-            this.comboBox_i.Location = new System.Drawing.Point(232, 3);
+            this.comboBox_i.Location = new System.Drawing.Point(230, 3);
             this.comboBox_i.Name = "comboBox_i";
             this.comboBox_i.Size = new System.Drawing.Size(121, 21);
             this.comboBox_i.TabIndex = 4;
             this.comboBox_i.SelectedValueChanged += new System.EventHandler(this.comboBox_i_SelectedValueChanged);
+            // 
+            // num_omega
+            // 
+            this.num_omega.DecimalPlaces = 4;
+            this.num_omega.Location = new System.Drawing.Point(445, 3);
+            this.num_omega.Name = "num_omega";
+            this.num_omega.Size = new System.Drawing.Size(120, 20);
+            this.num_omega.TabIndex = 5;
+            // 
+            // num_eps_fb2
+            // 
+            this.num_eps_fb2.DecimalPlaces = 4;
+            this.num_eps_fb2.Location = new System.Drawing.Point(657, 3);
+            this.num_eps_fb2.Name = "num_eps_fb2";
+            this.num_eps_fb2.Size = new System.Drawing.Size(120, 20);
+            this.num_eps_fb2.TabIndex = 6;
+            // 
+            // label2
+            // 
+            this.label2.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(399, 7);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(21, 13);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "ω=";
+            // 
+            // label3
+            // 
+            this.label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(597, 7);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(40, 13);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "ε fb2 =";
             // 
             // label1
             // 
@@ -203,8 +241,8 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lvRebar.HideSelection = false;
             this.lvRebar.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem3,
-            listViewItem4});
+            listViewItem9,
+            listViewItem10});
             this.lvRebar.Location = new System.Drawing.Point(19, 22);
             this.lvRebar.Name = "lvRebar";
             this.lvRebar.Size = new System.Drawing.Size(1104, 377);
@@ -227,56 +265,10 @@
             this.dataGridCoeffs.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridCoeffs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridCoeffs.Location = new System.Drawing.Point(21, 24);
             this.dataGridCoeffs.Name = "dataGridCoeffs";
             this.dataGridCoeffs.Size = new System.Drawing.Size(1092, 344);
             this.dataGridCoeffs.TabIndex = 0;
-            // 
-            // btnClose
-            // 
-            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClose.Location = new System.Drawing.Point(1070, 471);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(75, 23);
-            this.btnClose.TabIndex = 3;
-            this.btnClose.Text = "Закрыть";
-            this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-            // 
-            // num_omega
-            // 
-            this.num_omega.Location = new System.Drawing.Point(447, 3);
-            this.num_omega.Name = "num_omega";
-            this.num_omega.Size = new System.Drawing.Size(120, 20);
-            this.num_omega.TabIndex = 5;
-            // 
-            // num_eps_fb2
-            // 
-            this.num_eps_fb2.Location = new System.Drawing.Point(659, 3);
-            this.num_eps_fb2.Name = "num_eps_fb2";
-            this.num_eps_fb2.Size = new System.Drawing.Size(120, 20);
-            this.num_eps_fb2.TabIndex = 6;
-            // 
-            // label2
-            // 
-            this.label2.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(401, 7);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(21, 13);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "ω=";
-            // 
-            // label3
-            // 
-            this.label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(599, 7);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(40, 13);
-            this.label3.TabIndex = 8;
-            this.label3.Text = "ε fb2 =";
             // 
             // tabBeton
             // 
@@ -291,11 +283,25 @@
             // 
             // dataGridBeton
             // 
+            this.dataGridBeton.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridBeton.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridBeton.Location = new System.Drawing.Point(22, 27);
             this.dataGridBeton.Name = "dataGridBeton";
-            this.dataGridBeton.Size = new System.Drawing.Size(827, 346);
+            this.dataGridBeton.Size = new System.Drawing.Size(1079, 346);
             this.dataGridBeton.TabIndex = 0;
+            // 
+            // btnClose
+            // 
+            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClose.Location = new System.Drawing.Point(1070, 471);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(75, 23);
+            this.btnClose.TabIndex = 3;
+            this.btnClose.Text = "Закрыть";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // BSFiberSetup
             // 
@@ -314,14 +320,14 @@
             this.tabPage1.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.num_omega)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.num_eps_fb2)).EndInit();
             this.tabRebar.ResumeLayout(false);
             this.tabCoeffs.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridCoeffs)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bSDataBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.num_omega)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.num_eps_fb2)).EndInit();
             this.tabBeton.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridBeton)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bSDataBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }

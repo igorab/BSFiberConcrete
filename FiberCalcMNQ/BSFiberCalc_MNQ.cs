@@ -80,7 +80,7 @@ namespace BSFiberConcrete
         public double N_ult { get; protected set; }
 
         #endregion
-
+        public BetonType BetonType { get; set; }
         public Rebar Rebar {get; set;}
         public bool UseRebar { get; set; }
         public bool Fissure{ get; set; }

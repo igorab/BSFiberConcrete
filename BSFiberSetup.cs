@@ -24,7 +24,7 @@ namespace BSFiberConcrete
             Records = new List<Elements>();
             try
             {                
-                comboBetonType.DataSource = BSData.LoadTypes();
+                comboBetonType.DataSource = BSData.LoadBetonTypeName();
 
                 string i_b = Convert.ToString(comboBox_i.Text);
                 dataGridElements.DataSource =  BSData.LoadFiberConcreteTable(i_b);
@@ -149,12 +149,13 @@ namespace BSFiberConcrete
         }
 
         private void BSFiberSetup_Load(object sender, EventArgs e)
-        {
-            comboBox_i.SelectedIndex = 0;
-
+        {            
             InitSetupTable();
 
             InitRebarSetup();
+
+            comboBox_i.SelectedIndex = 0;
+            comboBetonType.SelectedIndex = 0;
         }
 
         private void InitRebarSetup()
@@ -190,6 +191,15 @@ namespace BSFiberConcrete
             {
                 MessageBox.Show(_e.Message);
             }
+        }
+
+        private void comboBetonType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int idx = comboBetonType.SelectedIndex;
+            var bt = Lib.BSQuery.BetonTypeFind(idx);
+
+            num_eps_fb2.Value = (decimal)bt.Eps_fb2;
+            num_omega.Value = (decimal)bt.Omega;
         }
     }
 }

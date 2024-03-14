@@ -23,6 +23,7 @@ namespace BSFiberConcrete
     {
         private DataTable m_Table { get; set; }
 
+        //private BetonType
         private Dictionary<string, double> m_Iniv ;
         private BSFiberCalculation bsCalc;
         private BSFiberLoadData m_BSLoadData;
@@ -34,8 +35,10 @@ namespace BSFiberConcrete
         private Dictionary<string, double> m_PhysParams;
         private Dictionary<string, double> m_GeomParams;
         private Dictionary<string, double> m_CalcResults;
+
         private List<string> m_Message;
         private BeamSection m_BeamSection;
+
 
         public BSFiberMain()
         {
@@ -53,8 +56,9 @@ namespace BSFiberConcrete
                 m_BSLoadData = new BSFiberLoadData();
                 m_BSLoadData.Load();
 
-                FiberConcrete = BSData.LoadFiberConcreteTable();
+                FiberConcrete = BSData.LoadFiberConcreteTable();                
                 cmbFib_i.SelectedIndex = 0;
+                comboBetonType.SelectedIndex = 0;
 
                 m_Iniv = m_BSLoadData.ReadInitFromJson();
                 List<Efforts> eff = Lib.BSData.LoadEfforts();
@@ -409,7 +413,7 @@ namespace BSFiberConcrete
                 {
                     var fib = getQuery?.First();
 
-                    numRfbt3n.Value = Convert.ToDecimal(BSHelper.MPA2kgsm2(fib?.Rfbt3));
+                    numRfbt3n.Value = Convert.ToDecimal(BSHelper.MPA2kgsm2(fib?.Rfbt3n));
                     numRfbn.Value = Convert.ToDecimal(BSHelper.MPA2kgsm2(beton?.Rfbn));
                 }
 
@@ -469,7 +473,9 @@ namespace BSFiberConcrete
             fiberCalc.Shear = _shear;
             
             InitEfforts(out Dictionary<string, double> MNQ);
-            
+
+            fiberCalc.BetonType = BSQuery.BetonTypeFind(comboBetonType.SelectedIndex);
+
             if (_shear || _useRebar)
             {
                 Rebar rebar = m_BSLoadData.Rebar;                                

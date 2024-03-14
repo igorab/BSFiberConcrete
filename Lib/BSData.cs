@@ -50,10 +50,10 @@ namespace BSFiberConcrete.Lib
         }
 
         /// <summary>
-        /// Типы бетона
+        /// Наименования типов бетона
         /// </summary>
         /// <returns>Список</returns>
-        public static List<string> LoadTypes()
+        public static List<string> LoadBetonTypeName()
         {
             try
             {
@@ -74,19 +74,19 @@ namespace BSFiberConcrete.Lib
         /// Типы бетона
         /// </summary>
         /// <returns>Список</returns>
-        public static List<string> LoadBetonData()
+        public static List<Beton> LoadBetonData()
         {
             try
             {
                 using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
                 {
-                    var output = cnn.Query<string>("select Name from Beton", new DynamicParameters());
+                    var output = cnn.Query<Beton>("select * from Beton", new DynamicParameters());
                     return output.ToList();
                 }
             }
             catch
             {
-                return new List<string>();
+                return new List<Beton>();
             }
         }
 

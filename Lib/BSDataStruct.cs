@@ -15,6 +15,31 @@ namespace BSFiberConcrete
 
     }
 
+    /// <summary>
+    /// Данные из таблицы Beton
+    /// </summary>
+    public class Beton
+    {
+        public  int Id { get; set; }
+        public  string Name { get; set; }
+        public  double Rb { get; set; }
+        public  double Rbt { get; set; }
+        public  double Eb { get; set; }
+    }
+
+    /// <summary>
+    /// Данные из таблицы BetonType
+    /// </summary>
+    public class BetonType
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public double Omega { get; set; }        
+        public double Eps_fb2 { get; set; }
+    }
+
+
+
 
     /// <summary>
     /// Фибробетон, параметры
@@ -26,6 +51,7 @@ namespace BSFiberConcrete
         public double Eb { get; set; }
         public double mu_fv { get; set; }
         public double omega { get; set; }
+        public double Efb => Eb * (1 - mu_fv) + Ef * mu_fv;
     }
 
     /// <summary>

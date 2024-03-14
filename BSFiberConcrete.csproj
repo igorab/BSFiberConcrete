@@ -182,6 +182,7 @@
       <DependentUpon>BSFiberMain.cs</DependentUpon>
     </Compile>
     <Compile Include="BSFiberConcrete.cs" />
+    <Compile Include="Lib\BSQuery.cs" />
     <Compile Include="Report\BSFiberReport.cs" />
     <Compile Include="Report\BSFiberReport_MNQ.cs" />
     <Compile Include="BSFiberSetup.cs">

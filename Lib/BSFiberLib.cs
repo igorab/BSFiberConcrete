@@ -23,7 +23,7 @@ namespace BSFiberConcrete
             new BSFiberBeton{Id = 200, Name = "B2i", Type = 2, Rfbt3 = 2.0, Rfbn = 15 },
             new BSFiberBeton{Id = 250, Name = "B2,5i", Type = 2, Rfbt3 = 2.5, Rfbn = 18.5 },
             new BSFiberBeton{Id = 300, Name = "B3i", Type = 2, Rfbt3 = 3.0, Rfbn = 22.0 },
-            new BSFiberBeton{Id = 350, Name = "B3,5i", Type = 2, Rfbt3 = 3.5, Rfbn = 25.5 },
+            new BSFiberBeton{Id = 350, Name = "B3,5i", Type = 2, Rfbt3 = 3.5, Rfbn = 25.58 },
             new BSFiberBeton{Id = 400, Name = "B4i", Type = 2, Rfbt3 = 4.0, Rfbn = 29.0 },
             new BSFiberBeton{Id = 450, Name = "B4,5i", Type = 2, Rfbt3 = 4.5, Rfbn = 32.0 },
             new BSFiberBeton{Id = 500, Name = "B5i", Type = 2, Rfbt3 = 5.0, Rfbn = 36.0 },
