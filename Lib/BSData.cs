@@ -38,12 +38,21 @@ namespace BSFiberConcrete.Lib
             return ok;
         }
 
+        /// <summary>
+        /// Подключение к БД
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Строка подключения</returns>
         public static string  LoadConnectionString(string id = "Default")
         {
             string s = ConfigurationManager.ConnectionStrings[id].ConnectionString;
             return s;
         }
 
+        /// <summary>
+        /// Типы бетона
+        /// </summary>
+        /// <returns>Список</returns>
         public static List<string> LoadTypes()
         {
             try
@@ -60,6 +69,33 @@ namespace BSFiberConcrete.Lib
             }
         }
 
+
+        /// <summary>
+        /// Типы бетона
+        /// </summary>
+        /// <returns>Список</returns>
+        public static List<string> LoadBetonData()
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    var output = cnn.Query<string>("select Name from Beton", new DynamicParameters());
+                    return output.ToList();
+                }
+            }
+            catch
+            {
+                return new List<string>();
+            }
+        }
+
+
+
+        /// <summary>
+        /// Коэффициенты
+        /// </summary>
+        /// <returns>Список</returns>
         public static List<Coefficients> LoadCoeffs()
         {
             try
@@ -76,10 +112,10 @@ namespace BSFiberConcrete.Lib
             }
         }
 
-
-
-
-
+        /// <summary>
+        /// Усилия 
+        /// </summary>
+        /// <returns>Список</returns>
         public static List<Efforts> LoadEfforts()
         {
             try

@@ -1,4 +1,6 @@
-﻿namespace BSFiberConcrete
+﻿using System.Windows.Forms;
+
+namespace BSFiberConcrete
 {
     /// <summary>
     /// Единицы измерения
@@ -39,10 +41,8 @@
         public double Rsc { get; set; }
         //Значения модуля упругости арматуры
         public double Es { get; set; }
-
         // Площадь растянутой арматуры
         public double As { get; set; }
-
         // Площадь сжатой арматуры
         public double A1s { get; set; }
         public double Rsw { get; set; }
@@ -50,7 +50,13 @@
         public double s_w { get; set; }
         public double ls { get; set; }
 
+        //Растояние до цента тяжести растянутой арматуры см
+        public double a { get; set; }
+        //Растояние до цента тяжести сжатой арматуры см
+        public double a1 { get; set; }
         public double Epsilon_s => (Es > 0 ) ? Rs / Es : 0;
+
+        public double Dzeta_R(double omega, double eps_fb2) => omega / (1 + Epsilon_s / eps_fb2);
     }
 
     /// <summary>

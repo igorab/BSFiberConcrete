@@ -30,17 +30,18 @@ namespace BSFiberConcrete
                 dataGridElements.DataSource =  BSData.LoadFiberConcreteTable(i_b);
 
                 dataGridCoeffs.DataSource = BSData.LoadCoeffs();
-                
-                using (var streamreader = new StreamReader(BSFiberLoadData.FiberConcretePath))
-                {
-                    CultureInfo culture = CultureInfo.InvariantCulture;
-                    IReaderConfiguration config = new CsvConfiguration(culture) { Delimiter = ";" };
 
-                    using (var csv = new CsvReader(streamreader, culture))
-                    {
-                        //records = csv.GetRecords<Elements>().ToList();
-                    }
-                }
+                dataGridBeton.DataSource = BSData.LoadBetonData();
+
+                //using (var streamreader = new StreamReader(BSFiberLoadData.FiberConcretePath))
+                //{
+                //    CultureInfo culture = CultureInfo.InvariantCulture;
+                //    IReaderConfiguration config = new CsvConfiguration(culture) { Delimiter = ";" };
+                //    using (var csv = new CsvReader(streamreader, culture))
+                //    {
+                //        records = csv.GetRecords<Elements>().ToList();
+                //    }
+                //}
             }
             catch (CsvHelper.HeaderValidationException)
             {
@@ -64,15 +65,11 @@ namespace BSFiberConcrete
                 */
             }
         }
-
       
         private void CreateMyListView(ListView _listView, Rebar _rebar)
         {
-            // Create a new ListView control.
             ListView listView = _listView;
-
-            //listView1.Bounds = new Rectangle(new Point(10, 10), new Size(300, 200));
-
+            
             // Set the view to show details.
             listView.View = View.Details;
             // Allow the user to edit item text.
@@ -88,43 +85,58 @@ namespace BSFiberConcrete
             // Sort the items in the list in ascending order.
             listView.Sorting = SortOrder.Ascending;
 
+            ListViewItem[] items = new ListViewItem[8];
+            int idx = -1;
             // Create items and sets of subitems for each item.
-            ListViewItem item0 = new ListViewItem("A400", 0);
-            item0.Checked = true;
-            item0.SubItems.Add("");
-            item0.SubItems.Add("Класс арматуры");
-            item0.SubItems.Add("");
+            items[++idx] = new ListViewItem("A400", 0);
+            items[idx].Checked = true;
+            items[idx].SubItems.Add("");
+            items[idx].SubItems.Add("Класс арматуры");
+            items[idx].SubItems.Add("");
 
-            ListViewItem item1 = new ListViewItem("Rs", 0);            
-            item1.Checked = true;
-            item1.SubItems.Add(_rebar.Rs.ToString());
-            item1.SubItems.Add("Расчетное сопротивление продольной арматуры");
-            item1.SubItems.Add("кг/см2");
+            items[++idx] = new ListViewItem("Rs", 0);
+            items[idx].Checked = true;
+            items[idx].SubItems.Add(_rebar.Rs.ToString());
+            items[idx].SubItems.Add("Расчетное сопротивление продольной арматуры");
+            items[idx].SubItems.Add("кг/см2");
 
-            ListViewItem item2 = new ListViewItem("As", 1);
-            item2.Checked = true;
-            item2.SubItems.Add(_rebar.As.ToString());
-            item2.SubItems.Add("Площадь растянутой арматуры");
-            item2.SubItems.Add("см2");
+            items[++idx] = new ListViewItem("As", 1);
+            items[idx].Checked = true;
+            items[idx].SubItems.Add(_rebar.As.ToString());
+            items[idx].SubItems.Add("Площадь растянутой арматуры");
+            items[idx].SubItems.Add("см2");
 
-            ListViewItem item3 = new ListViewItem("Rsw", 0);            
-            item3.Checked = true;
-            item3.SubItems.Add(_rebar.Rsw.ToString());
-            item3.SubItems.Add("Расчетное сопротивление поперечной арматуры");
-            item3.SubItems.Add("кг/см2");
+            items[++idx] = new ListViewItem("Rsw", 0);
+            items[idx].Checked = true;
+            items[idx].SubItems.Add(_rebar.Rsw.ToString());
+            items[idx].SubItems.Add("Расчетное сопротивление поперечной арматуры");
+            items[idx].SubItems.Add("кг/см2");
 
-            ListViewItem item4 = new ListViewItem("Asw", 0);
-            item4.Checked = true;
-            item4.SubItems.Add(_rebar.Asw.ToString());
-            item4.SubItems.Add("Площадь арматуры");
-            item4.SubItems.Add("см2");
+            items[++idx] = new ListViewItem("Asw", 0);
+            items[idx].Checked = true;
+            items[idx].SubItems.Add(_rebar.Asw.ToString());
+            items[idx].SubItems.Add("Площадь арматуры");
+            items[idx].SubItems.Add("см2");
 
-            ListViewItem item5 = new ListViewItem("s_w", 0);
-            item5.Checked = true;
-            item5.SubItems.Add(_rebar.s_w.ToString());
-            item5.SubItems.Add("Шаг попреречной арматуры");
-            item5.SubItems.Add("см");
+            items[++idx] = new ListViewItem("s_w", 0);
+            items[idx].Checked = true;
+            items[idx].SubItems.Add(_rebar.s_w.ToString());
+            items[idx].SubItems.Add("Шаг попреречной арматуры");
+            items[idx].SubItems.Add("см");
 
+            items[++idx] = new ListViewItem("a", 0);
+            items[idx].Checked = true;
+            items[idx].SubItems.Add(_rebar.a.ToString());
+            items[idx].SubItems.Add("Расст до ц.т. растянутой арм");
+            items[idx].SubItems.Add("см");
+
+            items[++idx] = new ListViewItem("a1", 0);
+            items[idx].Checked = true;
+            items[idx].SubItems.Add(_rebar.a1.ToString());
+            items[idx].SubItems.Add("Расст до ц.т. сжатой арм");
+            items[idx].SubItems.Add("см");
+
+            // idx == 8
             // Create columns for the items and subitems.
             // Width of -2 indicates auto-size.
             listView.Columns.Add("Параметр", 100, HorizontalAlignment.Left);
@@ -133,7 +145,7 @@ namespace BSFiberConcrete
             listView.Columns.Add("Ед. изм.", 100, HorizontalAlignment.Center);
 
             //Add the items to the ListView.
-            listView.Items.AddRange(new ListViewItem[] { item0, item1, item2, item3, item4, item5 });            
+            listView.Items.AddRange(items);
         }
 
         private void BSFiberSetup_Load(object sender, EventArgs e)

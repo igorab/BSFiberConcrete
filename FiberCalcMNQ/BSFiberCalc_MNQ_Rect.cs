@@ -87,10 +87,10 @@ namespace BSFiberConcrete
         /// </summary>
         protected void Calculate_N_Rods()
         {
-            BSRod rod = m_Beam.Rods[0];
+            //BSRod rod = m_Beam.Rods[0];
             MatRod = m_Beam.MatRod;
             MatFiber = m_Beam.Mat;
-
+            Efb = m_Fiber.Ef;
             string info;
 
             // Расчетное остаточное остаточного сопротивления осевому растяжению
@@ -100,7 +100,7 @@ namespace BSFiberConcrete
             Rfb = R_fb();
 
             // Расчетная высота сечения см
-            double h0 = h - rod.a; 
+            double h0 = h - Rebar.a; 
 
             // Высота сжатой зоны
             double x = (N  + Rebar.Rs * Rebar.As - Rebar.Rsc * Rebar.A1s +  Rfbt3 * b * h )/ ((Rfb + Rfbt3) * b); 
@@ -114,7 +114,7 @@ namespace BSFiberConcrete
             //Значения относительных деформаций арматуры для арматуры с физическим пределом текучести СП 63 п.п. 6.2.11
             double eps =  Rebar.Epsilon_s;
 
-            double dz_R = Dzeta_R(0.8);
+            double dz_R = Rebar.Dzeta_R(0.8, 0.0035);
 
             double x_denom = (Rfb + Rfbt3) * b + 2 * Rebar.Rs * Rebar.As / (h0 * (1 - dz_R));
 
@@ -125,18 +125,18 @@ namespace BSFiberConcrete
                 x = (x_denom > 0) ? (N + Rebar.Rs * Rebar.As * ((1 + dz_R) / (1 - dz_R)) - Rebar.Rsc * Rebar.A1s + Rfbt3 * b * h) / x_denom : 0;
             }
 
-            double alfa = MatRod.Es / MatFiber.Efb;
+            double alfa = Rebar.Es / Efb;
 
             double A_red = A + alfa * Rebar.As + alfa * Rebar.A1s;
 
             // Статический момент сечения фибробетона относительно растянутой грани
             double S = A * h / 2;
             // расстояние от центра тяжести приведенного сечения до растянутой в стадии эксплуатации грани Пособие к СП 52-102-2004 ф.2.12 (см)
-            double y = (A_red>0)? S + alfa * Rebar.As * rod.a + alfa * Rebar.A1s * (h - rod.a1) / A_red : 0;
+            double y = (A_red>0)? S + alfa * Rebar.As * Rebar.a + alfa * Rebar.A1s * (h - Rebar.a1) / A_red : 0;
             // расстояние от центра тяжести приведенного сечения до сжатой
-            double ys = y - rod.a;
+            double ys = y - Rebar.a;
             // расстояние от центра тяжести приведенного сечения до растянутой арматуры
-            double y1s = h - rod.a1 - y;
+            double y1s = h - Rebar.a1 - y;
 
             double Is = Rebar.As*ys*ys + Rebar.A1s *y1s*y1s;
 
@@ -151,9 +151,9 @@ namespace BSFiberConcrete
             eta =  1 / (1 - N / Ncr);
 
             // расстояние отточки приложения продольной силы N до центра тяжести сечения растянутой арматуры ф.6.33 см
-            double e = e0 * eta + (h0 - rod.a) / 2;
+            double e = e0 * eta + (h0 - Rebar.a) / 2;
 
-            M_ult = Rfb * b * x * (h0 - 0.5 * x) - Rfbt3 * b * (h - x) * ((h - x) / 2 - rod.a) + Rebar.Rsc * Rebar.A1s * (h0 - rod.a1);
+            M_ult = Rfb * b * x * (h0 - 0.5 * x) - Rfbt3 * b * (h - x) * ((h - x) / 2 - Rebar.a) + Rebar.Rsc * Rebar.A1s * (h0 - Rebar.a1);
 
             N_ult = M_ult / e;
 

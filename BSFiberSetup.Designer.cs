@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("1");
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("2");
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("1");
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("2");
             this.dataGridElements = new System.Windows.Forms.DataGridView();
             this.btnLoad = new System.Windows.Forms.Button();
             this.tabFiber = new System.Windows.Forms.TabControl();
@@ -46,6 +46,12 @@
             this.dataGridCoeffs = new System.Windows.Forms.DataGridView();
             this.bSDataBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.btnClose = new System.Windows.Forms.Button();
+            this.num_omega = new System.Windows.Forms.NumericUpDown();
+            this.num_eps_fb2 = new System.Windows.Forms.NumericUpDown();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.tabBeton = new System.Windows.Forms.TabPage();
+            this.dataGridBeton = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridElements)).BeginInit();
             this.tabFiber.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -54,6 +60,10 @@
             this.tabCoeffs.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridCoeffs)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bSDataBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.num_omega)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.num_eps_fb2)).BeginInit();
+            this.tabBeton.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridBeton)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridElements
@@ -63,9 +73,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridElements.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
             this.dataGridElements.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridElements.Location = new System.Drawing.Point(6, 82);
+            this.dataGridElements.Location = new System.Drawing.Point(6, 89);
             this.dataGridElements.Name = "dataGridElements";
-            this.dataGridElements.Size = new System.Drawing.Size(1117, 339);
+            this.dataGridElements.Size = new System.Drawing.Size(1117, 332);
             this.dataGridElements.TabIndex = 0;
             // 
             // btnLoad
@@ -87,6 +97,7 @@
             this.tabFiber.Controls.Add(this.tabPage1);
             this.tabFiber.Controls.Add(this.tabRebar);
             this.tabFiber.Controls.Add(this.tabCoeffs);
+            this.tabFiber.Controls.Add(this.tabBeton);
             this.tabFiber.Location = new System.Drawing.Point(12, 12);
             this.tabFiber.Name = "tabFiber";
             this.tabFiber.SelectedIndex = 0;
@@ -108,18 +119,26 @@
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.ColumnCount = 3;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 87.79343F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.20657F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 189F));
+            this.tableLayoutPanel1.ColumnCount = 7;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 75.67567F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 24.32432F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 169F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 46F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 152F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 151F));
             this.tableLayoutPanel1.Controls.Add(this.comboBetonType, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.label_i, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.comboBox_i, 2, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(9, 22);
+            this.tableLayoutPanel1.Controls.Add(this.num_omega, 4, 0);
+            this.tableLayoutPanel1.Controls.Add(this.num_eps_fb2, 6, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label2, 3, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label3, 5, 0);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(6, 23);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(362, 27);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(808, 27);
             this.tableLayoutPanel1.TabIndex = 3;
             // 
             // comboBetonType
@@ -134,7 +153,7 @@
             // 
             this.label_i.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label_i.AutoSize = true;
-            this.label_i.Location = new System.Drawing.Point(154, 7);
+            this.label_i.Location = new System.Drawing.Point(177, 7);
             this.label_i.Name = "label_i";
             this.label_i.Size = new System.Drawing.Size(15, 13);
             this.label_i.TabIndex = 3;
@@ -151,7 +170,7 @@
             "c",
             "d",
             "e"});
-            this.comboBox_i.Location = new System.Drawing.Point(175, 3);
+            this.comboBox_i.Location = new System.Drawing.Point(232, 3);
             this.comboBox_i.Name = "comboBox_i";
             this.comboBox_i.Size = new System.Drawing.Size(121, 21);
             this.comboBox_i.TabIndex = 4;
@@ -160,7 +179,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 66);
+            this.label1.Location = new System.Drawing.Point(9, 63);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(55, 13);
             this.label1.TabIndex = 1;
@@ -184,8 +203,8 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lvRebar.HideSelection = false;
             this.lvRebar.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2});
+            listViewItem3,
+            listViewItem4});
             this.lvRebar.Location = new System.Drawing.Point(19, 22);
             this.lvRebar.Name = "lvRebar";
             this.lvRebar.Size = new System.Drawing.Size(1104, 377);
@@ -225,6 +244,59 @@
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
+            // num_omega
+            // 
+            this.num_omega.Location = new System.Drawing.Point(447, 3);
+            this.num_omega.Name = "num_omega";
+            this.num_omega.Size = new System.Drawing.Size(120, 20);
+            this.num_omega.TabIndex = 5;
+            // 
+            // num_eps_fb2
+            // 
+            this.num_eps_fb2.Location = new System.Drawing.Point(659, 3);
+            this.num_eps_fb2.Name = "num_eps_fb2";
+            this.num_eps_fb2.Size = new System.Drawing.Size(120, 20);
+            this.num_eps_fb2.TabIndex = 6;
+            // 
+            // label2
+            // 
+            this.label2.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(401, 7);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(21, 13);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "ω=";
+            // 
+            // label3
+            // 
+            this.label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(599, 7);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(40, 13);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "ε fb2 =";
+            // 
+            // tabBeton
+            // 
+            this.tabBeton.Controls.Add(this.dataGridBeton);
+            this.tabBeton.Location = new System.Drawing.Point(4, 22);
+            this.tabBeton.Name = "tabBeton";
+            this.tabBeton.Padding = new System.Windows.Forms.Padding(3);
+            this.tabBeton.Size = new System.Drawing.Size(1129, 427);
+            this.tabBeton.TabIndex = 3;
+            this.tabBeton.Text = "Бетон";
+            this.tabBeton.UseVisualStyleBackColor = true;
+            // 
+            // dataGridBeton
+            // 
+            this.dataGridBeton.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridBeton.Location = new System.Drawing.Point(22, 27);
+            this.dataGridBeton.Name = "dataGridBeton";
+            this.dataGridBeton.Size = new System.Drawing.Size(827, 346);
+            this.dataGridBeton.TabIndex = 0;
+            // 
             // BSFiberSetup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -246,6 +318,10 @@
             this.tabCoeffs.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridCoeffs)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bSDataBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.num_omega)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.num_eps_fb2)).EndInit();
+            this.tabBeton.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridBeton)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -267,5 +343,11 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label label_i;
         private System.Windows.Forms.ComboBox comboBox_i;
+        private System.Windows.Forms.NumericUpDown num_omega;
+        private System.Windows.Forms.NumericUpDown num_eps_fb2;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TabPage tabBeton;
+        private System.Windows.Forms.DataGridView dataGridBeton;
     }
 }

@@ -444,6 +444,18 @@ namespace BSFiberConcrete
         }
 
         /// <summary>
+        ///  Введенные пользователем значения по арматуре
+        /// </summary>
+        /// <param name="_Rebar"></param>
+        private void InitRebarValues(ref Rebar _Rebar)
+        {
+            _Rebar.As = (double) numAs.Value;
+            _Rebar.A1s = (double) numAs1.Value;
+            _Rebar.a = (double) num_a.Value;
+            _Rebar.a1 = (double) num_a1.Value;
+        }
+
+        /// <summary>
         /// Усилия
         /// </summary>
         /// <param name="fiberCalc"></param>
@@ -460,8 +472,10 @@ namespace BSFiberConcrete
             
             if (_shear || _useRebar)
             {
+                Rebar rebar = m_BSLoadData.Rebar;                                
+                InitRebarValues(ref rebar);
                 // Армирование
-                fiberCalc.Rebar = m_BSLoadData.Rebar;
+                fiberCalc.Rebar = rebar;
 
                 InitLRebar(out double[] l_r);
 
