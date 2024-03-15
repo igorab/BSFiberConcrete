@@ -204,6 +204,7 @@ namespace BSFiberConcrete
             Ef = _fiber.Ef;
             Eb = _fiber.Eb;
             mu_fv = _fiber.mu_fv;
+            Efb = m_Fiber.Efb;
         } 
         
         // параметры арматуры
@@ -310,6 +311,90 @@ namespace BSFiberConcrete
 
             Msg.Add(info);
 
+            N_ult = BSHelper.Kg2T(N_ult);
+        }
+
+
+        protected void Calculate_N_Rods()
+        {                        
+            string info;
+
+            // Расчетное остаточное остаточного сопротивления осевому растяжению
+            Rfbt3 = R_fbt3();
+
+            // Расчетные значения сопротивления  на сжатиие по B30 СП63
+            Rfb = R_fb();
+
+            // Расчетная высота сечения см
+            double h0 = h - Rebar.a;
+
+            // Высота сжатой зоны
+            double x = (N + Rebar.Rs * Rebar.As - Rebar.Rsc * Rebar.A1s + Rfbt3 * b * h) / ((Rfb + Rfbt3) * b);
+
+            // относительной высоты сжатой зоны сталефибробетона
+            double dzeta = x / h0;
+
+            // характеристика сжатой зоны сталефибробетона, принимаемая для
+            // сталефибробетона из тяжелого бетона классов до В60 включительно равной 0,8
+
+            //Значения относительных деформаций арматуры для арматуры с физическим пределом текучести СП 63 п.п. 6.2.11
+            double eps = Rebar.Epsilon_s;
+
+            double dz_R = Rebar.Dzeta_R(BetonType.Omega, BetonType.Eps_fb2);
+
+            double x_denom = (Rfb + Rfbt3) * b + 2 * Rebar.Rs * Rebar.As / (h0 * (1 - dz_R));
+
+            delta_e = Delta_e(e0 / m_Beam.h);
+
+            fi1 = Fi1();
+
+            k_b = K_b(fi1, delta_e);
+
+            if (dzeta > dz_R)
+            {
+                x = (x_denom > 0) ? (N + Rebar.Rs * Rebar.As * ((1 + dz_R) / (1 - dz_R)) - Rebar.Rsc * Rebar.A1s + Rfbt3 * b * h) / x_denom : 0;
+            }
+
+            double alfa = Rebar.Es / Efb;
+
+            double A_red = A + alfa * Rebar.As + alfa * Rebar.A1s;
+
+            // Статический момент сечения фибробетона относительно растянутой грани
+            double S = A * h / 2;
+            // расстояние от центра тяжести приведенного сечения до растянутой в стадии эксплуатации грани Пособие к СП 52-102-2004 ф.2.12 (см)
+            double y = (A_red > 0) ? (S + alfa * Rebar.As * Rebar.a + alfa * Rebar.A1s * (h - Rebar.a1)) / A_red : 0;
+            // расстояние от центра тяжести приведенного сечения до сжатой
+            double ys = y - Rebar.a;
+            // расстояние от центра тяжести приведенного сечения до растянутой арматуры
+            double y1s = h - Rebar.a1 - y;
+
+            double Is = Rebar.As * ys * ys + Rebar.A1s * y1s * y1s;
+
+            // жесткость элемента в предельной по прочности стадии, определяемая по формуле (6.31)
+            D = k_b * Efb * I + 0.7 * Rebar.Es * Is;
+
+            // условная критическая сила, определяемая по формуле (6.24)
+            Ncr = (Math.PI * Math.PI) * D / Math.Pow(l0, 2);
+
+            // коэффициент, учитывающий влияние продольного изгиба (прогиба) элемента
+            // на его несущую способность и определяемый по формуле(6.23)6.1.13
+            eta = 1 / (1 - N / Ncr);
+
+            // расстояние отточки приложения продольной силы N до центра тяжести сечения растянутой арматуры ф.6.33 см
+            double e = e0 * eta + (h0 - Rebar.a) / 2;
+
+            M_ult = Rfb * b * x * (h0 - 0.5 * x) - Rfbt3 * b * (h - x) * ((h - x) / 2 - Rebar.a) + Rebar.Rsc * Rebar.A1s * (h0 - Rebar.a1);
+
+            N_ult = M_ult / e;
+
+            if (N * e <= M_ult)
+                info = "Прочность обеспечена";
+            else
+                info = "Прочность не обеспечена";
+
+            Msg.Add(info);
+
+            M_ult = BSHelper.Kg2T(M_ult);
             N_ult = BSHelper.Kg2T(N_ult);
         }
 

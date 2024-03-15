@@ -116,7 +116,7 @@ namespace BSFiberConcrete
                 {
                     w.WriteLine("<tr>");
                     w.WriteLine($"<td>{_pair.Key}</td>");
-                    w.WriteLine($"<td>| {_pair.Value} </td>");
+                    w.WriteLine($"<td>| {Math.Round(_pair.Value, 4)} </td>");
                     w.WriteLine("</tr>");
                 }
                
@@ -132,7 +132,7 @@ namespace BSFiberConcrete
                 {
                     w.WriteLine("<tr>");
                     w.WriteLine($"<td>{_pair.Key}</td>");
-                    w.WriteLine($"<td>| {_pair.Value} </td>");
+                    w.WriteLine($"<td>| {Math.Round(_pair.Value, 4)} </td>");
                     w.WriteLine("</tr>");
                 }                                
                 w.WriteLine("</Table>");

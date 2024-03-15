@@ -30,6 +30,10 @@ namespace BSFiberConcrete
                 // Расчет на действие моментов
                 CalculateM();
             }
+            else if (UseRebar)
+            {
+                Calculate_N_Rods();
+            }
             else
             {
                 Calculate_N();
