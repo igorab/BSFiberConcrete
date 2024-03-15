@@ -577,7 +577,7 @@ namespace BSFiberConcrete
 
             try
             {
-                FiberCalc_MNQ(out fiberCalc, checkBoxRebar.Checked, checkBoxFissure.Checked, _shear: true);
+                FiberCalc_MNQ(out fiberCalc, true, false, _shear: true);
             }
             catch (Exception _ex)
             {
@@ -586,8 +586,8 @@ namespace BSFiberConcrete
             finally
             {
                 BSFiberReport_MNQ report = new BSFiberReport_MNQ();
-
                 report.BeamSection = m_BeamSection;
+                report.ImageCalc = fiberCalc.ImageCalc();
                 report.Init(fiberCalc);
 
                 string pathToHtmlFile = report.CreateReport();

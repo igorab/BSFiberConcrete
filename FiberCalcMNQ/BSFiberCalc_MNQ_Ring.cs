@@ -8,12 +8,21 @@ namespace BSFiberConcrete
 {
     public class BSFiberCalc_MNQ_Ring : BSFiberCalc_MNQ
     {
+        private string m_ImgCalc;
         public BSBeam_Ring beam { get; set; }
 
         public BSFiberCalc_MNQ_Ring()
         {
             this.beam = new BSBeam_Ring();
             base.m_Beam = this.beam;
+        }
+
+        public override string ImageCalc()
+        {
+            if (!string.IsNullOrEmpty(m_ImgCalc))
+                return m_ImgCalc;
+
+            return base.ImageCalc();
         }
 
         public override void GetSize(double[] _t)
@@ -34,9 +43,7 @@ namespace BSFiberConcrete
 
         public override void GetParams(double[] _t)
         {
-            base.GetParams(_t);
-
-            e_N = 25;
+            base.GetParams(_t);            
         }
 
         private new void Calculate_N()
@@ -58,6 +65,16 @@ namespace BSFiberConcrete
             N_ult = Ar * (Rfb * Math.Sin(Math.PI * alfa_r) / Math.PI + Rfbt3 * (1 - 1.35 * alfa_r) * 1.6 * alfa_r) * beam.r_m / e_N;
 
             N_ult *= 0.001d;
+        }
+
+        /// <summary>
+        ///  Расчет прочности кольцевых сечений колонн с комбинированным покрытием
+        /// </summary>
+        protected new void Calculate_N_Rods()
+        {
+            m_ImgCalc = "Ring_N_Rods.PNG";
+
+            base.Calculate_N_Rods();
         }
 
 

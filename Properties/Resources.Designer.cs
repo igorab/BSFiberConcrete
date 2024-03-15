@@ -103,6 +103,16 @@ namespace BSFiberConcrete.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Incline_Q {
+            get {
+                object obj = ResourceManager.GetObject("Incline_Q", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Rebar {
             get {
                 object obj = ResourceManager.GetObject("Rebar", resourceCulture);
@@ -156,6 +166,16 @@ namespace BSFiberConcrete.Properties {
         internal static System.Drawing.Bitmap Ring {
             get {
                 object obj = ResourceManager.GetObject("Ring", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Ring_N_Rods {
+            get {
+                object obj = ResourceManager.GetObject("Ring_N_Rods", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

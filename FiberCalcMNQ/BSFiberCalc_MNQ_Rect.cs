@@ -77,6 +77,8 @@ namespace BSFiberConcrete
         /// </summary>
         private new void CalculateQ()
         {
+            m_ImgCalc = "Incline_Q.PNG";
+
             base.CalculateQ();            
         }
        
@@ -98,7 +100,8 @@ namespace BSFiberConcrete
                 Calculate_N_Out();
             }
             else if (Shear)
-            {   // Расчет на действие поперечной силы
+            {                
+                // Расчет на действие поперечной силы
                 CalculateQ();
                 // Расчет на действие моментов
                 CalculateM();

@@ -10,6 +10,8 @@ namespace BSFiberConcrete
     {
         public List<string> Msg;
 
+        private string m_ImgCalc;
+
         #region attributes
 
         [DisplayName("Высота сечения, см"), Description("Geom")]
@@ -141,8 +143,8 @@ namespace BSFiberConcrete
         ///  Расчетная схема , рисунок
         /// </summary>
         /// <returns>Наименование файла</returns>
-        public virtual string ImageCalc() => "";
-        
+        public virtual string ImageCalc() => !string.IsNullOrEmpty(m_ImgCalc) ? m_ImgCalc : "";
+                        
         public double Delta_e(double _d_e)
         {
             double d_e;
@@ -410,6 +412,8 @@ namespace BSFiberConcrete
 
         protected void CalculateQ()
         {
+            m_ImgCalc = "Incline_Q.PNG";
+
             // Растояние до цента тяжести арматуры растянутой арматуры, см
             double a = l_rebar.Length > 2 ? l_rebar[2] : 4;
 
