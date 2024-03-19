@@ -22,6 +22,13 @@ namespace BSFiberConcrete
         public double t_r { get => r2 - r1; }
 
         [DisplayName("Общая площадь кольцевого сечения")]
+        public double A_r => Area();
+
+        public double A_s => 9.04; 
+
+        // TODO выяснить алгоритм
+        public double r_s => 36; 
+
         public override double Area()
         {
             double t = t_r;
@@ -62,9 +69,15 @@ namespace BSFiberConcrete
             return wx;
         }
 
+        //Момент инерции тонкого кольца РТ СП
         public override double I_s()
         {
-            return Jx();
+            double i_s = A_s * Math.Pow(2 * r_s, 2) / 8d;  
+            return i_s;
         }
+
+        public double A_red (double _Es, double _Efb) => A_r + (_Es/ _Efb) * A_s;
+
+        public double Is_red(double _Es, double _Efb) => (_Es / _Efb) * I_s();
     }
 }

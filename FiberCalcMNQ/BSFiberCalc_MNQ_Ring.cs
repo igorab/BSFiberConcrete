@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MathNet.Numerics.Distributions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -68,13 +69,78 @@ namespace BSFiberConcrete
         }
 
         /// <summary>
-        ///  Расчет прочности кольцевых сечений колонн с комбинированным покрытием
+        /// Расчет прочности кольцевых сечений кол
+        /// </summary>
+        private void Calculate_N_Rods_Comb()
+        {
+            var _prms = (r1, r2, beam.r_s, N, e_N, l0);
+
+            // Расчетное остаточное остаточного сопротивления осевому растяжению
+            Rfbt3 = R_fbt3();
+            // Расчетные значения сопротивления  на сжатиие по B30 СП63
+            Rfb = R_fb();
+            //Момент инерции тонкого кольца РТ СП
+            double Is = beam.I_s();
+            // жесткость элемента в предельной по прочности стадии, определяемая по формуле (6.31)
+            D = D_stiff(Is);
+            // условная критическая сила, определяемая по формуле (6.24)
+            Ncr = N_cr(D);
+            // коэффициент, учитывающий влияние продольного изгиба (прогиба) элемента
+            // на его несущую способность и определяемый по формуле(6.23)6.1.13
+            eta = Eta(N, Ncr);
+
+            double x_denom = (Rebar.Rsc + 1.7* Rebar.Rs) * Rebar.As + (Rfb + Rfbt3) * beam.A_r;
+
+            // относительная площадь сжатой зоны бетона по ф. (6.41)
+            double dzeta_cir = (x_denom > 0) ? (N + Rebar.Rs * Rebar.As * + Rfbt3 * beam.A_r) / x_denom : 0;
+
+            delta_e = Delta_e(e0 / m_Beam.h);
+            fi1 = Fi1();
+            k_b = K_b(fi1, delta_e);
+
+            char calc_mode = 'c';
+            if (dzeta_cir > 0.15 && dzeta_cir < 0.6)            
+                calc_mode = 'a';            
+            else if (dzeta_cir <= 0.15)
+                calc_mode = 'b';
+            else if (dzeta_cir >= 0.6)
+                calc_mode = 'c';
+
+            switch (calc_mode)
+            {
+                case 'a':
+                    // Предельная продольная сжимающая сила сечения элемента
+                    N_ult = (Rfb * beam.A_r * beam.r_m + Rebar.Rsc * Rebar.As * beam.r_s) * Math.Sin(Math.PI * dzeta_cir) / Math.PI;
+                    N_ult += (Rebar.Rsc * Rebar.As + Rfbt3 * beam.A_r) * beam.r_s * (1 - 1.7 * dzeta_cir) * (0.2 - 1.3 * dzeta_cir);
+                    N_ult = N_ult / (e_N * eta);
+                    break;
+                case 'b':
+                    double dzeta_cir1 = (N + 0.75 * Rebar.Rs * Rebar.As) / (Rebar.Rsc * Rebar.As + Rfb * beam.A_r);
+                    // Предельная продольная сжимающая сила сечения элемента
+                    N_ult = (Rfb * beam.A_r * beam.r_m + Rebar.Rsc * Rebar.As * beam.r_s) * Math.Sin(Math.PI * dzeta_cir1) / Math.PI;
+                    N_ult += 0.295 * (Rebar.Rs * Rebar.As + Rfbt3 * beam.A_r) * beam.r_s;
+                    N_ult /= e_N * eta;
+                    break;
+                case 'c':
+                    double dzeta_cir2 = N / (Rebar.Rsc * Rebar.As + Rfb * beam.A_r);
+                    // Предельная продольная сжимающая сила сечения элемента
+                    N_ult = (Rfb * beam.A_r * beam.r_m + Rebar.Rsc * Rebar.As * beam.r_s) * Math.Sin(Math.PI * dzeta_cir2) / Math.PI;
+                    N_ult /= e_N * eta;
+                    break;
+            }
+        }
+
+
+        /// <summary>
+        ///  Расчет прочности кольцевых сечений колонн с комбинированным армированием
         /// </summary>
         protected new void Calculate_N_Rods()
         {
             m_ImgCalc = "Ring_N_Rods.PNG";
 
             base.Calculate_N_Rods();
+
+            Calculate_N_Rods_Comb();
         }
 
 
