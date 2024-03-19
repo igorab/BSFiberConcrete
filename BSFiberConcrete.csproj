@@ -166,7 +166,6 @@
     <Compile Include="FiberCalcMNQ\BSFiberCalc_MNQ_IT.cs" />
     <Compile Include="FiberCalcMNQ\BSFiberCalc_MNQ_Rect.cs" />
     <Compile Include="FiberCalcMNQ\BSFiberCalc_MNQ_Ring.cs" />
-    <Compile Include="FiberCalcMNQ\BSFiberCalc_MNQ_Ring_Rods.cs" />
     <Compile Include="FiberCalc\BSFibCalc_IBeam.cs" />
     <Compile Include="FiberCalc\BSFibCalc_Rect.cs" />
     <Compile Include="FiberCalc\BSFibCalc_Ring.cs" />

@@ -163,7 +163,7 @@ namespace BSFiberConcrete
             return d_e;
         }
 
-        public double Fi1() => (M1 != 0) ? 1 + Ml1 / M1 : 1.0;
+        public double Fi1() => (Ml1 / M1 <= 1) ? 1 + Ml1 / M1 : 2.0;
 
         protected double R_fb() => Rfbn / Yb * Yb1 * Yb2 * Yb3 * Yb5;
 
@@ -317,7 +317,7 @@ namespace BSFiberConcrete
         }
 
         // жесткость элемента в предельной по прочности стадии, определяемая по формуле (6.31)
-        protected double D_stiff(double _Is) => k_b* Efb * I + 0.7 * Rebar.Es * _Is;
+        protected double D_stiff(double _Is) => k_b* Efb * I + Rebar.k_s * Rebar.Es * _Is;
 
         // условная критическая сила, определяемая по формуле (6.24)
         protected  double N_cr(double _D) => (Math.PI* Math.PI) * _D / Math.Pow(l0, 2);

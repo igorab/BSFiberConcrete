@@ -85,7 +85,7 @@ namespace BSFiberConcrete
             // Sort the items in the list in ascending order.
             listView.Sorting = SortOrder.Ascending;
 
-            ListViewItem[] items = new ListViewItem[8];
+            ListViewItem[] items = new ListViewItem[9];
             int idx = -1;
             // Create items and sets of subitems for each item.
             items[++idx] = new ListViewItem("A400", 0);
@@ -136,7 +136,13 @@ namespace BSFiberConcrete
             items[idx].SubItems.Add("Расст до ц.т. сжатой арм");
             items[idx].SubItems.Add("см");
 
-            // idx == 8
+            items[++idx] = new ListViewItem("k_s", 0);
+            items[idx].Checked = true;
+            items[idx].SubItems.Add(_rebar.k_s.ToString());
+            items[idx].SubItems.Add("Влияние длительности действия нагрузки");
+            items[idx].SubItems.Add("");
+
+            // idx == 9
             // Create columns for the items and subitems.
             // Width of -2 indicates auto-size.
             listView.Columns.Add("Параметр", 100, HorizontalAlignment.Left);

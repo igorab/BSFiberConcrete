@@ -74,8 +74,9 @@ namespace BSFiberConcrete
         public double Rsw { get; set; }
         public double Asw { get; set; }
         public double s_w { get; set; }
+        public double k_s { get; set; }
         public double ls { get; set; }
-
+        
         //Растояние до цента тяжести растянутой арматуры см
         public double a { get; set; }
         //Растояние до цента тяжести сжатой арматуры см

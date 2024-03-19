@@ -74,7 +74,6 @@ namespace BSFiberConcrete
         private void Calculate_N_Rods_Comb()
         {
             var _prms = (r1, r2, beam.r_s, N, e_N, l0);
-
             // Расчетное остаточное остаточного сопротивления осевому растяжению
             Rfbt3 = R_fbt3();
             // Расчетные значения сопротивления  на сжатиие по B30 СП63
@@ -138,7 +137,7 @@ namespace BSFiberConcrete
         {
             m_ImgCalc = "Ring_N_Rods.PNG";
 
-            base.Calculate_N_Rods();
+            //base.Calculate_N_Rods();
 
             Calculate_N_Rods_Comb();
         }
