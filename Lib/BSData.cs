@@ -21,9 +21,8 @@ namespace BSFiberConcrete.Lib
         public static string ResourcePath(string _file) => Path.Combine(Environment.CurrentDirectory, "Resources", _file);  
 
         public static string DataPath(string _file)  => Path.Combine(Environment.CurrentDirectory, "Data", _file); 
-
-        //public static readonly string connectionString = $"Data Source={DataPath("Fiber.db")};";
-        public static readonly string connectionString = "Data Source=Fiber.db";
+        
+        public static readonly string connectionString = "Data Source =.\\Data\\Fiber.db; Version = 3;";
 
         public static bool Connect()
         {
@@ -45,7 +44,9 @@ namespace BSFiberConcrete.Lib
         /// <returns>Строка подключения</returns>
         public static string  LoadConnectionString(string id = "Default")
         {
-            string s = ConfigurationManager.ConnectionStrings[id].ConnectionString;
+            string s = ConfigurationManager.ConnectionStrings[id]?.ConnectionString;
+            if (string.IsNullOrEmpty(s))
+                s = connectionString;
             return s;
         }
 
@@ -174,8 +175,9 @@ namespace BSFiberConcrete.Lib
                     return output.ToList();
                 }
             }
-            catch
+            catch (Exception _e)
             {
+                MessageBox.Show(_e.Message);
                 return new List<Elements>();
             }
         }

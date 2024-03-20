@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BSFiberConcrete", "BSFiberC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BSCalcLib", "BSCalcLib\BSCalcLib.csproj", "{368408F1-6648-4B55-9853-85A86DD47A2F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BSCalcMenu", "BSCalcMenu\BSCalcMenu.csproj", "{7EB37E79-2077-4D21-A9D6-88EA93DAD041}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{368408F1-6648-4B55-9853-85A86DD47A2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{368408F1-6648-4B55-9853-85A86DD47A2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{368408F1-6648-4B55-9853-85A86DD47A2F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7EB37E79-2077-4D21-A9D6-88EA93DAD041}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7EB37E79-2077-4D21-A9D6-88EA93DAD041}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7EB37E79-2077-4D21-A9D6-88EA93DAD041}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7EB37E79-2077-4D21-A9D6-88EA93DAD041}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

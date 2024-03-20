@@ -50,6 +50,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Logo_house.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="CsvHelper, Version=30.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
       <HintPath>packages\CsvHelper.30.0.1\lib\net47\CsvHelper.dll</HintPath>
@@ -137,6 +140,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BSCalcMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BSCalcMenu.Designer.cs">
+      <DependentUpon>BSCalcMenu.cs</DependentUpon>
+    </Compile>
     <Compile Include="BSElements\BSBeam.cs" />
     <Compile Include="BSElements\BSBeam_IT.cs" />
     <Compile Include="BSElements\BSBeam_Rect.cs" />
@@ -182,6 +191,11 @@
     </Compile>
     <Compile Include="BSFiberConcrete.cs" />
     <Compile Include="Lib\BSQuery.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Report\BSFiberReport.cs" />
     <Compile Include="Report\BSFiberReport_MNQ.cs" />
     <Compile Include="BSFiberSetup.cs">
@@ -199,6 +213,9 @@
     <Compile Include="Mat\BSMaterial.cs" />
     <Compile Include="BSElements\BSRod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="BSCalcMenu.resx">
+      <DependentUpon>BSCalcMenu.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="BSFactors.resx">
       <DependentUpon>BSFactors.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -217,14 +234,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Content Include="Data\Fiber.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -239,6 +251,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Content Include="Logo_house.ico" />
     <Content Include="Resources\EffortsSign.PNG">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -249,6 +262,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <Content Include="Resources\Incline_Q.PNG">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Logo-300x67.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Logo_house.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Logo_small.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Rebar.PNG">
