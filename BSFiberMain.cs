@@ -16,12 +16,15 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 using System.Text.Json;
 using BSFiberConcrete.Lib;
+using CsvHelper.Configuration.Attributes;
 
 namespace BSFiberConcrete
 {
     public partial class BSFiberMain : Form
     {
         private DataTable m_Table { get; set; }
+
+        public CalcType CalcType { get; set; }
 
         //private BetonType
         private Dictionary<string, double> m_Iniv ;
@@ -45,6 +48,20 @@ namespace BSFiberConcrete
             InitializeComponent();
         }
         
+        private void CalcTypeShow()
+        {
+            if (CalcType == CalcType.Static)
+            {                
+                btnCalc_Q.Visible = true;
+                btnCalc_Deform.Visible = false;               
+            }
+            else if (CalcType == CalcType.Nonlinear)
+            {             
+                btnCalc_Q.Visible = false;
+                btnCalc_Deform.Visible = true;
+            }
+        }
+
         // глобальные настройки
         private void BSFiberMain_Load(object sender, EventArgs e)
         {            
@@ -112,8 +129,8 @@ namespace BSFiberConcrete
                 for (int i = 0; i < long_rebar.Length; i++)
                 {
                     gridLRebar.Rows[0].Cells[i].Value = long_rebar[i];
-                    gridLRebar.Rows[1].Cells[i].Value =(i==1)? 0: long_rebar[i];
-                    gridLRebar.Rows[2].Cells[i].Value = (i == 1) ? 0 : long_rebar[i];
+                    gridLRebar.Rows[1].Cells[i].Value = long_rebar[i];// (i==1)? 0: long_rebar[i];
+                    gridLRebar.Rows[2].Cells[i].Value = long_rebar[i];  // (i==1) ? 0 : long_rebar[i];
                 }
 
                 numAs.Value = (decimal)m_Iniv["As"]; 
@@ -121,6 +138,7 @@ namespace BSFiberConcrete
                 num_a.Value = (decimal)m_Iniv["_a"]; 
                 num_a1.Value = (decimal)m_Iniv["_a_1"];
 
+                CalcTypeShow();
             }
             catch (Exception _ex) 
             {
@@ -205,6 +223,9 @@ namespace BSFiberConcrete
             }
         }
         
+        /// <summary>
+        /// Расчет прочности сечения
+        /// </summary>        
         private void btnCalc_Click(object sender, EventArgs e)
         {
             bool useReinforcement = checkBoxRebar.Checked;
@@ -590,7 +611,7 @@ namespace BSFiberConcrete
                 report.ImageCalc = fiberCalc.ImageCalc();
                 report.Init(fiberCalc);
 
-                string pathToHtmlFile = report.CreateReport();
+                string pathToHtmlFile = report.CreateReport(1);
 
                 System.Diagnostics.Process.Start(pathToHtmlFile);
             }
@@ -639,7 +660,9 @@ namespace BSFiberConcrete
         // Расчет элементов по полосе между наклонными сечениями
         // Расчет на действие момента и поперечной силы
         private void btnCalc_Q_Click(object sender, EventArgs e)
-        {                        
+        {
+            FiberCalculate_N();
+
             FiberCalculate_Shear();
         }
         
@@ -873,6 +896,18 @@ namespace BSFiberConcrete
         }
 
         private void cmbBetonClass_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnCalcResults_Click(object sender, EventArgs e)
+        {
+            BSCalcResults bSCalcResults = new BSCalcResults();
+            bSCalcResults.CalcResults = m_CalcResults;
+            bSCalcResults.Show();
+        }
+
+        private void labelCalculation_Click(object sender, EventArgs e)
         {
 
         }

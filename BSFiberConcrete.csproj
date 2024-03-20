@@ -146,6 +146,12 @@
     <Compile Include="BSCalcMenu.Designer.cs">
       <DependentUpon>BSCalcMenu.cs</DependentUpon>
     </Compile>
+    <Compile Include="BSCalcResults.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BSCalcResults.Designer.cs">
+      <DependentUpon>BSCalcResults.cs</DependentUpon>
+    </Compile>
     <Compile Include="BSElements\BSBeam.cs" />
     <Compile Include="BSElements\BSBeam_IT.cs" />
     <Compile Include="BSElements\BSBeam_Rect.cs" />
@@ -164,12 +170,9 @@
     </Compile>
     <Compile Include="Calc\BSFiberCalc_Deform.cs" />
     <Compile Include="Calc\BSFiberCalc_IBeamRods.cs" />
-    <Compile Include="BSFiberCalc_InclinedSections.cs" />
-    <Compile Include="BSFiberCalc_Norm.cs" />
     <Compile Include="Calc\BSFiberCalc_NormRods.cs" />
     <Compile Include="Lib\BSHelper.cs" />
     <Compile Include="Calc\BSFiberCalculation.cs" />
-    <Compile Include="BSFiberCalc_M.cs" />
     <Compile Include="FiberCalcMNQ\BSFiberCalc_MNQ.cs" />
     <Compile Include="Calc\BSFiberCalc_Q.cs" />
     <Compile Include="FiberCalcMNQ\BSFiberCalc_MNQ_IT.cs" />
@@ -215,6 +218,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="BSCalcMenu.resx">
       <DependentUpon>BSCalcMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BSCalcResults.resx">
+      <DependentUpon>BSCalcResults.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="BSFactors.resx">
       <DependentUpon>BSFactors.cs</DependentUpon>

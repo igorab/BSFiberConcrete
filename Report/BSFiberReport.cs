@@ -258,13 +258,15 @@ namespace BSFiberConcrete
             w.WriteLine("</html>");            
         }
 
-        public string CreateReport()
+        public string CreateReport(int _fileIdx = 0)
         {
             string pathToHtmlFile = "";
-
+            string filename = "FiberCalculationReport{0}.htm";
             try
             {
-                using (FileStream fs = new FileStream("test.htm", FileMode.Create))
+                filename = (_fileIdx == 0) ? string.Format(filename, "") : string.Format(filename, _fileIdx);
+
+                using (FileStream fs = new FileStream(filename, FileMode.Create))
                 {
                     using (StreamWriter w = new StreamWriter(fs, Encoding.UTF8))
                     {

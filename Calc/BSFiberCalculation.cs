@@ -156,13 +156,18 @@ namespace BSFiberConcrete
 
             return 0;
         }
-
+        
+        /// <summary>
+        /// Расчет прочности сечения
+        /// </summary>
+        /// <param name="_profile">Профиль сечения</param>
+        /// <param name="_reinforcement">Используется ли арматура</param>
+        /// <returns>Экземпляр класса расчета</returns>
         public static BSFiberCalculation construct(BeamSection _profile, bool _reinforcement = false)
         {
             switch (_profile)
             {
-                case BeamSection.TBeam:
-                    return new BSFibCalc_TBeam();
+                case BeamSection.TBeam:                    
                 case BeamSection.IBeam:
                     if (_reinforcement)
                         return new BSFiberCalc_IBeamRods();

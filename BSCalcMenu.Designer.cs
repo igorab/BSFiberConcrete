@@ -39,23 +39,23 @@
             this.lblLocalStrength = new System.Windows.Forms.Label();
             this.btnUnits = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
+            this.btnFiberClass = new System.Windows.Forms.Button();
+            this.btnRebarClass = new System.Windows.Forms.Button();
+            this.btnBetonClass = new System.Windows.Forms.Button();
+            this.btnCoefY = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.btnStaticEquilibrium = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
+            this.btnNonlinearDeform = new System.Windows.Forms.Button();
             this.button11 = new System.Windows.Forms.Button();
             this.button12 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Button();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.labelInfo = new System.Windows.Forms.Label();
             this.pictureBoxLogo = new System.Windows.Forms.PictureBox();
+            this.labelInfo = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -70,7 +70,7 @@
             this.tableLayoutPanel1.ColumnCount = 3;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.57915F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.42085F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 280F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 284F));
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel4, 2, 1);
             this.tableLayoutPanel1.Controls.Add(this.labelVer, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.lblInfo, 0, 0);
@@ -95,7 +95,7 @@
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel4.Controls.Add(this.button9, 0, 1);
             this.tableLayoutPanel4.Controls.Add(this.button10, 0, 3);
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(576, 29);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(572, 29);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 6;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
@@ -152,7 +152,7 @@
             // 
             this.lblExpertise.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblExpertise.AutoSize = true;
-            this.lblExpertise.Location = new System.Drawing.Point(293, 6);
+            this.lblExpertise.Location = new System.Drawing.Point(291, 6);
             this.lblExpertise.Name = "lblExpertise";
             this.lblExpertise.Size = new System.Drawing.Size(70, 13);
             this.lblExpertise.TabIndex = 1;
@@ -162,7 +162,7 @@
             // 
             this.lblLocalStrength.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblLocalStrength.AutoSize = true;
-            this.lblLocalStrength.Location = new System.Drawing.Point(576, 6);
+            this.lblLocalStrength.Location = new System.Drawing.Point(572, 6);
             this.lblLocalStrength.Name = "lblLocalStrength";
             this.lblLocalStrength.Size = new System.Drawing.Size(109, 13);
             this.lblLocalStrength.TabIndex = 2;
@@ -170,7 +170,7 @@
             // 
             // btnUnits
             // 
-            this.btnUnits.Location = new System.Drawing.Point(293, 397);
+            this.btnUnits.Location = new System.Drawing.Point(291, 397);
             this.btnUnits.Name = "btnUnits";
             this.btnUnits.Size = new System.Drawing.Size(109, 23);
             this.btnUnits.TabIndex = 4;
@@ -182,12 +182,12 @@
             // 
             this.tableLayoutPanel2.ColumnCount = 1;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Controls.Add(this.button1, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.button2, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.button3, 0, 2);
-            this.tableLayoutPanel2.Controls.Add(this.button4, 0, 3);
+            this.tableLayoutPanel2.Controls.Add(this.btnFiberClass, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.btnRebarClass, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.button5, 0, 4);
             this.tableLayoutPanel2.Controls.Add(this.button6, 0, 5);
+            this.tableLayoutPanel2.Controls.Add(this.btnBetonClass, 0, 3);
+            this.tableLayoutPanel2.Controls.Add(this.btnCoefY, 0, 2);
             this.tableLayoutPanel2.Location = new System.Drawing.Point(4, 29);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 6;
@@ -200,45 +200,49 @@
             this.tableLayoutPanel2.Size = new System.Drawing.Size(264, 332);
             this.tableLayoutPanel2.TabIndex = 5;
             // 
-            // button1
+            // btnFiberClass
             // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(3, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(258, 49);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Класс фибробетона";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnFiberClass.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnFiberClass.Location = new System.Drawing.Point(3, 3);
+            this.btnFiberClass.Name = "btnFiberClass";
+            this.btnFiberClass.Size = new System.Drawing.Size(258, 49);
+            this.btnFiberClass.TabIndex = 0;
+            this.btnFiberClass.Text = "Класс фибробетона";
+            this.btnFiberClass.UseVisualStyleBackColor = true;
+            this.btnFiberClass.Click += new System.EventHandler(this.btnFiberClass_Click);
             // 
-            // button2
+            // btnRebarClass
             // 
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button2.Location = new System.Drawing.Point(3, 58);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(258, 49);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Класс арматуры";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnRebarClass.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnRebarClass.Location = new System.Drawing.Point(3, 58);
+            this.btnRebarClass.Name = "btnRebarClass";
+            this.btnRebarClass.Size = new System.Drawing.Size(258, 49);
+            this.btnRebarClass.TabIndex = 1;
+            this.btnRebarClass.Text = "Класс арматуры";
+            this.btnRebarClass.UseVisualStyleBackColor = true;
+            this.btnRebarClass.Click += new System.EventHandler(this.btnRebarClass_Click);
             // 
-            // button3
+            // btnBetonClass
             // 
-            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button3.Location = new System.Drawing.Point(3, 113);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(258, 49);
-            this.button3.TabIndex = 2;
-            this.button3.Text = "Класс бетона-матрицы";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnBetonClass.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnBetonClass.Location = new System.Drawing.Point(3, 168);
+            this.btnBetonClass.Name = "btnBetonClass";
+            this.btnBetonClass.Size = new System.Drawing.Size(258, 49);
+            this.btnBetonClass.TabIndex = 2;
+            this.btnBetonClass.Text = "Класс бетона-матрицы";
+            this.btnBetonClass.UseVisualStyleBackColor = true;
+            this.btnBetonClass.Click += new System.EventHandler(this.btnBetonClass_Click);
             // 
-            // button4
+            // btnCoefY
             // 
-            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button4.Location = new System.Drawing.Point(3, 168);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(258, 49);
-            this.button4.TabIndex = 3;
-            this.button4.Text = "Коэффициенты условий работы";
-            this.button4.UseVisualStyleBackColor = true;
+            this.btnCoefY.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnCoefY.Location = new System.Drawing.Point(3, 113);
+            this.btnCoefY.Name = "btnCoefY";
+            this.btnCoefY.Size = new System.Drawing.Size(258, 49);
+            this.btnCoefY.TabIndex = 3;
+            this.btnCoefY.Text = "Коэффициенты условий работы";
+            this.btnCoefY.UseVisualStyleBackColor = true;
+            this.btnCoefY.Click += new System.EventHandler(this.btnCoefY_Click);
             // 
             // button5
             // 
@@ -265,12 +269,12 @@
             this.tableLayoutPanel3.ColumnCount = 1;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.Controls.Add(this.btnStaticEquilibrium, 0, 1);
-            this.tableLayoutPanel3.Controls.Add(this.button8, 0, 3);
+            this.tableLayoutPanel3.Controls.Add(this.btnNonlinearDeform, 0, 3);
             this.tableLayoutPanel3.Controls.Add(this.button11, 0, 4);
             this.tableLayoutPanel3.Controls.Add(this.button12, 0, 5);
             this.tableLayoutPanel3.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.label2, 0, 2);
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(293, 29);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(291, 29);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 6;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
@@ -293,15 +297,16 @@
             this.btnStaticEquilibrium.UseVisualStyleBackColor = true;
             this.btnStaticEquilibrium.Click += new System.EventHandler(this.btnStaticEquilibrium_Click);
             // 
-            // button8
+            // btnNonlinearDeform
             // 
-            this.button8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button8.Location = new System.Drawing.Point(3, 168);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(257, 49);
-            this.button8.TabIndex = 1;
-            this.button8.Text = "Нелинейная деформационная модель";
-            this.button8.UseVisualStyleBackColor = true;
+            this.btnNonlinearDeform.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnNonlinearDeform.Location = new System.Drawing.Point(3, 168);
+            this.btnNonlinearDeform.Name = "btnNonlinearDeform";
+            this.btnNonlinearDeform.Size = new System.Drawing.Size(257, 49);
+            this.btnNonlinearDeform.TabIndex = 1;
+            this.btnNonlinearDeform.Text = "Нелинейная деформационная модель";
+            this.btnNonlinearDeform.UseVisualStyleBackColor = true;
+            this.btnNonlinearDeform.Click += new System.EventHandler(this.btnNonlinearDeform_Click);
             // 
             // button11
             // 
@@ -345,7 +350,7 @@
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(576, 397);
+            this.btnClose.Location = new System.Drawing.Point(572, 397);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(120, 23);
             this.btnClose.TabIndex = 3;
@@ -362,6 +367,15 @@
             this.flowLayoutPanel1.Size = new System.Drawing.Size(858, 78);
             this.flowLayoutPanel1.TabIndex = 1;
             // 
+            // pictureBoxLogo
+            // 
+            this.pictureBoxLogo.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxLogo.Image")));
+            this.pictureBoxLogo.Location = new System.Drawing.Point(3, 3);
+            this.pictureBoxLogo.Name = "pictureBoxLogo";
+            this.pictureBoxLogo.Size = new System.Drawing.Size(365, 69);
+            this.pictureBoxLogo.TabIndex = 0;
+            this.pictureBoxLogo.TabStop = false;
+            // 
             // labelInfo
             // 
             this.labelInfo.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -373,15 +387,6 @@
             this.labelInfo.Size = new System.Drawing.Size(438, 18);
             this.labelInfo.TabIndex = 1;
             this.labelInfo.Text = "Расчет элементов сталефибробетонных конструкций.";
-            // 
-            // pictureBoxLogo
-            // 
-            this.pictureBoxLogo.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxLogo.Image")));
-            this.pictureBoxLogo.Location = new System.Drawing.Point(3, 3);
-            this.pictureBoxLogo.Name = "pictureBoxLogo";
-            this.pictureBoxLogo.Size = new System.Drawing.Size(365, 69);
-            this.pictureBoxLogo.TabIndex = 0;
-            this.pictureBoxLogo.TabStop = false;
             // 
             // BSCalcMenu
             // 
@@ -422,16 +427,16 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button btnFiberClass;
+        private System.Windows.Forms.Button btnRebarClass;
+        private System.Windows.Forms.Button btnBetonClass;
+        private System.Windows.Forms.Button btnCoefY;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button9;
         private System.Windows.Forms.Button button10;
         private System.Windows.Forms.Button btnStaticEquilibrium;
-        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Button btnNonlinearDeform;
         private System.Windows.Forms.Button button11;
         private System.Windows.Forms.Button button12;
         private System.Windows.Forms.Label label1;

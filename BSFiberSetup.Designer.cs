@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem("1");
-            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("2");
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("1");
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("2");
             this.dataGridElements = new System.Windows.Forms.DataGridView();
             this.btnLoad = new System.Windows.Forms.Button();
             this.tabFiber = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPageFiber = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.comboBetonType = new System.Windows.Forms.ComboBox();
             this.label_i = new System.Windows.Forms.Label();
@@ -54,7 +54,7 @@
             this.btnClose = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridElements)).BeginInit();
             this.tabFiber.SuspendLayout();
-            this.tabPage1.SuspendLayout();
+            this.tabPageFiber.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.num_omega)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_eps_fb2)).BeginInit();
@@ -94,7 +94,7 @@
             this.tabFiber.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabFiber.Controls.Add(this.tabPage1);
+            this.tabFiber.Controls.Add(this.tabPageFiber);
             this.tabFiber.Controls.Add(this.tabRebar);
             this.tabFiber.Controls.Add(this.tabCoeffs);
             this.tabFiber.Controls.Add(this.tabBeton);
@@ -102,20 +102,20 @@
             this.tabFiber.Name = "tabFiber";
             this.tabFiber.SelectedIndex = 0;
             this.tabFiber.Size = new System.Drawing.Size(1137, 453);
-            this.tabFiber.TabIndex = 2;
+            this.tabFiber.TabIndex = 1;
             // 
-            // tabPage1
+            // tabPageFiber
             // 
-            this.tabPage1.Controls.Add(this.tableLayoutPanel1);
-            this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Controls.Add(this.dataGridElements);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1129, 427);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Фибробетон";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.tabPageFiber.Controls.Add(this.tableLayoutPanel1);
+            this.tabPageFiber.Controls.Add(this.label1);
+            this.tabPageFiber.Controls.Add(this.dataGridElements);
+            this.tabPageFiber.Location = new System.Drawing.Point(4, 22);
+            this.tabPageFiber.Name = "tabPageFiber";
+            this.tabPageFiber.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageFiber.Size = new System.Drawing.Size(1129, 427);
+            this.tabPageFiber.TabIndex = 0;
+            this.tabPageFiber.Text = "Фибробетон";
+            this.tabPageFiber.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel1
             // 
@@ -126,7 +126,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 46F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 152F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 153F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 154F));
             this.tableLayoutPanel1.Controls.Add(this.comboBetonType, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.label_i, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.comboBox_i, 2, 0);
@@ -155,7 +155,7 @@
             // 
             this.label_i.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label_i.AutoSize = true;
-            this.label_i.Location = new System.Drawing.Point(175, 7);
+            this.label_i.Location = new System.Drawing.Point(174, 7);
             this.label_i.Name = "label_i";
             this.label_i.Size = new System.Drawing.Size(15, 13);
             this.label_i.TabIndex = 3;
@@ -172,7 +172,7 @@
             "c",
             "d",
             "e"});
-            this.comboBox_i.Location = new System.Drawing.Point(230, 3);
+            this.comboBox_i.Location = new System.Drawing.Point(229, 3);
             this.comboBox_i.Name = "comboBox_i";
             this.comboBox_i.Size = new System.Drawing.Size(121, 21);
             this.comboBox_i.TabIndex = 4;
@@ -181,7 +181,7 @@
             // num_omega
             // 
             this.num_omega.DecimalPlaces = 4;
-            this.num_omega.Location = new System.Drawing.Point(445, 3);
+            this.num_omega.Location = new System.Drawing.Point(444, 3);
             this.num_omega.Name = "num_omega";
             this.num_omega.Size = new System.Drawing.Size(120, 20);
             this.num_omega.TabIndex = 5;
@@ -189,7 +189,7 @@
             // num_eps_fb2
             // 
             this.num_eps_fb2.DecimalPlaces = 4;
-            this.num_eps_fb2.Location = new System.Drawing.Point(657, 3);
+            this.num_eps_fb2.Location = new System.Drawing.Point(656, 3);
             this.num_eps_fb2.Name = "num_eps_fb2";
             this.num_eps_fb2.Size = new System.Drawing.Size(120, 20);
             this.num_eps_fb2.TabIndex = 6;
@@ -198,7 +198,7 @@
             // 
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(399, 7);
+            this.label2.Location = new System.Drawing.Point(398, 7);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(21, 13);
             this.label2.TabIndex = 7;
@@ -208,7 +208,7 @@
             // 
             this.label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(597, 7);
+            this.label3.Location = new System.Drawing.Point(596, 7);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(40, 13);
             this.label3.TabIndex = 8;
@@ -241,8 +241,8 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lvRebar.HideSelection = false;
             this.lvRebar.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem9,
-            listViewItem10});
+            listViewItem1,
+            listViewItem2});
             this.lvRebar.Location = new System.Drawing.Point(19, 22);
             this.lvRebar.Name = "lvRebar";
             this.lvRebar.Size = new System.Drawing.Size(1104, 377);
@@ -316,8 +316,8 @@
             this.Load += new System.EventHandler(this.BSFiberSetup_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridElements)).EndInit();
             this.tabFiber.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
+            this.tabPageFiber.ResumeLayout(false);
+            this.tabPageFiber.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.num_omega)).EndInit();
@@ -337,7 +337,7 @@
         private System.Windows.Forms.DataGridView dataGridElements;
         private System.Windows.Forms.Button btnLoad;
         private System.Windows.Forms.TabControl tabFiber;
-        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPageFiber;
         private System.Windows.Forms.TabPage tabRebar;
         private System.Windows.Forms.ListView lvRebar;
         private System.Windows.Forms.Label label1;

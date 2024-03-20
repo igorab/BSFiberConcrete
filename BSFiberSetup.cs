@@ -14,6 +14,8 @@ namespace BSFiberConcrete
     {
         public List<Elements> Records { get; set; }
         public BeamSection BeamSection { get; set; }
+
+        public int TabPageIdx { get; set; }
         public BSFiberSetup()
         {
             InitializeComponent();            
@@ -164,6 +166,9 @@ namespace BSFiberConcrete
 
                 comboBox_i.SelectedIndex = 0;
                 comboBetonType.SelectedIndex = 0;
+
+                if (tabFiber.TabPages.Count > TabPageIdx)
+                    tabFiber.SelectedTab = tabFiber.TabPages[TabPageIdx]; 
             }
             catch (Exception _e)
             {

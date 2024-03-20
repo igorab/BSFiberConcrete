@@ -53,7 +53,43 @@ namespace BSCalcMenu
         private void btnStaticEquilibrium_Click(object sender, EventArgs e)
         {            
             BSFiberMain bsFiberMain = new BSFiberMain();
-            
+            bsFiberMain.CalcType = CalcType.Static;
+            bsFiberMain.Show();
+        }
+
+        private void btnFiberClass_Click(object sender, EventArgs e)
+        {
+            BSFiberSetup bsFiberSetup = new BSFiberSetup();
+            bsFiberSetup.TabPageIdx = 0;
+            bsFiberSetup.Show();
+        }
+
+        private void btnRebarClass_Click(object sender, EventArgs e)
+        {
+            BSFiberSetup bsFiberSetup = new BSFiberSetup();
+            bsFiberSetup.TabPageIdx = 1;
+            bsFiberSetup.Show();
+        }
+
+        private void btnCoefY_Click(object sender, EventArgs e)
+        {
+            BSFiberSetup bsFiberSetup = new BSFiberSetup();
+            bsFiberSetup.TabPageIdx = 2;
+            bsFiberSetup.Show();
+        }
+
+
+        private void btnBetonClass_Click(object sender, EventArgs e)
+        {
+            BSFiberSetup bsFiberSetup = new BSFiberSetup();
+            bsFiberSetup.TabPageIdx = 3;
+            bsFiberSetup.Show();
+        }
+
+        private void btnNonlinearDeform_Click(object sender, EventArgs e)
+        {
+            BSFiberMain bsFiberMain = new BSFiberMain();
+            bsFiberMain.CalcType = CalcType.Nonlinear;
             bsFiberMain.Show();
         }
     }
