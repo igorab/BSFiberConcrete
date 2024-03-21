@@ -17,6 +17,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 using System.Text.Json;
 using BSFiberConcrete.Lib;
 using CsvHelper.Configuration.Attributes;
+using System.Globalization;
 
 namespace BSFiberConcrete
 {
@@ -77,6 +78,7 @@ namespace BSFiberConcrete
                 FiberConcrete = BSData.LoadFiberConcreteTable();                
                 cmbFib_i.SelectedIndex = 0;
                 comboBetonType.SelectedIndex = 0;
+                cmbRebarClass.SelectedIndex = 1;
 
                 m_Iniv = m_BSLoadData.ReadInitFromJson();
                 List<Efforts> eff = Lib.BSData.LoadEfforts();
@@ -181,7 +183,7 @@ namespace BSFiberConcrete
             if (prms.Length >= 8)
             {
                 prms[++idx] = Convert.ToDouble(numRfbt3n.Value);
-                prms[++idx] = Convert.ToDouble(numRfbn.Value);
+                prms[++idx] = Convert.ToDouble(numRfb_n.Value);
                 prms[++idx] = Convert.ToDouble(numYft.Value);
                 prms[++idx] = Convert.ToDouble(numYb.Value);
                 prms[++idx] = Convert.ToDouble(numYb1.Value);
@@ -265,13 +267,11 @@ namespace BSFiberConcrete
                 foreach (var res in m_CalcResults)
                 {
                     if (ires == 0)
-                    {
-                        lblRes0.Text = res.Key;
+                    {                        
                         tbResultW.Text = res.Value.ToString();
                     }
                     else if (ires == 1)
-                    {
-                        lblResult.Text = res.Key;
+                    {                     
                         tbResult.Text = res.Value.ToString();
                     }
                     else 
@@ -444,7 +444,7 @@ namespace BSFiberConcrete
                     var fib = getQuery?.First();
 
                     numRfbt3n.Value = Convert.ToDecimal(BSHelper.MPA2kgsm2(fib?.Rfbt3n));
-                    numRfbn.Value = Convert.ToDecimal(BSHelper.MPA2kgsm2(beton?.Rfbn));
+                    numRfb_n.Value = Convert.ToDecimal(BSHelper.MPA2kgsm2(beton?.Rfbn));
 
                     numYft.Value = Convert.ToDecimal(fib?.Yft);
                     numYb.Value = Convert.ToDecimal(fib?.Yb);                    
@@ -554,13 +554,11 @@ namespace BSFiberConcrete
             foreach (var res in m_CalcResults)
             {
                 if (ires == 0)
-                {
-                    lblRes0.Text = res.Key;
+                {                    
                     tbResultW.Text = res.Value.ToString();
                 }
                 else if (ires == 1)
-                {
-                    lblResult.Text = res.Key;
+                {                 
                     tbResult.Text = res.Value.ToString();
                 }
                 else
@@ -911,6 +909,30 @@ namespace BSFiberConcrete
             bSCalcResults.CalcResults = m_CalcResults;
             bSCalcResults.Show();
         }
-        
+
+        private void cmbBftn_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                double val = Convert.ToDouble(cmbBftn.Text.Substring(3));
+                numRfbt_n.Value = (decimal)val;
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void cmbBfn_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var bt = Lib.BSQuery.BetonTableFind(cmbBfn.Text);
+            numRfb_n.Value =  (decimal)bt.Rb;
+        }
+
+        private void cmbRebarClass_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var rb =  Lib.BSQuery.RebarFind(cmbRebarClass.Text);
+            numRs.Value = (decimal)rb.Rs;
+        }
     }
 }

@@ -40,14 +40,14 @@ namespace BSFiberConcrete.Lib
         /// </summary>
         /// <param name="_BT">Класс бетона</param>
         /// <returns></returns>
-        public static Beton BetonTableFind(int _BT)
+        public static Beton BetonTableFind(string _BT)
         {
             Beton bt = new Beton();
             try
             {
                 using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
                 {
-                    string query = $"select * from Beton where BT = {_BT}";
+                    string query = $"select * from Beton where BT = '{_BT}'";
                     var output = cnn.Query<Beton>(query, new DynamicParameters());
                     if (output.Count() > 0)
                         bt = output.ToList()[0];
@@ -56,6 +56,25 @@ namespace BSFiberConcrete.Lib
             catch { }
 
             return bt;
+        }
+
+
+        public static Rebar RebarFind(string _ID)
+        {
+            Rebar rb = new Rebar();
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    string query = $"select * from Rebar where ID = '{_ID}'";
+                    var output = cnn.Query<Rebar>(query, new DynamicParameters());
+                    if (output.Count() > 0)
+                        rb = output.ToList()[0];
+                }
+            }
+            catch { }
+
+            return rb;
         }
 
     }
