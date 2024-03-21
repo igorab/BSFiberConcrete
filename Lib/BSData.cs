@@ -91,8 +91,6 @@ namespace BSFiberConcrete.Lib
             }
         }
 
-
-
         /// <summary>
         /// Коэффициенты
         /// </summary>
@@ -182,7 +180,25 @@ namespace BSFiberConcrete.Lib
             }
         }
 
-
+        /// <summary>
+        /// Коэффициенты
+        /// </summary>
+        /// <returns>Список</returns>
+        public static List<Beton> LoadBetonTable()
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    var output = cnn.Query<Beton>("select * from Beton", new DynamicParameters());
+                    return output.ToList();
+                }
+            }
+            catch
+            {
+                return new List<Beton>();
+            }
+        }
 
     }
 }

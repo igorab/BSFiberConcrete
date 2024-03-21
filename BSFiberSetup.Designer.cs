@@ -52,6 +52,9 @@
             this.dataGridBeton = new System.Windows.Forms.DataGridView();
             this.bSDataBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.btnClose = new System.Windows.Forms.Button();
+            this.tableLayoutPanel10 = new System.Windows.Forms.TableLayoutPanel();
+            this.labelRebarClass = new System.Windows.Forms.Label();
+            this.cmbRebarClass = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridElements)).BeginInit();
             this.tabFiber.SuspendLayout();
             this.tabPageFiber.SuspendLayout();
@@ -64,6 +67,7 @@
             this.tabBeton.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridBeton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bSDataBindingSource)).BeginInit();
+            this.tableLayoutPanel10.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridElements
@@ -126,7 +130,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 46F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 152F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 154F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 155F));
             this.tableLayoutPanel1.Controls.Add(this.comboBetonType, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.label_i, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.comboBox_i, 2, 0);
@@ -172,7 +176,7 @@
             "c",
             "d",
             "e"});
-            this.comboBox_i.Location = new System.Drawing.Point(229, 3);
+            this.comboBox_i.Location = new System.Drawing.Point(228, 3);
             this.comboBox_i.Name = "comboBox_i";
             this.comboBox_i.Size = new System.Drawing.Size(121, 21);
             this.comboBox_i.TabIndex = 4;
@@ -181,7 +185,7 @@
             // num_omega
             // 
             this.num_omega.DecimalPlaces = 4;
-            this.num_omega.Location = new System.Drawing.Point(444, 3);
+            this.num_omega.Location = new System.Drawing.Point(443, 3);
             this.num_omega.Name = "num_omega";
             this.num_omega.Size = new System.Drawing.Size(120, 20);
             this.num_omega.TabIndex = 5;
@@ -189,7 +193,7 @@
             // num_eps_fb2
             // 
             this.num_eps_fb2.DecimalPlaces = 4;
-            this.num_eps_fb2.Location = new System.Drawing.Point(656, 3);
+            this.num_eps_fb2.Location = new System.Drawing.Point(655, 3);
             this.num_eps_fb2.Name = "num_eps_fb2";
             this.num_eps_fb2.Size = new System.Drawing.Size(120, 20);
             this.num_eps_fb2.TabIndex = 6;
@@ -198,7 +202,7 @@
             // 
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(398, 7);
+            this.label2.Location = new System.Drawing.Point(397, 7);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(21, 13);
             this.label2.TabIndex = 7;
@@ -208,7 +212,7 @@
             // 
             this.label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(596, 7);
+            this.label3.Location = new System.Drawing.Point(595, 7);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(40, 13);
             this.label3.TabIndex = 8;
@@ -225,6 +229,7 @@
             // 
             // tabRebar
             // 
+            this.tabRebar.Controls.Add(this.tableLayoutPanel10);
             this.tabRebar.Controls.Add(this.lvRebar);
             this.tabRebar.Location = new System.Drawing.Point(4, 22);
             this.tabRebar.Name = "tabRebar";
@@ -243,9 +248,9 @@
             this.lvRebar.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem1,
             listViewItem2});
-            this.lvRebar.Location = new System.Drawing.Point(19, 22);
+            this.lvRebar.Location = new System.Drawing.Point(19, 56);
             this.lvRebar.Name = "lvRebar";
-            this.lvRebar.Size = new System.Drawing.Size(1104, 377);
+            this.lvRebar.Size = new System.Drawing.Size(1104, 343);
             this.lvRebar.TabIndex = 0;
             this.lvRebar.UseCompatibleStateImageBehavior = false;
             // 
@@ -303,6 +308,48 @@
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
+            // tableLayoutPanel10
+            // 
+            this.tableLayoutPanel10.ColumnCount = 2;
+            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.5F));
+            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.5F));
+            this.tableLayoutPanel10.Controls.Add(this.labelRebarClass, 0, 0);
+            this.tableLayoutPanel10.Controls.Add(this.cmbRebarClass, 1, 0);
+            this.tableLayoutPanel10.Location = new System.Drawing.Point(19, 6);
+            this.tableLayoutPanel10.Name = "tableLayoutPanel10";
+            this.tableLayoutPanel10.RowCount = 1;
+            this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel10.Size = new System.Drawing.Size(200, 36);
+            this.tableLayoutPanel10.TabIndex = 8;
+            // 
+            // labelRebarClass
+            // 
+            this.labelRebarClass.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.labelRebarClass.AutoSize = true;
+            this.labelRebarClass.Location = new System.Drawing.Point(3, 11);
+            this.labelRebarClass.Name = "labelRebarClass";
+            this.labelRebarClass.Size = new System.Drawing.Size(91, 13);
+            this.labelRebarClass.TabIndex = 0;
+            this.labelRebarClass.Text = "Класс арматуры";
+            // 
+            // cmbRebarClass
+            // 
+            this.cmbRebarClass.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.cmbRebarClass.FormattingEnabled = true;
+            this.cmbRebarClass.Items.AddRange(new object[] {
+            "A240",
+            "A400",
+            "A500",
+            "A600",
+            "A800",
+            "A1000",
+            "B500",
+            "K1400"});
+            this.cmbRebarClass.Location = new System.Drawing.Point(104, 7);
+            this.cmbRebarClass.Name = "cmbRebarClass";
+            this.cmbRebarClass.Size = new System.Drawing.Size(93, 21);
+            this.cmbRebarClass.TabIndex = 1;
+            // 
             // BSFiberSetup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -328,6 +375,8 @@
             this.tabBeton.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridBeton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bSDataBindingSource)).EndInit();
+            this.tableLayoutPanel10.ResumeLayout(false);
+            this.tableLayoutPanel10.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -355,5 +404,8 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TabPage tabBeton;
         private System.Windows.Forms.DataGridView dataGridBeton;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel10;
+        private System.Windows.Forms.Label labelRebarClass;
+        private System.Windows.Forms.ComboBox cmbRebarClass;
     }
 }

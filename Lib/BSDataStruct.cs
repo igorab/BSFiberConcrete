@@ -21,7 +21,7 @@ namespace BSFiberConcrete
     public class Beton
     {
         public  int Id { get; set; }
-        public  string Name { get; set; }
+        public  string BT { get; set; }
         public  double Rb { get; set; }
         public  double Rbt { get; set; }
         public  double Eb { get; set; }

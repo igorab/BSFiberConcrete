@@ -31,6 +31,7 @@ namespace BSFiberConcrete
         private BSFiberCalculation bsCalc;
         private BSFiberLoadData m_BSLoadData;
         private List<Elements> FiberConcrete;
+        private List<Beton> m_Beton;
 
         public Dictionary<string, double> m_Beam { get; private set; }
         private Dictionary<string, double> m_Coeffs;
@@ -97,6 +98,14 @@ namespace BSFiberConcrete
                 cmbBetonClass.DisplayMember = "Name";
                 cmbBetonClass.ValueMember = "Name";
                 cmbBetonClass.SelectedValue = BSFiberLib.BetonList[5].Name;
+
+                m_Beton = BSData.LoadBetonData();
+                cmbBfn.DataSource = m_Beton;
+                cmbBfn.DisplayMember = "BT";
+                cmbBfn.ValueMember = "BT";
+                cmbBfn.SelectedValue = (m_Beton.Count > 7) ? m_Beton[7].BT : ""; // в настройки
+
+                cmbBftn.SelectedItem = "Bft3";
 
                 Elements fiberConcrete = BSFiberLib.PhysElements;
 
@@ -503,6 +512,7 @@ namespace BSFiberConcrete
             InitEfforts(out Dictionary<string, double> MNQ);
 
             fiberCalc.BetonType = BSQuery.BetonTypeFind(comboBetonType.SelectedIndex);
+            
 
             if (_shear || _useRebar)
             {
@@ -884,12 +894,7 @@ namespace BSFiberConcrete
 
             m_BSLoadData.SaveInitToJson(ef);
         }
-
-        private void tabConcrete_Click(object sender, EventArgs e)
-        {
-
-        }
-
+        
         private void cmbBetonClass_SelectedValueChanged(object sender, EventArgs e)
         {
             SelectedFiberBetonValues();
@@ -906,10 +911,6 @@ namespace BSFiberConcrete
             bSCalcResults.CalcResults = m_CalcResults;
             bSCalcResults.Show();
         }
-
-        private void labelCalculation_Click(object sender, EventArgs e)
-        {
-
-        }
+        
     }
 }
