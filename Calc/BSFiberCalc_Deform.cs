@@ -513,8 +513,14 @@ namespace BSFiberConcrete
             bool res_fb = epsilon_fb.AbsoluteMaximum() <=  m_Fiber.Eps_fb_ult;
             bool res_s = epsilon_s.AbsoluteMaximum() <= m_Rod.Eps_s_ult;
 
-            Res.Add("res_fb", Convert.ToDouble(res_fb));            
-            Res.Add("res_s", Convert.ToDouble(res_s));
+            if (res_fb)
+                Msg.Add("Проверка сечения по фибробетону пройдена");            
+            else
+                Msg.Add("Не пройдена проверка сечения по фибробетону");
+            if (res_s)
+                Msg.Add("Проверка сечения по арматуре пройдена");
+            else
+                Msg.Add("Не пройдена проверка сечения по арматуре");
         }
 
         /// <summary>

@@ -70,6 +70,25 @@ namespace BSFiberConcrete.Lib
             }
         }
 
+        /// <summary>
+        /// Классы бетона по сопротивлению на растяжение Bft 
+        /// </summary>
+        /// <returns>Список</returns>
+        public static List<FiberBft> LoadFiberBft()
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    var output = cnn.Query<FiberBft>("select * from FiberBft", new DynamicParameters());
+                    return output.ToList();
+                }
+            }
+            catch
+            {
+                return new List<FiberBft>();
+            }
+        }
 
         /// <summary>
         /// Типы бетона

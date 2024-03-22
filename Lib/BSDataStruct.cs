@@ -27,6 +27,17 @@ namespace BSFiberConcrete
         public  double Eb { get; set; }
     }
 
+
+    /// <summary>
+    /// Данные из таблицы FiberFbt - класс фибробетона по прочности на растяжение
+    /// </summary>
+    public class FiberBft
+    {        
+        public string ID { get; set; }        
+        public double Rfbt { get; set; }        
+    }
+
+
     /// <summary>
     /// Данные из таблицы BetonType
     /// </summary>

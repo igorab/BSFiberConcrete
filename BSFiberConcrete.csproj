@@ -129,6 +129,7 @@
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -167,6 +168,12 @@
     </Compile>
     <Compile Include="BSFiberAboutBox.Designer.cs">
       <DependentUpon>BSFiberAboutBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BSGraph.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BSGraph.Designer.cs">
+      <DependentUpon>BSGraph.cs</DependentUpon>
     </Compile>
     <Compile Include="Calc\BSFiberCalc_Deform.cs" />
     <Compile Include="Calc\BSFiberCalc_IBeamRods.cs" />
@@ -237,6 +244,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BSFormPanel.resx">
       <DependentUpon>BSFormPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BSGraph.resx">
+      <DependentUpon>BSGraph.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

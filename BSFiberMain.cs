@@ -107,7 +107,10 @@ namespace BSFiberConcrete
                 cmbBfn.ValueMember = "BT";
                 cmbBfn.SelectedValue = (m_Beton.Count > 7) ? m_Beton[7].BT : ""; // в настройки
 
-                cmbBftn.SelectedItem = "Bft3";
+                cmbBftn.DataSource = BSData.LoadFiberBft();
+                cmbBftn.DisplayMember = "ID";
+                cmbBftn.ValueMember = "ID";
+                cmbBftn.SelectedValue = "Bft3";
 
                 Elements fiberConcrete = BSFiberLib.PhysElements;
 
@@ -365,18 +368,28 @@ namespace BSFiberConcrete
         }
 
         // тавровое сечение
+        // Принимаем как двутавровое, у которого нижняя полка равна по толщине стенке
         private void btnTSection_Click(object sender, EventArgs e)
         {
-            m_BeamSection = BeamSection.TBeam;
+            //m_BeamSection = BeamSection.TBeam;
+            m_BeamSection = BeamSection.IBeam;
 
             m_Table = new DataTable();
+            /*
             m_Table.Columns.Add("b, cm", typeof(double));
             m_Table.Columns.Add("h, cm", typeof(double));
             m_Table.Columns.Add("b1, cm", typeof(double));
             m_Table.Columns.Add("h1, cm", typeof(double));
+            */
+            m_Table.Columns.Add("bf, cm", typeof(double));
+            m_Table.Columns.Add("hf, cm", typeof(double));
+            m_Table.Columns.Add("hw, cm", typeof(double));
+            m_Table.Columns.Add("bw, cm", typeof(double));
+            m_Table.Columns.Add("b1f, cm", typeof(double));
+            m_Table.Columns.Add("h1f, cm", typeof(double));
 
             dataGridView1.DataSource = m_Table;
-            m_Table.Rows.Add(80d, 20d, 20d, 20d);
+            m_Table.Rows.Add(80d, 20d, 20d, 20d, 0, 0);
 
             picBeton.Image = global::BSFiberConcrete.Properties.Resources.IBeam;
             picBeton.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -845,6 +858,9 @@ namespace BSFiberConcrete
                 m_PhysParams = fiberCalc_Deform.PhysParams;
                 // получить результат
                 m_CalcResults = fiberCalc_Deform.Results();
+
+                if (m_CalcResults?.Count > 0)
+                    fiberCalc_Deform.Msg.Add("Расчет успешно выполнен!");
             }
             catch (Exception _ex) 
             {
@@ -914,8 +930,8 @@ namespace BSFiberConcrete
         {
             try
             {
-                double val = Convert.ToDouble(cmbBftn.Text.Substring(3));
-                numRfbt_n.Value = (decimal)val;
+                FiberBft bft = (FiberBft)cmbBftn.SelectedItem;
+                numRfbt_n.Value = (decimal) BSHelper.MPA2kgsm2(bft.Rfbt); // Convert
             }
             catch
             {
