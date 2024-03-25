@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BSFiberConcrete", "BSFiberC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BSCalcLib", "BSCalcLib\BSCalcLib.csproj", "{368408F1-6648-4B55-9853-85A86DD47A2F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BSFiber.Tests", "BSFiber.Tests\BSFiber.Tests.csproj", "{0ED91ADD-9F8C-4A4F-B71B-CF52D73C709A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{368408F1-6648-4B55-9853-85A86DD47A2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{368408F1-6648-4B55-9853-85A86DD47A2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{368408F1-6648-4B55-9853-85A86DD47A2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0ED91ADD-9F8C-4A4F-B71B-CF52D73C709A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0ED91ADD-9F8C-4A4F-B71B-CF52D73C709A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0ED91ADD-9F8C-4A4F-B71B-CF52D73C709A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0ED91ADD-9F8C-4A4F-B71B-CF52D73C709A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

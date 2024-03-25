@@ -436,7 +436,7 @@ namespace BSFiberConcrete
             aboutWindow.Show();
         }
 
-        private void настройкиToolStripMenuItem_Click(object sender, EventArgs e)
+        private void setupToolStripMenuItem_Click(object sender, EventArgs e)
         {
             BSFiberSetup setupWindow = new BSFiberSetup();
             setupWindow.Show();
@@ -949,6 +949,17 @@ namespace BSFiberConcrete
         {
             var rb =  Lib.BSQuery.RebarFind(cmbRebarClass.Text);
             numRs.Value = (decimal)rb.Rs;
+        }
+
+        private void helpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void paramsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BSGraph bsGraph = new BSGraph();
+            bsGraph.Show();
         }
     }
 }
