@@ -1,4 +1,5 @@
 ﻿using BSFiberConcrete;
+using BSFiberConcrete.Beam;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -104,6 +105,13 @@ namespace BSCalcMenu
         {
             BSGraph bSGraph = new BSGraph();
             bSGraph.Show();
+        }
+
+        private void btnBeamCalc_Click(object sender, EventArgs e)
+        {
+            BSBeamCalcView beamCalcView = new BSBeamCalcView();
+            beamCalcView.Show();
+
         }
     }
 }

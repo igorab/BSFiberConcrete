@@ -141,11 +141,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Beam\BSBeam.cs">
+    <Compile Include="Beam\BSBeamCalcView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Beam\BSBeam.Designer.cs">
-      <DependentUpon>BSBeam.cs</DependentUpon>
+    <Compile Include="Beam\BSBeamCalcView.Designer.cs">
+      <DependentUpon>BSBeamCalcView.cs</DependentUpon>
     </Compile>
     <Compile Include="BSCalcMenu.cs">
       <SubType>Form</SubType>
@@ -235,6 +235,9 @@
     <Compile Include="Section\BSSectionDraw.Designer.cs">
       <DependentUpon>BSSectionDraw.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Beam\BSBeamCalcView.resx">
+      <DependentUpon>BSBeamCalcView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="BSCalcMenu.resx">
       <DependentUpon>BSCalcMenu.cs</DependentUpon>
     </EmbeddedResource>

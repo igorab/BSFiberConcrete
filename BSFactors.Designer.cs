@@ -28,40 +28,32 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.btnClose = new System.Windows.Forms.Button();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.gridFactors = new System.Windows.Forms.DataGridView();
             this.Factor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Descr = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Coeff = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Img = new System.Windows.Forms.DataGridViewLinkColumn();
             this.Load = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.btnClose = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.gridFactors)).BeginInit();
             this.SuspendLayout();
             // 
-            // dataGridView1
+            // gridFactors
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.gridFactors.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gridFactors.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridFactors.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Factor,
             this.Descr,
             this.Coeff,
             this.Img,
             this.Load});
-            this.dataGridView1.Location = new System.Drawing.Point(12, 29);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(683, 272);
-            this.dataGridView1.TabIndex = 0;
-            // 
-            // btnClose
-            // 
-            this.btnClose.Location = new System.Drawing.Point(620, 356);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(75, 23);
-            this.btnClose.TabIndex = 2;
-            this.btnClose.Text = "Закрыть";
-            this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            this.gridFactors.Location = new System.Drawing.Point(12, 29);
+            this.gridFactors.Name = "gridFactors";
+            this.gridFactors.Size = new System.Drawing.Size(722, 312);
+            this.gridFactors.TabIndex = 0;
             // 
             // Factor
             // 
@@ -75,9 +67,9 @@
             // 
             // Coeff
             // 
-            dataGridViewCellStyle2.Format = "N2";
-            dataGridViewCellStyle2.NullValue = "0";
-            this.Coeff.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle3.Format = "N2";
+            dataGridViewCellStyle3.NullValue = "0";
+            this.Coeff.DefaultCellStyle = dataGridViewCellStyle3;
             this.Coeff.HeaderText = "Коэффициент";
             this.Coeff.Name = "Coeff";
             // 
@@ -94,23 +86,33 @@
             this.Load.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Load.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
+            // btnClose
+            // 
+            this.btnClose.Location = new System.Drawing.Point(650, 387);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(75, 23);
+            this.btnClose.TabIndex = 2;
+            this.btnClose.Text = "Закрыть";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
             // BSFactors
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(746, 442);
             this.Controls.Add(this.btnClose);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.gridFactors);
             this.Name = "BSFactors";
             this.Text = "Диаграмма факторов";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridFactors)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView gridFactors;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.DataGridViewTextBoxColumn Factor;
         private System.Windows.Forms.DataGridViewTextBoxColumn Descr;

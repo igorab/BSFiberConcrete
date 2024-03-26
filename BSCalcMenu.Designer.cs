@@ -54,7 +54,7 @@
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.btnStaticEquilibrium = new System.Windows.Forms.Button();
             this.btnNonlinearDeform = new System.Windows.Forms.Button();
-            this.button11 = new System.Windows.Forms.Button();
+            this.btnBeamCalc = new System.Windows.Forms.Button();
             this.button12 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -79,7 +79,7 @@
             this.tableLayoutPanelMain.ColumnCount = 3;
             this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.57915F));
             this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.42085F));
-            this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 290F));
+            this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 292F));
             this.tableLayoutPanelMain.Controls.Add(this.tableLayoutPanel4, 2, 1);
             this.tableLayoutPanelMain.Controls.Add(this.lblInfo, 0, 0);
             this.tableLayoutPanelMain.Controls.Add(this.lblExpertise, 1, 0);
@@ -112,7 +112,7 @@
             this.tableLayoutPanel4.Controls.Add(this.btnGraphAF, 0, 5);
             this.tableLayoutPanel4.Controls.Add(this.button3, 0, 6);
             this.tableLayoutPanel4.Controls.Add(this.button4, 0, 7);
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(566, 28);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(564, 28);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 8;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 21.00457F));
@@ -217,7 +217,7 @@
             // 
             this.lblExpertise.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblExpertise.AutoSize = true;
-            this.lblExpertise.Location = new System.Drawing.Point(288, 6);
+            this.lblExpertise.Location = new System.Drawing.Point(287, 6);
             this.lblExpertise.Name = "lblExpertise";
             this.lblExpertise.Size = new System.Drawing.Size(70, 13);
             this.lblExpertise.TabIndex = 1;
@@ -227,7 +227,7 @@
             // 
             this.lblLocalStrength.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblLocalStrength.AutoSize = true;
-            this.lblLocalStrength.Location = new System.Drawing.Point(566, 6);
+            this.lblLocalStrength.Location = new System.Drawing.Point(564, 6);
             this.lblLocalStrength.Name = "lblLocalStrength";
             this.lblLocalStrength.Size = new System.Drawing.Size(109, 13);
             this.lblLocalStrength.TabIndex = 2;
@@ -235,7 +235,7 @@
             // 
             // btnUnits
             // 
-            this.btnUnits.Location = new System.Drawing.Point(288, 379);
+            this.btnUnits.Location = new System.Drawing.Point(287, 379);
             this.btnUnits.Name = "btnUnits";
             this.btnUnits.Size = new System.Drawing.Size(109, 20);
             this.btnUnits.TabIndex = 4;
@@ -335,11 +335,11 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.Controls.Add(this.btnStaticEquilibrium, 0, 1);
             this.tableLayoutPanel3.Controls.Add(this.btnNonlinearDeform, 0, 3);
-            this.tableLayoutPanel3.Controls.Add(this.button11, 0, 4);
+            this.tableLayoutPanel3.Controls.Add(this.btnBeamCalc, 0, 4);
             this.tableLayoutPanel3.Controls.Add(this.button12, 0, 5);
             this.tableLayoutPanel3.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.label2, 0, 2);
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(288, 28);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(287, 28);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 6;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
@@ -373,15 +373,16 @@
             this.btnNonlinearDeform.UseVisualStyleBackColor = true;
             this.btnNonlinearDeform.Click += new System.EventHandler(this.btnNonlinearDeform_Click);
             // 
-            // button11
+            // btnBeamCalc
             // 
-            this.button11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button11.Location = new System.Drawing.Point(3, 223);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(257, 49);
-            this.button11.TabIndex = 2;
-            this.button11.Text = "Экспертиза балки";
-            this.button11.UseVisualStyleBackColor = true;
+            this.btnBeamCalc.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnBeamCalc.Location = new System.Drawing.Point(3, 223);
+            this.btnBeamCalc.Name = "btnBeamCalc";
+            this.btnBeamCalc.Size = new System.Drawing.Size(257, 49);
+            this.btnBeamCalc.TabIndex = 2;
+            this.btnBeamCalc.Text = "Экспертиза балки";
+            this.btnBeamCalc.UseVisualStyleBackColor = true;
+            this.btnBeamCalc.Click += new System.EventHandler(this.btnBeamCalc_Click);
             // 
             // button12
             // 
@@ -415,7 +416,7 @@
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(566, 379);
+            this.btnClose.Location = new System.Drawing.Point(564, 379);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(120, 20);
             this.btnClose.TabIndex = 3;
@@ -546,7 +547,7 @@
         private System.Windows.Forms.Button button10;
         private System.Windows.Forms.Button btnStaticEquilibrium;
         private System.Windows.Forms.Button btnNonlinearDeform;
-        private System.Windows.Forms.Button button11;
+        private System.Windows.Forms.Button btnBeamCalc;
         private System.Windows.Forms.Button button12;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
