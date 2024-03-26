@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // Общие сведения об этой сборке предоставляются следующим набором
 // набора атрибутов. Измените значения этих атрибутов для изменения сведений,
 // связанных со сборкой.
-[assembly: AssemblyTitle("BSFiberConcrete")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Фибробетон")]
+[assembly: AssemblyDescription("Программа Фибробетон предназначена для проверки несущей способности или подбора арматуры в элементах сталефибробетонных конструкций, для вычисления прогибов в сталефибробетонных балках, для проверки местной прочности элементов сталефибробетонных конструкций.\r\n\r\n")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("BSFiberConcrete")]
-[assembly: AssemblyCopyright("Copyright ©  2023")]
+[assembly: AssemblyCompany("Basis LLC")]
+[assembly: AssemblyProduct("Сталефибробетон")]
+[assembly: AssemblyCopyright("igorab ©  2024")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

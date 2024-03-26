@@ -106,5 +106,10 @@ namespace BSFiberConcrete
         {
             this.Close();
         }
+
+        private void BSFiberAboutBox_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

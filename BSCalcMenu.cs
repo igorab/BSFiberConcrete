@@ -93,5 +93,17 @@ namespace BSCalcMenu
             bsFiberMain.CalcType = CalcType.Nonlinear;
             bsFiberMain.Show();
         }
+
+        private void btnInfo_Click(object sender, EventArgs e)
+        {
+            BSFiberAboutBox bSFiberAboutBox = new BSFiberAboutBox();
+            bSFiberAboutBox.Show();
+        }
+
+        private void btnGraphAF_Click(object sender, EventArgs e)
+        {
+            BSGraph bSGraph = new BSGraph();
+            bSGraph.Show();
+        }
     }
 }

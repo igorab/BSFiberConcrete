@@ -28,13 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.btnClose = new System.Windows.Forms.Button();
             this.Factor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Descr = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Coeff = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Img = new System.Windows.Forms.DataGridViewImageColumn();
+            this.Img = new System.Windows.Forms.DataGridViewLinkColumn();
             this.Load = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -75,9 +75,9 @@
             // 
             // Coeff
             // 
-            dataGridViewCellStyle1.Format = "N2";
-            dataGridViewCellStyle1.NullValue = "0";
-            this.Coeff.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Format = "N2";
+            dataGridViewCellStyle2.NullValue = "0";
+            this.Coeff.DefaultCellStyle = dataGridViewCellStyle2;
             this.Coeff.HeaderText = "Коэффициент";
             this.Coeff.Name = "Coeff";
             // 
@@ -85,6 +85,7 @@
             // 
             this.Img.HeaderText = "отображение";
             this.Img.Name = "Img";
+            this.Img.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
             // Load
             // 
@@ -114,7 +115,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Factor;
         private System.Windows.Forms.DataGridViewTextBoxColumn Descr;
         private System.Windows.Forms.DataGridViewTextBoxColumn Coeff;
-        private System.Windows.Forms.DataGridViewImageColumn Img;
+        private System.Windows.Forms.DataGridViewLinkColumn Img;
         private System.Windows.Forms.DataGridViewTextBoxColumn Load;
     }
 }

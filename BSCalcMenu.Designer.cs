@@ -28,12 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BSCalcMenu));
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanelMain = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.button9 = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
-            this.labelVer = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.labelLab = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.btnGraphAF = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
             this.lblInfo = new System.Windows.Forms.Label();
             this.lblExpertise = new System.Windows.Forms.Label();
             this.lblLocalStrength = new System.Windows.Forms.Label();
@@ -53,16 +59,13 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Button();
+            this.btnInfo = new System.Windows.Forms.Button();
+            this.imageList = new System.Windows.Forms.ImageList(this.components);
+            this.labelVer = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.pictureBoxLogo = new System.Windows.Forms.PictureBox();
             this.labelInfo = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.labelLab = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.tableLayoutPanel1.SuspendLayout();
+            this.tableLayoutPanelMain.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -70,30 +73,32 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).BeginInit();
             this.SuspendLayout();
             // 
-            // tableLayoutPanel1
+            // tableLayoutPanelMain
             // 
-            this.tableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-            this.tableLayoutPanel1.ColumnCount = 3;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.57915F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.42085F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 286F));
-            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel4, 2, 1);
-            this.tableLayoutPanel1.Controls.Add(this.labelVer, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.lblInfo, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.lblExpertise, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.lblLocalStrength, 2, 0);
-            this.tableLayoutPanel1.Controls.Add(this.btnUnits, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel3, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.btnClose, 2, 2);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(5, 87);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.284153F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 93.71584F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 33F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(855, 429);
-            this.tableLayoutPanel1.TabIndex = 0;
+            this.tableLayoutPanelMain.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
+            this.tableLayoutPanelMain.ColumnCount = 3;
+            this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.57915F));
+            this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.42085F));
+            this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 290F));
+            this.tableLayoutPanelMain.Controls.Add(this.tableLayoutPanel4, 2, 1);
+            this.tableLayoutPanelMain.Controls.Add(this.lblInfo, 0, 0);
+            this.tableLayoutPanelMain.Controls.Add(this.lblExpertise, 1, 0);
+            this.tableLayoutPanelMain.Controls.Add(this.lblLocalStrength, 2, 0);
+            this.tableLayoutPanelMain.Controls.Add(this.btnUnits, 1, 2);
+            this.tableLayoutPanelMain.Controls.Add(this.tableLayoutPanel2, 0, 1);
+            this.tableLayoutPanelMain.Controls.Add(this.tableLayoutPanel3, 1, 1);
+            this.tableLayoutPanelMain.Controls.Add(this.btnClose, 2, 2);
+            this.tableLayoutPanelMain.Controls.Add(this.btnInfo, 0, 3);
+            this.tableLayoutPanelMain.Controls.Add(this.labelVer, 0, 2);
+            this.tableLayoutPanelMain.Location = new System.Drawing.Point(5, 87);
+            this.tableLayoutPanelMain.Name = "tableLayoutPanelMain";
+            this.tableLayoutPanelMain.RowCount = 4;
+            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.284153F));
+            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 93.71584F));
+            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
+            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
+            this.tableLayoutPanelMain.Size = new System.Drawing.Size(855, 432);
+            this.tableLayoutPanelMain.TabIndex = 0;
             // 
             // tableLayoutPanel4
             // 
@@ -104,10 +109,10 @@
             this.tableLayoutPanel4.Controls.Add(this.label3, 0, 2);
             this.tableLayoutPanel4.Controls.Add(this.labelLab, 0, 4);
             this.tableLayoutPanel4.Controls.Add(this.button1, 0, 3);
-            this.tableLayoutPanel4.Controls.Add(this.button2, 0, 5);
+            this.tableLayoutPanel4.Controls.Add(this.btnGraphAF, 0, 5);
             this.tableLayoutPanel4.Controls.Add(this.button3, 0, 6);
             this.tableLayoutPanel4.Controls.Add(this.button4, 0, 7);
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(570, 29);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(566, 28);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 8;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 21.00457F));
@@ -141,16 +146,62 @@
             this.button10.Text = "Продавливание";
             this.button10.UseVisualStyleBackColor = true;
             // 
-            // labelVer
+            // label3
             // 
-            this.labelVer.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.labelVer.AutoSize = true;
-            this.labelVer.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelVer.Location = new System.Drawing.Point(4, 404);
-            this.labelVer.Name = "labelVer";
-            this.labelVer.Size = new System.Drawing.Size(65, 13);
-            this.labelVer.TabIndex = 2;
-            this.labelVer.Text = " Версия 1.0";
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(3, 100);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(48, 13);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "Подбор:";
+            // 
+            // labelLab
+            // 
+            this.labelLab.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelLab.AutoSize = true;
+            this.labelLab.Location = new System.Drawing.Point(3, 168);
+            this.labelLab.Name = "labelLab";
+            this.labelLab.Size = new System.Drawing.Size(77, 13);
+            this.labelLab.TabIndex = 3;
+            this.labelLab.Text = "Лаборатория:";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(3, 116);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(251, 42);
+            this.button1.TabIndex = 4;
+            this.button1.Text = "Rfbt3; Rfbt с учетом фибры";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // btnGraphAF
+            // 
+            this.btnGraphAF.Location = new System.Drawing.Point(3, 184);
+            this.btnGraphAF.Name = "btnGraphAF";
+            this.btnGraphAF.Size = new System.Drawing.Size(251, 42);
+            this.btnGraphAF.TabIndex = 5;
+            this.btnGraphAF.Text = "График \"нагрузка - перемещение\" aF";
+            this.btnGraphAF.UseVisualStyleBackColor = true;
+            this.btnGraphAF.Click += new System.EventHandler(this.btnGraphAF_Click);
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(3, 232);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(251, 45);
+            this.button3.TabIndex = 6;
+            this.button3.Text = "Определение прочности на растяжение";
+            this.button3.UseVisualStyleBackColor = true;
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(3, 283);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(251, 46);
+            this.button4.TabIndex = 7;
+            this.button4.Text = "Зависимость aF- f прогибов";
+            this.button4.UseVisualStyleBackColor = true;
             // 
             // lblInfo
             // 
@@ -166,7 +217,7 @@
             // 
             this.lblExpertise.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblExpertise.AutoSize = true;
-            this.lblExpertise.Location = new System.Drawing.Point(290, 6);
+            this.lblExpertise.Location = new System.Drawing.Point(288, 6);
             this.lblExpertise.Name = "lblExpertise";
             this.lblExpertise.Size = new System.Drawing.Size(70, 13);
             this.lblExpertise.TabIndex = 1;
@@ -176,7 +227,7 @@
             // 
             this.lblLocalStrength.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblLocalStrength.AutoSize = true;
-            this.lblLocalStrength.Location = new System.Drawing.Point(570, 6);
+            this.lblLocalStrength.Location = new System.Drawing.Point(566, 6);
             this.lblLocalStrength.Name = "lblLocalStrength";
             this.lblLocalStrength.Size = new System.Drawing.Size(109, 13);
             this.lblLocalStrength.TabIndex = 2;
@@ -184,9 +235,9 @@
             // 
             // btnUnits
             // 
-            this.btnUnits.Location = new System.Drawing.Point(290, 397);
+            this.btnUnits.Location = new System.Drawing.Point(288, 379);
             this.btnUnits.Name = "btnUnits";
-            this.btnUnits.Size = new System.Drawing.Size(109, 23);
+            this.btnUnits.Size = new System.Drawing.Size(109, 20);
             this.btnUnits.TabIndex = 4;
             this.btnUnits.Text = "Ед изм";
             this.btnUnits.UseVisualStyleBackColor = true;
@@ -202,7 +253,7 @@
             this.tableLayoutPanel2.Controls.Add(this.button6, 0, 5);
             this.tableLayoutPanel2.Controls.Add(this.btnBetonClass, 0, 3);
             this.tableLayoutPanel2.Controls.Add(this.btnCoefY, 0, 2);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(4, 29);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(4, 28);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 6;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
@@ -288,7 +339,7 @@
             this.tableLayoutPanel3.Controls.Add(this.button12, 0, 5);
             this.tableLayoutPanel3.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.label2, 0, 2);
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(290, 29);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(288, 28);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 6;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
@@ -364,13 +415,56 @@
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(570, 397);
+            this.btnClose.Location = new System.Drawing.Point(566, 379);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(120, 23);
+            this.btnClose.Size = new System.Drawing.Size(120, 20);
             this.btnClose.TabIndex = 3;
             this.btnClose.Text = "Закрыть";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
+            // btnInfo
+            // 
+            this.btnInfo.ImageKey = "Info.png";
+            this.btnInfo.ImageList = this.imageList;
+            this.btnInfo.Location = new System.Drawing.Point(4, 406);
+            this.btnInfo.Name = "btnInfo";
+            this.btnInfo.Size = new System.Drawing.Size(25, 22);
+            this.btnInfo.TabIndex = 8;
+            this.btnInfo.UseVisualStyleBackColor = true;
+            this.btnInfo.Click += new System.EventHandler(this.btnInfo_Click);
+            // 
+            // imageList
+            // 
+            this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
+            this.imageList.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList.Images.SetKeyName(0, "CM.png");
+            this.imageList.Images.SetKeyName(1, "Command.png");
+            this.imageList.Images.SetKeyName(2, "Editions.png");
+            this.imageList.Images.SetKeyName(3, "FileOpen.png");
+            this.imageList.Images.SetKeyName(4, "Files.png");
+            this.imageList.Images.SetKeyName(5, "Icons.png");
+            this.imageList.Images.SetKeyName(6, "Info.png");
+            this.imageList.Images.SetKeyName(7, "Layers.png");
+            this.imageList.Images.SetKeyName(8, "Menu.png");
+            this.imageList.Images.SetKeyName(9, "Properties.png");
+            this.imageList.Images.SetKeyName(10, "Property.png");
+            this.imageList.Images.SetKeyName(11, "Remove.png");
+            this.imageList.Images.SetKeyName(12, "Settings.png");
+            this.imageList.Images.SetKeyName(13, "Storages.png");
+            this.imageList.Images.SetKeyName(14, "TIMClasses.png");
+            this.imageList.Images.SetKeyName(15, "Transmute.png");
+            this.imageList.Images.SetKeyName(16, "ViewMap.png");
+            // 
+            // labelVer
+            // 
+            this.labelVer.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.labelVer.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelVer.Location = new System.Drawing.Point(4, 382);
+            this.labelVer.Name = "labelVer";
+            this.labelVer.Size = new System.Drawing.Size(65, 13);
+            this.labelVer.TabIndex = 2;
+            this.labelVer.Text = " Версия 1.0";
             // 
             // flowLayoutPanel1
             // 
@@ -402,62 +496,6 @@
             this.labelInfo.TabIndex = 1;
             this.labelInfo.Text = "Расчет элементов сталефибробетонных конструкций.";
             // 
-            // label3
-            // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(3, 100);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(48, 13);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Подбор:";
-            // 
-            // labelLab
-            // 
-            this.labelLab.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.labelLab.AutoSize = true;
-            this.labelLab.Location = new System.Drawing.Point(3, 168);
-            this.labelLab.Name = "labelLab";
-            this.labelLab.Size = new System.Drawing.Size(77, 13);
-            this.labelLab.TabIndex = 3;
-            this.labelLab.Text = "Лаборатория:";
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(3, 116);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(251, 42);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "Rfbt3; Rfbt с учетом фибры";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(3, 184);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(251, 42);
-            this.button2.TabIndex = 5;
-            this.button2.Text = "График \"нагрузка - перемещение\" aF";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(3, 232);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(251, 45);
-            this.button3.TabIndex = 6;
-            this.button3.Text = "Определение прочности на растяжение";
-            this.button3.UseVisualStyleBackColor = true;
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(3, 283);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(251, 46);
-            this.button4.TabIndex = 7;
-            this.button4.Text = "Зависимость aF- f прогибов";
-            this.button4.UseVisualStyleBackColor = true;
-            // 
             // BSCalcMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -465,13 +503,13 @@
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(865, 531);
             this.Controls.Add(this.flowLayoutPanel1);
-            this.Controls.Add(this.tableLayoutPanel1);
+            this.Controls.Add(this.tableLayoutPanelMain);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "BSCalcMenu";
             this.Text = "БАЗИС - Сталефибробетон";
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
+            this.tableLayoutPanelMain.ResumeLayout(false);
+            this.tableLayoutPanelMain.PerformLayout();
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel4.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
@@ -486,7 +524,7 @@
 
         #endregion
 
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelMain;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.PictureBox pictureBoxLogo;
         private System.Windows.Forms.Label lblInfo;
@@ -516,9 +554,11 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label labelLab;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnGraphAF;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button btnInfo;
+        private System.Windows.Forms.ImageList imageList;
     }
 }
 

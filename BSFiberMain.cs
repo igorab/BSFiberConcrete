@@ -238,9 +238,9 @@ namespace BSFiberConcrete
         }
         
         /// <summary>
-        /// Расчет прочности сечения
+        /// Расчет прочности сечения на действие момента
         /// </summary>        
-        private void btnCalc_Click(object sender, EventArgs e)
+        private void FiberCalculate_M()
         {
             bool useReinforcement = checkBoxRebar.Checked;
 
@@ -265,23 +265,6 @@ namespace BSFiberConcrete
                 m_GeomParams = bsCalc.GeomParams();
                 m_CalcResults = bsCalc.Results();
                 m_Message =  bsCalc.Msg;
-
-                int ires = 0;
-                foreach (var res in m_CalcResults)
-                {
-                    if (ires == 0)
-                    {                        
-                        tbResultW.Text = res.Value.ToString();
-                    }
-                    else if (ires == 1)
-                    {                     
-                        tbResult.Text = res.Value.ToString();
-                    }
-                    else 
-                        break;
-
-                    ires++;
-                }
 
                 m_PhysParams = bsCalc.PhysicalParameters();
 
@@ -562,23 +545,7 @@ namespace BSFiberConcrete
             fiberCalc.Msg.Add("Расчет успешно выполнен!");
 
             m_CalcResults = fiberCalc.Results();
-            
-            int ires = 0;
-            foreach (var res in m_CalcResults)
-            {
-                if (ires == 0)
-                {                    
-                    tbResultW.Text = res.Value.ToString();
-                }
-                else if (ires == 1)
-                {                 
-                    tbResult.Text = res.Value.ToString();
-                }
-                else
-                    break;
-
-                ires++;
-            }
+                        
         }
 
         /// <summary>
@@ -682,6 +649,8 @@ namespace BSFiberConcrete
         // Расчет на действие момента и поперечной силы
         private void btnCalc_Q_Click(object sender, EventArgs e)
         {
+            FiberCalculate_M();
+
             FiberCalculate_N();
 
             FiberCalculate_Shear();
@@ -961,5 +930,7 @@ namespace BSFiberConcrete
             BSGraph bsGraph = new BSGraph();
             bsGraph.Show();
         }
+
+       
     }
 }
