@@ -59,9 +59,10 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Button();
+            this.labelVer = new System.Windows.Forms.Label();
             this.btnInfo = new System.Windows.Forms.Button();
             this.imageList = new System.Windows.Forms.ImageList(this.components);
-            this.labelVer = new System.Windows.Forms.Label();
+            this.btnSectionDraw = new System.Windows.Forms.Button();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.pictureBoxLogo = new System.Windows.Forms.PictureBox();
             this.labelInfo = new System.Windows.Forms.Label();
@@ -79,7 +80,7 @@
             this.tableLayoutPanelMain.ColumnCount = 3;
             this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.57915F));
             this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.42085F));
-            this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 292F));
+            this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 296F));
             this.tableLayoutPanelMain.Controls.Add(this.tableLayoutPanel4, 2, 1);
             this.tableLayoutPanelMain.Controls.Add(this.lblInfo, 0, 0);
             this.tableLayoutPanelMain.Controls.Add(this.lblExpertise, 1, 0);
@@ -88,8 +89,9 @@
             this.tableLayoutPanelMain.Controls.Add(this.tableLayoutPanel2, 0, 1);
             this.tableLayoutPanelMain.Controls.Add(this.tableLayoutPanel3, 1, 1);
             this.tableLayoutPanelMain.Controls.Add(this.btnClose, 2, 2);
-            this.tableLayoutPanelMain.Controls.Add(this.btnInfo, 0, 3);
             this.tableLayoutPanelMain.Controls.Add(this.labelVer, 0, 2);
+            this.tableLayoutPanelMain.Controls.Add(this.btnInfo, 0, 3);
+            this.tableLayoutPanelMain.Controls.Add(this.btnSectionDraw, 1, 3);
             this.tableLayoutPanelMain.Location = new System.Drawing.Point(5, 87);
             this.tableLayoutPanelMain.Name = "tableLayoutPanelMain";
             this.tableLayoutPanelMain.RowCount = 4;
@@ -112,7 +114,7 @@
             this.tableLayoutPanel4.Controls.Add(this.btnGraphAF, 0, 5);
             this.tableLayoutPanel4.Controls.Add(this.button3, 0, 6);
             this.tableLayoutPanel4.Controls.Add(this.button4, 0, 7);
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(564, 28);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(560, 28);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 8;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 21.00457F));
@@ -217,7 +219,7 @@
             // 
             this.lblExpertise.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblExpertise.AutoSize = true;
-            this.lblExpertise.Location = new System.Drawing.Point(287, 6);
+            this.lblExpertise.Location = new System.Drawing.Point(285, 6);
             this.lblExpertise.Name = "lblExpertise";
             this.lblExpertise.Size = new System.Drawing.Size(70, 13);
             this.lblExpertise.TabIndex = 1;
@@ -227,7 +229,7 @@
             // 
             this.lblLocalStrength.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblLocalStrength.AutoSize = true;
-            this.lblLocalStrength.Location = new System.Drawing.Point(564, 6);
+            this.lblLocalStrength.Location = new System.Drawing.Point(560, 6);
             this.lblLocalStrength.Name = "lblLocalStrength";
             this.lblLocalStrength.Size = new System.Drawing.Size(109, 13);
             this.lblLocalStrength.TabIndex = 2;
@@ -235,7 +237,7 @@
             // 
             // btnUnits
             // 
-            this.btnUnits.Location = new System.Drawing.Point(287, 379);
+            this.btnUnits.Location = new System.Drawing.Point(285, 379);
             this.btnUnits.Name = "btnUnits";
             this.btnUnits.Size = new System.Drawing.Size(109, 20);
             this.btnUnits.TabIndex = 4;
@@ -339,7 +341,7 @@
             this.tableLayoutPanel3.Controls.Add(this.button12, 0, 5);
             this.tableLayoutPanel3.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.label2, 0, 2);
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(287, 28);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(285, 28);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 6;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
@@ -416,13 +418,23 @@
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(564, 379);
+            this.btnClose.Location = new System.Drawing.Point(560, 379);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(120, 20);
             this.btnClose.TabIndex = 3;
             this.btnClose.Text = "Закрыть";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
+            // labelVer
+            // 
+            this.labelVer.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.labelVer.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelVer.Location = new System.Drawing.Point(4, 382);
+            this.labelVer.Name = "labelVer";
+            this.labelVer.Size = new System.Drawing.Size(65, 13);
+            this.labelVer.TabIndex = 2;
+            this.labelVer.Text = " Версия 1.0";
             // 
             // btnInfo
             // 
@@ -457,15 +469,16 @@
             this.imageList.Images.SetKeyName(15, "Transmute.png");
             this.imageList.Images.SetKeyName(16, "ViewMap.png");
             // 
-            // labelVer
+            // btnSectionDraw
             // 
-            this.labelVer.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.labelVer.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelVer.Location = new System.Drawing.Point(4, 382);
-            this.labelVer.Name = "labelVer";
-            this.labelVer.Size = new System.Drawing.Size(65, 13);
-            this.labelVer.TabIndex = 2;
-            this.labelVer.Text = " Версия 1.0";
+            this.btnSectionDraw.ImageKey = "Layers.png";
+            this.btnSectionDraw.ImageList = this.imageList;
+            this.btnSectionDraw.Location = new System.Drawing.Point(285, 406);
+            this.btnSectionDraw.Name = "btnSectionDraw";
+            this.btnSectionDraw.Size = new System.Drawing.Size(25, 22);
+            this.btnSectionDraw.TabIndex = 9;
+            this.btnSectionDraw.UseVisualStyleBackColor = true;
+            this.btnSectionDraw.Click += new System.EventHandler(this.btnSectionDraw_Click);
             // 
             // flowLayoutPanel1
             // 
@@ -560,6 +573,7 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button btnInfo;
         private System.Windows.Forms.ImageList imageList;
+        private System.Windows.Forms.Button btnSectionDraw;
     }
 }
 

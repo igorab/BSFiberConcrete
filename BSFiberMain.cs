@@ -39,11 +39,10 @@ namespace BSFiberConcrete
         private Dictionary<string, double> m_Efforts;
         private Dictionary<string, double> m_PhysParams;
         private Dictionary<string, double> m_GeomParams;
-        private Dictionary<string, double> m_CalcResults;
+        private Dictionary<string, double> m_CalcResults;        
 
         private List<string> m_Message;
         private BeamSection m_BeamSection;
-
 
         public BSFiberMain()
         {
@@ -54,13 +53,15 @@ namespace BSFiberConcrete
         {
             if (CalcType == CalcType.Static)
             {                
-                btnCalc_Q.Visible = true;
+                btnStaticEqCalc.Visible = true;
                 btnCalc_Deform.Visible = false;               
+                panelRods.Visible = false;
             }
             else if (CalcType == CalcType.Nonlinear)
             {             
-                btnCalc_Q.Visible = false;
+                btnStaticEqCalc.Visible = false;
                 btnCalc_Deform.Visible = true;
+                panelRods.Visible = true;
             }
         }
 
@@ -73,8 +74,7 @@ namespace BSFiberConcrete
                 m_Table = new DataTable();
 
                 m_BSLoadData = new BSFiberLoadData();
-                m_BSLoadData.Load();
-
+               
                 FiberConcrete = BSData.LoadFiberConcreteTable();                
                 cmbFib_i.SelectedIndex = 0;
                 comboBetonType.SelectedIndex = 0;
@@ -91,6 +91,9 @@ namespace BSFiberConcrete
                     m_Iniv["Ml"] = eff[0].Ml;
                     m_Iniv["eN"] = eff[0].eN;
                 }
+
+                num_eN.Value = (decimal)m_Iniv["eN"];
+                num_Ml1_M1.Value = (decimal)m_Iniv["Ml"];
 
                 m_BSLoadData.ReadParamsFromJson();
 
@@ -113,9 +116,7 @@ namespace BSFiberConcrete
                 cmbBftn.SelectedValue = "Bft3";
 
                 Elements fiberConcrete = BSFiberLib.PhysElements;
-
-                //numRfbt3n.Value = (decimal)fiberConcrete.Rfbt3n;
-                //numRfbn.Value = (decimal)fiberConcrete.Rfbn;
+                
                 numYft.Value = (decimal)fiberConcrete.Yft;
                 numYb.Value = (decimal)fiberConcrete.Yb;
                 numYb1.Value = (decimal)fiberConcrete.Yb1;
@@ -240,7 +241,7 @@ namespace BSFiberConcrete
         /// <summary>
         /// Расчет прочности сечения на действие момента
         /// </summary>        
-        private void FiberCalculate_M()
+        private void FiberCalculate_M(double _M = 0)
         {
             bool useReinforcement = checkBoxRebar.Checked;
 
@@ -255,7 +256,7 @@ namespace BSFiberConcrete
                                                                     
                 bsCalc.GetParams(prms);                                                                                      
                 bsCalc.GetSize(BeamSizes());
-
+                bsCalc.Efforts = new Dictionary<string, double> {{ "My", _M }};
                 InitBeamLength();
                 
                 bsCalc.Calculate();
@@ -279,7 +280,7 @@ namespace BSFiberConcrete
                 if (bsCalc is null)                
                     throw new Exception("Не выполнен расчет");
                 
-                string pathToHtmlFile = CreateReport(_useReinforcement: useReinforcement);
+                string pathToHtmlFile = CreateReport(1, _useReinforcement: useReinforcement);
 
                 System.Diagnostics.Process.Start(pathToHtmlFile);
             }
@@ -296,7 +297,7 @@ namespace BSFiberConcrete
         /// <param name="_reportName">Заголовок</param>
         /// <param name="_useReinforcement">Используется ли арматура</param>
         /// <returns>Путь к файлу отчета</returns>
-        private string CreateReport(string _reportName = "", bool _useReinforcement = false)
+        private string CreateReport(int _fileId , string _reportName = "", bool _useReinforcement = false)
         {
             try
             {
@@ -319,7 +320,7 @@ namespace BSFiberConcrete
                 report.Messages = m_Message;
                 report.UseReinforcement = _useReinforcement;
 
-                path = report.CreateReport();
+                path = report.CreateReport(_fileId);
                 return path;
             }
             catch (Exception _e)
@@ -462,7 +463,12 @@ namespace BSFiberConcrete
             }
         }
 
-        private void InitEfforts(out Dictionary<string, double> MNQ)
+        /// <summary>
+        ///  Получить данные по усилиям с формы
+        /// </summary>
+        /// <param name="MNQ"></param>
+        /// <exception cref="Exception"></exception>
+        private void GetEffortsFromForm(out Dictionary<string, double> MNQ)
         {
             MNQ = new Dictionary<string, double>();
 
@@ -505,7 +511,7 @@ namespace BSFiberConcrete
             fiberCalc.Fissure = _fissurre;
             fiberCalc.Shear = _shear;
             
-            InitEfforts(out Dictionary<string, double> MNQ);
+            GetEffortsFromForm(out Dictionary<string, double> MNQ);
 
             fiberCalc.BetonType = BSQuery.BetonTypeFind(comboBetonType.SelectedIndex);
             
@@ -571,7 +577,7 @@ namespace BSFiberConcrete
                 report.BeamSection = m_BeamSection;                
                 report.Init(fiberCalc);
 
-                string pathToHtmlFile = report.CreateReport();
+                string pathToHtmlFile = report.CreateReport(2);
 
                 System.Diagnostics.Process.Start(pathToHtmlFile);
             }
@@ -599,7 +605,7 @@ namespace BSFiberConcrete
                 report.ImageCalc = fiberCalc.ImageCalc();
                 report.Init(fiberCalc);
 
-                string pathToHtmlFile = report.CreateReport(1);
+                string pathToHtmlFile = report.CreateReport(3);
 
                 System.Diagnostics.Process.Start(pathToHtmlFile);
             }
@@ -647,13 +653,18 @@ namespace BSFiberConcrete
 
         // Расчет элементов по полосе между наклонными сечениями
         // Расчет на действие момента и поперечной силы
-        private void btnCalc_Q_Click(object sender, EventArgs e)
+        private void btnStaticEqCalc_Click(object sender, EventArgs e)
         {
-            FiberCalculate_M();
+            GetEffortsFromForm(out Dictionary<string, double> MNQ);
 
-            FiberCalculate_N();
+            (double _M, double _N, double _Q) = (MNQ["My"], MNQ["N"], MNQ["Q"]);
 
-            FiberCalculate_Shear();
+            if (_M != 0)
+                FiberCalculate_M(_M);
+            if (_N != 0)
+                FiberCalculate_N();
+            if (_Q != 0)
+                FiberCalculate_Shear();
         }
         
         private void btnFactors_Click(object sender, EventArgs e)
@@ -706,7 +717,7 @@ namespace BSFiberConcrete
             if (UserInput)
             {
                 // Усилия                
-                InitEfforts(out Dictionary<string, double> MNQ);
+                GetEffortsFromForm(out Dictionary<string, double> MNQ);
                 c_Mx = MNQ["Mx"];
                 c_My = MNQ["My"];
                 c_N = MNQ["N"];
@@ -844,7 +855,7 @@ namespace BSFiberConcrete
                 DisplayNameAttribute attr = (DisplayNameAttribute)method.GetCustomAttributes(typeof(DisplayNameAttribute), true)[0];
                 string value = attr.DisplayName; 
 
-                string pathToHtmlFile = CreateReport(value);
+                string pathToHtmlFile = CreateReport(1, value);
 
                 System.Diagnostics.Process.Start(pathToHtmlFile);
             }
@@ -861,7 +872,7 @@ namespace BSFiberConcrete
 
         private void btnEffortsRefresh_Click(object sender, EventArgs e)
         {            
-            InitEfforts(out Dictionary<string, double> MNQ);
+            GetEffortsFromForm(out Dictionary<string, double> MNQ);
 
             Efforts ef = new Efforts() {Id = 1, Mx = MNQ["Mx"], My = MNQ["My"], N = MNQ["N"], Q = MNQ["Q"], Ml = MNQ["Ml"], eN = MNQ["eN"] };
             Lib.BSData.SaveEfforts(ef);
@@ -870,7 +881,7 @@ namespace BSFiberConcrete
                 
         private void btnSaveParams_Click(object sender, EventArgs e)
         {
-            InitEfforts(out Dictionary<string, double> MNQ);
+            GetEffortsFromForm(out Dictionary<string, double> MNQ);
 
             Dictionary<string, double> ef = new Dictionary<string, double> { 
                 ["Mx"] = MNQ["Mx"], ["My"] = MNQ["My"], ["N"] = MNQ["N"], ["Q"] = MNQ["Q"], ["Ml"] = MNQ["Ml"], ["eN"] = MNQ["eN"] };

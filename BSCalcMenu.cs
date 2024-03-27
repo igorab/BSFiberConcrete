@@ -1,5 +1,6 @@
 ﻿using BSFiberConcrete;
 using BSFiberConcrete.Beam;
+using BSFiberConcrete.Section;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -112,6 +113,12 @@ namespace BSCalcMenu
             BSBeamCalcView beamCalcView = new BSBeamCalcView();
             beamCalcView.Show();
 
+        }
+
+        private void btnSectionDraw_Click(object sender, EventArgs e)
+        {
+            BSSectionDraw bSSectionDraw = new BSSectionDraw();
+            bSSectionDraw.Show();
         }
     }
 }

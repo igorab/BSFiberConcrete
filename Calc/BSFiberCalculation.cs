@@ -57,6 +57,12 @@ namespace BSFiberConcrete
                 }            
         }
 
+        public Dictionary<string, double> Efforts { 
+            set { m_Efforts = new Dictionary<string, double>(value); }  
+        } 
+
+        protected Dictionary<string, double> m_Efforts;
+
         // Расчетные значения сопротивления на сжатиие по B30 СП63
         public double R_fb() => (Yb != 0) ? Rfbn / Yb * Yb1*Yb2*Yb3*Yb5 : 0;
 
@@ -67,19 +73,10 @@ namespace BSFiberConcrete
         public string DN(Type _T, string _property) => _T.GetProperty(_property).GetCustomAttribute<DisplayNameAttribute>().DisplayName;
         
         public BSFiberCalculation()
-        {
-            //Rfbt3n = 30.58;
+        {            
             B = 30;
-            //Rfbn = 224;                      
             gamma = 1.73 - 0.005 * (B - 15);
-
-            // коэффициенты
-            //Yft = 1.3d;
-            //Yb1 = 0.9;
-            //Yb2 = 0.9;
-            //Yb3 = 1;
-            //Yb5 = 1;
-
+           
             MatFiber = new BSMatFiber();
             MatFiber.e_b2 = 0.0035;
 
