@@ -959,8 +959,12 @@ namespace BSFiberConcrete
 
         private void cmbRebarClass_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var rb =  Lib.BSQuery.RebarFind(cmbRebarClass.Text);
-            numRs.Value = (decimal)rb.Rs;
+            try
+            {
+                var rb = Lib.BSQuery.RebarFind(cmbRebarClass.Text);
+                numRs.Value = (decimal)rb.Rs;
+            }
+            catch { }
         }
 
         private void helpToolStripMenuItem_Click(object sender, EventArgs e)
@@ -974,6 +978,14 @@ namespace BSFiberConcrete
             bsGraph.Show();
         }
 
-       
+        private void cmbTRebarClass_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                var trb = Lib.BSQuery.RebarFind(cmbTRebarClass.Text);
+                numRsw.Value = (decimal)trb.Rsw;
+            }
+            catch { }
+        }
     }
 }

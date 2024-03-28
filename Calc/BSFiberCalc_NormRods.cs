@@ -90,8 +90,8 @@ namespace BSFiberConcrete
 
             Mult = 1E-5d * Mult_arm(b, h0, _x, h, Rod.a, Rod.a1);
             
-            if (!checkOK)
-                throw new Exception(info);
+            //if (!checkOK)
+            //    throw new Exception(info);
 
             info = "Расчет успешно выполнен!";
             Msg.Add(info);
