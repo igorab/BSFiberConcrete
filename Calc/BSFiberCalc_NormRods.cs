@@ -58,9 +58,8 @@ namespace BSFiberConcrete
         public override void Calculate()
         {
             //Расчетное остаточное остаточного сопротивления осевому растяжению
-            Rfbt3 = Rfbt_3();
-
-            Rfb = R_fb();
+            //Rfbt3 = R_fbt3();
+            //Rfb = R_fb();
 
             // Расчетная высота сечения
             double h0 = h - Rod.a;

@@ -24,9 +24,7 @@ namespace BSFiberConcrete
         // физ. характеристики бетона
         [DisplayName("Расчетные значения сопротивления на сжатиие по СП63 кг/см2")]
         public new double Rfbn { get; protected set; }
-        [DisplayName("Значения коэффициента надежности по бетону при сжатии СП63")]
-        public double Yb { get; protected set; }
-
+                
         // Результаты
         [DisplayName("Высота сжатой зоны, см")]
         public double x { get; protected set; }
@@ -38,7 +36,7 @@ namespace BSFiberConcrete
         {
             base.GetParams(_t);
 
-            (Rfbt3n, Rfbn, Yft, Yb, Yb1, Yb2, Yb3, Yb5) = (_t[0], _t[1], _t[2], _t[3], _t[4], _t[5], _t[6], _t[7]);
+            ( Yft, Yb, Yb1, Yb2, Yb3, Yb5) = (_t[2], _t[3], _t[4], _t[5], _t[6], _t[7]);
         }
 
         public override Dictionary<string, double> GeomParams()
@@ -61,15 +59,29 @@ namespace BSFiberConcrete
         protected void Calc_Pre()
         {
             //Расчетное остаточное остаточного сопротивления осевому растяжению
-            Rfbt3 = (Rfbt3n / Yft) * Yb1 * Yb5;
-
+            //Rfbt3 = (Rfbt3n / Yft) * Yb1 * Yb5;
             //Расчетные значения сопротивления  на сжатиие по B30 СП63
-            Rfb = Rfbn / Yb * Yb1 * Yb2 * Yb3 * Yb5;
+            //Rfb = Rfbn / Yb * Yb1 * Yb2 * Yb3 * Yb5;
         }
+
+        public override bool Validate()
+        {
+            bool ret = base.Validate();
+
+            if (Rfb == 0 || Rfbt3 == 0)
+            {
+                Msg.Add("Требуется задать класс фибробетона на осевое сжатие и остаточное растяжение Rfbt3");
+                ret = false;
+            }
+
+            return ret;
+        }
+
 
         public override void Calculate()
         {
-            string info;
+            if (!Validate())
+                return;
 
             Calc_Pre();
 
@@ -87,7 +99,6 @@ namespace BSFiberConcrete
                 Mult = Rfb * bw * (x - h1f);
             };
 
-
             bool cond = Rfbt3 * (bf * hf + bw * hw) < Rfb * b1f * h1f;
 
             if (cond)
@@ -99,10 +110,9 @@ namespace BSFiberConcrete
                 calc_b();
             }
 
-            Mult = Mult * 0.00001d;
+            InfoCheckM(Mult);
 
-            info = "Расчет успешно выполнен!";
-            Msg.Add(info);
+            Mult = BSHelper.Kgsm2Tm(Mult);            
         }
 
         public override Dictionary<string, double> Results()

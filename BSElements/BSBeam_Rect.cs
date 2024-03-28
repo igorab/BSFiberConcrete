@@ -41,8 +41,8 @@ namespace BSFiberConcrete
         public override double Jx() => (b * b * b) * h / 12.0;
 
         //   Моменты сопротивления сечения
-        public double Wx() => b * h * h / 6.0;
-        public double Wy() => b * b * h / 6.0;
+        public static double Wx(double _b, double _h) => _b * _h * _h / 6.0;
+        public static double Wy(double _b, double _h) => _b * _b * _h / 6.0;
 
         // Нормальные напряжения в сечении
         //КН, КНм, КНм  _X см, _Y см

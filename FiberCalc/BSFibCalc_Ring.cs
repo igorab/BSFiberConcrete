@@ -20,7 +20,8 @@ namespace BSFiberConcrete
         {
             base.GetParams(_t);
 
-            (Rfbt3n, Rfbn, Yft, Yb, Yb1, Yb2, Yb3, Yb5) = (_t[0], _t[1], _t[2], _t[3], _t[4], _t[5], _t[6], _t[7]);
+            // need refactoring
+            (Yft, Yb, Yb1, Yb2, Yb3, Yb5) = ( _t[2], _t[3], _t[4], _t[5], _t[6], _t[7]);
         }
 
         public override Dictionary<string, double> GeomParams()
@@ -44,12 +45,25 @@ namespace BSFiberConcrete
             };
         }
 
+        public override bool Validate()
+        {
+            bool ret = base.Validate();
+
+            if (Rfb == 0 || Rfbt3 == 0)
+            {
+                Msg.Add("Требуется задать класс фибробетона на осевое сжатие и остаточное растяжение Rfbt3");
+                ret = false;
+            }
+
+            return ret;
+        }
+
+
         public override void Calculate()
         {
-            Rfb = R_fb();
-
-            Rfbt3 = R_fbt3();
-
+            if (!Validate())
+                return;
+            
             //толщина стенки кольца см
             double tr = r2 - r1;
 
@@ -67,11 +81,10 @@ namespace BSFiberConcrete
             //Предельный момент сечения
             Mult = Ar * (Rfb * Math.Sin(Math.PI * ar) / Math.PI + 0.234d * Rfbt3) * rm;
 
-            //Предельный момент сечения  (т*м)
-            Mult = Mult * 0.00001;
+            InfoCheckM(Mult);
 
-            string info = "Расчет успешно выполнен!";
-            Msg.Add(info);
+            //Предельный момент сечения  (т*м)
+            Mult = BSHelper.Kgsm2Tm( Mult );            
         }
     }
 }

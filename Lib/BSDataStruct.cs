@@ -25,6 +25,7 @@ namespace BSFiberConcrete
         public  double Rb { get; set; }
         public  double Rbt { get; set; }
         public  double Eb { get; set; }
+        public double B { get; set; }
     }
 
 
@@ -32,11 +33,14 @@ namespace BSFiberConcrete
     /// Данные из таблицы FiberFbt - класс фибробетона по прочности на растяжение
     /// </summary>
     public class FiberBft
-    {        
+    {  
+        // Класс
         public string ID { get; set; }        
-        public double Rfbt { get; set; }        
+        // Расчетное
+        public double Rfbt { get; set; }
+        // Нормативное
+        public double Rfbtn { get; set; }
     }
-
 
     /// <summary>
     /// Данные из таблицы BetonType
@@ -48,9 +52,6 @@ namespace BSFiberConcrete
         public double Omega { get; set; }        
         public double Eps_fb2 { get; set; }
     }
-
-
-
 
     /// <summary>
     /// Фибробетон, параметры

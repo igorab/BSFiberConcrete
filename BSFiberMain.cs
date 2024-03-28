@@ -31,10 +31,11 @@ namespace BSFiberConcrete
         private Dictionary<string, double> m_Iniv ;
         private BSFiberCalculation bsCalc;
         private BSFiberLoadData m_BSLoadData;
+        private BSMatFiber m_MatFiber;
         private List<Elements> FiberConcrete;
         private List<Beton> m_Beton;
 
-        public Dictionary<string, double> m_Beam { get; private set; }
+        public Dictionary<string, double> m_Beam { get; private set; }        
         private Dictionary<string, double> m_Coeffs;
         private Dictionary<string, double> m_Efforts;
         private Dictionary<string, double> m_PhysParams;
@@ -74,7 +75,8 @@ namespace BSFiberConcrete
                 m_Table = new DataTable();
 
                 m_BSLoadData = new BSFiberLoadData();
-               
+                m_MatFiber = new BSMatFiber();
+
                 FiberConcrete = BSData.LoadFiberConcreteTable();                
                 cmbFib_i.SelectedIndex = 0;
                 comboBetonType.SelectedIndex = 0;
@@ -96,6 +98,8 @@ namespace BSFiberConcrete
                 num_Ml1_M1.Value = (decimal)m_Iniv["Ml"];
 
                 m_BSLoadData.ReadParamsFromJson();
+                m_MatFiber.e_b2 = m_BSLoadData.Beton2.eps_b2;
+                //MatFiber.B = 30;.e
 
                 LoadRectangle(m_Iniv["b"], m_Iniv["h"]);
 
@@ -238,6 +242,25 @@ namespace BSFiberConcrete
             }
         }
         
+        // Определение классов фибробетона по данным, введенным пользователем
+        private void InitMatFiber()
+        {            
+            // Сжатие Rfb
+            Beton fb = Lib.BSQuery.BetonTableFind(cmbBfn.Text);
+            // Растяжение Rfbt
+            FiberBft fbt = (FiberBft)cmbBftn.SelectedItem;
+            
+            // сжатие:
+            m_MatFiber.B = fb.B;
+            m_MatFiber.Rfbn = fb.Rb;
+            // растяжение:            
+            m_MatFiber.Rfbtn = fbt.Rfbtn;
+            //остаточное растяжение:            
+            m_MatFiber.Rfbt2n = (double)numRfbt2n.Value;
+            m_MatFiber.Rfbt3n = (double)numRfbt3n.Value;
+        }
+
+
         /// <summary>
         /// Расчет прочности сечения на действие момента
         /// </summary>        
@@ -248,7 +271,9 @@ namespace BSFiberConcrete
             try
             {               
                 bsCalc = BSFiberCalculation.construct(m_BeamSection, useReinforcement);
-                                
+                
+                bsCalc.MatFiber = m_MatFiber;
+                
                 InitRebar(bsCalc);
 
                 double[] prms = m_BSLoadData.Params;
@@ -263,6 +288,7 @@ namespace BSFiberConcrete
 
                 m_PhysParams = bsCalc.PhysParams;
                 m_Coeffs = bsCalc.Coeffs;
+                m_Efforts = bsCalc.Efforts;
                 m_GeomParams = bsCalc.GeomParams();
                 m_CalcResults = bsCalc.Results();
                 m_Message =  bsCalc.Msg;
@@ -427,6 +453,9 @@ namespace BSFiberConcrete
         }
         
 
+        /// <summary>
+        /// Определить класс по остаточному сопротивлению        
+        /// </summary>
         private void SelectedFiberBetonValues()
         {
             try
@@ -441,7 +470,7 @@ namespace BSFiberConcrete
                     var fib = getQuery?.First();
 
                     numRfbt3n.Value = Convert.ToDecimal(BSHelper.MPA2kgsm2(fib?.Rfbt3n));
-                    numRfb_n.Value = Convert.ToDecimal(BSHelper.MPA2kgsm2(beton?.Rfbn));
+                    numRfbt2n.Value = Convert.ToDecimal(BSHelper.MPA2kgsm2(fib?.Rfbt2n));
 
                     numYft.Value = Convert.ToDecimal(fib?.Yft);
                     numYb.Value = Convert.ToDecimal(fib?.Yb);                    
@@ -655,6 +684,8 @@ namespace BSFiberConcrete
         // Расчет на действие момента и поперечной силы
         private void btnStaticEqCalc_Click(object sender, EventArgs e)
         {
+            InitMatFiber();
+
             GetEffortsFromForm(out Dictionary<string, double> MNQ);
 
             (double _M, double _N, double _Q) = (MNQ["My"], MNQ["N"], MNQ["Q"]);
@@ -911,18 +942,19 @@ namespace BSFiberConcrete
             try
             {
                 FiberBft bft = (FiberBft)cmbBftn.SelectedItem;
-                numRfbt_n.Value = (decimal) BSHelper.MPA2kgsm2(bft.Rfbt); // Convert
+                numRfbt_n.Value = (decimal) BSHelper.MPA2kgsm2(bft.Rfbtn); // Convert
             }
-            catch
-            {
-
-            }
+            catch { }
         }
 
         private void cmbBfn_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var bt = Lib.BSQuery.BetonTableFind(cmbBfn.Text);
-            numRfb_n.Value =  (decimal)bt.Rb;
+            try
+            {
+                Beton bt = Lib.BSQuery.BetonTableFind(cmbBfn.Text);
+                numRfb_n.Value = (decimal)bt.Rb;
+            }
+            catch { }
         }
 
         private void cmbRebarClass_SelectedIndexChanged(object sender, EventArgs e)

@@ -201,22 +201,34 @@ namespace BSFiberConcrete
         // Класс бетона
         public string BTCls { get; set; }
 
-        [DisplayName("Сопротивление сталефибробетона осевому сжатию")]
+        [DisplayName("Числовая характеристика класса фибробетона по прочности на осевое сжатие")]
+        public double B { get; set; }
+
+        [DisplayName("Нормативное сопротивление сталефибробетона осевому сжатию Rfbn")]
         public double Rfbn { get; set; }
 
-        [DisplayName("Сопротивление сталефибробетона осевому растяжению")]
+        [DisplayName("Расчетное сопротивление сталефибробетона осевому сжатию Rfbn")]
+        public double Rfb { get; set; }
+
+        [DisplayName("Нормативное сопротивление сталефибробетона осевому растяжению Rfbt")]
+        public double Rfbtn { get; set; }
+
+        [DisplayName("Расчетное сопротивление сталефибробетона осевому растяжению Rfbt")]
         public double Rfbt { get; set; }
 
-        // Rfbt2 Rfbt3 - остаточные сопротивления сталефибробетона растяжению (Таблица 2 СП 360)
+        [DisplayName("Остаточное нормативное сопротивление на растяжение Rfbt2,n")]
+        public double Rfbt2n { get; set; }
 
-        [DisplayName("Остаточное сопротивление на растяжение")]
+        [DisplayName("Остаточное расчетное сопротивление на растяжение Rfbt2")]
         public double Rfbt2 { get; set; }
 
-        [DisplayName("Остаточное сопротивление фибробетона осевому растяжению")]
-        public double Rfbt3 { get; set; }
+        [DisplayName("Остаточное нормативное сопротивление осевому растяжению Rfbt3,n")]
+        public double Rfbt3n { get; set; }
 
-        // Расчетное сопротивление
-        public double Rb { get => Rfbn; }
+        [DisplayName("Остаточное расчетное сопротивление осевому растяжению Rfbt3")]
+        public double Rfbt3 { get; set; }
+        
+        public double R_fb { get => Rfbn; }
         public double e_b1_red { get; set; }
         public double e_b1 { get; set; }
 
@@ -224,7 +236,7 @@ namespace BSFiberConcrete
         // принимаемые по указаниям СП 63.13330 как для обычного бетона
         public double e_b2 { get; set; }
 
-        public double Eb_red { get => (e_b1 !=0) ? Rb / e_b1 : 0; }
+        public double Eb_red { get => (e_b1 !=0) ? R_fb / e_b1 : 0; }
 
         // коэффициент приведения арматуры к фибробетону Пособие к СП 52-102-2004 п.п.2.33
         public double alfa(double _Es) => _Es / Efb;
@@ -271,7 +283,7 @@ namespace BSFiberConcrete
             }
             else if (e_b1_red <= _e && _e < e_b2)
             {
-                sgm = Rb;
+                sgm = R_fb;
             }
 
             return sgm;

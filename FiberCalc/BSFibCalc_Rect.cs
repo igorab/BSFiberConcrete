@@ -38,37 +38,53 @@ namespace BSFiberConcrete
         {
             base.GetParams(_t);
 
-            (Rfbt3n, Rfbn, Yft, Yb, Yb1, Yb2, Yb3, Yb5) = (_t[0], _t[1], _t[2], _t[3], _t[4], _t[5], _t[6], _t[7]);
+            // need refactoring
+            ( Yft, Yb, Yb1, Yb2, Yb3, Yb5) = (_t[2], _t[3], _t[4], _t[5], _t[6], _t[7]);
         }
 
         public override void GetSize(double[] _t)
         {
             (b, h) = (_t[0], _t[1]);
         }
-
-        protected double Rfbt_3() => (Yft != 0) ? (Rfbt3n / Yft) * Yb1 * Yb5 : Rfbt3n * Yb1 * Yb5;
        
-        public override void Calculate()
+        public override bool Validate()
         {
-            string info;
+            bool ret = base.Validate();
 
-            //Расчетное остаточное остаточного сопротивления осевому растяжению
-            Rfbt3 = Rfbt_3();
+            if (Rfbt == 0)
+            {
+                Msg.Add("Требуется задать класса фибробетона на осевое растяжение");
+                ret = false;
+            }
 
+            if (MatFiber.B < 15)
+            {
+                Msg.Add("Требуется увеличение класса фибробетона на осевое сжатие");
+                ret = false;
+            }
+
+            return ret;
+        }
+
+        public override void Calculate()
+        {            
+            if (!Validate()) 
+                return;
+             
             //коэффициент, учитывающий неупругие свойства фибробетона растянутой зоны сечения
-            double Y = 1.73d - 0.005d * (B - 15);
+            // Изменение 1 к СП 360
+            double cGamma = Gamma(MatFiber.B);
 
             //Упругопластический момент сопротивления  Ф.(6.3)
-            Wpl = b * h * h / 6 * Y;
+            Wpl = BSBeam_Rect.Wx(b, h) * cGamma;
 
-            //Значение пердльнолго момента сечения для изгибаемых сталефибробетонных элементов прямоугольного сечения определяют по формуле (6.3) (кг*см)
-            Mult = Rfbt3 * Wpl;
+            //Значение предельного момента сечения для изгибаемых сталефибробетонных элементов определяют по формуле (6.3) (кг*см)
+            Mult = Rfbt * Wpl;
+
+            InfoCheckM(Mult);
 
             //Предельный момент сечения  (т*м)
-            Mult = Mult * 0.00001;
-
-            info = "Расчет успешно выполнен!";
-            Msg.Add(info);
+            Mult = BSHelper.Kgsm2Tm(Mult);
         }
     }
 }

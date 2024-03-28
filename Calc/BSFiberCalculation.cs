@@ -9,26 +9,31 @@ namespace BSFiberConcrete
     public class BSFiberCalculation : IBSFiberCalculation
     {
         public List<string> Msg = new List<string>();
-
         public BSMatFiber MatFiber { get; set; }
 
-        [DisplayName("Нормативное остаточное сопротивления осевому растяжению кг/см2")]
-        public double Rfbt3n { get; set; }
+        [DisplayName("Нормативное сопротивления осевому растяжению, Rfbt,n, кг/см2")]
+        public double Rfbtn { get => MatFiber.Rfbtn; }
+
+        [DisplayName("Сопротивление сталефибробетона осевому растяжению, Rfbt, кг/см2")]
+        public double Rfbt { get => R_fbt(); }
+
+        [DisplayName("Нормативное остаточное сопротивления осевому растяжению, Rfbt3n, кг/см2")]
+        public double Rfbt3n { get => MatFiber.Rfbt3n; }
+
+        [DisplayName("Остаточное сопротивление сталефибробетона осевому растяжению, Rfbt3, кг/см2")]
+        public double Rfbt3 { get => R_fbt3(); }
 
         [DisplayName("Числовая характеристика класса фибробетона по прочности на осевое сжатие")]
-        public double B { get; set; }
+        public double B { get => MatFiber.B; }
 
-        [DisplayName("Расчетные значения сопротивления  на сжатиие по B30 СП63")]
-        public double Rfb { get; set; }
+        [DisplayName("Нормативное значение сопротивления сталефибробетона на осевое сжатие по СП63, кг/см2")]
+        public double Rfbn { get => MatFiber.Rfbn; }
 
-        [DisplayName("Нормативное значение сопротивления сталефибробетона на осевое сжатие по СП63 кг/см2")]
-        public double Rfbn { get; set; }
-
-        [DisplayName("Остаточное сопротивление сталефибробетона осевому растяжению")]
-        public double Rfbt3 { get; set; }
-        
-        private double m_Wpl;
-        private double gamma;
+        [DisplayName("Расчетные значения сопротивления  на сжатиие по B30 СП63, кг/см2")]
+        public double Rfb { get => R_fb(); }
+       
+                       
+        public double Gamma(double _B) => 1.73 - 0.005 * (_B - 15);
         
         protected double omega = BSMatFiber.omega;
 
@@ -57,7 +62,8 @@ namespace BSFiberConcrete
                 }            
         }
 
-        public Dictionary<string, double> Efforts { 
+        public Dictionary<string, double> Efforts {
+            get { return m_Efforts; }
             set { m_Efforts = new Dictionary<string, double>(value); }  
         } 
 
@@ -66,20 +72,16 @@ namespace BSFiberConcrete
         // Расчетные значения сопротивления на сжатиие по B30 СП63
         public double R_fb() => (Yb != 0) ? Rfbn / Yb * Yb1*Yb2*Yb3*Yb5 : 0;
 
-        //Расчетное остаточное остаточного сопротивления осевому растяжению
-        public double R_fbt3() => (Yft != 0) ? Rfbt3n / Yft * Yb1 * Yb5 : 0;
+        //Расчетное остаточное сопротивление осевому растяжению R_fbt
+        public double R_fbt() => (Yft != 0) ? Rfbtn / Yft * Yb1 * Yb5 : 0;
 
+        //Расчетное остаточное сопротивление осевому растяжению R_fbt3
+        public double R_fbt3() => (Yft != 0) ? Rfbt3n / Yft * Yb1 * Yb5 : 0;
 
         public string DN(Type _T, string _property) => _T.GetProperty(_property).GetCustomAttribute<DisplayNameAttribute>().DisplayName;
         
         public BSFiberCalculation()
-        {            
-            B = 30;
-            gamma = 1.73 - 0.005 * (B - 15);
-           
-            MatFiber = new BSMatFiber();
-            MatFiber.e_b2 = 0.0035;
-
+        {                                   
         }
 
         /// <summary>
@@ -114,46 +116,39 @@ namespace BSFiberConcrete
         {            
         }
 
-        public virtual void Calculate() { }
+        public virtual bool Validate()
+        {
+            return true;
+        }
+
+        public virtual void Calculate() 
+        {
+            if (!Validate())
+                return;
+        }
 
         public virtual Dictionary<string, double> Results()
         {
             return new Dictionary<string, double>() {};
         }
-
-        // упругопластический момент сопротивления сечения элемента для крайнего растянутого волокна
-        private double Wpl(double _b, double _h) => _b * Math.Pow(_h, 2) * gamma / 6;  
-
-        private double Mult() => Rfbt3n * m_Wpl;
-        
-               
+                                       
         /// <summary>
-        /// 6.1.13 Расчет внецентренно сжатых сталефибробетонных элементов
-        /// </summary>
-        /// <param name="_N"> действующая продольная сила</param>
-        /// <returns>Результат проверки </returns>
-        public bool checkN(double _N)
+        /// Информация о результате проверки сечения на действие изгибающего момента
+        /// </summary>                
+        public void InfoCheckM(double _M_ult)
         {
-            var res = _N <= Rfbn* Ab;
-            return res;
+            string info;
+
+            if (m_Efforts["My"] <= _M_ult)
+                info = "Сечение прошло проверку на действие изгибающего момента.";
+            else
+                info = "Сечение не прошло проверку. Рассчитанный предельный момент сечения превышает предельно допустимый.";
+            Msg.Add(info);
+
+            info = "Расчет успешно выполнен!";
+            Msg.Add(info);
         }
-
-        // 6.22
-        public double calcEccenticallyCompressed(double _b, double _h)
-        {
-            // случайный эксцентриситет, принимаемый по СП 63.13330
-            double eta = 0;
-            double D = 0;
-
-            double Ncr = Math.PI * Math.PI * D;
-
-
-            Ab = _b * _h * (1 - 2 * e0 * eta / _h);
-
-
-            return 0;
-        }
-        
+               
         /// <summary>
         /// Расчет прочности сечения
         /// </summary>

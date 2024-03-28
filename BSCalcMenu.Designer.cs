@@ -80,7 +80,7 @@
             this.tableLayoutPanelMain.ColumnCount = 3;
             this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.57915F));
             this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.42085F));
-            this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 296F));
+            this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 298F));
             this.tableLayoutPanelMain.Controls.Add(this.tableLayoutPanel4, 2, 1);
             this.tableLayoutPanelMain.Controls.Add(this.lblInfo, 0, 0);
             this.tableLayoutPanelMain.Controls.Add(this.lblExpertise, 1, 0);
@@ -97,9 +97,9 @@
             this.tableLayoutPanelMain.RowCount = 4;
             this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.284153F));
             this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 93.71584F));
-            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
-            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
-            this.tableLayoutPanelMain.Size = new System.Drawing.Size(855, 432);
+            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
+            this.tableLayoutPanelMain.Size = new System.Drawing.Size(855, 446);
             this.tableLayoutPanelMain.TabIndex = 0;
             // 
             // tableLayoutPanel4
@@ -114,7 +114,7 @@
             this.tableLayoutPanel4.Controls.Add(this.btnGraphAF, 0, 5);
             this.tableLayoutPanel4.Controls.Add(this.button3, 0, 6);
             this.tableLayoutPanel4.Controls.Add(this.button4, 0, 7);
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(560, 28);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(558, 29);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 8;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 21.00457F));
@@ -219,7 +219,7 @@
             // 
             this.lblExpertise.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblExpertise.AutoSize = true;
-            this.lblExpertise.Location = new System.Drawing.Point(285, 6);
+            this.lblExpertise.Location = new System.Drawing.Point(284, 6);
             this.lblExpertise.Name = "lblExpertise";
             this.lblExpertise.Size = new System.Drawing.Size(70, 13);
             this.lblExpertise.TabIndex = 1;
@@ -229,7 +229,7 @@
             // 
             this.lblLocalStrength.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblLocalStrength.AutoSize = true;
-            this.lblLocalStrength.Location = new System.Drawing.Point(560, 6);
+            this.lblLocalStrength.Location = new System.Drawing.Point(558, 6);
             this.lblLocalStrength.Name = "lblLocalStrength";
             this.lblLocalStrength.Size = new System.Drawing.Size(109, 13);
             this.lblLocalStrength.TabIndex = 2;
@@ -237,9 +237,9 @@
             // 
             // btnUnits
             // 
-            this.btnUnits.Location = new System.Drawing.Point(285, 379);
+            this.btnUnits.Location = new System.Drawing.Point(284, 387);
             this.btnUnits.Name = "btnUnits";
-            this.btnUnits.Size = new System.Drawing.Size(109, 20);
+            this.btnUnits.Size = new System.Drawing.Size(109, 24);
             this.btnUnits.TabIndex = 4;
             this.btnUnits.Text = "Ед изм";
             this.btnUnits.UseVisualStyleBackColor = true;
@@ -255,7 +255,7 @@
             this.tableLayoutPanel2.Controls.Add(this.button6, 0, 5);
             this.tableLayoutPanel2.Controls.Add(this.btnBetonClass, 0, 3);
             this.tableLayoutPanel2.Controls.Add(this.btnCoefY, 0, 2);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(4, 28);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(4, 29);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 6;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
@@ -341,7 +341,7 @@
             this.tableLayoutPanel3.Controls.Add(this.button12, 0, 5);
             this.tableLayoutPanel3.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.label2, 0, 2);
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(285, 28);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(284, 29);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 6;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
@@ -418,9 +418,10 @@
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(560, 379);
+            this.btnClose.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnClose.Location = new System.Drawing.Point(558, 387);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(120, 20);
+            this.btnClose.Size = new System.Drawing.Size(120, 24);
             this.btnClose.TabIndex = 3;
             this.btnClose.Text = "Закрыть";
             this.btnClose.UseVisualStyleBackColor = true;
@@ -430,7 +431,7 @@
             // 
             this.labelVer.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelVer.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelVer.Location = new System.Drawing.Point(4, 382);
+            this.labelVer.Location = new System.Drawing.Point(4, 392);
             this.labelVer.Name = "labelVer";
             this.labelVer.Size = new System.Drawing.Size(65, 13);
             this.labelVer.TabIndex = 2;
@@ -440,7 +441,7 @@
             // 
             this.btnInfo.ImageKey = "Info.png";
             this.btnInfo.ImageList = this.imageList;
-            this.btnInfo.Location = new System.Drawing.Point(4, 406);
+            this.btnInfo.Location = new System.Drawing.Point(4, 418);
             this.btnInfo.Name = "btnInfo";
             this.btnInfo.Size = new System.Drawing.Size(25, 22);
             this.btnInfo.TabIndex = 8;
@@ -473,7 +474,7 @@
             // 
             this.btnSectionDraw.ImageKey = "Layers.png";
             this.btnSectionDraw.ImageList = this.imageList;
-            this.btnSectionDraw.Location = new System.Drawing.Point(285, 406);
+            this.btnSectionDraw.Location = new System.Drawing.Point(284, 418);
             this.btnSectionDraw.Name = "btnSectionDraw";
             this.btnSectionDraw.Size = new System.Drawing.Size(25, 22);
             this.btnSectionDraw.TabIndex = 9;
@@ -515,7 +516,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(865, 531);
+            this.ClientSize = new System.Drawing.Size(865, 535);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.tableLayoutPanelMain);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
