@@ -1,4 +1,6 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Runtime.CompilerServices;
+using System.Windows.Forms;
 
 namespace BSFiberConcrete
 {
@@ -56,7 +58,7 @@ namespace BSFiberConcrete
     /// <summary>
     /// Фибробетон, параметры
     /// </summary>
-    public class Fiber
+    public class Fiber : ICloneable
     {
         public double e0 { get; set; }
         public double Ef { get; set; }
@@ -64,6 +66,11 @@ namespace BSFiberConcrete
         public double mu_fv { get; set; }
         public double omega { get; set; }
         public double Efb => Eb * (1 - mu_fv) + Ef * mu_fv;
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
     }
 
     /// <summary>

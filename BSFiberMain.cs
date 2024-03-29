@@ -99,7 +99,8 @@ namespace BSFiberConcrete
 
                 m_BSLoadData.ReadParamsFromJson();
                 m_MatFiber.e_b2 = m_BSLoadData.Beton2.eps_b2;
-                //MatFiber.B = 30;.e
+
+                numRandomEccentricity.Value = (decimal) m_BSLoadData.Fiber.e0;
 
                 LoadRectangle(m_Iniv["b"], m_Iniv["h"]);
 
@@ -513,6 +514,11 @@ namespace BSFiberConcrete
 
             if (MNQ.Count == 0)
                 throw new Exception("Не заданы усилия");
+
+            MNQ["Ml"] = (double)num_Ml1_M1.Value;
+            MNQ["eN"] = (double)num_eN.Value;
+            MNQ["e0"] = (double)numRandomEccentricity.Value;
+
         }
 
         /// <summary>
@@ -539,12 +545,15 @@ namespace BSFiberConcrete
             fiberCalc.UseRebar = _useRebar;
             fiberCalc.Fissure = _fissurre;
             fiberCalc.Shear = _shear;
+
+            fiberCalc.InitFiberParams(m_BSLoadData.Fiber);
+
+            fiberCalc.MatFiber = m_MatFiber;
             
             GetEffortsFromForm(out Dictionary<string, double> MNQ);
 
             fiberCalc.BetonType = BSQuery.BetonTypeFind(comboBetonType.SelectedIndex);
             
-
             if (_shear || _useRebar)
             {
                 Rebar rebar = m_BSLoadData.Rebar;                                
@@ -560,10 +569,9 @@ namespace BSFiberConcrete
             }
             
             double[] prms = m_BSLoadData.Params;
-
             InitUserParams(prms);
-
-            fiberCalc.GetParams(prms);
+            
+            fiberCalc.GetParams(prms); // передаем коэффициенты Yb, Yft, Yb1, Yb2, Yb3, Yb5, B
 
             double beamLngth = BSHelper.ToDouble(tbLength.Text);
 
@@ -571,16 +579,13 @@ namespace BSFiberConcrete
 
             fiberCalc.GetSize(sz);
 
-            fiberCalc.GetEfforts(MNQ);
-
-            fiberCalc.GetFiberParamsFromJson(m_BSLoadData.Fiber);
-           
+            fiberCalc.GetEfforts(MNQ); // передаем усилия и связанные с ними велечины
+                       
             fiberCalc.Calculate();
 
             fiberCalc.Msg.Add("Расчет успешно выполнен!");
 
-            m_CalcResults = fiberCalc.Results();
-                        
+            m_CalcResults = fiberCalc.Results();                        
         }
 
         /// <summary>
@@ -604,7 +609,7 @@ namespace BSFiberConcrete
                 BSFiberReport_MNQ report = new BSFiberReport_MNQ();
                 report.ImageCalc = fiberCalc.ImageCalc();
                 report.BeamSection = m_BeamSection;                
-                report.Init(fiberCalc);
+                report.InitFromFiberCalc(fiberCalc);
 
                 string pathToHtmlFile = report.CreateReport(2);
 
@@ -632,7 +637,7 @@ namespace BSFiberConcrete
                 BSFiberReport_MNQ report = new BSFiberReport_MNQ();
                 report.BeamSection = m_BeamSection;
                 report.ImageCalc = fiberCalc.ImageCalc();
-                report.Init(fiberCalc);
+                report.InitFromFiberCalc(fiberCalc);
 
                 string pathToHtmlFile = report.CreateReport(3);
 

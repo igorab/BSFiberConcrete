@@ -38,20 +38,20 @@ namespace BSFiberConcrete
         [DisplayName("Продольное усилие, кг"), Description("Phys")]
         public double N { get; protected set; }
 
-        [DisplayName("Cлучайный эксцентриситет, принимаемый по СП 63"), Description("Phys")]
+        [DisplayName("Cлучайный эксцентриситет, принимаемый по СП 63, e0"), Description("Phys")]
         public double e0 { get; private set; }
 
-        [DisplayName("Эксцентриситет приложения силы N"), Description("Phys")]
+        [DisplayName("Эксцентриситет приложения силы N, eN"), Description("Phys")]
         public double e_N { get; protected set; }
 
         [DisplayName("Относительное значение эксцентриситета продольной силы"), Description("Phys")]
         public double delta_e { get; protected set; }
 
-        [DisplayName("Момент от действия полной нагрузки"), Description("Phys")]
-        public double M1 { get; protected set; }
+        [DisplayName("Изгибающий момент"), Description("Phys")]
+        public double My { get; protected set; }
 
-        [DisplayName("Момент от действия постянных и длительных нагрузок нагрузок"), Description("Phys")]
-        public double Ml1 { get; protected set; }
+        [DisplayName("Доля постоянной нагрузки в общей нагрузке на элемент"), Description("Phys")]
+        public double Ml1toM1 { get; protected set; }
 
         [DisplayName("Коэффициент ф."), Description("Coef")]
         public double k_b { get; protected set; }
@@ -92,17 +92,24 @@ namespace BSFiberConcrete
 
         public BSMatRod MatRod { get; set; }
         public BSMatFiber MatFiber { get; set; }
+        
+        //Нормативное сопротивление осевому сжатию
+        protected double Rfbn { get => MatFiber.Rfbn; }
+
+        //Нормативное сопротивление осевому растяжению кг/см2 табл.2
+        public double Rfbtn { get => MatFiber.Rfbtn; }
 
         //Нормативное остаточное сопротивления осевому растяжению кг/см2 табл.2
-        protected double Rfbt3n;
+        public double Rfbt3n { get => MatFiber.Rfbt3n; }
+
+        protected double Rfb;
 
         //Расчетное остаточное остаточного сопротивления осевому растяжению 
         protected double Rfbt3;
 
         protected double B;
-        protected double y_t;
-        protected double Rfbn;
-        protected double fi = 0.9;
+        protected double y_t;        
+        protected double fi;
         protected double Ef; //для фибры из тонкой низкоуглеродистой проволоки МП п.п  кг/см2 
         protected double Eb; //Начальный модуль упругости бетона-матрицы B30 СП63
         //коэффициент фибрового армирования по объему
@@ -119,16 +126,13 @@ namespace BSFiberConcrete
         protected double Ab;
         //поперечная сила
         protected double Q;
-
-        protected double Rfb;
-        protected double Rfbtn;
-      
+              
         // параметры продольной арматуры
         protected double[] l_rebar;
         // параметры поперечной арматуры
         protected double[] t_rebar;
 
-        protected Dictionary<string, double> m_Efforts;
+        public Dictionary<string, double> m_Efforts;
 
         protected BSBeam m_Beam;
 
@@ -137,6 +141,8 @@ namespace BSFiberConcrete
             m_Beam = new BSBeam();
             m_Efforts = new Dictionary<string, double>();
             Msg = new List<string>();
+            // TODO refactoring
+            fi = 0.9;
         }
 
         /// <summary>
@@ -163,7 +169,7 @@ namespace BSFiberConcrete
             return d_e;
         }
 
-        public double Fi1() => (Ml1 / M1 <= 1) ? 1 + Ml1 / M1 : 2.0;
+        public double Fi1() => (Ml1toM1 <= 1) ? 1 + Ml1toM1 : 2.0;
 
         protected double R_fb() => Rfbn / Yb * Yb1 * Yb2 * Yb3 * Yb5;
 
@@ -199,13 +205,17 @@ namespace BSFiberConcrete
             return fiberCalc;
         }
 
-        public void GetFiberParamsFromJson(Fiber _fiber)
+        /// <summary>
+        ///  получить значения из настроек по умолчанию (Из json - файла)
+        /// </summary>
+        /// <param name="_fiber"></param>
+        public void InitFiberParams(Fiber _fiber)
         {
-            m_Fiber = _fiber;
-            //e0 = _fiber.e0;
-            Ef = _fiber.Ef;
-            Eb = _fiber.Eb;
-            mu_fv = _fiber.mu_fv;
+            m_Fiber = (Fiber)_fiber.Clone();
+
+            Ef = m_Fiber.Ef;
+            Eb = m_Fiber.Eb;
+            mu_fv = m_Fiber.mu_fv;
             Efb = m_Fiber.Efb;
         } 
         
@@ -270,7 +280,7 @@ namespace BSFiberConcrete
         protected void Calculate_N_Out()
         {
             //Коэффициент, учитывающий влияние длительности действия нагрузки (6.27)
-            fi1 = (M1 != 0) ? 1 + Ml1 / M1 : 1.0;
+            fi1 = (Ml1toM1 <=1) ? 1 + Ml1toM1 : 2.0;
 
             //относительное значение эксцентриситета продольной силы
             delta_e = Delta_e(e0 / m_Beam.h);
@@ -531,7 +541,7 @@ namespace BSFiberConcrete
             double h0 = h - a;
 
             // Нормативное остаточное сопротивления осевому растяжению кг/см2
-            double Rfbt3 = Rfbt3n / Yft * Yb1 * Yb5;
+            double _Rfbt3 = R_fbt3();
 
             // Площадь растянутой арматуры см2
             double As = Rebar.As;
@@ -549,7 +559,7 @@ namespace BSFiberConcrete
             double q_sw = Rsw * Asw / sw;
 
             // условие учета поперечной арматуры
-            if (q_sw < 0.25 * Rfbt3 * b)
+            if (q_sw < 0.25 * _Rfbt3 * b)
                 q_sw = 0;
 
             double c_min = h0;
@@ -563,7 +573,7 @@ namespace BSFiberConcrete
                    M_sw; // момент, воспр поперечной арматурой
             double M_fbt = 0; // момент, воспр сталефибробетоном
 
-            double Q_fbt3 = (c_min!=0) ? 1.5d * Rfbt3 * b * h0 * h0 / c_min : 0;
+            double Q_fbt3 = (c_min!=0) ? 1.5d * _Rfbt3 * b * h0 * h0 / c_min : 0;
 
             // усилие в продольной растянутой арматуре
             double N_s = Rebar.Rs * Rebar.As;
@@ -600,12 +610,12 @@ namespace BSFiberConcrete
                 lst_Q_sw.Add(Q_sw);
                 lst_M_sw.Add(M_sw);
 
-                Q_fbt3 = (ci != 0) ? 1.5d * Rfbt3 * b * h0 * h0 / ci : 0;
+                Q_fbt3 = (ci != 0) ? 1.5d * _Rfbt3 * b * h0 * h0 / ci : 0;
 
-                if (Q_fbt3 >= 2.5d * Rfbt3 * b * h0)
-                    Q_fbt3 = 2.5d * Rfbt3 * b * h0;
-                else if (Q_fbt3 <= 0.5d * Rfbt3 * b * h0)
-                    Q_fbt3 = 0.5d * Rfbt3 * b * h0;
+                if (Q_fbt3 >= 2.5d * _Rfbt3 * b * h0)
+                    Q_fbt3 = 2.5d * _Rfbt3 * b * h0;
+                else if (Q_fbt3 <= 0.5d * _Rfbt3 * b * h0)
+                    Q_fbt3 = 0.5d * _Rfbt3 * b * h0;
 
                 M_fbt = 0.5 * Q_fbt3 * ci;
 
@@ -633,34 +643,43 @@ namespace BSFiberConcrete
 
         public virtual void GetParams(double[] _t)
         {
-            (Rfbt3n, Rfbn, Yb, Yft, Yb1, Yb2, Yb3, Yb5, B) = (_t[0], _t[1], _t[2], _t[3], _t[4], _t[5], _t[6], _t[7], _t[8]);
-            Rfbtn = Rfbt3n;
+            // TODO Refactoring
+            (_, _, Yb, Yft, Yb1, Yb2, Yb3, Yb5, B) = (_t[0], _t[1], _t[2], _t[3], _t[4], _t[5], _t[6], _t[7], _t[8]);            
         }
 
         public virtual void GetSize(double[] _t) {}
 
         public void GetEfforts(Dictionary<string, double> _efforts)
         {
-            m_Efforts = _efforts;
-
-            double Mx = m_Efforts["Mx"];
+            m_Efforts = new Dictionary<string, double>(_efforts);
+            
             //Момент от действия полной нагрузки
-            M1 = m_Efforts["My"];
+            My = m_Efforts["My"];
+
             //Продольное усилие кг
             N = m_Efforts["N"];
+
             // Поперечная сила
-            Q = m_Efforts["Q"];
-           
+            Q = m_Efforts["Q"];        
+            
             //Момент от действия постянных и длительных нагрузок нагрузок
-            Ml1 = m_Efforts["Ml"];
-            // Эксцентриситет приложения N
+            Ml1toM1 = m_Efforts["Ml"];
+
+            // Эксцентриситет приложения силы N
             e_N = m_Efforts["eN"];
-            e0 = e_N;
+
+            // случайный эксцентриситет
+            e0 = m_Efforts["e0"];   
+            
+            m_Fiber.e0 = e0;            
         }
 
         public virtual Dictionary<string, double> Results()
         {
-            return new Dictionary<string, double>() { { "Rfb", Rfb }, { "N_ult", N_ult } };
+            return new Dictionary<string, double>() 
+            { 
+                { "Rfb", Rfb }, { "N_ult", N_ult } 
+            };
         }
     }
 }

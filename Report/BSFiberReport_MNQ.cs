@@ -22,10 +22,11 @@ namespace BSFiberConcrete
             m_CalcResults = new Dictionary<string, double>();
         }
 
-        public void Init(BSFiberCalc_MNQ _fiberCalc)
+        public void InitFromFiberCalc(BSFiberCalc_MNQ _fiberCalc)
         {
             fiberCalc = _fiberCalc;
             m_Messages = _fiberCalc.Msg;
+            m_Efforts = new Dictionary<string, double> (_fiberCalc.m_Efforts);
 
             ReportName = typeof(BSFiberCalc_MNQ).GetCustomAttribute<DisplayNameAttribute>().DisplayName;
 
