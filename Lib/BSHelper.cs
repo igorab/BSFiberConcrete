@@ -25,6 +25,11 @@ namespace BSFiberConcrete
         public static double Kgsm2Tm(double _kgsm) => _kgsm * 0.00001d;
         public static double MPA2kgsm2(double? _mpa) => 10.197162d * _mpa ?? 0;
 
+        public static double Kgsm2MPa(double? _val, int _dec = 2) => Math.Round( 0.098067d * _val ?? 0, _dec);
+
+        public static double Dec2Dbl(decimal _val, int _dec=2) => Math.Round( (double)_val, _dec);
+
+
         public static string ImgResource(BeamSection _bs, bool _useReinforcement = false)
         {
             string _img = "";

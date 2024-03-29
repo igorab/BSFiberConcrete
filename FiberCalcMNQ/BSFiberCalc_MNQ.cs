@@ -228,7 +228,21 @@ namespace BSFiberConcrete
             // Шаг поперечной арматуры
             Rebar.s_w = _t_rebar[1];
         }
-        
+
+        /// <summary>
+        /// Информация о результате проверки сечения на действие продольной силы
+        /// </summary>                
+        public void InfoCheckN(double _N_ult)
+        {
+            string info;
+
+            if (m_Efforts["N"] <= _N_ult)
+                info = "Сечение прошло проверку на действие продольной силы.";
+            else
+                info = "Сечение не прошло проверку на действие силы N.";
+            Msg.Add(info);            
+        }
+
         protected void Calculate_N()
         {
             //Коэффициент, учитывающий влияние длительности действия нагрузки, определяют по формуле (6.27)
@@ -267,6 +281,8 @@ namespace BSFiberConcrete
             {
                 N_ult = Rfb * Ab;
             }
+
+            InfoCheckN(N_ult);
 
             N_ult = BSHelper.Kg2T(N_ult);
         }

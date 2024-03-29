@@ -695,12 +695,19 @@ namespace BSFiberConcrete
 
             (double _M, double _N, double _Q) = (MNQ["My"], MNQ["N"], MNQ["Q"]);
 
-            if (_M != 0)
+            if (_M != 0 && _N == 0)
+            {
                 FiberCalculate_M(_M);
-            if (_N != 0)
+            }
+            else if (_N != 0)
+            {
                 FiberCalculate_N();
+            }
+
             if (_Q != 0)
+            {
                 FiberCalculate_Shear();
+            }
         }
         
         private void btnFactors_Click(object sender, EventArgs e)
@@ -991,6 +998,26 @@ namespace BSFiberConcrete
                 numRsw.Value = (decimal)trb.Rsw;
             }
             catch { }
+        }
+
+        private void numRfbt_n_ValueChanged(object sender, EventArgs e)
+        {
+            labelRfbtnMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numRfbt_n.Value)); 
+        }
+
+        private void numRfb_n_ValueChanged(object sender, EventArgs e)
+        {
+            labelRfbnMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numRfb_n.Value));
+        }
+
+        private void numRfbt2n_ValueChanged(object sender, EventArgs e)
+        {
+            labelRfbt2nMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numRfbt2n.Value));
+        }
+
+        private void numRfbt3n_ValueChanged(object sender, EventArgs e)
+        {
+            labelRfbt3nMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numRfbt3n.Value));
         }
     }
 }
