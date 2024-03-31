@@ -82,7 +82,7 @@ namespace BSFiberConcrete
     /// <summary>
     /// Арматура, параметры
     /// </summary>
-    public class Rebar
+    public class Rebar : ICloneable
     {
         public string ID { get; set; }
 
@@ -109,6 +109,12 @@ namespace BSFiberConcrete
         public double Epsilon_s => (Es > 0 ) ? Rs / Es : 0;
 
         public double Dzeta_R(double omega, double eps_fb2) => omega / (1 + Epsilon_s / eps_fb2);
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
+
     }
 
     /// <summary>

@@ -70,31 +70,26 @@ namespace BSFiberConcrete
                        
             //граничная относительная высота сжатой зоны
             double dzeta_R = Dzeta_R();
-
-            bool checkOK;
+                        
             string info;
-
-            if (dzeta <= dzeta_R)
+            bool checkOK = dzeta <= dzeta_R;
+            if (checkOK)
             {
-                checkOK = true;
-                info = "Условие ξ <= ξR выполнено ";
+                info = string.Format("Условие ξ ({0}) <= ξR ({1}) выполнено ", Math.Round(dzeta, 2), Math.Round(dzeta_R, 2));
                 Msg.Add(info);
             }
             else
             {
-                checkOK = false;
-                info = "Условие ξ <= ξR не выполнено! ";
+                info = string.Format("Условие ξ ({0}) <= ξR ({1}) не выполнено ", Math.Round(dzeta, 2), Math.Round(dzeta_R, 2));
                 info += "Требуется увеличить высоту элемента.";
                 Msg.Add(info);
             }
 
-            Mult = 1E-5d * Mult_arm(b, h0, _x, h, Rod.a, Rod.a1);
-            
-            //if (!checkOK)
-            //    throw new Exception(info);
+            Mult = Mult_arm(b, h0, _x, h, Rod.a, Rod.a1);
 
-            info = "Расчет успешно выполнен!";
-            Msg.Add(info);
+            InfoCheckM(Mult);
+
+            Mult = BSHelper.Kgsm2Tm(Mult);            
         }        
     }
     

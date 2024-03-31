@@ -130,6 +130,22 @@ namespace BSFiberConcrete.Lib
             }
         }
 
+        public static List<Rebar> LoadRebar()
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    var output = cnn.Query<Rebar>("select * from Rebar", new DynamicParameters());
+                    return output.ToList();
+                }
+            }
+            catch
+            {
+                return new List<Rebar>();
+            }
+        }
+
         /// <summary>
         /// Усилия 
         /// </summary>

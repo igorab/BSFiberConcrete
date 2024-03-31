@@ -31,6 +31,7 @@ namespace BSFiberConcrete
         private Dictionary<string, double> m_Iniv ;
         private BSFiberCalculation bsCalc;
         private BSFiberLoadData m_BSLoadData;
+        private List<Rebar> m_Rebar;
         private BSMatFiber m_MatFiber;
         private List<Elements> FiberConcrete;
         private List<Beton> m_Beton;
@@ -99,8 +100,9 @@ namespace BSFiberConcrete
 
                 m_BSLoadData.ReadParamsFromJson();
                 m_MatFiber.e_b2 = m_BSLoadData.Beton2.eps_b2;
-                m_MatFiber.Efb = m_BSLoadData.Fiber.Efb;
+                m_MatFiber.Efb = m_BSLoadData.Fiber.Efb;                
 
+                m_Rebar = BSData.LoadRebar();
 
                 numRandomEccentricity.Value = (decimal) m_BSLoadData.Fiber.e0;
 
@@ -255,12 +257,12 @@ namespace BSFiberConcrete
             
             // сжатие:
             m_MatFiber.B = fb.B;
-            m_MatFiber.Rfbn = fb.Rb;
+            m_MatFiber.Rfbn = BSHelper.MPA2kgsm2(fb.Rb);
             // растяжение:            
-            m_MatFiber.Rfbtn = fbt.Rfbtn;
+            m_MatFiber.Rfbtn = BSHelper.MPA2kgsm2(fbt.Rfbtn);
             //остаточное растяжение:            
-            m_MatFiber.Rfbt2n = (double)numRfbt2n.Value;
-            m_MatFiber.Rfbt3n = (double)numRfbt3n.Value;
+            m_MatFiber.Rfbt2n = (double)numRfbt2n.Value; // кг/см2
+            m_MatFiber.Rfbt3n = (double)numRfbt3n.Value; // кг/см2
         }
 
 
@@ -558,8 +560,13 @@ namespace BSFiberConcrete
             
             if (_shear || _useRebar)
             {
-                Rebar rebar = m_BSLoadData.Rebar;                                
+                Rebar rebar = (Rebar) m_BSLoadData.Rebar.Clone(); // из глобальных параметров
+                // настройки из БД
+                Rebar dbRebar = m_Rebar.Where(x => x.ID == Convert.ToString(cmbRebarClass.SelectedItem))?.First();
+                //  введено пользователем
                 InitRebarValues(ref rebar);
+                rebar.Es = BSHelper.MPA2kgsm2(dbRebar.Es);
+
                 // Армирование
                 fiberCalc.Rebar = rebar;
 
@@ -691,6 +698,7 @@ namespace BSFiberConcrete
         // Расчет на действие момента и поперечной силы
         private void btnStaticEqCalc_Click(object sender, EventArgs e)
         {
+            // Данные, введенные пользователем
             InitMatFiber();
 
             GetEffortsFromForm(out Dictionary<string, double> MNQ);
@@ -997,7 +1005,7 @@ namespace BSFiberConcrete
             try
             {
                 var trb = Lib.BSQuery.RebarFind(cmbTRebarClass.Text);
-                numRsw.Value = (decimal)trb.Rsw;
+                numRsw.Value = (decimal)BSHelper.MPA2kgsm2(trb.Rsw);
             }
             catch { }
         }

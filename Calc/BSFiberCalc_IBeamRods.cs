@@ -78,16 +78,16 @@ namespace BSFiberConcrete
             //граничная относительная высота сжатой зоны
             double dzeta_R = Dzeta_R();
 
-            if (dzeta <= dzeta_R)
-            {
-                checkOK = true;            
-                info = "Условие ξ <= ξR выполнено ";
+            checkOK = dzeta <= dzeta_R;
+
+            if (checkOK)
+            {                
+                info =  string.Format( "Условие ξ ({0}) <= ξR ({1}) выполнено ", Math.Round(dzeta,2), Math.Round(dzeta_R,2));
                 Msg.Add(info);
             }
             else
-            {
-                checkOK = false;
-                info = "Условие ξ <= ξR не выполнено! ";
+            {                
+                info = string.Format("Условие ξ ({0}) <= ξR ({1}) не выполнено ", Math.Round(dzeta,2), Math.Round(dzeta_R,2)); ;
                 info += "Требуется увеличить высоту элемента.";
                 Msg.Add(info);
             }
@@ -113,11 +113,8 @@ namespace BSFiberConcrete
                           - Rfbt3 * (bf * hf * (0.5 * hf -_a) + bw * (_h - hf - _x) * (_h0 - 0.5 * (_h + _x - hf))) 
                           + MatRod.Rsc * MatRod.As1 * (_h0 - _a1);                
             }
-
-            if (!checkOK)
-                throw new Exception(info);
-
-            return (res_Mult * 1e-5, _x);
+            
+            return (res_Mult, _x);
         }
 
         /// <summary>
@@ -125,15 +122,15 @@ namespace BSFiberConcrete
         /// </summary>
         public override void Calculate()
         {
-            string info;
+            //string info;
             
             Calc_Pre();
 
             (Mult, x) = Calc_Mult(_h0: h - Rod.a, _h: h, _a: Rod.a, _a1: Rod.a1);
 
-            info = "Расчет успешно выполнен!";
-            Msg.Add(info);
+            InfoCheckM(Mult);
 
+            Mult = BSHelper.Kgsm2Tm(Mult);
         }
     }
 }

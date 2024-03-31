@@ -12,6 +12,7 @@ namespace BSFiberConcrete
     /// </summary>
     public class BSFiberCalc_Q : BSFiberCalc_MNQ
     {
+        /*
         // высота и ширина сечения, см
         private double h, b;
         // Растояние до цента тяжести арматуры растянутой арматуры см
@@ -62,6 +63,6 @@ namespace BSFiberConcrete
             }
 
         }
-        
+        */
     }
 }
