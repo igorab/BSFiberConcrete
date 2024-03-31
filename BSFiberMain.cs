@@ -99,6 +99,8 @@ namespace BSFiberConcrete
 
                 m_BSLoadData.ReadParamsFromJson();
                 m_MatFiber.e_b2 = m_BSLoadData.Beton2.eps_b2;
+                m_MatFiber.Efb = m_BSLoadData.Fiber.Efb;
+
 
                 numRandomEccentricity.Value = (decimal) m_BSLoadData.Fiber.e0;
 
@@ -964,7 +966,7 @@ namespace BSFiberConcrete
             try
             {
                 Beton bt = Lib.BSQuery.BetonTableFind(cmbBfn.Text);
-                numRfb_n.Value = (decimal)bt.Rb;
+                numRfb_n.Value = (decimal)BSHelper.MPA2kgsm2(bt.Rb);
             }
             catch { }
         }
@@ -974,7 +976,7 @@ namespace BSFiberConcrete
             try
             {
                 var rb = Lib.BSQuery.RebarFind(cmbRebarClass.Text);
-                numRs.Value = (decimal)rb.Rs;
+                numRs.Value = (decimal)BSHelper.MPA2kgsm2(rb.Rs);
             }
             catch { }
         }
@@ -1018,6 +1020,16 @@ namespace BSFiberConcrete
         private void numRfbt3n_ValueChanged(object sender, EventArgs e)
         {
             labelRfbt3nMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numRfbt3n.Value));
+        }
+
+        private void numRs_ValueChanged(object sender, EventArgs e)
+        {
+            labelRsMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numRs.Value));
+        }
+
+        private void numRsw_ValueChanged(object sender, EventArgs e)
+        {
+            labelRswMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numRsw.Value));
         }
     }
 }

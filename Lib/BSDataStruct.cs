@@ -61,7 +61,13 @@ namespace BSFiberConcrete
     public class Fiber : ICloneable
     {
         public double e0 { get; set; }
+        /// <summary>
+        /// начальный модуль упругости стальной фибры
+        /// </summary>
         public double Ef { get; set; }
+        /// <summary>
+        /// начальный модуль упругости бетона-матрицы
+        /// </summary>
         public double Eb { get; set; }
         public double mu_fv { get; set; }
         public double omega { get; set; }
