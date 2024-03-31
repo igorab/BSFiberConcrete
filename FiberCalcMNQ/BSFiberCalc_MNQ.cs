@@ -333,9 +333,9 @@ namespace BSFiberConcrete
             string info;
 
             if (N <= N_ult)
-                info = "Прочность обеспечена";
+                info = "Прочность на действие продольной силы обеспечена";
             else
-                info = "Прочность не обеспечена";
+                info = "Прочность не обеспечена. Продольная сила превышает допустимое значение.";
 
             Msg.Add(info);
 
@@ -344,6 +344,8 @@ namespace BSFiberConcrete
 
         // жесткость элемента в предельной по прочности стадии, определяемая по формуле (6.31)
         protected double D_stiff(double _Is) => k_b* Efb * I + Rebar.k_s * Rebar.Es * _Is;
+
+        protected double DStiff(double _I, double _Is) => k_b * Efb * _I + Rebar.k_s * Rebar.Es * _Is;
 
         // условная критическая сила, определяемая по формуле (6.24)
         protected  double N_cr(double _D) => (Math.PI* Math.PI) * _D / Math.Pow(l0, 2);
@@ -408,7 +410,7 @@ namespace BSFiberConcrete
             // момент инерции
             double Is = Rebar.As * ys * ys + Rebar.A1s * y1s * y1s;
             // жесткость элемента в предельной по прочности стадии, определяемая по формуле (6.31)
-            D = D_stiff(Is);
+            D = DStiff(I, Is);
             // условная критическая сила, определяемая по формуле (6.24)
             Ncr = N_cr(D);
             // коэффициент, учитывающий влияние продольного изгиба (прогиба) элемента
