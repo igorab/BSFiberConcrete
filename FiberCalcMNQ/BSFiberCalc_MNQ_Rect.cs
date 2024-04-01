@@ -28,7 +28,7 @@ namespace BSFiberConcrete
             if (!string.IsNullOrEmpty(m_ImgCalc))
                 return m_ImgCalc;
 
-            return (Fissure) ? "Rect_N_out.PNG" : "Rect_N.PNG";
+            return (N_Out) ? "Rect_N_out.PNG" : "Rect_N.PNG";
         } 
         
         public override void GetSize(double[] _t)
@@ -95,7 +95,7 @@ namespace BSFiberConcrete
         /// </summary>
         public override void Calculate()
         {
-            if (Fissure)
+            if (N_Out)
             {
                 Calculate_N_Out();
             }

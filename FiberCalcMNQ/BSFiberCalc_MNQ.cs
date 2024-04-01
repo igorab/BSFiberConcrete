@@ -85,7 +85,7 @@ namespace BSFiberConcrete
         public BetonType BetonType { get; set; }
         public Rebar Rebar {get; set;}
         public bool UseRebar { get; set; }
-        public bool Fissure{ get; set; }
+        public bool N_Out{ get; set; }
         public bool Shear { get; set; }
 
         protected Fiber m_Fiber;
@@ -249,7 +249,7 @@ namespace BSFiberConcrete
             fi1 = Fi1();
 
             //относительное значение эксцентриситета продольной силы
-            delta_e = Delta_e(m_Fiber.e0 / m_Beam.h);
+            delta_e = Delta_e(m_Fiber.e_tot / m_Beam.h);
 
             // Коэфициент ф.(6.26)
             k_b = K_b(fi1, delta_e);
@@ -265,7 +265,7 @@ namespace BSFiberConcrete
 
             eta = (Ncr!=0) ? 1 / (1 - N / Ncr) : 0;
 
-            Ab = m_Beam.b * m_Beam.h * (1 - 2 * m_Fiber.e0 * eta / m_Beam.h);
+            Ab = m_Beam.b * m_Beam.h * (1 - 2 * m_Fiber.e_tot * eta / m_Beam.h);
 
             Rfb = R_fb();
 
@@ -273,7 +273,7 @@ namespace BSFiberConcrete
 
             double flex = l0 / h;
 
-            if (e0 <= h / 30 && flex <= 20)
+            if (m_Fiber.e_tot <= h / 30d && flex <= 20)
             {
                 N_ult = fi * Rfb * A;
             }
@@ -299,7 +299,7 @@ namespace BSFiberConcrete
             fi1 = (Ml1toM1 <=1) ? 1 + Ml1toM1 : 2.0;
 
             //относительное значение эксцентриситета продольной силы
-            delta_e = Delta_e(e0 / m_Beam.h);
+            delta_e = Delta_e(m_Fiber.e_tot / m_Beam.h);
 
             // Коэфициент ф.(6.26)
             k_b = K_b(fi1, delta_e);
@@ -320,12 +320,12 @@ namespace BSFiberConcrete
             //коэффициент, учитывающий влияние продольного изгиба элемента на его несущую способность (6.23) 6.1.13
             eta = 1 / (1 - N / Ncr);
 
-            Ab = m_Beam.b * m_Beam.h * (1 - 2 * m_Fiber.e0 * eta / m_Beam.h);
+            Ab = m_Beam.b * m_Beam.h * (1 - 2 * m_Fiber.e_tot * eta / m_Beam.h);
 
             //Расчетные значения сопротивления осевому растяжению
             double Rfbt = R_fbt();
             
-            double denom = A / I * e0 * eta * m_Beam.y_t - 1; 
+            double denom = A / I * m_Fiber.e_tot * eta * m_Beam.y_t - 1; 
 
             // Предельная сила сечения
             N_ult = 1/denom * Rfbt * A;
@@ -384,7 +384,7 @@ namespace BSFiberConcrete
 
             double x_denom = (Rfb + Rfbt3) * b + 2 * Rebar.Rs * Rebar.As / (h0 * (1 - dz_R));
 
-            delta_e = Delta_e(e0 / m_Beam.h);
+            delta_e = Delta_e(m_Fiber.e_tot / m_Beam.h);
 
             fi1 = Fi1();
 
@@ -417,7 +417,7 @@ namespace BSFiberConcrete
             // на его несущую способность и определяемый по формуле(6.23)6.1.13
             eta = Eta(N, Ncr);
             // расстояние отточки приложения продольной силы N до центра тяжести сечения растянутой арматуры ф.6.33 см
-            double e = e0 * eta + (h0 - Rebar.a) / 2;
+            double e = e0 * eta + (h0 - Rebar.a) / 2 + e_N;
 
             M_ult = Rfb * b * x * (h0 - 0.5 * x) - Rfbt3 * b * (h - x) * ((h - x) / 2 - Rebar.a) + Rebar.Rsc * Rebar.A1s * (h0 - Rebar.a1);
 
@@ -667,8 +667,15 @@ namespace BSFiberConcrete
 
         public virtual void GetSize(double[] _t) {}
 
-        public void GetEfforts(Dictionary<string, double> _efforts)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="_efforts"></param>
+        /// <returns>полный эксцентриситет </returns>
+        public double GetEfforts(Dictionary<string, double> _efforts)
         {
+            double e_tot; // полный эксцентриситет приложения силы
+
             m_Efforts = new Dictionary<string, double>(_efforts);
             
             //Момент от действия полной нагрузки
@@ -683,13 +690,20 @@ namespace BSFiberConcrete
             //Момент от действия постянных и длительных нагрузок нагрузок
             Ml1toM1 = m_Efforts["Ml"];
 
-            // Эксцентриситет приложения силы N
-            e_N = m_Efforts["eN"];
-
             // случайный эксцентриситет
-            e0 = m_Efforts["e0"];   
+            e0 = m_Efforts["e0"];
+
+            // Эксцентриситет приложения силы N
+            e_N = m_Efforts["eN"];           
             
-            m_Fiber.e0 = e0;            
+            // эксцентриситет от момента
+            double e_MN = (N != 0) ? My / N : 0;
+            e_N += e_MN;
+
+            e_tot = e0 + e_N + e_MN;
+            m_Fiber.e_tot = e_tot;
+
+            return e_tot;
         }
 
         public virtual Dictionary<string, double> Results()

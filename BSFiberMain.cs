@@ -90,9 +90,7 @@ namespace BSFiberConcrete
                     m_Iniv["Mx"] = eff[0].Mx;
                     m_Iniv["My"] = eff[0].My;
                     m_Iniv["N"] = eff[0].N;
-                    m_Iniv["Q"] = eff[0].Q;
-                    m_Iniv["Ml"] = eff[0].Ml;
-                    m_Iniv["eN"] = eff[0].eN;
+                    m_Iniv["Q"] = eff[0].Q;                    
                 }
 
                 num_eN.Value = (decimal)m_Iniv["eN"];
@@ -104,7 +102,7 @@ namespace BSFiberConcrete
 
                 m_Rebar = BSData.LoadRebar();
 
-                numRandomEccentricity.Value = (decimal) m_BSLoadData.Fiber.e0;
+                numRandomEccentricity.Value = (decimal) m_BSLoadData.Fiber.e_tot;
 
                 LoadRectangle(m_Iniv["b"], m_Iniv["h"]);
 
@@ -543,11 +541,10 @@ namespace BSFiberConcrete
         /// <param name="fiberCalc"></param>
         /// <param name="_rebar">Армирование</param>
         /// <param name="_fissurre">Расчет на трещиностойкость</param>
-        private void FiberCalc_MNQ(out BSFiberCalc_MNQ fiberCalc, bool _useRebar = false, bool _fissurre = false, bool _shear = false )
-        {
+        private void FiberCalc_MNQ(out BSFiberCalc_MNQ fiberCalc, bool _useRebar = false, bool _shear = false )
+        {            
             fiberCalc = BSFiberCalc_MNQ.Construct(m_BeamSection);
-            fiberCalc.UseRebar = _useRebar;
-            fiberCalc.Fissure = _fissurre;
+            fiberCalc.UseRebar = _useRebar;            
             fiberCalc.Shear = _shear;
 
             fiberCalc.InitFiberParams(m_BSLoadData.Fiber);
@@ -588,8 +585,13 @@ namespace BSFiberConcrete
 
             fiberCalc.GetSize(sz);
 
-            fiberCalc.GetEfforts(MNQ); // передаем усилия и связанные с ними велечины
-                       
+            // передаем усилия и связанные с ними велечины
+            double e_tot = fiberCalc.GetEfforts(MNQ); 
+
+            bool _N_out = false;
+            if (fiberCalc.h /2 < e_tot) _N_out = true;
+            fiberCalc.N_Out = _N_out;
+
             fiberCalc.Calculate();
 
             fiberCalc.Msg.Add("Расчет успешно выполнен!");
@@ -607,7 +609,7 @@ namespace BSFiberConcrete
 
             try
             {
-                FiberCalc_MNQ(out fiberCalc, checkBoxRebar.Checked, checkBoxFissure.Checked);
+                FiberCalc_MNQ(out fiberCalc, checkBoxRebar.Checked );
             }
             catch (Exception _ex)
             {
@@ -635,7 +637,7 @@ namespace BSFiberConcrete
 
             try
             {
-                FiberCalc_MNQ(out fiberCalc, true, false, _shear: true);
+                FiberCalc_MNQ(out fiberCalc, true, _shear: true);
             }
             catch (Exception _ex)
             {
@@ -654,12 +656,7 @@ namespace BSFiberConcrete
             }
         }
 
-        // Расчет на внецентренное сжатие
-        private void btnCalc_N_Click(object sender, EventArgs e)
-        {
-            FiberCalculate_N();
-        }
-
+        
         // поперечная арматура
         private void InitTRebar(out double[] t_rebar)
         {            

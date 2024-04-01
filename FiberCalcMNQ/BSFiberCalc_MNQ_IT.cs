@@ -20,7 +20,7 @@ namespace BSFiberConcrete
 
         public override void Calculate()
         {
-            if (Fissure)
+            if (N_Out)
             {
                 Calculate_N_Out();                
             }
