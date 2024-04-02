@@ -76,7 +76,11 @@ namespace BSFiberConcrete
 
             var x = bSRFibCalc.Run(out Dictionary<string, double> calcResult);
 
-            numRes.Value = (decimal) (!double.IsNaN(x) ? x : 0);            
+            lblRes.Text = "---  ";
+            foreach (var kvp in calcResult)
+            {
+                lblRes.Text += string.Format("{0}= {1}    ", kvp.Key, kvp.Value );
+            }
 
             BSRFibReport bSRFibReport = new BSRFibReport();
             bSRFibReport.Res = calcResult;

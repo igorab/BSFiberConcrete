@@ -45,15 +45,14 @@
             this.comboBox_vfb1 = new System.Windows.Forms.ComboBox();
             this.textBox_ufv = new System.Windows.Forms.TextBox();
             this.btnCalc = new System.Windows.Forms.Button();
-            this.numRes = new System.Windows.Forms.NumericUpDown();
             this.labelDescr = new System.Windows.Forms.Label();
             this.num_h = new System.Windows.Forms.NumericUpDown();
             this.num_b = new System.Windows.Forms.NumericUpDown();
             this.picFib = new System.Windows.Forms.PictureBox();
             this.num_l_f = new System.Windows.Forms.NumericUpDown();
             this.num_d_f_red = new System.Windows.Forms.NumericUpDown();
+            this.lblRes = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numRes)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_h)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_b)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picFib)).BeginInit();
@@ -116,13 +115,13 @@
             this.tableLayoutPanel1.Controls.Add(this.comboBox_vfb1, 2, 9);
             this.tableLayoutPanel1.Controls.Add(this.textBox_ufv, 2, 10);
             this.tableLayoutPanel1.Controls.Add(this.btnCalc, 1, 11);
-            this.tableLayoutPanel1.Controls.Add(this.numRes, 2, 11);
             this.tableLayoutPanel1.Controls.Add(this.labelDescr, 2, 1);
             this.tableLayoutPanel1.Controls.Add(this.num_h, 2, 2);
             this.tableLayoutPanel1.Controls.Add(this.num_b, 2, 3);
             this.tableLayoutPanel1.Controls.Add(this.picFib, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.num_l_f, 2, 5);
             this.tableLayoutPanel1.Controls.Add(this.num_d_f_red, 2, 8);
+            this.tableLayoutPanel1.Controls.Add(this.lblRes, 2, 11);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -321,23 +320,6 @@
             this.btnCalc.UseVisualStyleBackColor = true;
             this.btnCalc.Click += new System.EventHandler(this.btnCalc_Click);
             // 
-            // numRes
-            // 
-            this.numRes.Location = new System.Drawing.Point(231, 412);
-            this.numRes.Maximum = new decimal(new int[] {
-            1410065408,
-            2,
-            0,
-            0});
-            this.numRes.Minimum = new decimal(new int[] {
-            1215752192,
-            23,
-            0,
-            -2147483648});
-            this.numRes.Name = "numRes";
-            this.numRes.Size = new System.Drawing.Size(120, 20);
-            this.numRes.TabIndex = 27;
-            // 
             // labelDescr
             // 
             this.labelDescr.AutoSize = true;
@@ -416,6 +398,17 @@
             this.num_d_f_red.Size = new System.Drawing.Size(120, 20);
             this.num_d_f_red.TabIndex = 34;
             // 
+            // lblRes
+            // 
+            this.lblRes.AutoSize = true;
+            this.lblRes.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblRes.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblRes.Location = new System.Drawing.Point(231, 409);
+            this.lblRes.Name = "lblRes";
+            this.lblRes.Size = new System.Drawing.Size(485, 62);
+            this.lblRes.TabIndex = 35;
+            this.lblRes.Text = "---   ";
+            // 
             // BSRFiber
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -428,7 +421,6 @@
             this.Load += new System.EventHandler(this.BSRFiber_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numRes)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_h)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_b)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picFib)).EndInit();
@@ -456,12 +448,12 @@
         private System.Windows.Forms.ComboBox comboBox_vfb1;
         private System.Windows.Forms.TextBox textBox_ufv;
         private System.Windows.Forms.Button btnCalc;
-        private System.Windows.Forms.NumericUpDown numRes;
         private System.Windows.Forms.Label labelDescr;
         private System.Windows.Forms.NumericUpDown num_h;
         private System.Windows.Forms.NumericUpDown num_b;
         private System.Windows.Forms.PictureBox picFib;
         private System.Windows.Forms.NumericUpDown num_l_f;
         private System.Windows.Forms.NumericUpDown num_d_f_red;
+        private System.Windows.Forms.Label lblRes;
     }
 }
