@@ -77,5 +77,24 @@ namespace BSFiberConcrete.Lib
             return rb;
         }
 
+
+        public static RFiber RFiberFind(int _ID)
+        {
+            RFiber rb = new RFiber();
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    string query = $"select * from RFiber where ID = {_ID}";
+                    var output = cnn.Query<RFiber>(query, new DynamicParameters());
+                    if (output.Count() > 0)
+                        rb = output.ToList()[0];
+                }
+            }
+            catch { }
+
+            return rb;
+        }
+
     }
 }

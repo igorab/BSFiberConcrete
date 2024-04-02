@@ -237,4 +237,13 @@ namespace BSFiberConcrete
         public string Descr { get; set; }
     }
 
+    public class RFiber
+    {
+        public int ID { get; set; }
+        public double Rfser { get; set; }
+        public double Rf { get; set; }
+        public double G1 { get; set; }
+        public double G2 { get; set; }
+    }
 }
+

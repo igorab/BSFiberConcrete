@@ -12,26 +12,23 @@ namespace BSFiberConcrete.BSRFib
         public double h { get; set; }
         public double b { get; set; }
 
+        private double Rf;
         private double Rfbt3;
         private double Rb;
         private double Rf_ser;
         private double Rb_ser;
+        // коэффициент условий работы, принимаемый равным 1,0 для фибры из слябов;
+        // 1,1 – для фибры из листа и фибры из проволоки
+        private double gamma_fb1;
+        private double gamma_fb2;
 
         //коэффициент, учитывающий анкеровку фибры
         public double  eta_f { get; set; }
         public double l_f { get; set; }
-        
-        // коэффициент условий работы, принимаемый равным 1,0 для фибры из слябов;
-        // 1,1 – для фибры из листа и фибры из проволоки
-        private double gamma_fb1;
-
-        private double gamma_fb2;
-
+                
         // коэффициент фибрового армирования по объему
         private double mu_fv;
-
-        private double Rf;
-
+        
         private double k_or;
         //коэффициент, учитывающий работу фибр в сечении, перпендикулярном
         // направлению внешнего сжимающего усилия, и принимаемый по таблице В.2;
@@ -40,8 +37,7 @@ namespace BSFiberConcrete.BSRFib
         public BSRFibCalc()
         {            
             k_or = 0.5;
-            k_n = 0.5;
-            eta_f = 0.6;
+            k_n = 0.5;            
             Rfbt3 = 30.59;
             Rf = BSHelper.MPA2kgsm2(430);
             Rf_ser = BSHelper.MPA2kgsm2(400);
@@ -55,7 +51,7 @@ namespace BSFiberConcrete.BSRFib
       
         // площадь номинального поперечного сечения фибры, определяемая по ее номинальным размерам        
         public double S_f => h * b;
-
+        
         public double d_f_red => 1.13 * Math.Sqrt(S_f);
 
         public double L_f_an => eta_f *  d_f_red * Rf_ser / Rb_ser;
@@ -66,7 +62,18 @@ namespace BSFiberConcrete.BSRFib
 
         // коэффициент эффективности косвенного армирования фибрами, вычисляемый по формуле
         public double fi_f => (5.0 + L) / (1 + 4.5 * L);
-        
+
+        public RFiber RFiber 
+        { 
+            set 
+            { 
+                Rf_ser = BSHelper.MPA2kgsm2(value.Rfser);  
+                Rf = BSHelper.MPA2kgsm2(value.Rf); 
+                gamma_fb1 = value.G1; 
+                gamma_fb2 = value.G2;  
+            } 
+        }
+
         public double Run(out Dictionary<string, double> Res)
         {           
             // B8

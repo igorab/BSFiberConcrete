@@ -34,14 +34,13 @@
             this.cmbEtaf = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label9 = new System.Windows.Forms.Label();
-            this.comboBox_concrete = new System.Windows.Forms.ComboBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.comboBox_Rf_ser = new System.Windows.Forms.ComboBox();
-            this.label5 = new System.Windows.Forms.Label();
+            this.cmb_B = new System.Windows.Forms.ComboBox();
+            this.labelB = new System.Windows.Forms.Label();
+            this.cmb_RFiber = new System.Windows.Forms.ComboBox();
+            this.labelR_f_ser = new System.Windows.Forms.Label();
             this.labelEtaf = new System.Windows.Forms.Label();
             this.label_l_f = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.textBox_df_red = new System.Windows.Forms.TextBox();
+            this.label_d_f_red = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.comboBox_vfb1 = new System.Windows.Forms.ComboBox();
             this.textBox_ufv = new System.Windows.Forms.TextBox();
@@ -52,19 +51,21 @@
             this.num_b = new System.Windows.Forms.NumericUpDown();
             this.picFib = new System.Windows.Forms.PictureBox();
             this.num_l_f = new System.Windows.Forms.NumericUpDown();
+            this.num_d_f_red = new System.Windows.Forms.NumericUpDown();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numRes)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_h)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_b)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picFib)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_l_f)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.num_d_f_red)).BeginInit();
             this.SuspendLayout();
             // 
             // label_h
             // 
             this.label_h.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label_h.AutoSize = true;
-            this.label_h.Location = new System.Drawing.Point(209, 104);
+            this.label_h.Location = new System.Drawing.Point(208, 104);
             this.label_h.Name = "label_h";
             this.label_h.Size = new System.Drawing.Size(16, 13);
             this.label_h.TabIndex = 5;
@@ -74,7 +75,7 @@
             // 
             this.label_b.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label_b.AutoSize = true;
-            this.label_b.Location = new System.Drawing.Point(209, 138);
+            this.label_b.Location = new System.Drawing.Point(208, 138);
             this.label_b.Name = "label_b";
             this.label_b.Size = new System.Drawing.Size(16, 13);
             this.label_b.TabIndex = 7;
@@ -87,7 +88,7 @@
             "Фибра фрезерованная из слябов",
             "Фибра резанная из стального листа",
             "Фибра рубленная из стальной проволки"});
-            this.cmbEtaf.Location = new System.Drawing.Point(232, 166);
+            this.cmbEtaf.Location = new System.Drawing.Point(231, 166);
             this.cmbEtaf.Name = "cmbEtaf";
             this.cmbEtaf.Size = new System.Drawing.Size(255, 21);
             this.cmbEtaf.TabIndex = 9;
@@ -99,19 +100,18 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 103F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 31F));
             this.tableLayoutPanel1.Controls.Add(this.label9, 1, 10);
-            this.tableLayoutPanel1.Controls.Add(this.comboBox_concrete, 2, 7);
-            this.tableLayoutPanel1.Controls.Add(this.label6, 1, 7);
-            this.tableLayoutPanel1.Controls.Add(this.comboBox_Rf_ser, 2, 6);
-            this.tableLayoutPanel1.Controls.Add(this.label5, 1, 6);
+            this.tableLayoutPanel1.Controls.Add(this.cmb_B, 2, 7);
+            this.tableLayoutPanel1.Controls.Add(this.labelB, 1, 7);
+            this.tableLayoutPanel1.Controls.Add(this.cmb_RFiber, 2, 6);
+            this.tableLayoutPanel1.Controls.Add(this.labelR_f_ser, 1, 6);
             this.tableLayoutPanel1.Controls.Add(this.label_h, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.label_b, 1, 3);
             this.tableLayoutPanel1.Controls.Add(this.labelEtaf, 1, 4);
             this.tableLayoutPanel1.Controls.Add(this.cmbEtaf, 2, 4);
             this.tableLayoutPanel1.Controls.Add(this.label_l_f, 1, 5);
-            this.tableLayoutPanel1.Controls.Add(this.label7, 1, 8);
-            this.tableLayoutPanel1.Controls.Add(this.textBox_df_red, 2, 8);
+            this.tableLayoutPanel1.Controls.Add(this.label_d_f_red, 1, 8);
             this.tableLayoutPanel1.Controls.Add(this.label8, 1, 9);
             this.tableLayoutPanel1.Controls.Add(this.comboBox_vfb1, 2, 9);
             this.tableLayoutPanel1.Controls.Add(this.textBox_ufv, 2, 10);
@@ -122,6 +122,7 @@
             this.tableLayoutPanel1.Controls.Add(this.num_b, 2, 3);
             this.tableLayoutPanel1.Controls.Add(this.picFib, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.num_l_f, 2, 5);
+            this.tableLayoutPanel1.Controls.Add(this.num_d_f_red, 2, 8);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -146,16 +147,16 @@
             // 
             this.label9.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(197, 381);
+            this.label9.Location = new System.Drawing.Point(196, 381);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(28, 13);
             this.label9.TabIndex = 25;
             this.label9.Text = "ufv=";
             // 
-            // comboBox_concrete
+            // cmb_B
             // 
-            this.comboBox_concrete.FormattingEnabled = true;
-            this.comboBox_concrete.Items.AddRange(new object[] {
+            this.cmb_B.FormattingEnabled = true;
+            this.cmb_B.Items.AddRange(new object[] {
             "B3.5",
             "B5",
             "B7.5",
@@ -175,25 +176,26 @@
             "B80",
             "B90",
             "B100"});
-            this.comboBox_concrete.Location = new System.Drawing.Point(232, 276);
-            this.comboBox_concrete.Name = "comboBox_concrete";
-            this.comboBox_concrete.Size = new System.Drawing.Size(121, 21);
-            this.comboBox_concrete.TabIndex = 17;
+            this.cmb_B.Location = new System.Drawing.Point(231, 276);
+            this.cmb_B.Name = "cmb_B";
+            this.cmb_B.Size = new System.Drawing.Size(121, 21);
+            this.cmb_B.TabIndex = 17;
             // 
-            // label6
+            // labelB
             // 
-            this.label6.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(211, 279);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(14, 13);
-            this.label6.TabIndex = 16;
-            this.label6.Text = "B";
+            this.labelB.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.labelB.AutoSize = true;
+            this.labelB.Location = new System.Drawing.Point(210, 279);
+            this.labelB.Name = "labelB";
+            this.labelB.Size = new System.Drawing.Size(14, 13);
+            this.labelB.TabIndex = 16;
+            this.labelB.Text = "B";
             // 
-            // comboBox_Rf_ser
+            // cmb_RFiber
             // 
-            this.comboBox_Rf_ser.FormattingEnabled = true;
-            this.comboBox_Rf_ser.Items.AddRange(new object[] {
+            this.cmb_RFiber.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmb_RFiber.FormattingEnabled = true;
+            this.cmb_RFiber.Items.AddRange(new object[] {
             "(1) Фибра, фрезерованная из слябов  отвечающая ТУ 0882-193-46854090",
             "(2) Фибра, резанная из листа F1BREX отвечающая ТУ 0991-123-53832025 1 класса по п" +
                 "рочности",
@@ -235,26 +237,26 @@
                 "707303",
             "(21) Фибра, рубленная из проволки  от 1,25 мм  1,6 мм\r   отвечающая ТУ 1276-001-5" +
                 "6707303"});
-            this.comboBox_Rf_ser.Location = new System.Drawing.Point(232, 235);
-            this.comboBox_Rf_ser.Name = "comboBox_Rf_ser";
-            this.comboBox_Rf_ser.Size = new System.Drawing.Size(425, 21);
-            this.comboBox_Rf_ser.TabIndex = 15;
+            this.cmb_RFiber.Location = new System.Drawing.Point(231, 241);
+            this.cmb_RFiber.Name = "cmb_RFiber";
+            this.cmb_RFiber.Size = new System.Drawing.Size(485, 21);
+            this.cmb_RFiber.TabIndex = 15;
             // 
-            // label5
+            // labelR_f_ser
             // 
-            this.label5.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(181, 245);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(44, 13);
-            this.label5.TabIndex = 14;
-            this.label5.Text = "Rf_ser=";
+            this.labelR_f_ser.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.labelR_f_ser.AutoSize = true;
+            this.labelR_f_ser.Location = new System.Drawing.Point(180, 245);
+            this.labelR_f_ser.Name = "labelR_f_ser";
+            this.labelR_f_ser.Size = new System.Drawing.Size(44, 13);
+            this.labelR_f_ser.TabIndex = 14;
+            this.labelR_f_ser.Text = "R f, ser:";
             // 
             // labelEtaf
             // 
             this.labelEtaf.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelEtaf.AutoSize = true;
-            this.labelEtaf.Location = new System.Drawing.Point(203, 172);
+            this.labelEtaf.Location = new System.Drawing.Point(202, 172);
             this.labelEtaf.Name = "labelEtaf";
             this.labelEtaf.Size = new System.Drawing.Size(22, 13);
             this.labelEtaf.TabIndex = 11;
@@ -264,34 +266,27 @@
             // 
             this.label_l_f.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label_l_f.AutoSize = true;
-            this.label_l_f.Location = new System.Drawing.Point(207, 207);
+            this.label_l_f.Location = new System.Drawing.Point(206, 207);
             this.label_l_f.Name = "label_l_f";
             this.label_l_f.Size = new System.Drawing.Size(18, 13);
             this.label_l_f.TabIndex = 13;
             this.label_l_f.Text = "l f:";
             // 
-            // label7
+            // label_d_f_red
             // 
-            this.label7.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(182, 311);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(43, 13);
-            this.label7.TabIndex = 18;
-            this.label7.Text = "df_red=";
-            // 
-            // textBox_df_red
-            // 
-            this.textBox_df_red.Location = new System.Drawing.Point(232, 303);
-            this.textBox_df_red.Name = "textBox_df_red";
-            this.textBox_df_red.Size = new System.Drawing.Size(100, 20);
-            this.textBox_df_red.TabIndex = 22;
+            this.label_d_f_red.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.label_d_f_red.AutoSize = true;
+            this.label_d_f_red.Location = new System.Drawing.Point(181, 311);
+            this.label_d_f_red.Name = "label_d_f_red";
+            this.label_d_f_red.Size = new System.Drawing.Size(43, 13);
+            this.label_d_f_red.TabIndex = 18;
+            this.label_d_f_red.Text = "d f, red:";
             // 
             // label8
             // 
             this.label8.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(191, 345);
+            this.label8.Location = new System.Drawing.Point(190, 345);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(34, 13);
             this.label8.TabIndex = 23;
@@ -303,14 +298,14 @@
             this.comboBox_vfb1.Items.AddRange(new object[] {
             "Фибра из слябов",
             "Фибра из листа или проволки"});
-            this.comboBox_vfb1.Location = new System.Drawing.Point(232, 339);
+            this.comboBox_vfb1.Location = new System.Drawing.Point(231, 339);
             this.comboBox_vfb1.Name = "comboBox_vfb1";
             this.comboBox_vfb1.Size = new System.Drawing.Size(121, 21);
             this.comboBox_vfb1.TabIndex = 24;
             // 
             // textBox_ufv
             // 
-            this.textBox_ufv.Location = new System.Drawing.Point(232, 371);
+            this.textBox_ufv.Location = new System.Drawing.Point(231, 371);
             this.textBox_ufv.Name = "textBox_ufv";
             this.textBox_ufv.Size = new System.Drawing.Size(100, 20);
             this.textBox_ufv.TabIndex = 26;
@@ -318,7 +313,7 @@
             // btnCalc
             // 
             this.btnCalc.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.btnCalc.Location = new System.Drawing.Point(116, 412);
+            this.btnCalc.Location = new System.Drawing.Point(115, 412);
             this.btnCalc.Name = "btnCalc";
             this.btnCalc.Size = new System.Drawing.Size(101, 28);
             this.btnCalc.TabIndex = 12;
@@ -328,7 +323,7 @@
             // 
             // numRes
             // 
-            this.numRes.Location = new System.Drawing.Point(232, 412);
+            this.numRes.Location = new System.Drawing.Point(231, 412);
             this.numRes.Maximum = new decimal(new int[] {
             1410065408,
             2,
@@ -346,11 +341,12 @@
             // labelDescr
             // 
             this.labelDescr.AutoSize = true;
-            this.labelDescr.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.labelDescr.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.labelDescr.Dock = System.Windows.Forms.DockStyle.Fill;
             this.labelDescr.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelDescr.Location = new System.Drawing.Point(232, 20);
+            this.labelDescr.Location = new System.Drawing.Point(231, 20);
             this.labelDescr.Name = "labelDescr";
-            this.labelDescr.Size = new System.Drawing.Size(409, 60);
+            this.labelDescr.Size = new System.Drawing.Size(485, 74);
             this.labelDescr.TabIndex = 29;
             this.labelDescr.Text = "Определение сопротивлений сталефибробетона растяжению и сжатию с учетом влияния ф" +
     "ибрового армирования.";
@@ -358,7 +354,7 @@
             // num_h
             // 
             this.num_h.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.num_h.Location = new System.Drawing.Point(232, 100);
+            this.num_h.Location = new System.Drawing.Point(231, 100);
             this.num_h.Maximum = new decimal(new int[] {
             1410065408,
             2,
@@ -367,11 +363,12 @@
             this.num_h.Name = "num_h";
             this.num_h.Size = new System.Drawing.Size(120, 20);
             this.num_h.TabIndex = 30;
+            this.num_h.ValueChanged += new System.EventHandler(this.num_h_ValueChanged);
             // 
             // num_b
             // 
             this.num_b.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.num_b.Location = new System.Drawing.Point(232, 134);
+            this.num_b.Location = new System.Drawing.Point(231, 134);
             this.num_b.Maximum = new decimal(new int[] {
             1410065408,
             2,
@@ -380,6 +377,7 @@
             this.num_b.Name = "num_b";
             this.num_b.Size = new System.Drawing.Size(120, 20);
             this.num_b.TabIndex = 31;
+            this.num_b.ValueChanged += new System.EventHandler(this.num_b_ValueChanged);
             // 
             // picFib
             // 
@@ -387,7 +385,7 @@
             this.picFib.Image = global::BSFiberConcrete.Properties.Resources.balka_rect;
             this.picFib.Location = new System.Drawing.Point(108, 23);
             this.picFib.Name = "picFib";
-            this.picFib.Size = new System.Drawing.Size(117, 68);
+            this.picFib.Size = new System.Drawing.Size(116, 68);
             this.picFib.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picFib.TabIndex = 32;
             this.picFib.TabStop = false;
@@ -395,7 +393,7 @@
             // num_l_f
             // 
             this.num_l_f.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.num_l_f.Location = new System.Drawing.Point(232, 203);
+            this.num_l_f.Location = new System.Drawing.Point(231, 203);
             this.num_l_f.Maximum = new decimal(new int[] {
             1410065408,
             2,
@@ -404,6 +402,19 @@
             this.num_l_f.Name = "num_l_f";
             this.num_l_f.Size = new System.Drawing.Size(120, 20);
             this.num_l_f.TabIndex = 33;
+            // 
+            // num_d_f_red
+            // 
+            this.num_d_f_red.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.num_d_f_red.Location = new System.Drawing.Point(231, 307);
+            this.num_d_f_red.Maximum = new decimal(new int[] {
+            1410065408,
+            2,
+            0,
+            0});
+            this.num_d_f_red.Name = "num_d_f_red";
+            this.num_d_f_red.Size = new System.Drawing.Size(120, 20);
+            this.num_d_f_red.TabIndex = 34;
             // 
             // BSRFiber
             // 
@@ -422,6 +433,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.num_b)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picFib)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_l_f)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.num_d_f_red)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -435,12 +447,11 @@
         private System.Windows.Forms.Label labelEtaf;
         private System.Windows.Forms.Label label_l_f;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.ComboBox comboBox_concrete;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.ComboBox comboBox_Rf_ser;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox textBox_df_red;
+        private System.Windows.Forms.ComboBox cmb_B;
+        private System.Windows.Forms.Label labelB;
+        private System.Windows.Forms.ComboBox cmb_RFiber;
+        private System.Windows.Forms.Label labelR_f_ser;
+        private System.Windows.Forms.Label label_d_f_red;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ComboBox comboBox_vfb1;
         private System.Windows.Forms.TextBox textBox_ufv;
@@ -451,5 +462,6 @@
         private System.Windows.Forms.NumericUpDown num_b;
         private System.Windows.Forms.PictureBox picFib;
         private System.Windows.Forms.NumericUpDown num_l_f;
+        private System.Windows.Forms.NumericUpDown num_d_f_red;
     }
 }

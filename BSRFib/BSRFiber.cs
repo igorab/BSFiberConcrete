@@ -1,4 +1,5 @@
 ﻿using BSFiberConcrete.BSRFib;
+using BSFiberConcrete.Lib;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,6 +20,8 @@ namespace BSFiberConcrete
     {
         private double h = 60, b = 80, l_f = 25;
 
+        BSRFibCalc bSRFibCalc;
+
         private Dictionary<int, double> EtaF = new Dictionary<int, double>
         {
             [0] = 0.8,
@@ -29,23 +32,47 @@ namespace BSFiberConcrete
         public BSRFiber()
         {
             InitializeComponent();
+
+            bSRFibCalc = new BSRFibCalc();
         }
-               
+
+        private void num_b_ValueChanged(object sender, EventArgs e)
+        {
+            num_d_f_red.Value = (decimal)bSRFibCalc.d_f_red;
+        }
+
+        private void num_h_ValueChanged(object sender, EventArgs e)
+        {
+            num_d_f_red.Value = (decimal)bSRFibCalc.d_f_red; 
+        }
+
+        private void InitFibCalc()
+        {
+            bSRFibCalc.b = (double)num_b.Value;
+            bSRFibCalc.h = (double)num_h.Value;
+            bSRFibCalc.l_f = (double)num_l_f.Value;
+            bSRFibCalc.eta_f = EtaF[cmbEtaf.SelectedIndex];    
+            
+            bSRFibCalc.RFiber = BSQuery.RFiberFind(cmb_RFiber.SelectedIndex+1);
+
+        }
+
         private void BSRFiber_Load(object sender, EventArgs e)
         {
+            bSRFibCalc.b = b;
+            bSRFibCalc.h = h;
+            bSRFibCalc.l_f = l_f;
+
             num_b.Value = (decimal)b;
             num_h.Value = (decimal)h;
             num_l_f.Value = (decimal)l_f;
             cmbEtaf.SelectedIndex = 1;
+                       
         }
 
         private void btnCalc_Click(object sender, EventArgs e)
         {
-            BSRFibCalc bSRFibCalc = new BSRFibCalc();
-            bSRFibCalc.b = (double)num_b.Value;
-            bSRFibCalc.h = (double)num_h.Value;
-            bSRFibCalc.l_f = (double)num_l_f.Value;
-            bSRFibCalc.eta_f = EtaF[cmbEtaf.SelectedIndex]; 
+            InitFibCalc();
 
             var x = bSRFibCalc.Run(out Dictionary<string, double> calcResult);
 
