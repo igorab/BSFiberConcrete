@@ -1,21 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
-namespace BSFiberConcrete
+namespace BSFiberConcrete.BSRFib
 {
-    public partial class BSRFiber : Form
+    public class BSRFibCalc
     {
-        private double h, b;
+        private double h = 60, b = 80;
 
         //коэффициент, учитывающий анкеровку фибры
-        private double eta_f;
+        private double eta_f = 0.6;
 
         private double lf, Rf_ser, Rb_ser, Rb, df_red;
 
@@ -24,15 +20,10 @@ namespace BSFiberConcrete
         private double gamma_fb1;
         // коэффициент фибрового армирования по объему
         private double mu_fv;
-        
 
         private double Rf, vfb2;
 
-        public BSRFiber()
-        {
-            InitializeComponent();
-        }
-        
+       
         public double Run()
         {
 
@@ -47,6 +38,7 @@ namespace BSFiberConcrete
 
             L = kn * kn * mu_fv * Rf / Rb;
 
+            // коэффициент эффективности косвенного армирования фибрами, вычисляемый по формуле
             fi_f = (5 + L) / (1 + 4.5 * L);
 
             Rfb = Rb + (kn * kn * fi_f * mu_fv * Rf);
@@ -61,20 +53,6 @@ namespace BSFiberConcrete
             }
 
             return Rfbt3;
-        }
-
-
-        private void btnCalc_Click(object sender, EventArgs e)
-        {
-            var x = Run();
-
-            numRes.Value = (decimal) x;
-            
-        }
-
-        private void BSRFiber_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }

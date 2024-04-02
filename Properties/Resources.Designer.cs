@@ -63,6 +63,16 @@ namespace BSFiberConcrete.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap balka_rect {
+            get {
+                object obj = ResourceManager.GetObject("balka_rect", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap EffortsSign {
             get {
                 object obj = ResourceManager.GetObject("EffortsSign", resourceCulture);
