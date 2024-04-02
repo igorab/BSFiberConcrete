@@ -39,8 +39,7 @@
             this.comboBox_Rf_ser = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.labelEtaf = new System.Windows.Forms.Label();
-            this.textBox_lf = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.label_l_f = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.textBox_df_red = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -52,11 +51,13 @@
             this.num_h = new System.Windows.Forms.NumericUpDown();
             this.num_b = new System.Windows.Forms.NumericUpDown();
             this.picFib = new System.Windows.Forms.PictureBox();
+            this.num_l_f = new System.Windows.Forms.NumericUpDown();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numRes)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_h)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_b)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picFib)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.num_l_f)).BeginInit();
             this.SuspendLayout();
             // 
             // label_h
@@ -108,8 +109,7 @@
             this.tableLayoutPanel1.Controls.Add(this.label_b, 1, 3);
             this.tableLayoutPanel1.Controls.Add(this.labelEtaf, 1, 4);
             this.tableLayoutPanel1.Controls.Add(this.cmbEtaf, 2, 4);
-            this.tableLayoutPanel1.Controls.Add(this.textBox_lf, 2, 5);
-            this.tableLayoutPanel1.Controls.Add(this.label3, 1, 5);
+            this.tableLayoutPanel1.Controls.Add(this.label_l_f, 1, 5);
             this.tableLayoutPanel1.Controls.Add(this.label7, 1, 8);
             this.tableLayoutPanel1.Controls.Add(this.textBox_df_red, 2, 8);
             this.tableLayoutPanel1.Controls.Add(this.label8, 1, 9);
@@ -121,6 +121,7 @@
             this.tableLayoutPanel1.Controls.Add(this.num_h, 2, 2);
             this.tableLayoutPanel1.Controls.Add(this.num_b, 2, 3);
             this.tableLayoutPanel1.Controls.Add(this.picFib, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.num_l_f, 2, 5);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -253,28 +254,21 @@
             // 
             this.labelEtaf.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelEtaf.AutoSize = true;
-            this.labelEtaf.Location = new System.Drawing.Point(206, 172);
+            this.labelEtaf.Location = new System.Drawing.Point(203, 172);
             this.labelEtaf.Name = "labelEtaf";
-            this.labelEtaf.Size = new System.Drawing.Size(19, 13);
+            this.labelEtaf.Size = new System.Drawing.Size(22, 13);
             this.labelEtaf.TabIndex = 11;
-            this.labelEtaf.Text = "η f";
+            this.labelEtaf.Text = "η f:";
             // 
-            // textBox_lf
+            // label_l_f
             // 
-            this.textBox_lf.Location = new System.Drawing.Point(232, 199);
-            this.textBox_lf.Name = "textBox_lf";
-            this.textBox_lf.Size = new System.Drawing.Size(100, 20);
-            this.textBox_lf.TabIndex = 12;
-            // 
-            // label3
-            // 
-            this.label3.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(207, 207);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(18, 13);
-            this.label3.TabIndex = 13;
-            this.label3.Text = "lf=";
+            this.label_l_f.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.label_l_f.AutoSize = true;
+            this.label_l_f.Location = new System.Drawing.Point(207, 207);
+            this.label_l_f.Name = "label_l_f";
+            this.label_l_f.Size = new System.Drawing.Size(18, 13);
+            this.label_l_f.TabIndex = 13;
+            this.label_l_f.Text = "l f:";
             // 
             // label7
             // 
@@ -398,6 +392,19 @@
             this.picFib.TabIndex = 32;
             this.picFib.TabStop = false;
             // 
+            // num_l_f
+            // 
+            this.num_l_f.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.num_l_f.Location = new System.Drawing.Point(232, 203);
+            this.num_l_f.Maximum = new decimal(new int[] {
+            1410065408,
+            2,
+            0,
+            0});
+            this.num_l_f.Name = "num_l_f";
+            this.num_l_f.Size = new System.Drawing.Size(120, 20);
+            this.num_l_f.TabIndex = 33;
+            // 
             // BSRFiber
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -414,6 +421,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.num_h)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_b)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picFib)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.num_l_f)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -425,8 +433,7 @@
         private System.Windows.Forms.ComboBox cmbEtaf;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label labelEtaf;
-        private System.Windows.Forms.TextBox textBox_lf;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label_l_f;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.ComboBox comboBox_concrete;
         private System.Windows.Forms.Label label6;
@@ -443,5 +450,6 @@
         private System.Windows.Forms.NumericUpDown num_h;
         private System.Windows.Forms.NumericUpDown num_b;
         private System.Windows.Forms.PictureBox picFib;
+        private System.Windows.Forms.NumericUpDown num_l_f;
     }
 }

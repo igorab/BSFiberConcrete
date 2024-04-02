@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,49 +9,97 @@ namespace BSFiberConcrete.BSRFib
 {
     public class BSRFibCalc
     {
-        private double h = 60, b = 80;
+        public double h { get; set; }
+        public double b { get; set; }
+
+        private double Rfbt3;
+        private double Rb;
+        private double Rf_ser;
+        private double Rb_ser;
 
         //коэффициент, учитывающий анкеровку фибры
-        private double eta_f = 0.6;
-
-        private double lf, Rf_ser, Rb_ser, Rb, df_red;
-
+        public double  eta_f { get; set; }
+        public double l_f { get; set; }
+        
         // коэффициент условий работы, принимаемый равным 1,0 для фибры из слябов;
         // 1,1 – для фибры из листа и фибры из проволоки
         private double gamma_fb1;
+
+        private double gamma_fb2;
+
         // коэффициент фибрового армирования по объему
         private double mu_fv;
 
-        private double Rf, vfb2;
+        private double Rf;
 
-       
-        public double Run()
-        {
+        private double k_or;
+        //коэффициент, учитывающий работу фибр в сечении, перпендикулярном
+        // направлению внешнего сжимающего усилия, и принимаемый по таблице В.2;
+        private double k_n;
 
-            double lf_an, KT, kor, kn, Rfbt3, L, fi_f, Rfb;
+        public BSRFibCalc()
+        {            
+            k_or = 0.5;
+            k_n = 0.5;
+            eta_f = 0.6;
+            Rfbt3 = 30.59;
+            Rf = BSHelper.MPA2kgsm2(430);
+            Rf_ser = BSHelper.MPA2kgsm2(400);
+            Rb_ser = BSHelper.MPA2kgsm2(22);
+            Rb = BSHelper.MPA2kgsm2(17);
+            mu_fv = 0.005;
 
-            lf_an = eta_f * df_red * Rf_ser / Rb_ser;
+            gamma_fb1 = 1.1;
+            gamma_fb2 = 1.1;
+        }
+      
+        // площадь номинального поперечного сечения фибры, определяемая по ее номинальным размерам        
+        public double S_f => h * b;
 
-            KT = Math.Sqrt(1 - (1.2d - 80 * mu_fv));
+        public double d_f_red => 1.13 * Math.Sqrt(S_f);
 
-            kor = 0.5;
-            kn = 0.5;
+        public double L_f_an => eta_f *  d_f_red * Rf_ser / Rb_ser;
 
-            L = kn * kn * mu_fv * Rf / Rb;
+        public double K_T => Math.Sqrt(1 - (1.2d - 80 * mu_fv));
 
-            // коэффициент эффективности косвенного армирования фибрами, вычисляемый по формуле
-            fi_f = (5 + L) / (1 + 4.5 * L);
+        public double L => k_n * k_n * mu_fv * Rf / Rb;
 
-            Rfb = Rb + (kn * kn * fi_f * mu_fv * Rf);
+        // коэффициент эффективности косвенного армирования фибрами, вычисляемый по формуле
+        public double fi_f => (5.0 + L) / (1 + 4.5 * L);
+        
+        public double Run(out Dictionary<string, double> Res)
+        {           
+            // B8
+            double Rfb = Rb + (k_n * k_n * fi_f * mu_fv * Rf);
 
-            if (lf_an < lf / 2)
+            if (L_f_an < l_f / 2)
             {
-                Rfbt3 = gamma_fb1 * (KT * kor * kor * mu_fv * Rf * (1 - lf_an / lf) + 0.1 * Rb * (0.8 - Math.Sqrt(2 * mu_fv - 0.005)));
+                //
+                //сопротивление растяжению сталефибробетона исчерпывается из-за
+                //обрыва некоторого числа фибр и выдергивания остальных, что определяется условием
+                //
+                Rfbt3 = gamma_fb1 * (K_T * k_or * k_or * mu_fv * Rf * (1 - L_f_an / l_f) + 0.1 * Rb * (0.8 - Math.Sqrt(2 * mu_fv - 0.005)));
             }
             else
             {
-                Rfbt3 = vfb2 * Rb * (KT * kor * kor * mu_fv * lf / (8 * eta_f * df_red) + 0.08 - 0.5 * mu_fv);
+                //
+                //сопротивление растяжению сталефибробетона исчерпывается из-за
+                //выдергивания из бетона условно всех фибр, что определяется условием
+                //
+                Rfbt3 =  gamma_fb2 * Rb * (K_T * k_or * k_or * mu_fv * l_f / (8 * eta_f * d_f_red) + 0.08 - 0.5 * mu_fv);
             }
+
+            double mu_fs = mu_fv * k_or * k_or;
+
+            double mu1_fs = mu_fv * k_n * k_n;
+
+            Res = new Dictionary<string, double>()
+            {
+                ["Rfb"] = Rfb,
+                ["mu_fs"] = mu_fs,
+                ["mu1_fs"] = mu1_fs
+
+            };
 
             return Rfbt3;
         }

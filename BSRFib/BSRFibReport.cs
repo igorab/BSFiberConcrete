@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,13 +26,17 @@ namespace BSFiberConcrete.BSRFib
             ["mufv"] = "коэффициент фибрового армирования по объему рекомендуется принимать в пределах 0,005 < /if, < 0,018 для конструкций согласно (7.9)",
             ["lfan"] = "длина заделки фибры в бетоне, обеспечивающая ее разрыв при выдергивании",            
 
-            ["mufa"] = "коэффициент фибрового армирования по площади для растянутой зоны",
-            ["mufa1"] = "коэффициент фибрового армирования по площади для сжатой зоны",
+            ["mu_fa"] = "Коэффициент фибрового армирования по площади для растянутой зоны",
+            ["mu1_fa"] = "Коэффициент фибрового армирования по площади для сжатой зоны",
         };
+
+        public Dictionary<string, double> Res { set {m_Res = value; } }
+        private Dictionary<string, double> m_Res;
 
         public void Run()
         {
-
+            var x = m_Res["mu_fa"];
+            var y = m_Res["mu1_fa"];
         }
 
     }
