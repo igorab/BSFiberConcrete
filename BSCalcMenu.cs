@@ -81,7 +81,6 @@ namespace BSCalcMenu
             bsFiberSetup.Show();
         }
 
-
         private void btnBetonClass_Click(object sender, EventArgs e)
         {
             BSFiberSetup bsFiberSetup = new BSFiberSetup();
@@ -119,6 +118,17 @@ namespace BSCalcMenu
         {
             BSSectionDraw bSSectionDraw = new BSSectionDraw();
             bSSectionDraw.Show();
+        }
+
+        private void btnRFiber_Click(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void btnRFbtFiber_Click(object sender, EventArgs e)
+        {
+            BSRFiber bSRFiber = new BSRFiber();
+            bSRFiber.Show();
         }
     }
 }
