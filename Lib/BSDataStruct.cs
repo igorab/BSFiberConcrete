@@ -272,5 +272,22 @@ namespace BSFiberConcrete
         public double G1 { get; set; }
         public double G2 { get; set; }
     }
+
+
+    public class RFibKor
+    {
+        public int ID { get; set; }
+        public double A { get; set; }
+        public double B { get; set; }
+        public double C { get; set; }
+        public double D { get; set; }
+        public double E { get; set; }
+        public double F { get; set; }
+        public double G { get; set; }
+        public double H { get; set; }
+        public double I { get; set; }
+    }
+
+
 }
 

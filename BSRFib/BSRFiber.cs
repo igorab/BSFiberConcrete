@@ -52,6 +52,7 @@ namespace BSFiberConcrete
             bSRFibCalc.RFiber = BSQuery.RFiberFind(cmb_RFiber.SelectedIndex+1);
             bSRFibCalc.Rb =  BSHelper.MPA2kgsm2( BSQuery.BetonTableFind(Convert.ToString(cmb_B.SelectedItem)).Rb );
 
+            bSRFibCalc.d_f_red = (double)num_d_f_red.Value;
             bSRFibCalc.mu_fv = (double)num_mu_fv.Value;
 
         }
@@ -75,7 +76,9 @@ namespace BSFiberConcrete
         {
             InitFibCalc();
 
-            var x = bSRFibCalc.Run(out Dictionary<string, double> calcResult);
+            bSRFibCalc.LoadFibKorKn();
+
+            _ = bSRFibCalc.Run(out Dictionary<string, double> calcResult);
 
             lblRes.Text = "-kg/sm2 :  ";
             foreach (var kvp in calcResult)

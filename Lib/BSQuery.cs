@@ -94,7 +94,6 @@ namespace BSFiberConcrete.Lib
             catch { }
 
             return rb;
-        }
-
+        }        
     }
 }
