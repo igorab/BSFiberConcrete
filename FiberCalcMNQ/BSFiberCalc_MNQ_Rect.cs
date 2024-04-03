@@ -94,12 +94,8 @@ namespace BSFiberConcrete
         ///  Вычислить
         /// </summary>
         public override void Calculate()
-        {
-            if (N_Out)
-            {
-                Calculate_N_Out();
-            }
-            else if (Shear)
+        {            
+            if (Shear)
             {                
                 // Расчет на действие поперечной силы
                 CalculateQ();
@@ -111,8 +107,15 @@ namespace BSFiberConcrete
                 Calculate_N_Rods();
             }
             else
-            {
-                Calculate_N();
+            {                
+                if (N_Out)
+                {
+                    Calculate_N_Out();
+                }
+                else
+                {
+                    Calculate_N();
+                }
             }
         }
 
