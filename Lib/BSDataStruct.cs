@@ -18,15 +18,42 @@ namespace BSFiberConcrete
     }
 
     /// <summary>
+    ///  Бетон - матрица
     /// Данные из таблицы Beton
+    /// 6.7 , 6.8 СП63.13330.2018
     /// </summary>
     public class Beton
     {
         public  int Id { get; set; }
-        public  string BT { get; set; }
-        public  double Rb { get; set; }
-        public  double Rbt { get; set; }
+        /// <summary>
+        /// Класс бетона 
+        /// </summary>
+        public  string BT { get; set; }              
+        /// <summary>
+        /// Нормативное сопротивление сжатию
+        /// </summary>
+        public  double Rbn { get; set; }
+        /// <summary>
+        /// Расчетное сопротивление сжатию
+        /// </summary>                
+        public double Rb { get; set; }
+
+        /// <summary>
+        /// Растяжение осевое расчетное Rbt
+        /// </summary>
+        public double Rbt { get; set; }
+        /// <summary>
+        /// Растяжение осевое нормативное (Rbtn; Rbt,ser)
+        /// </summary>
+        public double Rbtn { get; set; }
+
+        /// <summary>
+        /// Модуль упругости
+        /// </summary>
         public  double Eb { get; set; }
+        /// <summary>
+        /// Номер в классе бетона (используется в расчетах) 
+        /// </summary>
         public double B { get; set; }
     }
 

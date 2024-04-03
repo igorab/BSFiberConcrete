@@ -13,14 +13,15 @@ namespace BSFiberConcrete.BSRFib
         public double b { get; set; }
 
         private double Rf;
-        private double Rfbt3;
-        private double Rb;
+        private double Rfbt3;        
         private double Rf_ser;
         private double Rb_ser;
         // коэффициент условий работы, принимаемый равным 1,0 для фибры из слябов;
         // 1,1 – для фибры из листа и фибры из проволоки
         private double gamma_fb1;
         private double gamma_fb2;
+
+        public double Rb { get; set; }
 
         //коэффициент, учитывающий анкеровку фибры
         public double  eta_f { get; set; }

@@ -255,7 +255,7 @@ namespace BSFiberConcrete
             
             // сжатие:
             m_MatFiber.B = fb.B;
-            m_MatFiber.Rfbn = BSHelper.MPA2kgsm2(fb.Rb);
+            m_MatFiber.Rfbn = BSHelper.MPA2kgsm2(fb.Rbn);
             // растяжение:            
             m_MatFiber.Rfbtn = BSHelper.MPA2kgsm2(fbt.Rfbtn);
             //остаточное растяжение:            
@@ -971,7 +971,7 @@ namespace BSFiberConcrete
             try
             {
                 Beton bt = Lib.BSQuery.BetonTableFind(cmbBfn.Text);
-                numRfb_n.Value = (decimal)BSHelper.MPA2kgsm2(bt.Rb);
+                numRfb_n.Value = (decimal)BSHelper.MPA2kgsm2(bt.Rbn);
             }
             catch { }
         }

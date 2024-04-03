@@ -51,9 +51,9 @@ namespace BSFiberConcrete
             bSRFibCalc.b = (double)num_b.Value;
             bSRFibCalc.h = (double)num_h.Value;
             bSRFibCalc.l_f = (double)num_l_f.Value;
-            bSRFibCalc.eta_f = EtaF[cmbEtaf.SelectedIndex];    
-            
+            bSRFibCalc.eta_f = EtaF[cmbEtaf.SelectedIndex];                
             bSRFibCalc.RFiber = BSQuery.RFiberFind(cmb_RFiber.SelectedIndex+1);
+            bSRFibCalc.Rb =  BSHelper.MPA2kgsm2( BSQuery.BetonTableFind(Convert.ToString(cmb_B.SelectedItem)).Rb );
 
         }
 
