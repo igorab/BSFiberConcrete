@@ -35,8 +35,8 @@ namespace BSFiberConcrete.BSRFib
 
         public void Run()
         {
-            var x = m_Res["mu_fs"];
-            var y = m_Res["mu1_fs"];
+            var x = m_Res["mu_fa"];
+            var y = m_Res["mu1_fa"];
         }
 
     }

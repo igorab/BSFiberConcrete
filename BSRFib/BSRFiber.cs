@@ -21,14 +21,7 @@ namespace BSFiberConcrete
         private double h = 60, b = 80, l_f = 25;
 
         BSRFibCalc bSRFibCalc;
-
-        private Dictionary<int, double> EtaF = new Dictionary<int, double>
-        {
-            [0] = 0.8,
-            [1] = 0.6,
-            [2] = 0.9,
-        };
-
+               
         public BSRFiber()
         {
             InitializeComponent();
@@ -51,9 +44,15 @@ namespace BSFiberConcrete
             bSRFibCalc.b = (double)num_b.Value;
             bSRFibCalc.h = (double)num_h.Value;
             bSRFibCalc.l_f = (double)num_l_f.Value;
-            bSRFibCalc.eta_f = EtaF[cmbEtaf.SelectedIndex];                
+            bSRFibCalc.eta_f = BSRFibCalc.EtaF[cmbEtaf.SelectedIndex];
+
+            bSRFibCalc.gamma_fb1 = BSRFibCalc.GammaFb[cmbEtaf.SelectedIndex];
+            bSRFibCalc.gamma_fb2 = BSRFibCalc.GammaFb[cmbEtaf.SelectedIndex];
+
             bSRFibCalc.RFiber = BSQuery.RFiberFind(cmb_RFiber.SelectedIndex+1);
             bSRFibCalc.Rb =  BSHelper.MPA2kgsm2( BSQuery.BetonTableFind(Convert.ToString(cmb_B.SelectedItem)).Rb );
+
+            bSRFibCalc.mu_fv = (double)num_mu_fv.Value;
 
         }
 
@@ -67,6 +66,8 @@ namespace BSFiberConcrete
             num_h.Value = (decimal)h;
             num_l_f.Value = (decimal)l_f;
             cmbEtaf.SelectedIndex = 1;
+            cmb_RFiber.SelectedIndex = 1;
+            cmb_B.SelectedIndex = 1;
                        
         }
 
@@ -76,10 +77,10 @@ namespace BSFiberConcrete
 
             var x = bSRFibCalc.Run(out Dictionary<string, double> calcResult);
 
-            lblRes.Text = "---  ";
+            lblRes.Text = "-kg/sm2 :  ";
             foreach (var kvp in calcResult)
             {
-                lblRes.Text += string.Format("{0}= {1}    ", kvp.Key, kvp.Value );
+                lblRes.Text += string.Format("{0}= {1}    ", kvp.Key, Math.Round(kvp.Value, 4));
             }
 
             BSRFibReport bSRFibReport = new BSRFibReport();

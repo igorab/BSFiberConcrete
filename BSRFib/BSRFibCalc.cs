@@ -16,10 +16,11 @@ namespace BSFiberConcrete.BSRFib
         private double Rfbt3;        
         private double Rf_ser;
         private double Rb_ser;
+
         // коэффициент условий работы, принимаемый равным 1,0 для фибры из слябов;
         // 1,1 – для фибры из листа и фибры из проволоки
-        private double gamma_fb1;
-        private double gamma_fb2;
+        public double gamma_fb1 { get; set; }
+        public double gamma_fb2 { get; set; }
 
         public double Rb { get; set; }
 
@@ -28,12 +29,28 @@ namespace BSFiberConcrete.BSRFib
         public double l_f { get; set; }
                 
         // коэффициент фибрового армирования по объему
-        private double mu_fv;
+        public double mu_fv { get; set; }
         
         private double k_or;
         //коэффициент, учитывающий работу фибр в сечении, перпендикулярном
         // направлению внешнего сжимающего усилия, и принимаемый по таблице В.2;
         private double k_n;
+
+
+        public static Dictionary<int, double> EtaF => new Dictionary<int, double>
+        {
+            [0] = 0.8,
+            [1] = 0.6,
+            [2] = 0.9,
+        };
+
+        public static Dictionary<int, double> GammaFb => new Dictionary<int, double>
+        {
+            [0] = 1.0,
+            [1] = 1.1,
+            [2] = 1.1,
+        };
+
 
         public BSRFibCalc()
         {            
@@ -69,9 +86,7 @@ namespace BSFiberConcrete.BSRFib
             set 
             { 
                 Rf_ser = BSHelper.MPA2kgsm2(value.Rfser);  
-                Rf = BSHelper.MPA2kgsm2(value.Rf); 
-                gamma_fb1 = value.G1; 
-                gamma_fb2 = value.G2;  
+                Rf = BSHelper.MPA2kgsm2(value.Rf);                  
             } 
         }
 
@@ -97,16 +112,16 @@ namespace BSFiberConcrete.BSRFib
                 Rfbt3 =  gamma_fb2 * Rb * (K_T * k_or * k_or * mu_fv * l_f / (8 * eta_f * d_f_red) + 0.08 - 0.5 * mu_fv);
             }
 
-            double mu_fs = mu_fv * k_or * k_or;
+            double mu_fa = mu_fv * k_or * k_or;
 
-            double mu1_fs = mu_fv * k_n * k_n;
+            double mu1_fa = mu_fv * k_n * k_n;
 
             Res = new Dictionary<string, double>()
             {
                 ["Rfb"] = Rfb,
-                ["mu_fs"] = mu_fs,
-                ["mu1_fs"] = mu1_fs
-
+                ["Rfbt3"] = Rfbt3,
+                ["mu_fa"] = mu_fa,
+                ["mu1_fa"] = mu1_fa
             };
 
             return Rfbt3;
