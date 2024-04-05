@@ -269,5 +269,22 @@ namespace BSFiberConcrete.Lib
             }
         }
 
+        public static List<FaF> LoadRChartFaF()
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    var output = cnn.Query<FaF>("select * from RChartFaF", new DynamicParameters());
+                    return output.ToList();
+                }
+            }
+            catch
+            {
+                return new List<FaF>();
+            }
+        }
+
+
     }
 }

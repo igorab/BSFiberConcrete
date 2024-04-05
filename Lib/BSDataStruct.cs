@@ -288,6 +288,14 @@ namespace BSFiberConcrete
         public double I { get; set; }
     }
 
+    
+
+    public class FaF
+    {
+        public  int Num { get; set; }
+        public  double aF { get; set; }
+        public  double F { get; set; }
+    }
 
 }
 

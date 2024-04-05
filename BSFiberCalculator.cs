@@ -9,7 +9,7 @@ namespace BSFiberConcrete
     /// <summary>
     /// Расчет балок из фибробетона
     /// </summary>
-    internal static class BSFiberConcrete
+    internal static class BSFiberCalculator
     {
         /// <summary>
         /// Главная точка входа для приложения.

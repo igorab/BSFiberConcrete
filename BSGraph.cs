@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BSFiberConcrete.Lib;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -18,25 +19,29 @@ namespace BSFiberConcrete
             InitializeComponent();
         }
 
+      
         private void BSGraph_Load(object sender, EventArgs e)
         {
-            SplineChartExample();
+            //SplineChartExample();
+        }
+                
+        void InitChart()
+        {
+            List<FaF> q = BSData.LoadRChartFaF();
+            
+            Series series = this.Chart.Series.Add("aF");
+            series.ChartType = SeriesChartType.Line;
+
+            foreach (var item in q)
+            {
+                series.Points.AddXY(item.aF, item.F);
+            }                       
         }
 
-        private void SplineChartExample()
+        private void btnDrawChart_Click(object sender, EventArgs e)
         {
-            this.Chart.Series.Clear();
+           InitChart();
 
-            this.Chart.Titles.Add("Total Income");
-
-            Series series = this.Chart.Series.Add("Total Income");
-            series.ChartType = SeriesChartType.Spline;
-            series.Points.AddXY("September", 100);
-            series.Points.AddXY("Obtober", 300);
-            series.Points.AddXY("November", 800);
-            series.Points.AddXY("December", 200);
-            series.Points.AddXY("January", 600);
-            series.Points.AddXY("February", 400);
         }
     }
 }

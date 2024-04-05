@@ -213,7 +213,7 @@
     <Compile Include="BSFiberMain.Designer.cs">
       <DependentUpon>BSFiberMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="BSFiberConcrete.cs" />
+    <Compile Include="BSFiberCalculator.cs" />
     <Compile Include="Lib\BSQuery.cs" />
     <Compile Include="Control\ProgresGrid.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -288,6 +288,7 @@
     </EmbeddedResource>
     <None Include="BSClassDiagram.cd" />
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\FaF.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -370,9 +371,7 @@
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\DataSources\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.8.1">
       <Visible>False</Visible>
