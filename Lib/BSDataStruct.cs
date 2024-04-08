@@ -289,13 +289,18 @@ namespace BSFiberConcrete
     }
 
     
-
+    /// <summary>
+    /// Приложение Б. График aF(F)
+    /// </summary>
     public class FaF
     {
         public  int Num { get; set; }
         public  double aF { get; set; }
         public  double F { get; set; }
-    }
 
+        public FaF()
+        {
+        }
+    }
 }
 
