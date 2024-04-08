@@ -64,16 +64,21 @@ namespace BSFiberConcrete.BSRFib
         }
 
 
+        /// <summary>
+        ///  получение значения F по линейной интерполяции
+        /// </summary>
+        /// <param name="_a">искомый аргумент</param>
+        /// <returns>Значение функции </returns>
         public double LinearFit(double _a)
         {            
             var r_from = dsFaF.First();
             var r_to = dsFaF.Last();
 
-            if (_a <= r_from.F)
-                return r_from.aF;
+            if (_a <= r_from.aF)
+                return r_from.F;
 
-            if (_a >= r_to.F)
-                return r_to.aF;
+            if (_a >= r_to.aF)
+                return r_to.F;
 
             var from = dsFaF.Where(_x => _x.aF < _a)?.Last();
             var to = dsFaF.Where(_x => _x.aF > _a)?.First();
@@ -82,9 +87,9 @@ namespace BSFiberConcrete.BSRFib
             double[] y = new double[] { from.F, to.F };
 
             var fy = Fit.LineFunc(x, y);
-            var z = fy(_a);
+            var _F = fy(_a);
 
-            return z;
+            return _F;
         }
 
         public double F05()

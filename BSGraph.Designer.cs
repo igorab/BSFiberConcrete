@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BSGraph));
             this.ChartFaF = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
@@ -52,6 +52,7 @@
             this.numDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.aFDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnDSGen = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.ChartFaF)).BeginInit();
             this.tableLayoutPanel.SuspendLayout();
             this.tableLayoutPanelCalcRes.SuspendLayout();
@@ -65,29 +66,29 @@
             // 
             // ChartFaF
             // 
-            chartArea1.Name = "ChartArea1";
-            this.ChartFaF.ChartAreas.Add(chartArea1);
+            chartArea2.Name = "ChartArea1";
+            this.ChartFaF.ChartAreas.Add(chartArea2);
             this.ChartFaF.DataSource = this.faFBindingSource;
             this.ChartFaF.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend1.Name = "aFL";
-            legend1.Title = "Fi-aFi";
-            this.ChartFaF.Legends.Add(legend1);
+            legend2.Name = "aFL";
+            legend2.Title = "Fi-aFi";
+            this.ChartFaF.Legends.Add(legend2);
             this.ChartFaF.Location = new System.Drawing.Point(367, 25);
             this.ChartFaF.Name = "ChartFaF";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series1.EmptyPointStyle.AxisLabel = "Fi";
-            series1.Legend = "aFL";
-            series1.Name = "AFSerie";
-            series1.XValueMember = "aF";
-            series1.YValueMembers = "F";
-            this.ChartFaF.Series.Add(series1);
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series2.EmptyPointStyle.AxisLabel = "Fi";
+            series2.Legend = "aFL";
+            series2.Name = "AFSerie";
+            series2.XValueMember = "aF";
+            series2.YValueMembers = "F";
+            this.ChartFaF.Series.Add(series2);
             this.ChartFaF.Size = new System.Drawing.Size(710, 424);
             this.ChartFaF.TabIndex = 0;
             this.ChartFaF.Text = "aF";
-            title1.Name = "aF";
-            title1.Text = "Нагрузка-перемещение внешних граней надреза";
-            this.ChartFaF.Titles.Add(title1);
+            title2.Name = "aF";
+            title2.Text = "Нагрузка-перемещение внешних граней надреза";
+            this.ChartFaF.Titles.Add(title2);
             // 
             // tableLayoutPanel
             // 
@@ -238,10 +239,11 @@
             this.tableLayoutPanelGrid.ColumnCount = 4;
             this.tableLayoutPanelGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanelGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanelGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 39F));
+            this.tableLayoutPanelGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 59F));
             this.tableLayoutPanelGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 51F));
             this.tableLayoutPanelGrid.Controls.Add(this.btnDSAdd, 3, 0);
             this.tableLayoutPanelGrid.Controls.Add(this.btnDSSave, 1, 0);
+            this.tableLayoutPanelGrid.Controls.Add(this.btnDSGen, 0, 0);
             this.tableLayoutPanelGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelGrid.Location = new System.Drawing.Point(4, 456);
             this.tableLayoutPanelGrid.Name = "tableLayoutPanelGrid";
@@ -266,7 +268,7 @@
             // 
             this.btnDSSave.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnDSSave.Image = ((System.Drawing.Image)(resources.GetObject("btnDSSave.Image")));
-            this.btnDSSave.Location = new System.Drawing.Point(225, 6);
+            this.btnDSSave.Location = new System.Drawing.Point(205, 6);
             this.btnDSSave.Name = "btnDSSave";
             this.btnDSSave.Size = new System.Drawing.Size(38, 35);
             this.btnDSSave.TabIndex = 5;
@@ -293,6 +295,16 @@
             this.fDataGridViewTextBoxColumn.DataPropertyName = "F";
             this.fDataGridViewTextBoxColumn.HeaderText = "F";
             this.fDataGridViewTextBoxColumn.Name = "fDataGridViewTextBoxColumn";
+            // 
+            // btnDSGen
+            // 
+            this.btnDSGen.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.btnDSGen.Image = ((System.Drawing.Image)(resources.GetObject("btnDSGen.Image")));
+            this.btnDSGen.Location = new System.Drawing.Point(82, 6);
+            this.btnDSGen.Name = "btnDSGen";
+            this.btnDSGen.Size = new System.Drawing.Size(38, 35);
+            this.btnDSGen.TabIndex = 6;
+            this.btnDSGen.UseVisualStyleBackColor = true;
             // 
             // BSGraph
             // 
@@ -337,5 +349,6 @@
         private System.Windows.Forms.Button btnDSAdd;
         private System.Windows.Forms.Button btnDSSave;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelGrid;
+        private System.Windows.Forms.Button btnDSGen;
     }
 }
