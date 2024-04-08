@@ -64,30 +64,38 @@ namespace BSFiberConcrete.BSRFib
         }
 
 
-        public double F05()
-        {
-            double r = dsFaF.Min(_x=> _x.F);
+        public double LinearFit(double _a)
+        {            
+            var r_from = dsFaF.First();
+            var r_to = dsFaF.Last();
 
-            double[] x = new double[] { 0, 1 };
-            double[] y = new double[] { 2, 3 };
+            if (_a <= r_from.F)
+                return r_from.aF;
+
+            if (_a >= r_to.F)
+                return r_to.aF;
+
+            var from = dsFaF.Where(_x => _x.aF < _a)?.Last();
+            var to = dsFaF.Where(_x => _x.aF > _a)?.First();
+
+            double[] x = new double[] { from.aF, to.aF };
+            double[] y = new double[] { from.F, to.F };
 
             var fy = Fit.LineFunc(x, y);
-            var z = fy(0.05);
+            var z = fy(_a);
 
+            return z;
+        }
 
+        public double F05()
+        {           
+            var z = LinearFit(a_F05);
             return z;
         }
 
         public double F25()
         {
-            double r = dsFaF.Max(_x => _x.F);
-
-            double[] x = new double[] { 0, 1 };
-            double[] y = new double[] { 2, 3 };
-
-            var fy = Fit.LineFunc(x, y);
-            var z = fy(0.25);
-
+            var z = LinearFit(a_F25);
             return z;
         }
 
