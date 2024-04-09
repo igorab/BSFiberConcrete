@@ -175,13 +175,13 @@ namespace BSFiberConcrete.Lib
                     {
                         foreach (FibLab fa in _ds)
                         {
-                            if (BSQuery.FibLabFind(fa.Id).Id != string.Empty)
+                            if ( string.IsNullOrEmpty(FibLabFind(fa.Id).Id) )
                             {
-                                int cnt = cnn.Execute("update RFibLab set Fel = @Fel, F05 = @F05, F25 = @F25  where Id = @Id ", fa, tr);
+                                int cnt = cnn.Execute("insert into RFibLab (Id, Fel, F05, F25) values(@Id, @Fel, @F05, @F25)", fa, tr);                                
                             }
                             else
                             {
-                                int cnt = cnn.Execute("insert into RFibLab (Id, Fel, F05, F25) values(@Id, @Fel, @F05, @F25)", fa, tr);
+                                int cnt = cnn.Execute("update RFibLab set Fel = @Fel, F05 = @F05, F25 = @F25  where Id = @Id ", fa, tr);
                             }
                         }
                         tr.Commit();

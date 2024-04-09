@@ -57,16 +57,24 @@ namespace BSFiberConcrete
             //}                       
         }
 
-        private void CalcF()
+        private FibLab CalcF()
         {
             BSRFibLabTensile labTensile = new BSRFibLabTensile();
             labTensile.DsFaF = Qds.ToList();
 
-            numFel.Value = (decimal)Qds.Max(_x => _x.F);
-            
-            numF05.Value = (decimal)labTensile.F05();
-            numF25.Value = (decimal)labTensile.F25();
-            
+            FibLab fibLab = new FibLab()
+            {
+                Id = txtBarSample.Text,
+                Fel = Qds.Max(_x => _x.F),
+                F05 = labTensile.F05(),
+                F25 = labTensile.F25(),
+            };
+
+            numFel.Value = (decimal)fibLab.Fel;            
+            numF05.Value = (decimal)fibLab.F05;
+            numF25.Value = (decimal)fibLab.F25;
+
+            return fibLab;            
         }
 
 
@@ -74,9 +82,13 @@ namespace BSFiberConcrete
         {
             InitChart();
 
-            CalcF();                        
+            var flab = CalcF();
+
+            // сохранить результаты
+            BSQuery.SaveFibLab(new List<FibLab> { flab });
         }
 
+        
         private void btnDSAdd_Click(object sender, EventArgs e)
         {
             int mx =  Qds.Max(x=>x.Num) + 1;

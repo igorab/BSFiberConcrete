@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BSFiberConcrete.Lib;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,11 @@ namespace BSFiberConcrete.BSRFib
         public RFiberTensileStrength()
         {
             InitializeComponent();
+        }
+
+        private void RFiberTensileStrength_Load(object sender, EventArgs e)
+        {
+            dataGridFFF.DataSource = BSData.LoadRFibLab();
         }
     }
 }

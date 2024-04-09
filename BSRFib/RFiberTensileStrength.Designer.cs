@@ -28,56 +28,77 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.dataGridFFF = new System.Windows.Forms.DataGridView();
-            this.Fel = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.F05 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.F25 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.fibLabBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.felDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.f05DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.f25DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridFFF)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fibLabBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridFFF
             // 
+            this.dataGridFFF.AutoGenerateColumns = false;
             this.dataGridFFF.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridFFF.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Fel,
-            this.F05,
-            this.F25});
+            this.idDataGridViewTextBoxColumn,
+            this.felDataGridViewTextBoxColumn,
+            this.f05DataGridViewTextBoxColumn,
+            this.f25DataGridViewTextBoxColumn});
+            this.dataGridFFF.DataSource = this.fibLabBindingSource;
             this.dataGridFFF.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridFFF.Location = new System.Drawing.Point(3, 3);
             this.dataGridFFF.Name = "dataGridFFF";
-            this.dataGridFFF.Size = new System.Drawing.Size(374, 429);
+            this.dataGridFFF.Size = new System.Drawing.Size(510, 489);
             this.dataGridFFF.TabIndex = 0;
-            // 
-            // Fel
-            // 
-            this.Fel.HeaderText = "F el";
-            this.Fel.Name = "Fel";
-            // 
-            // F05
-            // 
-            this.F05.HeaderText = "F 0,5";
-            this.F05.Name = "F05";
-            // 
-            // F25
-            // 
-            this.F25.HeaderText = "F 2,5";
-            this.F25.Name = "F25";
             // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 67.37589F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 32.62411F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 74.63415F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.36585F));
             this.tableLayoutPanel1.Controls.Add(this.dataGridFFF, 0, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(41, 12);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 81F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(564, 516);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(692, 576);
             this.tableLayoutPanel1.TabIndex = 1;
+            // 
+            // fibLabBindingSource
+            // 
+            this.fibLabBindingSource.DataSource = typeof(BSFiberConcrete.FibLab);
+            // 
+            // idDataGridViewTextBoxColumn
+            // 
+            this.idDataGridViewTextBoxColumn.DataPropertyName = "Id";
+            this.idDataGridViewTextBoxColumn.HeaderText = "Id";
+            this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
+            // 
+            // felDataGridViewTextBoxColumn
+            // 
+            this.felDataGridViewTextBoxColumn.DataPropertyName = "Fel";
+            this.felDataGridViewTextBoxColumn.HeaderText = "Fel";
+            this.felDataGridViewTextBoxColumn.Name = "felDataGridViewTextBoxColumn";
+            // 
+            // f05DataGridViewTextBoxColumn
+            // 
+            this.f05DataGridViewTextBoxColumn.DataPropertyName = "F05";
+            this.f05DataGridViewTextBoxColumn.HeaderText = "F05";
+            this.f05DataGridViewTextBoxColumn.Name = "f05DataGridViewTextBoxColumn";
+            // 
+            // f25DataGridViewTextBoxColumn
+            // 
+            this.f25DataGridViewTextBoxColumn.DataPropertyName = "F25";
+            this.f25DataGridViewTextBoxColumn.HeaderText = "F25";
+            this.f25DataGridViewTextBoxColumn.Name = "f25DataGridViewTextBoxColumn";
             // 
             // RFiberTensileStrength
             // 
@@ -87,8 +108,10 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "RFiberTensileStrength";
             this.Text = "Определение прочности на растяжение";
+            this.Load += new System.EventHandler(this.RFiberTensileStrength_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridFFF)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.fibLabBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -96,9 +119,11 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dataGridFFF;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Fel;
-        private System.Windows.Forms.DataGridViewTextBoxColumn F05;
-        private System.Windows.Forms.DataGridViewTextBoxColumn F25;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.BindingSource fibLabBindingSource;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn felDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn f05DataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn f25DataGridViewTextBoxColumn;
     }
 }

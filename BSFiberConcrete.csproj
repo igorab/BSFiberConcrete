@@ -300,6 +300,7 @@
     <None Include="BSClassDiagram.cd" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\FaF.datasource" />
+    <None Include="Properties\DataSources\FibLab.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
