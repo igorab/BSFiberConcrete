@@ -302,5 +302,22 @@ namespace BSFiberConcrete
         {
         }
     }
+
+    /// <summary>
+    /// Результаты испытаний образцов
+    /// </summary>
+    public class FibLab
+    {
+        public string Id { get; set; }
+        public double Fel { get; set; }
+        public double F05 { get; set; }
+        public double F25 { get; set; }
+
+        public FibLab()
+        {
+        }
+    }
+
+
 }
 

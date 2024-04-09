@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SQLite;
+using System.Windows.Forms;
 
 namespace BSFiberConcrete.Lib
 {
@@ -94,6 +95,104 @@ namespace BSFiberConcrete.Lib
             catch { }
 
             return rb;
-        }        
+        }
+
+        public static FaF RFaF_Find(int _Num)
+        {
+            FaF rb = new FaF();
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    string query = $"select * from RChartFaF where Num = {_Num}";
+                    var output = cnn.Query<FaF>(query, new DynamicParameters());
+                    if (output.Count() > 0)
+                        rb = output.ToList()[0];
+                }
+            }
+            catch { }
+
+            return rb;
+        }
+
+        public static void SaveFaF(List<FaF> _ds)
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    cnn.Open();
+                    using (var tr = cnn.BeginTransaction())
+                    {
+                        foreach (FaF fa in _ds)
+                        {
+                            if (BSQuery.RFaF_Find(fa.Num).Num != 0)
+                            {
+                                int cnt = cnn.Execute("update RChartFaF set aF = @aF, F = @F where Num = @Num ", fa, tr);
+                            }
+                            else
+                            {
+                                int cnt = cnn.Execute("insert into RChartFaF (Num, aF, F) values(@Num, @aF, @F)", fa, tr);
+                            }
+                        }
+                        tr.Commit();
+                    }
+                }
+            }
+            catch (Exception _e)
+            {
+                MessageBox.Show(_e.Message);
+            }
+        }
+
+
+        public static FibLab FibLabFind(string _Id)
+        {
+            FibLab rb = new FibLab();
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    string query = $"select * from RFibLab where Id = '{_Id}'";
+                    var output = cnn.Query<FibLab>(query, new DynamicParameters());
+                    if (output.Count() > 0)
+                        rb = output.ToList()[0];
+                }
+            }
+            catch { }
+
+            return rb;
+        }
+
+        public static void SaveFibLab(List<FibLab> _ds)
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    cnn.Open();
+                    using (var tr = cnn.BeginTransaction())
+                    {
+                        foreach (FibLab fa in _ds)
+                        {
+                            if (BSQuery.FibLabFind(fa.Id).Id != string.Empty)
+                            {
+                                int cnt = cnn.Execute("update RFibLab set Fel = @Fel, F05 = @F05, F25 = @F25  where Id = @Id ", fa, tr);
+                            }
+                            else
+                            {
+                                int cnt = cnn.Execute("insert into RFibLab (Id, Fel, F05, F25) values(@Id, @Fel, @F05, @F25)", fa, tr);
+                            }
+                        }
+                        tr.Commit();
+                    }
+                }
+            }
+            catch (Exception _e)
+            {
+                MessageBox.Show(_e.Message);
+            }
+        }
+
     }
 }

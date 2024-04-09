@@ -286,5 +286,22 @@ namespace BSFiberConcrete.Lib
         }
 
 
+        public static List<FibLab> LoadRFibLab()
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    var output = cnn.Query<FibLab>("select * from RFibLab", new DynamicParameters());
+                    return output.ToList();
+                }
+            }
+            catch
+            {
+                return new List<FibLab>();
+            }
+        }
+
+
     }
 }

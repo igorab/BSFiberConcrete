@@ -38,7 +38,7 @@
             this.labelLab = new System.Windows.Forms.Label();
             this.btnRFbtFiber = new System.Windows.Forms.Button();
             this.btnGraphAF = new System.Windows.Forms.Button();
-            this.btnRFiber = new System.Windows.Forms.Button();
+            this.btnRFiberTensileStrength = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.lblInfo = new System.Windows.Forms.Label();
             this.lblExpertise = new System.Windows.Forms.Label();
@@ -80,7 +80,7 @@
             this.tableLayoutPanelMain.ColumnCount = 3;
             this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.57915F));
             this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.42085F));
-            this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 304F));
+            this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 306F));
             this.tableLayoutPanelMain.Controls.Add(this.tableLayoutPanel4, 2, 1);
             this.tableLayoutPanelMain.Controls.Add(this.lblInfo, 0, 0);
             this.tableLayoutPanelMain.Controls.Add(this.lblExpertise, 1, 0);
@@ -112,9 +112,9 @@
             this.tableLayoutPanel4.Controls.Add(this.labelLab, 0, 4);
             this.tableLayoutPanel4.Controls.Add(this.btnRFbtFiber, 0, 3);
             this.tableLayoutPanel4.Controls.Add(this.btnGraphAF, 0, 5);
-            this.tableLayoutPanel4.Controls.Add(this.btnRFiber, 0, 6);
+            this.tableLayoutPanel4.Controls.Add(this.btnRFiberTensileStrength, 0, 6);
             this.tableLayoutPanel4.Controls.Add(this.button4, 0, 7);
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(552, 29);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(550, 29);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 8;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 21.00457F));
@@ -188,15 +188,15 @@
             this.btnGraphAF.UseVisualStyleBackColor = true;
             this.btnGraphAF.Click += new System.EventHandler(this.btnGraphAF_Click);
             // 
-            // btnRFiber
+            // btnRFiberTensileStrength
             // 
-            this.btnRFiber.Location = new System.Drawing.Point(3, 232);
-            this.btnRFiber.Name = "btnRFiber";
-            this.btnRFiber.Size = new System.Drawing.Size(251, 45);
-            this.btnRFiber.TabIndex = 6;
-            this.btnRFiber.Text = "Определение прочности на растяжение";
-            this.btnRFiber.UseVisualStyleBackColor = true;
-            this.btnRFiber.Click += new System.EventHandler(this.btnRFiber_Click);
+            this.btnRFiberTensileStrength.Location = new System.Drawing.Point(3, 232);
+            this.btnRFiberTensileStrength.Name = "btnRFiberTensileStrength";
+            this.btnRFiberTensileStrength.Size = new System.Drawing.Size(251, 45);
+            this.btnRFiberTensileStrength.TabIndex = 6;
+            this.btnRFiberTensileStrength.Text = "Определение прочности на растяжение";
+            this.btnRFiberTensileStrength.UseVisualStyleBackColor = true;
+            this.btnRFiberTensileStrength.Click += new System.EventHandler(this.btnRFiberTensileStrength_Click);
             // 
             // button4
             // 
@@ -221,7 +221,7 @@
             // 
             this.lblExpertise.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblExpertise.AutoSize = true;
-            this.lblExpertise.Location = new System.Drawing.Point(281, 6);
+            this.lblExpertise.Location = new System.Drawing.Point(280, 6);
             this.lblExpertise.Name = "lblExpertise";
             this.lblExpertise.Size = new System.Drawing.Size(70, 13);
             this.lblExpertise.TabIndex = 1;
@@ -231,7 +231,7 @@
             // 
             this.lblLocalStrength.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblLocalStrength.AutoSize = true;
-            this.lblLocalStrength.Location = new System.Drawing.Point(552, 6);
+            this.lblLocalStrength.Location = new System.Drawing.Point(550, 6);
             this.lblLocalStrength.Name = "lblLocalStrength";
             this.lblLocalStrength.Size = new System.Drawing.Size(109, 13);
             this.lblLocalStrength.TabIndex = 2;
@@ -239,7 +239,7 @@
             // 
             // btnUnits
             // 
-            this.btnUnits.Location = new System.Drawing.Point(281, 387);
+            this.btnUnits.Location = new System.Drawing.Point(280, 387);
             this.btnUnits.Name = "btnUnits";
             this.btnUnits.Size = new System.Drawing.Size(109, 24);
             this.btnUnits.TabIndex = 4;
@@ -343,7 +343,7 @@
             this.tableLayoutPanel3.Controls.Add(this.button12, 0, 5);
             this.tableLayoutPanel3.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.label2, 0, 2);
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(281, 29);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(280, 29);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 6;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
@@ -421,7 +421,7 @@
             // btnClose
             // 
             this.btnClose.Dock = System.Windows.Forms.DockStyle.Left;
-            this.btnClose.Location = new System.Drawing.Point(552, 387);
+            this.btnClose.Location = new System.Drawing.Point(550, 387);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(120, 24);
             this.btnClose.TabIndex = 3;
@@ -476,7 +476,7 @@
             // 
             this.btnSectionDraw.ImageKey = "Layers.png";
             this.btnSectionDraw.ImageList = this.imageList;
-            this.btnSectionDraw.Location = new System.Drawing.Point(281, 418);
+            this.btnSectionDraw.Location = new System.Drawing.Point(280, 418);
             this.btnSectionDraw.Name = "btnSectionDraw";
             this.btnSectionDraw.Size = new System.Drawing.Size(25, 22);
             this.btnSectionDraw.TabIndex = 9;
@@ -572,7 +572,7 @@
         private System.Windows.Forms.Label labelLab;
         private System.Windows.Forms.Button btnRFbtFiber;
         private System.Windows.Forms.Button btnGraphAF;
-        private System.Windows.Forms.Button btnRFiber;
+        private System.Windows.Forms.Button btnRFiberTensileStrength;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button btnInfo;
         private System.Windows.Forms.ImageList imageList;

@@ -1,5 +1,6 @@
 ﻿using BSFiberConcrete;
 using BSFiberConcrete.Beam;
+using BSFiberConcrete.BSRFib;
 using BSFiberConcrete.Section;
 using System;
 using System.Collections.Generic;
@@ -120,9 +121,11 @@ namespace BSCalcMenu
             bSSectionDraw.Show();
         }
 
-        private void btnRFiber_Click(object sender, EventArgs e)
+
+        private void btnRFiberTensileStrength_Click(object sender, EventArgs e)
         {
-           
+            RFiberTensileStrength tensileStrength = new RFiberTensileStrength();
+            tensileStrength.Show();
         }
 
         private void btnRFbtFiber_Click(object sender, EventArgs e)

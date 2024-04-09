@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -78,13 +79,84 @@ namespace BSFiberConcrete
 
         private void btnDSAdd_Click(object sender, EventArgs e)
         {
-            int mx =  Qds.Max(x=>x.Num+1);
+            int mx =  Qds.Max(x=>x.Num) + 1;
+            double mxaF = Qds.Max(x => x.aF) + 0.01;
 
-            FaF item = new FaF() { Num = mx, F = 5, aF = 5 };
+            FaF item = new FaF() { Num = mx, F = 5, aF = mxaF };
             Qds.Add(item);
             gridFaF.DataSource = Qds;
             //gridFaF.
             gridFaF.Refresh();
+        }
+
+        private void btnDSSave_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Сохранить данные?");
+
+            if (dialogResult == DialogResult.OK)
+                BSQuery.SaveFaF(Qds.ToList());
+        }
+      
+        private void btnDSOpen_Click(object sender, EventArgs e)
+        {
+            var fileContent = string.Empty;
+            var filePath = string.Empty;
+
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = "c:\\";
+                openFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+                openFileDialog.FilterIndex = 2;
+                openFileDialog.RestoreDirectory = true;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {                 
+                    filePath = openFileDialog.FileName;
+                 
+                    var fileStream = openFileDialog.OpenFile();
+
+                    using (StreamReader reader = new StreamReader(fileStream))
+                    {
+                        fileContent = reader.ReadToEnd();
+                    }
+                }
+            }
+
+            MessageBox.Show(fileContent, "File Content at path: " + filePath, MessageBoxButtons.OK);
+        }
+
+        private void tableLayoutPanelGrid_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void btnDSSave2File_Click(object sender, EventArgs e)
+        {
+            var fileContent = string.Empty;
+            var filePath = string.Empty;
+
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = "c:\\";
+                openFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+                openFileDialog.FilterIndex = 2;
+                openFileDialog.RestoreDirectory = true;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    filePath = openFileDialog.FileName;
+
+                    var fileStream = openFileDialog.OpenFile();
+
+                    using (StreamReader reader = new StreamReader(fileStream))
+                    {
+                        fileContent = reader.ReadToEnd();
+                    }
+                }
+            }
+
+            MessageBox.Show(fileContent, "File Content at path: " + filePath, MessageBoxButtons.OK);
+
         }
     }
 }

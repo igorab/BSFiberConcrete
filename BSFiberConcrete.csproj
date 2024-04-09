@@ -189,7 +189,14 @@
       <DependentUpon>BSRFiber.cs</DependentUpon>
     </Compile>
     <Compile Include="BSRFib\BSRFibLabTensile.cs" />
+    <Compile Include="BSRFib\BSRFibLabTensileStats.cs" />
     <Compile Include="BSRFib\BSRFibReport.cs" />
+    <Compile Include="BSRFib\RFiberTensileStrength.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BSRFib\RFiberTensileStrength.Designer.cs">
+      <DependentUpon>RFiberTensileStrength.cs</DependentUpon>
+    </Compile>
     <Compile Include="Calc\BSFiberCalc_Deform.cs" />
     <Compile Include="Calc\BSFiberCalc_IBeamRods.cs" />
     <Compile Include="Calc\BSFiberCalc_NormRods.cs" />
@@ -275,6 +282,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BSRFib\BSRFiber.resx">
       <DependentUpon>BSRFiber.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BSRFib\RFiberTensileStrength.resx">
+      <DependentUpon>RFiberTensileStrength.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
