@@ -13,14 +13,31 @@ namespace BSFiberConcrete.BSRFib
 {
     public partial class RFiberTensileStrength : Form
     {
+        BSRFibLabTensileStats tensileStats;
+
         public RFiberTensileStrength()
         {
             InitializeComponent();
+
+            tensileStats = new BSRFibLabTensileStats();
         }
 
         private void RFiberTensileStrength_Load(object sender, EventArgs e)
         {
-            dataGridFFF.DataSource = BSData.LoadRFibLab();
+            var ds = new List<FibLab> (BSData.LoadRFibLab());
+
+            dataGridFFF.DataSource = ds;
+
+            tensileStats.DsFibLab = ds;
+        }
+
+        private void btnCalculate_Click(object sender, EventArgs e)
+        {
+            tensileStats.Calculate();
+
+            numRfbt2n.Value = (decimal) tensileStats.Rfbt2n;
+            numRfbt3n.Value = (decimal)tensileStats.Rfbt3n;
+            numRFel.Value = (decimal) tensileStats.RFel;
         }
     }
 }
