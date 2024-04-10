@@ -313,6 +313,9 @@ namespace BSFiberConcrete
         public double F05 { get; set; }
         public double F25 { get; set; }
 
+        public double L { get; set; }
+        public double B { get; set; }
+
         public FibLab()
         {
         }

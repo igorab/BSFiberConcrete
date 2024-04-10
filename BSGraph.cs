@@ -9,6 +9,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
@@ -45,9 +46,7 @@ namespace BSFiberConcrete
         {
             Series series = this.ChartFaF.Series["AFSerie"]; 
             series.ChartType = SeriesChartType.Spline;
-
-            //series.AxisLabel = "xxx";
-                       
+                                  
             ChartFaF.DataSource = Qds;
             ChartFaF.DataBind();
 
@@ -65,6 +64,9 @@ namespace BSFiberConcrete
             FibLab fibLab = new FibLab()
             {
                 Id = txtBarSample.Text,
+                L = (double) numL.Value,
+                B = (double)numB.Value,
+
                 Fel = Qds.Max(_x => _x.F),
                 F05 = labTensile.F05(),
                 F25 = labTensile.F25(),
@@ -82,7 +84,7 @@ namespace BSFiberConcrete
         {
             InitChart();
 
-            var flab = CalcF();
+            FibLab flab = CalcF();
 
             // сохранить результаты
             BSQuery.SaveFibLab(new List<FibLab> { flab });
@@ -91,14 +93,21 @@ namespace BSFiberConcrete
         
         private void btnDSAdd_Click(object sender, EventArgs e)
         {
-            int mx =  Qds.Max(x=>x.Num) + 1;
-            double mxaF = Qds.Max(x => x.aF) + 0.01;
+            try
+            {
+                int mx = Qds.Max(x => x.Num) + 1;
+                double mxaF = Qds.Max(x => x.aF) + 0.01;
 
-            FaF item = new FaF() { Num = mx, F = 5, aF = mxaF };
-            Qds.Add(item);
-            gridFaF.DataSource = Qds;
-            //gridFaF.
-            gridFaF.Refresh();
+                FaF item = new FaF() { Num = mx, F = 5, aF = mxaF };
+                Qds.Add(item);
+                gridFaF.DataSource = Qds;
+
+                gridFaF.Refresh();
+            }
+            catch (Exception _ex) 
+            {
+                MessageBox.Show(_ex.Message);
+            }
         }
 
         private void btnDSSave_Click(object sender, EventArgs e)
@@ -122,39 +131,6 @@ namespace BSFiberConcrete
                 openFileDialog.RestoreDirectory = true;
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
-                {                 
-                    filePath = openFileDialog.FileName;
-                 
-                    var fileStream = openFileDialog.OpenFile();
-
-                    using (StreamReader reader = new StreamReader(fileStream))
-                    {
-                        fileContent = reader.ReadToEnd();
-                    }
-                }
-            }
-
-            MessageBox.Show(fileContent, "File Content at path: " + filePath, MessageBoxButtons.OK);
-        }
-
-        private void tableLayoutPanelGrid_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void btnDSSave2File_Click(object sender, EventArgs e)
-        {
-            var fileContent = string.Empty;
-            var filePath = string.Empty;
-
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
-            {
-                openFileDialog.InitialDirectory = "c:\\";
-                openFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
-                openFileDialog.FilterIndex = 2;
-                openFileDialog.RestoreDirectory = true;
-
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     filePath = openFileDialog.FileName;
 
@@ -164,11 +140,68 @@ namespace BSFiberConcrete
                     {
                         fileContent = reader.ReadToEnd();
                     }
+
+                    using (FileStream fs = new FileStream(filePath, FileMode.OpenOrCreate))
+                    {
+                        var q_ds = JsonSerializer.Deserialize<List<FaF>>(fs);
+
+                        Qds = new BindingList<FaF>(q_ds);
+
+                        gridFaF.DataSource = Qds;
+                        gridFaF.Refresh();
+                    }
+
+                    MessageBox.Show(fileContent, "Файл загружен: " + filePath, MessageBoxButtons.OK);
+                }
+            }            
+        }
+
+        private void tableLayoutPanelGrid_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        ///  Сохранить данные измерений в файл
+        /// </summary>        
+        private void btnDSSave2File_Click(object sender, EventArgs e)
+        {            
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.FileName = "Document"; // Default file name
+            dlg.DefaultExt = ".txt"; // Default file extension
+            dlg.Filter = "Text documents (.txt)|*.txt"; // Filter files by extension
+
+            // Show save file dialog box
+            DialogResult result = dlg.ShowDialog();
+
+            // Process save file dialog box results
+            if (result == DialogResult.OK)
+            {
+                // Save document
+                string path = dlg.FileName;
+                //string path = Path.Combine(Environment.CurrentDirectory, "");
+
+                List<FaF> fibFaF = new List<FaF>(Qds);
+                
+                using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
+                {
+                    JsonSerializer.Serialize<List<FaF>>(fs, fibFaF);
                 }
             }
+        }
 
-            MessageBox.Show(fileContent, "File Content at path: " + filePath, MessageBoxButtons.OK);
-
+        private void btnDSDel_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int idx = Qds.Count - 1;
+                Qds.RemoveAt(idx);                
+                gridFaF.Refresh();
+            }
+            catch (Exception _e)
+            {
+                MessageBox.Show(_e.Message);
+            }
         }
     }
 }

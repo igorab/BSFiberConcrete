@@ -34,10 +34,12 @@ namespace BSFiberConcrete.BSRFib
         private void btnCalculate_Click(object sender, EventArgs e)
         {
             tensileStats.Calculate();
-
-            numRfbt2n.Value = (decimal) tensileStats.Rfbt2n;
+            
+            numRfbt2n.Value = Convert.ToDecimal(tensileStats.Rfbt2n);
             numRfbt3n.Value = (decimal)tensileStats.Rfbt3n;
-            numRFel.Value = (decimal) tensileStats.RFel;
+            numRFbtn.Value = (decimal) tensileStats.RFbtn;
+
+
         }
     }
 }
