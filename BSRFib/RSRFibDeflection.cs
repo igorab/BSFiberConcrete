@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Entity.Infrastructure;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -81,7 +82,16 @@ namespace BSFiberConcrete.BSRFib
 
         private void dataGridDefl_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
+            if (dataGridDefl.Rows.Count > 0)
+            {
+                if (dataGridDefl.Columns[e.ColumnIndex].Name == "fColumn")
+                {
+                    var x = dataGridDefl.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
 
+                    dataGridDefl.Rows[e.RowIndex].Cells[e.ColumnIndex+1].Value = BSRFibLabTensile.Defl_aF_f( (double) x);                    
+                }
+                               
+            }
         }
 
         private void deflectionfaFBindingSource_CurrentChanged(object sender, EventArgs e)
@@ -92,6 +102,11 @@ namespace BSFiberConcrete.BSRFib
         private void deflectionfaFBindingSource_DataSourceChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void deflectionfaFBindingSource_CurrentItemChanged(object sender, EventArgs e)
+        {
+            
         }
     }
 }

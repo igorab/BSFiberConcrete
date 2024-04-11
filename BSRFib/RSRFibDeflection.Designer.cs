@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             this.dataGridDefl = new System.Windows.Forms.DataGridView();
-            this.Num = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanelDefl = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -41,10 +40,11 @@
             this.cmbBeams = new System.Windows.Forms.ComboBox();
             this.labelBeamId = new System.Windows.Forms.Label();
             this.textBeamId = new System.Windows.Forms.TextBox();
-            this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.aFDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.deflectionfaFBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Num = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.aFDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridDefl)).BeginInit();
             this.tableLayoutPanelDefl.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -61,30 +61,23 @@
             this.dataGridDefl.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.idDataGridViewTextBoxColumn,
             this.Num,
-            this.fDataGridViewTextBoxColumn,
+            this.fColumn,
             this.aFDataGridViewTextBoxColumn});
             this.dataGridDefl.DataSource = this.deflectionfaFBindingSource;
             this.dataGridDefl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridDefl.Location = new System.Drawing.Point(73, 83);
+            this.dataGridDefl.Location = new System.Drawing.Point(72, 83);
             this.dataGridDefl.Name = "dataGridDefl";
-            this.dataGridDefl.Size = new System.Drawing.Size(711, 346);
+            this.dataGridDefl.Size = new System.Drawing.Size(704, 346);
             this.dataGridDefl.TabIndex = 0;
             this.dataGridDefl.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridDefl_CellValueChanged);
-            // 
-            // Num
-            // 
-            this.Num.DataPropertyName = "Num";
-            this.Num.HeaderText = "№";
-            this.Num.Name = "Num";
-            this.Num.ToolTipText = "Номер измерения";
             // 
             // label1
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(73, 11);
+            this.label1.Location = new System.Drawing.Point(72, 11);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(711, 13);
+            this.label1.Size = new System.Drawing.Size(704, 13);
             this.label1.TabIndex = 1;
             this.label1.Text = "Зависимость aF- f прогибов";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -94,7 +87,7 @@
             this.tableLayoutPanelDefl.ColumnCount = 3;
             this.tableLayoutPanelDefl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 8.912189F));
             this.tableLayoutPanelDefl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 91.08781F));
-            this.tableLayoutPanelDefl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanelDefl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanelDefl.Controls.Add(this.dataGridDefl, 1, 2);
             this.tableLayoutPanelDefl.Controls.Add(this.label1, 1, 0);
             this.tableLayoutPanelDefl.Controls.Add(this.tableLayoutPanel1, 1, 3);
@@ -119,24 +112,24 @@
             this.tableLayoutPanel1.ColumnCount = 7;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.51515F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.48485F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 8F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 91F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 123F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 111F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 119F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 127F));
             this.tableLayoutPanel1.Controls.Add(this.btnSave, 6, 0);
             this.tableLayoutPanel1.Controls.Add(this.btnAdd, 0, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(73, 435);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(72, 435);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(711, 32);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(704, 32);
             this.tableLayoutPanel1.TabIndex = 3;
             // 
             // btnSave
             // 
             this.btnSave.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.btnSave.Location = new System.Drawing.Point(633, 4);
+            this.btnSave.Location = new System.Drawing.Point(626, 4);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 0;
@@ -158,7 +151,7 @@
             // 
             this.labelBeam.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelBeam.AutoSize = true;
-            this.labelBeam.Location = new System.Drawing.Point(16, 51);
+            this.labelBeam.Location = new System.Drawing.Point(15, 51);
             this.labelBeam.Name = "labelBeam";
             this.labelBeam.Size = new System.Drawing.Size(51, 13);
             this.labelBeam.TabIndex = 4;
@@ -169,11 +162,11 @@
             this.tableLayoutPanel2.ColumnCount = 3;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 59.05045F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40.94955F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 307F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 315F));
             this.tableLayoutPanel2.Controls.Add(this.cmbBeams, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.labelBeamId, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.textBeamId, 2, 0);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(73, 39);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(72, 39);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -188,7 +181,7 @@
             "(новый)"});
             this.cmbBeams.Location = new System.Drawing.Point(3, 8);
             this.cmbBeams.Name = "cmbBeams";
-            this.cmbBeams.Size = new System.Drawing.Size(187, 21);
+            this.cmbBeams.Size = new System.Drawing.Size(182, 21);
             this.cmbBeams.TabIndex = 2;
             this.cmbBeams.SelectedIndexChanged += new System.EventHandler(this.cmbBeams_SelectedIndexChanged);
             // 
@@ -196,9 +189,9 @@
             // 
             this.labelBeamId.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.labelBeamId.AutoSize = true;
-            this.labelBeamId.Location = new System.Drawing.Point(196, 12);
+            this.labelBeamId.Location = new System.Drawing.Point(191, 12);
             this.labelBeamId.Name = "labelBeamId";
-            this.labelBeamId.Size = new System.Drawing.Size(127, 13);
+            this.labelBeamId.Size = new System.Drawing.Size(124, 13);
             this.labelBeamId.TabIndex = 3;
             this.labelBeamId.Text = "описание";
             this.labelBeamId.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -206,10 +199,17 @@
             // textBeamId
             // 
             this.textBeamId.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBeamId.Location = new System.Drawing.Point(329, 9);
+            this.textBeamId.Location = new System.Drawing.Point(321, 9);
             this.textBeamId.Name = "textBeamId";
-            this.textBeamId.Size = new System.Drawing.Size(302, 20);
+            this.textBeamId.Size = new System.Drawing.Size(310, 20);
             this.textBeamId.TabIndex = 4;
+            // 
+            // deflectionfaFBindingSource
+            // 
+            this.deflectionfaFBindingSource.DataSource = typeof(BSFiberConcrete.Deflection_f_aF);
+            this.deflectionfaFBindingSource.DataSourceChanged += new System.EventHandler(this.deflectionfaFBindingSource_DataSourceChanged);
+            this.deflectionfaFBindingSource.CurrentChanged += new System.EventHandler(this.deflectionfaFBindingSource_CurrentChanged);
+            this.deflectionfaFBindingSource.CurrentItemChanged += new System.EventHandler(this.deflectionfaFBindingSource_CurrentItemChanged);
             // 
             // idDataGridViewTextBoxColumn
             // 
@@ -217,12 +217,19 @@
             this.idDataGridViewTextBoxColumn.HeaderText = "Id";
             this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
             // 
-            // fDataGridViewTextBoxColumn
+            // Num
             // 
-            this.fDataGridViewTextBoxColumn.DataPropertyName = "f";
-            this.fDataGridViewTextBoxColumn.HeaderText = "f, мм";
-            this.fDataGridViewTextBoxColumn.Name = "fDataGridViewTextBoxColumn";
-            this.fDataGridViewTextBoxColumn.ToolTipText = "Величина прогиба";
+            this.Num.DataPropertyName = "Num";
+            this.Num.HeaderText = "№";
+            this.Num.Name = "Num";
+            this.Num.ToolTipText = "Номер измерения";
+            // 
+            // fColumn
+            // 
+            this.fColumn.DataPropertyName = "f";
+            this.fColumn.HeaderText = "f, мм";
+            this.fColumn.Name = "fColumn";
+            this.fColumn.ToolTipText = "Величина прогиба";
             // 
             // aFDataGridViewTextBoxColumn
             // 
@@ -230,12 +237,6 @@
             this.aFDataGridViewTextBoxColumn.HeaderText = "a F, мм";
             this.aFDataGridViewTextBoxColumn.Name = "aFDataGridViewTextBoxColumn";
             this.aFDataGridViewTextBoxColumn.ToolTipText = "значение при испытании, мм";
-            // 
-            // deflectionfaFBindingSource
-            // 
-            this.deflectionfaFBindingSource.DataSource = typeof(BSFiberConcrete.Deflection_f_aF);
-            this.deflectionfaFBindingSource.DataSourceChanged += new System.EventHandler(this.deflectionfaFBindingSource_DataSourceChanged);
-            this.deflectionfaFBindingSource.CurrentChanged += new System.EventHandler(this.deflectionfaFBindingSource_CurrentChanged);
             // 
             // RSRFibDeflection
             // 
@@ -272,7 +273,7 @@
         private System.Windows.Forms.TextBox textBeamId;
         private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn Num;
-        private System.Windows.Forms.DataGridViewTextBoxColumn fDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn aFDataGridViewTextBoxColumn;
     }
 }
