@@ -194,5 +194,55 @@ namespace BSFiberConcrete.Lib
             }
         }
 
+
+        public static Deflection_f_aF FibLabDeflectionFind(string _Id)
+        {
+            Deflection_f_aF rb = new Deflection_f_aF();
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    string query = $"select * from RDeflection where Id = '{_Id}'";
+                    var output = cnn.Query<Deflection_f_aF>(query, new DynamicParameters());
+                    if (output.Count() > 0)
+                        rb = output.ToList()[0];
+                }
+            }
+            catch { }
+
+            return rb;
+        }
+
+
+        public static void SaveFibLabDeflection(List<Deflection_f_aF> _ds)
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    cnn.Open();
+                    using (var tr = cnn.BeginTransaction())
+                    {
+                        foreach (Deflection_f_aF fa in _ds)
+                        {
+                            if (string.IsNullOrEmpty(FibLabDeflectionFind(fa.Id).Id))
+                            {
+                                int cnt = cnn.Execute("insert into RDeflection (Id, Num, f, aF) values(@Id, @Num, @f, @aF)", fa, tr);
+                            }
+                            else
+                            {
+                                int cnt = cnn.Execute("update RDeflection set Id=@Id, Num=@Num, f=@f, aF=@aF where Id=@Id and Num =@Num ", fa, tr);
+                            }
+                        }
+                        tr.Commit();
+                    }
+                }
+            }
+            catch (Exception _e)
+            {
+                MessageBox.Show(_e.Message);
+            }
+        }
+
     }
 }

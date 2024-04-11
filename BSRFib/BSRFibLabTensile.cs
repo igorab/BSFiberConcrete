@@ -125,9 +125,10 @@ namespace BSFiberConcrete.BSRFib
             return r;
         }
 
-        
-
-
+        public static double Defl_aF_f(double _f, int _dec = 4 )
+        {
+            return Math.Round( (_f - 0.04) / 0.085, _dec);
+        }
 
     }
 }

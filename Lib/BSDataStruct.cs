@@ -359,9 +359,14 @@ namespace BSFiberConcrete
     public class Deflection_f_aF
     {
         /// <summary>
+        /// Номер образца
+        /// </summary>
+        public string Id  { get; set; }
+
+        /// <summary>
         /// Номер испытания
         /// </summary>
-        public int Id { get; set; }
+        public int Num { get; set; }
 
         /// <summary>
         /// перемещение надреза, мм

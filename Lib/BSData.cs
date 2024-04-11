@@ -302,6 +302,56 @@ namespace BSFiberConcrete.Lib
             }
         }
 
+        public static List<Deflection_f_aF> LoadRDeflection(string _Id)
+        {
+            string query;
+            if (string.IsNullOrEmpty(_Id))
+            {
+                query = string.Format("select * from RDeflection");
+            }
+            else
+            {
+                query = string.Format("select * from RDeflection where id == '{0}'", _Id);
+            }
+
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {                    
+                    var output = cnn.Query<Deflection_f_aF>(query, new DynamicParameters());
+                    return output.ToList();
+                }
+            }
+            catch
+            {
+                return new List<Deflection_f_aF>();
+            }
+        }
+
+        public static List<string> LoadBeamDeflection()
+        {
+            string query;
+            
+            query = string.Format("select Id from RDeflection group by Id ");
+            
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    var output = cnn.Query<string>(query, new DynamicParameters());
+                    return output.ToList();
+                }
+            }
+            catch
+            {
+                return new List<string>();
+            }
+        }
+
+
+
+
+
 
     }
 }
