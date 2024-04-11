@@ -133,5 +133,11 @@ namespace BSCalcMenu
             BSRFiber bSRFiber = new BSRFiber();
             bSRFiber.Show();
         }
+
+        private void btnBeamDeflection_Click(object sender, EventArgs e)
+        {
+            RSRFibDeflection fibDeflection = new RSRFibDeflection();
+            fibDeflection.Show();
+        }
     }
 }

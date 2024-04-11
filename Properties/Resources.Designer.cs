@@ -73,6 +73,16 @@ namespace BSFiberConcrete.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap BeamLab {
+            get {
+                object obj = ResourceManager.GetObject("BeamLab", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap EffortsSign {
             get {
                 object obj = ResourceManager.GetObject("EffortsSign", resourceCulture);

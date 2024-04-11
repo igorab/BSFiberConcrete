@@ -197,6 +197,12 @@
     <Compile Include="BSRFib\RFiberTensileStrength.Designer.cs">
       <DependentUpon>RFiberTensileStrength.cs</DependentUpon>
     </Compile>
+    <Compile Include="BSRFib\RSRFibDeflection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BSRFib\RSRFibDeflection.Designer.cs">
+      <DependentUpon>RSRFibDeflection.cs</DependentUpon>
+    </Compile>
     <Compile Include="Calc\BSFiberCalc_Deform.cs" />
     <Compile Include="Calc\BSFiberCalc_IBeamRods.cs" />
     <Compile Include="Calc\BSFiberCalc_NormRods.cs" />
@@ -286,6 +292,9 @@
     <EmbeddedResource Include="BSRFib\RFiberTensileStrength.resx">
       <DependentUpon>RFiberTensileStrength.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="BSRFib\RSRFibDeflection.resx">
+      <DependentUpon>RSRFibDeflection.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
@@ -299,6 +308,7 @@
     </EmbeddedResource>
     <None Include="BSClassDiagram.cd" />
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\Deflection_f_aF.datasource" />
     <None Include="Properties\DataSources\FaF.datasource" />
     <None Include="Properties\DataSources\FibLab.datasource" />
     <None Include="Properties\Settings.settings">
@@ -315,6 +325,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\balka_rect.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\BeamLab.PNG">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\EffortsSign.PNG">

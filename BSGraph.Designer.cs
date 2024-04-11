@@ -340,7 +340,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 44F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 108F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 134F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 136F));
             this.tableLayoutPanel1.Controls.Add(this.txtBarSample, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.labelL, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.numL, 2, 0);
@@ -360,7 +360,7 @@
             this.txtBarSample.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.txtBarSample.Location = new System.Drawing.Point(3, 10);
             this.txtBarSample.Name = "txtBarSample";
-            this.txtBarSample.Size = new System.Drawing.Size(200, 20);
+            this.txtBarSample.Size = new System.Drawing.Size(198, 20);
             this.txtBarSample.TabIndex = 8;
             this.txtBarSample.Text = "Образец 1";
             // 
@@ -368,7 +368,7 @@
             // 
             this.labelL.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelL.AutoSize = true;
-            this.labelL.Location = new System.Drawing.Point(219, 13);
+            this.labelL.Location = new System.Drawing.Point(217, 13);
             this.labelL.Name = "labelL";
             this.labelL.Size = new System.Drawing.Size(35, 13);
             this.labelL.TabIndex = 9;
@@ -378,7 +378,7 @@
             // 
             this.numL.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numL.DecimalPlaces = 2;
-            this.numL.Location = new System.Drawing.Point(260, 10);
+            this.numL.Location = new System.Drawing.Point(258, 10);
             this.numL.Maximum = new decimal(new int[] {
             1000000000,
             0,
@@ -397,7 +397,7 @@
             // 
             this.numB.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numB.DecimalPlaces = 2;
-            this.numB.Location = new System.Drawing.Point(410, 10);
+            this.numB.Location = new System.Drawing.Point(408, 10);
             this.numB.Maximum = new decimal(new int[] {
             1000000000,
             0,
@@ -416,7 +416,7 @@
             // 
             this.labelB.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelB.AutoSize = true;
-            this.labelB.Location = new System.Drawing.Point(369, 13);
+            this.labelB.Location = new System.Drawing.Point(367, 13);
             this.labelB.Name = "labelB";
             this.labelB.Size = new System.Drawing.Size(35, 13);
             this.labelB.TabIndex = 12;
@@ -442,7 +442,7 @@
             // 
             this.labelHsp.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelHsp.AutoSize = true;
-            this.labelHsp.Location = new System.Drawing.Point(523, 13);
+            this.labelHsp.Location = new System.Drawing.Point(521, 13);
             this.labelHsp.Name = "labelHsp";
             this.labelHsp.Size = new System.Drawing.Size(49, 13);
             this.labelHsp.TabIndex = 13;
@@ -452,7 +452,7 @@
             // 
             this.numHsp.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numHsp.DecimalPlaces = 2;
-            this.numHsp.Location = new System.Drawing.Point(578, 10);
+            this.numHsp.Location = new System.Drawing.Point(576, 10);
             this.numHsp.Maximum = new decimal(new int[] {
             1000000000,
             0,

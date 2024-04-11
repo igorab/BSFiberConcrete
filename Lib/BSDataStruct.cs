@@ -294,31 +294,84 @@ namespace BSFiberConcrete
     /// </summary>
     public class FaF
     {
+        /// <summary>
+        /// Номер измерения
+        /// </summary>
         public  int Num { get; set; }
+        /// <summary>
+        /// перемещение надреза
+        /// </summary>
         public  double aF { get; set; }
+        /// <summary>
+        /// усилие, Н
+        /// </summary>
         public  double F { get; set; }
 
         public FaF()
         {
         }
     }
-
+ 
     /// <summary>
     /// Результаты испытаний образцов
     /// </summary>
     public class FibLab
     {
+        /// <summary>
+        /// Идентификатор образца / испытания 
+        /// </summary>
         public string Id { get; set; }
+        /// <summary>
+        /// максимальное значение нагрузки в интервале значений перемещения внешних граней надреза 0 < aF ≤ 0,05 мм
+        /// </summary>
         public double Fel { get; set; }
+        /// <summary>
+        /// значение нагрузки, соответствующее перемещению внешних граней надреза aF = 0,5 мм
+        /// </summary>
         public double F05 { get; set; }
+        /// <summary>
+        /// значение нагрузки, соответствующее перемещению внешних граней надреза aF = 2,5 мм;
+        /// </summary>
         public double F25 { get; set; }
 
+        /// <summary>
+        /// длина пролета, мм
+        /// </summary>
         public double L { get; set; }
+        /// <summary>
+        /// ширина образца, мм
+        /// </summary>
         public double B { get; set; }
+        /// <summary>
+        /// расстояние между вершиной надреза и верхней гранью образца
+        /// </summary>
+        public double H_sp { get; set; }
 
         public FibLab()
         {
         }
+    }
+
+
+    /// <summary>
+    /// связь между aF и прогибом f
+    /// </summary>
+    public class Deflection_f_aF
+    {
+        /// <summary>
+        /// Номер испытания
+        /// </summary>
+        public int Id { get; set; }
+
+        /// <summary>
+        /// перемещение надреза, мм
+        /// </summary>
+        public double aF { get; set; }
+
+        /// <summary>
+        /// прогиб, мм
+        /// </summary>
+        public double f { get; set; }
     }
 
 
