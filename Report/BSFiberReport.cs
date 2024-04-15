@@ -182,35 +182,7 @@ namespace BSFiberConcrete
             }
         }
 
-        protected void MakeImageData(string _filename)
-        {
-            using (Bitmap image = new Bitmap(450, 100))
-            {
-                using (Graphics graphic = Graphics.FromImage(image))
-                {
-                    System.Drawing.Image thumbnail = System.Drawing.Image.FromFile(_filename);
-
-                    // Сохранить изображение в поток
-                    //Response.ContentType = "image/png";
-
-                    // Создать PNG-изображение, хранящееся в памяти
-                    MemoryStream mem = new MemoryStream();
-                    image.Save(mem, System.Drawing.Imaging.ImageFormat.Png);
-
-                    // Нарисовать эскиз
-                    //graphic.DrawImage(thumbnail, 0, 0, x, y);
-
-                    // Сохранить изображение
-                    image.Save(mem, ImageFormat.Png);
-
-
-                    // Записать данные MemoryStream в выходной поток
-                    //mem.WriteTo(Response.OutputStream);
-                }
-            }
-        }
-
-
+        
         private string MakeImageSrcData(string _filename)
         {
             if (_filename == "") return "";

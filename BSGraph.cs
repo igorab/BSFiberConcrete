@@ -203,5 +203,21 @@ namespace BSFiberConcrete
                 MessageBox.Show(_e.Message);
             }
         }
+
+        private void btnPrint_Click(object sender, EventArgs e)
+        {
+            BSRFibLabReport labReport = new BSRFibLabReport();
+
+            labReport.ReportName = "Лаборатория";
+
+            //string chartimage = "";
+            MemoryStream chartimage = new MemoryStream();
+
+            ChartFaF.SaveImage(chartimage, ChartImageFormat.Png);
+
+            labReport.ChartImage = chartimage;
+
+            labReport.RunReport(); 
+        }
     }
 }

@@ -50,6 +50,7 @@
             this.btnDSSave = new System.Windows.Forms.Button();
             this.btnDSOpen = new System.Windows.Forms.Button();
             this.btnDSSave2File = new System.Windows.Forms.Button();
+            this.btnDSDel = new System.Windows.Forms.Button();
             this.labelBarSample = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.txtBarSample = new System.Windows.Forms.TextBox();
@@ -57,11 +58,12 @@
             this.numL = new System.Windows.Forms.NumericUpDown();
             this.numB = new System.Windows.Forms.NumericUpDown();
             this.labelB = new System.Windows.Forms.Label();
-            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.btnDSDel = new System.Windows.Forms.Button();
-            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.labelHsp = new System.Windows.Forms.Label();
             this.numHsp = new System.Windows.Forms.NumericUpDown();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnPrint = new System.Windows.Forms.Button();
             this.faFBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.numDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.aFDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -78,6 +80,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numL)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numHsp)).BeginInit();
+            this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.faFBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -116,10 +119,10 @@
             this.tableLayoutPanel.Controls.Add(this.ChartFaF, 1, 1);
             this.tableLayoutPanel.Controls.Add(this.tableLayoutPanelCalcRes, 1, 3);
             this.tableLayoutPanel.Controls.Add(this.gridFaF, 0, 1);
-            this.tableLayoutPanel.Controls.Add(this.btnDrawChart, 1, 2);
             this.tableLayoutPanel.Controls.Add(this.tableLayoutPanelGrid, 0, 2);
             this.tableLayoutPanel.Controls.Add(this.labelBarSample, 0, 0);
             this.tableLayoutPanel.Controls.Add(this.tableLayoutPanel1, 1, 0);
+            this.tableLayoutPanel.Controls.Add(this.tableLayoutPanel2, 1, 2);
             this.tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel.Name = "tableLayoutPanel";
@@ -244,28 +247,29 @@
             this.btnDrawChart.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnDrawChart.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnDrawChart.BackgroundImage")));
             this.btnDrawChart.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.btnDrawChart.Location = new System.Drawing.Point(957, 471);
+            this.btnDrawChart.Location = new System.Drawing.Point(252, 10);
             this.btnDrawChart.Name = "btnDrawChart";
-            this.btnDrawChart.Size = new System.Drawing.Size(120, 28);
+            this.btnDrawChart.Size = new System.Drawing.Size(100, 28);
             this.btnDrawChart.TabIndex = 2;
-            this.btnDrawChart.Text = "Построить";
+            this.btnDrawChart.Text = "График";
             this.btnDrawChart.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnDrawChart.UseVisualStyleBackColor = true;
             this.btnDrawChart.Click += new System.EventHandler(this.btnDrawChart_Click);
             // 
             // tableLayoutPanelGrid
             // 
-            this.tableLayoutPanelGrid.ColumnCount = 5;
-            this.tableLayoutPanelGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 78.13953F));
-            this.tableLayoutPanelGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.86047F));
-            this.tableLayoutPanelGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 46F));
-            this.tableLayoutPanelGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 47F));
-            this.tableLayoutPanelGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 48F));
-            this.tableLayoutPanelGrid.Controls.Add(this.btnDSAdd, 4, 0);
-            this.tableLayoutPanelGrid.Controls.Add(this.btnDSSave, 1, 0);
-            this.tableLayoutPanelGrid.Controls.Add(this.btnDSOpen, 0, 0);
-            this.tableLayoutPanelGrid.Controls.Add(this.btnDSSave2File, 2, 0);
-            this.tableLayoutPanelGrid.Controls.Add(this.btnDSDel, 3, 0);
+            this.tableLayoutPanelGrid.ColumnCount = 6;
+            this.tableLayoutPanelGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 49F));
+            this.tableLayoutPanelGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 63.05732F));
+            this.tableLayoutPanelGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 36.94268F));
+            this.tableLayoutPanelGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 52F));
+            this.tableLayoutPanelGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 58F));
+            this.tableLayoutPanelGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 61F));
+            this.tableLayoutPanelGrid.Controls.Add(this.btnDSAdd, 5, 0);
+            this.tableLayoutPanelGrid.Controls.Add(this.btnDSSave, 2, 0);
+            this.tableLayoutPanelGrid.Controls.Add(this.btnDSOpen, 1, 0);
+            this.tableLayoutPanelGrid.Controls.Add(this.btnDSSave2File, 3, 0);
+            this.tableLayoutPanelGrid.Controls.Add(this.btnDSDel, 4, 0);
             this.tableLayoutPanelGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelGrid.Location = new System.Drawing.Point(4, 461);
             this.tableLayoutPanelGrid.Name = "tableLayoutPanelGrid";
@@ -290,7 +294,7 @@
             // 
             this.btnDSSave.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnDSSave.Image = ((System.Drawing.Image)(resources.GetObject("btnDSSave.Image")));
-            this.btnDSSave.Location = new System.Drawing.Point(174, 6);
+            this.btnDSSave.Location = new System.Drawing.Point(143, 6);
             this.btnDSSave.Name = "btnDSSave";
             this.btnDSSave.Size = new System.Drawing.Size(38, 35);
             this.btnDSSave.TabIndex = 5;
@@ -301,7 +305,7 @@
             // 
             this.btnDSOpen.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnDSOpen.Image = ((System.Drawing.Image)(resources.GetObject("btnDSOpen.Image")));
-            this.btnDSOpen.Location = new System.Drawing.Point(127, 6);
+            this.btnDSOpen.Location = new System.Drawing.Point(93, 6);
             this.btnDSOpen.Name = "btnDSOpen";
             this.btnDSOpen.Size = new System.Drawing.Size(38, 35);
             this.btnDSOpen.TabIndex = 6;
@@ -312,12 +316,24 @@
             // 
             this.btnDSSave2File.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnDSSave2File.Image = ((System.Drawing.Image)(resources.GetObject("btnDSSave2File.Image")));
-            this.btnDSSave2File.Location = new System.Drawing.Point(220, 6);
+            this.btnDSSave2File.Location = new System.Drawing.Point(195, 6);
             this.btnDSSave2File.Name = "btnDSSave2File";
             this.btnDSSave2File.Size = new System.Drawing.Size(38, 35);
             this.btnDSSave2File.TabIndex = 7;
             this.btnDSSave2File.UseVisualStyleBackColor = true;
             this.btnDSSave2File.Click += new System.EventHandler(this.btnDSSave2File_Click);
+            // 
+            // btnDSDel
+            // 
+            this.btnDSDel.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.btnDSDel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnDSDel.Location = new System.Drawing.Point(254, 7);
+            this.btnDSDel.Name = "btnDSDel";
+            this.btnDSDel.Size = new System.Drawing.Size(37, 33);
+            this.btnDSDel.TabIndex = 8;
+            this.btnDSDel.Text = "-";
+            this.btnDSDel.UseVisualStyleBackColor = true;
+            this.btnDSDel.Click += new System.EventHandler(this.btnDSDel_Click);
             // 
             // labelBarSample
             // 
@@ -340,7 +356,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 44F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 108F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 136F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 137F));
             this.tableLayoutPanel1.Controls.Add(this.txtBarSample, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.labelL, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.numL, 2, 0);
@@ -422,22 +438,6 @@
             this.labelB.TabIndex = 12;
             this.labelB.Text = "b, мм";
             // 
-            // openFileDialog
-            // 
-            this.openFileDialog.FileName = "FaF";
-            // 
-            // btnDSDel
-            // 
-            this.btnDSDel.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.btnDSDel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnDSDel.Location = new System.Drawing.Point(268, 7);
-            this.btnDSDel.Name = "btnDSDel";
-            this.btnDSDel.Size = new System.Drawing.Size(37, 33);
-            this.btnDSDel.TabIndex = 8;
-            this.btnDSDel.Text = "-";
-            this.btnDSDel.UseVisualStyleBackColor = true;
-            this.btnDSDel.Click += new System.EventHandler(this.btnDSDel_Click);
-            // 
             // labelHsp
             // 
             this.labelHsp.Anchor = System.Windows.Forms.AnchorStyles.Right;
@@ -466,6 +466,39 @@
             0,
             0,
             0});
+            // 
+            // openFileDialog
+            // 
+            this.openFileDialog.FileName = "FaF";
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel2.ColumnCount = 2;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Controls.Add(this.btnPrint, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.btnDrawChart, 0, 0);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(367, 461);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 1;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(710, 48);
+            this.tableLayoutPanel2.TabIndex = 10;
+            // 
+            // btnPrint
+            // 
+            this.btnPrint.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.btnPrint.Image = ((System.Drawing.Image)(resources.GetObject("btnPrint.Image")));
+            this.btnPrint.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnPrint.Location = new System.Drawing.Point(607, 9);
+            this.btnPrint.Name = "btnPrint";
+            this.btnPrint.Size = new System.Drawing.Size(100, 30);
+            this.btnPrint.TabIndex = 3;
+            this.btnPrint.Text = "Отчет";
+            this.btnPrint.UseVisualStyleBackColor = true;
+            this.btnPrint.Click += new System.EventHandler(this.btnPrint_Click);
             // 
             // faFBindingSource
             // 
@@ -515,6 +548,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numL)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numHsp)).EndInit();
+            this.tableLayoutPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.faFBindingSource)).EndInit();
             this.ResumeLayout(false);
 
@@ -554,5 +588,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn numDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn aFDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn fDataGridViewTextBoxColumn;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.Button btnPrint;
     }
 }

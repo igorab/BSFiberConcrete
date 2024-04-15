@@ -188,6 +188,7 @@
     <Compile Include="BSRFib\BSRFiber.Designer.cs">
       <DependentUpon>BSRFiber.cs</DependentUpon>
     </Compile>
+    <Compile Include="BSRFib\BSRFibLabReport.cs" />
     <Compile Include="BSRFib\BSRFibLabTensile.cs" />
     <Compile Include="BSRFib\BSRFibLabTensileStats.cs" />
     <Compile Include="BSRFib\BSRFibReport.cs" />
