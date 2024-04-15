@@ -21,9 +21,13 @@ namespace BSFiberConcrete
     {
         private BindingList<FaF> Qds;
 
+        private Dictionary<string, double> LabResults;
+
         public BSGraph()
         {
             InitializeComponent();
+
+            LabResults = new Dictionary<string, double>();
         }
               
         private void BSGraph_Load(object sender, EventArgs e)
@@ -155,12 +159,7 @@ namespace BSFiberConcrete
                 }
             }            
         }
-
-        private void tableLayoutPanelGrid_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
+      
         /// <summary>
         ///  Сохранить данные измерений в файл
         /// </summary>        
@@ -209,6 +208,19 @@ namespace BSFiberConcrete
             BSRFibLabReport labReport = new BSRFibLabReport();
 
             labReport.ReportName = "Лаборатория";
+            labReport.SampleDescr = "Образец: " + txtBarSample.Text;
+
+            LabResults = new Dictionary<string, double>() 
+            { 
+                {labelL.Text, Convert.ToDouble(numL.Value)}, 
+                {labelB.Text, Convert.ToDouble(numB.Value)}, 
+                {labelHsp.Text, Convert.ToDouble(numHsp.Value)},
+                {lblF05.Text, Convert.ToDouble(numF05.Value)}, 
+                {lblF25.Text, Convert.ToDouble(numF25.Value)}, 
+                {lblFeL.Text, Convert.ToDouble(numFel.Value)}
+            };
+
+            labReport.LabResults = LabResults;
 
             //string chartimage = "";
             MemoryStream chartimage = new MemoryStream();
@@ -216,6 +228,8 @@ namespace BSFiberConcrete
             ChartFaF.SaveImage(chartimage, ChartImageFormat.Png);
 
             labReport.ChartImage = chartimage;
+
+            labReport.ChartData = Qds.ToList();
 
             labReport.RunReport(); 
         }

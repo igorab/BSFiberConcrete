@@ -264,7 +264,7 @@
             this.tableLayoutPanelGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 36.94268F));
             this.tableLayoutPanelGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 52F));
             this.tableLayoutPanelGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 58F));
-            this.tableLayoutPanelGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 61F));
+            this.tableLayoutPanelGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 92F));
             this.tableLayoutPanelGrid.Controls.Add(this.btnDSAdd, 5, 0);
             this.tableLayoutPanelGrid.Controls.Add(this.btnDSSave, 2, 0);
             this.tableLayoutPanelGrid.Controls.Add(this.btnDSOpen, 1, 0);
@@ -294,9 +294,9 @@
             // 
             this.btnDSSave.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnDSSave.Image = ((System.Drawing.Image)(resources.GetObject("btnDSSave.Image")));
-            this.btnDSSave.Location = new System.Drawing.Point(143, 6);
+            this.btnDSSave.Location = new System.Drawing.Point(118, 6);
             this.btnDSSave.Name = "btnDSSave";
-            this.btnDSSave.Size = new System.Drawing.Size(38, 35);
+            this.btnDSSave.Size = new System.Drawing.Size(32, 35);
             this.btnDSSave.TabIndex = 5;
             this.btnDSSave.UseVisualStyleBackColor = true;
             this.btnDSSave.Click += new System.EventHandler(this.btnDSSave_Click);
@@ -305,7 +305,7 @@
             // 
             this.btnDSOpen.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnDSOpen.Image = ((System.Drawing.Image)(resources.GetObject("btnDSOpen.Image")));
-            this.btnDSOpen.Location = new System.Drawing.Point(93, 6);
+            this.btnDSOpen.Location = new System.Drawing.Point(74, 6);
             this.btnDSOpen.Name = "btnDSOpen";
             this.btnDSOpen.Size = new System.Drawing.Size(38, 35);
             this.btnDSOpen.TabIndex = 6;
@@ -316,7 +316,7 @@
             // 
             this.btnDSSave2File.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnDSSave2File.Image = ((System.Drawing.Image)(resources.GetObject("btnDSSave2File.Image")));
-            this.btnDSSave2File.Location = new System.Drawing.Point(195, 6);
+            this.btnDSSave2File.Location = new System.Drawing.Point(164, 6);
             this.btnDSSave2File.Name = "btnDSSave2File";
             this.btnDSSave2File.Size = new System.Drawing.Size(38, 35);
             this.btnDSSave2File.TabIndex = 7;
@@ -327,7 +327,7 @@
             // 
             this.btnDSDel.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnDSDel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnDSDel.Location = new System.Drawing.Point(254, 7);
+            this.btnDSDel.Location = new System.Drawing.Point(223, 7);
             this.btnDSDel.Name = "btnDSDel";
             this.btnDSDel.Size = new System.Drawing.Size(37, 33);
             this.btnDSDel.TabIndex = 8;

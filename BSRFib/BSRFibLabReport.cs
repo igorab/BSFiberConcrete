@@ -10,21 +10,23 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace BSFiberConcrete.BSRFib
 {
     public class BSRFibLabReport
     {
         public MemoryStream ChartImage { get; set; }
-
-        private string ImageCalc;
-
-        public Dictionary<string, object> m_GeomParams { get; private set; }
+        
+        public Dictionary<string, double> LabResults { get; set; }
 
         public string FileChart { get; }
-        public object ReportName { get; set; }
-        public Enum m_BeamSection { get; private set; }
-        public Dictionary<string, object> m_Beam { get; private set; }
 
+        public object ReportName { get; set; }
+
+        public object SampleDescr { get; set; }
+
+
+        public List<FaF> ChartData { get; internal set; }
 
         public string CreateReport(int _fileIdx = 0)
         {
@@ -65,53 +67,65 @@ namespace BSFiberConcrete.BSRFib
         protected virtual void Header(StreamWriter w)
         {
             w.WriteLine("<html>");
+            w.WriteLine("<head>");
             w.WriteLine($"<H1>{ReportName}</H1>");
             w.WriteLine("<H4>Расчет выполнен по СП 360.1325800.2017</H4>");
+            w.WriteLine($"<H2>{SampleDescr}</H2>");
 
-            string beamDescr = typeof(BeamSection).GetCustomAttribute<DescriptionAttribute>(true).Description;
-            //string beamSection = BSHelper.EnumDescription(m_BeamSection);
-            //w.WriteLine($"<H2>{beamDescr}: {beamSection}</H2>");
-            
+            w.WriteLine( @"<style>
+               td{
+                    width: 60px;
+                    height: 60px;
+                    border: solid 1px silver;
+                    text-align: center;
+                }
+                </style>");
+
+            w.WriteLine("</head>");
+            w.WriteLine("<body>");
+
+            if (LabResults != null)
+            {
+                w.WriteLine("<Table border=1 bordercolor = darkblue>");
+                w.WriteLine("<caption>Расчеты: </caption>");
+
+                foreach (var _pair in LabResults)
+                {
+                    w.WriteLine("<tr>");
+                    w.WriteLine($"<td><b>{_pair.Key}</b></td>");
+                    w.WriteLine($"<td> {_pair.Value}</td>");
+                    w.WriteLine("</tr>");
+                }
+
+                w.WriteLine("</tr>");
+                w.WriteLine("</Table>");
+                w.WriteLine("<br>");
+            }
+
             if (ChartImage != null)
             {                
                 string img = MakeImageSrcData(ChartImage);
                 w.WriteLine($"<table><tr><td> <img src={img}/> </td></tr> </table>");
             }
 
-            if (m_Beam != null)
+            if (ChartData != null)
             {
                 w.WriteLine("<Table border=1 bordercolor = darkblue>");
-                foreach (var _pair in m_Beam)
+                w.WriteLine("<tr><td><b>F</b></td><td><b>a<sub>F</sub></b></td></tr>");
+
+                foreach (FaF pair in ChartData)
                 {
                     w.WriteLine("<tr>");
-                    w.WriteLine($"<td><b>{_pair.Key}</b></td>");
-                    w.WriteLine($"<td colspan=2>| {_pair.Value} </td>");
+                    w.WriteLine($"<td><b>{pair.F }</b></td>");
+                    w.WriteLine($"<td colspan=2> {pair.aF} </td>");
                     w.WriteLine("</tr>");
                 }
                 w.WriteLine("</Table>");
-                w.WriteLine("<br>");
-
-                if (m_GeomParams != null)
-                {
-                    w.WriteLine("<Table border=1 bordercolor = darkblue>");
-                    w.WriteLine("<caption>Геометрия</caption>");
-
-                    foreach (var _pair in m_GeomParams)
-                    {
-                        w.WriteLine("<tr>");
-                        w.WriteLine($"<td><b>{_pair.Key}</b></td>");
-                        w.WriteLine($"<td>| {_pair.Value}</td>");
-                        w.WriteLine("</tr>");
-                    }
-
-                    w.WriteLine("</tr>");
-                    w.WriteLine("</Table>");
-                    w.WriteLine("<br>");
-                }
+                w.WriteLine("<br>");                
             }
+            w.WriteLine("</body>"); 
+            w.WriteLine("</html>");            
         }
-
-
 
         private string MakeImageSrcData(MemoryStream _img)
         {
