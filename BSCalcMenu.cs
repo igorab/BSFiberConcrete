@@ -104,7 +104,7 @@ namespace BSCalcMenu
 
         private void btnGraphAF_Click(object sender, EventArgs e)
         {
-            BSGraph bSGraph = new BSGraph();
+            BSRFibLabGraph bSGraph = new BSRFibLabGraph();
             bSGraph.Show();
         }
 

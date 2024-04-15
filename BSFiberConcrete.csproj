@@ -175,11 +175,11 @@
     <Compile Include="BSFiberAboutBox.Designer.cs">
       <DependentUpon>BSFiberAboutBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="BSGraph.cs">
+    <Compile Include="BSRFib\BSRFibLabGraph.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="BSGraph.Designer.cs">
-      <DependentUpon>BSGraph.cs</DependentUpon>
+    <Compile Include="BSRFib\BSRFibLabGraph.Designer.cs">
+      <DependentUpon>BSRFibLabGraph.cs</DependentUpon>
     </Compile>
     <Compile Include="BSRFib\BSRFibCalc.cs" />
     <Compile Include="BSRFib\BSRFiber.cs">
@@ -284,8 +284,8 @@
     <EmbeddedResource Include="BSFormPanel.resx">
       <DependentUpon>BSFormPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="BSGraph.resx">
-      <DependentUpon>BSGraph.cs</DependentUpon>
+    <EmbeddedResource Include="BSRFib\BSRFibLabGraph.resx">
+      <DependentUpon>BSRFibLabGraph.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="BSRFib\BSRFiber.resx">
       <DependentUpon>BSRFiber.cs</DependentUpon>

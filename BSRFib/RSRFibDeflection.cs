@@ -5,10 +5,13 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.Entity.Infrastructure;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace BSFiberConcrete.BSRFib
 {
@@ -17,7 +20,6 @@ namespace BSFiberConcrete.BSRFib
         private BindingList<Deflection_f_aF> Dsf_aF;
 
         private List<string> beams;
-
 
         public RSRFibDeflection()
         {
@@ -93,10 +95,31 @@ namespace BSFiberConcrete.BSRFib
                                
             }
         }
-
-        private void deflectionfaFBindingSource_CurrentChanged(object sender, EventArgs e)
+                      
+        private void btnReport_Click(object sender, EventArgs e)
         {
+            BSRFibLabReport labReport = new BSRFibLabReport();
 
+            labReport.ReportName = "Лаборатория";
+            labReport.SampleDescr = textBeamId.Text;
+            labReport.SampleName = "Образец: " + cmbBeams.Text;
+
+            Dictionary<string, double> LabResults = new Dictionary<string, double>()
+            {               
+            };
+
+            labReport.LabResults = LabResults;
+
+            //string chartimage = "";
+            //MemoryStream chartimage = new MemoryStream();
+
+            //ChartFaF.SaveImage(chartimage, ChartImageFormat.Png);
+
+            //labReport.ChartImage = chartimage;
+
+            labReport.D_f_aF = Dsf_aF.ToList();
+
+            labReport.RunReport();
         }
 
         private void deflectionfaFBindingSource_DataSourceChanged(object sender, EventArgs e)
@@ -104,9 +127,14 @@ namespace BSFiberConcrete.BSRFib
 
         }
 
+        private void deflectionfaFBindingSource_CurrentChanged(object sender, EventArgs e)
+        {
+
+        }
+
         private void deflectionfaFBindingSource_CurrentItemChanged(object sender, EventArgs e)
         {
-            
+
         }
     }
 }

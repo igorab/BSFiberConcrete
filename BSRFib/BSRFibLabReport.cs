@@ -23,10 +23,14 @@ namespace BSFiberConcrete.BSRFib
 
         public object ReportName { get; set; }
 
+        public object SampleName { get; set; }
+
         public object SampleDescr { get; set; }
 
 
         public List<FaF> ChartData { get; internal set; }
+
+        public List<Deflection_f_aF> D_f_aF { get; internal set; }
 
         public string CreateReport(int _fileIdx = 0)
         {

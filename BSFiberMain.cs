@@ -993,7 +993,7 @@ namespace BSFiberConcrete
 
         private void paramsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            BSGraph bsGraph = new BSGraph();
+            BSRFibLabGraph bsGraph = new BSRFibLabGraph();
             bsGraph.Show();
         }
 

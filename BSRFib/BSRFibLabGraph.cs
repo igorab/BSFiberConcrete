@@ -17,13 +17,13 @@ using Series = System.Windows.Forms.DataVisualization.Charting.Series;
 
 namespace BSFiberConcrete
 {
-    public partial class BSGraph : Form
+    public partial class BSRFibLabGraph : Form
     {
         private BindingList<FaF> Qds;
 
         private Dictionary<string, double> LabResults;
 
-        public BSGraph()
+        public BSRFibLabGraph()
         {
             InitializeComponent();
 
