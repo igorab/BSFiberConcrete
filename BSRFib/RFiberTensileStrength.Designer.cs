@@ -32,6 +32,9 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RFiberTensileStrength));
             this.dataGridFFF = new System.Windows.Forms.DataGridView();
+            this.L = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.B = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.H_sp = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.labelRfbt2n = new System.Windows.Forms.Label();
@@ -43,14 +46,13 @@
             this.numRFbtn = new System.Windows.Forms.NumericUpDown();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.btnCalculate = new System.Windows.Forms.Button();
-            this.fibLabBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.btnReport = new System.Windows.Forms.Button();
             this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.L = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.B = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.H_sp = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.felDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.f05DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.f25DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fibLabBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.labelCalc = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridFFF)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -89,6 +91,30 @@
             this.dataGridFFF.Size = new System.Drawing.Size(663, 488);
             this.dataGridFFF.TabIndex = 0;
             // 
+            // L
+            // 
+            this.L.DataPropertyName = "L";
+            this.L.HeaderText = "L, мм";
+            this.L.Name = "L";
+            this.L.ToolTipText = "Длина";
+            this.L.Width = 50;
+            // 
+            // B
+            // 
+            this.B.DataPropertyName = "B";
+            this.B.HeaderText = "B, мм";
+            this.B.Name = "B";
+            this.B.ToolTipText = "Ширина";
+            this.B.Width = 50;
+            // 
+            // H_sp
+            // 
+            this.H_sp.DataPropertyName = "H_sp";
+            this.H_sp.HeaderText = "H_sp, мм ";
+            this.H_sp.Name = "H_sp";
+            this.H_sp.ToolTipText = "Расстояние между вершиной надреза и верхней гранью образца";
+            this.H_sp.Width = 50;
+            // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 2;
@@ -121,11 +147,12 @@
             this.tableLayoutPanel2.Controls.Add(this.numRfbt2n, 1, 2);
             this.tableLayoutPanel2.Controls.Add(this.numRfbt3n, 1, 3);
             this.tableLayoutPanel2.Controls.Add(this.numRFbtn, 1, 4);
+            this.tableLayoutPanel2.Controls.Add(this.labelCalc, 1, 1);
             this.tableLayoutPanel2.Location = new System.Drawing.Point(672, 3);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 7;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 48.3871F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 51.6129F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 42.42424F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 57.57576F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 44F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 51F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 59F));
@@ -138,7 +165,7 @@
             // 
             this.labelRfbt2n.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelRfbt2n.AutoSize = true;
-            this.labelRfbt2n.Location = new System.Drawing.Point(12, 48);
+            this.labelRfbt2n.Location = new System.Drawing.Point(11, 48);
             this.labelRfbt2n.Name = "labelRfbt2n";
             this.labelRfbt2n.Size = new System.Drawing.Size(48, 13);
             this.labelRfbt2n.TabIndex = 0;
@@ -148,7 +175,7 @@
             // 
             this.labelRfbt3n.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelRfbt3n.AutoSize = true;
-            this.labelRfbt3n.Location = new System.Drawing.Point(12, 96);
+            this.labelRfbt3n.Location = new System.Drawing.Point(11, 96);
             this.labelRfbt3n.Name = "labelRfbt3n";
             this.labelRfbt3n.Size = new System.Drawing.Size(48, 13);
             this.labelRfbt3n.TabIndex = 1;
@@ -158,7 +185,7 @@
             // 
             this.labelRFbtn.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelRFbtn.AutoSize = true;
-            this.labelRFbtn.Location = new System.Drawing.Point(18, 151);
+            this.labelRFbtn.Location = new System.Drawing.Point(17, 151);
             this.labelRFbtn.Name = "labelRFbtn";
             this.labelRFbtn.Size = new System.Drawing.Size(42, 13);
             this.labelRFbtn.TabIndex = 2;
@@ -168,9 +195,9 @@
             // 
             this.pictureBoxBeamLab.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBoxBeamLab.Image = global::BSFiberConcrete.Properties.Resources.BeamLab;
-            this.pictureBoxBeamLab.Location = new System.Drawing.Point(66, 322);
+            this.pictureBoxBeamLab.Location = new System.Drawing.Point(65, 322);
             this.pictureBoxBeamLab.Name = "pictureBoxBeamLab";
-            this.pictureBoxBeamLab.Size = new System.Drawing.Size(256, 163);
+            this.pictureBoxBeamLab.Size = new System.Drawing.Size(257, 163);
             this.pictureBoxBeamLab.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBoxBeamLab.TabIndex = 3;
             this.pictureBoxBeamLab.TabStop = false;
@@ -179,12 +206,17 @@
             // 
             this.numRfbt2n.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numRfbt2n.DecimalPlaces = 4;
-            this.numRfbt2n.Location = new System.Drawing.Point(66, 45);
+            this.numRfbt2n.Location = new System.Drawing.Point(65, 45);
             this.numRfbt2n.Maximum = new decimal(new int[] {
-            -1530494976,
-            232830,
+            -727379968,
+            232,
             0,
             0});
+            this.numRfbt2n.Minimum = new decimal(new int[] {
+            1215752192,
+            23,
+            0,
+            -2147483648});
             this.numRfbt2n.Name = "numRfbt2n";
             this.numRfbt2n.Size = new System.Drawing.Size(120, 20);
             this.numRfbt2n.TabIndex = 3;
@@ -193,12 +225,17 @@
             // 
             this.numRfbt3n.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numRfbt3n.DecimalPlaces = 4;
-            this.numRfbt3n.Location = new System.Drawing.Point(66, 92);
+            this.numRfbt3n.Location = new System.Drawing.Point(65, 92);
             this.numRfbt3n.Maximum = new decimal(new int[] {
-            -1530494976,
-            232830,
+            -727379968,
+            232,
             0,
             0});
+            this.numRfbt3n.Minimum = new decimal(new int[] {
+            1215752192,
+            23,
+            0,
+            -2147483648});
             this.numRfbt3n.Name = "numRfbt3n";
             this.numRfbt3n.Size = new System.Drawing.Size(120, 20);
             this.numRfbt3n.TabIndex = 4;
@@ -207,12 +244,17 @@
             // 
             this.numRFbtn.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numRFbtn.DecimalPlaces = 4;
-            this.numRFbtn.Location = new System.Drawing.Point(66, 147);
+            this.numRFbtn.Location = new System.Drawing.Point(65, 147);
             this.numRFbtn.Maximum = new decimal(new int[] {
-            -1530494976,
-            232830,
+            -727379968,
+            232,
             0,
             0});
+            this.numRFbtn.Minimum = new decimal(new int[] {
+            1215752192,
+            23,
+            0,
+            -2147483648});
             this.numRFbtn.Name = "numRFbtn";
             this.numRFbtn.Size = new System.Drawing.Size(120, 20);
             this.numRFbtn.TabIndex = 5;
@@ -222,7 +264,8 @@
             this.tableLayoutPanel3.ColumnCount = 2;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Controls.Add(this.btnCalculate, 1, 0);
+            this.tableLayoutPanel3.Controls.Add(this.btnCalculate, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.btnReport, 1, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 497);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
@@ -237,7 +280,7 @@
             this.btnCalculate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCalculate.Image = ((System.Drawing.Image)(resources.GetObject("btnCalculate.Image")));
             this.btnCalculate.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCalculate.Location = new System.Drawing.Point(567, 3);
+            this.btnCalculate.Location = new System.Drawing.Point(235, 3);
             this.btnCalculate.Name = "btnCalculate";
             this.btnCalculate.Size = new System.Drawing.Size(93, 23);
             this.btnCalculate.TabIndex = 0;
@@ -245,39 +288,24 @@
             this.btnCalculate.UseVisualStyleBackColor = true;
             this.btnCalculate.Click += new System.EventHandler(this.btnCalculate_Click);
             // 
-            // fibLabBindingSource
+            // btnReport
             // 
-            this.fibLabBindingSource.DataSource = typeof(BSFiberConcrete.FibLab);
+            this.btnReport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnReport.Image = ((System.Drawing.Image)(resources.GetObject("btnReport.Image")));
+            this.btnReport.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnReport.Location = new System.Drawing.Point(567, 3);
+            this.btnReport.Name = "btnReport";
+            this.btnReport.Size = new System.Drawing.Size(93, 23);
+            this.btnReport.TabIndex = 1;
+            this.btnReport.Text = "Отчет";
+            this.btnReport.UseVisualStyleBackColor = true;
+            this.btnReport.Click += new System.EventHandler(this.btnReport_Click);
             // 
             // idDataGridViewTextBoxColumn
             // 
             this.idDataGridViewTextBoxColumn.DataPropertyName = "Id";
             this.idDataGridViewTextBoxColumn.HeaderText = "Id";
             this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
-            // 
-            // L
-            // 
-            this.L.DataPropertyName = "L";
-            this.L.HeaderText = "L, мм";
-            this.L.Name = "L";
-            this.L.ToolTipText = "Длина";
-            this.L.Width = 50;
-            // 
-            // B
-            // 
-            this.B.DataPropertyName = "B";
-            this.B.HeaderText = "B, мм";
-            this.B.Name = "B";
-            this.B.ToolTipText = "Ширина";
-            this.B.Width = 50;
-            // 
-            // H_sp
-            // 
-            this.H_sp.DataPropertyName = "H_sp";
-            this.H_sp.HeaderText = "H_sp, мм ";
-            this.H_sp.Name = "H_sp";
-            this.H_sp.ToolTipText = "Расстояние между вершиной надреза и верхней гранью образца";
-            this.H_sp.Width = 50;
             // 
             // felDataGridViewTextBoxColumn
             // 
@@ -296,6 +324,20 @@
             this.f25DataGridViewTextBoxColumn.DataPropertyName = "F25";
             this.f25DataGridViewTextBoxColumn.HeaderText = "F 2.5, Н ";
             this.f25DataGridViewTextBoxColumn.Name = "f25DataGridViewTextBoxColumn";
+            // 
+            // fibLabBindingSource
+            // 
+            this.fibLabBindingSource.DataSource = typeof(BSFiberConcrete.FibLab);
+            // 
+            // labelCalc
+            // 
+            this.labelCalc.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.labelCalc.AutoSize = true;
+            this.labelCalc.Location = new System.Drawing.Point(65, 17);
+            this.labelCalc.Name = "labelCalc";
+            this.labelCalc.Size = new System.Drawing.Size(45, 13);
+            this.labelCalc.TabIndex = 6;
+            this.labelCalc.Text = "Расчет:";
             // 
             // RFiberTensileStrength
             // 
@@ -342,5 +384,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn felDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn f05DataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn f25DataGridViewTextBoxColumn;
+        private System.Windows.Forms.Button btnReport;
+        private System.Windows.Forms.Label labelCalc;
     }
 }

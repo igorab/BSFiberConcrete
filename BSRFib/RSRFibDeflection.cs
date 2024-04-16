@@ -98,28 +98,34 @@ namespace BSFiberConcrete.BSRFib
                       
         private void btnReport_Click(object sender, EventArgs e)
         {
-            BSRFibLabReport labReport = new BSRFibLabReport();
+            try
+            {
+                BSRFibLabReport labReport = new BSRFibLabReport();
 
-            labReport.ReportName = "Лаборатория";
-            labReport.SampleDescr = textBeamId.Text;
-            labReport.SampleName = "Образец: " + cmbBeams.Text;
+                labReport.ReportName = "Лаборатория";
+                labReport.SampleDescr = textBeamId.Text;
+                labReport.SampleName = "Образец: " + cmbBeams.Text;
 
-            Dictionary<string, double> LabResults = new Dictionary<string, double>()
-            {               
-            };
+                Dictionary<string, double> LabResults = new Dictionary<string, double>()
+                {
+                };
 
-            labReport.LabResults = LabResults;
+                labReport.LabResults = LabResults;
 
-            //string chartimage = "";
-            //MemoryStream chartimage = new MemoryStream();
+                if (deflectionfaFBindingSource.DataSource is List<Deflection_f_aF>)
+                {
+                    var fafds = (List<Deflection_f_aF>)deflectionfaFBindingSource.DataSource;
 
-            //ChartFaF.SaveImage(chartimage, ChartImageFormat.Png);
+                    labReport.D_f_aF = new List<Deflection_f_aF>(fafds.ToList());
+                }
 
-            //labReport.ChartImage = chartimage;
-
-            labReport.D_f_aF = Dsf_aF.ToList();
-
-            labReport.RunReport();
+                labReport.RunReport();
+                
+            }
+            catch (Exception _ex) 
+            {
+                MessageBox.Show(_ex.Message);
+            }
         }
 
         private void deflectionfaFBindingSource_DataSourceChanged(object sender, EventArgs e)

@@ -57,6 +57,44 @@ namespace BSFiberConcrete
 
         }
 
+        private void btnReport_Click(object sender, EventArgs e)
+        {
+            PrintReport();
+        }
+
+        private void PrintReport()
+        {
+            try
+            {
+                BSRFibLabReport labReport = new BSRFibLabReport();
+
+                labReport.ReportName = "Подбор";
+                labReport.SampleDescr = labelDescr.Text;
+                labReport.SampleName = "Rfbt3; Rfb с учетом фибры";
+
+                Dictionary<string, string> LabItems = new Dictionary<string, string>()
+                {
+                    [label_h.Text] = Convert.ToString(num_h.Value),
+                    [label_b.Text] = Convert.ToString(num_b.Value),
+                    [labelEtaf.Text] = Convert.ToString(cmbEtaf.Text),
+                    [label_l_f.Text] = Convert.ToString(num_l_f.Value),
+                    [labelR_f_ser.Text] = Convert.ToString(cmb_RFiber.Text),
+                    [labelB.Text] = cmb_B.Text,
+                    [label_d_f_red.Text] = Convert.ToString(num_d_f_red.Value),
+                    [label_mu_fv.Text] = Convert.ToString(num_mu_fv.Value),
+                    ["Результат расчета:"] = Convert.ToString (lblRes.Text)
+                };
+
+                labReport.LabItems = LabItems;                
+                labReport.RunReport();
+
+            }
+            catch (Exception _ex)
+            {
+                MessageBox.Show(_ex.Message);
+            }
+        }
+
         private void BSRFiber_Load(object sender, EventArgs e)
         {
             bSRFibCalc.b = b;

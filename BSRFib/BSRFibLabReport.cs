@@ -19,6 +19,8 @@ namespace BSFiberConcrete.BSRFib
         
         public Dictionary<string, double> LabResults { get; set; }
 
+        public Dictionary<string, string> LabItems { get; set; }
+
         public string FileChart { get; }
 
         public object ReportName { get; set; }
@@ -31,6 +33,7 @@ namespace BSFiberConcrete.BSRFib
         public List<FaF> ChartData { get; internal set; }
 
         public List<Deflection_f_aF> D_f_aF { get; internal set; }
+        public List<FibLab> FibLab { get; internal set; }
 
         public string CreateReport(int _fileIdx = 0)
         {
@@ -78,7 +81,7 @@ namespace BSFiberConcrete.BSRFib
 
             w.WriteLine( @"<style>
                td{
-                    width: 60px;
+                    width: 80px;
                     height: 60px;
                     border: solid 1px silver;
                     text-align: center;
@@ -106,6 +109,24 @@ namespace BSFiberConcrete.BSRFib
                 w.WriteLine("<br>");
             }
 
+            if (LabItems != null)
+            {
+                w.WriteLine("<Table border=1 bordercolor = darkblue>");
+                w.WriteLine("<caption>Расчеты: </caption>");
+
+                foreach (var _pair in LabItems)
+                {
+                    w.WriteLine("<tr>");
+                    w.WriteLine($"<td><b>{_pair.Key}</b></td>");
+                    w.WriteLine($"<td> {_pair.Value}</td>");
+                    w.WriteLine("</tr>");
+                }
+
+                w.WriteLine("</tr>");
+                w.WriteLine("</Table>");
+                w.WriteLine("<br>");
+            }
+
             if (ChartImage != null)
             {                
                 string img = MakeImageSrcData(ChartImage);
@@ -116,7 +137,6 @@ namespace BSFiberConcrete.BSRFib
             {
                 w.WriteLine("<Table border=1 bordercolor = darkblue>");
                 w.WriteLine("<tr><td><b>F</b></td><td><b>a<sub>F</sub></b></td></tr>");
-
                 foreach (FaF pair in ChartData)
                 {
                     w.WriteLine("<tr>");
@@ -127,6 +147,46 @@ namespace BSFiberConcrete.BSRFib
                 w.WriteLine("</Table>");
                 w.WriteLine("<br>");                
             }
+
+
+            if (D_f_aF != null)
+            {
+                w.WriteLine("<Table border=1 bordercolor = darkblue>");
+                w.WriteLine("<tr><td>Образец</td><td>№</td> <td><b>f</b></td><td><b>a<sub>F</sub></b></td></tr>");
+                foreach (var pair in D_f_aF)
+                {
+                    w.WriteLine("<tr>");
+                    w.WriteLine($"<td><b>{pair.Id}</b></td>");
+                    w.WriteLine($"<td>{pair.Num}</td>");
+                    w.WriteLine($"<td><b>{pair.f}</b></td>");
+                    w.WriteLine($"<td colspan=2> {pair.aF} </td>");
+                    w.WriteLine("</tr>");
+                }
+                w.WriteLine("</Table>");
+                w.WriteLine("<br>");
+            }
+
+            if (FibLab != null)
+            {
+                w.WriteLine("<Table border=1 bordercolor = darkblue>");
+                w.WriteLine("<tr><td width = \"200\"'><b>Id</b></td><td>L</td><td>B</td><td>H sp</td><td>F el</td><td>F 0.5</td><td>F 2.5</td></tr>");
+
+                foreach (FibLab item in FibLab)
+                {
+                    w.WriteLine("<tr>");
+                    w.WriteLine($"<td width = \"200\"><b>{item.Id}</b></td>");
+                    w.WriteLine($"<td>{item.L}</td>");
+                    w.WriteLine($"<td>{item.B}</td>");
+                    w.WriteLine($"<td>{item.H_sp}</td>");
+                    w.WriteLine($"<td>{item.Fel} </td>");
+                    w.WriteLine($"<td>{item.F05} </td>");
+                    w.WriteLine($"<td>{item.F25} </td>");
+                    w.WriteLine("</tr>");
+                }
+                w.WriteLine("</Table>");
+                w.WriteLine("<br>");
+            }
+
             w.WriteLine("</body>"); 
             w.WriteLine("</html>");            
         }
