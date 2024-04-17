@@ -379,6 +379,33 @@ namespace BSFiberConcrete
         public double f { get; set; }
     }
 
+    /// <summary>
+    /// Местная прочность, таблица для расчета
+    /// </summary>
+    public class LocalStress
+    {
+        /// <summary>
+        /// Номер переменной
+        /// </summary>
+        public int Id { get; set; }
+
+        /// <summary>
+        /// Имя переменной
+        /// </summary>
+        public string VarName { get; set; }
+
+        /// <summary>
+        /// Описание переменной
+        /// </summary>
+        public string VarDescr { get; set; }
+
+        /// <summary>
+        /// Числовое значение переменной
+        /// </summary>
+        public double Value { get; set; }
+    }
+
+
 
 }
 

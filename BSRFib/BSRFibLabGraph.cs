@@ -208,6 +208,7 @@ namespace BSFiberConcrete
             BSRFibLabReport labReport = new BSRFibLabReport();
 
             labReport.ReportName = "Лаборатория";
+            labReport.SampleName = this.Text;
             labReport.SampleDescr = "Образец: " + txtBarSample.Text;
 
             LabResults = new Dictionary<string, double>() 

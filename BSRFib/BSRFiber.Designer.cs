@@ -92,7 +92,7 @@
             "Фибра рубленная из стальной проволоки"});
             this.cmbEtaf.Location = new System.Drawing.Point(229, 166);
             this.cmbEtaf.Name = "cmbEtaf";
-            this.cmbEtaf.Size = new System.Drawing.Size(477, 21);
+            this.cmbEtaf.Size = new System.Drawing.Size(474, 21);
             this.cmbEtaf.TabIndex = 9;
             // 
             // tableLayoutPanel1
@@ -102,7 +102,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 103F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 41F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 45F));
             this.tableLayoutPanel1.Controls.Add(this.cmb_B, 2, 7);
             this.tableLayoutPanel1.Controls.Add(this.labelB, 1, 7);
             this.tableLayoutPanel1.Controls.Add(this.cmb_RFiber, 2, 6);
@@ -224,7 +224,7 @@
                 ""});
             this.cmb_RFiber.Location = new System.Drawing.Point(229, 241);
             this.cmb_RFiber.Name = "cmb_RFiber";
-            this.cmb_RFiber.Size = new System.Drawing.Size(477, 21);
+            this.cmb_RFiber.Size = new System.Drawing.Size(474, 21);
             this.cmb_RFiber.TabIndex = 15;
             // 
             // labelR_f_ser
@@ -292,7 +292,7 @@
             this.labelDescr.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelDescr.Location = new System.Drawing.Point(229, 20);
             this.labelDescr.Name = "labelDescr";
-            this.labelDescr.Size = new System.Drawing.Size(477, 74);
+            this.labelDescr.Size = new System.Drawing.Size(474, 74);
             this.labelDescr.TabIndex = 29;
             this.labelDescr.Text = "Определение сопротивлений сталефибробетона растяжению и сжатию с учетом влияния ф" +
     "ибрового армирования.";
@@ -373,7 +373,7 @@
             this.lblRes.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lblRes.Location = new System.Drawing.Point(229, 409);
             this.lblRes.Name = "lblRes";
-            this.lblRes.Size = new System.Drawing.Size(477, 62);
+            this.lblRes.Size = new System.Drawing.Size(474, 62);
             this.lblRes.TabIndex = 35;
             this.lblRes.Text = "---   ";
             // 

@@ -102,7 +102,7 @@ namespace BSFiberConcrete.BSRFib
             {
                 BSRFibLabReport labReport = new BSRFibLabReport();
 
-                labReport.ReportName = "Лаборатория";
+                labReport.ReportName = "Лаборатория: " + this.Text;
                 labReport.SampleDescr = textBeamId.Text;
                 labReport.SampleName = "Образец: " + cmbBeams.Text;
 

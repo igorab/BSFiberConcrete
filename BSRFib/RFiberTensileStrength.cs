@@ -57,7 +57,7 @@ namespace BSFiberConcrete.BSRFib
             BSRFibLabReport labReport = new BSRFibLabReport();
 
             labReport.ReportName = "Лаборатория";
-            labReport.SampleDescr = "Образец: " + "";
+            labReport.SampleDescr = this.Text;
 
             Dictionary<string, double>  LabResults = new Dictionary<string, double>()
             {
@@ -70,6 +70,19 @@ namespace BSFiberConcrete.BSRFib
             labReport.FibLab = new List<FibLab>(m_DsFibLab);
 
             labReport.RunReport();
+        }
+
+        private void btnDelCalc_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Удалить расчет?") == DialogResult.OK)
+            {
+                // TODO Delete Calc
+            }
+        }
+
+        private void tableLayoutPanel3_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

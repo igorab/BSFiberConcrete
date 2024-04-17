@@ -1,6 +1,7 @@
 ﻿using BSFiberConcrete;
 using BSFiberConcrete.Beam;
 using BSFiberConcrete.BSRFib;
+using BSFiberConcrete.LocalStrength;
 using BSFiberConcrete.Section;
 using System;
 using System.Collections.Generic;
@@ -138,6 +139,32 @@ namespace BSCalcMenu
         {
             RSRFibDeflection fibDeflection = new RSRFibDeflection();
             fibDeflection.Show();
+        }
+
+        /// <summary>
+        /// Расчет на местное сжатие
+        /// </summary>        
+        private void btnLocalCompressionCalc_Click(object sender, EventArgs e)
+        {
+            BSLocalStrength localStrength = new BSLocalStrength();
+            localStrength.Show();
+
+
+            BSLocalCompressionCalc strengthCalc = new BSLocalCompressionCalc();
+            strengthCalc.RunCalc();                
+        }
+
+        /// <summary>
+        /// Расчет на продавливание
+        /// </summary>        
+        private void btnPunchCalc_Click(object sender, EventArgs e)
+        {
+            BSLocalStrength localStrength = new BSLocalStrength();
+            localStrength.Show();
+
+
+            BSLocalPunchCalc strengthCalc = new BSLocalPunchCalc();
+            strengthCalc.RunCalc();
         }
     }
 }

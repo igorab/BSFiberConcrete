@@ -29,12 +29,17 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RFiberTensileStrength));
             this.dataGridFFF = new System.Windows.Forms.DataGridView();
+            this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.L = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.B = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.H_sp = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.felDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.f05DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.f25DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fibLabBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.labelRfbt2n = new System.Windows.Forms.Label();
@@ -44,16 +49,13 @@
             this.numRfbt2n = new System.Windows.Forms.NumericUpDown();
             this.numRfbt3n = new System.Windows.Forms.NumericUpDown();
             this.numRFbtn = new System.Windows.Forms.NumericUpDown();
+            this.labelCalc = new System.Windows.Forms.Label();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.btnCalculate = new System.Windows.Forms.Button();
             this.btnReport = new System.Windows.Forms.Button();
-            this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.felDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.f05DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.f25DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fibLabBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.labelCalc = new System.Windows.Forms.Label();
+            this.btnDelCalc = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridFFF)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fibLabBindingSource)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBeamLab)).BeginInit();
@@ -61,20 +63,19 @@
             ((System.ComponentModel.ISupportInitialize)(this.numRfbt3n)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numRFbtn)).BeginInit();
             this.tableLayoutPanel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.fibLabBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridFFF
             // 
             this.dataGridFFF.AutoGenerateColumns = false;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridFFF.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridFFF.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridFFF.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridFFF.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.idDataGridViewTextBoxColumn,
@@ -90,6 +91,12 @@
             this.dataGridFFF.Name = "dataGridFFF";
             this.dataGridFFF.Size = new System.Drawing.Size(663, 488);
             this.dataGridFFF.TabIndex = 0;
+            // 
+            // idDataGridViewTextBoxColumn
+            // 
+            this.idDataGridViewTextBoxColumn.DataPropertyName = "Id";
+            this.idDataGridViewTextBoxColumn.HeaderText = "Id";
+            this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
             // 
             // L
             // 
@@ -114,6 +121,28 @@
             this.H_sp.Name = "H_sp";
             this.H_sp.ToolTipText = "Расстояние между вершиной надреза и верхней гранью образца";
             this.H_sp.Width = 50;
+            // 
+            // felDataGridViewTextBoxColumn
+            // 
+            this.felDataGridViewTextBoxColumn.DataPropertyName = "Fel";
+            this.felDataGridViewTextBoxColumn.HeaderText = "F el, Н";
+            this.felDataGridViewTextBoxColumn.Name = "felDataGridViewTextBoxColumn";
+            // 
+            // f05DataGridViewTextBoxColumn
+            // 
+            this.f05DataGridViewTextBoxColumn.DataPropertyName = "F05";
+            this.f05DataGridViewTextBoxColumn.HeaderText = "F 0.5, Н";
+            this.f05DataGridViewTextBoxColumn.Name = "f05DataGridViewTextBoxColumn";
+            // 
+            // f25DataGridViewTextBoxColumn
+            // 
+            this.f25DataGridViewTextBoxColumn.DataPropertyName = "F25";
+            this.f25DataGridViewTextBoxColumn.HeaderText = "F 2.5, Н ";
+            this.f25DataGridViewTextBoxColumn.Name = "f25DataGridViewTextBoxColumn";
+            // 
+            // fibLabBindingSource
+            // 
+            this.fibLabBindingSource.DataSource = typeof(BSFiberConcrete.FibLab);
             // 
             // tableLayoutPanel1
             // 
@@ -259,11 +288,22 @@
             this.numRFbtn.Size = new System.Drawing.Size(120, 20);
             this.numRFbtn.TabIndex = 5;
             // 
+            // labelCalc
+            // 
+            this.labelCalc.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.labelCalc.AutoSize = true;
+            this.labelCalc.Location = new System.Drawing.Point(65, 17);
+            this.labelCalc.Name = "labelCalc";
+            this.labelCalc.Size = new System.Drawing.Size(45, 13);
+            this.labelCalc.TabIndex = 6;
+            this.labelCalc.Text = "Расчет:";
+            // 
             // tableLayoutPanel3
             // 
             this.tableLayoutPanel3.ColumnCount = 2;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.Controls.Add(this.btnDelCalc, 0, 1);
             this.tableLayoutPanel3.Controls.Add(this.btnCalculate, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.btnReport, 1, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -274,6 +314,7 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(663, 76);
             this.tableLayoutPanel3.TabIndex = 2;
+            this.tableLayoutPanel3.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel3_Paint);
             // 
             // btnCalculate
             // 
@@ -301,43 +342,18 @@
             this.btnReport.UseVisualStyleBackColor = true;
             this.btnReport.Click += new System.EventHandler(this.btnReport_Click);
             // 
-            // idDataGridViewTextBoxColumn
+            // btnDelCalc
             // 
-            this.idDataGridViewTextBoxColumn.DataPropertyName = "Id";
-            this.idDataGridViewTextBoxColumn.HeaderText = "Id";
-            this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
-            // 
-            // felDataGridViewTextBoxColumn
-            // 
-            this.felDataGridViewTextBoxColumn.DataPropertyName = "Fel";
-            this.felDataGridViewTextBoxColumn.HeaderText = "F el, Н";
-            this.felDataGridViewTextBoxColumn.Name = "felDataGridViewTextBoxColumn";
-            // 
-            // f05DataGridViewTextBoxColumn
-            // 
-            this.f05DataGridViewTextBoxColumn.DataPropertyName = "F05";
-            this.f05DataGridViewTextBoxColumn.HeaderText = "F 0.5, Н";
-            this.f05DataGridViewTextBoxColumn.Name = "f05DataGridViewTextBoxColumn";
-            // 
-            // f25DataGridViewTextBoxColumn
-            // 
-            this.f25DataGridViewTextBoxColumn.DataPropertyName = "F25";
-            this.f25DataGridViewTextBoxColumn.HeaderText = "F 2.5, Н ";
-            this.f25DataGridViewTextBoxColumn.Name = "f25DataGridViewTextBoxColumn";
-            // 
-            // fibLabBindingSource
-            // 
-            this.fibLabBindingSource.DataSource = typeof(BSFiberConcrete.FibLab);
-            // 
-            // labelCalc
-            // 
-            this.labelCalc.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.labelCalc.AutoSize = true;
-            this.labelCalc.Location = new System.Drawing.Point(65, 17);
-            this.labelCalc.Name = "labelCalc";
-            this.labelCalc.Size = new System.Drawing.Size(45, 13);
-            this.labelCalc.TabIndex = 6;
-            this.labelCalc.Text = "Расчет:";
+            this.btnDelCalc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDelCalc.Image = ((System.Drawing.Image)(resources.GetObject("btnDelCalc.Image")));
+            this.btnDelCalc.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnDelCalc.Location = new System.Drawing.Point(235, 41);
+            this.btnDelCalc.Name = "btnDelCalc";
+            this.btnDelCalc.Size = new System.Drawing.Size(93, 23);
+            this.btnDelCalc.TabIndex = 2;
+            this.btnDelCalc.Text = "Удалить";
+            this.btnDelCalc.UseVisualStyleBackColor = true;
+            this.btnDelCalc.Click += new System.EventHandler(this.btnDelCalc_Click);
             // 
             // RFiberTensileStrength
             // 
@@ -349,6 +365,7 @@
             this.Text = "Определение прочности на растяжение";
             this.Load += new System.EventHandler(this.RFiberTensileStrength_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridFFF)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fibLabBindingSource)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
@@ -357,7 +374,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numRfbt3n)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numRFbtn)).EndInit();
             this.tableLayoutPanel3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.fibLabBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -386,5 +402,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn f25DataGridViewTextBoxColumn;
         private System.Windows.Forms.Button btnReport;
         private System.Windows.Forms.Label labelCalc;
+        private System.Windows.Forms.Button btnDelCalc;
     }
 }

@@ -35,6 +35,7 @@
             System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BSRFibLabGraph));
             this.ChartFaF = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.faFBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanelCalcRes = new System.Windows.Forms.TableLayoutPanel();
             this.lblF05 = new System.Windows.Forms.Label();
@@ -44,6 +45,9 @@
             this.numF25 = new System.Windows.Forms.NumericUpDown();
             this.numFel = new System.Windows.Forms.NumericUpDown();
             this.gridFaF = new System.Windows.Forms.DataGridView();
+            this.numDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.aFDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tableLayoutPanelGrid = new System.Windows.Forms.TableLayoutPanel();
             this.btnDSAdd = new System.Windows.Forms.Button();
             this.btnDSSave = new System.Windows.Forms.Button();
@@ -64,11 +68,8 @@
             this.btnDrawChart = new System.Windows.Forms.Button();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.faFBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.numDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.aFDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.ChartFaF)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.faFBindingSource)).BeginInit();
             this.tableLayoutPanel.SuspendLayout();
             this.tableLayoutPanelCalcRes.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numF05)).BeginInit();
@@ -81,7 +82,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numHsp)).BeginInit();
             this.tableLayoutPanel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.faFBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // ChartFaF
@@ -109,6 +109,10 @@
             title1.Name = "aF";
             title1.Text = "Нагрузка-перемещение внешних граней надреза";
             this.ChartFaF.Titles.Add(title1);
+            // 
+            // faFBindingSource
+            // 
+            this.faFBindingSource.DataSource = typeof(BSFiberConcrete.FaF);
             // 
             // tableLayoutPanel
             // 
@@ -242,6 +246,26 @@
             this.gridFaF.Size = new System.Drawing.Size(356, 403);
             this.gridFaF.TabIndex = 3;
             // 
+            // numDataGridViewTextBoxColumn
+            // 
+            this.numDataGridViewTextBoxColumn.DataPropertyName = "Num";
+            this.numDataGridViewTextBoxColumn.HeaderText = "№";
+            this.numDataGridViewTextBoxColumn.Name = "numDataGridViewTextBoxColumn";
+            this.numDataGridViewTextBoxColumn.ToolTipText = "Номер измерения";
+            this.numDataGridViewTextBoxColumn.Width = 50;
+            // 
+            // aFDataGridViewTextBoxColumn
+            // 
+            this.aFDataGridViewTextBoxColumn.DataPropertyName = "aF";
+            this.aFDataGridViewTextBoxColumn.HeaderText = "aF, мм";
+            this.aFDataGridViewTextBoxColumn.Name = "aFDataGridViewTextBoxColumn";
+            // 
+            // fDataGridViewTextBoxColumn
+            // 
+            this.fDataGridViewTextBoxColumn.DataPropertyName = "F";
+            this.fDataGridViewTextBoxColumn.HeaderText = "F, Н";
+            this.fDataGridViewTextBoxColumn.Name = "fDataGridViewTextBoxColumn";
+            // 
             // tableLayoutPanelGrid
             // 
             this.tableLayoutPanelGrid.ColumnCount = 6;
@@ -250,7 +274,7 @@
             this.tableLayoutPanelGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 36.94268F));
             this.tableLayoutPanelGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 52F));
             this.tableLayoutPanelGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 58F));
-            this.tableLayoutPanelGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 95F));
+            this.tableLayoutPanelGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 96F));
             this.tableLayoutPanelGrid.Controls.Add(this.btnDSAdd, 5, 0);
             this.tableLayoutPanelGrid.Controls.Add(this.btnDSSave, 2, 0);
             this.tableLayoutPanelGrid.Controls.Add(this.btnDSOpen, 1, 0);
@@ -280,7 +304,7 @@
             // 
             this.btnDSSave.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnDSSave.Image = ((System.Drawing.Image)(resources.GetObject("btnDSSave.Image")));
-            this.btnDSSave.Location = new System.Drawing.Point(116, 6);
+            this.btnDSSave.Location = new System.Drawing.Point(115, 6);
             this.btnDSSave.Name = "btnDSSave";
             this.btnDSSave.Size = new System.Drawing.Size(31, 35);
             this.btnDSSave.TabIndex = 5;
@@ -291,7 +315,7 @@
             // 
             this.btnDSOpen.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnDSOpen.Image = ((System.Drawing.Image)(resources.GetObject("btnDSOpen.Image")));
-            this.btnDSOpen.Location = new System.Drawing.Point(72, 6);
+            this.btnDSOpen.Location = new System.Drawing.Point(71, 6);
             this.btnDSOpen.Name = "btnDSOpen";
             this.btnDSOpen.Size = new System.Drawing.Size(38, 35);
             this.btnDSOpen.TabIndex = 6;
@@ -302,7 +326,7 @@
             // 
             this.btnDSSave2File.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnDSSave2File.Image = ((System.Drawing.Image)(resources.GetObject("btnDSSave2File.Image")));
-            this.btnDSSave2File.Location = new System.Drawing.Point(161, 6);
+            this.btnDSSave2File.Location = new System.Drawing.Point(160, 6);
             this.btnDSSave2File.Name = "btnDSSave2File";
             this.btnDSSave2File.Size = new System.Drawing.Size(38, 35);
             this.btnDSSave2File.TabIndex = 7;
@@ -313,7 +337,7 @@
             // 
             this.btnDSDel.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnDSDel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnDSDel.Location = new System.Drawing.Point(220, 7);
+            this.btnDSDel.Location = new System.Drawing.Point(219, 7);
             this.btnDSDel.Name = "btnDSDel";
             this.btnDSDel.Size = new System.Drawing.Size(37, 33);
             this.btnDSDel.TabIndex = 8;
@@ -500,30 +524,6 @@
             // 
             this.openFileDialog.FileName = "FaF";
             // 
-            // faFBindingSource
-            // 
-            this.faFBindingSource.DataSource = typeof(BSFiberConcrete.FaF);
-            // 
-            // numDataGridViewTextBoxColumn
-            // 
-            this.numDataGridViewTextBoxColumn.DataPropertyName = "Num";
-            this.numDataGridViewTextBoxColumn.HeaderText = "№";
-            this.numDataGridViewTextBoxColumn.Name = "numDataGridViewTextBoxColumn";
-            this.numDataGridViewTextBoxColumn.ToolTipText = "Номер измерения";
-            this.numDataGridViewTextBoxColumn.Width = 50;
-            // 
-            // aFDataGridViewTextBoxColumn
-            // 
-            this.aFDataGridViewTextBoxColumn.DataPropertyName = "aF";
-            this.aFDataGridViewTextBoxColumn.HeaderText = "aF, мм";
-            this.aFDataGridViewTextBoxColumn.Name = "aFDataGridViewTextBoxColumn";
-            // 
-            // fDataGridViewTextBoxColumn
-            // 
-            this.fDataGridViewTextBoxColumn.DataPropertyName = "F";
-            this.fDataGridViewTextBoxColumn.HeaderText = "F, Н";
-            this.fDataGridViewTextBoxColumn.Name = "fDataGridViewTextBoxColumn";
-            // 
             // BSRFibLabGraph
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -534,6 +534,7 @@
             this.Text = "График \"нагрузка-перемещение внешних граней надреза\"";
             this.Load += new System.EventHandler(this.BSGraph_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ChartFaF)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.faFBindingSource)).EndInit();
             this.tableLayoutPanel.ResumeLayout(false);
             this.tableLayoutPanel.PerformLayout();
             this.tableLayoutPanelCalcRes.ResumeLayout(false);
@@ -549,7 +550,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numHsp)).EndInit();
             this.tableLayoutPanel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.faFBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
