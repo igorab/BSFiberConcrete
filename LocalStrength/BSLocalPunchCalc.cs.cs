@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BSFiberConcrete.Lib;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.SymbolStore;
 using System.Linq;
@@ -20,6 +21,12 @@ namespace BSFiberConcrete.LocalStrength
         //Рабочая высота плиты по y(см)
         protected double h0y;
         protected double u;
+
+        public override List<LocalStress> DataSource()
+        {
+            return BSData.LoadLocalPunch();
+        }
+
 
         public override void RunCalc()
         {

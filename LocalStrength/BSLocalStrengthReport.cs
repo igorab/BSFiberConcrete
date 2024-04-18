@@ -14,9 +14,9 @@ namespace BSFiberConcrete.LocalStrength
         public BSLocalStrengthReport() { }
 
         public List<LocalStress> DataSource { get; internal set; }
-        public object ReportName { get; private set; }
-        public object SampleDescr { get; private set; }
-        public object SampleName { get; private set; }
+        public string ReportName {private get; set; }
+        public string SampleDescr {private get; set; }
+        public string SampleName {private get; set; }
         public Dictionary<string, double> CalcResults { get; private set; }
 
         public void RunReport()

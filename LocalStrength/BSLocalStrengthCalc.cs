@@ -24,10 +24,19 @@ namespace BSFiberConcrete.LocalStrength
         protected double Rfbtn;
         protected double Rfbt;
 
+        public virtual string ReportName() => "";
+        public virtual string SampleDescr() => "";
+        public virtual string SampleName() => "";
+
         public BSLocalStrengthCalc()
         {
-            (a1, a2, c, Yb1, Yb2, Yb3, Yb5) = (20, 30, 15, 0.9, 0.9, 1, 1);
+            //(a1, a2, c, Yb1, Yb2, Yb3, Yb5) = (20, 30, 15, 0.9, 0.9, 1, 1);
 
+        }
+
+        public virtual List<LocalStress> DataSource()
+        {
+            return new List<LocalStress>();
         }
 
 

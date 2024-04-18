@@ -146,12 +146,13 @@ namespace BSCalcMenu
         /// </summary>        
         private void btnLocalCompressionCalc_Click(object sender, EventArgs e)
         {
-            BSLocalStrength localStrength = new BSLocalStrength();
-            localStrength.Show();
-
-
             BSLocalCompressionCalc strengthCalc = new BSLocalCompressionCalc();
-            strengthCalc.RunCalc();                
+            BSLocalStrength localStrength = new BSLocalStrength();
+
+            localStrength.StrengthCalc = strengthCalc;
+            localStrength.Show();
+            
+            //strengthCalc.RunCalc();                
         }
 
         /// <summary>
@@ -159,12 +160,13 @@ namespace BSCalcMenu
         /// </summary>        
         private void btnPunchCalc_Click(object sender, EventArgs e)
         {
-            BSLocalStrength localStrength = new BSLocalStrength();
-            localStrength.Show();
-
-
             BSLocalPunchCalc strengthCalc = new BSLocalPunchCalc();
-            strengthCalc.RunCalc();
+            BSLocalStrength localStrength = new BSLocalStrength();
+
+            localStrength.StrengthCalc = strengthCalc;
+            localStrength.Show();
+            
+            //strengthCalc.RunCalc();
         }
     }
 }

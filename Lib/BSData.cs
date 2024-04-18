@@ -367,5 +367,26 @@ namespace BSFiberConcrete.Lib
                 return new List<LocalStress>();
             }
         }
+
+        /// <summary>
+        /// Местные нагрузки
+        /// </summary>
+        /// <returns>Данные и расчет </returns>
+        public static List<LocalStress> LoadLocalPunch()
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    var output = cnn.Query<LocalStress>("select * from LocalPunch", new DynamicParameters());
+                    return output.ToList();
+                }
+            }
+            catch
+            {
+                return new List<LocalStress>();
+            }
+        }
+
     }
 }
