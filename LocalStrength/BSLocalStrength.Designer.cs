@@ -58,9 +58,9 @@
             this.valueDataGridViewTextBoxColumn});
             this.dataGridLocalStrength.DataSource = this.localStressBindingSource;
             this.dataGridLocalStrength.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridLocalStrength.Location = new System.Drawing.Point(46, 62);
+            this.dataGridLocalStrength.Location = new System.Drawing.Point(44, 62);
             this.dataGridLocalStrength.Name = "dataGridLocalStrength";
-            this.dataGridLocalStrength.Size = new System.Drawing.Size(745, 470);
+            this.dataGridLocalStrength.Size = new System.Drawing.Size(717, 470);
             this.dataGridLocalStrength.TabIndex = 0;
             // 
             // idDataGridViewTextBoxColumn
@@ -107,7 +107,7 @@
             this.tableLayoutPanel1.ColumnCount = 3;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5.446928F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 94.55307F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 105F));
             this.tableLayoutPanel1.Controls.Add(this.dataGridLocalStrength, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.labelHeader, 1, 0);
@@ -129,7 +129,7 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.Controls.Add(this.btnPrintReport, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.btnCalc, 0, 0);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(541, 538);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(511, 538);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 63.63636F));
@@ -143,7 +143,7 @@
             this.btnPrintReport.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnPrintReport.Location = new System.Drawing.Point(128, 3);
             this.btnPrintReport.Name = "btnPrintReport";
-            this.btnPrintReport.Size = new System.Drawing.Size(119, 29);
+            this.btnPrintReport.Size = new System.Drawing.Size(119, 28);
             this.btnPrintReport.TabIndex = 1;
             this.btnPrintReport.Text = "Отчет";
             this.btnPrintReport.UseVisualStyleBackColor = true;
@@ -155,11 +155,11 @@
             this.btnCalc.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnCalc.Location = new System.Drawing.Point(3, 3);
             this.btnCalc.Name = "btnCalc";
-            this.btnCalc.Size = new System.Drawing.Size(119, 29);
+            this.btnCalc.Size = new System.Drawing.Size(119, 28);
             this.btnCalc.TabIndex = 0;
             this.btnCalc.Text = "Рассчитать";
             this.btnCalc.UseVisualStyleBackColor = true;
-            this.btnCalc.Click += new System.EventHandler(this.button1_Click);
+            this.btnCalc.Click += new System.EventHandler(this.btnCalc_Click);
             // 
             // labelHeader
             // 
@@ -167,9 +167,9 @@
             this.labelHeader.AutoSize = true;
             this.labelHeader.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.labelHeader.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelHeader.Location = new System.Drawing.Point(46, 21);
+            this.labelHeader.Location = new System.Drawing.Point(44, 21);
             this.labelHeader.Name = "labelHeader";
-            this.labelHeader.Size = new System.Drawing.Size(745, 16);
+            this.labelHeader.Size = new System.Drawing.Size(717, 16);
             this.labelHeader.TabIndex = 2;
             this.labelHeader.Text = "Расчет сталефибробетонных элементов на местное сжатие без арматуры";
             // 

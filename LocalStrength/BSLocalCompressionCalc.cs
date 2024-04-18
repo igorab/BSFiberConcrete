@@ -9,14 +9,31 @@ namespace BSFiberConcrete.LocalStrength
 {
     public class BSLocalCompressionCalc : BSLocalStrengthCalc
     {
-        public override List<LocalStress> DataSource()
+        public override void InitDataSource()
         {
-            return BSData.LoadLocalStress();
+            m_DS = BSData.LoadLocalStress();
         }
 
-        public override void RunCalc()
+        public override string ReportName()
         {
-            base.RunCalc();
+            return "Местное сжатие";
+        }
+
+        public override bool RunCalc()
+        {
+            bool ok = base.RunCalc();
+
+            return ok;
+        }
+
+        public override string SampleDescr()
+        {
+            return "";
+        }
+
+        public override string SampleName()
+        {
+            return "Расчет сталефибробетонных элементов на местное сжатие без арматуры";
         }
     }
 }

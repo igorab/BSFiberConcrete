@@ -8,6 +8,10 @@ namespace BSFiberConcrete.LocalStrength
 {
     public class BSLocalStrengthCalc
     {
+        protected List<LocalStress> m_DS;
+        public List<LocalStress> GetDS => m_DS;
+
+
         protected double a1;
         protected double a2;
         protected double c;
@@ -16,7 +20,7 @@ namespace BSFiberConcrete.LocalStrength
         protected double Yb2;
         protected double Yb3;
         protected double Yb5;
-
+        protected double Yft;
 
         protected double Rfb;
         protected double Rfbn;
@@ -34,15 +38,15 @@ namespace BSFiberConcrete.LocalStrength
 
         }
 
-        public virtual List<LocalStress> DataSource()
+        public virtual void InitDataSource()
         {
-            return new List<LocalStress>();
+            m_DS = new List<LocalStress>();
         }
 
 
-        public virtual void RunCalc()
+        public virtual bool RunCalc()
         {
-            
+            return false;
         }
 
     }

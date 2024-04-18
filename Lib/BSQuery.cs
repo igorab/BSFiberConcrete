@@ -244,5 +244,9 @@ namespace BSFiberConcrete.Lib
             }
         }
 
+        internal static List<LocalStress> UpdateLocalPunch(Dictionary<string, double> _D)
+        {
+            return BSData.LoadLocalPunch();
+        }
     }
 }

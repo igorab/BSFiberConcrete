@@ -20,11 +20,12 @@ namespace BSFiberConcrete.LocalStrength
         {
             InitializeComponent();
         }
-
-        private void button1_Click(object sender, EventArgs e)
+       
+        private void btnCalc_Click(object sender, EventArgs e)
         {
-
             StrengthCalc.RunCalc();
+
+            localStressBindingSource.DataSource = new BindingList<LocalStress>(StrengthCalc.GetDS); 
 
             // CExample excemple = new CExample();
             // System.Reflection.PropertyInfo[] properties =
@@ -43,7 +44,7 @@ namespace BSFiberConcrete.LocalStrength
 
         private void BSLocalStrength_Load(object sender, EventArgs e)
         {
-            var ds = new BindingList<LocalStress> (StrengthCalc.DataSource());
+            var ds = new BindingList<LocalStress> (StrengthCalc.GetDS);
 
             localStressBindingSource.DataSource = ds;
         }
