@@ -241,6 +241,11 @@
     </Compile>
     <Compile Include="LocalStrength\BSLocalStrengthCalc.cs" />
     <Compile Include="LocalStrength\BSLocalStrengthReport.cs" />
+    <Compile Include="LocalStrength\BSLocalStrengthRes.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BSLocalStrengthRes.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -309,6 +314,10 @@
     <EmbeddedResource Include="LocalStrength\BSLocalStrength.resx">
       <DependentUpon>BSLocalStrength.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="LocalStrength\BSLocalStrengthRes.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>BSLocalStrengthRes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
@@ -357,6 +366,7 @@
     <Content Include="Resources\Incline_Q.PNG">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\LocalPunch1.PNG" />
     <Content Include="Resources\Logo-300x67.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
