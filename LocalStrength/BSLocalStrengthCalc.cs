@@ -21,7 +21,7 @@ namespace BSFiberConcrete.LocalStrength
         protected double Yb3;
         protected double Yb5;
         protected double Yft;
-
+        protected double Yb;
         protected double Rfb;
         protected double Rfbn;
 

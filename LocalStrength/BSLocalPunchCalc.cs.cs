@@ -32,8 +32,7 @@ namespace BSFiberConcrete.LocalStrength
             foreach (var item in m_DS) D[item.VarName] = item.Value;    
 
             (a1, b1, h0x, h0y, Rfbtn, Yft, Yb1, Yb5, Rfbt, h0, u, Afb, Ffbult) = 
-                (D["a1"], D["a2"], D["h0x"], D["h0y"], D["Rfbtn"], D["Yft"], D["Yb1"], D["Yb5"], D["Rfbt"], D["h0"], D["u"], D["Afb"], D["Ffbult"]);
-            
+                (D["a1"], D["a2"], D["h0x"], D["h0y"], D["Rfbtn"], D["Yft"], D["Yb1"], D["Yb5"], D["Rfbt"], D["h0"], D["u"], D["Afb"], D["Ffbult"]);            
         }
 
         public override string ReportName()
@@ -45,7 +44,6 @@ namespace BSFiberConcrete.LocalStrength
         {
             return "Расчет сталефибробетонных элементов на продавливание при действии сосредоточенной силы без арматуры";
         }
-
 
         public override bool RunCalc()
         {
@@ -67,7 +65,13 @@ namespace BSFiberConcrete.LocalStrength
                 // Предельное усилие, воспринимаемое сталефибробетоном. (кг)
                 Ffbult = Rfbt * Afb;
 
-                Dictionary<string, double> D = new Dictionary<string, double>() { ["h0"] = h0, ["u"] = u, ["Afb"] = Afb, ["Ffbult"] = Ffbult };
+                Dictionary<string, double> D = new Dictionary<string, double>() 
+                { 
+                    ["h0"] = h0, 
+                    ["u"] = u, 
+                    ["Afb"] = Afb, 
+                    ["Ffbult"] = Ffbult 
+                };
 
                 m_DS = BSQuery.UpdateLocalPunch(D);
 
