@@ -244,7 +244,7 @@ namespace BSFiberConcrete.Lib
             }
         }
 
-        internal static List<LocalStress> UpdateLocalPunch(Dictionary<string, double> _ds)
+        public static List<LocalStress> UpdateLocalPunch(Dictionary<string, double> _ds)
         {
             try
             {
@@ -255,7 +255,7 @@ namespace BSFiberConcrete.Lib
                     {
                         foreach (KeyValuePair<string, double> item in _ds)
                         {                            
-                            int cnt = cnn.Execute("update LocalPunch set Value=@Value where Id=@Key ", item, tr);                            
+                            int cnt = cnn.Execute("update LocalPunch set Value=@Value where VarName=@Key ", item, tr);                            
                         }
                         tr.Commit();
                     }
@@ -268,5 +268,32 @@ namespace BSFiberConcrete.Lib
 
             return BSData.LoadLocalPunch();
         }
+
+        public static List<LocalStress> UpdateLocalCompression(Dictionary<string, double> _ds)
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    cnn.Open();
+                    using (var tr = cnn.BeginTransaction())
+                    {
+                        foreach (KeyValuePair<string, double> item in _ds)
+                        {
+                            int cnt = cnn.Execute("update LocalStress set Value=@Value where VarName=@Key ", item, tr);
+                        }
+                        tr.Commit();
+                    }
+                }
+            }
+            catch (Exception _e)
+            {
+                MessageBox.Show(_e.Message);
+            }
+
+            return BSData.LoadLocalStress();
+        }
+
+
     }
 }

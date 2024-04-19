@@ -64,5 +64,10 @@ namespace BSFiberConcrete.LocalStrength
 
             strengthReport.RunReport();
         }
+
+        private void btnCloseForm_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

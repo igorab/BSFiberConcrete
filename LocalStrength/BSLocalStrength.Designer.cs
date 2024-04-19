@@ -36,6 +36,7 @@
             this.btnPrintReport = new System.Windows.Forms.Button();
             this.btnCalc = new System.Windows.Forms.Button();
             this.labelHeader = new System.Windows.Forms.Label();
+            this.btnCloseForm = new System.Windows.Forms.Button();
             this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.varDescrDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.varNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -69,10 +70,11 @@
             this.tableLayoutPanel1.ColumnCount = 3;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 2.314815F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 97.68519F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 109F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110F));
             this.tableLayoutPanel1.Controls.Add(this.dataGridLocalStrength, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.labelHeader, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.btnCloseForm, 2, 2);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -134,6 +136,17 @@
             this.labelHeader.Size = new System.Drawing.Size(838, 16);
             this.labelHeader.TabIndex = 2;
             this.labelHeader.Text = "Расчет сталефибробетонных элементов на местное сжатие без арматуры";
+            // 
+            // btnCloseForm
+            // 
+            this.btnCloseForm.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.btnCloseForm.Location = new System.Drawing.Point(892, 551);
+            this.btnCloseForm.Name = "btnCloseForm";
+            this.btnCloseForm.Size = new System.Drawing.Size(79, 28);
+            this.btnCloseForm.TabIndex = 3;
+            this.btnCloseForm.Text = "Закрыть";
+            this.btnCloseForm.UseVisualStyleBackColor = true;
+            this.btnCloseForm.Click += new System.EventHandler(this.btnCloseForm_Click);
             // 
             // idDataGridViewTextBoxColumn
             // 
@@ -204,5 +217,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn varDescrDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn varNameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn valueDataGridViewTextBoxColumn;
+        private System.Windows.Forms.Button btnCloseForm;
     }
 }

@@ -36,10 +36,53 @@ namespace BSFiberConcrete.LocalStrength
 
         public override bool RunCalc()
         {
+            (Afbloc, Afbmax, Rfb, fi_fb, Rfbloc, Nult) = (0, 0, 0, 0, 0, 0);
+
             bool ok = base.RunCalc();
 
+            try
+            {
+                // Площадь смятия, см2
+                Afbloc = a1 * a2;
+                
+                // максимальная расчетная площадь
+                Afbmax = 6400;
+
+                //Расчетные значения сопротивления  на сжатиие по B30 СП63
+                Rfb = Rfbn /Yb * Yb1 * Yb2 * Yb3 * Yb5;
+
+                fi_fb = 0.8 * Math.Sqrt( Afbmax / Afbloc );
+
+                if (fi_fb > 2.5)
+                    fi_fb = 2.5;
+                else if (fi_fb < 1)
+                    fi_fb = 1.0;
+
+                Rfbloc = fi_fb * Rfb;
+
+                Nult = psi * Rfbloc * Afbloc;
+
+                Dictionary<string, double> D = new Dictionary<string, double>()
+                {
+                    ["Afbloc"] = Afbloc,
+                    ["Afbmax"] = Afbmax,
+                    ["Rfb"] = Rfb,
+                    ["fi_fb"] = fi_fb,
+                    ["Rfbloc"] = Rfbloc,
+                    ["Nult"] = Nult
+                };
+
+                m_DS = BSQuery.UpdateLocalCompression(D);
+
+                ok = true;
+            }
+            catch
+            {
+                ok = false;
+            }
             return ok;
         }
+    
 
         public override string SampleDescr()
         {

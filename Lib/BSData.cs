@@ -349,7 +349,7 @@ namespace BSFiberConcrete.Lib
         }
 
         /// <summary>
-        /// Местные нагрузки
+        /// Местные нагрузки LocalStress = LocalCompression 
         /// </summary>
         /// <returns>Данные и расчет </returns>
         public static List<LocalStress> LoadLocalStress()

@@ -207,6 +207,7 @@
     <Compile Include="Calc\BSFiberCalc_Deform.cs" />
     <Compile Include="Calc\BSFiberCalc_IBeamRods.cs" />
     <Compile Include="Calc\BSFiberCalc_NormRods.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Lib\BSHelper.cs" />
     <Compile Include="Calc\BSFiberCalculation.cs" />
     <Compile Include="FiberCalcMNQ\BSFiberCalc_MNQ.cs" />
