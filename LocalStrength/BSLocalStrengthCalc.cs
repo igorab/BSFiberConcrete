@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,6 +12,8 @@ namespace BSFiberConcrete.LocalStrength
         protected List<LocalStress> m_DS;
         public List<LocalStress> GetDS => m_DS;
 
+        public int Scheme { set; get; }
+        public bool UseReinforcement { set; get; }
 
         protected double a1;
         protected double a2;
@@ -35,8 +38,8 @@ namespace BSFiberConcrete.LocalStrength
 
         public BSLocalStrengthCalc()
         {
-            //(a1, a2, c, Yb1, Yb2, Yb3, Yb5) = (20, 30, 15, 0.9, 0.9, 1, 1);
-
+            Scheme = 1;
+            UseReinforcement = false;
         }
 
         public virtual void InitDataSource()
@@ -95,14 +98,25 @@ namespace BSFiberConcrete.LocalStrength
                     _am = (2*a2 + a1) * (2 * a1 + a2);
                     break;
                 case 2:
+                    _am = (2*a2 + a1)*a2  - 2 *(2*a2 + a1)*a;
                     break;
                 case 3:
+                    _am = AfbLoc(3);
                     break;
                 case 4:
+                    _am = AfbLoc(4);
                     break;
                 case 5:
+                    _am = (2 * a2 + a1) * a2 - 2 * (2 * a2 + a1) * a;
                     break;
                 case 6:
+                    if (c < a1)
+                        if (c < a)
+                            _am = (2*a2 + a1) * (2*c + a2) - (2*a2 + a1)*(a-c);
+                        else
+                            _am = (2*a2 + a1) * (2*c + a2) - (2*a2 + a1)*a;
+                    else
+                        _am = (2*a2 + a1) * (2*a2 + a1);
                     break;
             }
 
@@ -131,7 +145,10 @@ namespace BSFiberConcrete.LocalStrength
                     _lx = a1 + 2 * a2;
                     break;
                 case 6:
-                    _lx = 2 * a2 + a1;
+                    if (c < a1)
+                        _lx = 2 * a2 + a1;
+                    else
+                        _lx = 2 * a1 + a2;
                     break;
             }
             return _lx;

@@ -15,6 +15,7 @@ namespace BSFiberConcrete.LocalStrength
     public partial class BSLocalStrength : Form
     {
         public BSLocalStrengthCalc StrengthCalc {  get; set; }
+        
 
         public BSLocalStrength()
         {
@@ -23,23 +24,14 @@ namespace BSFiberConcrete.LocalStrength
        
         private void btnCalc_Click(object sender, EventArgs e)
         {
+            StrengthCalc.UseReinforcement = chboxReinforcement.Checked;            
+            StrengthCalc.Scheme = cmbScheme.SelectedIndex + 1;
+
             StrengthCalc.RunCalc();
 
-            localStressBindingSource.DataSource = new BindingList<LocalStress>(StrengthCalc.GetDS); 
-
-            // CExample excemple = new CExample();
-            // System.Reflection.PropertyInfo[] properties =
-            // excemple.GetType().GetProperties();
-            // FieldInfo[] fields = excemple.GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance);
-            // foreach (FieldInfo fi in fields)
-            //  Console.WriteLine(fi.Name);
-
-
-            //public class CExample
-            //{
-            //    private string privateValue = "private";
-            //    protected string protectedValue = "protected";
-            //}
+            localStressBindingSource.DataSource = new BindingList<LocalStress>(StrengthCalc.GetDS);
+            
+            
         }
 
         private void BSLocalStrength_Load(object sender, EventArgs e)

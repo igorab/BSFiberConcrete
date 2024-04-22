@@ -16,6 +16,8 @@ namespace BSFiberConcrete.LocalStrength
         private double Rfbloc;
         private double Nult;
 
+        private double N_ults;
+
         public override void InitDataSource()
         {
             m_DS = BSData.LoadLocalStress();
@@ -72,6 +74,9 @@ namespace BSFiberConcrete.LocalStrength
                     ["Nult"] = Nult
                 };
 
+                if (UseReinforcement)
+                    this.ReinforcementCalc();
+                
                 m_DS = BSQuery.UpdateLocalCompression(D);
 
                 ok = true;
@@ -83,6 +88,30 @@ namespace BSFiberConcrete.LocalStrength
             return ok;
         }
     
+        public bool ReinforcementCalc()
+        {
+            double nx = 5;
+            double ny = 5;
+            double Asx = 0.196;
+            double Asy= 0.196;
+
+            double lx = 5;
+            double ly = 5;
+
+            double s = 10;
+
+            double Afbloc_ef = Afbmax;
+
+            double mu_s_xy = (nx * Asx * lx + ny * Asy * ly) / (Afbloc_ef * s) ;
+
+            double fi_s_xy = Math.Sqrt(Afbloc_ef / Afbloc);
+
+            double Rfbs_loc = Rfbloc + 2 * fi_s_xy * mu_s_xy;
+
+            N_ults = psi * Rfbs_loc * Afbloc;
+
+            return true;
+        }
 
         public override string SampleDescr()
         {
