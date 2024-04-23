@@ -22,7 +22,7 @@ namespace BSFiberConcrete.LocalStrength
         protected double h0y;
         protected double u;
         protected double Afb;
-        protected double Ffbult;
+        protected double Ffb_ult;
         
         public override void InitDataSource()
         {
@@ -31,7 +31,7 @@ namespace BSFiberConcrete.LocalStrength
             Dictionary<string, double> D = new Dictionary<string, double>();
             foreach (var item in m_DS) D[item.VarName] = item.Value;    
 
-            (a1, b1, h0x, h0y, Rfbtn, Yft, Yb1, Yb5, Rfbt, h0, u, Afb, Ffbult) = 
+            (a1, b1, h0x, h0y, Rfbtn, Yft, Yb1, Yb5, Rfbt, h0, u, Afb, Ffb_ult) = 
                 (D["a1"], D["a2"], D["h0x"], D["h0y"], D["Rfbtn"], D["Yft"], D["Yb1"], D["Yb5"], D["Rfbt"], D["h0"], D["u"], D["Afb"], D["Ffbult"]);            
         }
 
@@ -47,7 +47,7 @@ namespace BSFiberConcrete.LocalStrength
 
         public override bool RunCalc()
         {
-            (h0, u, Afb, Ffbult) = (0, 0, 0, 0);
+            (h0, u, Afb, Ffb_ult) = (0, 0, 0, 0);
 
             bool ok = base.RunCalc();
 
@@ -63,14 +63,19 @@ namespace BSFiberConcrete.LocalStrength
                 Afb = u * h0;
 
                 // Предельное усилие, воспринимаемое сталефибробетоном. (кг)
-                Ffbult = Rfbt * Afb;
+                Ffb_ult = Rfbt * Afb;
+
+                if (F != 0 || Mx != 0 || My != 0)
+                {
+                    RunCalcFM();   
+                }
 
                 Dictionary<string, double> D = new Dictionary<string, double>() 
                 { 
                     ["h0"] = h0, 
                     ["u"] = u, 
                     ["Afb"] = Afb, 
-                    ["Ffbult"] = Ffbult 
+                    ["Ffbult"] = Ffb_ult 
                 };
 
                 m_DS = BSQuery.UpdateLocalPunch(D);
@@ -83,5 +88,77 @@ namespace BSFiberConcrete.LocalStrength
             }
             return ok;
         }
+
+        // сила продавливания
+        protected double F = 150000;
+
+        // Изгибающий момент по X кг*см
+        protected double Mx = 200000; // кг*см
+
+        // Изгибающий момент по Y кг*см
+        protected double My = 150000; // кг*см
+        
+        // расчет элементов на продавливание при действии сосредоточенных сил и моментов без арматуры
+        public bool RunCalcFM()
+        {
+            double Lx = b1 + h0;
+            double Ly = a1 + h0;
+
+            double Ifbx = 2 * ( Lx * Math.Pow(1,3) /12 + Math.Pow(Ly/2, 2) * Lx * 1 + 1 * Math.Pow(Ly, 3)/12 );
+            double Ifby = 2 * (Ly * Math.Pow(1, 3) / 12 + Math.Pow(Lx / 2, 2) * Ly * 1 + 1 * Math.Pow(Lx, 3) / 12);
+
+            double x_max = Lx / 2;
+            double y_max = Ly / 2;
+
+            // Момент сопротивления расчетного контура сталефибробетона при продавливании вокруг X
+            double Wfbx = Ifbx / y_max;
+
+            // Момент сопротивления расчетного контура сталефибробетона при продавливании вокруг Y
+            double Wfby = Ifby / x_max;
+
+            //Предельный изгибающий момент
+            double Mfb_x_ult = Rfbt * Wfbx * h0;
+
+            //Предельный изгибающий момент
+            double Mfb_y_ult = Rfbt * Wfby * h0;
+
+            double util_coeff = F / Ffb_ult + Mx / Mfb_x_ult + My / Mfb_y_ult;
+
+            return true;
+        }
+
+        // Расчетное сопротивление арматуры на продавливание СП63 (кг/см2) таб.6.15
+        protected double Rsw = 1732;
+
+        // площадь сечения поперечной арматуры с шагом sw, расположенная в пределах
+        // расстояния 0,5h0 по обе стороны от контура расчетного поперечного сечения по периметру контура расчетного поперечного сечения
+        protected double Asw = 2.06;
+
+        //шаг поперечной арматуры
+        protected double sw = 10;
+
+        // расчет элементов на продавливание при действии сосредоточенной силы с арматурой
+        public bool RunCalcReinforcementF()
+        {
+            // Длина расчетного контура №2
+            double a = a1 + 4 * h0;
+
+            // Ширина расчетного контура №2
+            double b = b1 + 4 * h0;
+
+            // Периметр контура расчетного поперечного сечения(см)
+            u = 2 * a + 2 * b;
+
+            // Площадь расчетного поперечного сечения(см)
+            Afb = u * h0;
+
+            Ffb_ult = Rfbt * Afb;
+
+            double util_coeff = F / Ffb_ult;
+
+            return true;
+        }
+
+
     }
 }
