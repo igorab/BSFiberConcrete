@@ -170,5 +170,16 @@ namespace BSCalcMenu
             
             //strengthCalc.RunCalc();
         }
+
+        /// <summary>
+        /// 5.2.8 Основные деформационные характеристики сталефибробетона
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnEfib_Click(object sender, EventArgs e)
+        {
+            BSEFib bsEFib = new BSEFib();
+            bsEFib.Show();
+        }
     }
 }
