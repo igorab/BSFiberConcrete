@@ -38,6 +38,8 @@ namespace BSFiberConcrete.LocalStrength
         {
             var ds = new BindingList<LocalStress> (StrengthCalc.GetDS);
 
+            labelHeader.Text = StrengthCalc.SampleDescr();
+
             localStressBindingSource.DataSource = ds;
         }
 

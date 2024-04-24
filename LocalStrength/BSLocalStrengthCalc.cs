@@ -53,6 +53,11 @@ namespace BSFiberConcrete.LocalStrength
             return false;
         }
 
+        public virtual bool ReinforcementCalc()
+        {
+            return false;
+        }
+
         public virtual double AfbLoc(int scheme)
         {
             double _al = 0;

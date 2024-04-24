@@ -32,11 +32,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BSLocalStrength));
             this.dataGridLocalStrength = new System.Windows.Forms.DataGridView();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanelBottom = new System.Windows.Forms.TableLayoutPanel();
             this.btnPrintReport = new System.Windows.Forms.Button();
             this.btnCalc = new System.Windows.Forms.Button();
-            this.labelHeader = new System.Windows.Forms.Label();
             this.btnCloseForm = new System.Windows.Forms.Button();
+            this.labelHeader = new System.Windows.Forms.Label();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.labelScheme = new System.Windows.Forms.Label();
             this.cmbScheme = new System.Windows.Forms.ComboBox();
@@ -48,7 +48,7 @@
             this.localStressBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridLocalStrength)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
+            this.tableLayoutPanelBottom.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.localStressBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -66,7 +66,7 @@
             this.dataGridLocalStrength.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridLocalStrength.Location = new System.Drawing.Point(23, 62);
             this.dataGridLocalStrength.Name = "dataGridLocalStrength";
-            this.dataGridLocalStrength.Size = new System.Drawing.Size(870, 470);
+            this.dataGridLocalStrength.Size = new System.Drawing.Size(856, 470);
             this.dataGridLocalStrength.TabIndex = 0;
             // 
             // tableLayoutPanel1
@@ -75,11 +75,10 @@
             this.tableLayoutPanel1.ColumnCount = 3;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 2.314815F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 97.68519F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 161F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 175F));
             this.tableLayoutPanel1.Controls.Add(this.dataGridLocalStrength, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanelBottom, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.labelHeader, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.btnCloseForm, 2, 2);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel3, 2, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
@@ -91,29 +90,33 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1058, 596);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
-            // tableLayoutPanel2
+            // tableLayoutPanelBottom
             // 
-            this.tableLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel2.ColumnCount = 2;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Controls.Add(this.btnPrintReport, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.btnCalc, 0, 0);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(643, 538);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 2;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 63.63636F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 36.36364F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(250, 55);
-            this.tableLayoutPanel2.TabIndex = 1;
+            this.tableLayoutPanelBottom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanelBottom.ColumnCount = 3;
+            this.tableLayoutPanelBottom.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanelBottom.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanelBottom.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 125F));
+            this.tableLayoutPanelBottom.Controls.Add(this.btnPrintReport, 1, 0);
+            this.tableLayoutPanelBottom.Controls.Add(this.btnCalc, 0, 0);
+            this.tableLayoutPanelBottom.Controls.Add(this.btnCloseForm, 2, 0);
+            this.tableLayoutPanelBottom.Location = new System.Drawing.Point(502, 538);
+            this.tableLayoutPanelBottom.Name = "tableLayoutPanelBottom";
+            this.tableLayoutPanelBottom.RowCount = 2;
+            this.tableLayoutPanelBottom.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 63.63636F));
+            this.tableLayoutPanelBottom.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 36.36364F));
+            this.tableLayoutPanelBottom.Size = new System.Drawing.Size(377, 55);
+            this.tableLayoutPanelBottom.TabIndex = 1;
             // 
             // btnPrintReport
             // 
+            this.btnPrintReport.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.btnPrintReport.Image = ((System.Drawing.Image)(resources.GetObject("btnPrintReport.Image")));
             this.btnPrintReport.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnPrintReport.Location = new System.Drawing.Point(128, 3);
+            this.btnPrintReport.Location = new System.Drawing.Point(129, 3);
             this.btnPrintReport.Name = "btnPrintReport";
-            this.btnPrintReport.Size = new System.Drawing.Size(119, 28);
+            this.btnPrintReport.Size = new System.Drawing.Size(120, 28);
             this.btnPrintReport.TabIndex = 1;
             this.btnPrintReport.Text = "Отчет";
             this.btnPrintReport.UseVisualStyleBackColor = true;
@@ -121,15 +124,31 @@
             // 
             // btnCalc
             // 
+            this.btnCalc.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCalc.Image = ((System.Drawing.Image)(resources.GetObject("btnCalc.Image")));
             this.btnCalc.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnCalc.Location = new System.Drawing.Point(3, 3);
             this.btnCalc.Name = "btnCalc";
-            this.btnCalc.Size = new System.Drawing.Size(119, 28);
+            this.btnCalc.Size = new System.Drawing.Size(120, 28);
             this.btnCalc.TabIndex = 0;
             this.btnCalc.Text = "Рассчитать";
             this.btnCalc.UseVisualStyleBackColor = true;
             this.btnCalc.Click += new System.EventHandler(this.btnCalc_Click);
+            // 
+            // btnCloseForm
+            // 
+            this.btnCloseForm.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCloseForm.Image = ((System.Drawing.Image)(resources.GetObject("btnCloseForm.Image")));
+            this.btnCloseForm.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCloseForm.Location = new System.Drawing.Point(255, 3);
+            this.btnCloseForm.Name = "btnCloseForm";
+            this.btnCloseForm.Size = new System.Drawing.Size(119, 28);
+            this.btnCloseForm.TabIndex = 3;
+            this.btnCloseForm.Text = "Закрыть";
+            this.btnCloseForm.UseVisualStyleBackColor = true;
+            this.btnCloseForm.Click += new System.EventHandler(this.btnCloseForm_Click);
             // 
             // labelHeader
             // 
@@ -139,20 +158,9 @@
             this.labelHeader.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelHeader.Location = new System.Drawing.Point(23, 21);
             this.labelHeader.Name = "labelHeader";
-            this.labelHeader.Size = new System.Drawing.Size(870, 16);
+            this.labelHeader.Size = new System.Drawing.Size(856, 16);
             this.labelHeader.TabIndex = 2;
-            this.labelHeader.Text = "Расчет сталефибробетонных элементов на местное сжатие без арматуры";
-            // 
-            // btnCloseForm
-            // 
-            this.btnCloseForm.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.btnCloseForm.Location = new System.Drawing.Point(937, 538);
-            this.btnCloseForm.Name = "btnCloseForm";
-            this.btnCloseForm.Size = new System.Drawing.Size(79, 28);
-            this.btnCloseForm.TabIndex = 3;
-            this.btnCloseForm.Text = "Закрыть";
-            this.btnCloseForm.UseVisualStyleBackColor = true;
-            this.btnCloseForm.Click += new System.EventHandler(this.btnCloseForm_Click);
+            this.labelHeader.Text = "Расчет сталефибробетонных элементов на местное сжатие";
             // 
             // tableLayoutPanel3
             // 
@@ -162,7 +170,7 @@
             this.tableLayoutPanel3.Controls.Add(this.labelScheme, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.cmbScheme, 1, 0);
             this.tableLayoutPanel3.Controls.Add(this.chboxReinforcement, 1, 1);
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(899, 62);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(885, 62);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 2;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -185,16 +193,17 @@
             this.cmbScheme.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.cmbScheme.FormattingEnabled = true;
             this.cmbScheme.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"});
+            "а",
+            "б",
+            "в",
+            "г",
+            "д",
+            "е"});
             this.cmbScheme.Location = new System.Drawing.Point(57, 14);
             this.cmbScheme.Name = "cmbScheme";
             this.cmbScheme.Size = new System.Drawing.Size(34, 21);
             this.cmbScheme.TabIndex = 1;
-            this.cmbScheme.Text = "1";
+            this.cmbScheme.Text = "а";
             // 
             // chboxReinforcement
             // 
@@ -257,7 +266,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridLocalStrength)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
-            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanelBottom.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.localStressBindingSource)).EndInit();
@@ -269,7 +278,7 @@
 
         private System.Windows.Forms.DataGridView dataGridLocalStrength;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelBottom;
         private System.Windows.Forms.Button btnCalc;
         private System.Windows.Forms.BindingSource localStressBindingSource;
         private System.Windows.Forms.Label labelHeader;

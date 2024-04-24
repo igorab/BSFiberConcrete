@@ -151,9 +151,7 @@ namespace BSCalcMenu
             BSLocalStrength localStrength = new BSLocalStrength();
 
             localStrength.StrengthCalc = strengthCalc;
-            localStrength.Show();
-            
-            //strengthCalc.RunCalc();                
+            localStrength.Show();                        
         }
 
         /// <summary>
@@ -165,10 +163,8 @@ namespace BSCalcMenu
             strengthCalc.InitDataSource();
             BSLocalStrength localStrength = new BSLocalStrength();
 
-            localStrength.StrengthCalc = strengthCalc;
-            localStrength.Show();
-            
-            //strengthCalc.RunCalc();
+            localStrength.StrengthCalc = strengthCalc;            
+            localStrength.Show();                        
         }
 
         /// <summary>

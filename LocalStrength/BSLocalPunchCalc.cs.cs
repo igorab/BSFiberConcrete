@@ -23,16 +23,42 @@ namespace BSFiberConcrete.LocalStrength
         protected double u;
         protected double Afb;
         protected double Ffb_ult;
-        
+
+
+        // Усилия:
+        // сила продавливания
+        protected double F;
+        // Изгибающий момент по X кг*см
+        protected double Mx; // кг*см
+        // Изгибающий момент по Y кг*см
+        protected double My; // кг*см
+
+        // Арматура:
+        // Расчетное сопротивление арматуры на продавливание СП63 (кг/см2) таб.6.15
+        protected double Rsw = 1732;
+        // площадь сечения поперечной арматуры с шагом sw, расположенная в пределах
+        // расстояния 0,5h0 по обе стороны от контура расчетного поперечного сечения по периметру контура расчетного поперечного сечения
+        protected double Asw = 2.06;
+        //шаг поперечной арматуры
+        protected double sw = 10;
+
+
         public override void InitDataSource()
         {
             m_DS = BSData.LoadLocalPunch();
 
             Dictionary<string, double> D = new Dictionary<string, double>();
-            foreach (var item in m_DS) D[item.VarName] = item.Value;    
+            foreach (var item in m_DS) D[item.VarName] = item.Value;
 
+            // Усилия:
+            (F, Mx, My) = (D["F"], D["Mx"], D["My"]);
+
+            // Бетон:
             (a1, b1, h0x, h0y, Rfbtn, Yft, Yb1, Yb5, Rfbt, h0, u, Afb, Ffb_ult) = 
                 (D["a1"], D["a2"], D["h0x"], D["h0y"], D["Rfbtn"], D["Yft"], D["Yb1"], D["Yb5"], D["Rfbt"], D["h0"], D["u"], D["Afb"], D["Ffbult"]);            
+
+            // Арматура:
+
         }
 
         public override string ReportName()
@@ -42,7 +68,10 @@ namespace BSFiberConcrete.LocalStrength
 
         public override string SampleName()
         {
-            return "Расчет сталефибробетонных элементов на продавливание при действии сосредоточенной силы без арматуры";
+            if (UseReinforcement)
+                return "Расчет сталефибробетонных элементов на продавливание при действии сосредоточенной силы c арматурой";
+            else
+                return "Расчет сталефибробетонных элементов на продавливание при действии сосредоточенной силы без арматуры";
         }
 
         public override bool RunCalc()
@@ -89,14 +118,7 @@ namespace BSFiberConcrete.LocalStrength
             return ok;
         }
 
-        // сила продавливания
-        protected double F = 150000;
-
-        // Изгибающий момент по X кг*см
-        protected double Mx = 200000; // кг*см
-
-        // Изгибающий момент по Y кг*см
-        protected double My = 150000; // кг*см
+        
         
         // расчет элементов на продавливание при действии сосредоточенных сил и моментов без арматуры
         public bool RunCalcFM()
@@ -127,18 +149,9 @@ namespace BSFiberConcrete.LocalStrength
             return true;
         }
 
-        // Расчетное сопротивление арматуры на продавливание СП63 (кг/см2) таб.6.15
-        protected double Rsw = 1732;
-
-        // площадь сечения поперечной арматуры с шагом sw, расположенная в пределах
-        // расстояния 0,5h0 по обе стороны от контура расчетного поперечного сечения по периметру контура расчетного поперечного сечения
-        protected double Asw = 2.06;
-
-        //шаг поперечной арматуры
-        protected double sw = 10;
-
+       
         // расчет элементов на продавливание при действии сосредоточенной силы с арматурой
-        public bool RunCalcReinforcementF()
+        public override bool ReinforcementCalc()
         {
             // Длина расчетного контура №2
             double a = a1 + 4 * h0;
@@ -159,6 +172,9 @@ namespace BSFiberConcrete.LocalStrength
             return true;
         }
 
-
+        public override string SampleDescr()
+        {
+            return "Расчет элементов на продавливание";
+        }
     }
 }

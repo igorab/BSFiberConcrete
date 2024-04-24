@@ -1,6 +1,7 @@
 ﻿using BSFiberConcrete.Lib;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,12 +10,30 @@ namespace BSFiberConcrete.LocalStrength
 {
     public class BSLocalCompressionCalc : BSLocalStrengthCalc
     {
-        private double psi;
-        private double Afbloc;
-        private double Afbmax;
-        private double fi_fb;
-        private double Rfbloc;
-        private double Nult;
+        protected double psi;
+        protected double Afbloc;
+        protected double Afbmax;
+        protected double fi_fb;
+        protected double Rfbloc;
+        protected double Nult;
+
+        // Армирование:
+        // расчетное сопротивление растяжению косвенной арматуры кг/см2
+        protected double Rs_xy;
+        // число стержней по x
+        protected double nx;
+        // число стержней по y
+        protected double ny;
+        // Площадь сечения стержня
+        protected double Asx;
+        // Площадь сечения стержня
+        protected double Asy;
+        // длина стержня сетки (см)
+        protected double lx;
+        // длина стержня сетки (см)
+        protected double ly;
+        // шаг сеток косвенного армирования
+        protected double s;
 
         private double N_ults;
 
@@ -29,6 +48,9 @@ namespace BSFiberConcrete.LocalStrength
                 (D["a1"], D["a2"], D["c"], D["Yb1"], D["Yb2"], D["Yb3"], D["Yb5"], D["Rfbn"], D["Yb"], 
                  D["Rfbt"], D["psi"], D["Afbloc"], D["Afbmax"], D["Rfb"], D["fi_fb"], D["Rfbloc"], D["Nult"]);
 
+            // Аматура
+            (Rs_xy, nx, ny, Asx, Asy, lx, ly, s) =
+                (D["Rs_xy"], D["nx"], D["ny"], D["Asx"], D["Asy"], D["lx"], D["ly"], D["s"]);
         }
 
         public override string ReportName()
@@ -88,26 +110,20 @@ namespace BSFiberConcrete.LocalStrength
             return ok;
         }
     
-        public bool ReinforcementCalc()
+        public override bool ReinforcementCalc()
         {
-            double nx = 5;
-            double ny = 5;
-            double Asx = 0.196;
-            double Asy= 0.196;
-
-            double lx = 5;
-            double ly = 5;
-
-            double s = 10;
-
+            
             double Afbloc_ef = Afbmax;
 
+            // коэффициент косвенного армирования
             double mu_s_xy = (nx * Asx * lx + ny * Asy * ly) / (Afbloc_ef * s) ;
-
+            // коэффициент косвенного армирования
             double fi_s_xy = Math.Sqrt(Afbloc_ef / Afbloc);
 
-            double Rfbs_loc = Rfbloc + 2 * fi_s_xy * mu_s_xy;
+            // приведенное (с учетом косвенной арматуры в зоне местного сжатия) расчетное сопротивление бетона сжатию
+            double Rfbs_loc = Rfbloc + 2 * fi_s_xy * Rs_xy * mu_s_xy;
 
+            //Предельная сила смятия (кг)
             N_ults = psi * Rfbs_loc * Afbloc;
 
             return true;
@@ -115,12 +131,15 @@ namespace BSFiberConcrete.LocalStrength
 
         public override string SampleDescr()
         {
-            return "";
+            return "Расчет сталефибробетонных элементов на местное сжатие";
         }
 
         public override string SampleName()
         {
-            return "Расчет сталефибробетонных элементов на местное сжатие без арматуры";
+            if (UseReinforcement == true)
+                return "Расчет сталефибробетонных элементов на местное сжатие c арматурой";
+            else
+                return "Расчет сталефибробетонных элементов на местное сжатие без арматуры";
         }
     }
 }

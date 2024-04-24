@@ -403,6 +403,11 @@ namespace BSFiberConcrete
         /// Числовое значение переменной
         /// </summary>
         public double Value { get; set; }
+
+        /// <summary>
+        /// Тип параметра
+        /// </summary>
+        public int Type { get; set; }
     }
 
 
