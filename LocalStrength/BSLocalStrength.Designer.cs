@@ -30,8 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BSLocalStrength));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGridLocalStrength = new System.Windows.Forms.DataGridView();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanelMain = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanelBottom = new System.Windows.Forms.TableLayoutPanel();
             this.btnPrintReport = new System.Windows.Forms.Button();
             this.btnCalc = new System.Windows.Forms.Button();
@@ -47,7 +48,7 @@
             this.valueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.localStressBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridLocalStrength)).BeginInit();
-            this.tableLayoutPanel1.SuspendLayout();
+            this.tableLayoutPanelMain.SuspendLayout();
             this.tableLayoutPanelBottom.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.localStressBindingSource)).BeginInit();
@@ -55,6 +56,8 @@
             // 
             // dataGridLocalStrength
             // 
+            this.dataGridLocalStrength.AllowUserToAddRows = false;
+            this.dataGridLocalStrength.AllowUserToDeleteRows = false;
             this.dataGridLocalStrength.AutoGenerateColumns = false;
             this.dataGridLocalStrength.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridLocalStrength.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -64,31 +67,33 @@
             this.valueDataGridViewTextBoxColumn});
             this.dataGridLocalStrength.DataSource = this.localStressBindingSource;
             this.dataGridLocalStrength.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridLocalStrength.Location = new System.Drawing.Point(23, 62);
+            this.dataGridLocalStrength.Location = new System.Drawing.Point(23, 71);
             this.dataGridLocalStrength.Name = "dataGridLocalStrength";
-            this.dataGridLocalStrength.Size = new System.Drawing.Size(856, 470);
+            this.dataGridLocalStrength.Size = new System.Drawing.Size(839, 523);
             this.dataGridLocalStrength.TabIndex = 0;
+            this.dataGridLocalStrength.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dataGridLocalStrength_RowPrePaint);
             // 
-            // tableLayoutPanel1
+            // tableLayoutPanelMain
             // 
-            this.tableLayoutPanel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.tableLayoutPanel1.ColumnCount = 3;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 2.314815F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 97.68519F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 175F));
-            this.tableLayoutPanel1.Controls.Add(this.dataGridLocalStrength, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanelBottom, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.labelHeader, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel3, 2, 1);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1058, 596);
-            this.tableLayoutPanel1.TabIndex = 1;
+            this.tableLayoutPanelMain.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.tableLayoutPanelMain.ColumnCount = 3;
+            this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 2.314815F));
+            this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 97.68519F));
+            this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 72F));
+            this.tableLayoutPanelMain.Controls.Add(this.dataGridLocalStrength, 1, 2);
+            this.tableLayoutPanelMain.Controls.Add(this.tableLayoutPanelBottom, 1, 3);
+            this.tableLayoutPanelMain.Controls.Add(this.labelHeader, 1, 0);
+            this.tableLayoutPanelMain.Controls.Add(this.tableLayoutPanel3, 1, 1);
+            this.tableLayoutPanelMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanelMain.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanelMain.Name = "tableLayoutPanelMain";
+            this.tableLayoutPanelMain.RowCount = 4;
+            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.4F));
+            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 84.64F));
+            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.8F));
+            this.tableLayoutPanelMain.Size = new System.Drawing.Size(938, 653);
+            this.tableLayoutPanelMain.TabIndex = 1;
             // 
             // tableLayoutPanelBottom
             // 
@@ -100,12 +105,12 @@
             this.tableLayoutPanelBottom.Controls.Add(this.btnPrintReport, 1, 0);
             this.tableLayoutPanelBottom.Controls.Add(this.btnCalc, 0, 0);
             this.tableLayoutPanelBottom.Controls.Add(this.btnCloseForm, 2, 0);
-            this.tableLayoutPanelBottom.Location = new System.Drawing.Point(502, 538);
+            this.tableLayoutPanelBottom.Location = new System.Drawing.Point(485, 600);
             this.tableLayoutPanelBottom.Name = "tableLayoutPanelBottom";
             this.tableLayoutPanelBottom.RowCount = 2;
             this.tableLayoutPanelBottom.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 63.63636F));
             this.tableLayoutPanelBottom.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 36.36364F));
-            this.tableLayoutPanelBottom.Size = new System.Drawing.Size(377, 55);
+            this.tableLayoutPanelBottom.Size = new System.Drawing.Size(377, 50);
             this.tableLayoutPanelBottom.TabIndex = 1;
             // 
             // btnPrintReport
@@ -116,7 +121,7 @@
             this.btnPrintReport.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnPrintReport.Location = new System.Drawing.Point(129, 3);
             this.btnPrintReport.Name = "btnPrintReport";
-            this.btnPrintReport.Size = new System.Drawing.Size(120, 28);
+            this.btnPrintReport.Size = new System.Drawing.Size(120, 25);
             this.btnPrintReport.TabIndex = 1;
             this.btnPrintReport.Text = "Отчет";
             this.btnPrintReport.UseVisualStyleBackColor = true;
@@ -130,7 +135,7 @@
             this.btnCalc.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnCalc.Location = new System.Drawing.Point(3, 3);
             this.btnCalc.Name = "btnCalc";
-            this.btnCalc.Size = new System.Drawing.Size(120, 28);
+            this.btnCalc.Size = new System.Drawing.Size(120, 25);
             this.btnCalc.TabIndex = 0;
             this.btnCalc.Text = "Рассчитать";
             this.btnCalc.UseVisualStyleBackColor = true;
@@ -144,7 +149,7 @@
             this.btnCloseForm.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnCloseForm.Location = new System.Drawing.Point(255, 3);
             this.btnCloseForm.Name = "btnCloseForm";
-            this.btnCloseForm.Size = new System.Drawing.Size(119, 28);
+            this.btnCloseForm.Size = new System.Drawing.Size(119, 25);
             this.btnCloseForm.TabIndex = 3;
             this.btnCloseForm.Text = "Закрыть";
             this.btnCloseForm.UseVisualStyleBackColor = true;
@@ -156,33 +161,33 @@
             this.labelHeader.AutoSize = true;
             this.labelHeader.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.labelHeader.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelHeader.Location = new System.Drawing.Point(23, 21);
+            this.labelHeader.Location = new System.Drawing.Point(23, 6);
             this.labelHeader.Name = "labelHeader";
-            this.labelHeader.Size = new System.Drawing.Size(856, 16);
+            this.labelHeader.Size = new System.Drawing.Size(839, 16);
             this.labelHeader.TabIndex = 2;
             this.labelHeader.Text = "Расчет сталефибробетонных элементов на местное сжатие";
             // 
             // tableLayoutPanel3
             // 
-            this.tableLayoutPanel3.ColumnCount = 2;
+            this.tableLayoutPanel3.ColumnCount = 3;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35.13514F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 64.86487F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 215F));
             this.tableLayoutPanel3.Controls.Add(this.labelScheme, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.cmbScheme, 1, 0);
-            this.tableLayoutPanel3.Controls.Add(this.chboxReinforcement, 1, 1);
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(885, 62);
+            this.tableLayoutPanel3.Controls.Add(this.chboxReinforcement, 2, 0);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(23, 31);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 2;
+            this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(156, 100);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(400, 34);
             this.tableLayoutPanel3.TabIndex = 4;
             // 
             // labelScheme
             // 
-            this.labelScheme.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.labelScheme.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelScheme.AutoSize = true;
-            this.labelScheme.Location = new System.Drawing.Point(3, 18);
+            this.labelScheme.Location = new System.Drawing.Point(23, 10);
             this.labelScheme.Name = "labelScheme";
             this.labelScheme.Size = new System.Drawing.Size(39, 13);
             this.labelScheme.TabIndex = 0;
@@ -199,7 +204,7 @@
             "г",
             "д",
             "е"});
-            this.cmbScheme.Location = new System.Drawing.Point(57, 14);
+            this.cmbScheme.Location = new System.Drawing.Point(68, 6);
             this.cmbScheme.Name = "cmbScheme";
             this.cmbScheme.Size = new System.Drawing.Size(34, 21);
             this.cmbScheme.TabIndex = 1;
@@ -209,7 +214,7 @@
             // 
             this.chboxReinforcement.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.chboxReinforcement.AutoSize = true;
-            this.chboxReinforcement.Location = new System.Drawing.Point(57, 66);
+            this.chboxReinforcement.Location = new System.Drawing.Point(188, 8);
             this.chboxReinforcement.Name = "chboxReinforcement";
             this.chboxReinforcement.Size = new System.Drawing.Size(75, 17);
             this.chboxReinforcement.TabIndex = 2;
@@ -222,6 +227,7 @@
             this.idDataGridViewTextBoxColumn.DataPropertyName = "Id";
             this.idDataGridViewTextBoxColumn.HeaderText = "№";
             this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
+            this.idDataGridViewTextBoxColumn.ReadOnly = true;
             this.idDataGridViewTextBoxColumn.ToolTipText = "Номер параметра";
             this.idDataGridViewTextBoxColumn.Width = 43;
             // 
@@ -240,12 +246,16 @@
             this.varNameDataGridViewTextBoxColumn.DataPropertyName = "VarName";
             this.varNameDataGridViewTextBoxColumn.HeaderText = "Параметр";
             this.varNameDataGridViewTextBoxColumn.Name = "varNameDataGridViewTextBoxColumn";
+            this.varNameDataGridViewTextBoxColumn.ReadOnly = true;
             this.varNameDataGridViewTextBoxColumn.Width = 83;
             // 
             // valueDataGridViewTextBoxColumn
             // 
             this.valueDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             this.valueDataGridViewTextBoxColumn.DataPropertyName = "Value";
+            dataGridViewCellStyle1.Format = "N4";
+            dataGridViewCellStyle1.NullValue = null;
+            this.valueDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
             this.valueDataGridViewTextBoxColumn.HeaderText = "Значение";
             this.valueDataGridViewTextBoxColumn.Name = "valueDataGridViewTextBoxColumn";
             this.valueDataGridViewTextBoxColumn.Width = 80;
@@ -258,14 +268,15 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1058, 596);
-            this.Controls.Add(this.tableLayoutPanel1);
+            this.ClientSize = new System.Drawing.Size(938, 653);
+            this.Controls.Add(this.tableLayoutPanelMain);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "BSLocalStrength";
             this.Text = "Расчет на местные нагрузки";
             this.Load += new System.EventHandler(this.BSLocalStrength_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridLocalStrength)).EndInit();
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
+            this.tableLayoutPanelMain.ResumeLayout(false);
+            this.tableLayoutPanelMain.PerformLayout();
             this.tableLayoutPanelBottom.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
@@ -277,20 +288,20 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dataGridLocalStrength;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelMain;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelBottom;
         private System.Windows.Forms.Button btnCalc;
         private System.Windows.Forms.BindingSource localStressBindingSource;
         private System.Windows.Forms.Label labelHeader;
         private System.Windows.Forms.Button btnPrintReport;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn varDescrDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn varNameDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn valueDataGridViewTextBoxColumn;
         private System.Windows.Forms.Button btnCloseForm;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.Label labelScheme;
         private System.Windows.Forms.ComboBox cmbScheme;
         private System.Windows.Forms.CheckBox chboxReinforcement;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn varDescrDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn varNameDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn valueDataGridViewTextBoxColumn;
     }
 }

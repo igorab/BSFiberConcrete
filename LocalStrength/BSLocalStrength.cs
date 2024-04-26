@@ -30,8 +30,7 @@ namespace BSFiberConcrete.LocalStrength
             StrengthCalc.RunCalc();
 
             localStressBindingSource.DataSource = new BindingList<LocalStress>(StrengthCalc.GetDS);
-            
-            
+                        
         }
 
         private void BSLocalStrength_Load(object sender, EventArgs e)
@@ -62,6 +61,21 @@ namespace BSFiberConcrete.LocalStrength
         private void btnCloseForm_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void dataGridLocalStrength_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+        {
+            try
+            {
+                if (StrengthCalc.Dc.ContainsKey(Convert.ToString(dataGridLocalStrength.Rows[e.RowIndex].Cells[2].Value)))
+                {
+                    dataGridLocalStrength.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Beige;
+                }
+            }
+            catch
+            {
+
+            }
         }
     }
 }

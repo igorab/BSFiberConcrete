@@ -12,6 +12,9 @@ namespace BSFiberConcrete.LocalStrength
         protected List<LocalStress> m_DS;
         public List<LocalStress> GetDS => m_DS;
 
+        // рассчитанные значения
+        public Dictionary<string, double> Dc;
+
         public int Scheme { set; get; }
         public bool UseReinforcement { set; get; }
 
@@ -40,6 +43,7 @@ namespace BSFiberConcrete.LocalStrength
         {
             Scheme = 1;
             UseReinforcement = false;
+            Dc = new Dictionary<string, double>();
         }
 
         public virtual void InitDataSource()
@@ -58,11 +62,11 @@ namespace BSFiberConcrete.LocalStrength
             return false;
         }
 
-        public virtual double AfbLoc(int scheme)
+        public virtual double AfbLoc(int _scheme)
         {
             double _al = 0;
 
-            switch (scheme)
+            switch (_scheme)
             {
                 case 1:
                     _al = a1 * a2;

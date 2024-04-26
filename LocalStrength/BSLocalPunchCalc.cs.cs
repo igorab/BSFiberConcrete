@@ -54,6 +54,20 @@ namespace BSFiberConcrete.LocalStrength
         // Коэфициент использования
         protected double util_coeff;
 
+        public BSLocalPunchCalc()
+        {
+            Scheme = 1;
+            UseReinforcement = false;
+            
+            Dc = new Dictionary<string, double>()
+            {
+                ["h0"] = h0,
+                ["u"] = u,
+                ["Afb"] = Afb,
+                ["Ffbult"] = Ffb_ult
+            };
+        }
+
         public override void InitDataSource()
         {
             m_DS = BSData.LoadLocalPunch();
@@ -111,19 +125,15 @@ namespace BSFiberConcrete.LocalStrength
                     RunCalcFM();   
                 }
 
-                Dictionary<string, double> D = new Dictionary<string, double>() 
-                { 
-                    ["h0"] = h0, 
-                    ["u"] = u, 
-                    ["Afb"] = Afb, 
-                    ["Ffbult"] = Ffb_ult 
-                };
-
-
+                Dc["h0"] = h0;
+                Dc["u"] = u;
+                Dc["Afb"] = Afb;
+                Dc["Ffbult"] = Ffb_ult;
+                
                 if (UseReinforcement)
                     this.ReinforcementCalc();
 
-                m_DS = BSQuery.UpdateLocalPunch(D);
+                m_DS = BSQuery.UpdateLocalPunch(Dc);
 
                 ok = true;
             }
