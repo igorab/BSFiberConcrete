@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BSFiberConcrete.Lib;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -11,6 +12,9 @@ namespace BSFiberConcrete.LocalStrength
     {
         protected List<LocalStress> m_DS;
         public List<LocalStress> GetDS => m_DS;
+
+        // исходные значения
+        public Dictionary<string, double> Ds;
 
         // рассчитанные значения
         public Dictionary<string, double> Dc;
@@ -43,6 +47,7 @@ namespace BSFiberConcrete.LocalStrength
         {
             Scheme = 1;
             UseReinforcement = false;
+            Ds = new Dictionary<string, double>();
             Dc = new Dictionary<string, double>();
         }
 
@@ -54,6 +59,16 @@ namespace BSFiberConcrete.LocalStrength
 
         public virtual bool RunCalc()
         {
+            foreach (var _d in m_DS)
+            {
+                if (Ds.ContainsKey(_d.VarName))
+                    Ds[_d.VarName] = _d.Value;
+                else
+                    Ds.Add(_d.VarName, _d.Value);
+            }
+
+            BSQuery.UpdateLocalCompression(Ds);
+
             return false;
         }
 
