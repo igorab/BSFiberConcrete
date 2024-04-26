@@ -69,7 +69,7 @@
             this.dataGridLocalStrength.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridLocalStrength.Location = new System.Drawing.Point(23, 71);
             this.dataGridLocalStrength.Name = "dataGridLocalStrength";
-            this.dataGridLocalStrength.Size = new System.Drawing.Size(839, 523);
+            this.dataGridLocalStrength.Size = new System.Drawing.Size(838, 523);
             this.dataGridLocalStrength.TabIndex = 0;
             this.dataGridLocalStrength.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dataGridLocalStrength_RowPrePaint);
             // 
@@ -79,7 +79,7 @@
             this.tableLayoutPanelMain.ColumnCount = 3;
             this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 2.314815F));
             this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 97.68519F));
-            this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 72F));
+            this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 74F));
             this.tableLayoutPanelMain.Controls.Add(this.dataGridLocalStrength, 1, 2);
             this.tableLayoutPanelMain.Controls.Add(this.tableLayoutPanelBottom, 1, 3);
             this.tableLayoutPanelMain.Controls.Add(this.labelHeader, 1, 0);
@@ -105,7 +105,7 @@
             this.tableLayoutPanelBottom.Controls.Add(this.btnPrintReport, 1, 0);
             this.tableLayoutPanelBottom.Controls.Add(this.btnCalc, 0, 0);
             this.tableLayoutPanelBottom.Controls.Add(this.btnCloseForm, 2, 0);
-            this.tableLayoutPanelBottom.Location = new System.Drawing.Point(485, 600);
+            this.tableLayoutPanelBottom.Location = new System.Drawing.Point(484, 600);
             this.tableLayoutPanelBottom.Name = "tableLayoutPanelBottom";
             this.tableLayoutPanelBottom.RowCount = 2;
             this.tableLayoutPanelBottom.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 63.63636F));
@@ -163,7 +163,7 @@
             this.labelHeader.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelHeader.Location = new System.Drawing.Point(23, 6);
             this.labelHeader.Name = "labelHeader";
-            this.labelHeader.Size = new System.Drawing.Size(839, 16);
+            this.labelHeader.Size = new System.Drawing.Size(838, 16);
             this.labelHeader.TabIndex = 2;
             this.labelHeader.Text = "Расчет сталефибробетонных элементов на местное сжатие";
             // 
@@ -220,6 +220,7 @@
             this.chboxReinforcement.TabIndex = 2;
             this.chboxReinforcement.Text = "Арматура";
             this.chboxReinforcement.UseVisualStyleBackColor = true;
+            this.chboxReinforcement.CheckedChanged += new System.EventHandler(this.chboxReinforcement_CheckedChanged);
             // 
             // idDataGridViewTextBoxColumn
             // 

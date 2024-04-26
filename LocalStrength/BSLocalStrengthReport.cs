@@ -64,11 +64,18 @@ namespace BSFiberConcrete.LocalStrength
             w.WriteLine($"<H3>{SampleName}</H3>");
 
             w.WriteLine(@"<style>
-               td{
-                    width: 80px;
+               td{                    
                     height: 60px;
                     border: solid 1px silver;
                     text-align: center;
+                }
+                td.id 
+                {
+                    width: 20px;
+                }
+                td.descr 
+                {
+                    text-align: left
                 }
                 </style>");
 
@@ -84,7 +91,7 @@ namespace BSFiberConcrete.LocalStrength
                 {
                     w.WriteLine("<tr>");
                     w.WriteLine($"<td><b>{_pair.Key}</b></td>");
-                    w.WriteLine($"<td> {_pair.Value}</td>");
+                    w.WriteLine($"<td> {Math.Round(_pair.Value, 4)}</td>");
                     w.WriteLine("</tr>");
                 }
 
@@ -96,15 +103,15 @@ namespace BSFiberConcrete.LocalStrength
             if (DataSource != null)
             {
                 w.WriteLine("<Table border=1 bordercolor = darkblue>");
-                w.WriteLine("<tr><td width = \"200\"'><b>Id</b></td><td>Описание</td><td>Параметр</td><td>Значение</td></tr>");
+                w.WriteLine("<tr><td class=\"id\"><b>Id</b></td><td>Описание</td><td>Параметр</td><td>Значение</td></tr>");
 
                 foreach (var item in DataSource)
                 {
                     w.WriteLine("<tr>");
-                    w.WriteLine($"<td width = \"200\"><b>{item.Id}</b></td>");                    
-                    w.WriteLine($"<td>{item.VarDescr}</td>");
+                    w.WriteLine($"<td class=\"id\"><b>{item.Id}</b></td>");                    
+                    w.WriteLine($"<td class = \"descr\">{item.VarDescr}:</td>");
                     w.WriteLine($"<td>{item.VarName}</td>");
-                    w.WriteLine($"<td>{item.Value} </td>");                    
+                    w.WriteLine($"<td>{Math.Round(item.Value, 4)} </td>");                    
                     w.WriteLine("</tr>");
                 }
                 w.WriteLine("</Table>");

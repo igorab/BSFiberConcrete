@@ -15,7 +15,9 @@ namespace BSFiberConcrete.LocalStrength
     public partial class BSLocalStrength : Form
     {
         public BSLocalStrengthCalc StrengthCalc {  get; set; }
-        
+
+        private BindingList<LocalStress> Ds;
+
 
         public BSLocalStrength()
         {
@@ -35,11 +37,11 @@ namespace BSFiberConcrete.LocalStrength
 
         private void BSLocalStrength_Load(object sender, EventArgs e)
         {
-            var ds = new BindingList<LocalStress> (StrengthCalc.GetDS);
+            Ds = new BindingList<LocalStress> (StrengthCalc.GetDS);
 
             labelHeader.Text = StrengthCalc.SampleDescr();
 
-            localStressBindingSource.DataSource = ds;
+            localStressBindingSource.DataSource = Ds;
         }
 
         private void btnPrintReport_Click(object sender, EventArgs e)
@@ -70,12 +72,20 @@ namespace BSFiberConcrete.LocalStrength
                 if (StrengthCalc.Dc.ContainsKey(Convert.ToString(dataGridLocalStrength.Rows[e.RowIndex].Cells[2].Value)))
                 {
                     dataGridLocalStrength.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Beige;
+                    
+                    //dataGridLocalStrength.Rows[e.RowIndex].Visible = chboxReinforcement.Checked;
+
                 }
             }
             catch
             {
 
             }
+        }
+
+        private void chboxReinforcement_CheckedChanged(object sender, EventArgs e)
+        {
+            dataGridLocalStrength.Refresh();
         }
     }
 }
