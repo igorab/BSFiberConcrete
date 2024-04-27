@@ -70,8 +70,11 @@ namespace BSFiberConcrete.LocalStrength
 
         public override void InitDataSource()
         {
-            m_DS = BSData.LoadLocalPunch();
+            m_DS = BSData.LoadLocalPunch();            
+        }
 
+        private void InitValuesFromDataSource()
+        {
             Dictionary<string, double> D = new Dictionary<string, double>();
             foreach (var item in m_DS) D[item.VarName] = item.Value;
 
@@ -79,12 +82,11 @@ namespace BSFiberConcrete.LocalStrength
             (F, Mx, My) = (D["F"], D["Mx"], D["My"]);
 
             // Бетон:
-            (a1, b1, h0x, h0y, Rfbtn, Yft, Yb1, Yb5, Rfbt, h0, u, Afb, Ffb_ult) = 
+            (a1, b1, h0x, h0y, Rfbtn, Yft, Yb1, Yb5, Rfbt, h0, u, Afb, Ffb_ult) =
                 (D["a1"], D["a2"], D["h0x"], D["h0y"], D["Rfbtn"], D["Yft"], D["Yb1"], D["Yb5"], D["Rfbt"], D["h0"], D["u"], D["Afb"], D["Ffbult"]);
 
             // Арматура:            
             (Rsw, Asw, sw) = (D["Rsw"], D["Asw"], D["sw"]);
-
         }
 
         public override string ReportName()
@@ -100,14 +102,26 @@ namespace BSFiberConcrete.LocalStrength
                 return "Расчет сталефибробетонных элементов на продавливание при действии сосредоточенной силы без арматуры";
         }
 
+        public override void UpdateInputData(Dictionary<string, double> _Ds)
+        {
+            m_DS = BSQuery.UpdateLocalPunch(_Ds);
+        }
+
         public override bool RunCalc()
         {
             (h0, u, Afb, Ffb_ult) = (0, 0, 0, 0);
 
             bool ok = base.RunCalc();
 
+            if (!ok)
+            {
+                throw new Exception("Ошибка обновления данных в таблице");
+            }
+
             try
             {
+                InitValuesFromDataSource();
+
                 // Приведенная рабочая высота сечения
                 h0 = 0.5 * (h0x + h0y);
 
@@ -144,8 +158,7 @@ namespace BSFiberConcrete.LocalStrength
             return ok;
         }
 
-        
-        
+                
         // расчет элементов на продавливание при действии сосредоточенных сил и моментов без арматуры
         public bool RunCalcFM()
         {

@@ -14,7 +14,7 @@ namespace BSFiberConcrete.LocalStrength
         public List<LocalStress> GetDS => m_DS;
 
         // исходные значения
-        public Dictionary<string, double> Ds;
+        private  Dictionary<string, double> Ds;
 
         // рассчитанные значения
         public Dictionary<string, double> Dc;
@@ -59,17 +59,32 @@ namespace BSFiberConcrete.LocalStrength
 
         public virtual bool RunCalc()
         {
-            foreach (var _d in m_DS)
+            try
             {
-                if (Ds.ContainsKey(_d.VarName))
-                    Ds[_d.VarName] = _d.Value;
-                else
-                    Ds.Add(_d.VarName, _d.Value);
+                foreach (var _d in m_DS)
+                {
+                    if (Ds.ContainsKey(_d.VarName))
+                        Ds[_d.VarName] = _d.Value;
+                    else
+                        Ds.Add(_d.VarName, _d.Value);
+                }
+
+                UpdateInputData(Ds);
             }
+            catch
+            {
+                return false;
+            }
+            return true;
+        }
 
-            BSQuery.UpdateLocalCompression(Ds);
+        /// <summary>
+        /// Обновить введенные в таблицу данные
+        /// </summary>
+        /// <param name="_Ds"></param>
+        public virtual void UpdateInputData(Dictionary<string, double> _Ds)
+        {
 
-            return false;
         }
 
         public virtual bool ReinforcementCalc()

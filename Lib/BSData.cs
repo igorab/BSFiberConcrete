@@ -358,7 +358,7 @@ namespace BSFiberConcrete.Lib
             {
                 using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
                 {
-                    var output = cnn.Query<LocalStress>("select * from LocalStress", new DynamicParameters());
+                    var output = cnn.Query<LocalStress>("select * from LocalStress order by id", new DynamicParameters());
                     return output.ToList();
                 }
             }
@@ -378,7 +378,7 @@ namespace BSFiberConcrete.Lib
             {
                 using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
                 {
-                    var output = cnn.Query<LocalStress>("select * from LocalPunch", new DynamicParameters());
+                    var output = cnn.Query<LocalStress>("select * from LocalPunch order by id", new DynamicParameters());
                     return output.ToList();
                 }
             }

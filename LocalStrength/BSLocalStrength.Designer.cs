@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BSLocalStrength));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGridLocalStrength = new System.Windows.Forms.DataGridView();
+            this.localStressBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tableLayoutPanelMain = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanelBottom = new System.Windows.Forms.TableLayoutPanel();
             this.btnPrintReport = new System.Windows.Forms.Button();
@@ -46,12 +47,12 @@
             this.varDescrDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.varNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.valueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.localStressBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridLocalStrength)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.localStressBindingSource)).BeginInit();
             this.tableLayoutPanelMain.SuspendLayout();
             this.tableLayoutPanelBottom.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.localStressBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridLocalStrength
@@ -64,7 +65,8 @@
             this.idDataGridViewTextBoxColumn,
             this.varDescrDataGridViewTextBoxColumn,
             this.varNameDataGridViewTextBoxColumn,
-            this.valueDataGridViewTextBoxColumn});
+            this.valueDataGridViewTextBoxColumn,
+            this.Type});
             this.dataGridLocalStrength.DataSource = this.localStressBindingSource;
             this.dataGridLocalStrength.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridLocalStrength.Location = new System.Drawing.Point(23, 71);
@@ -72,6 +74,10 @@
             this.dataGridLocalStrength.Size = new System.Drawing.Size(838, 523);
             this.dataGridLocalStrength.TabIndex = 0;
             this.dataGridLocalStrength.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dataGridLocalStrength_RowPrePaint);
+            // 
+            // localStressBindingSource
+            // 
+            this.localStressBindingSource.DataSource = typeof(BSFiberConcrete.LocalStress);
             // 
             // tableLayoutPanelMain
             // 
@@ -261,9 +267,13 @@
             this.valueDataGridViewTextBoxColumn.Name = "valueDataGridViewTextBoxColumn";
             this.valueDataGridViewTextBoxColumn.Width = 80;
             // 
-            // localStressBindingSource
+            // Type
             // 
-            this.localStressBindingSource.DataSource = typeof(BSFiberConcrete.LocalStress);
+            this.Type.DataPropertyName = "Type";
+            this.Type.HeaderText = "Тип";
+            this.Type.Name = "Type";
+            this.Type.ReadOnly = true;
+            this.Type.Visible = false;
             // 
             // BSLocalStrength
             // 
@@ -276,12 +286,12 @@
             this.Text = "Расчет на местные нагрузки";
             this.Load += new System.EventHandler(this.BSLocalStrength_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridLocalStrength)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.localStressBindingSource)).EndInit();
             this.tableLayoutPanelMain.ResumeLayout(false);
             this.tableLayoutPanelMain.PerformLayout();
             this.tableLayoutPanelBottom.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.localStressBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -304,5 +314,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn varDescrDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn varNameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn valueDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Type;
     }
 }

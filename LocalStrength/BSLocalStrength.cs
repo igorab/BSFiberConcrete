@@ -42,6 +42,8 @@ namespace BSFiberConcrete.LocalStrength
             labelHeader.Text = StrengthCalc.SampleDescr();
 
             localStressBindingSource.DataSource = Ds;
+
+            chboxReinforcement_CheckedChanged(null, null);
         }
 
         private void btnPrintReport_Click(object sender, EventArgs e)
@@ -71,10 +73,7 @@ namespace BSFiberConcrete.LocalStrength
             {
                 if (StrengthCalc.Dc.ContainsKey(Convert.ToString(dataGridLocalStrength.Rows[e.RowIndex].Cells[2].Value)))
                 {
-                    dataGridLocalStrength.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Beige;
-                    
-                    //dataGridLocalStrength.Rows[e.RowIndex].Visible = chboxReinforcement.Checked;
-
+                    dataGridLocalStrength.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Beige;                                        
                 }
             }
             catch
@@ -85,7 +84,26 @@ namespace BSFiberConcrete.LocalStrength
 
         private void chboxReinforcement_CheckedChanged(object sender, EventArgs e)
         {
-            dataGridLocalStrength.Refresh();
+            try
+            {
+                foreach (DataGridViewRow row in dataGridLocalStrength.Rows)
+                {
+                    if (Convert.ToInt32(row.Cells[4].Value) == 1)
+                    {
+                        try
+                        {
+                            if (chboxReinforcement.Checked == true)
+                                row.Visible = true;
+                            else
+                                row.Visible = false;
+                        }
+                        catch { }
+                    }
+                }
+                dataGridLocalStrength.Refresh();
+            }
+            catch
+            { }            
         }
     }
 }

@@ -71,12 +71,16 @@ namespace BSFiberConcrete.LocalStrength
         public override void InitDataSource()
         {
             m_DS = BSData.LoadLocalStress();
+            
+        }
 
+        private void InitValuesFromDataSource()
+        {
             Dictionary<string, double> D = new Dictionary<string, double>();
             foreach (var item in m_DS) D[item.VarName] = item.Value;
 
             (a1, a2, c, Yb1, Yb2, Yb3, Yb5, Rfbn, Yb, Rfbt, psi, Afbloc, Afbmax, Rfb, fi_fb, Rfbloc, Nult) =
-                (D["a1"], D["a2"], D["c"], D["Yb1"], D["Yb2"], D["Yb3"], D["Yb5"], D["Rfbn"], D["Yb"], 
+                (D["a1"], D["a2"], D["c"], D["Yb1"], D["Yb2"], D["Yb3"], D["Yb5"], D["Rfbn"], D["Yb"],
                  D["Rfbt"], D["psi"], D["Afbloc"], D["Afbmax"], D["Rfb"], D["fi_fb"], D["Rfbloc"], D["Nult"]);
 
             // Аматура
@@ -89,14 +93,25 @@ namespace BSFiberConcrete.LocalStrength
             return "Местное сжатие";
         }
 
+        public override void UpdateInputData(Dictionary<string, double> _Ds)
+        {
+            BSQuery.UpdateLocalCompression(_Ds);
+        }
+
         public override bool RunCalc()
         {
             (Afbloc, Afbmax, Rfb, fi_fb, Rfbloc, Nult) = (0, 0, 0, 0, 0, 0);
 
             bool ok = base.RunCalc();
+            if (!ok)
+            {
+                throw new Exception("Ошибка обновления данных в таблице");
+            }
 
             try
             {
+                InitValuesFromDataSource();
+
                 // Площадь смятия, см2
                 Afbloc = AfbLoc(Scheme);
                 
