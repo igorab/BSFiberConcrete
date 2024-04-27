@@ -35,14 +35,14 @@ namespace BSFiberConcrete.LocalStrength
 
         // Арматура:
         // Расчетное сопротивление арматуры на продавливание СП63 (кг/см2) таб.6.15
-        protected double Rsw = 1732;
+        protected double Rsw;
         // площадь сечения поперечной арматуры с шагом sw, расположенная в пределах
         // расстояния 0,5h0 по обе стороны от контура расчетного поперечного сечения по периметру контура расчетного поперечного сечения
-        protected double Asw = 2.06;
+        protected double Asw;
         //шаг поперечной арматуры
-        protected double sw = 10;
+        protected double sw;
         //усилие в поперечной арматуре на единицу длины контура расчетного поперечного сечения
-        protected double q_sw = 10;
+        protected double q_sw;
         //Предельное усилие,воспринимаемое поперечной арматурой при продавливании
         protected double Fsw_ult;
         //Предельное усилие, воспринимаемое сталефибробетоном и арматурой
@@ -107,6 +107,26 @@ namespace BSFiberConcrete.LocalStrength
             m_DS = BSQuery.UpdateLocalPunch(_Ds);
         }
 
+        private void DCalcResult()
+        {
+            Dc = new Dictionary<string, double>()
+            {
+                ["h0"] = h0,
+                ["u"] = u,
+                ["Afb"] = Afb,
+                ["Ffbult"] = Ffb_ult,
+              
+                ["a"] = a,
+                ["b"] = b,
+                ["Afb"] = Afb,
+                ["Ffb_ult"] = Ffb_ult,
+                ["Fult"] = Fult,
+                ["util_coeff"] = util_coeff
+            };
+        }
+
+
+
         public override bool RunCalc()
         {
             (h0, u, Afb, Ffb_ult) = (0, 0, 0, 0);
@@ -138,14 +158,13 @@ namespace BSFiberConcrete.LocalStrength
                 {
                     RunCalcFM();   
                 }
-
-                Dc["h0"] = h0;
-                Dc["u"] = u;
-                Dc["Afb"] = Afb;
-                Dc["Ffbult"] = Ffb_ult;
                 
                 if (UseReinforcement)
+                {
                     this.ReinforcementCalc();
+                }
+
+                DCalcResult();
 
                 m_DS = BSQuery.UpdateLocalPunch(Dc);
 
