@@ -32,7 +32,8 @@ namespace BSFiberConcrete.LocalStrength
             StrengthCalc.RunCalc();
 
             localStressBindingSource.DataSource = new BindingList<LocalStress>(StrengthCalc.GetDS);
-                        
+
+            chboxReinforcement_CheckedChanged(null, null);
         }
 
         private void BSLocalStrength_Load(object sender, EventArgs e)

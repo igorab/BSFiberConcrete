@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.SymbolStore;
+using System.Drawing.Text;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,8 +14,7 @@ namespace BSFiberConcrete.LocalStrength
     /// </summary>
     public class BSLocalPunchCalc : BSLocalStrengthCalc
     {
-        // Ширина приложения нагрузки (см)
-        protected double b1;
+        // Ширина приложения нагрузки (см)        
         protected double h0;
         // Рабочая высота плиты по x(см)
         protected double h0x;
@@ -89,7 +89,7 @@ namespace BSFiberConcrete.LocalStrength
             (F, Mx, My) = (D["F"], D["Mx"], D["My"]);
 
             // Бетон:
-            (a1, b1, h0x, h0y, Rfbtn, Yft, Yb1, Yb5, Rfbt, h0, u, Afb, Ffb_ult) =
+            (a1, a2, h0x, h0y, Rfbtn, Yft, Yb1, Yb5, Rfbt, h0, u, Afb, Ffb_ult) =
                 (D["a1"], D["a2"], D["h0x"], D["h0y"], D["Rfbtn"], D["Yft"], D["Yb1"], D["Yb5"], D["Rfbt"], D["h0"], D["u"], D["Afb"], D["Ffbult"]);
 
             // Арматура:            
@@ -157,8 +157,13 @@ namespace BSFiberConcrete.LocalStrength
                 // Приведенная рабочая высота сечения
                 h0 = 0.5 * (h0x + h0y);
 
+                // длина расчетного контура №1
+                double _a = a1 + h0;
+                // ширина расчетного контура №1
+                double _b = a2 + h0;
+
                 // Периметр контура расчетного поперечного сечения
-                u = 2 * a1 + 2 * b1;
+                u = 2 * _a + 2 * _b;
 
                 // Площадь расчетного поперечного сечения (см2) по ф.(6.92)
                 Afb = u * h0;
@@ -193,7 +198,7 @@ namespace BSFiberConcrete.LocalStrength
         // расчет элементов на продавливание при действии сосредоточенных сил и моментов без арматуры
         public bool RunCalcFM()
         {
-            double Lx = b1 + h0;
+            double Lx = a2 + h0;
             double Ly = a1 + h0;
 
             double Ifbx = 2 * ( Lx * Math.Pow(1,3) /12 + Math.Pow(Ly/2, 2) * Lx * 1 + 1 * Math.Pow(Ly, 3)/12 );
@@ -227,7 +232,7 @@ namespace BSFiberConcrete.LocalStrength
             a = a1 + 4 * h0;
 
             // Ширина расчетного контура №2
-            b = b1 + 4 * h0;
+            b = a2 + 4 * h0;
 
             // Периметр контура расчетного поперечного сечения(см)
             u = 2 * a + 2 * b;
