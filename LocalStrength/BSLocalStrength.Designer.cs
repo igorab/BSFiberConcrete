@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BSLocalStrength));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGridLocalStrength = new System.Windows.Forms.DataGridView();
-            this.localStressBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tableLayoutPanelMain = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanelBottom = new System.Windows.Forms.TableLayoutPanel();
             this.btnPrintReport = new System.Windows.Forms.Button();
@@ -43,16 +43,20 @@
             this.labelScheme = new System.Windows.Forms.Label();
             this.cmbScheme = new System.Windows.Forms.ComboBox();
             this.chboxReinforcement = new System.Windows.Forms.CheckBox();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.label1 = new System.Windows.Forms.Label();
             this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.varDescrDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.varNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.valueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.localStressBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridLocalStrength)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.localStressBindingSource)).BeginInit();
             this.tableLayoutPanelMain.SuspendLayout();
             this.tableLayoutPanelBottom.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.localStressBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridLocalStrength
@@ -75,9 +79,13 @@
             this.dataGridLocalStrength.TabIndex = 0;
             this.dataGridLocalStrength.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dataGridLocalStrength_RowPrePaint);
             // 
-            // localStressBindingSource
+            // Type
             // 
-            this.localStressBindingSource.DataSource = typeof(BSFiberConcrete.LocalStress);
+            this.Type.DataPropertyName = "Type";
+            this.Type.HeaderText = "Тип";
+            this.Type.Name = "Type";
+            this.Type.ReadOnly = true;
+            this.Type.Visible = false;
             // 
             // tableLayoutPanelMain
             // 
@@ -90,6 +98,7 @@
             this.tableLayoutPanelMain.Controls.Add(this.tableLayoutPanelBottom, 1, 3);
             this.tableLayoutPanelMain.Controls.Add(this.labelHeader, 1, 0);
             this.tableLayoutPanelMain.Controls.Add(this.tableLayoutPanel3, 1, 1);
+            this.tableLayoutPanelMain.Controls.Add(this.tableLayoutPanel1, 2, 2);
             this.tableLayoutPanelMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelMain.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanelMain.Name = "tableLayoutPanelMain";
@@ -178,7 +187,7 @@
             this.tableLayoutPanel3.ColumnCount = 3;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35.13514F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 64.86487F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 215F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 217F));
             this.tableLayoutPanel3.Controls.Add(this.labelScheme, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.cmbScheme, 1, 0);
             this.tableLayoutPanel3.Controls.Add(this.chboxReinforcement, 2, 0);
@@ -193,7 +202,7 @@
             // 
             this.labelScheme.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelScheme.AutoSize = true;
-            this.labelScheme.Location = new System.Drawing.Point(23, 10);
+            this.labelScheme.Location = new System.Drawing.Point(22, 10);
             this.labelScheme.Name = "labelScheme";
             this.labelScheme.Size = new System.Drawing.Size(39, 13);
             this.labelScheme.TabIndex = 0;
@@ -210,7 +219,7 @@
             "г",
             "д",
             "е"});
-            this.cmbScheme.Location = new System.Drawing.Point(68, 6);
+            this.cmbScheme.Location = new System.Drawing.Point(67, 6);
             this.cmbScheme.Name = "cmbScheme";
             this.cmbScheme.Size = new System.Drawing.Size(34, 21);
             this.cmbScheme.TabIndex = 1;
@@ -220,13 +229,44 @@
             // 
             this.chboxReinforcement.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.chboxReinforcement.AutoSize = true;
-            this.chboxReinforcement.Location = new System.Drawing.Point(188, 8);
+            this.chboxReinforcement.Location = new System.Drawing.Point(185, 8);
             this.chboxReinforcement.Name = "chboxReinforcement";
             this.chboxReinforcement.Size = new System.Drawing.Size(75, 17);
             this.chboxReinforcement.TabIndex = 2;
             this.chboxReinforcement.Text = "Арматура";
             this.chboxReinforcement.UseVisualStyleBackColor = true;
             this.chboxReinforcement.CheckedChanged += new System.EventHandler(this.chboxReinforcement_CheckedChanged);
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.label2, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label1, 0, 2);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(867, 71);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 4;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(68, 126);
+            this.tableLayoutPanel1.TabIndex = 5;
+            // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Beige;
+            this.label1.Location = new System.Drawing.Point(3, 62);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(62, 31);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Результат расчета";
             // 
             // idDataGridViewTextBoxColumn
             // 
@@ -260,20 +300,29 @@
             // 
             this.valueDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             this.valueDataGridViewTextBoxColumn.DataPropertyName = "Value";
-            dataGridViewCellStyle1.Format = "N4";
-            dataGridViewCellStyle1.NullValue = null;
-            this.valueDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Format = "N4";
+            dataGridViewCellStyle2.NullValue = null;
+            this.valueDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
             this.valueDataGridViewTextBoxColumn.HeaderText = "Значение";
             this.valueDataGridViewTextBoxColumn.Name = "valueDataGridViewTextBoxColumn";
             this.valueDataGridViewTextBoxColumn.Width = 80;
             // 
-            // Type
+            // localStressBindingSource
             // 
-            this.Type.DataPropertyName = "Type";
-            this.Type.HeaderText = "Тип";
-            this.Type.Name = "Type";
-            this.Type.ReadOnly = true;
-            this.Type.Visible = false;
+            this.localStressBindingSource.DataSource = typeof(BSFiberConcrete.LocalStress);
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.White;
+            this.label2.Location = new System.Drawing.Point(3, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(62, 31);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Ввести значения";
             // 
             // BSLocalStrength
             // 
@@ -286,12 +335,14 @@
             this.Text = "Расчет на местные нагрузки";
             this.Load += new System.EventHandler(this.BSLocalStrength_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridLocalStrength)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.localStressBindingSource)).EndInit();
             this.tableLayoutPanelMain.ResumeLayout(false);
             this.tableLayoutPanelMain.PerformLayout();
             this.tableLayoutPanelBottom.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.localStressBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -315,5 +366,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn varNameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn valueDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn Type;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
     }
 }
