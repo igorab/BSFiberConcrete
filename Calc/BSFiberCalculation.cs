@@ -51,7 +51,7 @@ namespace BSFiberConcrete
         [BSFiberCalculation(Name = "случайный эксцентриситет, принимаемый по СП 63.13330")]
         private double e0;
 
-        public Dictionary<string, double> Coeffs {
+        public virtual Dictionary<string, double> Coeffs {
             get {
                 return  new Dictionary<string, double>() { { "Yft", Yft }, { "Yb", Yb }, { "Yb1", Yb1 }, { "Yb2", Yb2 }, { "Yb3", Yb3 }, { "Yb5", Yb5 } };
             }             

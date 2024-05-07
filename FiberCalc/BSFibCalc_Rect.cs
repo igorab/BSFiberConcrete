@@ -15,8 +15,10 @@ namespace BSFiberConcrete
         public double b { get; private set; }
         [DisplayName("Упругопластический момент сопротивления")]
         public double Wpl { get; private set; }
-        [DisplayName("Предельный момент сечения для изгибаемых сталефибробетонных элементов, т*м")]
+        [DisplayName("Предельный момент сечения для изгибаемых сталефибробетонных элементов, кг*см")]
         public double Mult { get; protected set; }
+
+        public override Dictionary<string, double> Coeffs => new Dictionary<string, double>() { { "Yft", Yft }, { "Yb1", Yb1 }, { "Yb5", Yb5 } };
 
         public override Dictionary<string, double> GeomParams()
         {
@@ -84,7 +86,7 @@ namespace BSFiberConcrete
             InfoCheckM(Mult);
 
             //Предельный момент сечения  (т*м)
-            Mult = BSHelper.Kgsm2Tm(Mult);
+            //Mult = BSHelper.Kgsm2Tm(Mult);
         }
     }
 }

@@ -78,6 +78,8 @@ namespace BSFiberConcrete
                 m_BSLoadData = new BSFiberLoadData();
                 m_MatFiber = new BSMatFiber();
 
+                flowLayoutPanelRebar.Enabled = (checkBoxRebar.Checked == true);
+
                 FiberConcrete = BSData.LoadFiberConcreteTable();                
                 cmbFib_i.SelectedIndex = 0;
                 comboBetonType.SelectedIndex = 0;
@@ -285,7 +287,8 @@ namespace BSFiberConcrete
                 bsCalc.GetParams(prms);                                                                                      
                 bsCalc.GetSize(BeamSizes());
                 bsCalc.Efforts = new Dictionary<string, double> {{ "My", _M }};
-                InitBeamLength();
+
+                //InitBeamLength();
                 
                 bsCalc.Calculate();
 
@@ -1035,6 +1038,11 @@ namespace BSFiberConcrete
         private void numRsw_ValueChanged(object sender, EventArgs e)
         {
             labelRswMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numRsw.Value));
+        }
+
+        private void checkBoxRebar_CheckedChanged(object sender, EventArgs e)
+        {
+            flowLayoutPanelRebar.Enabled = (checkBoxRebar.Checked == true);
         }
     }
 }
