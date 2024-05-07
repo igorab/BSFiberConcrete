@@ -30,9 +30,7 @@ namespace BSFiberConcrete.BSRFib
         // коэффициенты учета неупругих деформаций в
         // сталефибробетоне растянутой зоны образца
         private double k_F05;
-        private double k_F25;
-
-        private double k_Fel;
+        private double k_F25;        
 
         // см
         public double a_F05 { get; }
@@ -55,7 +53,6 @@ namespace BSFiberConcrete.BSRFib
             // коэффициенты учета неупругих деформаций в сталефибробетоне растянутой зоны образца >>
             k_F05 = 0.4;
             k_F25 = 0.34;            
-            k_Fel = 0.6;
             // <<
 
 
