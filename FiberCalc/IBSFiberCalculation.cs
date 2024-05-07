@@ -15,7 +15,7 @@ namespace BSFiberConcrete
 
         Dictionary<string, double> GeomParams();
 
-        void Calculate();
+        bool Calculate();
         Dictionary<string, double> Results();
     }
 

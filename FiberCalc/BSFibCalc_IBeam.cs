@@ -29,7 +29,7 @@ namespace BSFiberConcrete
         [DisplayName("Высота сжатой зоны, см")]
         public double x { get; protected set; }
 
-        [DisplayName("Предельный момент сечения, т*м")]
+        [DisplayName("Предельный момент сечения, кг*см")]
         public double Mult { get; protected set; }
 
         public override void GetParams(double[] _t)
@@ -78,10 +78,10 @@ namespace BSFiberConcrete
         }
 
 
-        public override void Calculate()
+        public override bool Calculate()
         {
             if (!Validate())
-                return;
+                return false;
 
             Calc_Pre();
 
@@ -112,7 +112,9 @@ namespace BSFiberConcrete
 
             InfoCheckM(Mult);
 
-            Mult = BSHelper.Kgsm2Tm(Mult);            
+            //Mult = BSHelper.Kgsm2Tm(Mult); 
+            
+            return true;
         }
 
         public override Dictionary<string, double> Results()

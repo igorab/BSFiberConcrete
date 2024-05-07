@@ -55,7 +55,7 @@ namespace BSFiberConcrete
 
         public double Dzeta_R() => omega / (1 + MatRod.epsilon_s() / MatFiber.e_b2);
 
-        public override void Calculate()
+        public override bool Calculate()
         {
             //Расчетное остаточное остаточного сопротивления осевому растяжению
             //Rfbt3 = R_fbt3();
@@ -89,7 +89,9 @@ namespace BSFiberConcrete
 
             InfoCheckM(Mult);
 
-            Mult = BSHelper.Kgsm2Tm(Mult);            
+            //Mult = BSHelper.Kgsm2Tm(Mult);            
+
+            return true;
         }        
     }
     

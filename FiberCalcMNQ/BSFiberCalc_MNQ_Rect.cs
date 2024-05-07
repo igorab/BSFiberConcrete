@@ -93,7 +93,7 @@ namespace BSFiberConcrete
         /// <summary>
         ///  Вычислить
         /// </summary>
-        public override void Calculate()
+        public override bool Calculate()
         {            
             if (Shear)
             {                
@@ -117,6 +117,8 @@ namespace BSFiberConcrete
                     Calculate_N();
                 }
             }
+
+            return true;
         }
 
         public override Dictionary<string, double> Results()

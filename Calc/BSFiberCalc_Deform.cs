@@ -456,7 +456,7 @@ namespace BSFiberConcrete
         //
         // Рассчитать
         //
-        public void Calculate()
+        public bool Calculate()
         {
             int cIters = 1000;
 
@@ -521,6 +521,8 @@ namespace BSFiberConcrete
                 Msg.Add("Проверка сечения по арматуре пройдена");
             else
                 Msg.Add("Не пройдена проверка сечения по арматуре");
+
+            return true;
         }
 
         /// <summary>

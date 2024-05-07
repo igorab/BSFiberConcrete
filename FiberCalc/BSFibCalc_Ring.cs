@@ -59,10 +59,10 @@ namespace BSFiberConcrete
         }
 
 
-        public override void Calculate()
+        public override bool Calculate()
         {
             if (!Validate())
-                return;
+                return false;
             
             //толщина стенки кольца см
             double tr = r2 - r1;
@@ -84,7 +84,9 @@ namespace BSFiberConcrete
             InfoCheckM(Mult);
 
             //Предельный момент сечения  (т*м)
-            Mult = BSHelper.Kgsm2Tm( Mult );            
+            Mult = BSHelper.Kgsm2Tm( Mult );
+
+            return true;
         }
     }
 }

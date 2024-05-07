@@ -272,7 +272,7 @@ namespace BSFiberConcrete
         private void FiberCalculate_M(double _M = 0)
         {
             bool useReinforcement = checkBoxRebar.Checked;
-
+            bool calcOk = false;
             try
             {               
                 bsCalc = BSFiberCalculation.construct(m_BeamSection, useReinforcement);
@@ -289,8 +289,8 @@ namespace BSFiberConcrete
                 bsCalc.Efforts = new Dictionary<string, double> {{ "My", _M }};
 
                 //InitBeamLength();
-                
-                bsCalc.Calculate();
+
+                calcOk = bsCalc.Calculate();
 
                 m_PhysParams = bsCalc.PhysParams;
                 m_Coeffs = bsCalc.Coeffs;
@@ -311,10 +311,21 @@ namespace BSFiberConcrete
             {
                 if (bsCalc is null)                
                     throw new Exception("Не выполнен расчет");
-                
-                string pathToHtmlFile = CreateReport(1, _useReinforcement: useReinforcement);
 
-                System.Diagnostics.Process.Start(pathToHtmlFile);
+                if (calcOk)
+                {
+                    string pathToHtmlFile = CreateReport(1, _useReinforcement: useReinforcement);
+
+                    System.Diagnostics.Process.Start(pathToHtmlFile);
+                }
+                else
+                {
+                    string errMsg = "";
+                    foreach (string ms in m_Message) errMsg += ms + ";\t\n";
+
+                    MessageBox.Show(errMsg);
+                }
+
             }
             catch (Exception _e)
             {

@@ -120,7 +120,7 @@ namespace BSFiberConcrete
         /// <summary>
         /// расчет прочности двутавра с рабочей арматурой
         /// </summary>
-        public override void Calculate()
+        public override bool Calculate()
         {
             //string info;
             
@@ -131,6 +131,8 @@ namespace BSFiberConcrete
             InfoCheckM(Mult);
 
             Mult = BSHelper.Kgsm2Tm(Mult);
+
+            return true;
         }
     }
 }

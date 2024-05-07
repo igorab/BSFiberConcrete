@@ -143,7 +143,7 @@ namespace BSFiberConcrete
         }
 
 
-        public override void Calculate()
+        public override bool Calculate()
         {
             if (N_Out)
             {
@@ -163,6 +163,8 @@ namespace BSFiberConcrete
             {
                 Calculate_N();
             }
+
+            return true;
         }
     }
 }

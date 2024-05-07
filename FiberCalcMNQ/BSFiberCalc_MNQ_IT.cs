@@ -18,7 +18,7 @@ namespace BSFiberConcrete
             base.m_Beam = this.beam;
         }
 
-        public override void Calculate()
+        public override bool Calculate()
         {
             if (N_Out)
             {
@@ -38,8 +38,9 @@ namespace BSFiberConcrete
             {
                 Calculate_N();
             }
-            //throw new Exception("Расчет не выполнен (нет в СП)");
 
+            //throw new Exception("Расчет не выполнен (нет в СП)");
+            return true;
         }
 
         public override void GetSize(double[] _t)

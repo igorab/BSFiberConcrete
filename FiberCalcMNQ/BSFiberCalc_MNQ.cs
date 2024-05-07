@@ -652,7 +652,10 @@ namespace BSFiberConcrete
             M_ult = BSHelper.Kg2T(M_ult);
         }
 
-        public virtual void Calculate() {}
+        public virtual bool Calculate() 
+        {
+            return true;
+        }
 
         public Dictionary<string, double> GeomParams()
         {

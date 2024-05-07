@@ -32,28 +32,28 @@
   <Class Name="BSFiberConcrete.BSBeam_Ring" Collapsed="true">
     <Position X="32.25" Y="8.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAEAAAAgAAAAABAEAIBgQAAAAAAEYQAAFQAAAAA=</HashCode>
+      <HashCode>CACAAAEAAAAgAAAAABAEBIBgQAAAAAAEYQAAFQAAAAA=</HashCode>
       <FileName>BSElements\BSBeam_Ring.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BSFiberConcrete.BSFibCalc_IBeam" Collapsed="true">
-    <Position X="20" Y="8.25" Width="1.5" />
+    <Position X="20.5" Y="7.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAIAAAAAAAQBBChAAAAgAAACCCCgAAAAIBgAAAAAAA=</HashCode>
+      <HashCode>AAAIAAAAAACQBBChAAAAAAAACCCCgAAAAIBgAAAAAAA=</HashCode>
       <FileName>FiberCalc\BSFibCalc_IBeam.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BSFiberConcrete.BSFibCalc_Rect">
     <Position X="22" Y="7.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAABCgAAACAAAACCAAgAAAQQAAAAAAAAg=</HashCode>
+      <HashCode>AAAAAAAAAACAABC0AAAAAAAACCAAgAAAQQAAAAAEAAg=</HashCode>
       <FileName>FiberCalc\BSFibCalc_Rect.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BSFiberConcrete.BSFibCalc_Ring" Collapsed="true">
-    <Position X="18" Y="9" Width="1.5" />
+    <Position X="14.75" Y="8.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAABCgAAAAAAAASCAAgAAAIAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAACAABCgAAAAAAAASCAAgAAAIAAAAAAAAAA=</HashCode>
       <FileName>FiberCalc\BSFibCalc_Ring.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -64,10 +64,10 @@
       <FileName>FiberCalc\IBSFiberCalculation.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BSFiberConcrete.BSFiberCalculation" Collapsed="true">
-    <Position X="18.75" Y="6" Width="1.5" />
+  <Class Name="BSFiberConcrete.BSFiberCalculation">
+    <Position X="18.25" Y="5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAEgBAAAAAAIABCxwYAAiAACCCFApgAAAAAAAAEACAg=</HashCode>
+      <HashCode>AAAiBAAAAACAAACxwMAAiAACCDEApgAAAAAAAAUBCBA=</HashCode>
       <FileName>Calc\BSFiberCalculation.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="1.3" />
@@ -82,7 +82,7 @@
   <Class Name="BSFiberConcrete.BSFiberCalc_MNQ" Collapsed="true">
     <Position X="6.5" Y="0.75" Width="4.75" />
     <TypeIdentifier>
-      <HashCode>AIgkRABYQoAAhAChiAgBigQDXXAAhhQAYQgAZDEgiRA=</HashCode>
+      <HashCode>EIgkxCgYRoAAlACjyAgBiQQDXXAAjgYAYQgA5DEgjRA=</HashCode>
       <FileName>FiberCalcMNQ\BSFiberCalc_MNQ.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -107,14 +107,14 @@
   <Class Name="BSFiberConcrete.BSFiberCalc_MNQ_Rect">
     <Position X="2.75" Y="12.75" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AIAAAAAAQAAAAACAAAAAAAAADGAAAAQAAAAAAAAABAA=</HashCode>
+      <HashCode>AIAAAAAAQAAAAACCAAAAAAAADGAAAAQAAAAAAAAABAA=</HashCode>
       <FileName>FiberCalcMNQ\BSFiberCalc_MNQ_Rect.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BSFiberConcrete.BSFiberCalc_MNQ_Ring">
-    <Position X="12.5" Y="7" Width="2.5" />
+    <Position X="14.5" Y="3.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAACAAABAAAAAACAAgAQAAAAAAAAAAAA=</HashCode>
+      <HashCode>AIAAAAAAACAAAACCAABAAAAAACAAgAQAAAAAAAAABAA=</HashCode>
       <FileName>FiberCalcMNQ\BSFiberCalc_MNQ_Ring.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -125,7 +125,7 @@
       <FileName>BSElements\BSBeam.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="BSFiberConcrete.IBSFiberCalculation" Collapsed="true">
+  <Interface Name="BSFiberConcrete.IBSFiberCalculation">
     <Position X="22" Y="6" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAACgAAAAAAAACCAAgAAAAAAAAAAAAAA=</HashCode>

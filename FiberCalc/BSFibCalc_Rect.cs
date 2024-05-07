@@ -18,7 +18,10 @@ namespace BSFiberConcrete
         [DisplayName("Предельный момент сечения для изгибаемых сталефибробетонных элементов, кг*см")]
         public double Mult { get; protected set; }
 
-        [DisplayName("Коэффициент использования")]
+        [DisplayName("Коэффициент, учитывающий неупругие свойства фибробетона растянутой зоны")]
+        public double cGamma { get; protected set; }
+
+        [DisplayName("Коэффициент использования по усилию")]
         public double UtilRate { get; protected set; }
 
         /// <summary>
@@ -50,6 +53,18 @@ namespace BSFiberConcrete
             };
         }
 
+        public override Dictionary<string, double> PhysicalParameters()
+        {
+            Dictionary<string, double> phys = new Dictionary<string, double>
+            {
+                { DN(typeof(BSFiberCalculation), "Rfbt"), Rfbt },
+                { DN(typeof(BSFiberCalculation), "B"), B },
+                { DN(typeof(BSFibCalc_Rect), "cGamma"), cGamma }
+            };
+
+            return phys;
+        }
+
         public override void GetParams(double[] _t)
         {
             base.GetParams(_t);
@@ -75,21 +90,28 @@ namespace BSFiberConcrete
 
             if (MatFiber.B < 15)
             {
-                Msg.Add("Требуется увеличение класса фибробетона на осевое сжатие");
+                Msg.Add("Требуется увеличение класса бетона-матрицы (менее B15 не используется)");
                 ret = false;
             }
+
+            if (MatFiber.B > 60)
+            {
+                Msg.Add("Для бетона классом более B60 расчет вести на основе нелинейной деформационной модели");
+
+                ret = false;
+            }
+
 
             return ret;
         }
 
-        public override void Calculate()
-        {            
-            if (!Validate()) 
-                return;
-             
-            //коэффициент, учитывающий неупругие свойства фибробетона растянутой зоны сечения
+        public override bool Calculate()
+        {
+            if (!Validate())            
+                return false;
+                        
             // Изменение 1 к СП 360
-            double cGamma = Gamma(MatFiber.B);
+            cGamma = Gamma(MatFiber.B);
 
             //Упругопластический момент сопротивления  Ф.(6.3)
             Wpl = BSBeam_Rect.Wx(b, h) * cGamma;
@@ -104,6 +126,10 @@ namespace BSFiberConcrete
 
             //Предельный момент сечения  (т*м)
             //Mult = BSHelper.Kgsm2Tm(Mult);
+
+            return true;
         }
+
+       
     }
 }

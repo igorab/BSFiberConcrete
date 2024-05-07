@@ -93,13 +93,17 @@ namespace BSFiberConcrete
             return new Dictionary<string, double>() { };
         }
 
+        /// <summary>
+        /// Физические свойства материала
+        /// </summary>        
         public virtual Dictionary<string, double> PhysicalParameters()
         {
-            Dictionary<string, double> phys = new Dictionary<string, double>();
-
-            phys.Add(DN(typeof(BSFiberCalculation), "Rfbt3n"), Rfbt3n);
-            phys.Add(DN(typeof(BSFiberCalculation), "B"), B);
-            phys.Add(DN(typeof(BSFiberCalculation), "Rfbn"), Rfbn);            
+            Dictionary<string, double> phys = new Dictionary<string, double>
+            {
+                { DN(typeof(BSFiberCalculation), "Rfbt3n"), Rfbt3n },
+                { DN(typeof(BSFiberCalculation), "B"), B },
+                { DN(typeof(BSFiberCalculation), "Rfbn"), Rfbn }
+            };
 
             return phys;
         }
@@ -121,10 +125,12 @@ namespace BSFiberConcrete
             return true;
         }
 
-        public virtual void Calculate() 
+        public virtual bool Calculate() 
         {
             if (!Validate())
-                return;
+                return false;
+
+            return true;
         }
 
         public virtual Dictionary<string, double> Results()
