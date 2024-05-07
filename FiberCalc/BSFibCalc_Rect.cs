@@ -18,8 +18,17 @@ namespace BSFiberConcrete
         [DisplayName("Предельный момент сечения для изгибаемых сталефибробетонных элементов, кг*см")]
         public double Mult { get; protected set; }
 
+        [DisplayName("Коэффициент использования")]
+        public double UtilRate { get; protected set; }
+
+        /// <summary>
+        /// Коэффициенты надежности, применяемые в расчете
+        /// </summary>
         public override Dictionary<string, double> Coeffs => new Dictionary<string, double>() { { "Yft", Yft }, { "Yb1", Yb1 }, { "Yb5", Yb5 } };
 
+        /// <summary>
+        /// Геометрия сечения
+        /// </summary>        
         public override Dictionary<string, double> GeomParams()
         {
             Dictionary<string, double> geom = base.GeomParams();
@@ -28,11 +37,16 @@ namespace BSFiberConcrete
             return geom;
         }
 
+        /// <summary>
+        /// результаты расчета
+        /// </summary>        
         public override Dictionary<string, double> Results()
         {
             return new Dictionary<string, double>() {
                     { DN(typeof(BSFibCalc_Rect), "Wpl"), Wpl},
-                    { DN(typeof(BSFibCalc_Rect), "Mult"), Mult}
+                    { DN(typeof(BSFibCalc_Rect), "Mult"), Mult},
+                    { DN(typeof(BSFibCalc_Rect), "UtilRate"), UtilRate}
+
             };
         }
 
@@ -82,6 +96,9 @@ namespace BSFiberConcrete
 
             //Значение предельного момента сечения для изгибаемых сталефибробетонных элементов определяют по формуле (6.3) (кг*см)
             Mult = Rfbt * Wpl;
+
+            //Коэффициент использования
+            UtilRate = (Mult!=0)? m_Efforts["My"] / Mult : 0; 
 
             InfoCheckM(Mult);
 
