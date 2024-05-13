@@ -32,8 +32,8 @@
             this.btnPoint = new System.Windows.Forms.Button();
             this.btnLine = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.pic = new System.Windows.Forms.PictureBox();
             this.btnSectionGrid = new System.Windows.Forms.Button();
+            this.pic = new System.Windows.Forms.PictureBox();
             this.panelTop.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic)).BeginInit();
@@ -69,6 +69,7 @@
             this.btnLine.TabIndex = 0;
             this.btnLine.Text = "-------";
             this.btnLine.UseVisualStyleBackColor = true;
+            this.btnLine.Click += new System.EventHandler(this.btnLine_Click);
             // 
             // panel1
             // 
@@ -79,6 +80,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1002, 52);
             this.panel1.TabIndex = 1;
+            // 
+            // btnSectionGrid
+            // 
+            this.btnSectionGrid.Location = new System.Drawing.Point(827, 8);
+            this.btnSectionGrid.Name = "btnSectionGrid";
+            this.btnSectionGrid.Size = new System.Drawing.Size(54, 32);
+            this.btnSectionGrid.TabIndex = 0;
+            this.btnSectionGrid.Text = "x-0-y";
+            this.btnSectionGrid.UseVisualStyleBackColor = true;
+            this.btnSectionGrid.Click += new System.EventHandler(this.btnSectionGrid_Click);
             // 
             // pic
             // 
@@ -93,16 +104,6 @@
             this.pic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pic_MouseDown);
             this.pic.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pic_MouseMove);
             this.pic.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pic_MouseUp);
-            // 
-            // btnSectionGrid
-            // 
-            this.btnSectionGrid.Location = new System.Drawing.Point(827, 8);
-            this.btnSectionGrid.Name = "btnSectionGrid";
-            this.btnSectionGrid.Size = new System.Drawing.Size(54, 32);
-            this.btnSectionGrid.TabIndex = 0;
-            this.btnSectionGrid.Text = "x-0-y";
-            this.btnSectionGrid.UseVisualStyleBackColor = true;
-            this.btnSectionGrid.Click += new System.EventHandler(this.btnSectionGrid_Click);
             // 
             // BSSectionDraw
             // 

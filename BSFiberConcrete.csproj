@@ -354,6 +354,7 @@
     <None Include="Properties\DataSources\FaF.datasource" />
     <None Include="Properties\DataSources\FibLab.datasource" />
     <None Include="Properties\DataSources\LocalStress.datasource" />
+    <None Include="Properties\DataSources\System.Drawing.Point.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

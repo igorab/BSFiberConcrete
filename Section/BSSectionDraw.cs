@@ -93,6 +93,11 @@ namespace BSFiberConcrete.Section
             sectionGrid.Show();
         }
 
+        private void btnLine_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void pic_Click(object sender, EventArgs e)
         {
 

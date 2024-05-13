@@ -57,14 +57,32 @@ namespace BSCalcLib
             {
                 double coef = X[i + 1] - X[i];
 
-                STE[1,1] = coef/3.0;
+                STE[1,1] = coef/3.0 + 1.0/coef;
+                STE[1,2] = coef/6.0 - 1.0 / coef;
+                STE[2, 2] = STE[1, 1];
+                STE[2, 1] = STE[1, 2];
 
-                ST[i, i] += STE[1, 1]; 
+                ST[i, i] += STE[1, 1];
+                ST[i, i+1] += STE[1, 2];
+                ST[i+1, i] += STE[2, 1];
+                ST[i+1, i+1] += STE[2, 2];
             }
         }
 
         // the Dirichlet boundary conditions are inserted in the right-hand side matrix and the system k matrix is corrected
+        private void InitBC()
+        {
+            for (int i=0; i < NPoints; i ++)
+            {
+                for (int j = 0; j < NPoints; j++)
+                {
+                    ST[i, j] = 0.0;
+                }
 
+                ST[i, i] = 1.0;
+                RHS[i, 1] = Math.Exp(X[i]);
+            }
+        }
 
     }
 }
