@@ -126,8 +126,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "BSSectionGrid";
             this.Text = "Задать сечение";
-            this.Load += new System.EventHandler(this.BSSectionGrid_Load);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.BSSectionGrid_Paint);
+            this.Load += new System.EventHandler(this.BSSectionGrid_Load);            
             this.tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pointBS)).EndInit();

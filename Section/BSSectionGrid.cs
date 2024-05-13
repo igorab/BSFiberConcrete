@@ -52,13 +52,15 @@ namespace BSFiberConcrete.Section
         {
 
             // Create the starting point.
-            Point startPoint = new Point(1, 1);
+            Point startPoint = new Point(pic.Left, pic.Top);
 
             // Use the addition operator to get the end point.
-            Point endPoint = startPoint + new Size(140, 150);
+            Point endPoint = startPoint + new Size(pic.Width, pic.Height);
+
+            Pen p = new Pen(Color.Blue);
 
             // Draw a line between the points.
-            g.DrawLine(SystemPens.Highlight, startPoint, endPoint);
+            g.DrawLine(p, startPoint, endPoint);
 
             
             
@@ -73,10 +75,7 @@ namespace BSFiberConcrete.Section
             CreatePointsAndSizes();
         }
 
-        private void BSSectionGrid_Paint(object sender, PaintEventArgs e)
-        {
-            
-        }
+       
 
         private void btnAdd_Click(object sender, EventArgs e)
         {            

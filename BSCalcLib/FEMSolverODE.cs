@@ -13,13 +13,16 @@ namespace BSCalcLib
     /// </summary>
 
     public class FEMSolverODE
-    {        
+    {
+        public List<double> X { set { m_X = value.ToArray(); } }
+  
+
         // total number of nodes
-        public static int NPoints;
+        private static int NPoints;
         // total number of elements
-        public static int NElem;
+        private static int NElem;
         // x-coordinate of node I
-        double[] X = new double[NPoints];
+        private double[] m_X = new double[NPoints];
 
         // the M-N-th element of the element X matrix, M and N being node identifiers
         double[,] STE = new double[NPoints, NPoints];
@@ -55,7 +58,7 @@ namespace BSCalcLib
         {
             for (int i = 0; i < NElem; i++)
             {
-                double coef = X[i + 1] - X[i];
+                double coef = m_X[i + 1] - m_X[i];
 
                 STE[1,1] = coef/3.0 + 1.0/coef;
                 STE[1,2] = coef/6.0 - 1.0 / coef;
@@ -80,9 +83,26 @@ namespace BSCalcLib
                 }
 
                 ST[i, i] = 1.0;
-                RHS[i, 1] = Math.Exp(X[i]);
+                RHS[i, 1] = Math.Exp(m_X[i]);
             }
         }
 
+        public static void RunFromCode()
+        {
+            List<double> _X = new List<double> {0.0, 0.1, 0.3, 0.6, 1.0, 1.5, 2.0 };
+
+            FEMSolverODE solverODE = new FEMSolverODE();
+            solverODE.X = _X;
+            solverODE.Run();
+        }
+
+        public void Run()
+        {
+            InitSTRHS();
+
+            InitSTEST();
+
+            InitBC();
+        }
     }
 }
