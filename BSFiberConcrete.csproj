@@ -281,6 +281,12 @@
     <Compile Include="Section\BSSectionDraw.Designer.cs">
       <DependentUpon>BSSectionDraw.cs</DependentUpon>
     </Compile>
+    <Compile Include="Section\BSSectionGrid.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Section\BSSectionGrid.Designer.cs">
+      <DependentUpon>BSSectionGrid.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Beam\BSBeamCalcView.resx">
       <DependentUpon>BSBeamCalcView.cs</DependentUpon>
     </EmbeddedResource>
@@ -338,6 +344,9 @@
     </Content>
     <EmbeddedResource Include="Section\BSSectionDraw.resx">
       <DependentUpon>BSSectionDraw.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Section\BSSectionGrid.resx">
+      <DependentUpon>BSSectionGrid.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="BSClassDiagram.cd" />
     <None Include="packages.config" />

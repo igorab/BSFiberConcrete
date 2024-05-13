@@ -29,11 +29,13 @@
         private void InitializeComponent()
         {
             this.panelTop = new System.Windows.Forms.Panel();
+            this.btnPoint = new System.Windows.Forms.Button();
+            this.btnLine = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pic = new System.Windows.Forms.PictureBox();
-            this.btnLine = new System.Windows.Forms.Button();
-            this.btnPoint = new System.Windows.Forms.Button();
+            this.btnSectionGrid = new System.Windows.Forms.Button();
             this.panelTop.SuspendLayout();
+            this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic)).BeginInit();
             this.SuspendLayout();
             // 
@@ -45,40 +47,8 @@
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTop.Location = new System.Drawing.Point(0, 0);
             this.panelTop.Name = "panelTop";
-            this.panelTop.Size = new System.Drawing.Size(989, 75);
+            this.panelTop.Size = new System.Drawing.Size(1002, 75);
             this.panelTop.TabIndex = 0;
-            // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.SystemColors.ButtonShadow;
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 546);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(989, 52);
-            this.panel1.TabIndex = 1;
-            // 
-            // pic
-            // 
-            this.pic.BackColor = System.Drawing.Color.White;
-            this.pic.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pic.Location = new System.Drawing.Point(0, 75);
-            this.pic.Name = "pic";
-            this.pic.Size = new System.Drawing.Size(989, 471);
-            this.pic.TabIndex = 2;
-            this.pic.TabStop = false;
-            this.pic.Click += new System.EventHandler(this.pic_Click);
-            this.pic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pic_MouseDown);
-            this.pic.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pic_MouseMove);
-            this.pic.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pic_MouseUp);
-            // 
-            // btnLine
-            // 
-            this.btnLine.Location = new System.Drawing.Point(507, 12);
-            this.btnLine.Name = "btnLine";
-            this.btnLine.Size = new System.Drawing.Size(43, 37);
-            this.btnLine.TabIndex = 0;
-            this.btnLine.Text = "-------";
-            this.btnLine.UseVisualStyleBackColor = true;
             // 
             // btnPoint
             // 
@@ -91,11 +61,54 @@
             this.btnPoint.UseVisualStyleBackColor = true;
             this.btnPoint.Click += new System.EventHandler(this.btnPoint_Click);
             // 
+            // btnLine
+            // 
+            this.btnLine.Location = new System.Drawing.Point(507, 12);
+            this.btnLine.Name = "btnLine";
+            this.btnLine.Size = new System.Drawing.Size(43, 37);
+            this.btnLine.TabIndex = 0;
+            this.btnLine.Text = "-------";
+            this.btnLine.UseVisualStyleBackColor = true;
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.panel1.Controls.Add(this.btnSectionGrid);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel1.Location = new System.Drawing.Point(0, 571);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1002, 52);
+            this.panel1.TabIndex = 1;
+            // 
+            // pic
+            // 
+            this.pic.BackColor = System.Drawing.Color.White;
+            this.pic.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pic.Location = new System.Drawing.Point(0, 75);
+            this.pic.Name = "pic";
+            this.pic.Size = new System.Drawing.Size(1002, 496);
+            this.pic.TabIndex = 2;
+            this.pic.TabStop = false;
+            this.pic.Click += new System.EventHandler(this.pic_Click);
+            this.pic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pic_MouseDown);
+            this.pic.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pic_MouseMove);
+            this.pic.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pic_MouseUp);
+            // 
+            // btnSectionGrid
+            // 
+            this.btnSectionGrid.Location = new System.Drawing.Point(827, 8);
+            this.btnSectionGrid.Name = "btnSectionGrid";
+            this.btnSectionGrid.Size = new System.Drawing.Size(54, 32);
+            this.btnSectionGrid.TabIndex = 0;
+            this.btnSectionGrid.Text = "x-0-y";
+            this.btnSectionGrid.UseVisualStyleBackColor = true;
+            this.btnSectionGrid.Click += new System.EventHandler(this.btnSectionGrid_Click);
+            // 
             // BSSectionDraw
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(989, 598);
+            this.ClientSize = new System.Drawing.Size(1002, 623);
             this.Controls.Add(this.pic);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panelTop);
@@ -104,6 +117,7 @@
             this.Text = "Нарисовать сечение";
             this.Load += new System.EventHandler(this.BSSectionDraw_Load);
             this.panelTop.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pic)).EndInit();
             this.ResumeLayout(false);
 
@@ -116,5 +130,6 @@
         private System.Windows.Forms.PictureBox pic;
         private System.Windows.Forms.Button btnPoint;
         private System.Windows.Forms.Button btnLine;
+        private System.Windows.Forms.Button btnSectionGrid;
     }
 }

@@ -87,6 +87,12 @@ namespace BSFiberConcrete.Section
             drawPoint = !drawPoint;
         }
 
+        private void btnSectionGrid_Click(object sender, EventArgs e)
+        {
+            BSSectionGrid sectionGrid   = new BSSectionGrid();
+            sectionGrid.Show();
+        }
+
         private void pic_Click(object sender, EventArgs e)
         {
 
