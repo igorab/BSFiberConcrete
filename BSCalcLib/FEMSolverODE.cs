@@ -73,7 +73,7 @@ namespace BSCalcLib
                 STE[0,0] = coef/3.0 + 1.0/coef;
                 STE[0,1] = coef/6.0 - 1.0 / coef;
                 STE[1, 0] = STE[0, 1];
-                STE[1,1] = STE[1, 1];
+                STE[1,1] = STE[0, 0];
                 
                 ST[i, i] += STE[0, 0];
                 ST[i, i+1] += STE[0, 1];
@@ -107,6 +107,21 @@ namespace BSCalcLib
             InitSTMatrix();
 
             InitBC();
+
+            LinearEquationsSystem system = new LinearEquationsSystem(NPoints);
+
+            for (int j=0; j< NPoints; j++)
+                system.SetFreeVector(j, RHS[j]);
+
+            for (int i = 0; i < NPoints; i++)
+                for (int j = 0; j < NPoints; j++)
+                    system.SetMatrixCell(j, i, ST[i, j]);
+
+            system.Solve();
+
+            double z;
+            for (int i = 0; i < NPoints; i++)
+                z = system.Solution(i);
         }
 
         public static void RunFromCode()
