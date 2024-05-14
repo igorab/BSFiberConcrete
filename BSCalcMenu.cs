@@ -177,5 +177,11 @@ namespace BSCalcMenu
             BSEFib bsEFib = new BSEFib();
             bsEFib.Show();
         }
+
+        private void btnSection_Click(object sender, EventArgs e)
+        {
+            BSSectionGrid sectionGrid = new BSSectionGrid();
+            sectionGrid.Show();
+        }
     }
 }

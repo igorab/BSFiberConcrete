@@ -13,18 +13,16 @@ namespace BSFiberConcrete.Section
     public partial class BSSectionGrid : Form
     {
         Point pt;
-
         Bitmap bm;
         Graphics g;
-        Point px, py;
-        Pen p = new Pen(Color.Black, 4);
-        private int N = 20;
+        
+        private const int N = 20;
 
         public BSSectionGrid()
         {
             InitializeComponent();
 
-            pt = new Point() { X = 1, Y = 1 } ;
+            pt = new Point() { X = 0, Y = 0 } ;
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -46,40 +44,54 @@ namespace BSFiberConcrete.Section
                 g.DrawLine(p, new Point((pic.Width / N * (i + 1)), 0), new Point((pic.Width / N * (i + 1)), pic.Height));
                 g.DrawLine(p, new Point(0, (pic.Height / N * (i + 1))), new Point(pic.Width, (pic.Height / N * (i + 1))));
             }
+
+            pointBS.Add(new BSPoint(pt));
+            pt.X += 10;
+            pt.Y += 10;
+            pointBS.Add(new BSPoint(pt));
         }
 
-        private void CreatePointsAndSizes()
+        private void DrawLines()
         {
+            List<PointF> points = new List<PointF>();
 
-            // Create the starting point.
-            Point startPoint = new Point(pic.Left, pic.Top);
-
-            // Use the addition operator to get the end point.
-            Point endPoint = startPoint + new Size(pic.Width, pic.Height);
+            foreach (BSPoint point in pointBS)
+            {
+                PointF pt = new PointF(point.X, point.Y);
+                points.Add(pt);
+            }            
 
             Pen p = new Pen(Color.Blue);
-
-            // Draw a line between the points.
-            g.DrawLine(p, startPoint, endPoint);
-
-            
-            
-            g.DrawString("The sizes are equal.",
-                new Font(this.Font, FontStyle.Italic),
-                Brushes.Indigo, 10.0F, 65.0F);
+           
+            if (points != null)
+                g.DrawCurve(p, points.ToArray());
+                        
+            //g.
             
         }
 
         private void subtractButton_Click(object sender, EventArgs e)
         {
-            CreatePointsAndSizes();
+            DrawLines();
+            this.Refresh();
+        }
+       
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            pt.X = 2 * pt.X;
+            pt.Y = 2 * pt.Y;
+            pointBS.Add(new BSPoint(pt));           
         }
 
-       
-
-        private void btnAdd_Click(object sender, EventArgs e)
-        {            
-            pointBS.Add(pt);
+        private void btnDel_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                pointBS.RemoveAt(pointBS.Count - 1);
+            }
+            catch (ArgumentOutOfRangeException) 
+            { 
+            } 
         }
     }
     
