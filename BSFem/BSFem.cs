@@ -11,7 +11,12 @@ namespace BSFem
 
         private void btnCalculate_Click(object sender, EventArgs e)
         {
-            FEMSolverODE.RunFromCode();
+            var Z = FEMSolverODE.RunFromCode();
+
+            if (Z != null) 
+            {
+                textBox1.Text = string.Join("\t\n", Z) ;   
+            }
         }
     }
 }

@@ -18,6 +18,21 @@ namespace BSFiberConcrete.Section
         
         private const int N = 20;
 
+        private BindingList<BSPoint> InitRectangle()
+        {
+            List<BSPoint> pts = new List<BSPoint>()
+            {
+                new BSPoint() {X = 0, Y = 0, Num = 0},
+                new BSPoint() {X = 0, Y = 200, Num = 1},
+                new BSPoint() {X = 200, Y = 200, Num = 2},
+                new BSPoint() {X = 200, Y = 0, Num = 3},
+                new BSPoint() {X = 0, Y = 0, Num = 4}
+            };
+
+            return new BindingList<BSPoint>(pts);
+
+        }
+
         public BSSectionGrid()
         {
             InitializeComponent();
@@ -25,11 +40,7 @@ namespace BSFiberConcrete.Section
             pt = new Point() { X = 0, Y = 0 } ;
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
+     
         private void BSSectionGrid_Load(object sender, EventArgs e)
         {
             bm = new Bitmap(pic.Width, pic.Height);
@@ -45,10 +56,9 @@ namespace BSFiberConcrete.Section
                 g.DrawLine(p, new Point(0, (pic.Height / N * (i + 1))), new Point(pic.Width, (pic.Height / N * (i + 1))));
             }
 
-            pointBS.Add(new BSPoint(pt));
-            pt.X += 10;
-            pt.Y += 10;
-            pointBS.Add(new BSPoint(pt));
+            //pointBS.Add(new BSPoint(pt));
+            pointBS.DataSource = InitRectangle();
+            
         }
 
         private void DrawLines()
@@ -64,7 +74,7 @@ namespace BSFiberConcrete.Section
             Pen p = new Pen(Color.Blue);
            
             if (points != null)
-                g.DrawCurve(p, points.ToArray());
+                g.DrawLines(p, points.ToArray());
                         
             //g.
             
@@ -92,6 +102,11 @@ namespace BSFiberConcrete.Section
             catch (ArgumentOutOfRangeException) 
             { 
             } 
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+
         }
     }
     

@@ -100,7 +100,7 @@ namespace BSCalcLib
             
         }
 
-        public void Run()
+        public List<double> Run()
         {
             InitToZeros();
 
@@ -119,18 +119,22 @@ namespace BSCalcLib
 
             system.Solve();
 
-            double z;
+            List<double> Z = new List<double>();
             for (int i = 0; i < NPoints; i++)
-                z = system.Solution(i);
+                Z.Add(system.Solution(i));
+
+            return Z;
         }
 
-        public static void RunFromCode()
+        public static List<double> RunFromCode()
         {
             List<double> _X = new List<double> {0.0, 0.1, 0.3, 0.6, 1.0, 1.5, 2.0 };
 
             FEMSolverODE solverODE = new FEMSolverODE();
             solverODE.X = _X;
-            solverODE.Run();
+            var Z = solverODE.Run();
+
+            return Z;
         }
 
       

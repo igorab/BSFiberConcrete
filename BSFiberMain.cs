@@ -757,8 +757,8 @@ namespace BSFiberConcrete
             double c_eps_b1_red = b2.eps_b1_red;
             double c_eps_b2 = b2.eps_b2;
 
-            double c_h = 60, // см 
-                   c_b = 30; // см
+            double c_h = 0, //60 см 
+                   c_b = 0; //30 см
            
             double c_L = Convert.ToDouble(tbLength.Text); // см
             string cRCls = r2.Cls_s;
