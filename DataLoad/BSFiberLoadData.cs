@@ -52,12 +52,15 @@ namespace BSFiberConcrete
             }            
         }
 
-        public void SaveInitToJson(Dictionary<string, double>  _val)
+        public void SaveInitSectionsToJson(Dictionary<string, double>  _sections)
         {
             string path = Path.Combine(Environment.CurrentDirectory, "Templates\\BSInit.json");
             Dictionary<string, double> fibInit = new Dictionary<string, double>(m_FibInit);
-            
-            fibInit["Mx"] = _val["Mx"];             
+
+            foreach (var _v in _sections)
+            {
+                fibInit[_v.Key] = _v.Value;
+            }
 
             using (FileStream fs = new FileStream(path, FileMode.Truncate))
             {

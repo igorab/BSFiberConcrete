@@ -381,7 +381,7 @@ namespace BSFiberConcrete
             m_Table.Columns.Add("b, cm", typeof(double));
             m_Table.Columns.Add("h, cm", typeof(double));
 
-            dataGridView1.DataSource = m_Table;
+            dataGridSection.DataSource = m_Table;
             m_Table.Rows.Add( _b, _h);
 
             picBeton.Image = global::BSFiberConcrete.Properties.Resources.FiberBeton;
@@ -410,13 +410,13 @@ namespace BSFiberConcrete
             */
             m_Table.Columns.Add("bf, cm", typeof(double));
             m_Table.Columns.Add("hf, cm", typeof(double));
-            m_Table.Columns.Add("hw, cm", typeof(double));
             m_Table.Columns.Add("bw, cm", typeof(double));
+            m_Table.Columns.Add("hw, cm", typeof(double));           
             m_Table.Columns.Add("b1f, cm", typeof(double));
             m_Table.Columns.Add("h1f, cm", typeof(double));
 
-            dataGridView1.DataSource = m_Table;
-            m_Table.Rows.Add(80d, 20d, 20d, 20d, 0, 0);
+            dataGridSection.DataSource = m_Table;
+            m_Table.Rows.Add(m_Iniv["bf"], m_Iniv["hf"], m_Iniv["bw"], m_Iniv["hw"], 0, 0);
 
             picBeton.Image = global::BSFiberConcrete.Properties.Resources.IBeam;
             picBeton.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -431,7 +431,7 @@ namespace BSFiberConcrete
             m_Table.Columns.Add("r1, cm", typeof(double));
             m_Table.Columns.Add("r2, cm", typeof(double));
                         
-            dataGridView1.DataSource = m_Table;
+            dataGridSection.DataSource = m_Table;
             m_Table.Rows.Add(m_Iniv["r1"], m_Iniv["r2"]);
 
             picBeton.Image = global::BSFiberConcrete.Properties.Resources.Ring;
@@ -445,13 +445,13 @@ namespace BSFiberConcrete
             m_Table = new DataTable();
             m_Table.Columns.Add("bf, cm", typeof(double));
             m_Table.Columns.Add("hf, cm", typeof(double));
-            m_Table.Columns.Add("hw, cm", typeof(double));
             m_Table.Columns.Add("bw, cm", typeof(double));
+            m_Table.Columns.Add("hw, cm", typeof(double));            
             m_Table.Columns.Add("b1f, cm", typeof(double));
             m_Table.Columns.Add("h1f, cm", typeof(double));
 
-            dataGridView1.DataSource = m_Table;
-            m_Table.Rows.Add(80d, 20d, 20d, 20d, 80d, 20d);
+            dataGridSection.DataSource = m_Table;
+            m_Table.Rows.Add(m_Iniv["bf"], m_Iniv["hf"], m_Iniv["bw"], m_Iniv["hw"], m_Iniv["b1f"], m_Iniv["h1f"]);
 
             picBeton.Image = global::BSFiberConcrete.Properties.Resources.IBeam;
             picBeton.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -742,8 +742,11 @@ namespace BSFiberConcrete
         [DisplayName("Расчет по прочности нормальных сечений на основе нелинейной деформационной модели")]
         private void btnCalc_Deform_Click(object sender, EventArgs e)
         {
-            var b2 = m_BSLoadData.Beton2;
-            var r2 = m_BSLoadData.Rod2;
+            //Beton bt = Lib.BSQuery.BetonTableFind(cmbBfn.Text);
+
+            // Настройки из файла Templates\BSFiberParams.json
+            Beton2 b2 = m_BSLoadData.Beton2;
+            Rod2 r2 = m_BSLoadData.Rod2;
 
             string cBtCls = b2.Cls_b;
             double cRb = b2.Rb; // МПа
@@ -934,6 +937,7 @@ namespace BSFiberConcrete
                       
         }
 
+        // сохранить усилия
         private void btnEffortsRefresh_Click(object sender, EventArgs e)
         {            
             GetEffortsFromForm(out Dictionary<string, double> MNQ);
@@ -942,15 +946,42 @@ namespace BSFiberConcrete
             Lib.BSData.SaveEfforts(ef);
         }
 
-                
+
+        // сохранить геометрические размеры
         private void btnSaveParams_Click(object sender, EventArgs e)
         {
-            GetEffortsFromForm(out Dictionary<string, double> MNQ);
+            try
+            {
+                Dictionary<string, double> SZ = new Dictionary<string, double>();
+                double[] sz = BeamSizes();
+                Dictionary<string, double> ef = null;
 
-            Dictionary<string, double> ef = new Dictionary<string, double> { 
-                ["Mx"] = MNQ["Mx"], ["My"] = MNQ["My"], ["N"] = MNQ["N"], ["Q"] = MNQ["Q"], ["Ml"] = MNQ["Ml"], ["eN"] = MNQ["eN"] };
+                if (m_BeamSection == BeamSection.Rect)
+                {
+                    ef = new Dictionary<string, double> {
+                        ["b"] = sz[0], ["h"] = sz[1]                        
+                    };
+                }
+                else if (m_BeamSection == BeamSection.IBeam || m_BeamSection == BeamSection.TBeam)
+                {
+                    ef = new Dictionary<string, double> {
+                        ["bf"] = sz[0], ["hf"] = sz[1], ["bw"] = sz[2], ["hw"] = sz[3], ["b1f"] = sz[4], ["h1f"] = sz[5]
+                    };
+                }
+                else if (m_BeamSection == BeamSection.Ring)
+                {
+                    ef = new Dictionary<string, double> {
+                        ["r1"] = sz[0], ["r2"] = sz[1]
+                    };
+                }
 
-            m_BSLoadData.SaveInitToJson(ef);
+                if (ef != null)
+                    m_BSLoadData.SaveInitSectionsToJson(ef);
+            }
+            catch (Exception _e)
+            {
+                MessageBox.Show(_e.Message);                
+            }
         }
         
         private void cmbBetonClass_SelectedValueChanged(object sender, EventArgs e)
