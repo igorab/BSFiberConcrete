@@ -33,18 +33,18 @@
             this.pic = new System.Windows.Forms.PictureBox();
             this.subtractButton = new System.Windows.Forms.Button();
             this.dataGrid = new System.Windows.Forms.DataGridView();
-            this.xDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.yDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pointBS = new System.Windows.Forms.BindingSource(this.components);
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnSave = new System.Windows.Forms.Button();
             this.btnDel = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
-            this.btnSave = new System.Windows.Forms.Button();
+            this.pointBS = new System.Windows.Forms.BindingSource(this.components);
+            this.yDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.xDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pointBS)).BeginInit();
             this.tableLayoutPanel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pointBS)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -91,34 +91,14 @@
             // 
             this.dataGrid.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGrid.AutoGenerateColumns = false;
             this.dataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.xDataGridViewTextBoxColumn,
             this.yDataGridViewTextBoxColumn});
-            this.dataGrid.DataSource = this.pointBS;
             this.dataGrid.Location = new System.Drawing.Point(13, 3);
             this.dataGrid.Name = "dataGrid";
             this.dataGrid.Size = new System.Drawing.Size(124, 282);
             this.dataGrid.TabIndex = 1;
-            // 
-            // xDataGridViewTextBoxColumn
-            // 
-            this.xDataGridViewTextBoxColumn.DataPropertyName = "X";
-            this.xDataGridViewTextBoxColumn.HeaderText = "X";
-            this.xDataGridViewTextBoxColumn.Name = "xDataGridViewTextBoxColumn";
-            this.xDataGridViewTextBoxColumn.Width = 40;
-            // 
-            // yDataGridViewTextBoxColumn
-            // 
-            this.yDataGridViewTextBoxColumn.DataPropertyName = "Y";
-            this.yDataGridViewTextBoxColumn.HeaderText = "Y";
-            this.yDataGridViewTextBoxColumn.Name = "yDataGridViewTextBoxColumn";
-            this.yDataGridViewTextBoxColumn.Width = 40;
-            // 
-            // pointBS
-            // 
-            this.pointBS.DataSource = typeof(BSFiberConcrete.Section.BSPoint);
             // 
             // tableLayoutPanel2
             // 
@@ -135,6 +115,17 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(124, 100);
             this.tableLayoutPanel2.TabIndex = 4;
+            // 
+            // btnSave
+            // 
+            this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnSave.Location = new System.Drawing.Point(3, 53);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(41, 35);
+            this.btnSave.TabIndex = 4;
+            this.btnSave.Text = "s";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnDel
             // 
@@ -158,16 +149,23 @@
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
-            // btnSave
+            // pointBS
             // 
-            this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnSave.Location = new System.Drawing.Point(3, 53);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(41, 35);
-            this.btnSave.TabIndex = 4;
-            this.btnSave.Text = "s";
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            this.pointBS.DataSource = typeof(BSFiberConcrete.Section.BSPoint);
+            // 
+            // yDataGridViewTextBoxColumn
+            // 
+            this.yDataGridViewTextBoxColumn.DataPropertyName = "Y";
+            this.yDataGridViewTextBoxColumn.HeaderText = "Y";
+            this.yDataGridViewTextBoxColumn.Name = "yDataGridViewTextBoxColumn";
+            this.yDataGridViewTextBoxColumn.Width = 40;
+            // 
+            // xDataGridViewTextBoxColumn
+            // 
+            this.xDataGridViewTextBoxColumn.DataPropertyName = "X";
+            this.xDataGridViewTextBoxColumn.HeaderText = "X";
+            this.xDataGridViewTextBoxColumn.Name = "xDataGridViewTextBoxColumn";
+            this.xDataGridViewTextBoxColumn.Width = 40;
             // 
             // BSSectionGrid
             // 
@@ -181,8 +179,8 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pic)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pointBS)).EndInit();
             this.tableLayoutPanel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pointBS)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -192,13 +190,13 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Button subtractButton;
         private System.Windows.Forms.DataGridView dataGrid;
-        private System.Windows.Forms.BindingSource pointBS;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.PictureBox pic;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Button btnDel;
+        private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.DataGridViewTextBoxColumn xDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn yDataGridViewTextBoxColumn;
-        private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.BindingSource pointBS;
     }
 }

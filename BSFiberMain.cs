@@ -18,6 +18,8 @@ using System.Text.Json;
 using BSFiberConcrete.Lib;
 using CsvHelper.Configuration.Attributes;
 using System.Globalization;
+using System.Diagnostics;
+using BSFiberConcrete.Section;
 
 namespace BSFiberConcrete
 {
@@ -742,7 +744,7 @@ namespace BSFiberConcrete
         [DisplayName("Расчет по прочности нормальных сечений на основе нелинейной деформационной модели")]
         private void btnCalc_Deform_Click(object sender, EventArgs e)
         {
-            //Beton bt = Lib.BSQuery.BetonTableFind(cmbBfn.Text);
+            // Beton bt = Lib.BSQuery.BetonTableFind(cmbBfn.Text);
 
             // Настройки из файла Templates\BSFiberParams.json
             Beton2 b2 = m_BSLoadData.Beton2;
@@ -1038,8 +1040,15 @@ namespace BSFiberConcrete
 
         private void paramsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            BSRFibLabGraph bsGraph = new BSRFibLabGraph();
-            bsGraph.Show();
+            try
+            {                
+                string path = Path.Combine(Environment.CurrentDirectory, "Templates\\BSFiberParams.json");
+                Process.Start(@"notepad.exe", path);
+            }
+            catch (Exception _e)
+            {
+                MessageBox.Show(_e.Message);
+            }
         }
 
         private void cmbTRebarClass_SelectedIndexChanged(object sender, EventArgs e)
@@ -1085,6 +1094,12 @@ namespace BSFiberConcrete
         private void checkBoxRebar_CheckedChanged(object sender, EventArgs e)
         {
             flowLayoutPanelRebar.Enabled = (checkBoxRebar.Checked == true);
+        }
+
+        private void btnSection_Click(object sender, EventArgs e)
+        {
+            BSSectionChart sectionChart = new BSSectionChart();
+            sectionChart.Show();
         }
     }
 }

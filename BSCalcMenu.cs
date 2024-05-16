@@ -180,8 +180,8 @@ namespace BSCalcMenu
 
         private void btnSection_Click(object sender, EventArgs e)
         {
-            BSSectionGrid sectionGrid = new BSSectionGrid();
-            sectionGrid.Show();
+            BSSectionChart sectionChart = new BSSectionChart();
+            sectionChart.Show();
         }
     }
 }
