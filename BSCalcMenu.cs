@@ -181,6 +181,7 @@ namespace BSCalcMenu
         private void btnSection_Click(object sender, EventArgs e)
         {
             BSSectionChart sectionChart = new BSSectionChart();
+
             sectionChart.Show();
         }
     }

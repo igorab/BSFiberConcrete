@@ -30,7 +30,7 @@ namespace BSFiberConcrete
         public CalcType CalcType { get; set; }
 
         //private BetonType
-        private Dictionary<string, double> m_Iniv ;
+        private Dictionary<string, double> m_Iniv;
         private BSFiberCalculation bsCalc;
         private BSFiberLoadData m_BSLoadData;
         private List<Rebar> m_Rebar;
@@ -38,31 +38,32 @@ namespace BSFiberConcrete
         private List<Elements> FiberConcrete;
         private List<Beton> m_Beton;
 
-        public Dictionary<string, double> m_Beam { get; private set; }        
+        public Dictionary<string, double> m_Beam { get; private set; }
         private Dictionary<string, double> m_Coeffs;
         private Dictionary<string, double> m_Efforts;
         private Dictionary<string, double> m_PhysParams;
         private Dictionary<string, double> m_GeomParams;
-        private Dictionary<string, double> m_CalcResults;        
+        private Dictionary<string, double> m_CalcResults;
 
         private List<string> m_Message;
-        private BeamSection m_BeamSection;
+
+        private BeamSection m_BeamSection { get; set; }
 
         public BSFiberMain()
         {
             InitializeComponent();
         }
-        
+
         private void CalcTypeShow()
         {
             if (CalcType == CalcType.Static)
-            {                
+            {
                 btnStaticEqCalc.Visible = true;
-                btnCalc_Deform.Visible = false;               
+                btnCalc_Deform.Visible = false;
                 panelRods.Visible = false;
             }
             else if (CalcType == CalcType.Nonlinear)
-            {             
+            {
                 btnStaticEqCalc.Visible = false;
                 btnCalc_Deform.Visible = true;
                 panelRods.Visible = true;
@@ -71,7 +72,7 @@ namespace BSFiberConcrete
 
         // глобальные настройки
         private void BSFiberMain_Load(object sender, EventArgs e)
-        {            
+        {
             try
             {
                 m_Beam = new Dictionary<string, double>();
@@ -82,7 +83,7 @@ namespace BSFiberConcrete
 
                 flowLayoutPanelRebar.Enabled = (checkBoxRebar.Checked == true);
 
-                FiberConcrete = BSData.LoadFiberConcreteTable();                
+                FiberConcrete = BSData.LoadFiberConcreteTable();
                 cmbFib_i.SelectedIndex = 0;
                 comboBetonType.SelectedIndex = 0;
                 cmbRebarClass.SelectedIndex = 1;
@@ -94,7 +95,7 @@ namespace BSFiberConcrete
                     m_Iniv["Mx"] = eff[0].Mx;
                     m_Iniv["My"] = eff[0].My;
                     m_Iniv["N"] = eff[0].N;
-                    m_Iniv["Q"] = eff[0].Q;                    
+                    m_Iniv["Q"] = eff[0].Q;
                 }
 
                 num_eN.Value = (decimal)m_Iniv["eN"];
@@ -102,11 +103,11 @@ namespace BSFiberConcrete
 
                 m_BSLoadData.ReadParamsFromJson();
                 m_MatFiber.e_b2 = m_BSLoadData.Beton2.eps_b2;
-                m_MatFiber.Efb = m_BSLoadData.Fiber.Efb;                
+                m_MatFiber.Efb = m_BSLoadData.Fiber.Efb;
 
                 m_Rebar = BSData.LoadRebar();
 
-                numRandomEccentricity.Value = (decimal) m_BSLoadData.Fiber.e_tot;
+                numRandomEccentricity.Value = (decimal)m_BSLoadData.Fiber.e_tot;
 
                 LoadRectangle(m_Iniv["b"], m_Iniv["h"]);
 
@@ -127,14 +128,14 @@ namespace BSFiberConcrete
                 cmbBftn.SelectedValue = "Bft3";
 
                 Elements fiberConcrete = BSFiberLib.PhysElements;
-                
+
                 numYft.Value = (decimal)fiberConcrete.Yft;
                 numYb.Value = (decimal)fiberConcrete.Yb;
                 numYb1.Value = (decimal)fiberConcrete.Yb1;
                 numYb2.Value = (decimal)fiberConcrete.Yb2;
                 numYb3.Value = (decimal)fiberConcrete.Yb3;
                 numYb5.Value = (decimal)fiberConcrete.Yb5;
-                                
+
                 double[] mnq = { m_Iniv["Mx"], m_Iniv["My"], m_Iniv["N"], m_Iniv["Q"], m_Iniv["Ml"], m_Iniv["eN"] }; //Mx My N Q Ml
                 gridEfforts.Rows.Add(mnq);
                 for (int i = 0; i < mnq.Length; i++)
@@ -148,10 +149,10 @@ namespace BSFiberConcrete
                 {
                     gridTRebar.Rows[0].Cells[i].Value = t_rebar[i];
                 }
-                
+
                 double[] long_rebar = { m_Iniv["D_l"], m_Iniv["Qty_l"], m_Iniv["a_l"], m_Iniv["Cls_l"], m_Iniv["Coef_l"] }; // продольная арматура
-                for (int i=0; i<3; i ++) gridLRebar.Rows.Add(long_rebar);
-                
+                for (int i = 0; i < 3; i++) gridLRebar.Rows.Add(long_rebar);
+
                 for (int i = 0; i < long_rebar.Length; i++)
                 {
                     gridLRebar.Rows[0].Cells[i].Value = long_rebar[i];
@@ -159,14 +160,14 @@ namespace BSFiberConcrete
                     gridLRebar.Rows[2].Cells[i].Value = long_rebar[i];  // (i==1) ? 0 : long_rebar[i];
                 }
 
-                numAs.Value = (decimal)m_Iniv["As"]; 
+                numAs.Value = (decimal)m_Iniv["As"];
                 numAs1.Value = (decimal)m_Iniv["As1"];
-                num_a.Value = (decimal)m_Iniv["_a"]; 
+                num_a.Value = (decimal)m_Iniv["_a"];
                 num_a1.Value = (decimal)m_Iniv["_a_1"];
 
                 CalcTypeShow();
             }
-            catch (Exception _ex) 
+            catch (Exception _ex)
             {
                 MessageBox.Show(_ex.Message);
             }
@@ -186,6 +187,22 @@ namespace BSFiberConcrete
                     idx++;
                 }
                 sz[idx] = _length;
+            }
+
+            return sz;
+        }
+
+        private double[] BeamWidtHeight(out double _w, out double _h)
+        {
+            double[] sz = BeamSizes();
+
+            _w = sz[0];
+            _h = sz[1];
+
+            if (m_BeamSection == BeamSection.TBeam || m_BeamSection == BeamSection.IBeam)            
+            {
+                _w = Math.Max(sz[0], sz[4]);
+                _h = sz[1] + sz[3] + sz[5];
             }
 
             return sz;
@@ -1099,6 +1116,15 @@ namespace BSFiberConcrete
         private void btnSection_Click(object sender, EventArgs e)
         {
             BSSectionChart sectionChart = new BSSectionChart();
+            sectionChart.m_BeamSection = m_BeamSection;
+
+            var sz = BeamWidtHeight(out double b, out double h );
+
+            sectionChart.Wdth = (float)b;
+            sectionChart.Hght = (float)h;
+
+            sectionChart.Sz = sz;
+
             sectionChart.Show();
         }
     }

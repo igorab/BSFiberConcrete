@@ -13,65 +13,93 @@ using System.Windows.Forms.DataVisualization.Charting;
 namespace BSFiberConcrete.Section
 {
     public partial class BSSectionChart : Form
-    {        
-        private List<PointF> PointsRect;
-        private List<PointF> PointsIBeam;
+    {
+        public BeamSection m_BeamSection { get; set; }
+
+        private List<PointF> PointsSection;        
         private List<PointF> RodPoints;
 
         public float Wdth { set { w = value; } }
         public float Hght { set { h = value; } }
 
-        float h = 60;
-        float w = 80;
+        public double[] Sz = new double[] {79, 19, 22, 18, 81, 21};
+
+        private float w;
+        private float h;
+        
 
         public BSSectionChart()
         {
             InitializeComponent();
-           
-            PointsRect = new List<PointF>() 
-            { 
-                new PointF(0, 0), 
-                new PointF(0, h) ,
-                new PointF(w, h),
-                new PointF(w, 0),
-                new PointF(0, 0)
-            };
 
-            PointsIBeam = new List<PointF>()
+            m_BeamSection = BeamSection.Rect;
+            w = 100;
+            h = 100;
+        }
+
+        private void InitPoints()
+        {
+            if (m_BeamSection == BeamSection.Rect)
             {
-                new PointF(0, 0),
-                new PointF(w, 0) ,
-                new PointF(w, 20),
-                new PointF(60, 20),
-                new PointF(60, 40),
-                new PointF(80, 40),
-                new PointF(80, h),
-                new PointF(0, h),
-                new PointF(0, 40),
-                new PointF(20, 40),
-                new PointF(20, 20),
-                new PointF(0, 20),
-                new PointF(0, 0),
-            };
+                PointsSection = new List<PointF>()
+                {
+                    new PointF(0, 0),
+                    new PointF(0, h) ,
+                    new PointF(w, h),
+                    new PointF(w, 0),
+                    new PointF(0, 0)
+                };
 
+                RodPoints = new List<PointF>()
+                {
+                    new PointF(0+4, h-4),
+                    new PointF(w/2f, h-4) ,
+                    new PointF(w-4, h-4),
 
-            RodPoints = new List<PointF>()
+                    new PointF(0+4, 4),
+                    new PointF(w/2f, 4) ,
+                    new PointF(w-4, 4),
+                };
+            }
+            else if (m_BeamSection == BeamSection.IBeam || m_BeamSection == BeamSection.TBeam)
             {
-                new PointF(0+4, h-4),
-                new PointF(w/2f, h-4) ,
-                new PointF(w-4, h-4),
+                float bf = (float)Sz[0], hf = (float)Sz[1], bw = (float)Sz[2], hw = (float)Sz[3], b1f = (float)Sz[4], h1f = (float)Sz[5];
 
-                new PointF(0+4, 4),
-                new PointF(w/2f, 4) ,
-                new PointF(w-4, 4),
+                PointsSection = new List<PointF>()
+                {
+                    new PointF(bf/2f, 0),
+                    new PointF(bf/2f, hf) ,
+                    new PointF(bw/2f, hf),
+                    new PointF(bw/2f, hf + hw),
+                    new PointF(b1f/2f, hf + hw),
+                    new PointF(b1f/2f, hf + hw + h1f),
+                    new PointF(-b1f/2f, hf + hw + h1f),
+                    new PointF(-b1f/2f, hf + hw),
+                    new PointF(-bw/2f, hf + hw),
+                    new PointF(-bw/2f, hf),
+                    new PointF(-bf/2f, hf),
+                    new PointF(-bf/2f, 0)
+                };
 
-            };
+                RodPoints = new List<PointF>()
+                {
+                    new PointF((w-4)/2f, h-4),
+                    new PointF(0, h-4) ,
+                    new PointF(-(w-4)/2f, h-4),
+
+                    new PointF((w-4)/2f, 4),
+                    new PointF(0, 4) ,
+                    new PointF(-(w-4)/2f, 4),
+                };
+            }
         }
 
         private void InitDataSource()
         {
+            InitPoints();
+           
             int idx = 0;    
-            foreach(PointF p in PointsRect) 
+            foreach(PointF p in PointsSection) 
             {
                 idx++;
                 BSPoint bsPt = new BSPoint(p) { Num = idx };
@@ -80,9 +108,20 @@ namespace BSFiberConcrete.Section
         }
 
 
-        private void btnDraw_Click(object sender, EventArgs e)
+        private void DrawFromDatasource(bool _clear = false)
         {
-            var points = new List<PointF>(PointsIBeam);
+            if (_clear)
+            {
+                chart.Series[0].Points.Clear();
+                chart.Series[1].Points.Clear();
+            }
+
+            var points = new List<PointF>();
+
+            foreach (BSPoint bsp in pointBS)
+            {
+                points.Add(new PointF(bsp.X, bsp.Y));
+            }
 
             for (int j = 0; j < points.Count; j++)
             {
@@ -95,7 +134,12 @@ namespace BSFiberConcrete.Section
                 var pt = RodPoints[j];
                 chart.Series[1].Points.Add(new DataPoint(pt.X, pt.Y));
             }
+        }
 
+
+        private void btnDraw_Click(object sender, EventArgs e)
+        {            
+            DrawFromDatasource(true);
         }
 
         private void chart_Click(object sender, EventArgs e)
@@ -158,6 +202,8 @@ namespace BSFiberConcrete.Section
         private void BSSectionChart_Load(object sender, EventArgs e)
         {
             InitDataSource();
+
+            DrawFromDatasource();
         }
     }
 }
