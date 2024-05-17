@@ -31,6 +31,8 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BSCalcMenu));
             this.tableLayoutPanelMain = new System.Windows.Forms.TableLayoutPanel();
+            this.btnSection = new System.Windows.Forms.Button();
+            this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.btnLocalCompressionCalc = new System.Windows.Forms.Button();
             this.btnPunchCalc = new System.Windows.Forms.Button();
@@ -62,12 +64,10 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.labelVer = new System.Windows.Forms.Label();
             this.btnInfo = new System.Windows.Forms.Button();
-            this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.btnSectionDraw = new System.Windows.Forms.Button();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.pictureBoxLogo = new System.Windows.Forms.PictureBox();
             this.labelInfo = new System.Windows.Forms.Label();
-            this.btnSection = new System.Windows.Forms.Button();
             this.tableLayoutPanelMain.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -82,7 +82,7 @@
             this.tableLayoutPanelMain.ColumnCount = 3;
             this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.57915F));
             this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.42085F));
-            this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 314F));
+            this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 316F));
             this.tableLayoutPanelMain.Controls.Add(this.btnSection, 0, 3);
             this.tableLayoutPanelMain.Controls.Add(this.tableLayoutPanel4, 2, 1);
             this.tableLayoutPanelMain.Controls.Add(this.lblInfo, 0, 0);
@@ -105,6 +105,39 @@
             this.tableLayoutPanelMain.Size = new System.Drawing.Size(855, 446);
             this.tableLayoutPanelMain.TabIndex = 0;
             // 
+            // btnSection
+            // 
+            this.btnSection.ImageKey = "Layers.png";
+            this.btnSection.ImageList = this.imageList;
+            this.btnSection.Location = new System.Drawing.Point(275, 418);
+            this.btnSection.Name = "btnSection";
+            this.btnSection.Size = new System.Drawing.Size(25, 22);
+            this.btnSection.TabIndex = 10;
+            this.btnSection.UseVisualStyleBackColor = true;
+            this.btnSection.Click += new System.EventHandler(this.btnSection_Click);
+            // 
+            // imageList
+            // 
+            this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
+            this.imageList.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList.Images.SetKeyName(0, "CM.png");
+            this.imageList.Images.SetKeyName(1, "Command.png");
+            this.imageList.Images.SetKeyName(2, "Editions.png");
+            this.imageList.Images.SetKeyName(3, "FileOpen.png");
+            this.imageList.Images.SetKeyName(4, "Files.png");
+            this.imageList.Images.SetKeyName(5, "Icons.png");
+            this.imageList.Images.SetKeyName(6, "Info.png");
+            this.imageList.Images.SetKeyName(7, "Layers.png");
+            this.imageList.Images.SetKeyName(8, "Menu.png");
+            this.imageList.Images.SetKeyName(9, "Properties.png");
+            this.imageList.Images.SetKeyName(10, "Property.png");
+            this.imageList.Images.SetKeyName(11, "Remove.png");
+            this.imageList.Images.SetKeyName(12, "Settings.png");
+            this.imageList.Images.SetKeyName(13, "Storages.png");
+            this.imageList.Images.SetKeyName(14, "TIMClasses.png");
+            this.imageList.Images.SetKeyName(15, "Transmute.png");
+            this.imageList.Images.SetKeyName(16, "ViewMap.png");
+            // 
             // tableLayoutPanel4
             // 
             this.tableLayoutPanel4.ColumnCount = 1;
@@ -118,7 +151,7 @@
             this.tableLayoutPanel4.Controls.Add(this.btnRFiberTensileStrength, 0, 7);
             this.tableLayoutPanel4.Controls.Add(this.btnBeamDeflection, 0, 8);
             this.tableLayoutPanel4.Controls.Add(this.btnEfib, 0, 4);
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(542, 29);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(540, 29);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 9;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 21.00457F));
@@ -244,7 +277,7 @@
             // 
             this.lblExpertise.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblExpertise.AutoSize = true;
-            this.lblExpertise.Location = new System.Drawing.Point(276, 6);
+            this.lblExpertise.Location = new System.Drawing.Point(275, 6);
             this.lblExpertise.Name = "lblExpertise";
             this.lblExpertise.Size = new System.Drawing.Size(70, 13);
             this.lblExpertise.TabIndex = 1;
@@ -254,7 +287,7 @@
             // 
             this.lblLocalStrength.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblLocalStrength.AutoSize = true;
-            this.lblLocalStrength.Location = new System.Drawing.Point(542, 6);
+            this.lblLocalStrength.Location = new System.Drawing.Point(540, 6);
             this.lblLocalStrength.Name = "lblLocalStrength";
             this.lblLocalStrength.Size = new System.Drawing.Size(109, 13);
             this.lblLocalStrength.TabIndex = 2;
@@ -262,7 +295,7 @@
             // 
             // btnUnits
             // 
-            this.btnUnits.Location = new System.Drawing.Point(276, 387);
+            this.btnUnits.Location = new System.Drawing.Point(275, 387);
             this.btnUnits.Name = "btnUnits";
             this.btnUnits.Size = new System.Drawing.Size(109, 24);
             this.btnUnits.TabIndex = 4;
@@ -366,7 +399,7 @@
             this.tableLayoutPanel3.Controls.Add(this.button12, 0, 5);
             this.tableLayoutPanel3.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.label2, 0, 2);
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(276, 29);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(275, 29);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 6;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
@@ -375,7 +408,7 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(259, 332);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(258, 332);
             this.tableLayoutPanel3.TabIndex = 6;
             // 
             // btnStaticEquilibrium
@@ -383,7 +416,7 @@
             this.btnStaticEquilibrium.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnStaticEquilibrium.Location = new System.Drawing.Point(3, 58);
             this.btnStaticEquilibrium.Name = "btnStaticEquilibrium";
-            this.btnStaticEquilibrium.Size = new System.Drawing.Size(253, 49);
+            this.btnStaticEquilibrium.Size = new System.Drawing.Size(252, 49);
             this.btnStaticEquilibrium.TabIndex = 0;
             this.btnStaticEquilibrium.Text = "Статическое равновесие";
             this.btnStaticEquilibrium.UseVisualStyleBackColor = true;
@@ -394,7 +427,7 @@
             this.btnNonlinearDeform.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnNonlinearDeform.Location = new System.Drawing.Point(3, 168);
             this.btnNonlinearDeform.Name = "btnNonlinearDeform";
-            this.btnNonlinearDeform.Size = new System.Drawing.Size(253, 49);
+            this.btnNonlinearDeform.Size = new System.Drawing.Size(252, 49);
             this.btnNonlinearDeform.TabIndex = 1;
             this.btnNonlinearDeform.Text = "Нелинейная деформационная модель";
             this.btnNonlinearDeform.UseVisualStyleBackColor = true;
@@ -405,7 +438,7 @@
             this.btnBeamCalc.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnBeamCalc.Location = new System.Drawing.Point(3, 223);
             this.btnBeamCalc.Name = "btnBeamCalc";
-            this.btnBeamCalc.Size = new System.Drawing.Size(253, 49);
+            this.btnBeamCalc.Size = new System.Drawing.Size(252, 49);
             this.btnBeamCalc.TabIndex = 2;
             this.btnBeamCalc.Text = "Экспертиза балки";
             this.btnBeamCalc.UseVisualStyleBackColor = true;
@@ -416,7 +449,7 @@
             this.button12.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.button12.Location = new System.Drawing.Point(3, 278);
             this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(253, 51);
+            this.button12.Size = new System.Drawing.Size(252, 51);
             this.button12.TabIndex = 3;
             this.button12.Text = "Прогиб балки";
             this.button12.UseVisualStyleBackColor = true;
@@ -444,7 +477,7 @@
             // btnClose
             // 
             this.btnClose.Dock = System.Windows.Forms.DockStyle.Left;
-            this.btnClose.Location = new System.Drawing.Point(542, 387);
+            this.btnClose.Location = new System.Drawing.Point(540, 387);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(120, 24);
             this.btnClose.TabIndex = 3;
@@ -473,33 +506,11 @@
             this.btnInfo.UseVisualStyleBackColor = true;
             this.btnInfo.Click += new System.EventHandler(this.btnInfo_Click);
             // 
-            // imageList
-            // 
-            this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
-            this.imageList.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList.Images.SetKeyName(0, "CM.png");
-            this.imageList.Images.SetKeyName(1, "Command.png");
-            this.imageList.Images.SetKeyName(2, "Editions.png");
-            this.imageList.Images.SetKeyName(3, "FileOpen.png");
-            this.imageList.Images.SetKeyName(4, "Files.png");
-            this.imageList.Images.SetKeyName(5, "Icons.png");
-            this.imageList.Images.SetKeyName(6, "Info.png");
-            this.imageList.Images.SetKeyName(7, "Layers.png");
-            this.imageList.Images.SetKeyName(8, "Menu.png");
-            this.imageList.Images.SetKeyName(9, "Properties.png");
-            this.imageList.Images.SetKeyName(10, "Property.png");
-            this.imageList.Images.SetKeyName(11, "Remove.png");
-            this.imageList.Images.SetKeyName(12, "Settings.png");
-            this.imageList.Images.SetKeyName(13, "Storages.png");
-            this.imageList.Images.SetKeyName(14, "TIMClasses.png");
-            this.imageList.Images.SetKeyName(15, "Transmute.png");
-            this.imageList.Images.SetKeyName(16, "ViewMap.png");
-            // 
             // btnSectionDraw
             // 
-            this.btnSectionDraw.ImageKey = "Layers.png";
+            this.btnSectionDraw.ImageKey = "Icons.png";
             this.btnSectionDraw.ImageList = this.imageList;
-            this.btnSectionDraw.Location = new System.Drawing.Point(542, 418);
+            this.btnSectionDraw.Location = new System.Drawing.Point(540, 418);
             this.btnSectionDraw.Name = "btnSectionDraw";
             this.btnSectionDraw.Size = new System.Drawing.Size(25, 22);
             this.btnSectionDraw.TabIndex = 9;
@@ -535,17 +546,6 @@
             this.labelInfo.Size = new System.Drawing.Size(438, 18);
             this.labelInfo.TabIndex = 1;
             this.labelInfo.Text = "Расчет элементов сталефибробетонных конструкций.";
-            // 
-            // btnSection
-            // 
-            this.btnSection.ImageKey = "Layers.png";
-            this.btnSection.ImageList = this.imageList;
-            this.btnSection.Location = new System.Drawing.Point(276, 418);
-            this.btnSection.Name = "btnSection";
-            this.btnSection.Size = new System.Drawing.Size(25, 22);
-            this.btnSection.TabIndex = 10;
-            this.btnSection.UseVisualStyleBackColor = true;
-            this.btnSection.Click += new System.EventHandler(this.btnSection_Click);
             // 
             // BSCalcMenu
             // 

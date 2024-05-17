@@ -13,10 +13,15 @@ namespace BSFem
         {
             var Z = FEMSolverODE.RunFromCode();
 
-            if (Z != null) 
+            if (Z != null)
             {
-                textBox1.Text = string.Join("\t\n", Z) ;   
+                textBox1.Text = string.Join("\t\n", Z);
             }
+        }
+
+        private void btnMesh_Click(object sender, EventArgs e)
+        {
+            BSCalcLib.Mesh.Generate();
         }
     }
 }

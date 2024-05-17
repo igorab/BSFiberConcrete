@@ -39,7 +39,8 @@ namespace BSFiberConcrete.Section
 
         private void InitPoints()
         {
-            if (m_BeamSection == BeamSection.Rect)
+            if (m_BeamSection == BeamSection.Rect 
+                || m_BeamSection == BeamSection.Ring) //TODO для кольцевого сечения будет отдельный алгоритм
             {
                 PointsSection = new List<PointF>()
                 {

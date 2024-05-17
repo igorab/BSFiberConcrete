@@ -43,10 +43,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Tri\Triangle.dll</HintPath>
     </Reference>
+    <Reference Include="Triangle.Rendering">
+      <HintPath>Tri\Triangle.Rendering.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FEMSolverODE.cs" />
     <Compile Include="LinearEquationsSystem.cs" />
+    <Compile Include="Mesh.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Triangle.cs" />
   </ItemGroup>
