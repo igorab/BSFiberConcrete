@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 //using System.G
 using TriangleNet.Geometry;
+using TriangleNet.Meshing;
 using TriangleNet.Rendering.Text;
 
 namespace BSCalcLib
@@ -31,7 +32,15 @@ namespace BSCalcLib
             // Add the outer box contour with boundary marker 1.
             p.Add(new Contour(vrtx, 1));
 
-            var mesh = p.Triangulate();
+            ConstraintOptions options = new ConstraintOptions() { Convex = false, ConformingDelaunay = true };
+
+            QualityOptions quality = new QualityOptions()
+            {
+                MinimumAngle = 25.0,
+                VariableArea = true
+            };
+
+            IMesh mesh = p.Triangulate(options, quality);
 
             string svgPath = Path.Combine(FilePath, "IBeam.svg");
 

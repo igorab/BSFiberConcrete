@@ -56,7 +56,7 @@ namespace BSCalcLib
                 Rectangle bounds = new Rectangle(x, y, w, h);
 
                 // Generate mesh.
-                IMesh mesh = GenericMesher.StructuredMesh(bounds, 2, 2);
+                IMesh mesh = GenericMesher.StructuredMesh(bounds, 20, 20);
 
                 string svgPath = Path.Combine(FilePath, "rectangle1.svg");
 
