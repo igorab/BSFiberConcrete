@@ -22,7 +22,7 @@ namespace BSFiberConcrete.Section
         public float Wdth { set { w = value; } }
         public float Hght { set { h = value; } }
 
-        public double[] Sz = new double[] {79, 19, 22, 18, 81, 21};
+        public double[] Sz { get; set; }
 
         private float w;
         private float h;
@@ -35,6 +35,8 @@ namespace BSFiberConcrete.Section
             m_BeamSection = BeamSection.Rect;
             w = 100;
             h = 100;
+
+            Sz = new double[] { 79, 19, 22, 18, 81, 21 };
         }
 
         private void InitPoints()
@@ -63,24 +65,8 @@ namespace BSFiberConcrete.Section
                 };
             }
             else if (m_BeamSection == BeamSection.IBeam || m_BeamSection == BeamSection.TBeam)
-            {
-                float bf = (float)Sz[0], hf = (float)Sz[1], bw = (float)Sz[2], hw = (float)Sz[3], b1f = (float)Sz[4], h1f = (float)Sz[5];
-
-                PointsSection = new List<PointF>()
-                {
-                    new PointF(bf/2f, 0),
-                    new PointF(bf/2f, hf) ,
-                    new PointF(bw/2f, hf),
-                    new PointF(bw/2f, hf + hw),
-                    new PointF(b1f/2f, hf + hw),
-                    new PointF(b1f/2f, hf + hw + h1f),
-                    new PointF(-b1f/2f, hf + hw + h1f),
-                    new PointF(-b1f/2f, hf + hw),
-                    new PointF(-bw/2f, hf + hw),
-                    new PointF(-bw/2f, hf),
-                    new PointF(-bf/2f, hf),
-                    new PointF(-bf/2f, 0)
-                };
+            {                                          
+                BSSection.IBeam(Sz, out PointsSection);
 
                 RodPoints = new List<PointF>()
                 {

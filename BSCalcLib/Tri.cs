@@ -1,14 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+//using System.G
 using TriangleNet.Geometry;
+using TriangleNet.Rendering.Text;
 
 namespace BSCalcLib
 {
-    public abstract class Triangle
+    public abstract class Tri
     {
+        public static string FilePath { get; set; }
+
+        public static string CreateContour(List<System.Drawing.PointF> _points)
+        {
+            Polygon p = new Polygon();
+
+            Vertex[] vrtx = new Vertex[_points.Count];
+
+            int vIdx = 0;
+            foreach (var point in _points)   
+            {
+                var v = new Vertex(point.X, point.Y, 1);
+                vrtx[vIdx] = v;
+                vIdx++;
+            };
+
+            // Add the outer box contour with boundary marker 1.
+            p.Add(new Contour(vrtx, 1));
+
+            var mesh = p.Triangulate();
+
+            string svgPath = Path.Combine(FilePath, "IBeam.svg");
+
+            SvgImage.Save(mesh, svgPath, 800);
+
+            return svgPath;
+        }
     }
 
     //Polygon
@@ -16,7 +46,7 @@ namespace BSCalcLib
     // Creating a polygon
 
     // Using contours
-    public class TriPoly : Triangle
+    public class TriPoly : Tri
     {
         public static void Example()
         {
@@ -44,7 +74,7 @@ namespace BSCalcLib
     }
 
     // Using segments
-    public class TriSegment : Triangle
+    public class TriSegment : Tri
     {
         public static void Example()
         {

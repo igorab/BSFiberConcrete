@@ -34,21 +34,21 @@
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.btnDraw = new System.Windows.Forms.Button();
-            this.dataGrid = new System.Windows.Forms.DataGridView();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnDel = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
+            this.chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.btnDraw = new System.Windows.Forms.Button();
+            this.dataGrid = new System.Windows.Forms.DataGridView();
             this.numDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.xDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.yDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pointBS = new System.Windows.Forms.BindingSource(this.components);
             this.tableLayoutPanel.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
-            this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pointBS)).BeginInit();
             this.SuspendLayout();
             // 
@@ -57,7 +57,7 @@
             this.tableLayoutPanel.ColumnCount = 3;
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.83517F));
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 85.16483F));
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 29F));
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel.Controls.Add(this.tableLayoutPanel2, 0, 2);
             this.tableLayoutPanel.Controls.Add(this.chart, 1, 1);
             this.tableLayoutPanel.Controls.Add(this.btnDraw, 1, 2);
@@ -71,61 +71,6 @@
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 104F));
             this.tableLayoutPanel.Size = new System.Drawing.Size(956, 625);
             this.tableLayoutPanel.TabIndex = 0;
-            // 
-            // chart
-            // 
-            this.chart.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-            this.chart.BorderlineWidth = 3;
-            chartArea1.Name = "ChartArea1";
-            this.chart.ChartAreas.Add(chartArea1);
-            this.chart.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend1.Name = "Legend1";
-            this.chart.Legends.Add(legend1);
-            this.chart.Location = new System.Drawing.Point(140, 38);
-            this.chart.Name = "chart";
-            series1.BorderWidth = 3;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series1.Legend = "Legend1";
-            series1.Name = "Сечение";
-            series2.BorderWidth = 3;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series2.EmptyPointStyle.BorderWidth = 3;
-            series2.Legend = "Legend1";
-            series2.MarkerSize = 10;
-            series2.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
-            series2.Name = "Армирование";
-            this.chart.Series.Add(series1);
-            this.chart.Series.Add(series2);
-            this.chart.Size = new System.Drawing.Size(783, 479);
-            this.chart.TabIndex = 0;
-            this.chart.Click += new System.EventHandler(this.chart_Click);
-            // 
-            // btnDraw
-            // 
-            this.btnDraw.Location = new System.Drawing.Point(140, 523);
-            this.btnDraw.Name = "btnDraw";
-            this.btnDraw.Size = new System.Drawing.Size(75, 23);
-            this.btnDraw.TabIndex = 1;
-            this.btnDraw.Text = "Рисовать";
-            this.btnDraw.UseVisualStyleBackColor = true;
-            this.btnDraw.Click += new System.EventHandler(this.btnDraw_Click);
-            // 
-            // dataGrid
-            // 
-            this.dataGrid.AutoGenerateColumns = false;
-            this.dataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.numDataGridViewTextBoxColumn,
-            this.xDataGridViewTextBoxColumn,
-            this.yDataGridViewTextBoxColumn});
-            this.dataGrid.DataSource = this.pointBS;
-            this.dataGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGrid.Location = new System.Drawing.Point(3, 38);
-            this.dataGrid.Name = "dataGrid";
-            this.dataGrid.Size = new System.Drawing.Size(131, 479);
-            this.dataGrid.TabIndex = 2;
             // 
             // tableLayoutPanel2
             // 
@@ -176,6 +121,61 @@
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
+            // chart
+            // 
+            this.chart.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+            this.chart.BorderlineWidth = 3;
+            chartArea1.Name = "ChartArea1";
+            this.chart.ChartAreas.Add(chartArea1);
+            this.chart.Dock = System.Windows.Forms.DockStyle.Fill;
+            legend1.Name = "Legend1";
+            this.chart.Legends.Add(legend1);
+            this.chart.Location = new System.Drawing.Point(140, 38);
+            this.chart.Name = "chart";
+            series1.BorderWidth = 3;
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.Legend = "Legend1";
+            series1.Name = "Сечение";
+            series2.BorderWidth = 3;
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series2.EmptyPointStyle.BorderWidth = 3;
+            series2.Legend = "Legend1";
+            series2.MarkerSize = 10;
+            series2.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
+            series2.Name = "Армирование";
+            this.chart.Series.Add(series1);
+            this.chart.Series.Add(series2);
+            this.chart.Size = new System.Drawing.Size(782, 479);
+            this.chart.TabIndex = 0;
+            this.chart.Click += new System.EventHandler(this.chart_Click);
+            // 
+            // btnDraw
+            // 
+            this.btnDraw.Location = new System.Drawing.Point(140, 523);
+            this.btnDraw.Name = "btnDraw";
+            this.btnDraw.Size = new System.Drawing.Size(75, 23);
+            this.btnDraw.TabIndex = 1;
+            this.btnDraw.Text = "Рисовать";
+            this.btnDraw.UseVisualStyleBackColor = true;
+            this.btnDraw.Click += new System.EventHandler(this.btnDraw_Click);
+            // 
+            // dataGrid
+            // 
+            this.dataGrid.AutoGenerateColumns = false;
+            this.dataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.numDataGridViewTextBoxColumn,
+            this.xDataGridViewTextBoxColumn,
+            this.yDataGridViewTextBoxColumn});
+            this.dataGrid.DataSource = this.pointBS;
+            this.dataGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGrid.Location = new System.Drawing.Point(3, 38);
+            this.dataGrid.Name = "dataGrid";
+            this.dataGrid.Size = new System.Drawing.Size(131, 479);
+            this.dataGrid.TabIndex = 2;
+            // 
             // numDataGridViewTextBoxColumn
             // 
             this.numDataGridViewTextBoxColumn.DataPropertyName = "Num";
@@ -211,9 +211,9 @@
             this.Text = "Сечение";
             this.Load += new System.EventHandler(this.BSSectionChart_Load);
             this.tableLayoutPanel.ResumeLayout(false);
+            this.tableLayoutPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).EndInit();
-            this.tableLayoutPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pointBS)).EndInit();
             this.ResumeLayout(false);
 

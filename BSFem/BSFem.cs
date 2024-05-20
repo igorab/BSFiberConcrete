@@ -23,5 +23,25 @@ namespace BSFem
         {
             BSCalcLib.Mesh.Generate();
         }
+
+        /// <summary>
+        /// Контур
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnPoly_Click(object sender, EventArgs e)
+        {
+            BSCalcLib.TriPoly.Example();
+        }
+
+        /// <summary>
+        /// Сегмент
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnSegment_Click(object sender, EventArgs e)
+        {
+            BSCalcLib.TriSegment.Example();
+        }
     }
 }

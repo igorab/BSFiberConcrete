@@ -2,24 +2,15 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Security.Principal;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
-using System.Text.Json;
 using BSFiberConcrete.Lib;
-using CsvHelper.Configuration.Attributes;
-using System.Globalization;
 using System.Diagnostics;
 using BSFiberConcrete.Section;
+using BSCalcLib;
+using System.Drawing;
 
 namespace BSFiberConcrete
 {
@@ -1113,6 +1104,11 @@ namespace BSFiberConcrete
             flowLayoutPanelRebar.Enabled = (checkBoxRebar.Checked == true);
         }
 
+        /// <summary>
+        ///  Конструктор сечений
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSection_Click(object sender, EventArgs e)
         {
             BSSectionChart sectionChart = new BSSectionChart();
@@ -1126,6 +1122,44 @@ namespace BSFiberConcrete
             sectionChart.Sz = sz;
 
             sectionChart.Show();
+        }
+
+        /// <summary>
+        /// Покрыть сечение сеткой
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnMesh_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string pathToSvgFile = "";
+                double[] sz = BeamWidtHeight(out double b, out double h);
+
+                if (m_BeamSection == BeamSection.Rect)
+                {
+                    List<double> rect = new List<double> { 0, 0, b, h };
+                    Mesh.FilePath = Path.Combine(Environment.CurrentDirectory, "Templates");
+
+                    pathToSvgFile = BSCalcLib.Mesh.Generate(rect);
+                }
+                else if (m_BeamSection == BeamSection.IBeam)
+                {
+                    List<PointF> pts ;
+                    BSSection.IBeam(sz, out pts);
+
+                    Tri.FilePath = Path.Combine(Environment.CurrentDirectory, "Templates");
+                    pathToSvgFile = BSCalcLib.Tri.CreateContour(pts) ;
+                }
+
+                //System.Diagnostics.Process.Start(pathToSvgFile);
+                Process.Start(new ProcessStartInfo { FileName = pathToSvgFile, UseShellExecute = true });
+
+            }
+            catch (Exception _e)
+            {
+                MessageBox.Show(_e.Message);
+            }
         }
     }
 }

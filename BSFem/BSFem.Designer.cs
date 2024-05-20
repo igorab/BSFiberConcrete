@@ -59,8 +59,9 @@
             btnPoly.Name = "btnPoly";
             btnPoly.Size = new Size(96, 23);
             btnPoly.TabIndex = 2;
-            btnPoly.Text = "Полигон";
+            btnPoly.Text = "Контур";
             btnPoly.UseVisualStyleBackColor = true;
+            btnPoly.Click += btnPoly_Click;
             // 
             // btnSegment
             // 
@@ -70,6 +71,7 @@
             btnSegment.TabIndex = 3;
             btnSegment.Text = "Сегмент";
             btnSegment.UseVisualStyleBackColor = true;
+            btnSegment.Click += btnSegment_Click;
             // 
             // btnMesh
             // 
