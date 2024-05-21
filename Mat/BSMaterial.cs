@@ -156,6 +156,7 @@ namespace BSFiberConcrete
             return sigma_s;
         }
 
+        // Диаграмма состояния двухлинейная
         public double Eps_StD(double _e)
         {
             double sgm = 0;
@@ -262,11 +263,13 @@ namespace BSFiberConcrete
 
             if (e_fbt1 < e_fbt && e_fbt <= e_fbt2)
             {
-                sigma_fbt = Rfbt * (1 - (1 - Rfbt2 / Rfbt) * (e_fbt - e_fbt1) / (e_fbt2 - e_fbt1));
+                if (Rfbt != 0)
+                    sigma_fbt = Rfbt * (1 - (1 - Rfbt2 / Rfbt) * (e_fbt - e_fbt1) / (e_fbt2 - e_fbt1));
             }
             else if (e_fbt1 < e_fbt && e_fbt <= e_fbt3)
             {
-                sigma_fbt = Rfbt * (1 - (1 - Rfbt3 / Rfbt2) * (e_fbt - e_fbt2) / (e_fbt3 - e_fbt2));
+                if (Rfbt2 != 0)
+                    sigma_fbt = Rfbt * (1 - (1 - Rfbt3 / Rfbt2) * (e_fbt - e_fbt2) / (e_fbt3 - e_fbt2));
             }
             
             return sigma_fbt;
