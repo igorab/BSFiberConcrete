@@ -241,19 +241,20 @@ namespace BSFiberConcrete
             {
                 BSFiberCalc_RectRods _bsCalcRods = (BSFiberCalc_RectRods)_bsCalc;
 
-                InitLRebar(out double[] _l_rebar);
+                InitLRebar(out List<double[]> _l_rebar);
                 InitTRebar(out double[] _t_rebar);
-
-                _bsCalcRods.GetLTRebar(_l_rebar, _t_rebar, matRod);
+                //TODO refactoring
+                _bsCalcRods.GetLTRebar(_l_rebar[0], _t_rebar, matRod);
             }
             else if (_bsCalc is BSFiberCalc_IBeamRods)
             {
                 BSFiberCalc_IBeamRods _bsCalcRods = (BSFiberCalc_IBeamRods)_bsCalc;
 
-                InitLRebar(out double[] _l_rebar);
+                InitLRebar(out List <double[]> _l_rebar);
                 InitTRebar(out double[] _t_rebar);
-                               
-                _bsCalcRods.GetLTRebar(_l_rebar, _t_rebar, matRod);
+
+                //TODO refactoring
+                _bsCalcRods.GetLTRebar(_l_rebar[0], _t_rebar, matRod);
             }
         }
         
@@ -591,11 +592,11 @@ namespace BSFiberConcrete
                 // Армирование
                 fiberCalc.Rebar = rebar;
 
-                InitLRebar(out double[] l_r);
+                InitLRebar(out List<double[]> l_r);
 
                 InitTRebar(out double[] t_r);
 
-                fiberCalc.GetRebarParams(l_r, t_r);
+                fiberCalc.GetRebarParams(l_r[0], t_r);
             }
             
             double[] prms = m_BSLoadData.Params;
@@ -696,9 +697,12 @@ namespace BSFiberConcrete
         }
 
         // продольная арматура
-        private void InitLRebar(out double[] l_rebar)
+        private void InitLRebar(out List<double[]> _Rods_rebar)
         {
-            l_rebar = new double[10];
+            double[]  l_rebar = new double[10];
+
+            _Rods_rebar = new List<double[]>();
+
             DataGridViewRowCollection rows_l = gridLRebar.Rows;
 
             for (int irow = 0; irow < 3; irow++)
@@ -706,11 +710,14 @@ namespace BSFiberConcrete
                 var row = rows_l[irow];
 
                 l_rebar = new double[row.Cells.Count];
+
                 for (int i = 0; i < l_rebar.Length; i++)
                 {
                     double x = Convert.ToDouble(row.Cells[i].Value);
                     l_rebar[i] = x;
                 }
+
+                _Rods_rebar.Add(l_rebar);
             }
         }
 
@@ -748,7 +755,7 @@ namespace BSFiberConcrete
         }
 
         private bool UserInput = true;
-
+        
         [DisplayName("Расчет по прочности нормальных сечений на основе нелинейной деформационной модели")]
         private void btnCalc_Deform_Click(object sender, EventArgs e)
         {
@@ -759,10 +766,13 @@ namespace BSFiberConcrete
             Rod2 r2 = m_BSLoadData.Rod2;
 
             string cBtCls = b2.Cls_b;
-            double cRb = b2.Rb; // МПа
-            double cRs = r2.Rs; // МПа
-            double cEb = b2.Eb; // Мпа
-            double cEs = r2.Es; // Мпа
+
+            double cRb = BSHelper.MPA2kgsm2( b2.Rb ); // МПа
+            double cRs = BSHelper.MPA2kgsm2(r2.Rs ); // МПа
+            double cEb = BSHelper.MPA2kgsm2( b2.Eb ); // Мпа
+            double cEs = BSHelper.MPA2kgsm2( r2.Es ); // Мпа
+
+
             double c_eps_s0 = r2.eps_s0;// 0.00175; // Мпа
             double c_eps_s2 = r2.eps_s2; // 0.025; // Мпа
 
@@ -784,7 +794,7 @@ namespace BSFiberConcrete
             double c_My = 0;  //95; 
             double c_N = 0;  //0; 
             
-            double[] l_r = new double[5]; // параметры продольной арматуры
+            List<double[]> l_r = new List<double[]>(); // параметры продольной арматуры
             double[] t_r = new double[5];  // параметры поперечной арматуры
 
             // расстановка арматурных стержней
@@ -829,50 +839,54 @@ namespace BSFiberConcrete
                 };
 
                 // расстановка арматурных стержней
-                //  пример фибробетон  
-                //{ { 40, 80 }, { 300, 80 }, { 40, 120 }, { 300, 120 }, { 40, 640 }, { 300, 640 }, {40, 1115 }, {300, 1115}};
+                //  пример фибробетон                  
                 Action Reinforcement = delegate()
                 {
-                    // раскладка арматуры X Y:, см
-                    double d_r = l_r[0];
-                    int d_qty = Convert.ToInt32(l_r[1]);
+                    int d_qty = 0; //количество стержней
+                    foreach (var lr in l_r)
+                    {
+                        d_qty += 1; // (int)lr[1];
+                    }
 
-                    double a_r; // защитный слой арматуры
-                    a_r = l_r[2];
+                    //координаты, формат:  { { 4, 4 }, { 15, 4 }, { 26, 4 } } :
+                    double[,] rdYdX = new double[d_qty, 2];
+                    //диаметры,  формат { 2.5, 1.8, 2.5 }; // D , см
+                    double[] rD_lng = new double[d_qty];
+                    //площади арматуры: { 4.909, 2.545, 4.909 };
+                    double[] _As = new double[d_qty];
 
-                    double[,] rdYdX = new double[d_qty, 2]; //  { { 4, 4 }, { 15, 4 }, { 26, 4 } };
-                    double[] rD_lng = new double[d_qty];   //{ 2.5, 1.8, 2.5 }; // D , см
-                    double[] _As = new double[d_qty]; // { 4.909, 2.545, 4.909 };
+                    double a_r = l_r[0][2]; // защитный слой арматуры
 
                     // ширина минус защитный слой слева и справа:
                     double bx = c_b - a_r - a_r;
+
                     // расстояние между стержнями
-                    double d_bx = bx / (d_qty - 1);   
+                    double d_bx = bx / (d_qty - 1);
 
-                    for (int r_idx = 0; r_idx < d_qty; r_idx++)
+                    int idx = 0; // Индекс стержня
+                    foreach (double[] lr in l_r)
                     {
-                        rdYdX[r_idx, 0] = a_r + d_bx * r_idx;
-                        rdYdX[r_idx, 1] = a_r;
+                        // раскладка арматуры X Y:, см
+                        double d_r = lr[0]; // диаметр стержня                        
+                                                                                                                       
+                        rdYdX[idx, 0] = a_r + d_bx * idx;
+                        rdYdX[idx, 1] = a_r;
 
-                        rD_lng[r_idx] = d_r;
-                        _As[r_idx] = BSHelper.AreaCircle(d_r);
-                    }
-
-                    int rows = rdYdX.GetUpperBound(0) + 1;    // количество строк            
-                    for (int i = 0; i < rows; i++)
-                    {
+                        rD_lng[idx] = d_r;
+                        _As[idx] = BSHelper.AreaCircle(d_r);
+                                                
                         BSRod rod = new BSRod()
                         {
-                            Num = i,
+                            Num = idx,
                             LTType = RebarLTType.Longitudinal,
-                            D = rD_lng[i],
-                            Z_X = rdYdX[i, 0] - X0,
-                            Z_Y = -1 * (rdYdX[i, 1] - Y0),
+                            D = rD_lng[idx],
+                            Z_X = rdYdX[idx, 0] - X0,
+                            Z_Y = -1 * (rdYdX[idx, 1] - Y0),
                             MatRod = fiberCalc_Deform.MatRebar,
                             Nu = 1.0 // на 1 итерации задаем 1
                         };
-
-                        rods.Add(rod);
+                        idx++;
+                        rods.Add(rod);                        
                     }
                 };
 
@@ -1048,15 +1062,7 @@ namespace BSFiberConcrete
 
         private void paramsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            try
-            {                
-                string path = Path.Combine(Environment.CurrentDirectory, "Templates\\BSFiberParams.json");
-                Process.Start(@"notepad.exe", path);
-            }
-            catch (Exception _e)
-            {
-                MessageBox.Show(_e.Message);
-            }
+           
         }
 
         private void cmbTRebarClass_SelectedIndexChanged(object sender, EventArgs e)
@@ -1155,6 +1161,32 @@ namespace BSFiberConcrete
                 //System.Diagnostics.Process.Start(pathToSvgFile);
                 Process.Start(new ProcessStartInfo { FileName = pathToSvgFile, UseShellExecute = true });
 
+            }
+            catch (Exception _e)
+            {
+                MessageBox.Show(_e.Message);
+            }
+        }
+
+        private void toolBSFiberParams_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string path = Path.Combine(Environment.CurrentDirectory, "Templates\\BSFiberParams.json");
+                Process.Start(@"notepad.exe", path);
+            }
+            catch (Exception _e)
+            {
+                MessageBox.Show(_e.Message);
+            }
+        }
+
+        private void toolsBSInit_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string path = Path.Combine(Environment.CurrentDirectory, "Templates\\BSInit.json");
+                Process.Start(@"notepad.exe", path);
             }
             catch (Exception _e)
             {

@@ -379,7 +379,7 @@ namespace BSFiberConcrete
 
             for (int i = 0; i < Zfby.Count; i++) 
             {
-                double _e = 1000*(eps_0 + ky * Zfby[i]);
+                double _e = /*1000*/(eps_0 + ky * Zfby[i]);
                 epsilon_fb[i] = _e;
 
                 double sgm = MatFiber.Eps_StD( - _e);
@@ -392,7 +392,7 @@ namespace BSFiberConcrete
 
             for (int j = 0; j < Zsy.Count; j++)
             {
-                double _e = 1000 * (eps_0 + ky * Zsy[j]);
+                double _e = /*1000 */ (eps_0 + ky * Zsy[j]);
                 epsilon_s[j] = _e;
 
                 double sgm = MatRebar.Eps_StD(_e);

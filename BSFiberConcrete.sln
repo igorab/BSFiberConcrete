@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BSCalcLib", "BSCalcLib\BSCa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BSFiber.Tests", "BSFiber.Tests\BSFiber.Tests.csproj", "{0ED91ADD-9F8C-4A4F-B71B-CF52D73C709A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BSFem", "BSFem\BSFem.csproj", "{AE1B501A-0486-42B4-B1E4-00717B4469AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BSFem", "BSFem\BSFem.csproj", "{AE1B501A-0486-42B4-B1E4-00717B4469AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

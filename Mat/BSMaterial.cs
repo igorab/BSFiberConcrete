@@ -259,7 +259,7 @@ namespace BSFiberConcrete
 
             double e_fbt2 = 0.004;
 
-            double e_fbt3 = 0.02 - 0.0125 * (Rfbt3 / Rfbt2 - 0.5);
+            double e_fbt3 = (Rfbt2 != 0) ? 0.02 - 0.0125 * (Rfbt3 / Rfbt2 - 0.5) : 0;
 
             if (e_fbt1 < e_fbt && e_fbt <= e_fbt2)
             {
