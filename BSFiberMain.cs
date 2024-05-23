@@ -767,14 +767,13 @@ namespace BSFiberConcrete
 
             string cBtCls = b2.Cls_b;
 
-            double cRb = BSHelper.MPA2kgsm2( b2.Rb ); // МПа
-            double cRs = BSHelper.MPA2kgsm2(r2.Rs ); // МПа
-            double cEb = BSHelper.MPA2kgsm2( b2.Eb ); // Мпа
-            double cEs = BSHelper.MPA2kgsm2( r2.Es ); // Мпа
+            double cRb = BSHelper.MPA2kgsm2( b2.Rb ); // МПа -> кгс/см2
+            double cRs = BSHelper.MPA2kgsm2(r2.Rs ); // МПа -> кгс/см2
+            double cEb = BSHelper.MPA2kgsm2( b2.Eb ); // Мпа -> кгс/см2
+            double cEs = BSHelper.MPA2kgsm2( r2.Es ); // Мпа -> кгс/см2
 
-
-            double c_eps_s0 = r2.eps_s0;// 0.00175; // Мпа
-            double c_eps_s2 = r2.eps_s2; // 0.025; // Мпа
+            double c_eps_s0 = r2.eps_s0;// 0.00175; 
+            double c_eps_s2 = r2.eps_s2; // 0.025; 
 
             double c_eps_b1 = b2.eps_b1;
             double c_eps_b1_red = b2.eps_b1_red;
@@ -789,9 +788,10 @@ namespace BSFiberConcrete
             const int c_Y_N = 10; // разбиение по высоте
             const int c_X_M = 1; // разбиение по ширине
 
-            // Mx  , My - усилия, кНм
-            double c_Mx = 0; // 45; 
-            double c_My = 0;  //95; 
+            // Mx, My - моменты, кгс*см
+            double c_Mx = 0; // 0; 
+            double c_My = 0;  // 0; 
+            // N - силы, кгс
             double c_N = 0;  //0; 
             
             List<double[]> l_r = new List<double[]>(); // параметры продольной арматуры
@@ -814,8 +814,14 @@ namespace BSFiberConcrete
                 c_b = rect[0];
                 c_h = rect[1];
 
+                m_GeomParams = new Dictionary<string, double>
+                {
+                    { "b, см", c_b },
+                    { "h, см", c_h }
+                };
+
                 // Арматура
-                    // продольная
+                // продольная
                 InitLRebar(out l_r);
                     // поперечная
                 InitTRebar(out t_r);
@@ -866,14 +872,15 @@ namespace BSFiberConcrete
                     int idx = 0; // Индекс стержня
                     foreach (double[] lr in l_r)
                     {
-                        // раскладка арматуры X Y:, см
-                        double d_r = lr[0]; // диаметр стержня                        
-                                                                                                                       
+                        // диаметр стержня, см
+                        double d_r = lr[0];                      
+                        double qty_r = lr[1];
+                        
                         rdYdX[idx, 0] = a_r + d_bx * idx;
                         rdYdX[idx, 1] = a_r;
 
                         rD_lng[idx] = d_r;
-                        _As[idx] = BSHelper.AreaCircle(d_r);
+                        _As[idx] = qty_r * BSHelper.AreaCircle(d_r);
                                                 
                         BSRod rod = new BSRod()
                         {
@@ -883,7 +890,7 @@ namespace BSFiberConcrete
                             Z_X = rdYdX[idx, 0] - X0,
                             Z_Y = -1 * (rdYdX[idx, 1] - Y0),
                             MatRod = fiberCalc_Deform.MatRebar,
-                            Nu = 1.0 // на 1 итерации задаем 1
+                            Nu = 1.0 // на первой итерации задаем 1
                         };
                         idx++;
                         rods.Add(rod);                        
@@ -894,7 +901,7 @@ namespace BSFiberConcrete
                 {
                     BTCls = cBtCls,
                     Nu_fb = 1,
-                    Rfbn = cRb, //МПа
+                    Rfbn = cRb, 
                     Rfbt = 0,
                     Rfbt2 = 0,
                     Rfbt3 = 0,
@@ -923,12 +930,14 @@ namespace BSFiberConcrete
 
                 // рассчитать
                 fiberCalc_Deform.Calculate();
-
+                
                 m_Efforts = fiberCalc_Deform.Efforts;
 
                 m_PhysParams = fiberCalc_Deform.PhysParams;
                 // получить результат
                 m_CalcResults = fiberCalc_Deform.Results();
+
+                m_Message = fiberCalc_Deform.Msg;
 
                 if (m_CalcResults?.Count > 0)
                     fiberCalc_Deform.Msg.Add("Расчет успешно выполнен!");

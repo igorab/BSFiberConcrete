@@ -79,7 +79,9 @@ namespace BSFiberConcrete
         public double R_fbt3() => (Yft != 0) ? Rfbt3n / Yft * Yb1 * Yb5 : 0;
 
         public string DN(Type _T, string _property) => _T.GetProperty(_property).GetCustomAttribute<DisplayNameAttribute>().DisplayName;
-        
+
+        public static string DsplN(Type _T, string _property) => new BSFiberCalculation().DN(_T, _property);
+
         public BSFiberCalculation()
         {                                   
         }

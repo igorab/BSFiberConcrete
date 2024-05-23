@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics.Eventing.Reader;
 using System.Drawing.Text;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace BSFiberConcrete
     /// </summary>
     public class BSFiberCalc_Deform : IBSFiberCalculation
     {
-        public List<string> Msg = new List<string>();
+        public List<string> Msg { get; private set; }
 
         // заданные нагрузки
         // изгибающие моменты от внешней нагрузки относительно выбранных и располагаемых в пределах
@@ -50,10 +51,20 @@ namespace BSFiberConcrete
         private List<BSElement> m_BElem;
         private List<BSRod> m_Rods;
 
-        // радиусы кривизны продольной оси в плоскостях действия моментов
-        private double rx, ry;
-        // относительная деформация волокна, расположенная на пересечении выбранных осей
-        private double eps_0;
+        [DisplayName("Радиус кривизны продольной оси в плоскости действия моментов, Rx, см")]
+        public double rx { get; private set; }
+
+        [DisplayName("Радиус кривизны продольной оси в плоскости действия моментов, Ry, см")]
+        public double ry { get; private set; }
+
+        [DisplayName("Относительная деформация волокна в Ц.Т. сечения, e0") ]
+        public double eps_0 { get; private set; }
+
+        [DisplayName("Кривизна 1/Rx, 1/см" )]
+        public double Kx { get; private set; }
+
+        [DisplayName("Кривизна 1/Ry, 1/см")]
+        public double Ky { get; private set; }
 
         // жесткостные характеристики
         private const int I1 = 0, I2 = 1, I3 = 2;
@@ -91,7 +102,10 @@ namespace BSFiberConcrete
 
         public Dictionary<string, double> Efforts
         {
-            get { return new Dictionary<string, double> { { "Mx", Mx }, { "My", My }, { "N", N } }; }
+            get { return new Dictionary<string, double> 
+            { 
+                { "Mx, кгс*см", Mx }, { "My, кгс*см", My }, { "N, кгс", N } }; 
+            }
         }
 
         public Dictionary<string, double> PhysParams
@@ -99,8 +113,12 @@ namespace BSFiberConcrete
             get
             {
                 return new Dictionary<string, double> { 
-                    { "Rfbn", m_Fiber.Rfbn }, { "Eb", m_Fiber.Eb }, { "Eps_fb_ult", m_Fiber.Eps_fb_ult },
-                    { "Rs", m_Rod.Rs }, { "Es", m_Rod.Es }, { "Eps_s_ult", m_Rod.Eps_s_ult }
+                    { "Rfb,n, кгс/см2", m_Fiber.Rfbn }, 
+                    { "Eb, кгс/см2", m_Fiber.Eb }, 
+                    { "e_fb_ult", m_Fiber.Eps_fb_ult },
+                    { "Rs, кгс/см2", m_Rod.Rs }, 
+                    { "Es, кгс/см2", m_Rod.Es }, 
+                    { "e_s_ult", m_Rod.Eps_s_ult }
                 };
             }
         }
@@ -120,7 +138,9 @@ namespace BSFiberConcrete
 
             rx = 1;
             ry = 1;
-            eps_0 = 1;            
+            eps_0 = 1;
+
+            Msg = new List<string>();
         }
 
         /// <summary>
@@ -348,12 +368,17 @@ namespace BSFiberConcrete
                 (ky, eps_0) = (X[I1], X[I2]);
                 
                 ry = 1 / ky;
+                Ky = ky;
             }
             else
             {
                 (kx, ky, eps_0) = (X[I1], X[I2], X[I3]);
                 rx = 1 / kx;
                 ry = 1 / ky;
+
+                Kx = kx;
+                Ky = ky;
+
             }                        
         }
 
@@ -374,6 +399,9 @@ namespace BSFiberConcrete
             bool doNextIter = true;
 
             double kx = 1/rx, ky = 1/ry;
+
+            Kx = kx;
+            Ky = ky;
 
             ArraysClear();
 
@@ -428,8 +456,8 @@ namespace BSFiberConcrete
             double My_calc =  My_b_calc + My_s_calc;
             double N_calc = N_b_calc + N_s_calc;
 
-            if (Math.Abs(Mx*1000 - Mx_calc) <= BSHelper.Epsilon &&
-                Math.Abs(My*1000 - My_calc) <= BSHelper.Epsilon && 
+            if (Math.Abs(Mx /*1000*/ - Mx_calc) <= BSHelper.Epsilon &&
+                Math.Abs(My /*1000*/ - My_calc) <= BSHelper.Epsilon && 
                 Math.Abs(N - N_calc) <= BSHelper.Epsilon)
             {
                 doNextIter = false;
@@ -452,6 +480,12 @@ namespace BSFiberConcrete
             var y = m.Solve(v);
 
         }
+
+        private void AddToResult(string _attr, double _value)
+        {
+            Res.Add(BSFiberCalculation.DsplN(typeof(BSFiberCalc_Deform), _attr), _value);
+        }
+
 
         //
         // Рассчитать
@@ -506,9 +540,11 @@ namespace BSFiberConcrete
                     break;
             }
             
-            Res.Add("e0", eps_0);
-            Res.Add("rx", rx);
-            Res.Add("ry", ry);
+            AddToResult( "eps_0", eps_0);
+            AddToResult("rx", rx);
+            AddToResult("Kx", Kx);
+            AddToResult("ry", ry);
+            AddToResult("Ky", Ky);
 
             bool res_fb = epsilon_fb.AbsoluteMaximum() <=  m_Fiber.Eps_fb_ult;
             bool res_s = epsilon_s.AbsoluteMaximum() <= m_Rod.Eps_s_ult;
@@ -565,8 +601,8 @@ namespace BSFiberConcrete
         }
 
         public Dictionary<string, double> GeomParams()
-        {
-            throw new NotImplementedException();
+        {             
+            return null;
         }
 
               
