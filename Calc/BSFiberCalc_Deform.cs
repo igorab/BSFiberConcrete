@@ -407,7 +407,7 @@ namespace BSFiberConcrete
 
             for (int i = 0; i < Zfby.Count; i++) 
             {
-                double _e = /*1000*/(eps_0 + ky * Zfby[i]);
+                double _e = eps_0 + ky * Zfby[i];
                 epsilon_fb[i] = _e;
 
                 double sgm = MatFiber.Eps_StD( - _e);
@@ -420,7 +420,7 @@ namespace BSFiberConcrete
 
             for (int j = 0; j < Zsy.Count; j++)
             {
-                double _e = /*1000 */ (eps_0 + ky * Zsy[j]);
+                double _e = eps_0 + ky * Zsy[j];
                 epsilon_s[j] = _e;
 
                 double sgm = MatRebar.Eps_StD(_e);
@@ -456,8 +456,8 @@ namespace BSFiberConcrete
             double My_calc =  My_b_calc + My_s_calc;
             double N_calc = N_b_calc + N_s_calc;
 
-            if (Math.Abs(Mx /*1000*/ - Mx_calc) <= BSHelper.Epsilon &&
-                Math.Abs(My /*1000*/ - My_calc) <= BSHelper.Epsilon && 
+            if (Math.Abs(Mx - Mx_calc) <= BSHelper.Epsilon &&
+                Math.Abs(My - My_calc) <= BSHelper.Epsilon && 
                 Math.Abs(N - N_calc) <= BSHelper.Epsilon)
             {
                 doNextIter = false;
@@ -492,7 +492,7 @@ namespace BSFiberConcrete
         //
         public bool Calculate()
         {
-            int cIters = 1000;
+            int cIters = 10000;
 
             m_BElem = CalculationScheme(m_Y_N, m_X_M);
 
@@ -546,13 +546,17 @@ namespace BSFiberConcrete
             AddToResult("ry", ry);
             AddToResult("Ky", Ky);
 
-            bool res_fb = epsilon_fb.AbsoluteMaximum() <=  m_Fiber.Eps_fb_ult;
-            bool res_s = epsilon_s.AbsoluteMaximum() <= m_Rod.Eps_s_ult;
+            double e_fb_calc = epsilon_fb.AbsoluteMaximum();
 
+            bool res_fb = e_fb_calc <=  m_Fiber.Eps_fb_ult;            
             if (res_fb)
                 Msg.Add("Проверка сечения по фибробетону пройдена");            
             else
                 Msg.Add("Не пройдена проверка сечения по фибробетону");
+
+            double e_s_calc = epsilon_s.AbsoluteMaximum();
+
+            bool res_s = e_s_calc <= m_Rod.Eps_s_ult;
             if (res_s)
                 Msg.Add("Проверка сечения по арматуре пройдена");
             else

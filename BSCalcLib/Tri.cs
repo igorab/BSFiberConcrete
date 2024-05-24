@@ -44,7 +44,7 @@ namespace BSCalcLib
 
             string svgPath = Path.Combine(FilePath, "IBeam.svg");
 
-            SvgImage.Save(mesh, svgPath, 800);
+            // SvgImage.Save(mesh, svgPath, 800);
 
             return svgPath;
         }
