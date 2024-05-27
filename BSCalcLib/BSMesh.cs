@@ -16,7 +16,7 @@ using TriangleNet.Topology;
 
 namespace BSCalcLib
 {
-    public class Mesh
+    public class BSMesh
     {
         public static string FilePath {  get; set; }     
 

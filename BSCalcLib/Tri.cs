@@ -4,10 +4,17 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
+using TriangleNet;
+
+
 //using System.G
 using TriangleNet.Geometry;
+using TriangleNet.IO;
 using TriangleNet.Meshing;
 using TriangleNet.Rendering.Text;
+
+
 
 namespace BSCalcLib
 {
@@ -15,8 +22,43 @@ namespace BSCalcLib
     {
         public static string FilePath { get; set; }
 
-        public static string CreateContour(List<System.Drawing.PointF> _points)
+        public static Mesh Mesh { get; set; }
+
+        public static List<object> CalculationScheme(int _N = 10, int _M = 1)
         {
+            List<object> result = new List<object> { new object() };
+
+            foreach (var edge in Mesh.Edges)
+            {
+
+            }
+
+            foreach (var hole in Mesh.Holes)
+            {
+
+            }
+
+            foreach (var vertex in Mesh.Vertices)
+            {
+
+            }
+
+            foreach (var tri in Mesh.Triangles)
+            {
+                var b = tri.Bounds();
+                var a = tri.Area;
+
+
+            }
+
+
+
+            return result;
+        }
+
+
+        public static string CreateContour(List<System.Drawing.PointF> _points)
+        {            
             Polygon p = new Polygon();
 
             Vertex[] vrtx = new Vertex[_points.Count];
@@ -40,11 +82,17 @@ namespace BSCalcLib
                 VariableArea = true
             };
 
-            IMesh mesh = p.Triangulate(options, quality);
+            Mesh = p.Triangulate(options, quality) as Mesh;
+
+            CalculationScheme();
 
             string svgPath = Path.Combine(FilePath, "IBeam.svg");
 
-            // SvgImage.Save(mesh, svgPath, 800);
+            SvgImage.Save(Mesh, svgPath, 800);
+
+            string polyPath = Path.Combine(FilePath, "IBeam.poly");
+            FileProcessor.Write(Mesh, polyPath);
+            //string s = p.ToString();
 
             return svgPath;
         }

@@ -1154,9 +1154,9 @@ namespace BSFiberConcrete
                 if (m_BeamSection == BeamSection.Rect)
                 {
                     List<double> rect = new List<double> { 0, 0, b, h };
-                    Mesh.FilePath = Path.Combine(Environment.CurrentDirectory, "Templates");
+                    BSMesh.FilePath = Path.Combine(Environment.CurrentDirectory, "Templates");
 
-                    pathToSvgFile = BSCalcLib.Mesh.Generate(rect);
+                    pathToSvgFile = BSCalcLib.BSMesh.Generate(rect);
                 }
                 else if (m_BeamSection == BeamSection.IBeam)
                 {
