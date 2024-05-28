@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -13,7 +15,8 @@ using TriangleNet.Geometry;
 using TriangleNet.IO;
 using TriangleNet.Meshing;
 using TriangleNet.Rendering.Text;
-
+using TriangleNet.Tools;
+using TriangleNet.Topology;
 
 
 namespace BSCalcLib
@@ -22,36 +25,81 @@ namespace BSCalcLib
     {
         public static string FilePath { get; set; }
 
+        public static List<double> triAreas;
+        public static List<Point> triCGs;
+
         public static Mesh Mesh { get; set; }
+
+        static Tri()
+        {
+            triAreas = new List<double>();
+            triCGs = new List<Point>();
+        }
 
         public static List<object> CalculationScheme(int _N = 10, int _M = 1)
         {
             List<object> result = new List<object> { new object() };
-
-            foreach (var edge in Mesh.Edges)
+            HashSet<Rectangle> rects = new HashSet<Rectangle>();
+            
+            
+            string msg = "";
+            int triIdx = 0;
+            foreach (Triangle tri in Mesh.Triangles)
             {
+                Rectangle rec = tri.Bounds();               
+                rects.Add(rec);
 
+                msg += string.Format("{0} {1} {2} {3} {4} {5} {6} {7} \\t\\n", rec.Bottom, rec.Height, rec.Left, rec.Right, rec.Top, rec.Width, rec.X, rec.Y);
+
+                //MessageBox.Show(msg);
+
+                Debug.Assert(true, msg);                
+
+                double a = tri.Area;
+                int vId0 = tri.GetVertexID(0);
+                int vId1 = tri.GetVertexID(1);
+                int vId2 = tri.GetVertexID(2);
+
+                Vertex v0 = tri.GetVertex(0);
+                Vertex v1 = tri.GetVertex(1);
+                Vertex v2 = tri.GetVertex(2);
+
+                Point triCG = new Point() {X = (float) (v0.X + v1.X + v2.X)/3.0 , Y = (float) (v0.Y + v1.Y + v2.Y) / 3.0 };
+                triCGs.Add(triCG);
+                triAreas.Add(rec.Width * rec.Height);
+
+                triIdx++;
             }
 
-            foreach (var hole in Mesh.Holes)
-            {
+            TriangleQuadTree qtree = new TriangleQuadTree(Mesh);
 
+            //qtree.Query
+
+            //MeshValidator
+
+
+            foreach (Edge edge in Mesh.Edges)
+            {
+                var edgeNum = edge.Label;
+                var pointFrom =  edge.P0;
+                var pointTo =  edge.P1;
             }
 
-            foreach (var vertex in Mesh.Vertices)
+            foreach (Point hole in Mesh.Holes)
             {
-
+                var h_x = hole.X;
+                var h_y = hole.X;
             }
 
-            foreach (var tri in Mesh.Triangles)
+            foreach (Vertex vertex in Mesh.Vertices)
             {
-                var b = tri.Bounds();
-                var a = tri.Area;
+                var v_x = vertex.X;
+                var v_y = vertex.Y;
 
+                var v_Num = vertex.Label;
 
+                var v_Id = vertex.ID;
             }
-
-
 
             return result;
         }
