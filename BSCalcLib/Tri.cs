@@ -38,10 +38,11 @@ namespace BSCalcLib
 
         public static List<object> CalculationScheme(int _N = 10, int _M = 1)
         {
-            List<object> result = new List<object> { new object() };
+            List<object> result = new List<object> { new object() };         
             HashSet<Rectangle> rects = new HashSet<Rectangle>();
-            
-            
+            triAreas = new List<double>();
+            triCGs = new List<Point>();
+
             string msg = "";
             int triIdx = 0;
             foreach (Triangle tri in Mesh.Triangles)
@@ -64,7 +65,8 @@ namespace BSCalcLib
                 Vertex v1 = tri.GetVertex(1);
                 Vertex v2 = tri.GetVertex(2);
 
-                Point triCG = new Point() {X = (float) (v0.X + v1.X + v2.X)/3.0 , Y = (float) (v0.Y + v1.Y + v2.Y) / 3.0 };
+                // Центр тяжести треугольника
+                Point triCG = new Point() {ID = triIdx,  X = (float) (v0.X + v1.X + v2.X)/3.0 , Y = (float) (v0.Y + v1.Y + v2.Y) / 3.0 };
                 triCGs.Add(triCG);
                 triAreas.Add(rec.Width * rec.Height);
 
@@ -72,12 +74,8 @@ namespace BSCalcLib
             }
 
             TriangleQuadTree qtree = new TriangleQuadTree(Mesh);
-
-            //qtree.Query
-
-            //MeshValidator
-
-
+            var xTri = qtree.Query(0, 0);
+           
             foreach (Edge edge in Mesh.Edges)
             {
                 var edgeNum = edge.Label;
@@ -131,16 +129,13 @@ namespace BSCalcLib
             };
 
             Mesh = p.Triangulate(options, quality) as Mesh;
-
-            CalculationScheme();
-
+            
             string svgPath = Path.Combine(FilePath, "IBeam.svg");
 
             SvgImage.Save(Mesh, svgPath, 800);
 
             string polyPath = Path.Combine(FilePath, "IBeam.poly");
             FileProcessor.Write(Mesh, polyPath);
-            //string s = p.ToString();
 
             return svgPath;
         }

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
-
+using TriangleNet;
 using TriangleNet.Geometry;
 using TriangleNet.IO;
 using TriangleNet.Meshing;
@@ -18,7 +18,18 @@ namespace BSCalcLib
 {
     public class BSMesh
     {
+        public static int Nx { get; set; }
+        public static int Ny { get; set; }
+
+        public static Mesh Mesh { get; set; }
+
         public static string FilePath {  get; set; }     
+
+        static BSMesh()
+        {
+            Nx = 2;
+            Ny = 2;
+        }
 
         public static void Example()
         {
@@ -56,15 +67,15 @@ namespace BSCalcLib
                 Rectangle bounds = new Rectangle(x, y, w, h);
 
                 // Generate mesh.
-                IMesh mesh = GenericMesher.StructuredMesh(bounds, 20, 20);
+                Mesh = GenericMesher.StructuredMesh(bounds, Nx, Ny) as Mesh;
 
                 string svgPath = Path.Combine(FilePath, "rectangle1.svg");
 
-                SvgImage.Save(mesh, svgPath, 800);
+                SvgImage.Save(Mesh, svgPath, 800);
 
-                int cnt = mesh.Triangles.Count;
+                int cnt = Mesh.Triangles.Count;
 
-                foreach (Triangle tr in mesh.Triangles)
+                foreach (Triangle tr in Mesh.Triangles)
                 {
                     var a = tr.Area;
                 }

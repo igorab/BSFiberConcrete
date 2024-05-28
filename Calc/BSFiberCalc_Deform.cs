@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using MathNet.Numerics;
 using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics.LinearAlgebra.Double;
-
+using TriangleNet.Geometry;
 
 namespace BSFiberConcrete
 {
@@ -20,6 +20,9 @@ namespace BSFiberConcrete
     public class BSFiberCalc_Deform : IBSFiberCalculation
     {
         public List<string> Msg { get; private set; }
+
+        public List<double> triAreas { get; set; }
+        public List<Point> triCGs { get; set; }
 
         // заданные нагрузки
         // изгибающие моменты от внешней нагрузки относительно выбранных и располагаемых в пределах

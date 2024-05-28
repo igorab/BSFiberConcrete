@@ -11,6 +11,7 @@ using System.Diagnostics;
 using BSFiberConcrete.Section;
 using BSCalcLib;
 using System.Drawing;
+using TriangleNet.Geometry;
 
 namespace BSFiberConcrete
 {
@@ -39,6 +40,11 @@ namespace BSFiberConcrete
         private List<string> m_Message;
 
         private BeamSection m_BeamSection { get; set; }
+
+        // Mesh generation
+        private List<double> triAreas;
+        private List<TriangleNet.Geometry.Point> triCGs;
+
 
         public BSFiberMain()
         {
@@ -835,6 +841,11 @@ namespace BSFiberConcrete
 
                 BSFiberCalc_Deform fiberCalc_Deform = new BSFiberCalc_Deform(_Mx: c_Mx, _My: c_My, _N: c_N);
 
+                // построить сетку сечения
+                GenerateMesh();
+                fiberCalc_Deform.triAreas = triAreas;
+                fiberCalc_Deform.triCGs = triCGs;
+
                 // задать тип арматуры
                 fiberCalc_Deform.MatRebar = new BSMatRod(cEs)
                 {
@@ -1139,6 +1150,41 @@ namespace BSFiberConcrete
             sectionChart.Show();
         }
 
+        // <summary>
+        /// Покрыть сечение сеткой
+        /// </summary>
+        private string GenerateMesh()
+        {
+            string pathToSvgFile = "";
+            double[] sz = BeamWidtHeight(out double b, out double h);
+
+            if (m_BeamSection == BeamSection.Rect)
+            {
+                List<double> rect = new List<double> { 0, 0, b, h };
+                BSMesh.FilePath = Path.Combine(Environment.CurrentDirectory, "Templates");
+
+                pathToSvgFile = BSCalcLib.BSMesh.Generate(rect);
+                Tri.Mesh = BSMesh.Mesh;
+                Tri.CalculationScheme();
+            }
+            else if (m_BeamSection == BeamSection.IBeam)
+            {
+                List<PointF> pts;
+                BSSection.IBeam(sz, out pts);
+
+                Tri.FilePath = Path.Combine(Environment.CurrentDirectory, "Templates");
+                pathToSvgFile = BSCalcLib.Tri.CreateContour(pts);
+                Tri.CalculationScheme();                
+            }
+
+            triAreas = Tri.triAreas;
+            triCGs = Tri.triCGs;
+
+            return pathToSvgFile;
+        }
+
+
+
         /// <summary>
         /// Покрыть сечение сеткой
         /// </summary>
@@ -1149,25 +1195,9 @@ namespace BSFiberConcrete
             try
             {
                 string pathToSvgFile = "";
-                double[] sz = BeamWidtHeight(out double b, out double h);
 
-                if (m_BeamSection == BeamSection.Rect)
-                {
-                    List<double> rect = new List<double> { 0, 0, b, h };
-                    BSMesh.FilePath = Path.Combine(Environment.CurrentDirectory, "Templates");
-
-                    pathToSvgFile = BSCalcLib.BSMesh.Generate(rect);
-                }
-                else if (m_BeamSection == BeamSection.IBeam)
-                {
-                    List<PointF> pts ;
-                    BSSection.IBeam(sz, out pts);
-
-                    Tri.FilePath = Path.Combine(Environment.CurrentDirectory, "Templates");
-                    pathToSvgFile = BSCalcLib.Tri.CreateContour(pts) ;
-                }
-
-                //System.Diagnostics.Process.Start(pathToSvgFile);
+                pathToSvgFile = GenerateMesh();
+               
                 Process.Start(new ProcessStartInfo { FileName = pathToSvgFile, UseShellExecute = true });
 
             }
