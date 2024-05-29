@@ -35,11 +35,13 @@ namespace BSFiberConcrete.Section
 
     public class BSSection
     {
-        public static void IBeam(double[] _Sz, out List<PointF> PointsSection)
+        public static void IBeam(double[] _Sz, out List<PointF> PointsSection, out PointF _center)
         {
             float[] Sz = Array.ConvertAll(_Sz, element => (float)element);
 
             float bf = Sz[0], hf = Sz[1], bw = Sz[2], hw = Sz[3], b1f = Sz[4], h1f = Sz[5];
+
+            _center = new PointF(0, (hf + hw + h1f) /2f);
 
             PointsSection = new List<PointF>()
             {

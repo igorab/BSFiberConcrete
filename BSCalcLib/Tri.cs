@@ -28,12 +28,20 @@ namespace BSCalcLib
         public static List<double> triAreas;
         public static List<Point> triCGs;
 
+        /// <summary>
+        /// Начало координат
+        /// </summary>
+        public static Point Oxy { get; set; } 
+
+
         public static Mesh Mesh { get; set; }
 
         static Tri()
         {
             triAreas = new List<double>();
             triCGs = new List<Point>();
+
+            Oxy = new Point() {ID = 0, X = 0, Y = 0 };
         }
 
         public static List<object> CalculationScheme(int _N = 10, int _M = 1)
@@ -111,9 +119,8 @@ namespace BSCalcLib
 
             int vIdx = 0;
             foreach (var point in _points)   
-            {
-                var v = new Vertex(point.X, point.Y, 1);
-                vrtx[vIdx] = v;
+            {                
+                vrtx[vIdx] = new Vertex(point.X, point.Y, 1);
                 vIdx++;
             };
 

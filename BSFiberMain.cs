@@ -12,6 +12,7 @@ using BSFiberConcrete.Section;
 using BSCalcLib;
 using System.Drawing;
 using TriangleNet.Geometry;
+using TriangleNet.Topology;
 
 namespace BSFiberConcrete
 {
@@ -42,9 +43,12 @@ namespace BSFiberConcrete
         private BeamSection m_BeamSection { get; set; }
 
         // Mesh generation
+        // площади элементов (треугольников)
         private List<double> triAreas;
+        // координаты центра тяжести элементов (треугольников)
         private List<TriangleNet.Geometry.Point> triCGs;
-
+        // центр тяжести сечения
+        private TriangleNet.Geometry.Point CG { get; set; }
 
         public BSFiberMain()
         {
@@ -843,6 +847,7 @@ namespace BSFiberConcrete
 
                 // построить сетку сечения
                 GenerateMesh();
+                fiberCalc_Deform.CG = CG;
                 fiberCalc_Deform.triAreas = triAreas;
                 fiberCalc_Deform.triCGs = triCGs;
 
@@ -1154,13 +1159,15 @@ namespace BSFiberConcrete
         /// Покрыть сечение сеткой
         /// </summary>
         private string GenerateMesh()
-        {
+        {            
             string pathToSvgFile = "";
             double[] sz = BeamWidtHeight(out double b, out double h);
 
             if (m_BeamSection == BeamSection.Rect)
             {
                 List<double> rect = new List<double> { 0, 0, b, h };
+                CG = new TriangleNet.Geometry.Point(b/2.0, h/2.0);
+
                 BSMesh.FilePath = Path.Combine(Environment.CurrentDirectory, "Templates");
 
                 pathToSvgFile = BSCalcLib.BSMesh.Generate(rect);
@@ -1170,7 +1177,8 @@ namespace BSFiberConcrete
             else if (m_BeamSection == BeamSection.IBeam)
             {
                 List<PointF> pts;
-                BSSection.IBeam(sz, out pts);
+                BSSection.IBeam(sz, out pts, out PointF _center);
+                CG = new TriangleNet.Geometry.Point(_center.X, _center.Y);
 
                 Tri.FilePath = Path.Combine(Environment.CurrentDirectory, "Templates");
                 pathToSvgFile = BSCalcLib.Tri.CreateContour(pts);

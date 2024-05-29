@@ -65,8 +65,8 @@ namespace BSFiberConcrete.Section
                 };
             }
             else if (m_BeamSection == BeamSection.IBeam || m_BeamSection == BeamSection.TBeam)
-            {                                          
-                BSSection.IBeam(Sz, out PointsSection);
+            {                
+                BSSection.IBeam(Sz, out PointsSection, out PointF _center);
 
                 RodPoints = new List<PointF>()
                 {

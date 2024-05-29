@@ -288,6 +288,14 @@ namespace BSFiberConcrete
             {
                 sgm = R_fb;
             }
+            else if (_e < 0) // по теории такого быть не должно
+            {
+                sgm = Eb_red * _e;
+            }
+            else if (_e >= e_b2) // и такого быть не должно
+            {
+                sgm = R_fb;
+            }
 
             return sgm;
         }

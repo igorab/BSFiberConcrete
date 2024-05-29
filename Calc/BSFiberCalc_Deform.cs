@@ -21,6 +21,8 @@ namespace BSFiberConcrete
     {
         public List<string> Msg { get; private set; }
 
+        // координаты центра тяжести сечения 
+        public Point CG { get; set; }
         public List<double> triAreas { get; set; }
         public List<Point> triCGs { get; set; }
 
@@ -187,7 +189,7 @@ namespace BSFiberConcrete
 
                 Zfbx[i] = elem.Z_X;
                 Zfby[i] = elem.Z_Y;
-                Ab[i] = elem.Ab;
+                Ab[i] = elem.Area;
                 Nju_fb[i] = elem.Nu;
             }
 
@@ -222,8 +224,8 @@ namespace BSFiberConcrete
             {
                 sigma_fb[i] = beam.Sigma_Z(N, Mx, My, elem.Z_X, elem.Z_Y);
 
-                double sgm = 0, eps = 0; 
-                sgm = m_Fiber.Eps_StateDiagram(eps);
+                //double  eps = 0; 
+                //double sgm = m_Fiber.Eps_StateDiagram(eps);
                                 
                 epsilon_fb[i] = 1; 
 
@@ -490,6 +492,47 @@ namespace BSFiberConcrete
         }
 
 
+        /// <summary>
+        /// Расчетная схема сечения. оси кооридинат - 0 ц.т. X -вправо Y - вверх
+        /// </summary>
+        /// <param name="_usemesh"></param>
+        /// <returns></returns>
+        private List<BSElement> CalculationScheme(bool _usemesh = true)
+        {
+            int Nx = 10;
+            int Ny = 10;
+
+            List<BSElement> bs = new List<BSElement>();
+            BSBeam_Rect beam = (BSBeam_Rect)m_Beam;
+
+            // центр тяжести сечения           
+            (double X0, double Y0) = (CG.X, CG.Y);
+            
+            double elX = 0,
+                   elY = 0;
+                        
+            foreach (var t in triCGs)
+            {                               
+                // начало координат переносим в ц.т. сечения
+                double cgX = t.X - X0;                
+                double cgY = t.Y - Y0;
+
+                BSElement bsElement = new BSElement(t.ID, cgX, cgY) 
+                { 
+                    Area = triAreas[t.ID],
+                    A = 1, 
+                    B = 1 
+                };
+
+                bsElement.E = beam.Mat.Eb;
+
+                bs.Add(bsElement);
+                                                          
+            }
+
+            return bs;
+        }
+
         //
         // Рассчитать
         //
@@ -497,12 +540,19 @@ namespace BSFiberConcrete
         {
             int cIters = 10000;
 
-            m_BElem = CalculationScheme(m_Y_N, m_X_M);
+            if (triAreas.Count > 0)
+            {
+                m_BElem = CalculationScheme(true);
+            }
+            else
+            {
+                m_BElem = CalculationScheme(m_Y_N, m_X_M);
+            }
 
             int qty_J = m_Beam.RodsQty; // количество стержней           
             int qty_I = m_BElem.Count; // количество элементов сечения
 
-            double _A_s = m_Beam.AreaS(); 
+             double _A_s = m_Beam.AreaS(); 
 
             InitVectors(qty_I, qty_J);
            
