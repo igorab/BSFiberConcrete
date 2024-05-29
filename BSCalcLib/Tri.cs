@@ -110,8 +110,12 @@ namespace BSCalcLib
             return result;
         }
 
-
-        public static string CreateContour(List<System.Drawing.PointF> _points)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="_points"></param>
+        /// <returns></returns>
+        public static string CreateIBeamContour(List<System.Drawing.PointF> _points)
         {            
             Polygon p = new Polygon();
 

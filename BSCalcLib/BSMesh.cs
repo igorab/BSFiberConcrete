@@ -65,10 +65,10 @@ namespace BSCalcLib
             {
                 // Create unit square.
                 Rectangle bounds = new Rectangle(x, y, w, h);
-
+                
                 // Generate mesh.
                 Mesh = GenericMesher.StructuredMesh(bounds, Nx, Ny) as Mesh;
-
+            
                 string svgPath = Path.Combine(FilePath, "rectangle1.svg");
 
                 SvgImage.Save(Mesh, svgPath, 800);
@@ -80,7 +80,6 @@ namespace BSCalcLib
                     var a = tr.Area;
                 }
 
-
                 return svgPath;
             }
             catch
@@ -89,6 +88,50 @@ namespace BSCalcLib
             }
         }
 
+        public static string GenerateCircle(double r, Point center, double h, int label = 0)
+        {           
+            try
+            {
+                var contour =  BSMesh.Circle(r, center, h, label);
 
+
+                return "";
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+
+
+        /// <summary>
+        /// Create a circular contour.
+        /// </summary>
+        /// <param name="r">The radius.</param>
+        /// <param name="center">The center point.</param>
+        /// <param name="h">The desired segment length.</param>
+        /// <param name="label">The boundary label.</param>
+        /// <returns>A circular contour.</returns>
+        public static Contour Circle(double r, Point center, double h, int label = 0)
+        {
+            int n = (int)(2 * Math.PI * r / h);
+
+            var points = new List<Vertex>(n);
+
+            double x, y, dphi = 2 * Math.PI / n;
+
+            for (int i = 0; i < n; i++)
+            {
+                x = center.X + r * Math.Cos(i * dphi);
+                y = center.Y + r * Math.Sin(i * dphi);
+
+                points.Add(new Vertex(x, y, label));
+            }
+
+            return new Contour(points, label, true);
+        }
     }
+
 }
+
