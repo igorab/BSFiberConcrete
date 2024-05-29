@@ -92,10 +92,29 @@ namespace BSCalcLib
         {           
             try
             {
-                var contour =  BSMesh.Circle(r, center, h, label);
+                Contour contour =  BSMesh.Circle(r, center, r/10.0, label);
 
+                Polygon poly = new Polygon();                                                
+                poly.Add(contour);
 
-                return "";
+                ConstraintOptions options = new ConstraintOptions() { Convex = false, ConformingDelaunay = true };
+                QualityOptions quality = new QualityOptions()
+                {
+                    MinimumAngle = 40.0,
+                    VariableArea = true
+                };
+                //Mesh = poly.Triangulate() as Mesh;
+
+                Mesh = poly.Triangulate(options, quality) as Mesh;
+
+                string svgPath = Path.Combine(FilePath, "Circle.svg");
+
+                SvgImage.Save(Mesh, svgPath, 800);
+
+                string polyPath = Path.Combine(FilePath, "Circle.poly");
+                FileProcessor.Write(Mesh, polyPath);
+
+                return svgPath;                
             }
             catch
             {

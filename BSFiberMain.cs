@@ -1186,7 +1186,10 @@ namespace BSFiberConcrete
             {
                 CG = new TriangleNet.Geometry.Point(b / 2.0, h / 2.0);
 
-                BSMesh.GenerateCircle(b, CG, h);
+                pathToSvgFile = BSMesh.GenerateCircle(b, CG, h);
+
+                Tri.Mesh = BSMesh.Mesh;
+                //Tri.CalculationScheme();
             }
 
             triAreas = Tri.triAreas;

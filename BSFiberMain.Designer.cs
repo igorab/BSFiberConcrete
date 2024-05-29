@@ -30,18 +30,18 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BSFiberMain));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.tabGeneral = new System.Windows.Forms.TabControl();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle29 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle30 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle31 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle32 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle33 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.tabNDM = new System.Windows.Forms.TabControl();
             this.tabParams = new System.Windows.Forms.TabPage();
             this.groupVar = new System.Windows.Forms.GroupBox();
             this.btnCalcResults = new System.Windows.Forms.Button();
@@ -147,16 +147,6 @@
             this.numAs1 = new System.Windows.Forms.NumericUpDown();
             this.label15 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.panelRods = new System.Windows.Forms.TableLayoutPanel();
-            this.lblLongitudinalReinforcement = new System.Windows.Forms.Label();
-            this.gridLRebar = new System.Windows.Forms.DataGridView();
-            this.label16 = new System.Windows.Forms.Label();
-            this.gridTRebar = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Sw = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ClassRebar = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TCondFactor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridSection = new System.Windows.Forms.DataGridView();
             this.btnRectang = new System.Windows.Forms.Button();
             this.btnTSection = new System.Windows.Forms.Button();
@@ -179,12 +169,23 @@
             this.flowLayoutPanelArea = new System.Windows.Forms.FlowLayoutPanel();
             this.btnSaveParams = new System.Windows.Forms.Button();
             this.flowLayoutBtns = new System.Windows.Forms.FlowLayoutPanel();
-            this.D = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Qty = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.a = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.RebarClass = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.gridTRebar = new System.Windows.Forms.DataGridView();
+            this.TCondFactor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ClassRebar = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Sw = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label16 = new System.Windows.Forms.Label();
+            this.gridLRebar = new System.Windows.Forms.DataGridView();
             this.CondFactor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tabGeneral.SuspendLayout();
+            this.RebarClass = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.a = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Qty = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.D = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.lblLongitudinalReinforcement = new System.Windows.Forms.Label();
+            this.panelRods = new System.Windows.Forms.TableLayoutPanel();
+            this.tabNDM.SuspendLayout();
             this.tabParams.SuspendLayout();
             this.groupVar.SuspendLayout();
             this.groupBeam.SuspendLayout();
@@ -226,27 +227,29 @@
             ((System.ComponentModel.ISupportInitialize)(this.numAs)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAs1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.panelRods.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridLRebar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridTRebar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridSection)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.panelCalc.SuspendLayout();
             this.flowLayoutPanelArea.SuspendLayout();
             this.flowLayoutBtns.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridTRebar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridLRebar)).BeginInit();
+            this.panelRods.SuspendLayout();
             this.SuspendLayout();
             // 
-            // tabGeneral
+            // tabNDM
             // 
-            this.tabGeneral.Controls.Add(this.tabParams);
-            this.tabGeneral.Controls.Add(this.tabConcrete);
-            this.tabGeneral.Controls.Add(this.tabStrength);
-            this.tabGeneral.Controls.Add(this.tabRebar);
-            this.tabGeneral.Location = new System.Drawing.Point(11, 40);
-            this.tabGeneral.Name = "tabGeneral";
-            this.tabGeneral.SelectedIndex = 0;
-            this.tabGeneral.Size = new System.Drawing.Size(1106, 337);
-            this.tabGeneral.TabIndex = 0;
+            this.tabNDM.Controls.Add(this.tabParams);
+            this.tabNDM.Controls.Add(this.tabConcrete);
+            this.tabNDM.Controls.Add(this.tabStrength);
+            this.tabNDM.Controls.Add(this.tabRebar);
+            this.tabNDM.Controls.Add(this.tabPage1);
+            this.tabNDM.Location = new System.Drawing.Point(15, 27);
+            this.tabNDM.Name = "tabNDM";
+            this.tabNDM.SelectedIndex = 0;
+            this.tabNDM.Size = new System.Drawing.Size(1106, 353);
+            this.tabNDM.TabIndex = 0;
             // 
             // tabParams
             // 
@@ -257,7 +260,7 @@
             this.tabParams.Padding = new System.Windows.Forms.Padding(3);
             this.tabParams.Size = new System.Drawing.Size(1098, 311);
             this.tabParams.TabIndex = 0;
-            this.tabParams.Text = "Параметры";
+            this.tabParams.Text = "Балка";
             this.tabParams.UseVisualStyleBackColor = true;
             // 
             // groupVar
@@ -330,13 +333,12 @@
             this.groupBeam.Size = new System.Drawing.Size(683, 299);
             this.groupBeam.TabIndex = 0;
             this.groupBeam.TabStop = false;
-            this.groupBeam.Text = "Балка";
             // 
             // picBeton
             // 
             this.picBeton.ErrorImage = null;
             this.picBeton.Image = global::BSFiberConcrete.Properties.Resources.FiberBeton;
-            this.picBeton.Location = new System.Drawing.Point(372, 12);
+            this.picBeton.Location = new System.Drawing.Point(372, 25);
             this.picBeton.Name = "picBeton";
             this.picBeton.Size = new System.Drawing.Size(305, 194);
             this.picBeton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -361,7 +363,7 @@
             this.tableLayoutPanel2.Controls.Add(this.num_eN, 1, 4);
             this.tableLayoutPanel2.Controls.Add(this.label_Ml1_M1, 0, 5);
             this.tableLayoutPanel2.Controls.Add(this.num_Ml1_M1, 1, 5);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(6, 25);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(6, 19);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 6;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -370,7 +372,7 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 33F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(360, 231);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(360, 237);
             this.tableLayoutPanel2.TabIndex = 8;
             // 
             // cmbExtremeFlexibility
@@ -381,7 +383,7 @@
             "бетонные элементы",
             "железобетонные элементы",
             "колонны, являющиеся элементами зданий"});
-            this.cmbExtremeFlexibility.Location = new System.Drawing.Point(202, 135);
+            this.cmbExtremeFlexibility.Location = new System.Drawing.Point(202, 141);
             this.cmbExtremeFlexibility.Name = "cmbExtremeFlexibility";
             this.cmbExtremeFlexibility.Size = new System.Drawing.Size(121, 21);
             this.cmbExtremeFlexibility.TabIndex = 6;
@@ -389,7 +391,7 @@
             // tbLength
             // 
             this.tbLength.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.tbLength.Location = new System.Drawing.Point(202, 11);
+            this.tbLength.Location = new System.Drawing.Point(202, 12);
             this.tbLength.Name = "tbLength";
             this.tbLength.Size = new System.Drawing.Size(119, 20);
             this.tbLength.TabIndex = 0;
@@ -400,7 +402,7 @@
             // 
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(4, 55);
+            this.label2.Location = new System.Drawing.Point(4, 60);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(167, 13);
             this.label2.TabIndex = 3;
@@ -410,7 +412,7 @@
             // 
             this.numRandomEccentricity.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numRandomEccentricity.DecimalPlaces = 4;
-            this.numRandomEccentricity.Location = new System.Drawing.Point(202, 95);
+            this.numRandomEccentricity.Location = new System.Drawing.Point(202, 101);
             this.numRandomEccentricity.Maximum = new decimal(new int[] {
             10000000,
             0,
@@ -424,7 +426,7 @@
             // 
             this.labelRandomEccentricity.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelRandomEccentricity.AutoSize = true;
-            this.labelRandomEccentricity.Location = new System.Drawing.Point(4, 98);
+            this.labelRandomEccentricity.Location = new System.Drawing.Point(4, 104);
             this.labelRandomEccentricity.Name = "labelRandomEccentricity";
             this.labelRandomEccentricity.Size = new System.Drawing.Size(164, 13);
             this.labelRandomEccentricity.TabIndex = 5;
@@ -434,7 +436,7 @@
             // 
             this.labelExtremeFlexibility.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelExtremeFlexibility.AutoSize = true;
-            this.labelExtremeFlexibility.Location = new System.Drawing.Point(4, 139);
+            this.labelExtremeFlexibility.Location = new System.Drawing.Point(4, 145);
             this.labelExtremeFlexibility.Name = "labelExtremeFlexibility";
             this.labelExtremeFlexibility.Size = new System.Drawing.Size(118, 13);
             this.labelExtremeFlexibility.TabIndex = 7;
@@ -456,7 +458,7 @@
             "0.54",
             "0.58",
             "0.365"});
-            this.cmbEffectiveLengthFactor.Location = new System.Drawing.Point(202, 51);
+            this.cmbEffectiveLengthFactor.Location = new System.Drawing.Point(202, 56);
             this.cmbEffectiveLengthFactor.Name = "cmbEffectiveLengthFactor";
             this.cmbEffectiveLengthFactor.Size = new System.Drawing.Size(119, 21);
             this.cmbEffectiveLengthFactor.TabIndex = 2;
@@ -465,7 +467,7 @@
             // 
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(4, 14);
+            this.label1.Location = new System.Drawing.Point(4, 16);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(112, 13);
             this.label1.TabIndex = 1;
@@ -475,7 +477,7 @@
             // 
             this.labelNEccentricity.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelNEccentricity.AutoSize = true;
-            this.labelNEccentricity.Location = new System.Drawing.Point(4, 175);
+            this.labelNEccentricity.Location = new System.Drawing.Point(4, 181);
             this.labelNEccentricity.Name = "labelNEccentricity";
             this.labelNEccentricity.Size = new System.Drawing.Size(165, 13);
             this.labelNEccentricity.TabIndex = 8;
@@ -485,7 +487,7 @@
             // 
             this.num_eN.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.num_eN.DecimalPlaces = 4;
-            this.num_eN.Location = new System.Drawing.Point(202, 171);
+            this.num_eN.Location = new System.Drawing.Point(202, 177);
             this.num_eN.Maximum = new decimal(new int[] {
             100000000,
             0,
@@ -499,7 +501,7 @@
             // 
             this.label_Ml1_M1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label_Ml1_M1.AutoSize = true;
-            this.label_Ml1_M1.Location = new System.Drawing.Point(4, 208);
+            this.label_Ml1_M1.Location = new System.Drawing.Point(4, 214);
             this.label_Ml1_M1.Name = "label_Ml1_M1";
             this.label_Ml1_M1.Size = new System.Drawing.Size(152, 13);
             this.label_Ml1_M1.TabIndex = 10;
@@ -509,7 +511,7 @@
             // 
             this.num_Ml1_M1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.num_Ml1_M1.DecimalPlaces = 4;
-            this.num_Ml1_M1.Location = new System.Drawing.Point(202, 204);
+            this.num_Ml1_M1.Location = new System.Drawing.Point(202, 210);
             this.num_Ml1_M1.Maximum = new decimal(new int[] {
             100000000,
             0,
@@ -608,7 +610,7 @@
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 79.23387F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.76613F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 141F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 174F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 175F));
             this.tableLayoutPanel4.Controls.Add(this.numRfbt3n, 2, 0);
             this.tableLayoutPanel4.Controls.Add(this.labelRfbt3n, 1, 0);
             this.tableLayoutPanel4.Controls.Add(this.labelRfbt3nDescr, 0, 0);
@@ -640,7 +642,7 @@
             // 
             this.numRfbt3n.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numRfbt3n.DecimalPlaces = 2;
-            this.numRfbt3n.Location = new System.Drawing.Point(469, 5);
+            this.numRfbt3n.Location = new System.Drawing.Point(468, 5);
             this.numRfbt3n.Maximum = new decimal(new int[] {
             1000000000,
             0,
@@ -655,7 +657,7 @@
             // 
             this.labelRfbt3n.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelRfbt3n.AutoSize = true;
-            this.labelRfbt3n.Location = new System.Drawing.Point(373, 9);
+            this.labelRfbt3n.Location = new System.Drawing.Point(372, 9);
             this.labelRfbt3n.Name = "labelRfbt3n";
             this.labelRfbt3n.Size = new System.Drawing.Size(45, 13);
             this.labelRfbt3n.TabIndex = 3;
@@ -685,7 +687,7 @@
             // 
             this.labelRfbtn.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelRfbtn.AutoSize = true;
-            this.labelRfbtn.Location = new System.Drawing.Point(373, 102);
+            this.labelRfbtn.Location = new System.Drawing.Point(372, 102);
             this.labelRfbtn.Name = "labelRfbtn";
             this.labelRfbtn.Size = new System.Drawing.Size(39, 13);
             this.labelRfbtn.TabIndex = 11;
@@ -696,7 +698,7 @@
             this.numRfbt_n.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numRfbt_n.DecimalPlaces = 2;
             this.numRfbt_n.Enabled = false;
-            this.numRfbt_n.Location = new System.Drawing.Point(469, 98);
+            this.numRfbt_n.Location = new System.Drawing.Point(468, 98);
             this.numRfbt_n.Maximum = new decimal(new int[] {
             1000000000,
             0,
@@ -721,7 +723,7 @@
             // 
             this.labelRfbn.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelRfbn.AutoSize = true;
-            this.labelRfbn.Location = new System.Drawing.Point(373, 71);
+            this.labelRfbn.Location = new System.Drawing.Point(372, 71);
             this.labelRfbn.Name = "labelRfbn";
             this.labelRfbn.Size = new System.Drawing.Size(36, 13);
             this.labelRfbn.TabIndex = 2;
@@ -732,7 +734,7 @@
             this.numRfb_n.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numRfb_n.DecimalPlaces = 2;
             this.numRfb_n.Enabled = false;
-            this.numRfb_n.Location = new System.Drawing.Point(469, 67);
+            this.numRfb_n.Location = new System.Drawing.Point(468, 67);
             this.numRfb_n.Maximum = new decimal(new int[] {
             1000000000,
             0,
@@ -757,7 +759,7 @@
             // 
             this.labelRfbt2n.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelRfbt2n.AutoSize = true;
-            this.labelRfbt2n.Location = new System.Drawing.Point(373, 40);
+            this.labelRfbt2n.Location = new System.Drawing.Point(372, 40);
             this.labelRfbt2n.Name = "labelRfbt2n";
             this.labelRfbt2n.Size = new System.Drawing.Size(45, 13);
             this.labelRfbt2n.TabIndex = 15;
@@ -767,7 +769,7 @@
             // 
             this.numRfbt2n.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numRfbt2n.DecimalPlaces = 2;
-            this.numRfbt2n.Location = new System.Drawing.Point(469, 36);
+            this.numRfbt2n.Location = new System.Drawing.Point(468, 36);
             this.numRfbt2n.Maximum = new decimal(new int[] {
             1000000000,
             0,
@@ -782,7 +784,7 @@
             // 
             this.labelRfbt3nMPa.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelRfbt3nMPa.AutoSize = true;
-            this.labelRfbt3nMPa.Location = new System.Drawing.Point(610, 9);
+            this.labelRfbt3nMPa.Location = new System.Drawing.Point(609, 9);
             this.labelRfbt3nMPa.Name = "labelRfbt3nMPa";
             this.labelRfbt3nMPa.Size = new System.Drawing.Size(30, 13);
             this.labelRfbt3nMPa.TabIndex = 17;
@@ -792,7 +794,7 @@
             // 
             this.labelRfbt2nMPa.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelRfbt2nMPa.AutoSize = true;
-            this.labelRfbt2nMPa.Location = new System.Drawing.Point(610, 40);
+            this.labelRfbt2nMPa.Location = new System.Drawing.Point(609, 40);
             this.labelRfbt2nMPa.Name = "labelRfbt2nMPa";
             this.labelRfbt2nMPa.Size = new System.Drawing.Size(30, 13);
             this.labelRfbt2nMPa.TabIndex = 18;
@@ -802,7 +804,7 @@
             // 
             this.labelRfbnMPa.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelRfbnMPa.AutoSize = true;
-            this.labelRfbnMPa.Location = new System.Drawing.Point(610, 71);
+            this.labelRfbnMPa.Location = new System.Drawing.Point(609, 71);
             this.labelRfbnMPa.Name = "labelRfbnMPa";
             this.labelRfbnMPa.Size = new System.Drawing.Size(30, 13);
             this.labelRfbnMPa.TabIndex = 19;
@@ -812,7 +814,7 @@
             // 
             this.labelRfbtnMPa.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelRfbtnMPa.AutoSize = true;
-            this.labelRfbtnMPa.Location = new System.Drawing.Point(610, 102);
+            this.labelRfbtnMPa.Location = new System.Drawing.Point(609, 102);
             this.labelRfbtnMPa.Name = "labelRfbtnMPa";
             this.labelRfbtnMPa.Size = new System.Drawing.Size(30, 13);
             this.labelRfbtnMPa.TabIndex = 20;
@@ -826,7 +828,7 @@
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 29F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 128F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 208F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 188F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 189F));
             this.tableLayoutPanel5.Controls.Add(this.comboBetonType, 1, 0);
             this.tableLayoutPanel5.Controls.Add(this.lblBetonClass, 4, 0);
             this.tableLayoutPanel5.Controls.Add(this.label21, 2, 0);
@@ -861,7 +863,7 @@
             // 
             this.lblBetonClass.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblBetonClass.AutoSize = true;
-            this.lblBetonClass.Location = new System.Drawing.Point(388, 10);
+            this.lblBetonClass.Location = new System.Drawing.Point(387, 10);
             this.lblBetonClass.Name = "lblBetonClass";
             this.lblBetonClass.Size = new System.Drawing.Size(192, 13);
             this.lblBetonClass.TabIndex = 3;
@@ -871,7 +873,7 @@
             // 
             this.label21.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(231, 10);
+            this.label21.Location = new System.Drawing.Point(230, 10);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(18, 13);
             this.label21.TabIndex = 5;
@@ -888,7 +890,7 @@
             "c",
             "d",
             "e"});
-            this.cmbFib_i.Location = new System.Drawing.Point(260, 6);
+            this.cmbFib_i.Location = new System.Drawing.Point(259, 6);
             this.cmbFib_i.Name = "cmbFib_i";
             this.cmbFib_i.Size = new System.Drawing.Size(112, 21);
             this.cmbFib_i.TabIndex = 6;
@@ -897,7 +899,7 @@
             // 
             this.cmbBetonClass.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.cmbBetonClass.FormattingEnabled = true;
-            this.cmbBetonClass.Location = new System.Drawing.Point(596, 6);
+            this.cmbBetonClass.Location = new System.Drawing.Point(595, 6);
             this.cmbBetonClass.Name = "cmbBetonClass";
             this.cmbBetonClass.Size = new System.Drawing.Size(150, 21);
             this.cmbBetonClass.TabIndex = 4;
@@ -929,7 +931,7 @@
             this.tableLayoutPanel8.ColumnCount = 3;
             this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 72.27488F));
             this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.72512F));
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 154F));
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 155F));
             this.tableLayoutPanel8.Controls.Add(this.numYft, 2, 0);
             this.tableLayoutPanel8.Controls.Add(this.numYb, 2, 1);
             this.tableLayoutPanel8.Controls.Add(this.labelYb, 1, 1);
@@ -949,7 +951,7 @@
             // 
             this.numYft.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numYft.DecimalPlaces = 1;
-            this.numYft.Location = new System.Drawing.Point(484, 8);
+            this.numYft.Location = new System.Drawing.Point(483, 8);
             this.numYft.Maximum = new decimal(new int[] {
             10000000,
             0,
@@ -963,7 +965,7 @@
             // 
             this.numYb.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numYb.DecimalPlaces = 1;
-            this.numYb.Location = new System.Drawing.Point(484, 45);
+            this.numYb.Location = new System.Drawing.Point(483, 45);
             this.numYb.Maximum = new decimal(new int[] {
             10000000,
             0,
@@ -977,7 +979,7 @@
             // 
             this.labelYb.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelYb.AutoSize = true;
-            this.labelYb.Location = new System.Drawing.Point(458, 49);
+            this.labelYb.Location = new System.Drawing.Point(457, 49);
             this.labelYb.Name = "labelYb";
             this.labelYb.Size = new System.Drawing.Size(20, 13);
             this.labelYb.TabIndex = 15;
@@ -997,7 +999,7 @@
             // 
             this.labelYft.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelYft.AutoSize = true;
-            this.labelYft.Location = new System.Drawing.Point(458, 12);
+            this.labelYft.Location = new System.Drawing.Point(457, 12);
             this.labelYft.Name = "labelYft";
             this.labelYft.Size = new System.Drawing.Size(20, 13);
             this.labelYft.TabIndex = 2;
@@ -1217,45 +1219,45 @@
             // 
             // M
             // 
-            dataGridViewCellStyle1.Format = "N2";
-            dataGridViewCellStyle1.NullValue = "0";
-            this.M.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle28.Format = "N2";
+            dataGridViewCellStyle28.NullValue = "0";
+            this.M.DefaultCellStyle = dataGridViewCellStyle28;
             this.M.HeaderText = "Mx";
             this.M.Name = "M";
             this.M.ToolTipText = "Момент от действия полной нагрузки";
             // 
             // My
             // 
-            dataGridViewCellStyle2.Format = "N2";
-            dataGridViewCellStyle2.NullValue = "0";
-            this.My.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle29.Format = "N2";
+            dataGridViewCellStyle29.NullValue = "0";
+            this.My.DefaultCellStyle = dataGridViewCellStyle29;
             this.My.HeaderText = "My, кг*см";
             this.My.Name = "My";
             this.My.ToolTipText = "Момент отн оси Y";
             // 
             // N
             // 
-            dataGridViewCellStyle3.Format = "N2";
-            dataGridViewCellStyle3.NullValue = "0";
-            this.N.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle30.Format = "N2";
+            dataGridViewCellStyle30.NullValue = "0";
+            this.N.DefaultCellStyle = dataGridViewCellStyle30;
             this.N.HeaderText = "N, кг";
             this.N.Name = "N";
             this.N.ToolTipText = "Продольная сила";
             // 
             // Q
             // 
-            dataGridViewCellStyle4.Format = "N2";
-            dataGridViewCellStyle4.NullValue = "0";
-            this.Q.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle31.Format = "N2";
+            dataGridViewCellStyle31.NullValue = "0";
+            this.Q.DefaultCellStyle = dataGridViewCellStyle31;
             this.Q.HeaderText = "Q, кг";
             this.Q.Name = "Q";
             this.Q.ToolTipText = "Поперечная сила";
             // 
             // Ml
             // 
-            dataGridViewCellStyle5.Format = "N2";
-            dataGridViewCellStyle5.NullValue = "0";
-            this.Ml.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle32.Format = "N2";
+            dataGridViewCellStyle32.NullValue = "0";
+            this.Ml.DefaultCellStyle = dataGridViewCellStyle32;
             this.Ml.HeaderText = "Ml";
             this.Ml.Name = "Ml";
             this.Ml.ToolTipText = "Момент от действия постянных и длительных нагрузок нагрузок";
@@ -1263,9 +1265,9 @@
             // 
             // eN
             // 
-            dataGridViewCellStyle6.Format = "N2";
-            dataGridViewCellStyle6.NullValue = "0";
-            this.eN.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle33.Format = "N2";
+            dataGridViewCellStyle33.NullValue = "0";
+            this.eN.DefaultCellStyle = dataGridViewCellStyle33;
             this.eN.HeaderText = "eN";
             this.eN.Name = "eN";
             this.eN.ToolTipText = "Эксцентриситет приложения силы";
@@ -1294,7 +1296,6 @@
             // tabRebar
             // 
             this.tabRebar.Controls.Add(this.flowLayoutPanelRebar);
-            this.tabRebar.Controls.Add(this.panelRods);
             this.tabRebar.Location = new System.Drawing.Point(4, 22);
             this.tabRebar.Name = "tabRebar";
             this.tabRebar.Padding = new System.Windows.Forms.Padding(3);
@@ -1308,10 +1309,11 @@
             this.flowLayoutPanelRebar.Controls.Add(this.tableLayoutPanel10);
             this.flowLayoutPanelRebar.Controls.Add(this.tableLayoutPanel1);
             this.flowLayoutPanelRebar.Controls.Add(this.pictureBox1);
+            this.flowLayoutPanelRebar.Dock = System.Windows.Forms.DockStyle.Top;
             this.flowLayoutPanelRebar.FlowDirection = System.Windows.Forms.FlowDirection.BottomUp;
-            this.flowLayoutPanelRebar.Location = new System.Drawing.Point(386, 0);
+            this.flowLayoutPanelRebar.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanelRebar.Name = "flowLayoutPanelRebar";
-            this.flowLayoutPanelRebar.Size = new System.Drawing.Size(709, 294);
+            this.flowLayoutPanelRebar.Size = new System.Drawing.Size(1092, 294);
             this.flowLayoutPanelRebar.TabIndex = 8;
             // 
             // tableLayoutPanel10
@@ -1320,7 +1322,7 @@
             this.tableLayoutPanel10.ColumnCount = 3;
             this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 58.96414F));
             this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 41.03586F));
-            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 121F));
+            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 123F));
             this.tableLayoutPanel10.Controls.Add(this.labelRsw, 0, 3);
             this.tableLayoutPanel10.Controls.Add(this.labelRs, 0, 1);
             this.tableLayoutPanel10.Controls.Add(this.numRs, 1, 1);
@@ -1345,7 +1347,7 @@
             // 
             this.labelRsw.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelRsw.AutoSize = true;
-            this.labelRsw.Location = new System.Drawing.Point(70, 115);
+            this.labelRsw.Location = new System.Drawing.Point(69, 115);
             this.labelRsw.Name = "labelRsw";
             this.labelRsw.Size = new System.Drawing.Size(70, 13);
             this.labelRsw.TabIndex = 7;
@@ -1355,7 +1357,7 @@
             // 
             this.labelRs.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelRs.AutoSize = true;
-            this.labelRs.Location = new System.Drawing.Point(78, 45);
+            this.labelRs.Location = new System.Drawing.Point(77, 45);
             this.labelRs.Name = "labelRs";
             this.labelRs.Size = new System.Drawing.Size(62, 13);
             this.labelRs.TabIndex = 2;
@@ -1365,14 +1367,14 @@
             // 
             this.numRs.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numRs.DecimalPlaces = 2;
-            this.numRs.Location = new System.Drawing.Point(147, 41);
+            this.numRs.Location = new System.Drawing.Point(146, 41);
             this.numRs.Maximum = new decimal(new int[] {
             1000000000,
             0,
             0,
             0});
             this.numRs.Name = "numRs";
-            this.numRs.Size = new System.Drawing.Size(93, 20);
+            this.numRs.Size = new System.Drawing.Size(92, 20);
             this.numRs.TabIndex = 3;
             this.numRs.ValueChanged += new System.EventHandler(this.numRs_ValueChanged);
             // 
@@ -1389,9 +1391,9 @@
             "A1000",
             "B500",
             "K1400"});
-            this.cmbRebarClass.Location = new System.Drawing.Point(147, 7);
+            this.cmbRebarClass.Location = new System.Drawing.Point(146, 7);
             this.cmbRebarClass.Name = "cmbRebarClass";
-            this.cmbRebarClass.Size = new System.Drawing.Size(93, 21);
+            this.cmbRebarClass.Size = new System.Drawing.Size(92, 21);
             this.cmbRebarClass.TabIndex = 1;
             this.cmbRebarClass.SelectedIndexChanged += new System.EventHandler(this.cmbRebarClass_SelectedIndexChanged);
             // 
@@ -1428,9 +1430,9 @@
             "A1000",
             "B500",
             "K1400"});
-            this.cmbTRebarClass.Location = new System.Drawing.Point(147, 75);
+            this.cmbTRebarClass.Location = new System.Drawing.Point(146, 75);
             this.cmbTRebarClass.Name = "cmbTRebarClass";
-            this.cmbTRebarClass.Size = new System.Drawing.Size(93, 21);
+            this.cmbTRebarClass.Size = new System.Drawing.Size(92, 21);
             this.cmbTRebarClass.TabIndex = 5;
             this.cmbTRebarClass.SelectedIndexChanged += new System.EventHandler(this.cmbTRebarClass_SelectedIndexChanged);
             // 
@@ -1438,14 +1440,14 @@
             // 
             this.numRsw.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numRsw.DecimalPlaces = 2;
-            this.numRsw.Location = new System.Drawing.Point(147, 112);
+            this.numRsw.Location = new System.Drawing.Point(146, 112);
             this.numRsw.Maximum = new decimal(new int[] {
             1000000000,
             0,
             0,
             0});
             this.numRsw.Name = "numRsw";
-            this.numRsw.Size = new System.Drawing.Size(93, 20);
+            this.numRsw.Size = new System.Drawing.Size(92, 20);
             this.numRsw.TabIndex = 6;
             this.numRsw.ValueChanged += new System.EventHandler(this.numRsw_ValueChanged);
             // 
@@ -1454,7 +1456,7 @@
             this.labelRsMPa.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelRsMPa.AutoSize = true;
             this.labelRsMPa.BackColor = System.Drawing.Color.Transparent;
-            this.labelRsMPa.Location = new System.Drawing.Point(247, 45);
+            this.labelRsMPa.Location = new System.Drawing.Point(245, 45);
             this.labelRsMPa.Name = "labelRsMPa";
             this.labelRsMPa.Size = new System.Drawing.Size(30, 13);
             this.labelRsMPa.TabIndex = 8;
@@ -1465,7 +1467,7 @@
             this.labelRswMPa.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelRswMPa.AutoSize = true;
             this.labelRswMPa.BackColor = System.Drawing.Color.White;
-            this.labelRswMPa.Location = new System.Drawing.Point(247, 115);
+            this.labelRswMPa.Location = new System.Drawing.Point(245, 115);
             this.labelRswMPa.Name = "labelRswMPa";
             this.labelRswMPa.Size = new System.Drawing.Size(30, 13);
             this.labelRswMPa.TabIndex = 9;
@@ -1583,117 +1585,6 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 4;
             this.pictureBox1.TabStop = false;
-            // 
-            // panelRods
-            // 
-            this.panelRods.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-            this.panelRods.ColumnCount = 1;
-            this.panelRods.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.panelRods.Controls.Add(this.lblLongitudinalReinforcement, 0, 0);
-            this.panelRods.Controls.Add(this.gridLRebar, 0, 1);
-            this.panelRods.Controls.Add(this.label16, 0, 2);
-            this.panelRods.Controls.Add(this.gridTRebar, 0, 3);
-            this.panelRods.Location = new System.Drawing.Point(6, 7);
-            this.panelRods.Name = "panelRods";
-            this.panelRods.RowCount = 4;
-            this.panelRods.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.93507F));
-            this.panelRods.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 85.06493F));
-            this.panelRods.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 24F));
-            this.panelRods.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 112F));
-            this.panelRods.Size = new System.Drawing.Size(352, 291);
-            this.panelRods.TabIndex = 6;
-            // 
-            // lblLongitudinalReinforcement
-            // 
-            this.lblLongitudinalReinforcement.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.lblLongitudinalReinforcement.AutoSize = true;
-            this.lblLongitudinalReinforcement.Location = new System.Drawing.Point(4, 5);
-            this.lblLongitudinalReinforcement.Name = "lblLongitudinalReinforcement";
-            this.lblLongitudinalReinforcement.Size = new System.Drawing.Size(188, 13);
-            this.lblLongitudinalReinforcement.TabIndex = 1;
-            this.lblLongitudinalReinforcement.Text = "Продольная арматура (первый ряд)";
-            // 
-            // gridLRebar
-            // 
-            this.gridLRebar.AllowUserToAddRows = false;
-            this.gridLRebar.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridLRebar.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.D,
-            this.Qty,
-            this.a,
-            this.RebarClass,
-            this.CondFactor});
-            this.gridLRebar.Location = new System.Drawing.Point(4, 27);
-            this.gridLRebar.Name = "gridLRebar";
-            this.gridLRebar.Size = new System.Drawing.Size(344, 121);
-            this.gridLRebar.TabIndex = 0;
-            // 
-            // label16
-            // 
-            this.label16.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(4, 157);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(119, 13);
-            this.label16.TabIndex = 3;
-            this.label16.Text = "Поперечная арматура";
-            // 
-            // gridTRebar
-            // 
-            this.gridTRebar.AllowUserToAddRows = false;
-            this.gridTRebar.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.gridTRebar.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridTRebar.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn1,
-            this.Sw,
-            this.dataGridViewTextBoxColumn2,
-            this.ClassRebar,
-            this.TCondFactor});
-            this.gridTRebar.Location = new System.Drawing.Point(4, 180);
-            this.gridTRebar.Name = "gridTRebar";
-            this.gridTRebar.Size = new System.Drawing.Size(344, 107);
-            this.gridTRebar.TabIndex = 2;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            dataGridViewCellStyle9.Format = "N2";
-            dataGridViewCellStyle9.NullValue = "0";
-            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle9;
-            this.dataGridViewTextBoxColumn1.HeaderText = "D cм";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewTextBoxColumn1.Width = 50;
-            // 
-            // Sw
-            // 
-            dataGridViewCellStyle10.Format = "N2";
-            dataGridViewCellStyle10.NullValue = "0";
-            this.Sw.DefaultCellStyle = dataGridViewCellStyle10;
-            this.Sw.HeaderText = "Шаг (Sw y)";
-            this.Sw.Name = "Sw";
-            this.Sw.Width = 50;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            dataGridViewCellStyle11.Format = "N0";
-            dataGridViewCellStyle11.NullValue = "0";
-            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle11;
-            this.dataGridViewTextBoxColumn2.HeaderText = "Шт";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.Width = 50;
-            // 
-            // ClassRebar
-            // 
-            this.ClassRebar.HeaderText = "Класс";
-            this.ClassRebar.Name = "ClassRebar";
-            this.ClassRebar.Width = 50;
-            // 
-            // TCondFactor
-            // 
-            this.TCondFactor.HeaderText = "Коэф у р";
-            this.TCondFactor.Name = "TCondFactor";
-            this.TCondFactor.ToolTipText = "Коэффициент условий работы";
-            this.TCondFactor.Width = 50;
             // 
             // dataGridSection
             // 
@@ -1916,37 +1807,98 @@
             this.flowLayoutBtns.Size = new System.Drawing.Size(656, 55);
             this.flowLayoutBtns.TabIndex = 16;
             // 
-            // D
+            // tabPage1
             // 
-            dataGridViewCellStyle7.Format = "N2";
-            dataGridViewCellStyle7.NullValue = "0";
-            this.D.DefaultCellStyle = dataGridViewCellStyle7;
-            this.D.HeaderText = "D см";
-            this.D.Name = "D";
-            this.D.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.D.Width = 50;
+            this.tabPage1.Controls.Add(this.panelRods);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(1098, 327);
+            this.tabPage1.TabIndex = 4;
+            this.tabPage1.Text = "НДМ";
+            this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // Qty
+            // gridTRebar
             // 
-            dataGridViewCellStyle8.Format = "N0";
-            dataGridViewCellStyle8.NullValue = "0";
-            this.Qty.DefaultCellStyle = dataGridViewCellStyle8;
-            this.Qty.HeaderText = "Шт";
-            this.Qty.Name = "Qty";
-            this.Qty.Width = 50;
+            this.gridTRebar.AllowUserToAddRows = false;
+            this.gridTRebar.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.gridTRebar.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridTRebar.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn1,
+            this.Sw,
+            this.dataGridViewTextBoxColumn2,
+            this.ClassRebar,
+            this.TCondFactor});
+            this.gridTRebar.Location = new System.Drawing.Point(4, 210);
+            this.gridTRebar.Name = "gridTRebar";
+            this.gridTRebar.Size = new System.Drawing.Size(344, 107);
+            this.gridTRebar.TabIndex = 2;
             // 
-            // a
+            // TCondFactor
             // 
-            this.a.HeaderText = "a, см";
-            this.a.Name = "a";
-            this.a.ToolTipText = "Расстояние до ц.т.";
-            this.a.Width = 50;
+            this.TCondFactor.HeaderText = "Коэф у р";
+            this.TCondFactor.Name = "TCondFactor";
+            this.TCondFactor.ToolTipText = "Коэффициент условий работы";
+            this.TCondFactor.Width = 50;
             // 
-            // RebarClass
+            // ClassRebar
             // 
-            this.RebarClass.HeaderText = "Класс";
-            this.RebarClass.Name = "RebarClass";
-            this.RebarClass.Width = 50;
+            this.ClassRebar.HeaderText = "Класс";
+            this.ClassRebar.Name = "ClassRebar";
+            this.ClassRebar.Width = 50;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            dataGridViewCellStyle27.Format = "N0";
+            dataGridViewCellStyle27.NullValue = "0";
+            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle27;
+            this.dataGridViewTextBoxColumn2.HeaderText = "Шт";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.Width = 50;
+            // 
+            // Sw
+            // 
+            dataGridViewCellStyle26.Format = "N2";
+            dataGridViewCellStyle26.NullValue = "0";
+            this.Sw.DefaultCellStyle = dataGridViewCellStyle26;
+            this.Sw.HeaderText = "Шаг (Sw y)";
+            this.Sw.Name = "Sw";
+            this.Sw.Width = 50;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            dataGridViewCellStyle25.Format = "N2";
+            dataGridViewCellStyle25.NullValue = "0";
+            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle25;
+            this.dataGridViewTextBoxColumn1.HeaderText = "D cм";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewTextBoxColumn1.Width = 50;
+            // 
+            // label16
+            // 
+            this.label16.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(4, 187);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(119, 13);
+            this.label16.TabIndex = 3;
+            this.label16.Text = "Поперечная арматура";
+            // 
+            // gridLRebar
+            // 
+            this.gridLRebar.AllowUserToAddRows = false;
+            this.gridLRebar.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridLRebar.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.D,
+            this.Qty,
+            this.a,
+            this.RebarClass,
+            this.CondFactor});
+            this.gridLRebar.Location = new System.Drawing.Point(4, 31);
+            this.gridLRebar.Name = "gridLRebar";
+            this.gridLRebar.Size = new System.Drawing.Size(344, 121);
+            this.gridLRebar.TabIndex = 0;
             // 
             // CondFactor
             // 
@@ -1955,6 +1907,68 @@
             this.CondFactor.ToolTipText = "Коэффициент условий работы";
             this.CondFactor.Width = 50;
             // 
+            // RebarClass
+            // 
+            this.RebarClass.HeaderText = "Класс";
+            this.RebarClass.Name = "RebarClass";
+            this.RebarClass.Width = 50;
+            // 
+            // a
+            // 
+            this.a.HeaderText = "a, см";
+            this.a.Name = "a";
+            this.a.ToolTipText = "Расстояние до ц.т.";
+            this.a.Width = 50;
+            // 
+            // Qty
+            // 
+            dataGridViewCellStyle24.Format = "N0";
+            dataGridViewCellStyle24.NullValue = "0";
+            this.Qty.DefaultCellStyle = dataGridViewCellStyle24;
+            this.Qty.HeaderText = "Шт";
+            this.Qty.Name = "Qty";
+            this.Qty.Width = 50;
+            // 
+            // D
+            // 
+            dataGridViewCellStyle23.Format = "N2";
+            dataGridViewCellStyle23.NullValue = "0";
+            this.D.DefaultCellStyle = dataGridViewCellStyle23;
+            this.D.HeaderText = "D см";
+            this.D.Name = "D";
+            this.D.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.D.Width = 50;
+            // 
+            // lblLongitudinalReinforcement
+            // 
+            this.lblLongitudinalReinforcement.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lblLongitudinalReinforcement.AutoSize = true;
+            this.lblLongitudinalReinforcement.Location = new System.Drawing.Point(4, 7);
+            this.lblLongitudinalReinforcement.Name = "lblLongitudinalReinforcement";
+            this.lblLongitudinalReinforcement.Size = new System.Drawing.Size(188, 13);
+            this.lblLongitudinalReinforcement.TabIndex = 1;
+            this.lblLongitudinalReinforcement.Text = "Продольная арматура (первый ряд)";
+            // 
+            // panelRods
+            // 
+            this.panelRods.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
+            this.panelRods.ColumnCount = 1;
+            this.panelRods.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.panelRods.Controls.Add(this.gridLRebar, 0, 1);
+            this.panelRods.Controls.Add(this.label16, 0, 2);
+            this.panelRods.Controls.Add(this.gridTRebar, 0, 3);
+            this.panelRods.Controls.Add(this.lblLongitudinalReinforcement, 0, 0);
+            this.panelRods.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panelRods.Location = new System.Drawing.Point(3, 3);
+            this.panelRods.Name = "panelRods";
+            this.panelRods.RowCount = 4;
+            this.panelRods.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.93507F));
+            this.panelRods.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 85.06493F));
+            this.panelRods.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 24F));
+            this.panelRods.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 112F));
+            this.panelRods.Size = new System.Drawing.Size(352, 321);
+            this.panelRods.TabIndex = 6;
+            // 
             // BSFiberMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1962,7 +1976,7 @@
             this.ClientSize = new System.Drawing.Size(1161, 597);
             this.Controls.Add(this.flowLayoutPanelArea);
             this.Controls.Add(this.panelCalc);
-            this.Controls.Add(this.tabGeneral);
+            this.Controls.Add(this.tabNDM);
             this.Controls.Add(this.flowLayoutBtns);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -1971,7 +1985,7 @@
             this.Name = "BSFiberMain";
             this.Text = "Фибробетон";
             this.Load += new System.EventHandler(this.BSFiberMain_Load);
-            this.tabGeneral.ResumeLayout(false);
+            this.tabNDM.ResumeLayout(false);
             this.tabParams.ResumeLayout(false);
             this.groupVar.ResumeLayout(false);
             this.groupVar.PerformLayout();
@@ -2023,10 +2037,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numAs)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAs1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.panelRods.ResumeLayout(false);
-            this.panelRods.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridLRebar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridTRebar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridSection)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -2034,6 +2044,11 @@
             this.panelCalc.PerformLayout();
             this.flowLayoutPanelArea.ResumeLayout(false);
             this.flowLayoutBtns.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gridTRebar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridLRebar)).EndInit();
+            this.panelRods.ResumeLayout(false);
+            this.panelRods.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2041,7 +2056,7 @@
 
         #endregion
 
-        private System.Windows.Forms.TabControl tabGeneral;
+        private System.Windows.Forms.TabControl tabNDM;
         private System.Windows.Forms.TabPage tabParams;
         private System.Windows.Forms.TabPage tabConcrete;
         private System.Windows.Forms.TabPage tabStrength;
@@ -2078,10 +2093,6 @@
         private System.Windows.Forms.DataGridView gridEfforts;
         private System.Windows.Forms.Button btnStaticEqCalc;
         private System.Windows.Forms.TabPage tabRebar;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.DataGridView gridTRebar;
-        private System.Windows.Forms.Label lblLongitudinalReinforcement;
-        private System.Windows.Forms.DataGridView gridLRebar;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button btnFactors;
         private System.Windows.Forms.Button btnCalc_Deform;
@@ -2097,7 +2108,6 @@
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.TableLayoutPanel panelRods;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.NumericUpDown numRfb_n;
@@ -2174,16 +2184,22 @@
         private System.Windows.Forms.Button btnMesh;
         private System.Windows.Forms.ToolStripMenuItem toolBSFiberParams;
         private System.Windows.Forms.ToolStripMenuItem toolsBSInit;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Sw;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ClassRebar;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TCondFactor;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TableLayoutPanel panelRods;
+        private System.Windows.Forms.Label lblLongitudinalReinforcement;
+        private System.Windows.Forms.DataGridView gridLRebar;
         private System.Windows.Forms.DataGridViewTextBoxColumn D;
         private System.Windows.Forms.DataGridViewTextBoxColumn Qty;
         private System.Windows.Forms.DataGridViewTextBoxColumn a;
         private System.Windows.Forms.DataGridViewTextBoxColumn RebarClass;
         private System.Windows.Forms.DataGridViewTextBoxColumn CondFactor;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.DataGridView gridTRebar;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Sw;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ClassRebar;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TCondFactor;
     }
 }
 
