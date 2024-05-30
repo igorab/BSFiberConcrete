@@ -432,6 +432,7 @@
     <Content Include="Resources\Ring_N_Rods.PNG">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\TBeam.jpg" />
     <Content Include="Templates\FiberConcrete.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

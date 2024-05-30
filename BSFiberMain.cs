@@ -13,6 +13,7 @@ using BSCalcLib;
 using System.Drawing;
 using TriangleNet.Geometry;
 using TriangleNet.Topology;
+using MathNet.Numerics.Distributions;
 
 namespace BSFiberConcrete
 {
@@ -398,6 +399,8 @@ namespace BSFiberConcrete
         {
             m_BeamSection = BeamSection.Rect;
 
+            dataGridSection.DataSource = null;
+
             m_Table = new DataTable();
             m_Table.Columns.Add("b, cm", typeof(double));
             m_Table.Columns.Add("h, cm", typeof(double));
@@ -415,38 +418,59 @@ namespace BSFiberConcrete
             LoadRectangle(m_Iniv["b"], m_Iniv["h"]);
         }
 
-        // тавровое сечение
-        // Принимаем как двутавровое, у которого нижняя полка равна по толщине стенке
-        private void btnTSection_Click(object sender, EventArgs e)
+
+        private void TSection(int T)
         {
-            //m_BeamSection = BeamSection.TBeam;
-            m_BeamSection = BeamSection.IBeam;
+            m_BeamSection = BeamSection.TBeam;
+            dataGridSection.DataSource = null;
 
             m_Table = new DataTable();
-            /*
-            m_Table.Columns.Add("b, cm", typeof(double));
-            m_Table.Columns.Add("h, cm", typeof(double));
-            m_Table.Columns.Add("b1, cm", typeof(double));
-            m_Table.Columns.Add("h1, cm", typeof(double));
-            */
             m_Table.Columns.Add("bf, cm", typeof(double));
             m_Table.Columns.Add("hf, cm", typeof(double));
             m_Table.Columns.Add("bw, cm", typeof(double));
-            m_Table.Columns.Add("hw, cm", typeof(double));           
+            m_Table.Columns.Add("hw, cm", typeof(double));
             m_Table.Columns.Add("b1f, cm", typeof(double));
             m_Table.Columns.Add("h1f, cm", typeof(double));
 
             dataGridSection.DataSource = m_Table;
-            m_Table.Rows.Add(m_Iniv["bf"], m_Iniv["hf"], m_Iniv["bw"], m_Iniv["hw"], 0, 0);
-
-            picBeton.Image = global::BSFiberConcrete.Properties.Resources.IBeam;
+            
+            if (T == 1)
+            {
+                m_Table.Rows.Add(m_Iniv["bf"], m_Iniv["hf"], m_Iniv["bw"], m_Iniv["hw"], 0, 0);
+                dataGridSection.Columns[4].Visible = false;
+                dataGridSection.Columns[5].Visible = false;
+                picBeton.Image = global::BSFiberConcrete.Properties.Resources.TBeam; //TODO заменить на TBeam
+            }
+            else if (T == -1)
+            {
+                m_Table.Rows.Add(0, 0, m_Iniv["bw"], m_Iniv["hw"], m_Iniv["b1f"], m_Iniv["h1f"]);
+                dataGridSection.Columns[0].Visible = false;
+                dataGridSection.Columns[1].Visible = false;
+                picBeton.Image = global::BSFiberConcrete.Properties.Resources.TBeam; //TODO заменить на TLBeam
+            }
+            
             picBeton.SizeMode = PictureBoxSizeMode.StretchImage;
+        }
+
+
+
+        // тавровое сечение
+        // Принимаем как двутавровое, у которого нижняя полка равна по толщине стенке
+        private void btnTSection_Click(object sender, EventArgs e)
+        {
+            TSection(1);
+        }
+
+        private void btnTSectionLow_Click(object sender, EventArgs e)
+        {
+            TSection(-1);
         }
 
         // кольцевое сечение
         private void btnRing_Click(object sender, EventArgs e)
         {
             m_BeamSection = BeamSection.Ring;
+            dataGridSection.DataSource = null;
 
             m_Table = new DataTable();
             m_Table.Columns.Add("r1, cm", typeof(double));
@@ -462,6 +486,7 @@ namespace BSFiberConcrete
         private void btnIBeam_Click(object sender, EventArgs e)
         {
             m_BeamSection = BeamSection.IBeam;
+            dataGridSection.DataSource = null;
 
             m_Table = new DataTable();
             m_Table.Columns.Add("bf, cm", typeof(double));
@@ -473,7 +498,7 @@ namespace BSFiberConcrete
 
             dataGridSection.DataSource = m_Table;
             m_Table.Rows.Add(m_Iniv["bf"], m_Iniv["hf"], m_Iniv["bw"], m_Iniv["hw"], m_Iniv["b1f"], m_Iniv["h1f"]);
-
+            
             picBeton.Image = global::BSFiberConcrete.Properties.Resources.IBeam;
             picBeton.SizeMode = PictureBoxSizeMode.StretchImage;
         }
@@ -1186,7 +1211,8 @@ namespace BSFiberConcrete
             {
                 CG = new TriangleNet.Geometry.Point(b / 2.0, h / 2.0);
 
-                pathToSvgFile = BSMesh.GenerateCircle(b, CG, h);
+                //pathToSvgFile = BSMesh.GenerateCircle(b, CG, h);
+                pathToSvgFile = BSMesh.GenerateRing(true);
 
                 Tri.Mesh = BSMesh.Mesh;
                 //Tri.CalculationScheme();
@@ -1247,5 +1273,7 @@ namespace BSFiberConcrete
                 MessageBox.Show(_e.Message);
             }
         }
+
+        
     }
 }

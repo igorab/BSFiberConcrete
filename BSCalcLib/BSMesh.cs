@@ -150,6 +150,46 @@ namespace BSCalcLib
 
             return new Contour(points, label, true);
         }
+
+        public static string GenerateRing(bool print = false)
+        {
+            // Generate the input geometry.
+            var poly = CreateRing();
+
+            // Set minimum angle quality option.
+            var quality = new QualityOptions() { MinimumAngle = 30.0 };
+
+            // Generate mesh using the polygons Triangulate extension method.
+            var mesh = poly.Triangulate(quality);
+
+            string svgPath = Path.Combine(FilePath, "Ring.svg");
+
+            if (print) SvgImage.Save(mesh, svgPath, 500);
+
+            return svgPath;
+        }
+
+        public static IPolygon CreateRing(double h = 0.2)
+        {
+            // Generate the input geometry.
+            var poly = new Polygon();
+
+            // Center point.
+            var center = new Point(0, 0);
+
+            // Inner contour (hole).
+            poly.Add(Circle(1.0, center, h, 1), center);
+
+            // Internal contour.
+            poly.Add(Circle(2.0, center, h, 2));
+
+            // Outer contour.
+            poly.Add(Circle(3.0, center, h, 3));
+
+            return poly;
+        }
+
+
     }
 
 }

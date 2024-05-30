@@ -1,24 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace BSFiberConcrete
 {
-    [BSFiberCalculation(Descr = "Расчет балки двутаврового сечения")]
+    [BSFiberCalculation(Descr = "Расчет балки таврового/двутаврового сечения")]
     public class BSFibCalc_IBeam : BSFiberCalculation
     {
         // размеры:
-        [DisplayName("Ширина нижней полки двутавра")]
+        [DisplayName("Ширина нижней полки")]
         public double bf { get; protected set; }
-        [DisplayName("Высота нижней полки двутавра")]
+        [DisplayName("Высота нижней полки")]
         public double hf { get; protected set; }
-        [DisplayName("Высота стенки двутавра")]
+        [DisplayName("Высота стенки")]
         public double hw { get; protected set; }
-        [DisplayName("Ширина стенки двутавра")]
+        [DisplayName("Ширина стенки")]
         public double bw { get; protected set; }
-        [DisplayName("Ширина верхней полки двутавра")]
+        [DisplayName("Ширина верхней полки")]
         public double b1f { get; protected set; }
-        [DisplayName("Высота верхней полки двутавра")]
+        [DisplayName("Высота верхней полки")]
         public double h1f { get; protected set; }
 
         // физ. характеристики бетона
@@ -31,6 +32,8 @@ namespace BSFiberConcrete
 
         [DisplayName("Предельный момент сечения, кг*см")]
         public double Mult { get; protected set; }
+
+        private double h;
 
         public override void GetParams(double[] _t)
         {
@@ -58,10 +61,7 @@ namespace BSFiberConcrete
 
         protected void Calc_Pre()
         {
-            //Расчетное остаточное остаточного сопротивления осевому растяжению
-            //Rfbt3 = (Rfbt3n / Yft) * Yb1 * Yb5;
-            //Расчетные значения сопротивления  на сжатиие по B30 СП63
-            //Rfb = Rfbn / Yb * Yb1 * Yb2 * Yb3 * Yb5;
+            h = hf + hw + h1f; 
         }
 
         public override bool Validate()
@@ -80,6 +80,8 @@ namespace BSFiberConcrete
 
         public override bool Calculate()
         {
+            bool calcOk;
+
             if (!Validate())
                 return false;
 
@@ -96,9 +98,10 @@ namespace BSFiberConcrete
             {
                 x = Rfbt3 * (bw * h1f + bw * hw + bw * h1f) / (bw * (Rfbt3 + Rfb));
 
-                Mult = Rfb * bw * (x - h1f);
+                Mult = Rfb * bw * (x - h1f) * (x - 0.5 * h1f) + Rfbt3 * (bw * (hw + h1f - x) + bw * hf * (h - 0.5 * (h1f + hf)));
             };
-
+            
+            // Расчет Тавра            
             bool cond = Rfbt3 * (bf * hf + bw * hw) < Rfb * b1f * h1f;
 
             if (cond)
@@ -109,12 +112,11 @@ namespace BSFiberConcrete
             {
                 calc_b();
             }
-
-            InfoCheckM(Mult);
-
-            //Mult = BSHelper.Kgsm2Tm(Mult); 
+            calcOk = true;
             
-            return true;
+            InfoCheckM(Mult);
+                        
+            return calcOk;
         }
 
         public override Dictionary<string, double> Results()
