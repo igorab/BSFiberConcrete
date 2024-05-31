@@ -41,7 +41,9 @@ namespace BSFiberConcrete
         [Description("Кольцевое сечение")]
         Ring = 3,
         [Description("Прямоугольное сечение")]
-        Rect = 4
+        Rect = 4,
+        [Description("Тавр нижняя полка")]
+        LBeam = 5
     }
    
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Field | AttributeTargets.Property, Inherited = true)]

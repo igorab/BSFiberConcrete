@@ -33,6 +33,9 @@ namespace BSFiberConcrete
         [DisplayName("Предельный момент сечения, кг*см")]
         public double Mult { get; protected set; }
 
+        [DisplayName("Коэффициент использования по усилию")]
+        public double UtilRate { get; protected set; }
+
         private double h;
 
         public override void GetParams(double[] _t)
@@ -112,6 +115,10 @@ namespace BSFiberConcrete
             {
                 calc_b();
             }
+
+            //Коэффициент использования
+            UtilRate = (Mult != 0) ? m_Efforts["My"] / Mult : 0;
+
             calcOk = true;
             
             InfoCheckM(Mult);
@@ -123,7 +130,8 @@ namespace BSFiberConcrete
         {
             return new Dictionary<string, double>() {
                 { DN(typeof(BSFibCalc_IBeam), "x"), x },
-                { DN(typeof(BSFibCalc_IBeam), "Mult") , Mult }
+                { DN(typeof(BSFibCalc_IBeam), "Mult") , Mult },
+                { DN(typeof(BSFibCalc_IBeam), "UtilRate"), UtilRate}
             };
         }
     }

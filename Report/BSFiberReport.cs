@@ -39,7 +39,7 @@ namespace BSFiberConcrete
         protected Dictionary<string, double> m_CalcResults;
         protected List<string> m_Messages;
 
-        protected BeamSection m_BeamSection;
+        protected BeamSection m_BeamSection { get; set; }
 
         public string ImageCalc { get; set; }
 
@@ -90,10 +90,13 @@ namespace BSFiberConcrete
 
                     foreach (var _pair in m_GeomParams)
                     {
-                        w.WriteLine("<tr>");
-                        w.WriteLine($"<td><b>{_pair.Key}</b></td>");
-                        w.WriteLine($"<td>| {_pair.Value}</td>");
-                        w.WriteLine("</tr>");
+                        if (_pair.Value != 0)
+                        {
+                            w.WriteLine("<tr>");
+                            w.WriteLine($"<td><b>{_pair.Key}</b></td>");
+                            w.WriteLine($"<td>| {_pair.Value}</td>");
+                            w.WriteLine("</tr>");
+                        }
                     }
 
                     w.WriteLine("</tr>");

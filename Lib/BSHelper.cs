@@ -45,6 +45,9 @@ namespace BSFiberConcrete
                 case BeamSection.TBeam:
                     _img = "TBeam.jpg";
                     break;
+                case BeamSection.LBeam:
+                    _img = "LBeam.jpg";
+                    break;
                 case BeamSection.IBeam:
                     if (_useReinforcement)
                         _img = "IBeamArm.PNG";

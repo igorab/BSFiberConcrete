@@ -42,6 +42,7 @@ namespace BSFiberConcrete
         private List<string> m_Message;
 
         private BeamSection m_BeamSection { get; set; }
+        private BeamSection m_BeamSectionReport { get; set; }
 
         // Mesh generation
         // площади элементов (треугольников)
@@ -336,7 +337,7 @@ namespace BSFiberConcrete
 
                 if (calcOk)
                 {
-                    string pathToHtmlFile = CreateReport(1, _useReinforcement: useReinforcement);
+                    string pathToHtmlFile = CreateReport(1, m_BeamSectionReport, _useReinforcement: useReinforcement);
 
                     System.Diagnostics.Process.Start(pathToHtmlFile);
                 }
@@ -362,7 +363,10 @@ namespace BSFiberConcrete
         /// <param name="_reportName">Заголовок</param>
         /// <param name="_useReinforcement">Используется ли арматура</param>
         /// <returns>Путь к файлу отчета</returns>
-        private string CreateReport(int _fileId , string _reportName = "", bool _useReinforcement = false)
+        private string CreateReport(int _fileId ,
+                                    BeamSection _BeamSection,
+                                    string _reportName = "",                                    
+                                    bool _useReinforcement = false)
         {
             try
             {                
@@ -377,7 +381,7 @@ namespace BSFiberConcrete
                 report.Efforts = m_Efforts;
                 report.GeomParams = m_GeomParams;
                 report.PhysParams = m_PhysParams;
-                report.BeamSection = m_BeamSection;
+                report.BeamSection = _BeamSection;
                 report.CalcResults = m_CalcResults;
                 report.Messages = m_Message;
                 report.UseReinforcement = _useReinforcement;
@@ -395,6 +399,7 @@ namespace BSFiberConcrete
         private void LoadRectangle(double _b, double _h)
         {
             m_BeamSection = BeamSection.Rect;
+            m_BeamSectionReport = m_BeamSection;
 
             dataGridSection.DataSource = null;
 
@@ -416,9 +421,10 @@ namespace BSFiberConcrete
         }
 
 
-        private void TSection(int T)
+        private void TSection(char _T_L)
         {
             m_BeamSection = BeamSection.TBeam;
+            
             dataGridSection.DataSource = null;
 
             m_Table = new DataTable();
@@ -431,19 +437,21 @@ namespace BSFiberConcrete
 
             dataGridSection.DataSource = m_Table;
             
-            if (T == 1)
+            if (_T_L == 'T')
             {
-                m_Table.Rows.Add(m_Iniv["bf"], m_Iniv["hf"], m_Iniv["bw"], m_Iniv["hw"], 0, 0);
-                dataGridSection.Columns[4].Visible = false;
-                dataGridSection.Columns[5].Visible = false;
-                picBeton.Image = global::BSFiberConcrete.Properties.Resources.TBeam; 
-            }
-            else if (T == -1)
-            {
+                m_BeamSectionReport = BeamSection.TBeam;
                 m_Table.Rows.Add(0, 0, m_Iniv["bw"], m_Iniv["hw"], m_Iniv["b1f"], m_Iniv["h1f"]);
                 dataGridSection.Columns[0].Visible = false;
                 dataGridSection.Columns[1].Visible = false;
-                picBeton.Image = global::BSFiberConcrete.Properties.Resources.TBeam; //TODO заменить на TLBeam
+                picBeton.Image = global::BSFiberConcrete.Properties.Resources.TBeam;
+            }
+            else if (_T_L == 'L')
+            {
+                m_BeamSectionReport = BeamSection.LBeam;
+                m_Table.Rows.Add(m_Iniv["bf"], m_Iniv["hf"], m_Iniv["bw"], m_Iniv["hw"], 0, 0);
+                dataGridSection.Columns[4].Visible = false;
+                dataGridSection.Columns[5].Visible = false;
+                picBeton.Image = global::BSFiberConcrete.Properties.Resources.LBeam;
             }
             
             picBeton.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -455,18 +463,19 @@ namespace BSFiberConcrete
         // Принимаем как двутавровое, у которого нижняя полка равна по толщине стенке
         private void btnTSection_Click(object sender, EventArgs e)
         {
-            TSection(1);
+            TSection('T');
         }
 
-        private void btnTSectionLow_Click(object sender, EventArgs e)
-        {
-            TSection(-1);
+        private void btn_LSection_Click(object sender, EventArgs e)
+        {            
+            TSection('L');
         }
 
         // кольцевое сечение
         private void btnRing_Click(object sender, EventArgs e)
         {
             m_BeamSection = BeamSection.Ring;
+            m_BeamSectionReport = m_BeamSection;
             dataGridSection.DataSource = null;
 
             m_Table = new DataTable();
@@ -483,6 +492,8 @@ namespace BSFiberConcrete
         private void btnIBeam_Click(object sender, EventArgs e)
         {
             m_BeamSection = BeamSection.IBeam;
+            m_BeamSectionReport = m_BeamSection;
+
             dataGridSection.DataSource = null;
 
             m_Table = new DataTable();
@@ -993,7 +1004,7 @@ namespace BSFiberConcrete
                 DisplayNameAttribute attr = (DisplayNameAttribute)method.GetCustomAttributes(typeof(DisplayNameAttribute), true)[0];
                 string value = attr.DisplayName; 
 
-                string pathToHtmlFile = CreateReport(1, value);
+                string pathToHtmlFile = CreateReport(1, m_BeamSection,  value);
 
                 System.Diagnostics.Process.Start(pathToHtmlFile);
             }
