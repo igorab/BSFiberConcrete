@@ -365,10 +365,7 @@ namespace BSFiberConcrete
         private string CreateReport(int _fileId , string _reportName = "", bool _useReinforcement = false)
         {
             try
-            {
-                //if (bsCalc is null)
-                //    throw new Exception("Не выполнен расчет");
-
+            {                
                 string path = "";
                 BSFiberReport report = new BSFiberReport();
 
@@ -379,7 +376,7 @@ namespace BSFiberConcrete
                 report.Coeffs = m_Coeffs;
                 report.Efforts = m_Efforts;
                 report.GeomParams = m_GeomParams;
-                report.PhysParams = m_PhysParams;// bsCalc.PhysicalParameters();
+                report.PhysParams = m_PhysParams;
                 report.BeamSection = m_BeamSection;
                 report.CalcResults = m_CalcResults;
                 report.Messages = m_Message;
@@ -439,7 +436,7 @@ namespace BSFiberConcrete
                 m_Table.Rows.Add(m_Iniv["bf"], m_Iniv["hf"], m_Iniv["bw"], m_Iniv["hw"], 0, 0);
                 dataGridSection.Columns[4].Visible = false;
                 dataGridSection.Columns[5].Visible = false;
-                picBeton.Image = global::BSFiberConcrete.Properties.Resources.TBeam; //TODO заменить на TBeam
+                picBeton.Image = global::BSFiberConcrete.Properties.Resources.TBeam; 
             }
             else if (T == -1)
             {

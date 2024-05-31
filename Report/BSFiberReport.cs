@@ -67,7 +67,7 @@ namespace BSFiberConcrete
             {                
                 string path = Lib.BSData.ResourcePath(_filename);
                 string img = MakeImageSrcData(path);
-                w.WriteLine($"<table><tr><td> <img src={img}/> </td></tr> </table>");
+                w.WriteLine($"<table><tr><td> <img src={img}/ width=\"500\" height=\"300\"> </td></tr> </table>");
             }
 
             if (m_Beam != null)
