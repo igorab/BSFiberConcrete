@@ -64,12 +64,14 @@ namespace BSFiberConcrete
                 btnStaticEqCalc.Visible = true;
                 btnCalc_Deform.Visible = false;
                 panelRods.Visible = false;
+                gridEfforts.Columns["Mx"].Visible = false;
             }
             else if (CalcType == CalcType.Nonlinear)
             {
                 btnStaticEqCalc.Visible = false;
                 btnCalc_Deform.Visible = true;
                 panelRods.Visible = true;
+                gridEfforts.Columns["Mx"].Visible = true;
             }
         }
 
@@ -1198,15 +1200,17 @@ namespace BSFiberConcrete
 
             BSMesh.FilePath = Path.Combine(Environment.CurrentDirectory, "Templates");
 
+            BeamSection T = BeamSection.IBeam | BeamSection.TBeam | BeamSection.LBeam;
+
             if (m_BeamSection == BeamSection.Rect)
             {
                 List<double> rect = new List<double> { 0, 0, b, h };
                 CG = new TriangleNet.Geometry.Point(b/2.0, h/2.0);                
-                pathToSvgFile = BSCalcLib.BSMesh.Generate(rect);
+                pathToSvgFile = BSCalcLib.BSMesh.GenerateRectangle(rect);
                 Tri.Mesh = BSMesh.Mesh;
                 Tri.CalculationScheme();
             }
-            else if (m_BeamSection == BeamSection.IBeam)
+            else if (m_BeamSection == T)
             {
                 List<PointF> pts;
                 BSSection.IBeam(sz, out pts, out PointF _center);
@@ -1217,17 +1221,27 @@ namespace BSFiberConcrete
             }
             else if (m_BeamSection == BeamSection.Ring)
             {
-                CG = new TriangleNet.Geometry.Point(b / 2.0, h / 2.0);
+                CG = new TriangleNet.Geometry.Point(0, 0);
 
                 //pathToSvgFile = BSMesh.GenerateCircle(b, CG, h);
-                pathToSvgFile = BSMesh.GenerateRing(true);
+                double R = sz[1];
+                double r =  sz[0];
+                if (r > R)
+                    throw BSBeam_Ring.RadiiError();
+
+                BSMesh.Center = CG;
+                pathToSvgFile = BSMesh.GenerateRing(R, r, true);
 
                 Tri.Mesh = BSMesh.Mesh;
-                //Tri.CalculationScheme();
+                Tri.CalculationScheme();
+            }
+            else
+            {
+                throw new Exception("Не задано сечение");
             }
 
-            triAreas = Tri.triAreas;
-            triCGs = Tri.triCGs;
+            triAreas = Tri.triAreas; // площади треугольников
+            triCGs = Tri.triCGs; // ц.т. треугольников
 
             return pathToSvgFile;
         }

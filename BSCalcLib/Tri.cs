@@ -45,11 +45,15 @@ namespace BSCalcLib
         }
 
         public static List<object> CalculationScheme(int _N = 10, int _M = 1)
-        {
-            List<object> result = new List<object> { new object() };         
+        {            
+            List<object> result = new List<object> { new object() };
+            if (Mesh is null) return result;
+
             HashSet<Rectangle> rects = new HashSet<Rectangle>();
             triAreas = new List<double>();
             triCGs = new List<Point>();
+
+
 
             string msg = "";
             int triIdx = 0;

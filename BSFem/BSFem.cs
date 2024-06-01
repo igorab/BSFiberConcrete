@@ -21,7 +21,7 @@ namespace BSFem
 
         private void btnMesh_Click(object sender, EventArgs e)
         {
-            BSCalcLib.BSMesh.Generate();
+            BSCalcLib.BSMesh.GenerateTest();
         }
 
         /// <summary>

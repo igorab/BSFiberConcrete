@@ -22,6 +22,8 @@ namespace BSCalcLib
         public static int Ny { get; set; }
 
         public static Mesh Mesh { get; set; }
+        
+        public static Point Center { get; set; }  
 
         public static string FilePath {  get; set; }     
 
@@ -29,6 +31,8 @@ namespace BSCalcLib
         {
             Nx = 2;
             Ny = 2;
+
+            Center = new Point(0, 0);
         }
 
         public static void Example()
@@ -44,7 +48,7 @@ namespace BSCalcLib
         }
 
         //Generating a structured mesh
-        public static void Generate()
+        public static void GenerateTest()
         {
             // Create unit square.
             Rectangle bounds = new Rectangle(-1.0, -1.0, 2.0, 2.0);
@@ -56,7 +60,7 @@ namespace BSCalcLib
             int cnt =  mesh.Triangles.Count ;
         }
 
-        public static string Generate(List<double> _points)
+        public static string GenerateRectangle(List<double> _points)
         {
             double x, y, w, h;
             (x, y, w, h) = (_points[0], _points[1], _points[2], _points[3]);
@@ -151,40 +155,41 @@ namespace BSCalcLib
             return new Contour(points, label, true);
         }
 
-        public static string GenerateRing(bool print = false)
+        public static string GenerateRing(double _R, double _r,  bool print = false)
         {
             // Generate the input geometry.
-            var poly = CreateRing();
+            double h = (_R - _r) / 2;
+            var poly = CreateRing(_R, _r, h);
 
             // Set minimum angle quality option.
             var quality = new QualityOptions() { MinimumAngle = 30.0 };
 
             // Generate mesh using the polygons Triangulate extension method.
-            var mesh = poly.Triangulate(quality);
+            Mesh = poly.Triangulate(quality) as TriangleNet.Mesh;
 
             string svgPath = Path.Combine(FilePath, "Ring.svg");
 
-            if (print) SvgImage.Save(mesh, svgPath, 500);
+            if (print) SvgImage.Save(Mesh, svgPath, 500);
 
             return svgPath;
         }
 
-        public static IPolygon CreateRing(double h = 0.2)
+        public static IPolygon CreateRing(double _R, double _r, double h = 0.2)
         {
             // Generate the input geometry.
-            var poly = new Polygon();
+            Polygon poly = new Polygon();
 
             // Center point.
-            var center = new Point(0, 0);
+            Point center = new Point(Center.X, Center.Y);
 
             // Inner contour (hole).
-            poly.Add(Circle(1.0, center, h, 1), center);
+            poly.Add(Circle(_r, center, h, 1), center);
 
             // Internal contour.
-            poly.Add(Circle(2.0, center, h, 2));
+            poly.Add(Circle((_R + _r)/2.0, center, h, 2));
 
             // Outer contour.
-            poly.Add(Circle(3.0, center, h, 3));
+            poly.Add(Circle(_R, center, h, 3));
 
             return poly;
         }
