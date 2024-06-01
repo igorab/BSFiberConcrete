@@ -1200,7 +1200,7 @@ namespace BSFiberConcrete
 
             BSMesh.FilePath = Path.Combine(Environment.CurrentDirectory, "Templates");
 
-            BeamSection T = BeamSection.IBeam | BeamSection.TBeam | BeamSection.LBeam;
+            BeamSection T = BeamSection.TBeam | BeamSection.IBeam | BeamSection.LBeam;
 
             if (m_BeamSection == BeamSection.Rect)
             {
@@ -1210,7 +1210,7 @@ namespace BSFiberConcrete
                 Tri.Mesh = BSMesh.Mesh;
                 Tri.CalculationScheme();
             }
-            else if (m_BeamSection == T)
+            else if (T.HasFlag(m_BeamSection))
             {
                 List<PointF> pts;
                 BSSection.IBeam(sz, out pts, out PointF _center);

@@ -30,10 +30,13 @@ namespace BSFiberConcrete
         Nonlinear = 2
     }
 
-
-    [Description("Сечение балки")]
+    
+    
+    [Flags, Description("Сечение балки")]
     public enum BeamSection
     {
+        [Description("Cечение не задано")]
+        None = 0,
         [Description("Тавровое сечение")]
         TBeam = 1,
         [Description("Двутавровое сечение")]
