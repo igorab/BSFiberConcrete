@@ -1199,7 +1199,7 @@ namespace BSFiberConcrete
             double[] sz = BeamWidtHeight(out double b, out double h);
 
             BSMesh.FilePath = Path.Combine(Environment.CurrentDirectory, "Templates");
-
+            Tri.FilePath = BSMesh.FilePath;
             BeamSection T = BeamSection.TBeam | BeamSection.IBeam | BeamSection.LBeam;
 
             if (m_BeamSection == BeamSection.Rect)
@@ -1207,6 +1207,22 @@ namespace BSFiberConcrete
                 List<double> rect = new List<double> { 0, 0, b, h };
                 CG = new TriangleNet.Geometry.Point(b/2.0, h/2.0);                
                 pathToSvgFile = BSCalcLib.BSMesh.GenerateRectangle(rect);
+                Tri.Mesh = BSMesh.Mesh;
+                Tri.CalculationScheme();
+            }
+            else if (m_BeamSection == BeamSection.Ring)
+            {
+                CG = new TriangleNet.Geometry.Point(0, 0);
+
+                //pathToSvgFile = BSMesh.GenerateCircle(b, CG, h);
+                double R = sz[1];
+                double r = sz[0];
+                if (r > R)
+                    throw BSBeam_Ring.RadiiError();
+
+                BSMesh.Center = CG;
+                pathToSvgFile = BSMesh.GenerateRing(R, r, true);
+
                 Tri.Mesh = BSMesh.Mesh;
                 Tri.CalculationScheme();
             }
@@ -1218,23 +1234,7 @@ namespace BSFiberConcrete
                 
                 pathToSvgFile = BSCalcLib.Tri.CreateIBeamContour(pts);
                 Tri.CalculationScheme();                
-            }
-            else if (m_BeamSection == BeamSection.Ring)
-            {
-                CG = new TriangleNet.Geometry.Point(0, 0);
-
-                //pathToSvgFile = BSMesh.GenerateCircle(b, CG, h);
-                double R = sz[1];
-                double r =  sz[0];
-                if (r > R)
-                    throw BSBeam_Ring.RadiiError();
-
-                BSMesh.Center = CG;
-                pathToSvgFile = BSMesh.GenerateRing(R, r, true);
-
-                Tri.Mesh = BSMesh.Mesh;
-                Tri.CalculationScheme();
-            }
+            }            
             else
             {
                 throw new Exception("Не задано сечение");
