@@ -463,6 +463,10 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="BSBeamCalc\BSBeamCalc.csproj">
+      <Project>{61cf8666-2b4d-09e9-0ac7-4131f588c8ed}</Project>
+      <Name>BSBeamCalc</Name>
+    </ProjectReference>
     <ProjectReference Include="BSCalcLib\BSCalcLib.csproj">
       <Project>{368408f1-6648-4b55-9853-85a86dd47a2f}</Project>
       <Name>BSCalcLib</Name>

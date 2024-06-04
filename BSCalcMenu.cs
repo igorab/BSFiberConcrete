@@ -3,6 +3,7 @@ using BSFiberConcrete.Beam;
 using BSFiberConcrete.BSRFib;
 using BSFiberConcrete.LocalStrength;
 using BSFiberConcrete.Section;
+using CBAnsDes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
 
 namespace BSCalcMenu
 {
@@ -183,6 +185,17 @@ namespace BSCalcMenu
             BSSectionChart sectionChart = new BSSectionChart();
 
             sectionChart.Show();
+        }
+
+        private void btnBeamDefl_Click(object sender, EventArgs e)
+        {            
+            //CBAnsDes.My.MyProject.Application.Run(new string[] { });
+
+            //CBAnsDes.BSBeamCalculator.Main();
+            //CBAnsDes.My.MyApplication.Main(new string[] { });
+
+            CBAnsDes.MDIMain mDIMain = new MDIMain();
+            mDIMain.ShowDialog();
         }
     }
 }

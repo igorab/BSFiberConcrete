@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BSFiber.Tests", "BSFiber.Te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BSFem", "BSFem\BSFem.csproj", "{AE1B501A-0486-42B4-B1E4-00717B4469AD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BSBeamCalc", "BSBeamCalc\BSBeamCalc.csproj", "{61CF8666-2B4D-09E9-0AC7-4131F588C8ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{AE1B501A-0486-42B4-B1E4-00717B4469AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE1B501A-0486-42B4-B1E4-00717B4469AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE1B501A-0486-42B4-B1E4-00717B4469AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61CF8666-2B4D-09E9-0AC7-4131F588C8ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61CF8666-2B4D-09E9-0AC7-4131F588C8ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61CF8666-2B4D-09E9-0AC7-4131F588C8ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61CF8666-2B4D-09E9-0AC7-4131F588C8ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
