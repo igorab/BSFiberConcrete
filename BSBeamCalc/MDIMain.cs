@@ -488,12 +488,14 @@ namespace CBAnsDes
 
         private void GeneralInstructionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            My.MyProject.Forms.GeneralInstruction.ShowDialog();
+            GeneralInstruction generalInstruction = new GeneralInstruction();
+            generalInstruction.ShowDialog();
         }
 
         private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            My.MyProject.Forms.Aboutus.ShowDialog();
+            Aboutus aboutus = new Aboutus();
+            aboutus.ShowDialog();
         }
 
         private void memdetailsToolStripMenuItem_Click(object sender, EventArgs e)

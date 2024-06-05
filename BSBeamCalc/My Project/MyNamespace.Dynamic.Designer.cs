@@ -9,29 +9,7 @@ namespace CBAnsDes.My
         public partial class MyForms
         {
 
-            [EditorBrowsable(EditorBrowsableState.Never)]
-            public Aboutus m_Aboutus;
-
-            public Aboutus Aboutus
-            {
-                [DebuggerHidden]
-                get
-                {
-                    m_Aboutus = Create__Instance__(m_Aboutus);
-                    return m_Aboutus;
-                }
-                [DebuggerHidden]
-                set
-                {
-                    if (ReferenceEquals(value, m_Aboutus))
-                        return;
-                    if (value is not null)
-                        throw new ArgumentException("Property can only be set to Nothing");
-                    Dispose__Instance__(ref m_Aboutus);
-                }
-            }
-
-
+            
             [EditorBrowsable(EditorBrowsableState.Never)]
             public addmember m_addmember;
 
@@ -104,7 +82,7 @@ namespace CBAnsDes.My
                 }
             }
 
-
+            /*
             [EditorBrowsable(EditorBrowsableState.Never)]
             public GeneralInstruction m_GeneralInstruction;
 
@@ -126,7 +104,7 @@ namespace CBAnsDes.My
                     Dispose__Instance__(ref m_GeneralInstruction);
                 }
             }
-
+            */
 
             [EditorBrowsable(EditorBrowsableState.Never)]
             public logo m_logo;

@@ -87,6 +87,7 @@ namespace CBAnsDes
             this.StatusStrip = new System.Windows.Forms.StatusStrip();
             this.ToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.ToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.ToolStrip1 = new System.Windows.Forms.ToolStrip();
             this.ToolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
@@ -115,7 +116,6 @@ namespace CBAnsDes
             this.SLLabel = new System.Windows.Forms.ToolStripLabel();
             this.PrintDocument1 = new System.Drawing.Printing.PrintDocument();
             this.PrintPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
-            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.MenuStrip.SuspendLayout();
             this.ToolStrip.SuspendLayout();
             this.StatusStrip.SuspendLayout();
@@ -170,14 +170,14 @@ namespace CBAnsDes
             this.OpenToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Black;
             this.OpenToolStripMenuItem.Name = "OpenToolStripMenuItem";
             this.OpenToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.OpenToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.OpenToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
             this.OpenToolStripMenuItem.Text = "&Open";
             this.OpenToolStripMenuItem.Click += new System.EventHandler(this.OpenFile);
             // 
             // ToolStripSeparator3
             // 
             this.ToolStripSeparator3.Name = "ToolStripSeparator3";
-            this.ToolStripSeparator3.Size = new System.Drawing.Size(151, 6);
+            this.ToolStripSeparator3.Size = new System.Drawing.Size(181, 6);
             // 
             // SaveToolStripMenuItem
             // 
@@ -185,24 +185,24 @@ namespace CBAnsDes
             this.SaveToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Black;
             this.SaveToolStripMenuItem.Name = "SaveToolStripMenuItem";
             this.SaveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.SaveToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.SaveToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
             this.SaveToolStripMenuItem.Text = "&Save";
             this.SaveToolStripMenuItem.Click += new System.EventHandler(this.SaveAsToolStripMenuItem_Click);
             // 
             // ToolStripSeparator4
             // 
             this.ToolStripSeparator4.Name = "ToolStripSeparator4";
-            this.ToolStripSeparator4.Size = new System.Drawing.Size(151, 6);
+            this.ToolStripSeparator4.Size = new System.Drawing.Size(181, 6);
             // 
             // ToolStripSeparator5
             // 
             this.ToolStripSeparator5.Name = "ToolStripSeparator5";
-            this.ToolStripSeparator5.Size = new System.Drawing.Size(151, 6);
+            this.ToolStripSeparator5.Size = new System.Drawing.Size(181, 6);
             // 
             // ExitToolStripMenuItem
             // 
             this.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem";
-            this.ExitToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.ExitToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
             this.ExitToolStripMenuItem.Text = "E&xit";
             this.ExitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolsStripMenuItem_Click);
             // 
@@ -378,8 +378,8 @@ namespace CBAnsDes
             this.AnalyzeToolStripMenuItem,
             this.DesignToolStripMenuItem});
             this.ComputeToolStripMenuItem.Name = "ComputeToolStripMenuItem";
-            this.ComputeToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
-            this.ComputeToolStripMenuItem.Text = "Compute";
+            this.ComputeToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
+            this.ComputeToolStripMenuItem.Text = "Расчет";
             // 
             // CreateToolStripMenuItem
             // 
@@ -467,8 +467,8 @@ namespace CBAnsDes
             // AboutToolStripMenuItem
             // 
             this.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem";
-            this.AboutToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
-            this.AboutToolStripMenuItem.Text = "&About ...";
+            this.AboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.AboutToolStripMenuItem.Text = "&О программе ...";
             this.AboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
             // 
             // ToolStrip
@@ -543,6 +543,11 @@ namespace CBAnsDes
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 17);
+            // 
+            // toolStripStatusLabel2
+            // 
+            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(0, 17);
             // 
             // ToolStrip1
             // 
@@ -823,11 +828,6 @@ namespace CBAnsDes
             this.PrintPreviewDialog1.Icon = ((System.Drawing.Icon)(resources.GetObject("PrintPreviewDialog1.Icon")));
             this.PrintPreviewDialog1.Name = "PrintPreviewDialog1";
             this.PrintPreviewDialog1.Visible = false;
-            // 
-            // toolStripStatusLabel2
-            // 
-            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            this.toolStripStatusLabel2.Size = new System.Drawing.Size(0, 17);
             // 
             // MDIMain
             // 
