@@ -24,7 +24,7 @@ namespace CBAnsDes
             if (Indexes.mem.Count != 0)
             {
                 CreateToolStripMenuItem_Click(sender, e);
-                msgrslt = ((int)MessageBox.Show("Do you want to save your Job ?", "Samson Mano", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)).ToString();
+                msgrslt = ((int)MessageBox.Show("Вы хотите сохранить работу?", "Экспертиза балки", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)).ToString();
                 if (Conversions.ToDouble(msgrslt) == (double)DialogResult.Yes)
                 {
                     SaveAsToolStripMenuItem_Click(sender, e);
@@ -38,14 +38,11 @@ namespace CBAnsDes
                     My.MyProject.Forms.beamcreate.mainpic.Refresh();
                     return;
                 }
-
             }
 
-        x1:
-            ;
-
+            x1:            
             Indexes.mem.Clear();
-            var Frm = new Newapp(false);
+            Newapp Frm = new Newapp(false);
             Frm.ShowInTaskbar = false;
             Frm.ShowDialog();
 
@@ -98,18 +95,25 @@ namespace CBAnsDes
         private void OpenFile(object sender, EventArgs e)
         {
             string msgrslt;
+
             CreateToolStripMenuItem_Click(sender, e);
+
             CreateToolStripMenuItem.Checked = true;
+
+            bool fileopen = false;
+
             if (Indexes.mem.Count != 0)
             {
-                msgrslt = ((int)MessageBox.Show("Do you want to save your Job ?", "Samson Mano", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)).ToString();
+                msgrslt = ((int)MessageBox.Show("Вы хотите сохранить свою работу?", "Экспертиза Балки", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)).ToString();
+                fileopen = true;
+
                 if (Conversions.ToDouble(msgrslt) == (double)DialogResult.Yes)
                 {
                     SaveAsToolStripMenuItem_Click(sender, e);
                 }
                 else if (Conversions.ToDouble(msgrslt) == (double)DialogResult.No)
                 {
-                    //goto x1;
+                    fileopen = false;
                 }
                 else
                 {
@@ -117,11 +121,9 @@ namespace CBAnsDes
                     return;
                 }
             }
-            else
-            {
-            //x1:
-                ;
 
+            if (!fileopen)
+            {                            
                 Indexes.mem.Clear();
                 My.MyProject.Forms.beamcreate.mainpic.Refresh();
 
@@ -135,7 +137,7 @@ namespace CBAnsDes
 
                 var ofd = new OpenFileDialog();
                 ofd.DefaultExt = ".cbf";
-                ofd.Filter = "Samson Mano's continuous beam Object Files (*.cbf)|*.cbf";
+                ofd.Filter = "Экспертиза балки Object Files (*.cbf)|*.cbf";
                 ofd.ShowDialog();
                 if (File.Exists(ofd.FileName))
                 {
@@ -148,7 +150,7 @@ namespace CBAnsDes
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Unable to Open !!!", "Samson Mano", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Невозможно открыть файл !!!", "Экспертиза балки", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                     List<Member> instance1 = (List<Member>)cbobject[0];
@@ -166,19 +168,19 @@ namespace CBAnsDes
                     AddMemberToolStripMenuItem.Enabled = true;
                     ToolStripButton2.Enabled = true;
                     BeamEndsToolStripMenuItem.Enabled = true;
-                    // igorab
-                    //ToolStripButton3.Enabled = false;
-                    //editMemberToolStripMenuItem.Enabled = false;
-                    //ToolStripButton4.Enabled = false;
-                    //RemoveMemberToolStripMenuItem.Enabled = false;
-                    //ToolStripButton5.Enabled = false;
-                    //AddLoadToolStripMenuItem.Enabled = false;
-                    //ToolStripButton6.Enabled = false;
-                    //RemoveLoadsToolStripMenuItem.Enabled = false;
-                    //ToolStripButton7.Enabled = false;
-                    //ModifyLoadToolStripMenuItem.Enabled = false;
-                    //ToolStripButton8.Enabled = false;
-                    //RemoveLoadToolStripMenuItem.Enabled = false;
+
+                    ToolStripButton3.Enabled = false;
+                    editMemberToolStripMenuItem.Enabled = false;
+                    ToolStripButton4.Enabled = false;
+                    RemoveMemberToolStripMenuItem.Enabled = false;
+                    ToolStripButton5.Enabled = false;
+                    AddLoadToolStripMenuItem.Enabled = false;
+                    ToolStripButton6.Enabled = false;
+                    RemoveLoadsToolStripMenuItem.Enabled = false;
+                    ToolStripButton7.Enabled = false;
+                    ModifyLoadToolStripMenuItem.Enabled = false;
+                    ToolStripButton8.Enabled = false;
+                    RemoveLoadToolStripMenuItem.Enabled = false;
 
                     EditMenu.Enabled = true;
                     ComputeToolStripMenuItem.Enabled = true;
@@ -194,6 +196,7 @@ namespace CBAnsDes
                 {
                     // MessageBox.Show("File does not exist!")
                 }
+
                 My.MyProject.Forms.beamcreate.mainpic.Refresh();
             }
         }
@@ -302,9 +305,9 @@ namespace CBAnsDes
             a.ShowDialog();
         }
 
+        // Удалить загружения
         private void ToolStripButton6_Click(object sender, EventArgs e)
-        {
-            // --Remove Loads
+        {           
             Indexes.mem[Indexes.selline].Pload.Clear();
             Indexes.mem[Indexes.selline].Uload.Clear();
             Indexes.mem[Indexes.selline].Mload.Clear();
@@ -386,15 +389,9 @@ namespace CBAnsDes
             {
                 if (m.Pload.Count != 0 | m.Uload.Count != 0 | m.Mload.Count != 0)
                 {
-                    // ------Analysis Part
-                    // Try
+                   
                     FEAnalyzer.ContinuousBeam_analyzer();
-                    // Catch ex As Exception
-                    // MsgBox("Error Analysis .....                   " & vbNewLine & "Please Report Bug" & vbNewLine & "..................................................", MsgBoxStyle.OkOnly, "Bug")
-                    // CreateToolStripMenuItem_Click(sender, e)
-                    // Exit Sub
-                    // End Try
-
+                    
                     DesignToolStripMenuItem.Checked = false;
                     AnalyzeToolStripMenuItem.Checked = true;
                     CreateToolStripMenuItem.Checked = false;
@@ -418,7 +415,9 @@ namespace CBAnsDes
                     continue;
                 }
             }
+
             Interaction.MsgBox("No valid Load type is found !!!!!!!!", MsgBoxStyle.OkOnly, "No Load");
+
             CreateToolStripMenuItem_Click(sender, e);
         }
 
@@ -484,11 +483,7 @@ namespace CBAnsDes
             EditMenu.Enabled = false;
             ComputeToolStripMenuItem.Enabled = false;
             ViewMenu.Enabled = false;
-            ToolsMenu.Enabled = false;
-            // ---Scene
-            // Me.Visible = False
-            // logo.ShowDialog()
-            // Me.Visible = True
+            ToolsMenu.Enabled = false;            
         }
 
         private void GeneralInstructionToolStripMenuItem_Click(object sender, EventArgs e)
@@ -514,18 +509,8 @@ namespace CBAnsDes
         }
 
         private void PrintToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            // PrintDocument1.DefaultPageSettings.PaperSource.Kind = "Custom"
-
-
-
-            // PrintDocument1.DefaultPageSettings.PaperSize.Height = 21 'PrintDocument1.DefaultPageSettings.PaperSize.Width = 10 PrintPreviewDialog1.Document = PrintDocument1
-
-
-
+        {           
             PrintPreviewDialog1.ShowDialog();
-
-
         }
 
         private void PrintDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)

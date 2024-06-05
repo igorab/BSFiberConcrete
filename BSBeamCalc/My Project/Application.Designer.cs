@@ -9,6 +9,7 @@
 // ------------------------------------------------------------------------------
 
 using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace CBAnsDes.My
 {
@@ -29,6 +30,14 @@ namespace CBAnsDes.My
             SaveMySettingsOnExit = true;
             ShutdownStyle = Microsoft.VisualBasic.ApplicationServices.ShutdownMode.AfterMainFormCloses;
         }
+
+        public void DoCreateMainForm(Form _frm)
+        {
+            //MyProject.Forms.MDIMain = (MDIMain) _frm;
+            //MainForm = _frm;
+           
+        }
+
 
         [DebuggerStepThrough()]
         protected override void OnCreateMainForm()

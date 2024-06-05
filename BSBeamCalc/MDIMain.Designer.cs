@@ -86,6 +86,7 @@ namespace CBAnsDes
             this.ToolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.StatusStrip = new System.Windows.Forms.StatusStrip();
             this.ToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.ToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.ToolStrip1 = new System.Windows.Forms.ToolStrip();
             this.ToolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
@@ -114,6 +115,7 @@ namespace CBAnsDes
             this.SLLabel = new System.Windows.Forms.ToolStripLabel();
             this.PrintDocument1 = new System.Drawing.Printing.PrintDocument();
             this.PrintPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
+            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.MenuStrip.SuspendLayout();
             this.ToolStrip.SuspendLayout();
             this.StatusStrip.SuspendLayout();
@@ -158,7 +160,7 @@ namespace CBAnsDes
             this.NewToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Black;
             this.NewToolStripMenuItem.Name = "NewToolStripMenuItem";
             this.NewToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.NewToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.NewToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
             this.NewToolStripMenuItem.Text = "&New";
             this.NewToolStripMenuItem.Click += new System.EventHandler(this.ShowNewForm);
             // 
@@ -384,7 +386,7 @@ namespace CBAnsDes
             this.CreateToolStripMenuItem.CheckOnClick = true;
             this.CreateToolStripMenuItem.Name = "CreateToolStripMenuItem";
             this.CreateToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F7;
-            this.CreateToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.CreateToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.CreateToolStripMenuItem.Text = "Create";
             this.CreateToolStripMenuItem.Click += new System.EventHandler(this.CreateToolStripMenuItem_Click);
             // 
@@ -393,7 +395,7 @@ namespace CBAnsDes
             this.AnalyzeToolStripMenuItem.CheckOnClick = true;
             this.AnalyzeToolStripMenuItem.Name = "AnalyzeToolStripMenuItem";
             this.AnalyzeToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.AnalyzeToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.AnalyzeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.AnalyzeToolStripMenuItem.Text = "Analyze";
             this.AnalyzeToolStripMenuItem.Click += new System.EventHandler(this.AnalyzeToolStripMenuItem_Click);
             // 
@@ -401,7 +403,7 @@ namespace CBAnsDes
             // 
             this.DesignToolStripMenuItem.Enabled = false;
             this.DesignToolStripMenuItem.Name = "DesignToolStripMenuItem";
-            this.DesignToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.DesignToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.DesignToolStripMenuItem.Text = "Design";
             this.DesignToolStripMenuItem.Click += new System.EventHandler(this.DesignToolStripMenuItem_Click);
             // 
@@ -522,7 +524,9 @@ namespace CBAnsDes
             // 
             this.StatusStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.StatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ToolStripStatusLabel});
+            this.ToolStripStatusLabel,
+            this.toolStripStatusLabel1,
+            this.toolStripStatusLabel2});
             this.StatusStrip.Location = new System.Drawing.Point(0, 544);
             this.StatusStrip.Name = "StatusStrip";
             this.StatusStrip.Size = new System.Drawing.Size(792, 22);
@@ -532,8 +536,13 @@ namespace CBAnsDes
             // ToolStripStatusLabel
             // 
             this.ToolStripStatusLabel.Name = "ToolStripStatusLabel";
-            this.ToolStripStatusLabel.Size = new System.Drawing.Size(180, 17);
-            this.ToolStripStatusLabel.Text = "Click on the beam & loads to edit..";
+            this.ToolStripStatusLabel.Size = new System.Drawing.Size(294, 17);
+            this.ToolStripStatusLabel.Text = "Кликните для редактирования балки или нагрузки ..";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 17);
             // 
             // ToolStrip1
             // 
@@ -815,6 +824,11 @@ namespace CBAnsDes
             this.PrintPreviewDialog1.Name = "PrintPreviewDialog1";
             this.PrintPreviewDialog1.Visible = false;
             // 
+            // toolStripStatusLabel2
+            // 
+            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(0, 17);
+            // 
             // MDIMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -830,7 +844,7 @@ namespace CBAnsDes
             this.MainMenuStrip = this.MenuStrip;
             this.MinimumSize = new System.Drawing.Size(244, 267);
             this.Name = "MDIMain";
-            this.Text = "Continuous Beam Analyzer ----- Developed by Samson Mano <saminnx@gmail.com>";
+            this.Text = "Экспертиза балки";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.MDIMain_Load);
             this.MenuStrip.ResumeLayout(false);
@@ -923,6 +937,7 @@ namespace CBAnsDes
         internal ToolStripLabel SLLabel;
         internal ToolStripMenuItem GeneralInstructionToolStripMenuItem;
         internal ToolStripSeparator ToolStripSeparator1;
-
+        private ToolStripStatusLabel toolStripStatusLabel1;
+        private ToolStripStatusLabel toolStripStatusLabel2;
     }
 }

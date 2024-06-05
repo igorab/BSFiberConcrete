@@ -5,7 +5,7 @@ using Microsoft.VisualBasic;
 
 namespace CBAnsDes
 {
-    public partial class beamcreate
+    public partial class BeamCreate
     {
         private float ht;
         private float totL;
@@ -91,7 +91,10 @@ namespace CBAnsDes
             }
         }
 
-        public beamcreate()
+        /// <summary>
+        /// Создать балку
+        /// </summary>
+        public BeamCreate()
         {
             InitializeComponent();
         }
@@ -99,35 +102,25 @@ namespace CBAnsDes
         private void beamcreate_Load(object sender, EventArgs e)
         {
             try
-            {
-                // mainpic.Width = 1600
-                // mainpic.Height = 1600
-                // respic.Width = 1600
-                // respic.Height = 1600
-
-
+            {               
                 mainpic.Dock = DockStyle.Fill;
                 respic.Dock = DockStyle.Fill;
 
                 Indexes.MidPt = new Point((int)Math.Round(mainpic.Width / 2d), (int)Math.Round(mainpic.Height / 2d));
 
-                // VScrollBar1.Maximum = (1600 - coverpic.Height) / 2
-                // HScrollBar1.Maximum = (1600 - coverpic.Width) / 2
-                // VScrollBar1.Minimum = 100
-                // HScrollBar1.Minimum = 50
-                // VScrollBar1.Value = VScrollBar1.Maximum / 2
-                // HScrollBar1.Value = HScrollBar1.Maximum / 2
+                MDIMain frmParent = (MDIMain) this.ParentForm;
+
                 My.MyProject.Forms.MDIMain.SFlabel.Visible = false;
                 My.MyProject.Forms.MDIMain.BMlabel.Visible = false;
                 My.MyProject.Forms.MDIMain.Xlabel.Visible = false;
+
                 SizeChanged += (_, __) => SizeController.sizemonitor();
                 SizeController.sizemonitor();
             }
             catch (Exception ex)
             {
-                Interaction.MsgBox("Fundamental Error !!!!");
+                Interaction.MsgBox( ex.Message );
             }
-
         }
 
         #region Mainpic Events
@@ -135,24 +128,15 @@ namespace CBAnsDes
         private void mainpic_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.ScaleTransform((float)Indexes.Zm, (float)Indexes.Zm);
+
             e.Graphics.TranslateTransform(Indexes.MidPt.X, Indexes.MidPt.Y);
-
-            // Zero point for reference
-            // e.Graphics.DrawRectangle(Pens.BlueViolet, New Rectangle(New Point(-10, -10), New Size(20, 20)))
-
-
-            // '---Grids (Paint grid removed in 2021 version)
-            // For i = 0 To 1600 Step 100
-            // e.Graphics.DrawLine(Pens.Beige, i, 0, i, ht)
-            // e.Graphics.DrawLine(Pens.Beige, 0, i, 1600, i)
-            // 'e.Graphics.DrawString(i, Font, Brushes.Brown, i, ht * (8 / 10))
-            // Next
-
-
-
+           
             paintBeam(e);
+
             paintEnds(e);
+
             paintSupport(e);
+
             paintload(e);
         }
 
@@ -166,27 +150,28 @@ namespace CBAnsDes
             float TotLength = 0f;
 
             foreach (var itm in Indexes.mem)
+            {
                 TotLength = TotLength + itm.spanlength;
-
+            }
 
             StDist = (float)(-(coverpic.Width / 2d) + 100d);
+
             ScaTotLength = coverpic.Width - 200;
 
             e.Graphics.DrawLine(BeamPen, StDist, 0f, StDist + ScaTotLength, 0f);
+
             e.Graphics.DrawLine(Pens.CadetBlue, StDist, 0 + 100, StDist, 0 + 140);
-
-            // e.Graphics.DrawRectangle(Pens.DarkBlue, StDist - 2, (ht / 2) - 2, 4, 4)
-            // e.Graphics.FillRectangle(Brushes.DarkBlue, StDist - 2, (ht / 2) - 2, 4, 4)
-
+           
             float Idist = StDist;
+
             float dist = 0f;
+
             foreach (var itm in Indexes.mem)
             {
                 dist = dist + itm.spanlength;
-                e.Graphics.DrawLine(Pens.CadetBlue, StDist + dist * (ScaTotLength / TotLength), 0 + 100, StDist + dist * (ScaTotLength / TotLength), 0 + 140);
-                // e.Graphics.DrawRectangle(Pens.DarkBlue, (StDist + (dist * (ScaTotLength / TotLength))) - 2, (ht / 2) - 2, 4, 4)
-                // e.Graphics.FillRectangle(Brushes.DarkBlue, (StDist + (dist * (ScaTotLength / TotLength))) - 2, (ht / 2) - 2, 4, 4)
 
+                e.Graphics.DrawLine(Pens.CadetBlue, StDist + dist * (ScaTotLength / TotLength), 0 + 100, StDist + dist * (ScaTotLength / TotLength), 0 + 140);
+                
                 // ---Dimension Line
                 var adcap = new System.Drawing.Drawing2D.AdjustableArrowCap(3f, 5f);
                 linGrBrush = new System.Drawing.Drawing2D.LinearGradientBrush(new Point((int)Math.Round(Idist), 0 + 120), new Point((int)Math.Round(StDist + dist * (ScaTotLength / TotLength)), 0 + 120), Color.CadetBlue, Color.Azure);
@@ -196,14 +181,12 @@ namespace CBAnsDes
                 dimpen.CustomEndCap = adcap;
                 e.Graphics.DrawLine(dimpen, Idist, 0 + 120, StDist + dist * (ScaTotLength / TotLength), 0 + 120);
 
-
                 // Defining the Rectangle for selecting the beam element
                 var R = new Rectangle((int)Math.Round(Idist), 0 - 100, (int)Math.Round(StDist + dist * (ScaTotLength / TotLength) - Idist), 140);
 
                 // e.Graphics.DrawRectangle(Pens.Black, R)
                 Indexes.mem[Indexes.mem.IndexOf(itm)].rect = R;
                 // ==================================================================================================================================
-
 
                 e.Graphics.DrawString(itm.spanlength.ToString(), Font, Brushes.DodgerBlue, (StDist + dist * (ScaTotLength / TotLength) + Idist) / 2f, 0 + 115);
                 linGrBrush = new System.Drawing.Drawing2D.LinearGradientBrush(new Point((int)Math.Round(Idist), 0 - 3), new Point((int)Math.Round(StDist + dist * (ScaTotLength / TotLength)), 0 + 3), Color.LightBlue, Color.Aqua);
@@ -432,56 +415,7 @@ namespace CBAnsDes
                     e.Graphics.DrawString(itm.Uload[i].uload1.ToString(), Font, loadpen.Brush, toSX1, 0 - 20 - toSY1);
                     ;
 
-                    // #error Cannot convert MultiLineIfBlockSyntax - see comment for details
-                    /* Cannot convert MultiLineIfBlockSyntax, System.ArgumentException: Элемент с тем же ключом уже был добавлен.
-                                           в System.ThrowHelper.ThrowArgumentException(ExceptionResource resource)
-                                           в System.Collections.Generic.Dictionary`2.Insert(TKey key, TValue value, Boolean add)
-                                           в ICSharpCode.CodeConverter.CSharp.PerScopeState.<CreateLocalsAsync>d__19.MoveNext()
-                                        --- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
-                                           в System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                           в ICSharpCode.CodeConverter.CSharp.PerScopeStateVisitorDecorator.<AddLocalVariablesAsync>d__6.MoveNext()
-                                        --- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
-                                           в System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-                                           в ICSharpCode.CodeConverter.CSharp.CommentConvertingMethodBodyVisitor.<DefaultVisitInnerAsync>d__3.MoveNext()
-
-                                        Input:
-
-                                                        If toSY1 >= toSY2 Then
-                                                            Dim temp As Global.CBAnsDes.Member.U
-                                                            temp.uload1 = itm.Uload(i).uload1
-                                                            temp.uload2 = itm.Uload(i).uload2
-                                                            temp.udist1 = itm.Uload(i).udist1
-                                                            temp.udist2 = itm.Uload(i).udist2
-
-                                                            ' Defining the Rectangle for selecting the UVL Load
-                                                            Dim R As New Global.System.Drawing.Rectangle((toSX1), ((0) - toSY1), (toSX2 - toSX1), toSY1)
-                                                            temp.rect = [R]
-                                                            'e.Graphics.DrawRectangle(Pens.Black, R)
-
-                                                            '==================================================================================================================================
-
-                                                            Dim ind As Integer = i
-                                                            Global.CBAnsDes.Indexes.mem(Global.CBAnsDes.Indexes.mem.IndexOf(itm)).Uload.Insert(ind, temp)
-                                                            Global.CBAnsDes.Indexes.mem(Global.CBAnsDes.Indexes.mem.IndexOf(itm)).Uload.RemoveAt(ind + 1)
-                                                        Else
-                                                            Dim temp As Global.CBAnsDes.Member.U
-                                                            temp.uload1 = itm.Uload(i).uload1
-                                                            temp.uload2 = itm.Uload(i).uload2
-                                                            temp.udist1 = itm.Uload(i).udist1
-                                                            temp.udist2 = itm.Uload(i).udist2
-
-                                                            ' Defining the Rectangle for selecting the UVL Load
-                                                            Dim R As New Global.System.Drawing.Rectangle((toSX1), ((0) - toSY2), (toSX2 - toSX1), toSY2)
-                                                            temp.rect = [R]
-                                                            'e.Graphics.DrawRectangle(Pens.Black, R)
-
-                                                            '==================================================================================================================================
-                                                            Dim ind As Integer = i
-                                                            Global.CBAnsDes.Indexes.mem(Global.CBAnsDes.Indexes.mem.IndexOf(itm)).Uload.Insert(ind, temp)
-                                                            Global.CBAnsDes.Indexes.mem(Global.CBAnsDes.Indexes.mem.IndexOf(itm)).Uload.RemoveAt(ind + 1)
-                                                        End If
-
-                                         */
+                    
                     if (itm.Uload[i].udist1 == selUL.udist1 & itm.Uload[i].uload1 == selUL.uload1 & itm.Uload[i].udist2 == selUL.udist2 & itm.Uload[i].uload2 == selUL.uload2)
                     {
                         if (toSY2 == toSY1)
@@ -627,19 +561,7 @@ namespace CBAnsDes
                     e.Graphics.DrawString(Math.Abs(itm.Mload[i].mload).ToString(), Font, loadpen.Brush, toSX, 0 - 50);
                 }
                 intSTdist = StDist + dist * (ScaTotLength / TotLength);
-            }
-            // --Check For Load Selection 
-            // For Each itm In mem
-            // For Each Pitm In itm.Pload
-            // e.Graphics.DrawRectangle(Pens.DarkRed, Pitm.rect)
-            // Next
-            // For Each uitm In itm.Uload
-            // e.Graphics.DrawRectangle(Pens.DarkRed, uitm.rect)
-            // Next
-            // For Each mitm In itm.Mload
-            // e.Graphics.DrawRectangle(Pens.DarkRed, mitm.rect)
-            // Next
-            // Next
+            }          
         }
 
         #endregion
@@ -658,9 +580,7 @@ namespace CBAnsDes
             double TempX, TempY;
             TempX = e.X / Indexes.Zm - Indexes.MidPt.X;
             TempY = e.Y / Indexes.Zm - Indexes.MidPt.Y;
-
-            // ' MessageBox.Show(TempX.ToString() + ", " + TempY.ToString())
-
+            
             if (TempY > -5) // Select member
             {
                 Indexes.Lselline = -1;
@@ -1010,16 +930,7 @@ namespace CBAnsDes
             My.MyProject.Forms.MDIMain.ToolStrip1.Focus();
         }
 
-        // Private Sub HScrollBar1_Scroll(ByVal sender As System.Object, ByVal e As System.Windows.Forms.ScrollEventArgs)
-        // mainpic.Left = -(HScrollBar1.Value)
-        // respic.Left = -(HScrollBar1.Value)
-        // End Sub
-
-        // Private Sub VScrollBar1_Scroll(ByVal sender As System.Object, ByVal e As System.Windows.Forms.ScrollEventArgs)
-        // mainpic.Top = -(VScrollBar1.Value)
-        // respic.Top = -(VScrollBar1.Value)
-        // End Sub
-
+        
         private void mainpic_MouseMove(object sender, MouseEventArgs e)
         {
             // ------ Mouse move drag
@@ -1048,75 +959,17 @@ namespace CBAnsDes
             {
                 if (Indexes.Zm > 0.101d)
                 {
-                    Indexes.Zm = Indexes.Zm - 0.1d;
-                    // ElseIf Zm <= 0.1 Then
-                    // If Zm > 0.0101 Then
-                    // Zm = Zm - 0.01
-                    // ElseIf Zm <= 0.01 Then
-                    // If Zm > 0.00101 Then
-                    // Zm = Zm - 0.001
-                    // End If
-                    // End If
+                    Indexes.Zm = Indexes.Zm - 0.1d;                   
                 }
             }
             Indexes.MidPt.X = (int)Math.Round(e.X / Indexes.Zm - xw);
             Indexes.MidPt.Y = (int)Math.Round(e.Y / Indexes.Zm - yw);
-            // MTPic.Refresh()
-
-
-            // mainpic.SuspendLayout()
-            // Dim xw, yw As Single
-            // xw = e.X / Zm
-            // yw = e.Y / Zm
-            // If e.Delta > 0 Then
-            // If Zm < 10 Then
-            // Zm = Zm + 0.25
-            // End If
-            // Else
-            // If Zm > 1 Then
-            // Zm = Zm - 0.25
-            // End If
-            // End If
-            // mainpic.Refresh()
-            // If e.X <> xw * Zm Then
-            // mainpic.Width = 1600 * Zm
-            // mainpic.Height = ht * Zm
-            // ' HScrollBar1.Maximum = (1600 * Zm) - coverpic.Width
-            // ' VScrollBar1.Maximum = (1600 * Zm) - coverpic.Height
-
-            // xw = -(mainpic.Left - ((xw * Zm) - e.X))
-            // yw = -(mainpic.Top - ((yw * Zm) - e.Y))
-
-            // 'If xw <= HScrollBar1.Minimum Then
-            // '    mainpic.Left = -1
-            // '    HScrollBar1.Value = 50
-            // 'ElseIf xw >= HScrollBar1.Maximum Then
-            // '    mainpic.Left = -HScrollBar1.Maximum
-            // '    HScrollBar1.Value = HScrollBar1.Maximum
-            // 'Else
-            // '    mainpic.Left = -xw
-            // '    HScrollBar1.Value = xw
-            // 'End If
-            // mainpic.Refresh()
-            // 'If yw <= VScrollBar1.Minimum Then
-            // '    mainpic.Top = -1
-            // '    VScrollBar1.Value = 100
-            // 'ElseIf yw >= VScrollBar1.Maximum Then
-            // '    mainpic.Top = -VScrollBar1.Maximum
-            // '    VScrollBar1.Value = VScrollBar1.Maximum
-            // 'Else
-            // '    mainpic.Top = -yw
-            // '    VScrollBar1.Value = yw
-            // 'End If
-
-            // ' mainpic.Top = -(((ht * Zm) - ht) / 2)
-            // mainpic.Invalidate()
-
-            // mainpic.ResumeLayout()
+            
             mainpic.Refresh();
+
             My.MyProject.Forms.MDIMain.ToolStripLabel1.Text = Indexes.Zm * 100d + "%";
             My.MyProject.Forms.MDIMain.ToolStripLabel2.Text = Indexes.Zm * 100d + "%";
-            // End If
+            
         }
         #endregion
 
@@ -1251,17 +1104,13 @@ namespace CBAnsDes
         {
             e.Graphics.ScaleTransform((float)Indexes.Zm, (float)Indexes.Zm);
             e.Graphics.TranslateTransform(Indexes.MidPt.X, Indexes.MidPt.Y);
-
-            // '---Grids (Paint grid removed in 2021 version)
-            // For i = 0 To 1600 Step 100
-            // e.Graphics.DrawLine(Pens.Beige, i, 0, i, ht)
-            // e.Graphics.DrawLine(Pens.Beige, 0, i, 1600, i)
-            // 'e.Graphics.DrawString(i, Font, Brushes.Brown, i, ht * (8 / 10))
-            // Next
-
+          
             rpaintBeam(e);
+
             rpaintEnds(e);
+
             rpaintSupport(e);
+
             rpaintload(e);
 
             if (My.MyProject.Forms.MDIMain.ShearForceDiagramToolStripMenuItem.Checked == true)
@@ -1593,19 +1442,27 @@ namespace CBAnsDes
 
         private void rMomentPaint(PaintEventArgs e)
         {
-            var PP = new Pen(Color.Crimson, 3f);
-            Font fnt;
-            fnt = new Font("Verdana", 14f);
-            e.Graphics.DrawString("Bending Moment Diagram", fnt, Brushes.Crimson, (float)(-(coverpic.Width / 2d) + 100d), 0 - 260);
-            e.Graphics.DrawLine(PP, (int)Math.Round(Indexes.BMpts[0].X), (int)Math.Round(MEheight / 2f), Indexes.BMpts[0].X, Indexes.BMpts[0].Y);
-            e.Graphics.DrawLines(PP, Indexes.BMpts);
-            fnt = new Font("Verdana", 10f, FontStyle.Bold);
-            int i = 0;
-            foreach (var pt in Indexes.BMmaxs)
+            try
             {
-                e.Graphics.DrawString(Math.Round(Indexes.BM[Indexes.BMMc[i]], 3).ToString(), fnt, Brushes.Crimson, pt.X, pt.Y);
-                i = i + 1;
+                var PP = new Pen(Color.Crimson, 3f);
+                Font fnt;
+                fnt = new Font("Verdana", 14f);
+                e.Graphics.DrawString("Bending Moment Diagram", fnt, Brushes.Crimson, (float)(-(coverpic.Width / 2d) + 100d), 0 - 260);
+                e.Graphics.DrawLine(PP, (int)Math.Round(Indexes.BMpts[0].X), (int)Math.Round(MEheight / 2f), Indexes.BMpts[0].X, Indexes.BMpts[0].Y);
+                e.Graphics.DrawLines(PP, Indexes.BMpts);
+                fnt = new Font("Verdana", 10f, FontStyle.Bold);
+                int i = 0;
+                foreach (var pt in Indexes.BMmaxs)
+                {
+                    e.Graphics.DrawString(Math.Round(Indexes.BM[Indexes.BMMc[i]], 3).ToString(), fnt, Brushes.Crimson, pt.X, pt.Y);
+                    i = i + 1;
+                }
             }
+            catch (Exception _e)
+            {
+               MessageBox.Show( _e.Message);
+            }
+
         }
 
         private void rDeflectionPaint(PaintEventArgs e)
@@ -1815,8 +1672,7 @@ namespace CBAnsDes
 
         #region Context Menu 3 Events
         private void BendingMomentToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            // MDIMain.BendingMomentDiagramToolStripMenuItem_Click(sender, e)
+        {            
             if (My.MyProject.Forms.MDIMain.ShearForceDiagramToolStripMenuItem.Checked == true | My.MyProject.Forms.MDIMain.DeflectionToolStripMenuItem.Checked == true | My.MyProject.Forms.MDIMain.SlopeToolStripMenuItem.Checked == true)
             {
                 My.MyProject.Forms.MDIMain.ShearForceDiagramToolStripMenuItem.Checked = false;
@@ -1869,10 +1725,9 @@ namespace CBAnsDes
 
 
 
+
         #endregion
+
         #endregion
-
-
-
     }
 }

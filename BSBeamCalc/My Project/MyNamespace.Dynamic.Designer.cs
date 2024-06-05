@@ -6,7 +6,7 @@ namespace CBAnsDes.My
 {
     public static partial class MyProject
     {
-        internal partial class MyForms
+        public partial class MyForms
         {
 
             [EditorBrowsable(EditorBrowsableState.Never)]
@@ -56,24 +56,28 @@ namespace CBAnsDes.My
 
 
             [EditorBrowsable(EditorBrowsableState.Never)]
-            public beamcreate m_beamcreate;
+            public BeamCreate m_BeamCreate;
 
-            public beamcreate beamcreate
+            public BeamCreate beamcreate
             {
-                [DebuggerHidden]
+                //[DebuggerHidden]
                 get
                 {
-                    m_beamcreate = Create__Instance__(m_beamcreate);
-                    return m_beamcreate;
+                    //igorab
+                    m_BeamCreate = Create__Instance__(m_BeamCreate);
+                    
+                    return m_BeamCreate;
                 }
-                [DebuggerHidden]
+                //[DebuggerHidden]
                 set
                 {
-                    if (ReferenceEquals(value, m_beamcreate))
+                    if (ReferenceEquals(value, m_BeamCreate))
                         return;
+
                     if (value is not null)
                         throw new ArgumentException("Property can only be set to Nothing");
-                    Dispose__Instance__(ref m_beamcreate);
+
+                    Dispose__Instance__(ref m_BeamCreate);
                 }
             }
 
@@ -152,7 +156,7 @@ namespace CBAnsDes.My
 
             public MDIMain MDIMain
             {
-                [DebuggerHidden]
+                //[DebuggerHidden]
                 get
                 {
                     m_MDIMain = Create__Instance__(m_MDIMain);

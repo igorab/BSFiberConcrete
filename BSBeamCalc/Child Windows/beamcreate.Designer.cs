@@ -6,7 +6,7 @@ using System.Windows.Forms;
 namespace CBAnsDes
 {
     [Microsoft.VisualBasic.CompilerServices.DesignerGenerated()]
-    public partial class beamcreate : Form
+    public partial class BeamCreate : Form
     {
 
         // Form overrides dispose to clean up the component list.
@@ -35,282 +35,296 @@ namespace CBAnsDes
         [DebuggerStepThrough()]
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
-            coverpic = new Panel();
-            respic = new Panel();
-            respic.Paint += new PaintEventHandler(respic_Paint);
-            respic.MouseEnter += new EventHandler(respic_MouseEnter);
-            respic.MouseLeave += new EventHandler(respic_MouseLeave);
-            respic.MouseWheel += new MouseEventHandler(respic_MouseWheel);
-            respic.MouseMove += new MouseEventHandler(respic_MouseMove);
-            respic.MouseClick += new MouseEventHandler(respic_MouseClick);
-            respic.MouseDown += new MouseEventHandler(respic_MouseDown);
-            respic.MouseUp += new MouseEventHandler(respic_MouseUp);
-            respic.MouseDoubleClick += new MouseEventHandler(respic_MouseDoubleClick);
-            mainpic = new Panel();
-            mainpic.Paint += new PaintEventHandler(mainpic_Paint);
-            mainpic.MouseClick += new MouseEventHandler(mainpic_MouseClick);
-            mainpic.MouseDown += new MouseEventHandler(mainpic_MouseDown);
-            mainpic.MouseUp += new MouseEventHandler(mainpic_MouseUp);
-            mainpic.DoubleClick += new EventHandler(mainpic_DoubleClick);
-            mainpic.MouseEnter += new EventHandler(mainpic_MouseEnter);
-            mainpic.MouseLeave += new EventHandler(mainpic_MouseLeave);
-            mainpic.MouseMove += new MouseEventHandler(mainpic_MouseMove);
-            mainpic.MouseWheel += new MouseEventHandler(mainpic_MouseWheel);
-            PictureBox1 = new PictureBox();
-            ContextMenuStrip1 = new ContextMenuStrip(components);
-            AddMemberToolStripMenuItem1 = new ToolStripMenuItem();
-            AddMemberToolStripMenuItem1.Click += new EventHandler(AddMemberToolStripMenuItem1_Click);
-            EditEndsToolStripMenuItem = new ToolStripMenuItem();
-            EditEndsToolStripMenuItem.Click += new EventHandler(EditEndsToolStripMenuItem_Click);
-            ToolStripSeparator9 = new ToolStripSeparator();
-            EditMemebrToolStripMenuItem = new ToolStripMenuItem();
-            EditMemebrToolStripMenuItem.Click += new EventHandler(EditMemebrToolStripMenuItem_Click);
-            RemoveMemberToolStripMenuItem = new ToolStripMenuItem();
-            RemoveMemberToolStripMenuItem.Click += new EventHandler(RemoveMemberToolStripMenuItem_Click);
-            AddLoadToolStripMenuItem1 = new ToolStripMenuItem();
-            AddLoadToolStripMenuItem1.Click += new EventHandler(AddLoadToolStripMenuItem1_Click);
-            RemoveLoadsToolStripMenuItem = new ToolStripMenuItem();
-            RemoveLoadsToolStripMenuItem.Click += new EventHandler(RemoveLoadsToolStripMenuItem_Click);
-            ContextMenuStrip2 = new ContextMenuStrip(components);
-            AddMemberToolStripMenuItem = new ToolStripMenuItem();
-            AddMemberToolStripMenuItem.Click += new EventHandler(AddMemberToolStripMenuItem_Click);
-            EditEndsToolStripMenuItem1 = new ToolStripMenuItem();
-            EditEndsToolStripMenuItem1.Click += new EventHandler(EditEndsToolStripMenuItem1_Click);
-            ToolStripSeparator1 = new ToolStripSeparator();
-            EditLoadToolStripMenuItem = new ToolStripMenuItem();
-            EditLoadToolStripMenuItem.Click += new EventHandler(EditLoadToolStripMenuItem_Click);
-            RemoveLoadToolStripMenuItem = new ToolStripMenuItem();
-            RemoveLoadToolStripMenuItem.Click += new EventHandler(RemoveLoadToolStripMenuItem_Click);
-            ContextMenuStrip3 = new ContextMenuStrip(components);
-            BendingMomentToolStripMenuItem = new ToolStripMenuItem();
-            BendingMomentToolStripMenuItem.Click += new EventHandler(BendingMomentToolStripMenuItem_Click);
-            ShearForceToolStripMenuItem = new ToolStripMenuItem();
-            ShearForceToolStripMenuItem.Click += new EventHandler(ShearForceToolStripMenuItem_Click);
-            DeflectionToolStripMenuItem = new ToolStripMenuItem();
-            DeflectionToolStripMenuItem.Click += new EventHandler(DeflectionToolStripMenuItem_Click);
-            SlopeToolStripMenuItem = new ToolStripMenuItem();
-            SlopeToolStripMenuItem.Click += new EventHandler(SlopeToolStripMenuItem_Click);
-            res_coverpic = new PictureBox();
-            coverpic.SuspendLayout();
-            respic.SuspendLayout();
-            mainpic.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)PictureBox1).BeginInit();
-            ContextMenuStrip1.SuspendLayout();
-            ContextMenuStrip2.SuspendLayout();
-            ContextMenuStrip3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)res_coverpic).BeginInit();
-            SuspendLayout();
+            this.components = new System.ComponentModel.Container();
+            this.coverpic = new System.Windows.Forms.Panel();
+            this.respic = new System.Windows.Forms.Panel();
+            this.res_coverpic = new System.Windows.Forms.PictureBox();
+            this.mainpic = new System.Windows.Forms.Panel();
+            this.PictureBox1 = new System.Windows.Forms.PictureBox();
+            this.ContextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.AddMemberToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.EditEndsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+            this.EditMemebrToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.RemoveMemberToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.AddLoadToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.RemoveLoadsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ContextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.AddMemberToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.EditEndsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.EditLoadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.RemoveLoadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ContextMenuStrip3 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.BendingMomentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ShearForceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.DeflectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.SlopeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.coverpic.SuspendLayout();
+            this.respic.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.res_coverpic)).BeginInit();
+            this.mainpic.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).BeginInit();
+            this.ContextMenuStrip1.SuspendLayout();
+            this.ContextMenuStrip2.SuspendLayout();
+            this.ContextMenuStrip3.SuspendLayout();
+            this.SuspendLayout();
             // 
             // coverpic
             // 
-            coverpic.BackColor = Color.White;
-            coverpic.BorderStyle = BorderStyle.Fixed3D;
-            coverpic.Controls.Add(respic);
-            coverpic.Controls.Add(mainpic);
-            coverpic.Dock = DockStyle.Fill;
-            coverpic.Location = new Point(0, 0);
-            coverpic.Margin = new Padding(4);
-            coverpic.Name = "coverpic";
-            coverpic.Size = new Size(988, 535);
-            coverpic.TabIndex = 0;
+            this.coverpic.BackColor = System.Drawing.Color.White;
+            this.coverpic.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.coverpic.Controls.Add(this.respic);
+            this.coverpic.Controls.Add(this.mainpic);
+            this.coverpic.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.coverpic.Location = new System.Drawing.Point(0, 0);
+            this.coverpic.Name = "coverpic";
+            this.coverpic.Size = new System.Drawing.Size(741, 435);
+            this.coverpic.TabIndex = 0;
             // 
             // respic
             // 
-            respic.BackColor = Color.White;
-            respic.BorderStyle = BorderStyle.FixedSingle;
-            respic.Controls.Add(res_coverpic);
-            respic.Location = new Point(104, 373);
-            respic.Margin = new Padding(4);
-            respic.Name = "respic";
-            respic.Size = new Size(263, 112);
-            respic.TabIndex = 1;
-            // 
-            // mainpic
-            // 
-            mainpic.BackColor = Color.White;
-            mainpic.BorderStyle = BorderStyle.FixedSingle;
-            mainpic.Controls.Add(PictureBox1);
-            mainpic.Location = new Point(12, 14);
-            mainpic.Margin = new Padding(4);
-            mainpic.Name = "mainpic";
-            mainpic.Size = new Size(831, 317);
-            mainpic.TabIndex = 0;
-            // 
-            // PictureBox1
-            // 
-            PictureBox1.BackColor = Color.Transparent;
-            PictureBox1.Dock = DockStyle.Fill;
-            PictureBox1.Enabled = false;
-            PictureBox1.Location = new Point(0, 0);
-            PictureBox1.Name = "PictureBox1";
-            PictureBox1.Size = new Size(829, 315);
-            PictureBox1.TabIndex = 0;
-            PictureBox1.TabStop = false;
-            // 
-            // ContextMenuStrip1
-            // 
-            ContextMenuStrip1.ImageScalingSize = new Size(20, 20);
-            ContextMenuStrip1.Items.AddRange(new ToolStripItem[] { AddMemberToolStripMenuItem1, EditEndsToolStripMenuItem, ToolStripSeparator9, EditMemebrToolStripMenuItem, RemoveMemberToolStripMenuItem, AddLoadToolStripMenuItem1, RemoveLoadsToolStripMenuItem });
-            ContextMenuStrip1.Name = "ContextMenuStrip1";
-            ContextMenuStrip1.Size = new Size(197, 166);
-            // 
-            // AddMemberToolStripMenuItem1
-            // 
-            AddMemberToolStripMenuItem1.Image = My.Resources.Resources.addmember;
-            AddMemberToolStripMenuItem1.Name = "AddMemberToolStripMenuItem1";
-            AddMemberToolStripMenuItem1.Size = new Size(196, 26);
-            AddMemberToolStripMenuItem1.Text = "Add Member";
-            // 
-            // EditEndsToolStripMenuItem
-            // 
-            EditEndsToolStripMenuItem.Image = My.Resources.Resources.editends;
-            EditEndsToolStripMenuItem.Name = "EditEndsToolStripMenuItem";
-            EditEndsToolStripMenuItem.Size = new Size(196, 26);
-            EditEndsToolStripMenuItem.Text = "Edit Ends";
-            // 
-            // ToolStripSeparator9
-            // 
-            ToolStripSeparator9.Name = "ToolStripSeparator9";
-            ToolStripSeparator9.Size = new Size(193, 6);
-            // 
-            // EditMemebrToolStripMenuItem
-            // 
-            EditMemebrToolStripMenuItem.Image = My.Resources.Resources.editmember;
-            EditMemebrToolStripMenuItem.Name = "EditMemebrToolStripMenuItem";
-            EditMemebrToolStripMenuItem.Size = new Size(196, 26);
-            EditMemebrToolStripMenuItem.Text = "Edit Memebr";
-            // 
-            // RemoveMemberToolStripMenuItem
-            // 
-            RemoveMemberToolStripMenuItem.Image = My.Resources.Resources.deletemember;
-            RemoveMemberToolStripMenuItem.Name = "RemoveMemberToolStripMenuItem";
-            RemoveMemberToolStripMenuItem.Size = new Size(196, 26);
-            RemoveMemberToolStripMenuItem.Text = "Remove Member";
-            // 
-            // AddLoadToolStripMenuItem1
-            // 
-            AddLoadToolStripMenuItem1.Image = My.Resources.Resources.addload;
-            AddLoadToolStripMenuItem1.Name = "AddLoadToolStripMenuItem1";
-            AddLoadToolStripMenuItem1.Size = new Size(196, 26);
-            AddLoadToolStripMenuItem1.Text = "Add Load";
-            // 
-            // RemoveLoadsToolStripMenuItem
-            // 
-            RemoveLoadsToolStripMenuItem.Image = My.Resources.Resources.removeloads;
-            RemoveLoadsToolStripMenuItem.Name = "RemoveLoadsToolStripMenuItem";
-            RemoveLoadsToolStripMenuItem.Size = new Size(196, 26);
-            RemoveLoadsToolStripMenuItem.Text = "Remove Loads";
-            // 
-            // ContextMenuStrip2
-            // 
-            ContextMenuStrip2.ImageScalingSize = new Size(20, 20);
-            ContextMenuStrip2.Items.AddRange(new ToolStripItem[] { AddMemberToolStripMenuItem, EditEndsToolStripMenuItem1, ToolStripSeparator1, EditLoadToolStripMenuItem, RemoveLoadToolStripMenuItem });
-            ContextMenuStrip2.Name = "ContextMenuStrip2";
-            ContextMenuStrip2.Size = new Size(174, 114);
-            // 
-            // AddMemberToolStripMenuItem
-            // 
-            AddMemberToolStripMenuItem.Image = My.Resources.Resources.addmember;
-            AddMemberToolStripMenuItem.Name = "AddMemberToolStripMenuItem";
-            AddMemberToolStripMenuItem.Size = new Size(173, 26);
-            AddMemberToolStripMenuItem.Text = "Add Member";
-            // 
-            // EditEndsToolStripMenuItem1
-            // 
-            EditEndsToolStripMenuItem1.Image = My.Resources.Resources.editends;
-            EditEndsToolStripMenuItem1.Name = "EditEndsToolStripMenuItem1";
-            EditEndsToolStripMenuItem1.Size = new Size(173, 26);
-            EditEndsToolStripMenuItem1.Text = "Edit Ends";
-            // 
-            // ToolStripSeparator1
-            // 
-            ToolStripSeparator1.Name = "ToolStripSeparator1";
-            ToolStripSeparator1.Size = new Size(170, 6);
-            // 
-            // EditLoadToolStripMenuItem
-            // 
-            EditLoadToolStripMenuItem.Image = My.Resources.Resources.modifyload;
-            EditLoadToolStripMenuItem.Name = "EditLoadToolStripMenuItem";
-            EditLoadToolStripMenuItem.Size = new Size(173, 26);
-            EditLoadToolStripMenuItem.Text = "Edit Load";
-            // 
-            // RemoveLoadToolStripMenuItem
-            // 
-            RemoveLoadToolStripMenuItem.Image = My.Resources.Resources.removeload;
-            RemoveLoadToolStripMenuItem.Name = "RemoveLoadToolStripMenuItem";
-            RemoveLoadToolStripMenuItem.Size = new Size(173, 26);
-            RemoveLoadToolStripMenuItem.Text = "Remove Load";
-            // 
-            // ContextMenuStrip3
-            // 
-            ContextMenuStrip3.ImageScalingSize = new Size(20, 20);
-            ContextMenuStrip3.Items.AddRange(new ToolStripItem[] { BendingMomentToolStripMenuItem, ShearForceToolStripMenuItem, DeflectionToolStripMenuItem, SlopeToolStripMenuItem });
-            ContextMenuStrip3.Name = "ContextMenuStrip3";
-            ContextMenuStrip3.Size = new Size(198, 108);
-            // 
-            // BendingMomentToolStripMenuItem
-            // 
-            BendingMomentToolStripMenuItem.Image = My.Resources.Resources.bm;
-            BendingMomentToolStripMenuItem.Name = "BendingMomentToolStripMenuItem";
-            BendingMomentToolStripMenuItem.Size = new Size(197, 26);
-            BendingMomentToolStripMenuItem.Text = "Bending Moment";
-            // 
-            // ShearForceToolStripMenuItem
-            // 
-            ShearForceToolStripMenuItem.Image = My.Resources.Resources.shear;
-            ShearForceToolStripMenuItem.Name = "ShearForceToolStripMenuItem";
-            ShearForceToolStripMenuItem.Size = new Size(197, 26);
-            ShearForceToolStripMenuItem.Text = "Shear Force";
-            // 
-            // DeflectionToolStripMenuItem
-            // 
-            DeflectionToolStripMenuItem.Image = My.Resources.Resources.bend;
-            DeflectionToolStripMenuItem.Name = "DeflectionToolStripMenuItem";
-            DeflectionToolStripMenuItem.Size = new Size(197, 26);
-            DeflectionToolStripMenuItem.Text = "Deflection";
-            // 
-            // SlopeToolStripMenuItem
-            // 
-            SlopeToolStripMenuItem.Image = My.Resources.Resources.Slope;
-            SlopeToolStripMenuItem.Name = "SlopeToolStripMenuItem";
-            SlopeToolStripMenuItem.Size = new Size(197, 26);
-            SlopeToolStripMenuItem.Text = "Slope";
+            this.respic.BackColor = System.Drawing.Color.White;
+            this.respic.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.respic.Controls.Add(this.res_coverpic);
+            this.respic.Location = new System.Drawing.Point(78, 303);
+            this.respic.Name = "respic";
+            this.respic.Size = new System.Drawing.Size(198, 91);
+            this.respic.TabIndex = 1;
+            this.respic.Paint += new System.Windows.Forms.PaintEventHandler(this.respic_Paint);
+            this.respic.MouseClick += new System.Windows.Forms.MouseEventHandler(this.respic_MouseClick);
+            this.respic.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.respic_MouseDoubleClick);
+            this.respic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.respic_MouseDown);
+            this.respic.MouseEnter += new System.EventHandler(this.respic_MouseEnter);
+            this.respic.MouseLeave += new System.EventHandler(this.respic_MouseLeave);
+            this.respic.MouseMove += new System.Windows.Forms.MouseEventHandler(this.respic_MouseMove);
+            this.respic.MouseUp += new System.Windows.Forms.MouseEventHandler(this.respic_MouseUp);
+            this.respic.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.respic_MouseWheel);
             // 
             // res_coverpic
             // 
-            res_coverpic.BackColor = Color.Transparent;
-            res_coverpic.Dock = DockStyle.Fill;
-            res_coverpic.Enabled = false;
-            res_coverpic.Location = new Point(0, 0);
-            res_coverpic.Name = "res_coverpic";
-            res_coverpic.Size = new Size(261, 110);
-            res_coverpic.TabIndex = 0;
-            res_coverpic.TabStop = false;
+            this.res_coverpic.BackColor = System.Drawing.Color.Transparent;
+            this.res_coverpic.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.res_coverpic.Enabled = false;
+            this.res_coverpic.Location = new System.Drawing.Point(0, 0);
+            this.res_coverpic.Margin = new System.Windows.Forms.Padding(2);
+            this.res_coverpic.Name = "res_coverpic";
+            this.res_coverpic.Size = new System.Drawing.Size(196, 89);
+            this.res_coverpic.TabIndex = 0;
+            this.res_coverpic.TabStop = false;
             // 
-            // beamcreate
+            // mainpic
             // 
-            AutoScaleDimensions = new SizeF(8.0f, 16.0f);
-            AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.WhiteSmoke;
-            ClientSize = new Size(988, 535);
-            Controls.Add(coverpic);
-            FormBorderStyle = FormBorderStyle.None;
-            Margin = new Padding(4);
-            MinimumSize = new Size(533, 369);
-            Name = "beamcreate";
-            Opacity = 0.9d;
-            Text = "beamcreate";
-            coverpic.ResumeLayout(false);
-            respic.ResumeLayout(false);
-            mainpic.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)PictureBox1).EndInit();
-            ContextMenuStrip1.ResumeLayout(false);
-            ContextMenuStrip2.ResumeLayout(false);
-            ContextMenuStrip3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)res_coverpic).EndInit();
-            Load += new EventHandler(beamcreate_Load);
-            ResumeLayout(false);
+            this.mainpic.BackColor = System.Drawing.Color.White;
+            this.mainpic.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.mainpic.Controls.Add(this.PictureBox1);
+            this.mainpic.Location = new System.Drawing.Point(9, 11);
+            this.mainpic.Name = "mainpic";
+            this.mainpic.Size = new System.Drawing.Size(624, 258);
+            this.mainpic.TabIndex = 0;
+            this.mainpic.Paint += new System.Windows.Forms.PaintEventHandler(this.mainpic_Paint);
+            this.mainpic.DoubleClick += new System.EventHandler(this.mainpic_DoubleClick);
+            this.mainpic.MouseClick += new System.Windows.Forms.MouseEventHandler(this.mainpic_MouseClick);
+            this.mainpic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mainpic_MouseDown);
+            this.mainpic.MouseEnter += new System.EventHandler(this.mainpic_MouseEnter);
+            this.mainpic.MouseLeave += new System.EventHandler(this.mainpic_MouseLeave);
+            this.mainpic.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mainpic_MouseMove);
+            this.mainpic.MouseUp += new System.Windows.Forms.MouseEventHandler(this.mainpic_MouseUp);
+            this.mainpic.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.mainpic_MouseWheel);
+            // 
+            // PictureBox1
+            // 
+            this.PictureBox1.BackColor = System.Drawing.Color.Transparent;
+            this.PictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PictureBox1.Enabled = false;
+            this.PictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.PictureBox1.Margin = new System.Windows.Forms.Padding(2);
+            this.PictureBox1.Name = "PictureBox1";
+            this.PictureBox1.Size = new System.Drawing.Size(622, 256);
+            this.PictureBox1.TabIndex = 0;
+            this.PictureBox1.TabStop = false;
+            // 
+            // ContextMenuStrip1
+            // 
+            this.ContextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.ContextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.AddMemberToolStripMenuItem1,
+            this.EditEndsToolStripMenuItem,
+            this.ToolStripSeparator9,
+            this.EditMemebrToolStripMenuItem,
+            this.RemoveMemberToolStripMenuItem,
+            this.AddLoadToolStripMenuItem1,
+            this.RemoveLoadsToolStripMenuItem});
+            this.ContextMenuStrip1.Name = "ContextMenuStrip1";
+            this.ContextMenuStrip1.Size = new System.Drawing.Size(170, 166);
+            // 
+            // AddMemberToolStripMenuItem1
+            // 
+            this.AddMemberToolStripMenuItem1.Image = global::CBAnsDes.My.Resources.Resources.addmember;
+            this.AddMemberToolStripMenuItem1.Name = "AddMemberToolStripMenuItem1";
+            this.AddMemberToolStripMenuItem1.Size = new System.Drawing.Size(169, 26);
+            this.AddMemberToolStripMenuItem1.Text = "Add Member";
+            this.AddMemberToolStripMenuItem1.Click += new System.EventHandler(this.AddMemberToolStripMenuItem1_Click);
+            // 
+            // EditEndsToolStripMenuItem
+            // 
+            this.EditEndsToolStripMenuItem.Image = global::CBAnsDes.My.Resources.Resources.editends;
+            this.EditEndsToolStripMenuItem.Name = "EditEndsToolStripMenuItem";
+            this.EditEndsToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
+            this.EditEndsToolStripMenuItem.Text = "Edit Ends";
+            this.EditEndsToolStripMenuItem.Click += new System.EventHandler(this.EditEndsToolStripMenuItem_Click);
+            // 
+            // ToolStripSeparator9
+            // 
+            this.ToolStripSeparator9.Name = "ToolStripSeparator9";
+            this.ToolStripSeparator9.Size = new System.Drawing.Size(166, 6);
+            // 
+            // EditMemebrToolStripMenuItem
+            // 
+            this.EditMemebrToolStripMenuItem.Image = global::CBAnsDes.My.Resources.Resources.editmember;
+            this.EditMemebrToolStripMenuItem.Name = "EditMemebrToolStripMenuItem";
+            this.EditMemebrToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
+            this.EditMemebrToolStripMenuItem.Text = "Edit Memebr";
+            this.EditMemebrToolStripMenuItem.Click += new System.EventHandler(this.EditMemebrToolStripMenuItem_Click);
+            // 
+            // RemoveMemberToolStripMenuItem
+            // 
+            this.RemoveMemberToolStripMenuItem.Image = global::CBAnsDes.My.Resources.Resources.deletemember;
+            this.RemoveMemberToolStripMenuItem.Name = "RemoveMemberToolStripMenuItem";
+            this.RemoveMemberToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
+            this.RemoveMemberToolStripMenuItem.Text = "Remove Member";
+            this.RemoveMemberToolStripMenuItem.Click += new System.EventHandler(this.RemoveMemberToolStripMenuItem_Click);
+            // 
+            // AddLoadToolStripMenuItem1
+            // 
+            this.AddLoadToolStripMenuItem1.Image = global::CBAnsDes.My.Resources.Resources.addload;
+            this.AddLoadToolStripMenuItem1.Name = "AddLoadToolStripMenuItem1";
+            this.AddLoadToolStripMenuItem1.Size = new System.Drawing.Size(169, 26);
+            this.AddLoadToolStripMenuItem1.Text = "Add Load";
+            this.AddLoadToolStripMenuItem1.Click += new System.EventHandler(this.AddLoadToolStripMenuItem1_Click);
+            // 
+            // RemoveLoadsToolStripMenuItem
+            // 
+            this.RemoveLoadsToolStripMenuItem.Image = global::CBAnsDes.My.Resources.Resources.removeloads;
+            this.RemoveLoadsToolStripMenuItem.Name = "RemoveLoadsToolStripMenuItem";
+            this.RemoveLoadsToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
+            this.RemoveLoadsToolStripMenuItem.Text = "Remove Loads";
+            this.RemoveLoadsToolStripMenuItem.Click += new System.EventHandler(this.RemoveLoadsToolStripMenuItem_Click);
+            // 
+            // ContextMenuStrip2
+            // 
+            this.ContextMenuStrip2.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.ContextMenuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.AddMemberToolStripMenuItem,
+            this.EditEndsToolStripMenuItem1,
+            this.ToolStripSeparator1,
+            this.EditLoadToolStripMenuItem,
+            this.RemoveLoadToolStripMenuItem});
+            this.ContextMenuStrip2.Name = "ContextMenuStrip2";
+            this.ContextMenuStrip2.Size = new System.Drawing.Size(151, 114);
+            // 
+            // AddMemberToolStripMenuItem
+            // 
+            this.AddMemberToolStripMenuItem.Image = global::CBAnsDes.My.Resources.Resources.addmember;
+            this.AddMemberToolStripMenuItem.Name = "AddMemberToolStripMenuItem";
+            this.AddMemberToolStripMenuItem.Size = new System.Drawing.Size(150, 26);
+            this.AddMemberToolStripMenuItem.Text = "Add Member";
+            this.AddMemberToolStripMenuItem.Click += new System.EventHandler(this.AddMemberToolStripMenuItem_Click);
+            // 
+            // EditEndsToolStripMenuItem1
+            // 
+            this.EditEndsToolStripMenuItem1.Image = global::CBAnsDes.My.Resources.Resources.editends;
+            this.EditEndsToolStripMenuItem1.Name = "EditEndsToolStripMenuItem1";
+            this.EditEndsToolStripMenuItem1.Size = new System.Drawing.Size(150, 26);
+            this.EditEndsToolStripMenuItem1.Text = "Edit Ends";
+            this.EditEndsToolStripMenuItem1.Click += new System.EventHandler(this.EditEndsToolStripMenuItem1_Click);
+            // 
+            // ToolStripSeparator1
+            // 
+            this.ToolStripSeparator1.Name = "ToolStripSeparator1";
+            this.ToolStripSeparator1.Size = new System.Drawing.Size(147, 6);
+            // 
+            // EditLoadToolStripMenuItem
+            // 
+            this.EditLoadToolStripMenuItem.Image = global::CBAnsDes.My.Resources.Resources.modifyload;
+            this.EditLoadToolStripMenuItem.Name = "EditLoadToolStripMenuItem";
+            this.EditLoadToolStripMenuItem.Size = new System.Drawing.Size(150, 26);
+            this.EditLoadToolStripMenuItem.Text = "Edit Load";
+            this.EditLoadToolStripMenuItem.Click += new System.EventHandler(this.EditLoadToolStripMenuItem_Click);
+            // 
+            // RemoveLoadToolStripMenuItem
+            // 
+            this.RemoveLoadToolStripMenuItem.Image = global::CBAnsDes.My.Resources.Resources.removeload;
+            this.RemoveLoadToolStripMenuItem.Name = "RemoveLoadToolStripMenuItem";
+            this.RemoveLoadToolStripMenuItem.Size = new System.Drawing.Size(150, 26);
+            this.RemoveLoadToolStripMenuItem.Text = "Remove Load";
+            this.RemoveLoadToolStripMenuItem.Click += new System.EventHandler(this.RemoveLoadToolStripMenuItem_Click);
+            // 
+            // ContextMenuStrip3
+            // 
+            this.ContextMenuStrip3.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.ContextMenuStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.BendingMomentToolStripMenuItem,
+            this.ShearForceToolStripMenuItem,
+            this.DeflectionToolStripMenuItem,
+            this.SlopeToolStripMenuItem});
+            this.ContextMenuStrip3.Name = "ContextMenuStrip3";
+            this.ContextMenuStrip3.Size = new System.Drawing.Size(172, 108);
+            // 
+            // BendingMomentToolStripMenuItem
+            // 
+            this.BendingMomentToolStripMenuItem.Image = global::CBAnsDes.My.Resources.Resources.bm;
+            this.BendingMomentToolStripMenuItem.Name = "BendingMomentToolStripMenuItem";
+            this.BendingMomentToolStripMenuItem.Size = new System.Drawing.Size(171, 26);
+            this.BendingMomentToolStripMenuItem.Text = "Bending Moment";
+            this.BendingMomentToolStripMenuItem.Click += new System.EventHandler(this.BendingMomentToolStripMenuItem_Click);
+            // 
+            // ShearForceToolStripMenuItem
+            // 
+            this.ShearForceToolStripMenuItem.Image = global::CBAnsDes.My.Resources.Resources.shear;
+            this.ShearForceToolStripMenuItem.Name = "ShearForceToolStripMenuItem";
+            this.ShearForceToolStripMenuItem.Size = new System.Drawing.Size(171, 26);
+            this.ShearForceToolStripMenuItem.Text = "Shear Force";
+            this.ShearForceToolStripMenuItem.Click += new System.EventHandler(this.ShearForceToolStripMenuItem_Click);
+            // 
+            // DeflectionToolStripMenuItem
+            // 
+            this.DeflectionToolStripMenuItem.Image = global::CBAnsDes.My.Resources.Resources.bend;
+            this.DeflectionToolStripMenuItem.Name = "DeflectionToolStripMenuItem";
+            this.DeflectionToolStripMenuItem.Size = new System.Drawing.Size(171, 26);
+            this.DeflectionToolStripMenuItem.Text = "Deflection";
+            this.DeflectionToolStripMenuItem.Click += new System.EventHandler(this.DeflectionToolStripMenuItem_Click);
+            // 
+            // SlopeToolStripMenuItem
+            // 
+            this.SlopeToolStripMenuItem.Image = global::CBAnsDes.My.Resources.Resources.Slope;
+            this.SlopeToolStripMenuItem.Name = "SlopeToolStripMenuItem";
+            this.SlopeToolStripMenuItem.Size = new System.Drawing.Size(171, 26);
+            this.SlopeToolStripMenuItem.Text = "Slope";
+            this.SlopeToolStripMenuItem.Click += new System.EventHandler(this.SlopeToolStripMenuItem_Click);
+            // 
+            // BeamCreate
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.ClientSize = new System.Drawing.Size(741, 435);
+            this.Controls.Add(this.coverpic);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.MinimumSize = new System.Drawing.Size(400, 300);
+            this.Name = "BeamCreate";
+            this.Opacity = 0.9D;
+            this.Text = "beamcreate";
+            this.Load += new System.EventHandler(this.beamcreate_Load);
+            this.coverpic.ResumeLayout(false);
+            this.respic.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.res_coverpic)).EndInit();
+            this.mainpic.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).EndInit();
+            this.ContextMenuStrip1.ResumeLayout(false);
+            this.ContextMenuStrip2.ResumeLayout(false);
+            this.ContextMenuStrip3.ResumeLayout(false);
+            this.ResumeLayout(false);
 
         }
         internal Panel coverpic;

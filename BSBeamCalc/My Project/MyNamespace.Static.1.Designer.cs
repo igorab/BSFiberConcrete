@@ -87,7 +87,7 @@ namespace CBAnsDes.My
         private readonly static ThreadSafeObjectProvider<Microsoft.VisualBasic.ApplicationServices.User> m_UserObjectProvider = new ThreadSafeObjectProvider<Microsoft.VisualBasic.ApplicationServices.User>();
        
         [System.ComponentModel.Design.HelpKeyword("My.Forms")]
-        internal static MyForms Forms
+        public static MyForms Forms
         {
             [DebuggerHidden()]
             get
@@ -98,7 +98,7 @@ namespace CBAnsDes.My
 
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         [MyGroupCollection("System.Windows.Forms.Form", "Create__Instance__", "Dispose__Instance__", "My.MyProject.Forms")]
-        internal sealed partial class MyForms
+        public sealed partial class MyForms
         {
             [DebuggerHidden()]
             private static T Create__Instance__<T>(T Instance) where T : Form, new()
