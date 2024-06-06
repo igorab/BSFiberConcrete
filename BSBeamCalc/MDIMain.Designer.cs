@@ -160,7 +160,7 @@ namespace CBAnsDes
             this.NewToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Black;
             this.NewToolStripMenuItem.Name = "NewToolStripMenuItem";
             this.NewToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.NewToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
+            this.NewToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
             this.NewToolStripMenuItem.Text = "&New";
             this.NewToolStripMenuItem.Click += new System.EventHandler(this.ShowNewForm);
             // 
@@ -170,14 +170,14 @@ namespace CBAnsDes
             this.OpenToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Black;
             this.OpenToolStripMenuItem.Name = "OpenToolStripMenuItem";
             this.OpenToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.OpenToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
+            this.OpenToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
             this.OpenToolStripMenuItem.Text = "&Open";
             this.OpenToolStripMenuItem.Click += new System.EventHandler(this.OpenFile);
             // 
             // ToolStripSeparator3
             // 
             this.ToolStripSeparator3.Name = "ToolStripSeparator3";
-            this.ToolStripSeparator3.Size = new System.Drawing.Size(181, 6);
+            this.ToolStripSeparator3.Size = new System.Drawing.Size(151, 6);
             // 
             // SaveToolStripMenuItem
             // 
@@ -185,24 +185,24 @@ namespace CBAnsDes
             this.SaveToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Black;
             this.SaveToolStripMenuItem.Name = "SaveToolStripMenuItem";
             this.SaveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.SaveToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
+            this.SaveToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
             this.SaveToolStripMenuItem.Text = "&Save";
             this.SaveToolStripMenuItem.Click += new System.EventHandler(this.SaveAsToolStripMenuItem_Click);
             // 
             // ToolStripSeparator4
             // 
             this.ToolStripSeparator4.Name = "ToolStripSeparator4";
-            this.ToolStripSeparator4.Size = new System.Drawing.Size(181, 6);
+            this.ToolStripSeparator4.Size = new System.Drawing.Size(151, 6);
             // 
             // ToolStripSeparator5
             // 
             this.ToolStripSeparator5.Name = "ToolStripSeparator5";
-            this.ToolStripSeparator5.Size = new System.Drawing.Size(181, 6);
+            this.ToolStripSeparator5.Size = new System.Drawing.Size(151, 6);
             // 
             // ExitToolStripMenuItem
             // 
             this.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem";
-            this.ExitToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
+            this.ExitToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
             this.ExitToolStripMenuItem.Text = "E&xit";
             this.ExitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolsStripMenuItem_Click);
             // 
@@ -387,7 +387,7 @@ namespace CBAnsDes
             this.CreateToolStripMenuItem.Name = "CreateToolStripMenuItem";
             this.CreateToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F7;
             this.CreateToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.CreateToolStripMenuItem.Text = "Create";
+            this.CreateToolStripMenuItem.Text = "Создать";
             this.CreateToolStripMenuItem.Click += new System.EventHandler(this.CreateToolStripMenuItem_Click);
             // 
             // AnalyzeToolStripMenuItem
@@ -396,14 +396,14 @@ namespace CBAnsDes
             this.AnalyzeToolStripMenuItem.Name = "AnalyzeToolStripMenuItem";
             this.AnalyzeToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
             this.AnalyzeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.AnalyzeToolStripMenuItem.Text = "Analyze";
+            this.AnalyzeToolStripMenuItem.Text = "Анализ";
             this.AnalyzeToolStripMenuItem.Click += new System.EventHandler(this.AnalyzeToolStripMenuItem_Click);
             // 
             // DesignToolStripMenuItem
             // 
             this.DesignToolStripMenuItem.Enabled = false;
             this.DesignToolStripMenuItem.Name = "DesignToolStripMenuItem";
-            this.DesignToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.DesignToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.DesignToolStripMenuItem.Text = "Design";
             this.DesignToolStripMenuItem.Click += new System.EventHandler(this.DesignToolStripMenuItem_Click);
             // 
@@ -414,8 +414,8 @@ namespace CBAnsDes
             this.ToolStripSeparator11,
             this.CalculatorToolStripMenuItem});
             this.ToolsMenu.Name = "ToolsMenu";
-            this.ToolsMenu.Size = new System.Drawing.Size(46, 20);
-            this.ToolsMenu.Text = "&Tools";
+            this.ToolsMenu.Size = new System.Drawing.Size(95, 20);
+            this.ToolsMenu.Text = "&Инструменты";
             // 
             // memdetailsToolStripMenuItem
             // 
@@ -432,8 +432,8 @@ namespace CBAnsDes
             // CalculatorToolStripMenuItem
             // 
             this.CalculatorToolStripMenuItem.Name = "CalculatorToolStripMenuItem";
-            this.CalculatorToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.CalculatorToolStripMenuItem.Text = "Calculator";
+            this.CalculatorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.CalculatorToolStripMenuItem.Text = "Калькулятор";
             this.CalculatorToolStripMenuItem.Click += new System.EventHandler(this.CalculatorToolStripMenuItem_Click);
             // 
             // HelpMenu
@@ -444,8 +444,8 @@ namespace CBAnsDes
             this.ToolStripSeparator1,
             this.AboutToolStripMenuItem});
             this.HelpMenu.Name = "HelpMenu";
-            this.HelpMenu.Size = new System.Drawing.Size(44, 20);
-            this.HelpMenu.Text = "&Help";
+            this.HelpMenu.Size = new System.Drawing.Size(68, 20);
+            this.HelpMenu.Text = "&Помощь";
             // 
             // ToolStripSeparator8
             // 
@@ -455,8 +455,8 @@ namespace CBAnsDes
             // GeneralInstructionToolStripMenuItem
             // 
             this.GeneralInstructionToolStripMenuItem.Name = "GeneralInstructionToolStripMenuItem";
-            this.GeneralInstructionToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
-            this.GeneralInstructionToolStripMenuItem.Text = "General Instruction";
+            this.GeneralInstructionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.GeneralInstructionToolStripMenuItem.Text = "Описание";
             this.GeneralInstructionToolStripMenuItem.Click += new System.EventHandler(this.GeneralInstructionToolStripMenuItem_Click);
             // 
             // ToolStripSeparator1
@@ -467,7 +467,7 @@ namespace CBAnsDes
             // AboutToolStripMenuItem
             // 
             this.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem";
-            this.AboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.AboutToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.AboutToolStripMenuItem.Text = "&О программе ...";
             this.AboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
             // 

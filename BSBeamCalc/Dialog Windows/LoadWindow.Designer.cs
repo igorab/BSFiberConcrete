@@ -121,7 +121,7 @@ namespace CBAnsDes
             this.TabPage1.Padding = new System.Windows.Forms.Padding(4);
             this.TabPage1.Size = new System.Drawing.Size(455, 199);
             this.TabPage1.TabIndex = 0;
-            this.TabPage1.Text = "Сосредоточенная сила";
+            this.TabPage1.Text = "Сила";
             // 
             // Label12
             // 
@@ -154,7 +154,7 @@ namespace CBAnsDes
             // 
             // TextBox1
             // 
-            this.TextBox1.Location = new System.Drawing.Point(86, 101);
+            this.TextBox1.Location = new System.Drawing.Point(111, 101);
             this.TextBox1.Name = "TextBox1";
             this.TextBox1.Size = new System.Drawing.Size(54, 21);
             this.TextBox1.TabIndex = 6;
@@ -175,28 +175,29 @@ namespace CBAnsDes
             this.Label5.AutoSize = true;
             this.Label5.Location = new System.Drawing.Point(7, 104);
             this.Label5.Name = "Label5";
-            this.Label5.Size = new System.Drawing.Size(62, 13);
+            this.Label5.Size = new System.Drawing.Size(98, 13);
             this.Label5.TabIndex = 2;
-            this.Label5.Text = "Intensity:";
+            this.Label5.Text = "Интенсивность:";
             // 
             // Label4
             // 
             this.Label4.AutoSize = true;
             this.Label4.Location = new System.Drawing.Point(10, 52);
             this.Label4.Name = "Label4";
-            this.Label4.Size = new System.Drawing.Size(59, 13);
+            this.Label4.Size = new System.Drawing.Size(78, 13);
             this.Label4.TabIndex = 1;
-            this.Label4.Text = "Location:";
+            this.Label4.Text = "Положение:";
             // 
             // Label1
             // 
             this.Label1.AutoSize = true;
             this.Label1.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label1.ForeColor = System.Drawing.Color.MidnightBlue;
             this.Label1.Location = new System.Drawing.Point(7, 4);
             this.Label1.Name = "Label1";
-            this.Label1.Size = new System.Drawing.Size(86, 18);
+            this.Label1.Size = new System.Drawing.Size(185, 18);
             this.Label1.TabIndex = 0;
-            this.Label1.Text = "Point Load";
+            this.Label1.Text = "Сосредоточенная сила";
             // 
             // TabPage2
             // 
@@ -221,7 +222,7 @@ namespace CBAnsDes
             this.TabPage2.Padding = new System.Windows.Forms.Padding(4);
             this.TabPage2.Size = new System.Drawing.Size(455, 199);
             this.TabPage2.TabIndex = 1;
-            this.TabPage2.Text = "UVL";
+            this.TabPage2.Text = "РРН";
             // 
             // Label14
             // 
@@ -335,11 +336,12 @@ namespace CBAnsDes
             // 
             this.Label2.AutoSize = true;
             this.Label2.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label2.ForeColor = System.Drawing.Color.DarkBlue;
             this.Label2.Location = new System.Drawing.Point(7, 4);
             this.Label2.Name = "Label2";
-            this.Label2.Size = new System.Drawing.Size(197, 18);
+            this.Label2.Size = new System.Drawing.Size(335, 18);
             this.Label2.TabIndex = 0;
-            this.Label2.Text = "Uniformly Varying Load";
+            this.Label2.Text = "Равномерно распределенная нагрузка";
             // 
             // TabPage3
             // 
@@ -361,7 +363,7 @@ namespace CBAnsDes
             this.TabPage3.Padding = new System.Windows.Forms.Padding(4);
             this.TabPage3.Size = new System.Drawing.Size(455, 199);
             this.TabPage3.TabIndex = 2;
-            this.TabPage3.Text = "Изгибающий момент";
+            this.TabPage3.Text = "Момент";
             // 
             // Label15
             // 
@@ -397,9 +399,9 @@ namespace CBAnsDes
             this.RadioButton2.AutoSize = true;
             this.RadioButton2.Location = new System.Drawing.Point(338, 112);
             this.RadioButton2.Name = "RadioButton2";
-            this.RadioButton2.Size = new System.Drawing.Size(84, 17);
+            this.RadioButton2.Size = new System.Drawing.Size(92, 17);
             this.RadioButton2.TabIndex = 13;
-            this.RadioButton2.Text = "ClockWise";
+            this.RadioButton2.Text = "По часовой";
             this.RadioButton2.UseVisualStyleBackColor = true;
             this.RadioButton2.CheckedChanged += new System.EventHandler(this.RadioButton2_CheckedChanged);
             // 
@@ -409,16 +411,16 @@ namespace CBAnsDes
             this.RadioButton1.Checked = true;
             this.RadioButton1.Location = new System.Drawing.Point(187, 112);
             this.RadioButton1.Name = "RadioButton1";
-            this.RadioButton1.Size = new System.Drawing.Size(115, 17);
+            this.RadioButton1.Size = new System.Drawing.Size(118, 17);
             this.RadioButton1.TabIndex = 12;
             this.RadioButton1.TabStop = true;
-            this.RadioButton1.Text = "Anti -ClockWise";
+            this.RadioButton1.Text = "Против часовой";
             this.RadioButton1.UseVisualStyleBackColor = true;
             this.RadioButton1.CheckedChanged += new System.EventHandler(this.RadioButton1_CheckedChanged);
             // 
             // TextBox2
             // 
-            this.TextBox2.Location = new System.Drawing.Point(88, 108);
+            this.TextBox2.Location = new System.Drawing.Point(113, 108);
             this.TextBox2.Name = "TextBox2";
             this.TextBox2.Size = new System.Drawing.Size(54, 21);
             this.TextBox2.TabIndex = 10;
@@ -437,28 +439,29 @@ namespace CBAnsDes
             this.Label6.AutoSize = true;
             this.Label6.Location = new System.Drawing.Point(9, 111);
             this.Label6.Name = "Label6";
-            this.Label6.Size = new System.Drawing.Size(62, 13);
+            this.Label6.Size = new System.Drawing.Size(98, 13);
             this.Label6.TabIndex = 8;
-            this.Label6.Text = "Intensity:";
+            this.Label6.Text = "Интенсивность:";
             // 
             // Label7
             // 
             this.Label7.AutoSize = true;
             this.Label7.Location = new System.Drawing.Point(12, 55);
             this.Label7.Name = "Label7";
-            this.Label7.Size = new System.Drawing.Size(59, 13);
+            this.Label7.Size = new System.Drawing.Size(78, 13);
             this.Label7.TabIndex = 7;
-            this.Label7.Text = "Location:";
+            this.Label7.Text = "Положение:";
             // 
             // Label3
             // 
             this.Label3.AutoSize = true;
             this.Label3.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label3.ForeColor = System.Drawing.Color.Navy;
             this.Label3.Location = new System.Drawing.Point(7, 4);
             this.Label3.Name = "Label3";
-            this.Label3.Size = new System.Drawing.Size(70, 18);
+            this.Label3.Size = new System.Drawing.Size(166, 18);
             this.Label3.TabIndex = 0;
-            this.Label3.Text = "Moment";
+            this.Label3.Text = "Изгибающий момент";
             // 
             // Panel1
             // 

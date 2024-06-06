@@ -128,6 +128,8 @@ namespace BSFiberConcrete
             }
         }
 
+        public Dictionary<string, double> Reinforcement { get; internal set; }
+
 
         /// <summary>
         /// 
@@ -223,10 +225,7 @@ namespace BSFiberConcrete
             foreach (var elem in m_BElem)
             {
                 sigma_fb[i] = beam.Sigma_Z(N, Mx, My, elem.Z_X, elem.Z_Y);
-
-                //double  eps = 0; 
-                //double sgm = m_Fiber.Eps_StateDiagram(eps);
-                                
+                                             
                 epsilon_fb[i] = 1; 
 
                 Nju_fb[i] = m_BElem[i].Nu; // sigma_fb[i] / (m_Fiber.Efb * epsilon_fb[i]);
@@ -234,9 +233,7 @@ namespace BSFiberConcrete
             }
 
             for (int j = 0; j < m_Rods.Count; j++)
-            {
-                //MatRebar.Eps_StateDiagram(0);
-
+            {                
                 sigma_s[j] = 1;
 
                 epsilon_s[j] = 1; 
@@ -498,18 +495,12 @@ namespace BSFiberConcrete
         /// <param name="_usemesh"></param>
         /// <returns></returns>
         private List<BSElement> CalculationScheme(bool _usemesh = true)
-        {
-            int Nx = 10;
-            int Ny = 10;
-
+        {            
             List<BSElement> bs = new List<BSElement>();
             BSBeam_Rect beam = (BSBeam_Rect)m_Beam;
 
             // центр тяжести сечения           
             (double X0, double Y0) = (CG.X, CG.Y);
-            
-            double elX = 0,
-                   elY = 0;
                         
             foreach (var t in triCGs)
             {                               
@@ -526,8 +517,7 @@ namespace BSFiberConcrete
 
                 bsElement.E = beam.Mat.Eb;
 
-                bs.Add(bsElement);
-                                                          
+                bs.Add(bsElement);                                                          
             }
 
             return bs;

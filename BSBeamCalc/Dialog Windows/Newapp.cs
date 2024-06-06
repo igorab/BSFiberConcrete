@@ -112,12 +112,12 @@ namespace CBAnsDes
             if (Conversion.Val(TextBox2.Text) < 0.1d)
             {
                 TextBox2.Text = 10.ToString();
-                Interaction.MsgBox("Sorry Length limited to 0.1 units");
+                Interaction.MsgBox("Длина балки не может быть менее 0.1");
                 return;
             }
+            
+            int nos = (int)Math.Round(Conversion.Val(TextBox3.Text));
 
-            int nos;
-            nos = (int)Math.Round(Conversion.Val(TextBox3.Text));
             for (int i = 0, loopTo = nos - 1; i <= loopTo; i++)
             {
                 var TEMPmem = new Member();
@@ -127,6 +127,7 @@ namespace CBAnsDes
                 TEMPmem.g = (float)Conversion.Val(TextBox6.Text);
                 Indexes.mem.Add(TEMPmem);
             }
+
             if (RadioButton1.Checked == true)
             {
                 Indexes.ends = 1;         // Fixed-Fixed

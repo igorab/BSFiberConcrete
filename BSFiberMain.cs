@@ -36,6 +36,7 @@ namespace BSFiberConcrete
         private Dictionary<string, double> m_Coeffs;
         private Dictionary<string, double> m_Efforts;
         private Dictionary<string, double> m_PhysParams;
+        private Dictionary<string, double> m_Reinforcement;
         private Dictionary<string, double> m_GeomParams;
         private Dictionary<string, double> m_CalcResults;
 
@@ -383,6 +384,7 @@ namespace BSFiberConcrete
                 report.Efforts = m_Efforts;
                 report.GeomParams = m_GeomParams;
                 report.PhysParams = m_PhysParams;
+                report.Reinforcement = m_Reinforcement;
                 report.BeamSection = _BeamSection;
                 report.CalcResults = m_CalcResults;
                 report.Messages = m_Message;
@@ -895,11 +897,14 @@ namespace BSFiberConcrete
                     e_s2 = c_eps_s2
                 };
 
+                m_Reinforcement = new Dictionary<string, double>();
+
                 // расстановка арматурных стержней
                 //  пример фибробетон                  
-                Action Reinforcement = delegate()
+                Action RodsReinforcement = delegate()
                 {
                     int d_qty = 0; //количество стержней
+                    double area_total = 0;
                     foreach (var lr in l_r)
                     {
                         d_qty += 1; // (int)lr[1];
@@ -932,7 +937,8 @@ namespace BSFiberConcrete
 
                         rD_lng[idx] = d_r;
                         _As[idx] = qty_r * BSHelper.AreaCircle(d_r);
-                                                
+                        area_total += _As[idx];
+
                         BSRod rod = new BSRod()
                         {
                             Num = idx,
@@ -946,6 +952,9 @@ namespace BSFiberConcrete
                         idx++;
                         rods.Add(rod);                        
                     }
+
+                    m_Reinforcement.Add("Количество стержней, шт", d_qty);
+                    m_Reinforcement.Add("Площадь арматуры, см2", area_total);
                 };
 
                 BSMatFiber material = new BSMatFiber(cEb)
@@ -964,8 +973,8 @@ namespace BSFiberConcrete
                 // задать свойства бетона
                 fiberCalc_Deform.MatFiber = material;
 
-                Reinforcement();
-
+                RodsReinforcement();
+                
                 // задать размеры балки,
                 // задать материал,
                 // присвоить арматуру
@@ -985,6 +994,9 @@ namespace BSFiberConcrete
                 m_Efforts = fiberCalc_Deform.Efforts;
 
                 m_PhysParams = fiberCalc_Deform.PhysParams;
+
+                //m_Reinforcement = fiberCalc_Deform.Reinforcement;
+
                 // получить результат
                 m_CalcResults = fiberCalc_Deform.Results();
 
@@ -1006,7 +1018,7 @@ namespace BSFiberConcrete
                 DisplayNameAttribute attr = (DisplayNameAttribute)method.GetCustomAttributes(typeof(DisplayNameAttribute), true)[0];
                 string value = attr.DisplayName; 
 
-                string pathToHtmlFile = CreateReport(1, m_BeamSection,  value);
+                string pathToHtmlFile = CreateReport(1, m_BeamSectionReport,  value);
 
                 System.Diagnostics.Process.Start(pathToHtmlFile);
             }

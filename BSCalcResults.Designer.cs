@@ -39,7 +39,7 @@
             this.lvResults.HideSelection = false;
             this.lvResults.Location = new System.Drawing.Point(13, 13);
             this.lvResults.Name = "lvResults";
-            this.lvResults.Size = new System.Drawing.Size(390, 367);
+            this.lvResults.Size = new System.Drawing.Size(666, 367);
             this.lvResults.TabIndex = 0;
             this.lvResults.UseCompatibleStateImageBehavior = false;
             // 
@@ -47,7 +47,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(415, 392);
+            this.ClientSize = new System.Drawing.Size(691, 392);
             this.Controls.Add(this.lvResults);
             this.Name = "BSCalcResults";
             this.Text = "Результаты последнего расчета";

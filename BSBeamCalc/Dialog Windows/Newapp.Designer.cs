@@ -35,277 +35,277 @@ namespace CBAnsDes
         [DebuggerStepThrough()]
         private void InitializeComponent()
         {
-            var resources = new System.ComponentModel.ComponentResourceManager(typeof(Newapp));
-            Label1 = new Label();
-            Label2 = new Label();
-            Label3 = new Label();
-            GroupBox1 = new GroupBox();
-            RadioButton6 = new RadioButton();
-            RadioButton6.CheckedChanged += new EventHandler(RadioButton6_CheckedChanged);
-            RadioButton5 = new RadioButton();
-            RadioButton4 = new RadioButton();
-            RadioButton4.CheckedChanged += new EventHandler(RadioButton4_CheckedChanged);
-            RadioButton3 = new RadioButton();
-            RadioButton2 = new RadioButton();
-            RadioButton1 = new RadioButton();
-            TextBox1 = new TextBox();
-            TextBox1.TextChanged += new EventHandler(TextBox1_TextChanged);
-            TextBox2 = new TextBox();
-            TextBox2.TextChanged += new EventHandler(TextBox2_TextChanged);
-            TextBox3 = new TextBox();
-            TextBox3.TextChanged += new EventHandler(TextBox3_TextChanged);
-            Label5 = new Label();
-            Label6 = new Label();
-            TextBox4 = new TextBox();
-            TextBox4.TextChanged += new EventHandler(TextBox4_TextChanged);
-            TextBox5 = new TextBox();
-            TextBox5.TextChanged += new EventHandler(TextBox5_TextChanged);
-            Label4 = new Label();
-            TextBox6 = new TextBox();
-            Button_Ok = new Button();
-            Button_Ok.Click += new EventHandler(Button_Ok_Click);
-            Button_cancel = new Button();
-            Button_cancel.Click += new EventHandler(Button_cancel_Click);
-            GroupBox1.SuspendLayout();
-            SuspendLayout();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Newapp));
+            this.Label1 = new System.Windows.Forms.Label();
+            this.Label2 = new System.Windows.Forms.Label();
+            this.Label3 = new System.Windows.Forms.Label();
+            this.GroupBox1 = new System.Windows.Forms.GroupBox();
+            this.RadioButton6 = new System.Windows.Forms.RadioButton();
+            this.RadioButton5 = new System.Windows.Forms.RadioButton();
+            this.RadioButton4 = new System.Windows.Forms.RadioButton();
+            this.RadioButton3 = new System.Windows.Forms.RadioButton();
+            this.RadioButton2 = new System.Windows.Forms.RadioButton();
+            this.RadioButton1 = new System.Windows.Forms.RadioButton();
+            this.TextBox1 = new System.Windows.Forms.TextBox();
+            this.TextBox2 = new System.Windows.Forms.TextBox();
+            this.TextBox3 = new System.Windows.Forms.TextBox();
+            this.Label5 = new System.Windows.Forms.Label();
+            this.Label6 = new System.Windows.Forms.Label();
+            this.TextBox4 = new System.Windows.Forms.TextBox();
+            this.TextBox5 = new System.Windows.Forms.TextBox();
+            this.Label4 = new System.Windows.Forms.Label();
+            this.TextBox6 = new System.Windows.Forms.TextBox();
+            this.Button_Ok = new System.Windows.Forms.Button();
+            this.Button_cancel = new System.Windows.Forms.Button();
+            this.GroupBox1.SuspendLayout();
+            this.SuspendLayout();
             // 
             // Label1
             // 
-            Label1.AutoSize = true;
-            Label1.Location = new Point(38, 15);
-            Label1.Name = "Label1";
-            Label1.Size = new Size(84, 13);
-            Label1.TabIndex = 0;
-            Label1.Text = "Name Of Work :" + '\r' + '\n';
+            this.Label1.AutoSize = true;
+            this.Label1.Location = new System.Drawing.Point(38, 15);
+            this.Label1.Name = "Label1";
+            this.Label1.Size = new System.Drawing.Size(89, 13);
+            this.Label1.TabIndex = 0;
+            this.Label1.Text = "Наименование :\r\n";
             // 
             // Label2
             // 
-            Label2.AutoSize = true;
-            Label2.Location = new Point(38, 41);
-            Label2.Name = "Label2";
-            Label2.Size = new Size(114, 13);
-            Label2.TabIndex = 1;
-            Label2.Text = "Total Length of beam :";
+            this.Label2.AutoSize = true;
+            this.Label2.Location = new System.Drawing.Point(38, 41);
+            this.Label2.Name = "Label2";
+            this.Label2.Size = new System.Drawing.Size(117, 13);
+            this.Label2.TabIndex = 1;
+            this.Label2.Text = "Полная длина балки :";
             // 
             // Label3
             // 
-            Label3.AutoSize = true;
-            Label3.Location = new Point(39, 69);
-            Label3.Name = "Label3";
-            Label3.Size = new Size(73, 13);
-            Label3.TabIndex = 2;
-            Label3.Text = "No., of Span :";
+            this.Label3.AutoSize = true;
+            this.Label3.Location = new System.Drawing.Point(39, 69);
+            this.Label3.Name = "Label3";
+            this.Label3.Size = new System.Drawing.Size(73, 13);
+            this.Label3.TabIndex = 2;
+            this.Label3.Text = "No., of Span :";
             // 
             // GroupBox1
             // 
-            GroupBox1.Controls.Add(RadioButton6);
-            GroupBox1.Controls.Add(RadioButton5);
-            GroupBox1.Controls.Add(RadioButton4);
-            GroupBox1.Controls.Add(RadioButton3);
-            GroupBox1.Controls.Add(RadioButton2);
-            GroupBox1.Controls.Add(RadioButton1);
-            GroupBox1.Location = new Point(40, 185);
-            GroupBox1.Name = "GroupBox1";
-            GroupBox1.Size = new Size(245, 123);
-            GroupBox1.TabIndex = 3;
-            GroupBox1.TabStop = false;
-            GroupBox1.Text = "End Condition";
+            this.GroupBox1.Controls.Add(this.RadioButton6);
+            this.GroupBox1.Controls.Add(this.RadioButton5);
+            this.GroupBox1.Controls.Add(this.RadioButton4);
+            this.GroupBox1.Controls.Add(this.RadioButton3);
+            this.GroupBox1.Controls.Add(this.RadioButton2);
+            this.GroupBox1.Controls.Add(this.RadioButton1);
+            this.GroupBox1.Location = new System.Drawing.Point(40, 185);
+            this.GroupBox1.Name = "GroupBox1";
+            this.GroupBox1.Size = new System.Drawing.Size(245, 123);
+            this.GroupBox1.TabIndex = 3;
+            this.GroupBox1.TabStop = false;
+            this.GroupBox1.Text = "End Condition";
             // 
             // RadioButton6
             // 
-            RadioButton6.AutoSize = true;
-            RadioButton6.Location = new Point(131, 51);
-            RadioButton6.Name = "RadioButton6";
-            RadioButton6.Size = new Size(88, 17);
-            RadioButton6.TabIndex = 5;
-            RadioButton6.TabStop = true;
-            RadioButton6.Text = "Pinned - Free";
-            RadioButton6.UseVisualStyleBackColor = true;
+            this.RadioButton6.AutoSize = true;
+            this.RadioButton6.Location = new System.Drawing.Point(131, 51);
+            this.RadioButton6.Name = "RadioButton6";
+            this.RadioButton6.Size = new System.Drawing.Size(88, 17);
+            this.RadioButton6.TabIndex = 5;
+            this.RadioButton6.TabStop = true;
+            this.RadioButton6.Text = "Pinned - Free";
+            this.RadioButton6.UseVisualStyleBackColor = true;
+            this.RadioButton6.CheckedChanged += new System.EventHandler(this.RadioButton6_CheckedChanged);
             // 
             // RadioButton5
             // 
-            RadioButton5.AutoSize = true;
-            RadioButton5.Location = new Point(21, 85);
-            RadioButton5.Name = "RadioButton5";
-            RadioButton5.Size = new Size(92, 17);
-            RadioButton5.TabIndex = 4;
-            RadioButton5.TabStop = true;
-            RadioButton5.Text = "Fixed - Pinned";
-            RadioButton5.UseVisualStyleBackColor = true;
+            this.RadioButton5.AutoSize = true;
+            this.RadioButton5.Location = new System.Drawing.Point(21, 85);
+            this.RadioButton5.Name = "RadioButton5";
+            this.RadioButton5.Size = new System.Drawing.Size(92, 17);
+            this.RadioButton5.TabIndex = 4;
+            this.RadioButton5.TabStop = true;
+            this.RadioButton5.Text = "Fixed - Pinned";
+            this.RadioButton5.UseVisualStyleBackColor = true;
             // 
             // RadioButton4
             // 
-            RadioButton4.AutoSize = true;
-            RadioButton4.Location = new Point(131, 85);
-            RadioButton4.Name = "RadioButton4";
-            RadioButton4.Size = new Size(76, 17);
-            RadioButton4.TabIndex = 3;
-            RadioButton4.Text = "Free - Free";
-            RadioButton4.UseVisualStyleBackColor = true;
+            this.RadioButton4.AutoSize = true;
+            this.RadioButton4.Location = new System.Drawing.Point(131, 85);
+            this.RadioButton4.Name = "RadioButton4";
+            this.RadioButton4.Size = new System.Drawing.Size(76, 17);
+            this.RadioButton4.TabIndex = 3;
+            this.RadioButton4.Text = "Free - Free";
+            this.RadioButton4.UseVisualStyleBackColor = true;
+            this.RadioButton4.CheckedChanged += new System.EventHandler(this.RadioButton4_CheckedChanged);
             // 
             // RadioButton3
             // 
-            RadioButton3.AutoSize = true;
-            RadioButton3.Location = new Point(131, 18);
-            RadioButton3.Name = "RadioButton3";
-            RadioButton3.Size = new Size(100, 17);
-            RadioButton3.TabIndex = 2;
-            RadioButton3.Text = "Pinned - Pinned";
-            RadioButton3.UseVisualStyleBackColor = true;
+            this.RadioButton3.AutoSize = true;
+            this.RadioButton3.Location = new System.Drawing.Point(131, 18);
+            this.RadioButton3.Name = "RadioButton3";
+            this.RadioButton3.Size = new System.Drawing.Size(100, 17);
+            this.RadioButton3.TabIndex = 2;
+            this.RadioButton3.Text = "Pinned - Pinned";
+            this.RadioButton3.UseVisualStyleBackColor = true;
             // 
             // RadioButton2
             // 
-            RadioButton2.AutoSize = true;
-            RadioButton2.Location = new Point(21, 51);
-            RadioButton2.Name = "RadioButton2";
-            RadioButton2.Size = new Size(80, 17);
-            RadioButton2.TabIndex = 1;
-            RadioButton2.Text = "Fixed - Free";
-            RadioButton2.UseVisualStyleBackColor = true;
+            this.RadioButton2.AutoSize = true;
+            this.RadioButton2.Location = new System.Drawing.Point(21, 51);
+            this.RadioButton2.Name = "RadioButton2";
+            this.RadioButton2.Size = new System.Drawing.Size(80, 17);
+            this.RadioButton2.TabIndex = 1;
+            this.RadioButton2.Text = "Fixed - Free";
+            this.RadioButton2.UseVisualStyleBackColor = true;
             // 
             // RadioButton1
             // 
-            RadioButton1.AutoSize = true;
-            RadioButton1.Checked = true;
-            RadioButton1.Location = new Point(21, 19);
-            RadioButton1.Name = "RadioButton1";
-            RadioButton1.Size = new Size(84, 17);
-            RadioButton1.TabIndex = 0;
-            RadioButton1.TabStop = true;
-            RadioButton1.Text = "Fixed - Fixed";
-            RadioButton1.UseVisualStyleBackColor = true;
+            this.RadioButton1.AutoSize = true;
+            this.RadioButton1.Checked = true;
+            this.RadioButton1.Location = new System.Drawing.Point(21, 19);
+            this.RadioButton1.Name = "RadioButton1";
+            this.RadioButton1.Size = new System.Drawing.Size(84, 17);
+            this.RadioButton1.TabIndex = 0;
+            this.RadioButton1.TabStop = true;
+            this.RadioButton1.Text = "Fixed - Fixed";
+            this.RadioButton1.UseVisualStyleBackColor = true;
             // 
             // TextBox1
             // 
-            TextBox1.Location = new Point(178, 12);
-            TextBox1.Name = "TextBox1";
-            TextBox1.Size = new Size(70, 20);
-            TextBox1.TabIndex = 5;
-            TextBox1.Text = "Beam1";
+            this.TextBox1.Location = new System.Drawing.Point(178, 12);
+            this.TextBox1.Name = "TextBox1";
+            this.TextBox1.Size = new System.Drawing.Size(70, 20);
+            this.TextBox1.TabIndex = 5;
+            this.TextBox1.Text = "Beam1";
+            this.TextBox1.TextChanged += new System.EventHandler(this.TextBox1_TextChanged);
             // 
             // TextBox2
             // 
-            TextBox2.Location = new Point(179, 39);
-            TextBox2.Name = "TextBox2";
-            TextBox2.Size = new Size(69, 20);
-            TextBox2.TabIndex = 6;
-            TextBox2.Text = "10";
+            this.TextBox2.Location = new System.Drawing.Point(179, 39);
+            this.TextBox2.Name = "TextBox2";
+            this.TextBox2.Size = new System.Drawing.Size(69, 20);
+            this.TextBox2.TabIndex = 6;
+            this.TextBox2.Text = "10";
+            this.TextBox2.TextChanged += new System.EventHandler(this.TextBox2_TextChanged);
             // 
             // TextBox3
             // 
-            TextBox3.Location = new Point(178, 67);
-            TextBox3.Name = "TextBox3";
-            TextBox3.Size = new Size(70, 20);
-            TextBox3.TabIndex = 7;
-            TextBox3.Text = "1";
+            this.TextBox3.Location = new System.Drawing.Point(178, 67);
+            this.TextBox3.Name = "TextBox3";
+            this.TextBox3.Size = new System.Drawing.Size(70, 20);
+            this.TextBox3.TabIndex = 7;
+            this.TextBox3.Text = "1";
+            this.TextBox3.TextChanged += new System.EventHandler(this.TextBox3_TextChanged);
             // 
             // Label5
             // 
-            Label5.AutoSize = true;
-            Label5.Location = new Point(38, 97);
-            Label5.Margin = new Padding(2, 0, 2, 0);
-            Label5.Name = "Label5";
-            Label5.Size = new Size(119, 13);
-            Label5.TabIndex = 9;
-            Label5.Text = "Modulus of Elasticity E :";
+            this.Label5.AutoSize = true;
+            this.Label5.Location = new System.Drawing.Point(38, 97);
+            this.Label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.Label5.Name = "Label5";
+            this.Label5.Size = new System.Drawing.Size(114, 13);
+            this.Label5.TabIndex = 9;
+            this.Label5.Text = "Модуль упругости E :";
             // 
             // Label6
             // 
-            Label6.AutoSize = true;
-            Label6.Location = new Point(38, 122);
-            Label6.Margin = new Padding(2, 0, 2, 0);
-            Label6.Name = "Label6";
-            Label6.Size = new Size(101, 13);
-            Label6.TabIndex = 10;
-            Label6.Text = "Moment of Inertia I :";
+            this.Label6.AutoSize = true;
+            this.Label6.Location = new System.Drawing.Point(38, 122);
+            this.Label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.Label6.Name = "Label6";
+            this.Label6.Size = new System.Drawing.Size(104, 13);
+            this.Label6.TabIndex = 10;
+            this.Label6.Text = "Момент инерции I :";
             // 
             // TextBox4
             // 
-            TextBox4.Location = new Point(178, 94);
-            TextBox4.Margin = new Padding(2, 2, 2, 2);
-            TextBox4.Name = "TextBox4";
-            TextBox4.Size = new Size(70, 20);
-            TextBox4.TabIndex = 11;
-            TextBox4.Text = "20000";
+            this.TextBox4.Location = new System.Drawing.Point(178, 94);
+            this.TextBox4.Margin = new System.Windows.Forms.Padding(2);
+            this.TextBox4.Name = "TextBox4";
+            this.TextBox4.Size = new System.Drawing.Size(70, 20);
+            this.TextBox4.TabIndex = 11;
+            this.TextBox4.Text = "20000";
+            this.TextBox4.TextChanged += new System.EventHandler(this.TextBox4_TextChanged);
             // 
             // TextBox5
             // 
-            TextBox5.Location = new Point(178, 119);
-            TextBox5.Margin = new Padding(2, 2, 2, 2);
-            TextBox5.Name = "TextBox5";
-            TextBox5.Size = new Size(71, 20);
-            TextBox5.TabIndex = 12;
-            TextBox5.Text = "1";
+            this.TextBox5.Location = new System.Drawing.Point(178, 119);
+            this.TextBox5.Margin = new System.Windows.Forms.Padding(2);
+            this.TextBox5.Name = "TextBox5";
+            this.TextBox5.Size = new System.Drawing.Size(71, 20);
+            this.TextBox5.TabIndex = 12;
+            this.TextBox5.Text = "1";
+            this.TextBox5.TextChanged += new System.EventHandler(this.TextBox5_TextChanged);
             // 
             // Label4
             // 
-            Label4.AutoSize = true;
-            Label4.Location = new Point(9, 150);
-            Label4.Margin = new Padding(2, 0, 2, 0);
-            Label4.Name = "Label4";
-            Label4.Size = new Size(161, 13);
-            Label4.TabIndex = 13;
-            Label4.Text = "Shear deformation g = (EI/ksAG)";
+            this.Label4.AutoSize = true;
+            this.Label4.Location = new System.Drawing.Point(9, 150);
+            this.Label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.Label4.Name = "Label4";
+            this.Label4.Size = new System.Drawing.Size(161, 13);
+            this.Label4.TabIndex = 13;
+            this.Label4.Text = "Shear deformation g = (EI/ksAG)";
             // 
             // TextBox6
             // 
-            TextBox6.Location = new Point(179, 148);
-            TextBox6.Margin = new Padding(2, 2, 2, 2);
-            TextBox6.Name = "TextBox6";
-            TextBox6.Size = new Size(69, 20);
-            TextBox6.TabIndex = 14;
-            TextBox6.Text = "0";
+            this.TextBox6.Location = new System.Drawing.Point(179, 148);
+            this.TextBox6.Margin = new System.Windows.Forms.Padding(2);
+            this.TextBox6.Name = "TextBox6";
+            this.TextBox6.Size = new System.Drawing.Size(69, 20);
+            this.TextBox6.TabIndex = 14;
+            this.TextBox6.Text = "0";
             // 
             // Button_Ok
             // 
-            Button_Ok.Location = new Point(37, 328);
-            Button_Ok.Name = "Button_Ok";
-            Button_Ok.Size = new Size(75, 23);
-            Button_Ok.TabIndex = 15;
-            Button_Ok.Text = "Ok";
-            Button_Ok.UseVisualStyleBackColor = true;
+            this.Button_Ok.Location = new System.Drawing.Point(37, 328);
+            this.Button_Ok.Name = "Button_Ok";
+            this.Button_Ok.Size = new System.Drawing.Size(75, 23);
+            this.Button_Ok.TabIndex = 15;
+            this.Button_Ok.Text = "Ok";
+            this.Button_Ok.UseVisualStyleBackColor = true;
+            this.Button_Ok.Click += new System.EventHandler(this.Button_Ok_Click);
             // 
             // Button_cancel
             // 
-            Button_cancel.Location = new Point(184, 328);
-            Button_cancel.Name = "Button_cancel";
-            Button_cancel.Size = new Size(75, 23);
-            Button_cancel.TabIndex = 16;
-            Button_cancel.Text = "Cancel";
-            Button_cancel.UseVisualStyleBackColor = true;
+            this.Button_cancel.Location = new System.Drawing.Point(184, 328);
+            this.Button_cancel.Name = "Button_cancel";
+            this.Button_cancel.Size = new System.Drawing.Size(75, 23);
+            this.Button_cancel.TabIndex = 16;
+            this.Button_cancel.Text = "Cancel";
+            this.Button_cancel.UseVisualStyleBackColor = true;
+            this.Button_cancel.Click += new System.EventHandler(this.Button_cancel_Click);
             // 
             // Newapp
             // 
-            AutoScaleDimensions = new SizeF(6.0f, 13.0f);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(316, 363);
-            Controls.Add(Button_cancel);
-            Controls.Add(Button_Ok);
-            Controls.Add(TextBox6);
-            Controls.Add(Label4);
-            Controls.Add(TextBox5);
-            Controls.Add(TextBox4);
-            Controls.Add(Label6);
-            Controls.Add(Label5);
-            Controls.Add(TextBox3);
-            Controls.Add(TextBox2);
-            Controls.Add(TextBox1);
-            Controls.Add(GroupBox1);
-            Controls.Add(Label3);
-            Controls.Add(Label2);
-            Controls.Add(Label1);
-            FormBorderStyle = FormBorderStyle.FixedDialog;
-            Icon = (Icon)resources.GetObject("$this.Icon");
-            Name = "Newapp";
-            Opacity = 0.7d;
-            ShowInTaskbar = false;
-            StartPosition = FormStartPosition.CenterScreen;
-            Text = "New";
-            GroupBox1.ResumeLayout(false);
-            GroupBox1.PerformLayout();
-            Load += new EventHandler(Newapp_Load);
-            ResumeLayout(false);
-            PerformLayout();
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(316, 363);
+            this.Controls.Add(this.Button_cancel);
+            this.Controls.Add(this.Button_Ok);
+            this.Controls.Add(this.TextBox6);
+            this.Controls.Add(this.Label4);
+            this.Controls.Add(this.TextBox5);
+            this.Controls.Add(this.TextBox4);
+            this.Controls.Add(this.Label6);
+            this.Controls.Add(this.Label5);
+            this.Controls.Add(this.TextBox3);
+            this.Controls.Add(this.TextBox2);
+            this.Controls.Add(this.TextBox1);
+            this.Controls.Add(this.GroupBox1);
+            this.Controls.Add(this.Label3);
+            this.Controls.Add(this.Label2);
+            this.Controls.Add(this.Label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Name = "Newapp";
+            this.Opacity = 0.7D;
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Новый расчет";
+            this.Load += new System.EventHandler(this.Newapp_Load);
+            this.GroupBox1.ResumeLayout(false);
+            this.GroupBox1.PerformLayout();
+            this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
         internal Label Label1;

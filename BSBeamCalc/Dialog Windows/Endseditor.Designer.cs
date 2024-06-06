@@ -35,137 +35,137 @@ namespace CBAnsDes
         [DebuggerStepThrough()]
         private void InitializeComponent()
         {
-            var resources = new System.ComponentModel.ComponentResourceManager(typeof(Ends_Editor));
-            GroupBox1 = new GroupBox();
-            RadioButton6 = new RadioButton();
-            RadioButton5 = new RadioButton();
-            RadioButton4 = new RadioButton();
-            RadioButton3 = new RadioButton();
-            RadioButton2 = new RadioButton();
-            RadioButton1 = new RadioButton();
-            Button_ok = new Button();
-            Button_ok.Click += new EventHandler(Button_ok_Click);
-            Button_cancel = new Button();
-            Button_cancel.Click += new EventHandler(Button_cancel_Click);
-            GroupBox1.SuspendLayout();
-            SuspendLayout();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Ends_Editor));
+            this.GroupBox1 = new System.Windows.Forms.GroupBox();
+            this.RadioButton6 = new System.Windows.Forms.RadioButton();
+            this.RadioButton5 = new System.Windows.Forms.RadioButton();
+            this.RadioButton4 = new System.Windows.Forms.RadioButton();
+            this.RadioButton3 = new System.Windows.Forms.RadioButton();
+            this.RadioButton2 = new System.Windows.Forms.RadioButton();
+            this.RadioButton1 = new System.Windows.Forms.RadioButton();
+            this.Button_ok = new System.Windows.Forms.Button();
+            this.Button_cancel = new System.Windows.Forms.Button();
+            this.GroupBox1.SuspendLayout();
+            this.SuspendLayout();
             // 
             // GroupBox1
             // 
-            GroupBox1.Controls.Add(RadioButton6);
-            GroupBox1.Controls.Add(RadioButton5);
-            GroupBox1.Controls.Add(RadioButton4);
-            GroupBox1.Controls.Add(RadioButton3);
-            GroupBox1.Controls.Add(RadioButton2);
-            GroupBox1.Controls.Add(RadioButton1);
-            GroupBox1.Location = new Point(12, 12);
-            GroupBox1.Name = "GroupBox1";
-            GroupBox1.Size = new Size(245, 123);
-            GroupBox1.TabIndex = 4;
-            GroupBox1.TabStop = false;
-            GroupBox1.Text = "End Condition";
+            this.GroupBox1.Controls.Add(this.RadioButton6);
+            this.GroupBox1.Controls.Add(this.RadioButton5);
+            this.GroupBox1.Controls.Add(this.RadioButton4);
+            this.GroupBox1.Controls.Add(this.RadioButton3);
+            this.GroupBox1.Controls.Add(this.RadioButton2);
+            this.GroupBox1.Controls.Add(this.RadioButton1);
+            this.GroupBox1.Location = new System.Drawing.Point(12, 12);
+            this.GroupBox1.Name = "GroupBox1";
+            this.GroupBox1.Size = new System.Drawing.Size(283, 123);
+            this.GroupBox1.TabIndex = 4;
+            this.GroupBox1.TabStop = false;
+            this.GroupBox1.Text = "Закрепления";
             // 
             // RadioButton6
             // 
-            RadioButton6.AutoSize = true;
-            RadioButton6.Location = new Point(131, 51);
-            RadioButton6.Name = "RadioButton6";
-            RadioButton6.Size = new Size(82, 17);
-            RadioButton6.TabIndex = 5;
-            RadioButton6.TabStop = true;
-            RadioButton6.Text = "Pinned-Free";
-            RadioButton6.UseVisualStyleBackColor = true;
+            this.RadioButton6.AutoSize = true;
+            this.RadioButton6.Location = new System.Drawing.Point(141, 52);
+            this.RadioButton6.Name = "RadioButton6";
+            this.RadioButton6.Size = new System.Drawing.Size(116, 17);
+            this.RadioButton6.TabIndex = 5;
+            this.RadioButton6.TabStop = true;
+            this.RadioButton6.Text = "Шарнир-Свободно";
+            this.RadioButton6.UseVisualStyleBackColor = true;
             // 
             // RadioButton5
             // 
-            RadioButton5.AutoSize = true;
-            RadioButton5.Location = new Point(21, 83);
-            RadioButton5.Name = "RadioButton5";
-            RadioButton5.Size = new Size(92, 17);
-            RadioButton5.TabIndex = 4;
-            RadioButton5.TabStop = true;
-            RadioButton5.Text = "Fixed - Pinned";
-            RadioButton5.UseVisualStyleBackColor = true;
+            this.RadioButton5.AutoSize = true;
+            this.RadioButton5.Location = new System.Drawing.Point(21, 83);
+            this.RadioButton5.Name = "RadioButton5";
+            this.RadioButton5.Size = new System.Drawing.Size(113, 17);
+            this.RadioButton5.TabIndex = 4;
+            this.RadioButton5.TabStop = true;
+            this.RadioButton5.Text = "Жестко - Шарнир";
+            this.RadioButton5.UseVisualStyleBackColor = true;
             // 
             // RadioButton4
             // 
-            RadioButton4.AutoSize = true;
-            RadioButton4.Location = new Point(131, 83);
-            RadioButton4.Name = "RadioButton4";
-            RadioButton4.Size = new Size(76, 17);
-            RadioButton4.TabIndex = 3;
-            RadioButton4.Text = "Free - Free";
-            RadioButton4.UseVisualStyleBackColor = true;
+            this.RadioButton4.AutoSize = true;
+            this.RadioButton4.Location = new System.Drawing.Point(141, 84);
+            this.RadioButton4.Name = "RadioButton4";
+            this.RadioButton4.Size = new System.Drawing.Size(132, 17);
+            this.RadioButton4.TabIndex = 3;
+            this.RadioButton4.Text = "Свободно - Свободно";
+            this.RadioButton4.UseVisualStyleBackColor = true;
             // 
             // RadioButton3
             // 
-            RadioButton3.AutoSize = true;
-            RadioButton3.Location = new Point(131, 18);
-            RadioButton3.Name = "RadioButton3";
-            RadioButton3.Size = new Size(100, 17);
-            RadioButton3.TabIndex = 2;
-            RadioButton3.Text = "Pinned - Pinned";
-            RadioButton3.UseVisualStyleBackColor = true;
+            this.RadioButton3.AutoSize = true;
+            this.RadioButton3.Location = new System.Drawing.Point(141, 19);
+            this.RadioButton3.Name = "RadioButton3";
+            this.RadioButton3.Size = new System.Drawing.Size(112, 17);
+            this.RadioButton3.TabIndex = 2;
+            this.RadioButton3.Text = "Шарнир - Шарнир";
+            this.RadioButton3.UseVisualStyleBackColor = true;
             // 
             // RadioButton2
             // 
-            RadioButton2.AutoSize = true;
-            RadioButton2.Location = new Point(21, 51);
-            RadioButton2.Name = "RadioButton2";
-            RadioButton2.Size = new Size(80, 17);
-            RadioButton2.TabIndex = 1;
-            RadioButton2.Text = "Fixed - Free";
-            RadioButton2.UseVisualStyleBackColor = true;
+            this.RadioButton2.AutoSize = true;
+            this.RadioButton2.Location = new System.Drawing.Point(21, 51);
+            this.RadioButton2.Name = "RadioButton2";
+            this.RadioButton2.Size = new System.Drawing.Size(123, 17);
+            this.RadioButton2.TabIndex = 1;
+            this.RadioButton2.Text = "Жестко - Свободно";
+            this.RadioButton2.UseVisualStyleBackColor = true;
             // 
             // RadioButton1
             // 
-            RadioButton1.AutoSize = true;
-            RadioButton1.Checked = true;
-            RadioButton1.Location = new Point(21, 19);
-            RadioButton1.Name = "RadioButton1";
-            RadioButton1.Size = new Size(84, 17);
-            RadioButton1.TabIndex = 0;
-            RadioButton1.TabStop = true;
-            RadioButton1.Text = "Fixed - Fixed";
-            RadioButton1.UseVisualStyleBackColor = true;
+            this.RadioButton1.AutoSize = true;
+            this.RadioButton1.Checked = true;
+            this.RadioButton1.Location = new System.Drawing.Point(21, 19);
+            this.RadioButton1.Name = "RadioButton1";
+            this.RadioButton1.Size = new System.Drawing.Size(114, 17);
+            this.RadioButton1.TabIndex = 0;
+            this.RadioButton1.TabStop = true;
+            this.RadioButton1.Text = "Жестко - Жестко";
+            this.RadioButton1.UseVisualStyleBackColor = true;
             // 
             // Button_ok
             // 
-            Button_ok.Location = new Point(33, 169);
-            Button_ok.Name = "Button_ok";
-            Button_ok.Size = new Size(75, 23);
-            Button_ok.TabIndex = 5;
-            Button_ok.Text = "Ok";
-            Button_ok.UseVisualStyleBackColor = true;
+            this.Button_ok.Location = new System.Drawing.Point(33, 169);
+            this.Button_ok.Name = "Button_ok";
+            this.Button_ok.Size = new System.Drawing.Size(75, 23);
+            this.Button_ok.TabIndex = 5;
+            this.Button_ok.Text = "Ok";
+            this.Button_ok.UseVisualStyleBackColor = true;
+            this.Button_ok.Click += new System.EventHandler(this.Button_ok_Click);
             // 
             // Button_cancel
             // 
-            Button_cancel.Location = new Point(144, 169);
-            Button_cancel.Name = "Button_cancel";
-            Button_cancel.Size = new Size(75, 23);
-            Button_cancel.TabIndex = 6;
-            Button_cancel.Text = "Cancel";
-            Button_cancel.UseVisualStyleBackColor = true;
+            this.Button_cancel.Location = new System.Drawing.Point(144, 169);
+            this.Button_cancel.Name = "Button_cancel";
+            this.Button_cancel.Size = new System.Drawing.Size(75, 23);
+            this.Button_cancel.TabIndex = 6;
+            this.Button_cancel.Text = "Cancel";
+            this.Button_cancel.UseVisualStyleBackColor = true;
+            this.Button_cancel.Click += new System.EventHandler(this.Button_cancel_Click);
             // 
             // Ends_Editor
             // 
-            AutoScaleDimensions = new SizeF(6.0f, 13.0f);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(266, 204);
-            Controls.Add(Button_cancel);
-            Controls.Add(Button_ok);
-            Controls.Add(GroupBox1);
-            FormBorderStyle = FormBorderStyle.FixedDialog;
-            Icon = (Icon)resources.GetObject("$this.Icon");
-            Name = "Ends_Editor";
-            Opacity = 0.7d;
-            ShowInTaskbar = false;
-            StartPosition = FormStartPosition.CenterParent;
-            Text = "Ends Editor";
-            GroupBox1.ResumeLayout(false);
-            GroupBox1.PerformLayout();
-            Load += new EventHandler(Ends_Editor_Load);
-            ResumeLayout(false);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(307, 206);
+            this.Controls.Add(this.Button_cancel);
+            this.Controls.Add(this.Button_ok);
+            this.Controls.Add(this.GroupBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Name = "Ends_Editor";
+            this.Opacity = 0.7D;
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "Опоры - редактровать";
+            this.Load += new System.EventHandler(this.Ends_Editor_Load);
+            this.GroupBox1.ResumeLayout(false);
+            this.GroupBox1.PerformLayout();
+            this.ResumeLayout(false);
 
         }
         internal GroupBox GroupBox1;
