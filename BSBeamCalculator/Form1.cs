@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BSBeamCalculator.model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace BSBeamCalculator
 {
@@ -29,6 +31,9 @@ namespace BSBeamCalculator
 
             //tableLayoutPanel1.ColumnStyles[0].SizeType = SizeType.Absolute;
             //tableLayoutPanel1.ColumnStyles[0].Width = 50;
+
+            Controller.load = "Concentrated";
+            Controller.support = "Fixed-No";
 
             AutoCompleteStringCollection source = new AutoCompleteStringCollection()
             {
@@ -66,8 +71,41 @@ namespace BSBeamCalculator
 
         private void button1_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Hello World");
-            listBox1.Items.Insert(0, "Парагвай");
+            chart1.Series.Clear();
+            chart2.Series.Clear();
+            // собираем данные с формы
+            double lengthBeam = (double)numericUpDown1.Value;
+            double force = (double)numericUpDown2.Value;
+            double startPointForce = (double)numericUpDown3.Value;
+            double endPointForce = (double)numericUpDown4.Value;
+            //double supportBeam = 
+            //double loadBeam = 
+
+            //Controller.support =
+            //Controller.load =
+            Controller.l = lengthBeam;
+            Controller.f = force;
+            Controller.x1 = startPointForce;
+            Controller.x2 = endPointForce;
+
+            // запуск расчета
+            Controller.RunCalculation();
+
+            // результат расчета
+
+            DiagramResult result = Controller.result;
+            chart1.Series.Add("Series1");
+            chart1.Series["Series1"].BorderWidth = 3;
+            chart1.Series["Series1"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            for (int i = 0; i < result.valuesx.Count; i++)
+            { chart1.Series["Series1"].Points.AddXY(result.valuesx[i], result.valuesQ[i]); }
+
+            chart2.Series.Add("Series1");
+            chart2.Series["Series1"].BorderWidth = 3;
+            chart2.Series["Series1"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            for (int i = 0; i < result.valuesx.Count; i++)
+            { chart2.Series["Series1"].Points.AddXY(result.valuesx[i], result.valuesM[i]); }
+
 
         }
 
@@ -90,12 +128,14 @@ namespace BSBeamCalculator
         private void radioButton12_CheckedChanged(object sender, EventArgs e)
         {
             numericUpDown4.Enabled = true;
+            Controller.load = "Controller";
         }
 
         private void radioButton11_CheckedChanged(object sender, EventArgs e)
         {
             numericUpDown4.Enabled = false;
-            numericUpDown4.Value = 1;
+            numericUpDown4.Value = 0;
+            Controller.load = "Uniformly-Distributed";
         }
 
         //void listBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -104,7 +144,24 @@ namespace BSBeamCalculator
         //    MessageBox.Show(selectedCountry);
         //}
 
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            Controller.support = "Fixed-Fixed";
+        }
 
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            Controller.support = "Fixed-No";
+        }
 
+        private void radioButton3_CheckedChanged(object sender, EventArgs e)
+        {
+            Controller.support = "Hinged-Movable";
+        }
+
+        private void radioButton4_CheckedChanged(object sender, EventArgs e)
+        {
+            Controller.support = "Fixed-Movable";
+        }
     }
 }
