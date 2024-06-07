@@ -33,22 +33,7 @@ namespace BSBeamCalculator
             //tableLayoutPanel1.ColumnStyles[0].Width = 50;
 
             Controller.load = "Concentrated";
-            Controller.support = "Fixed-No";
-
-            AutoCompleteStringCollection source = new AutoCompleteStringCollection()
-            {
-                "Кузнецов",
-                "Иванов",
-                "Петров",
-                "Кустов"
-            };
-            textBox1.AutoCompleteCustomSource = source;
-            textBox1.AutoCompleteMode = AutoCompleteMode.Suggest;
-            textBox1.AutoCompleteSource = AutoCompleteSource.CustomSource;
-
-
-            string[] countries = { "Бразилия", "Аргентина", "Чили", "Уругвай", "Колумбия" };
-            listBox1.Items.AddRange(countries);
+            Controller.support = "Fixed-Fixed";
 
         }
 
@@ -96,15 +81,20 @@ namespace BSBeamCalculator
             DiagramResult result = Controller.result;
             chart1.Series.Add("Series1");
             chart1.Series["Series1"].BorderWidth = 3;
+            chart1.ChartAreas[0].AxisX.Minimum = 0;
+            chart1.ChartAreas[0].AxisX.Maximum = lengthBeam;
             chart1.Series["Series1"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            for (int i = 0; i < result.valuesx.Count; i++)
-            { chart1.Series["Series1"].Points.AddXY(result.valuesx[i], result.valuesQ[i]); }
+            for (int i = 0; i < result.pointQ[0].Length; i++)
+            { chart1.Series["Series1"].Points.AddXY(result.pointQ[0][i], result.pointQ[1][i]); }
 
             chart2.Series.Add("Series1");
             chart2.Series["Series1"].BorderWidth = 3;
+            chart2.Series["Series1"].Color = System.Drawing.Color.Red;
+            chart2.ChartAreas[0].AxisX.Minimum = 0;
+            chart2.ChartAreas[0].AxisX.Maximum = lengthBeam;
             chart2.Series["Series1"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            for (int i = 0; i < result.valuesx.Count; i++)
-            { chart2.Series["Series1"].Points.AddXY(result.valuesx[i], result.valuesM[i]); }
+            for (int i = 0; i < result.pointM[0].Length; i++)
+            { chart2.Series["Series1"].Points.AddXY(result.pointM[0][i], result.pointM[1][i]); }
 
 
         }
@@ -116,8 +106,8 @@ namespace BSBeamCalculator
 
         private void button2_Click(object sender, EventArgs e)
         {
-            string selectedCountry = listBox1.SelectedItem.ToString();
-            listBox1.Items.Remove(selectedCountry);
+            chart1.Series.Clear();
+            chart2.Series.Clear();
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -127,15 +117,17 @@ namespace BSBeamCalculator
 
         private void radioButton12_CheckedChanged(object sender, EventArgs e)
         {
-            numericUpDown4.Enabled = true;
-            Controller.load = "Controller";
+            //numericUpDown4.Enabled = true;
+            numericUpDown3.Enabled = false;
+            Controller.load = "Uniformly-Distributed";
         }
 
         private void radioButton11_CheckedChanged(object sender, EventArgs e)
         {
-            numericUpDown4.Enabled = false;
-            numericUpDown4.Value = 0;
-            Controller.load = "Uniformly-Distributed";
+            //numericUpDown4.Enabled = false;
+            //numericUpDown4.Value = 0;
+            numericUpDown3.Enabled = true;
+            Controller.load = "Concentrated";
         }
 
         //void listBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -156,12 +148,22 @@ namespace BSBeamCalculator
 
         private void radioButton3_CheckedChanged(object sender, EventArgs e)
         {
-            Controller.support = "Hinged-Movable";
+            Controller.support = "Pinned-Movable";
         }
 
         private void radioButton4_CheckedChanged(object sender, EventArgs e)
         {
             Controller.support = "Fixed-Movable";
+        }
+
+        private void radioButton5_CheckedChanged(object sender, EventArgs e)
+        {
+            Controller.support = "No-Fixed";
+        }
+
+        private void radioButton6_CheckedChanged(object sender, EventArgs e)
+        {
+            Controller.support = "Movable-Fixed";
         }
     }
 }
