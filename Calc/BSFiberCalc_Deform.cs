@@ -143,8 +143,8 @@ namespace BSFiberConcrete
             My = _My;
             N  = _N;
 
-            rx = 1;
-            ry = 1;
+            rx = 0;
+            ry = 0;
             eps_0 = 1;
 
             Msg = new List<string>();
@@ -400,7 +400,8 @@ namespace BSFiberConcrete
         {
             bool doNextIter = true;
 
-            double kx = 1/rx, ky = 1/ry;
+            double kx = (rx != 0) ? 1/rx : 0,
+                   ky = (ry != 0) ? 1 /ry : 0;
 
             Kx = kx;
             Ky = ky;
@@ -425,8 +426,8 @@ namespace BSFiberConcrete
                 double _e = eps_0 + ky * Zsy[j];
                 epsilon_s[j] = _e;
 
-                double sgm = MatRebar.Eps_StD(_e);
-                sigma_s[j] = sgm;
+                double sgm = MatRebar.Eps_StD( Math.Abs(_e));
+                sigma_s[j] = Math.Sign(_e) * sgm;
 
                 double nju_s = sgm / (MatRebar.Es * _e);
 
@@ -454,9 +455,9 @@ namespace BSFiberConcrete
                 N_s_calc += Fj;
             }
 
-            double Mx_calc = Mx_b_calc + Mx_s_calc;
-            double My_calc =  My_b_calc + My_s_calc;
-            double N_calc = N_b_calc + N_s_calc;
+            double Mx_calc = Math.Abs(Mx_b_calc + Mx_s_calc);
+            double My_calc =  Math.Abs(My_b_calc + My_s_calc);
+            double N_calc = Math.Abs(N_b_calc + N_s_calc);
 
             if (Math.Abs(Mx - Mx_calc) <= BSHelper.Epsilon &&
                 Math.Abs(My - My_calc) <= BSHelper.Epsilon && 

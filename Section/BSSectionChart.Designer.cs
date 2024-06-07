@@ -69,7 +69,7 @@
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.730769F));
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 93.26923F));
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 104F));
-            this.tableLayoutPanel.Size = new System.Drawing.Size(956, 625);
+            this.tableLayoutPanel.Size = new System.Drawing.Size(899, 701);
             this.tableLayoutPanel.TabIndex = 0;
             // 
             // tableLayoutPanel2
@@ -80,12 +80,12 @@
             this.tableLayoutPanel2.Controls.Add(this.btnSave, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.btnDel, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.btnAdd, 0, 0);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 523);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 599);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(124, 99);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(122, 99);
             this.tableLayoutPanel2.TabIndex = 5;
             // 
             // btnSave
@@ -102,7 +102,7 @@
             // btnDel
             // 
             this.btnDel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnDel.Location = new System.Drawing.Point(65, 3);
+            this.btnDel.Location = new System.Drawing.Point(64, 3);
             this.btnDel.Name = "btnDel";
             this.btnDel.Size = new System.Drawing.Size(41, 35);
             this.btnDel.TabIndex = 3;
@@ -130,7 +130,7 @@
             this.chart.Dock = System.Windows.Forms.DockStyle.Fill;
             legend1.Name = "Legend1";
             this.chart.Legends.Add(legend1);
-            this.chart.Location = new System.Drawing.Point(140, 38);
+            this.chart.Location = new System.Drawing.Point(131, 43);
             this.chart.Name = "chart";
             series1.BorderWidth = 3;
             series1.ChartArea = "ChartArea1";
@@ -147,13 +147,13 @@
             series2.Name = "Армирование";
             this.chart.Series.Add(series1);
             this.chart.Series.Add(series2);
-            this.chart.Size = new System.Drawing.Size(782, 479);
+            this.chart.Size = new System.Drawing.Size(734, 550);
             this.chart.TabIndex = 0;
             this.chart.Click += new System.EventHandler(this.chart_Click);
             // 
             // btnDraw
             // 
-            this.btnDraw.Location = new System.Drawing.Point(140, 523);
+            this.btnDraw.Location = new System.Drawing.Point(131, 599);
             this.btnDraw.Name = "btnDraw";
             this.btnDraw.Size = new System.Drawing.Size(75, 23);
             this.btnDraw.TabIndex = 1;
@@ -171,9 +171,9 @@
             this.yDataGridViewTextBoxColumn});
             this.dataGrid.DataSource = this.pointBS;
             this.dataGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGrid.Location = new System.Drawing.Point(3, 38);
+            this.dataGrid.Location = new System.Drawing.Point(3, 43);
             this.dataGrid.Name = "dataGrid";
-            this.dataGrid.Size = new System.Drawing.Size(131, 479);
+            this.dataGrid.Size = new System.Drawing.Size(122, 550);
             this.dataGrid.TabIndex = 2;
             // 
             // numDataGridViewTextBoxColumn
@@ -205,7 +205,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(956, 625);
+            this.ClientSize = new System.Drawing.Size(899, 701);
             this.Controls.Add(this.tableLayoutPanel);
             this.Name = "BSSectionChart";
             this.Text = "Сечение";

@@ -116,7 +116,7 @@ namespace BSFiberConcrete
                 numRandomEccentricity.Value = (decimal)m_BSLoadData.Fiber.e_tot;
 
                 LoadRectangle(m_Iniv["b"], m_Iniv["h"]);
-
+                
                 cmbBetonClass.DataSource = BSFiberLib.BetonList;
                 cmbBetonClass.DisplayMember = "Name";
                 cmbBetonClass.ValueMember = "Name";
@@ -414,6 +414,11 @@ namespace BSFiberConcrete
             dataGridSection.DataSource = m_Table;
             m_Table.Rows.Add( _b, _h);
 
+            foreach (DataGridViewColumn column in dataGridSection.Columns)
+            {
+                column.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+
             picBeton.Image = global::BSFiberConcrete.Properties.Resources.FiberBeton;
             picBeton.SizeMode = PictureBoxSizeMode.StretchImage;
         }
@@ -457,7 +462,12 @@ namespace BSFiberConcrete
                 dataGridSection.Columns[5].Visible = false;
                 picBeton.Image = global::BSFiberConcrete.Properties.Resources.LBeam;
             }
-            
+
+            foreach (DataGridViewColumn column in dataGridSection.Columns)
+            {
+                column.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+
             picBeton.SizeMode = PictureBoxSizeMode.StretchImage;
         }
 
@@ -489,6 +499,11 @@ namespace BSFiberConcrete
             dataGridSection.DataSource = m_Table;
             m_Table.Rows.Add(m_Iniv["r1"], m_Iniv["r2"]);
 
+            foreach (DataGridViewColumn column in dataGridSection.Columns)
+            {
+                column.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+
             picBeton.Image = global::BSFiberConcrete.Properties.Resources.Ring;
         }
 
@@ -510,7 +525,12 @@ namespace BSFiberConcrete
 
             dataGridSection.DataSource = m_Table;
             m_Table.Rows.Add(m_Iniv["bf"], m_Iniv["hf"], m_Iniv["bw"], m_Iniv["hw"], m_Iniv["b1f"], m_Iniv["h1f"]);
-            
+
+            foreach (DataGridViewColumn column in dataGridSection.Columns)
+            {
+                column.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+
             picBeton.Image = global::BSFiberConcrete.Properties.Resources.IBeam;
             picBeton.SizeMode = PictureBoxSizeMode.StretchImage;
         }
@@ -875,11 +895,7 @@ namespace BSFiberConcrete
             }
 
             try
-            {
-                // Начало координат:
-                double X0 = c_b / 2.0;
-                double Y0 = c_h / 2.0;
-
+            {                
                 BSFiberCalc_Deform fiberCalc_Deform = new BSFiberCalc_Deform(_Mx: c_Mx, _My: c_My, _N: c_N);
 
                 // построить сетку сечения
@@ -887,6 +903,10 @@ namespace BSFiberConcrete
                 fiberCalc_Deform.CG = CG;
                 fiberCalc_Deform.triAreas = triAreas;
                 fiberCalc_Deform.triCGs = triCGs;
+
+                // Начало координат:
+                double X0 = CG.X;
+                double Y0 = CG.Y;
 
                 // задать тип арматуры
                 fiberCalc_Deform.MatRebar = new BSMatRod(cEs)
@@ -945,7 +965,7 @@ namespace BSFiberConcrete
                             LTType = RebarLTType.Longitudinal,
                             D = rD_lng[idx],
                             Z_X = rdYdX[idx, 0] - X0,
-                            Z_Y = -1 * (rdYdX[idx, 1] - Y0),
+                            Z_Y = rdYdX[idx, 1] - Y0,
                             MatRod = fiberCalc_Deform.MatRebar,
                             Nu = 1.0 // на первой итерации задаем 1
                         };
@@ -1190,9 +1210,9 @@ namespace BSFiberConcrete
         private void btnSection_Click(object sender, EventArgs e)
         {
             BSSectionChart sectionChart = new BSSectionChart();
-            sectionChart.m_BeamSection = m_BeamSection;
+            sectionChart.m_BeamSection = m_BeamSectionReport;
 
-            var sz = BeamWidtHeight(out double b, out double h );
+            var sz = BeamWidtHeight(out double b, out double h);
 
             sectionChart.Wdth = (float)b;
             sectionChart.Hght = (float)h;
@@ -1308,6 +1328,14 @@ namespace BSFiberConcrete
             }
         }
 
-        
+        private void dataGridSection_MouseClick(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void dataGridSection_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }
