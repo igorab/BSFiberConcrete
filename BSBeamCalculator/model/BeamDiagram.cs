@@ -125,28 +125,16 @@ namespace BSBeamCalculator.model
         }
 
         /// <summary>
-        /// тестовая функция для определения момента и силы для конкретного simpleBeamCase
+        /// Функция для определения момента и силы для конкретного simpleBeamCase
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="length"></param>
-        /// <param name="c1"></param>
-        /// <param name="c2"></param>
-        /// <param name="F"></param>
-        /// <returns></returns>
+        /// <param name="length">Длина балки</param>
+        /// <param name="c1">начальная точка приложения силы</param>
+        /// <param name="c2">конечная точка приложения силы</param>
+        /// <param name="F">значение силы</param>
+        /// <returns>Результат в формате [ xQ, Q, xM, M]</returns>
         /// <exception cref="Exception"></exception>
         public double[][] CalculateValuesForDiagram(double length, double c1, double c2, double F)
         {
-            // Pinned-Movable support
-            // Concentrated load 
-
-            double[] xQ = new double[1];
-            double[] Q = new double[1];
-            double[] xM = new double[1];
-            double[] M = new double[1];
-
-            double[][] result = new double[1][];
-
-            string simpleBeamType = supportBeamType + ':' + loadBeamType;
             double a = c1;
             double b = length - c1;
             double al = a / length;
@@ -156,7 +144,6 @@ namespace BSBeamCalculator.model
             double R2 = 0;
             double M1 = 0;
             double M2 = 0;
-
 
             switch (supportBeamType)
             {
@@ -176,30 +163,10 @@ namespace BSBeamCalculator.model
                         R2 = F * length / 2;
                         M1 = F * Math.Pow(length, 2) / 12;
                         M2 = F * Math.Pow(length, 2) / 12;
-
-                        //// Определение характерных точек для построения эпюры сил
-                        //xQ = new double[] { 0, 0, length, length };
-                        //Q = new double[] { 0, R1, -R2, 0 };
-
-                        //// Точки для эпюры моментов
-                        //int n = 100; // кол-во точек
-                        //xM = new double[n];
-                        //M = new double[n];
-                        //// шаг точек
-                        //double m = length / (n - 1);
-                        //for (int i = 0; i < xM.Length; i++)
-                        //{
-                        //    double tmpX = i * m;
-                        //    double tmpM = (M1 - R1 * tmpX + F * tmpX * tmpX / 2);
-                        //    xM[i] = tmpX;
-                        //    M[i] = tmpM;
-                        //}
-                        //result = new double[4][] { xQ, Q, xM, M };
                     }
                     break;
 
                 case "Fixed-No":
-
                     if (loadBeamType == "Concentrated")
                     {
                         // Определение реакций:
@@ -207,11 +174,6 @@ namespace BSBeamCalculator.model
                         M1 = F * a;
                         R2 = 0;
                         M2 = 0;
-
-                        //xQ = new double[] { 0, a, a, length };
-                        //Q = new double[] { R1, R1, 0,0 };
-                        //xM = new double[] { 0, a, length };
-                        //M = new double[] { M1, 0, 0 };
                     }
                     else if (loadBeamType == "Uniformly-Distributed")
                     {
@@ -220,28 +182,10 @@ namespace BSBeamCalculator.model
                         R2 = 0;
                         M1 = F * Math.Pow(length,2) /2;
                         M2 = 0;
-                        //xQ = new double[] { 0, length };
-                        //Q = new double[] { R1, 0};
-
-                        //// Точки для эпюры моментов
-                        //int n = 100; // кол-во точек
-                        //xM = new double[n];
-                        //M = new double[n];
-                        //// шаг точек
-                        //double m = length / (n - 1);
-                        //for (int i = 0; i < xM.Length; i++)
-                        //{
-                        //    double tmpX = i * m;
-                        //    double tmpM = (M1 - R1 * tmpX + F * tmpX * tmpX / 2);
-                        //    xM[i] = tmpX;
-                        //    M[i] = tmpM;
-                        //}
-
-                        //result = new double[4][] { xQ, Q, xM, M };
                     }    
                     break;
-                case "No-Fixed":
 
+                case "No-Fixed":
                     if (loadBeamType == "Concentrated")
                     {
                         // Определение реакций:
@@ -257,28 +201,6 @@ namespace BSBeamCalculator.model
                         R2 = F * length;
                         M1 = 0;
                         M2 = F * Math.Pow(length, 2) / 2;
-
-                        //xQ = new double[] { 0, length };
-                        //Q = new double[] { R1, 0 };
-
-                        //// Точки для эпюры моментов
-                        //int n = 100; // кол-во точек
-                        //xM = new double[n];
-                        //M = new double[n];
-                        //// шаг точек
-                        //double m = length / (n - 1);
-                        //for (int i = 0; i < xM.Length; i++)
-                        //{
-                        //    double tmpX = i * m;
-                        //    double tmpM = (M1 - R1 * tmpX + F * tmpX * tmpX / 2);
-                        //    xM[i] = tmpX;
-                        //    M[i] = tmpM;
-                        //}
-
-                        //Array.Reverse(xQ);
-                        //Array.Reverse(Q);
-                        //Array.Reverse(xM);
-                        //Array.Reverse(M);
                     }
                     break;
 
@@ -290,10 +212,6 @@ namespace BSBeamCalculator.model
                         R2 = F * Math.Pow(al, 2) * (3 - al) / 2;
                         M1 = F * a * b * (length + b)/(2 * Math.Pow(length, 2));
                         M2 = 0;
-                        //xQ = new double[] { 0, a, a, length };
-                        //Q = new double[] { R1, R1, R1 - F, R1 - F };
-                        //xM = new double[] { 0, a, length };
-                        //M = new double[] { M1, M1 - R1 * a, 0 };
                     }
                     else if (loadBeamType == "Uniformly-Distributed")
                     {
@@ -302,26 +220,9 @@ namespace BSBeamCalculator.model
                         R2 = F * length * 3 / 8;
                         M1 = F * Math.Pow(length, 2) / 8;
                         M2 = 0;
-
-                        //// Определение характерных точек для построения эпюры сил
-                        //xQ = new double[] { 0, length };
-                        //Q = new double[] { R1, -R2 };
-
-                        //// Точки для эпюры моментов
-                        //int n = 100; // кол-во точек
-                        //xM = new double[n];
-                        //M = new double[n];
-                        //// шаг точек
-                        //double m = length / (n - 1);
-                        //for (int i = 0; i < xM.Length; i++)
-                        //{
-                        //    double tmpX = i * m;
-                        //    double tmpM = (M1 - R1 * tmpX + F * tmpX * tmpX / 2);
-                        //    xM[i] = tmpX;
-                        //    M[i] = tmpM;
-                        //}
                     }
                     break;
+
                 case "Movable-Fixed":
                     if (loadBeamType == "Concentrated")
                     {
@@ -330,10 +231,6 @@ namespace BSBeamCalculator.model
                         R2 = F * bl * (3 - Math.Pow(bl, 2)) / 2;
                         M1 = 0;
                         M2 = F * a * b * (length + b) / (2 * Math.Pow(length, 2));
-                        //xQ = new double[] { 0, a, a, length };
-                        //Q = new double[] { R1, R1, R1 - F, R1 - F };
-                        //xM = new double[] { 0, a, length };
-                        //M = new double[] { M1, M1 - R1 * a, 0 };
                     }
                     else if (loadBeamType == "Uniformly-Distributed")
                     {
@@ -342,30 +239,9 @@ namespace BSBeamCalculator.model
                         R2 = F * length * 5 / 8;
                         M1 = 0;
                         M2 = F * Math.Pow(length, 2) / 8;
-                        //// Определение характерных точек для построения эпюры сил
-                        //xQ = new double[] { 0, length };
-                        //Q = new double[] { R1, -R2 };
-
-                        //// Точки для эпюры моментов
-                        //int n = 100; // кол-во точек
-                        //xM = new double[n];
-                        //M = new double[n];
-                        //// шаг точек
-                        //double m = length / (n - 1);
-                        //for (int i = 0; i < xM.Length; i++)
-                        //{
-                        //    double tmpX = i * m;
-                        //    double tmpM = (M1 - R1 * tmpX + F * tmpX * tmpX / 2);
-                        //    xM[i] = tmpX;
-                        //    M[i] = tmpM;
-                        //}
-
-                        ////Array.Reverse(xQ);
-                        //Array.Reverse(Q);
-                        ////Array.Reverse(xM);
-                        //Array.Reverse(M);
                     }
                     break;
+
                 case "Pinned-Movable":
                     if (loadBeamType == "Concentrated")
                     {
@@ -374,32 +250,6 @@ namespace BSBeamCalculator.model
                         R2 = F * c1 / length;
                         M1 = 0;
                         M2 = 0;
-                        //xQ = new double[] { 0, c1, c1, length };
-                        //Q = new double[] { R1, R1, R1 - F, R1 - F };
-                        //xM = new double[] { 0, c1, length };
-                        //M = new double[] { -R1 * 0, -R1 * c1,- R2 * (length - length) };
-
-
-                        //double Q;
-                        //double M;
-                        //for (int i = 0; i < x.Count(); i++)
-                        //{
-                        //    double tmpX = x[i];
-                        //    if (0 <= tmpX && tmpX <= c1)
-                        //    {
-                        //        Q = R1;
-                        //        M = -R1 * tmpX;
-                        //    }
-                        //    else if (tmpX > c1 && tmpX <= length)
-                        //    {
-                        //        Q = R1 - F;
-                        //        M = -R2 * (length - tmpX);
-                        //    }
-                        //    else
-                        //    { throw new Exception("Программная ошибка. Некорректно опреджелены точки для построения графика"); }
-                        //    result[1][i] = Q;
-                        //    result[2][i] = M;
-                        //}
                     }
                     if (loadBeamType == "Uniformly-Distributed")
                     {
@@ -408,27 +258,9 @@ namespace BSBeamCalculator.model
                         R2 = F * length / 2;
                         M1 = 0;
                         M2 = 0;
-                        //// Определение характерных точек для построения эпюры сил
-                        //xQ = new double[] { 0, length };
-                        //Q = new double[] { R1, -R2 };
-
-                        //// Точки для эпюры моментов
-                        //int n = 100; // кол-во точек
-                        //xM = new double[n];
-                        //M = new double[n];
-                        //// шаг точек
-                        //double m = length / (n - 1);
-                        //for (int i = 0; i < xM.Length; i++)
-                        //{
-                        //    double tmpX = i * m;
-                        //    double tmpM = (R1 * tmpX - F * tmpX * tmpX / 2) * -1;
-                        //    xM[i] = tmpX;
-                        //    M[i] = tmpM;
-                        //}
                     }
                     break;
             }
-
             if (loadBeamType == "Concentrated")
             {
                 double[] load = new double[5] { F, R1, R2, M1, M2, };
@@ -443,9 +275,6 @@ namespace BSBeamCalculator.model
             }
             else
             { throw new Exception("Программная ошибка. Не предусмотренная нагрузка на балку."); }
-
-            //return new double[4][] { xQ, Q, xM, M };
-            //return result;
         }
 
 
@@ -479,10 +308,9 @@ namespace BSBeamCalculator.model
         }
 
 
-
         /// <summary>
         ///  Метод для расчета значений силы и моменета для построения эпюр.
-        ///  Рассматривается общий случай сосредлоточенной нагрузки
+        ///  Рассматривается общий случай распределенной нагрузки
         /// </summary>
         /// <param name="load"> массив значений рекаций [F, R1, R2, M1, M2]</param>
         /// <param name="length">Массив длин [Length, a, b ]</param>
@@ -528,8 +356,10 @@ namespace BSBeamCalculator.model
     {
         public double[][] pointQ;
         public double[][] pointM;
-        public List<double> maxPointQ;
-        public List<double> maxPointM;
+        public double maxM;
+        public double minM;
+        public double maxAbsQ;
+
 
         /// <summary>
         /// 
@@ -548,8 +378,13 @@ namespace BSBeamCalculator.model
                 values_xQ_xM[2],
                 values_xQ_xM[3]
             };
-            maxPointQ = FindeMaxAbsValue(new double[][] { values_xQ_xM[0], values_xQ_xM[1] });
-            maxPointM= FindeMaxAbsValue(new double[][] { values_xQ_xM[2], values_xQ_xM[3] });
+            //maxPointQ = FindeMaxAbsValue(new double[][] { values_xQ_xM[0], values_xQ_xM[1] });
+            //maxPointM= FindeMaxAbsValue(new double[][] { values_xQ_xM[2], values_xQ_xM[3] });
+            List<double> maxAbsPointQ = FindeMaxAbsValue(new double[][] { values_xQ_xM[0], values_xQ_xM[1] });
+            maxAbsQ = maxAbsPointQ[1];
+            maxM = values_xQ_xM[3].Max();
+            minM = values_xQ_xM[3].Min();
+
         }
 
         /// <summary>

@@ -62,7 +62,6 @@ namespace BSBeamCalculator
             double lengthBeam = (double)numericUpDown1.Value;
             double force = (double)numericUpDown2.Value;
             double startPointForce = (double)numericUpDown3.Value;
-            double endPointForce = (double)numericUpDown4.Value;
             //double supportBeam = 
             //double loadBeam = 
 
@@ -71,7 +70,7 @@ namespace BSBeamCalculator
             Controller.l = lengthBeam;
             Controller.f = force;
             Controller.x1 = startPointForce;
-            Controller.x2 = endPointForce;
+            Controller.x2 = 0;
 
             // запуск расчета
             Controller.RunCalculation();
@@ -96,6 +95,9 @@ namespace BSBeamCalculator
             for (int i = 0; i < result.pointM[0].Length; i++)
             { chart2.Series["Series1"].Points.AddXY(result.pointM[0][i], result.pointM[1][i]); }
 
+            label9.Text = result.maxM.ToString();
+            label12.Text = result.minM.ToString();
+            label18.Text = Math.Abs(result.maxAbsQ).ToString();
 
         }
 
@@ -108,6 +110,9 @@ namespace BSBeamCalculator
         {
             chart1.Series.Clear();
             chart2.Series.Clear();
+            label9.Text = "0";
+            label12.Text = "0";
+            label18.Text = "0";
         }
 
         private void button3_Click(object sender, EventArgs e)
