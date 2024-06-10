@@ -826,6 +826,25 @@ namespace BSFiberConcrete
         [DisplayName("Расчет по прочности нормальных сечений на основе нелинейной деформационной модели")]
         private void btnCalc_Deform_Click(object sender, EventArgs e)
         {
+            int deformDiagram = cmbDeformDiagram.SelectedIndex;
+            BSMatFiber material;
+
+            material = new BSMatFiber(numYft.Value, numYb.Value, numYb1.Value, numYb2.Value, numYb3.Value, numYb5.Value)
+            {
+                Efb = (double)numEfb.Value,                
+                Nu_fb = 1.0,
+                Rfbn = (double)numRfb_n.Value,
+                Rfbtn = (double)numRfbt_n.Value,
+                Rfbt2n = (double)numRfbt2n.Value,                
+                Rfbt3n = (double)numRfbt3n.Value,
+                Eps_fb0 = (double)numEps_fb0.Value,
+                Eps_fb2 = (double)numEps_fb2.Value,
+                Eps_fbt2 = (double)numEps_fbt2.Value,
+                Eps_fbt3 = (double)numEps_fbt3.Value,
+                Eps_fb_ult = (double) numEps_fb_ult.Value,
+                Eps_fbt_ult = (double)numEps_fbt_ult.Value
+            };
+
             // Beton bt = Lib.BSQuery.BetonTableFind(cmbBfn.Text);
 
             // Настройки из файла Templates\BSFiberParams.json
@@ -846,8 +865,8 @@ namespace BSFiberConcrete
             double c_eps_b1_red = b2.eps_b1_red;
             double c_eps_b2 = b2.eps_b2;
 
-            double c_h = 0, //60 см 
-                   c_b = 0; //30 см
+            double c_h = 0, // см 
+                   c_b = 0; // см
            
             double c_L = Convert.ToDouble(tbLength.Text); // см
             string cRCls = r2.Cls_s;
@@ -977,7 +996,7 @@ namespace BSFiberConcrete
                     m_Reinforcement.Add("Площадь арматуры, см2", area_total);
                 };
 
-                BSMatFiber material = new BSMatFiber(cEb)
+                material = new BSMatFiber(cEb)
                 {
                     BTCls = cBtCls,
                     Nu_fb = 1,
@@ -987,7 +1006,9 @@ namespace BSFiberConcrete
                     Rfbt3 = 0,
                     e_b1_red = c_eps_b1_red,
                     e_b1 = c_eps_b1,
-                    e_b2 = c_eps_b2
+                    e_b2 = c_eps_b2,
+                    Eps_fb_ult = 0.002,
+                    Eps_fbt_ult = 0.0001
                 };
 
                 // задать свойства бетона
@@ -1230,6 +1251,11 @@ namespace BSFiberConcrete
             string pathToSvgFile = "";
             double[] sz = BeamWidtHeight(out double b, out double h);
 
+            BSMesh.Nx = (int) numMeshN.Value;
+            BSMesh.Ny = (int)numMeshN.Value;
+            BSMesh.MinAngle = (double) numTriAngle.Value;
+            Tri.MinAngle = (double)numTriAngle.Value;
+
             BSMesh.FilePath = Path.Combine(Environment.CurrentDirectory, "Templates");
             Tri.FilePath = BSMesh.FilePath;
             BeamSection T = BeamSection.TBeam | BeamSection.IBeam | BeamSection.LBeam;
@@ -1245,8 +1271,7 @@ namespace BSFiberConcrete
             else if (m_BeamSection == BeamSection.Ring)
             {
                 CG = new TriangleNet.Geometry.Point(0, 0);
-
-                //pathToSvgFile = BSMesh.GenerateCircle(b, CG, h);
+                
                 double R = sz[1];
                 double r = sz[0];
                 if (r > R)

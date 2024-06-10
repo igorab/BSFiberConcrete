@@ -47,8 +47,8 @@ namespace BSFiberConcrete
 
         private BSBeam m_Beam { get; set; }
 
-        private BSMatFiber m_Fiber = new BSMatFiber();
-        private BSMatRod m_Rod = new BSMatRod();
+        private BSMatFiber m_Fiber;
+        private BSMatRod m_Rod;
 
         // расчетная схема сечения
         private int m_Y_N = 1; // разбиение по высоте
@@ -70,6 +70,9 @@ namespace BSFiberConcrete
 
         [DisplayName("Кривизна 1/Ry, 1/см")]
         public double Ky { get; private set; }
+
+        [DisplayName("Максимальная относительная деформация")]
+        public double e_fb_calc { get; private set; }
 
         // жесткостные характеристики
         private const int I1 = 0, I2 = 1, I3 = 2;
@@ -146,6 +149,9 @@ namespace BSFiberConcrete
             rx = 0;
             ry = 0;
             eps_0 = 1;
+
+            m_Fiber = new BSMatFiber();
+            m_Rod = new BSMatRod();
 
             Msg = new List<string>();
         }
@@ -583,14 +589,16 @@ namespace BSFiberConcrete
                 if (!doNextIter) 
                     break;
             }
-            
-            AddToResult( "eps_0", eps_0);
+
+            e_fb_calc = epsilon_fb.AbsoluteMaximum();
+
+            AddToResult("eps_0", eps_0);
             AddToResult("rx", rx);
             AddToResult("Kx", Kx);
             AddToResult("ry", ry);
             AddToResult("Ky", Ky);
-
-            double e_fb_calc = epsilon_fb.AbsoluteMaximum();
+            AddToResult("e_fb_calc", e_fb_calc);
+            
 
             bool res_fb = e_fb_calc <=  m_Fiber.Eps_fb_ult;            
             if (res_fb)
