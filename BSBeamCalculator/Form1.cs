@@ -80,7 +80,7 @@ namespace BSBeamCalculator
 
             DiagramResult result = Controller.result;
             chart1.Series.Add("Series1");
-            chart1.Series["Series1"].BorderWidth = 3;
+            chart1.Series["Series1"].BorderWidth = 4;
             chart1.ChartAreas[0].AxisX.Minimum = 0;
             chart1.ChartAreas[0].AxisX.Maximum = lengthBeam;
             chart1.Series["Series1"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
@@ -88,7 +88,7 @@ namespace BSBeamCalculator
             { chart1.Series["Series1"].Points.AddXY(result.pointQ[0][i], result.pointQ[1][i]); }
 
             chart2.Series.Add("Series1");
-            chart2.Series["Series1"].BorderWidth = 3;
+            chart2.Series["Series1"].BorderWidth = 4;
             chart2.Series["Series1"].Color = System.Drawing.Color.Red;
             chart2.ChartAreas[0].AxisX.Minimum = 0;
             chart2.ChartAreas[0].AxisX.Maximum = lengthBeam;

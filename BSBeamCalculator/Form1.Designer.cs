@@ -32,10 +32,10 @@ namespace BSBeamCalculator
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea11 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend11 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea12 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend12 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -60,7 +60,6 @@ namespace BSBeamCalculator
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.radioButton12 = new System.Windows.Forms.RadioButton();
-            this.radioButton11 = new System.Windows.Forms.RadioButton();
             this.panel4 = new System.Windows.Forms.Panel();
             this.numericUpDown4 = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
@@ -68,12 +67,17 @@ namespace BSBeamCalculator
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.radioButton11 = new System.Windows.Forms.RadioButton();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.button2 = new System.Windows.Forms.Button();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -88,21 +92,23 @@ namespace BSBeamCalculator
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
+            this.panel5.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
-            this.panel5.SuspendLayout();
+            this.panel6.SuspendLayout();
+            this.tableLayoutPanel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45.34231F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 54.65769F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.71942F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.28058F));
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.groupBox1, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.button2, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.panel5, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.groupBox1, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.panel6, 1, 1);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(-1, 1);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
@@ -115,8 +121,8 @@ namespace BSBeamCalculator
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.ColumnCount = 2;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65.06329F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34.93671F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60.4119F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 39.5881F));
             this.tableLayoutPanel2.Controls.Add(this.panel3, 1, 1);
             this.tableLayoutPanel2.Controls.Add(this.groupBox2, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.groupBox3, 1, 0);
@@ -126,16 +132,16 @@ namespace BSBeamCalculator
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 52.65701F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 47.34299F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(395, 425);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(437, 425);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // panel3
             // 
             this.panel3.Controls.Add(this.button4);
             this.panel3.Controls.Add(this.button3);
-            this.panel3.Location = new System.Drawing.Point(260, 226);
+            this.panel3.Location = new System.Drawing.Point(267, 226);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(132, 36);
+            this.panel3.Size = new System.Drawing.Size(167, 196);
             this.panel3.TabIndex = 0;
             // 
             // button4
@@ -306,7 +312,7 @@ namespace BSBeamCalculator
             // 
             this.groupBox3.Controls.Add(this.panel2);
             this.groupBox3.Controls.Add(this.label3);
-            this.groupBox3.Location = new System.Drawing.Point(260, 3);
+            this.groupBox3.Location = new System.Drawing.Point(267, 3);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(132, 212);
             this.groupBox3.TabIndex = 1;
@@ -391,19 +397,6 @@ namespace BSBeamCalculator
             this.radioButton12.Text = "Распределенная нагрузка";
             this.radioButton12.UseVisualStyleBackColor = true;
             this.radioButton12.CheckedChanged += new System.EventHandler(this.radioButton12_CheckedChanged);
-            // 
-            // radioButton11
-            // 
-            this.radioButton11.AutoSize = true;
-            this.radioButton11.Checked = true;
-            this.radioButton11.Location = new System.Drawing.Point(19, 20);
-            this.radioButton11.Name = "radioButton11";
-            this.radioButton11.Size = new System.Drawing.Size(144, 17);
-            this.radioButton11.TabIndex = 0;
-            this.radioButton11.TabStop = true;
-            this.radioButton11.Text = " Сосредоточенная сила";
-            this.radioButton11.UseVisualStyleBackColor = true;
-            this.radioButton11.CheckedChanged += new System.EventHandler(this.radioButton11_CheckedChanged);
             // 
             // panel4
             // 
@@ -492,53 +485,23 @@ namespace BSBeamCalculator
             this.label4.TabIndex = 0;
             this.label4.Text = "Величина";
             // 
-            // groupBox1
+            // radioButton11
             // 
-            this.groupBox1.Controls.Add(this.chart2);
-            this.groupBox1.Controls.Add(this.chart1);
-            this.groupBox1.Location = new System.Drawing.Point(407, 3);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(481, 425);
-            this.groupBox1.TabIndex = 2;
-            this.groupBox1.TabStop = false;
-            // 
-            // chart2
-            // 
-            chartArea11.Name = "ChartArea1";
-            this.chart2.ChartAreas.Add(chartArea11);
-            legend11.Name = "Legend1";
-            this.chart2.Legends.Add(legend11);
-            this.chart2.Location = new System.Drawing.Point(6, 204);
-            this.chart2.Name = "chart2";
-            this.chart2.Size = new System.Drawing.Size(475, 221);
-            this.chart2.TabIndex = 1;
-            this.chart2.Text = "chart2";
-            // 
-            // chart1
-            // 
-            chartArea12.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea12);
-            legend12.Name = "Legend1";
-            this.chart1.Legends.Add(legend12);
-            this.chart1.Location = new System.Drawing.Point(6, 8);
-            this.chart1.Name = "chart1";
-            this.chart1.Size = new System.Drawing.Size(481, 195);
-            this.chart1.TabIndex = 0;
-            this.chart1.Text = "chart1";
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(407, 435);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "Сбросить";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.radioButton11.AutoSize = true;
+            this.radioButton11.Checked = true;
+            this.radioButton11.Location = new System.Drawing.Point(19, 20);
+            this.radioButton11.Name = "radioButton11";
+            this.radioButton11.Size = new System.Drawing.Size(144, 17);
+            this.radioButton11.TabIndex = 0;
+            this.radioButton11.TabStop = true;
+            this.radioButton11.Text = " Сосредоточенная сила";
+            this.radioButton11.UseVisualStyleBackColor = true;
+            this.radioButton11.CheckedChanged += new System.EventHandler(this.radioButton11_CheckedChanged);
             // 
             // panel5
             // 
             this.panel5.Controls.Add(this.button1);
+            this.panel5.Controls.Add(this.button2);
             this.panel5.Location = new System.Drawing.Point(3, 435);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(398, 100);
@@ -554,6 +517,96 @@ namespace BSBeamCalculator
             this.button1.Text = "Расчитать";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(317, 32);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 3;
+            this.button2.Text = "Сбросить";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.chart2);
+            this.groupBox1.Controls.Add(this.chart1);
+            this.groupBox1.Location = new System.Drawing.Point(446, 3);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(435, 425);
+            this.groupBox1.TabIndex = 2;
+            this.groupBox1.TabStop = false;
+            // 
+            // chart2
+            // 
+            chartArea1.Name = "ChartArea1";
+            this.chart2.ChartAreas.Add(chartArea1);
+            this.chart2.Location = new System.Drawing.Point(6, 204);
+            this.chart2.Name = "chart2";
+            this.chart2.Size = new System.Drawing.Size(429, 180);
+            this.chart2.TabIndex = 1;
+            this.chart2.Text = "chart2";
+            title1.Name = "Title1";
+            title1.Text = "Момент";
+            this.chart2.Titles.Add(title1);
+            // 
+            // chart1
+            // 
+            chartArea2.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea2);
+            this.chart1.Location = new System.Drawing.Point(6, 8);
+            this.chart1.Name = "chart1";
+            this.chart1.Size = new System.Drawing.Size(429, 195);
+            this.chart1.TabIndex = 0;
+            this.chart1.Text = "chart1";
+            title2.Name = "Title1";
+            title2.Text = "Сила";
+            this.chart1.Titles.Add(title2);
+            // 
+            // panel6
+            // 
+            this.panel6.Controls.Add(this.tableLayoutPanel4);
+            this.panel6.Location = new System.Drawing.Point(446, 435);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(442, 100);
+            this.panel6.TabIndex = 5;
+            // 
+            // tableLayoutPanel4
+            // 
+            this.tableLayoutPanel4.ColumnCount = 2;
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.27007F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.72993F));
+            this.tableLayoutPanel4.Controls.Add(this.label7, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.label8, 0, 1);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(168, 3);
+            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
+            this.tableLayoutPanel4.RowCount = 2;
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(274, 52);
+            this.tableLayoutPanel4.TabIndex = 2;
+            // 
+            // label7
+            // 
+            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(3, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(128, 26);
+            this.label7.TabIndex = 0;
+            this.label7.Tag = "ывыв";
+            this.label7.Text = "Максимальный момент";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label8.Location = new System.Drawing.Point(3, 26);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(128, 13);
+            this.label8.TabIndex = 2;
+            this.label8.Text = "Минимальный момент";
             // 
             // Form1
             // 
@@ -584,10 +637,13 @@ namespace BSBeamCalculator
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
+            this.panel5.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chart2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
-            this.panel5.ResumeLayout(false);
+            this.panel6.ResumeLayout(false);
+            this.tableLayoutPanel4.ResumeLayout(false);
+            this.tableLayoutPanel4.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -632,6 +688,10 @@ namespace BSBeamCalculator
         private System.Windows.Forms.DataVisualization.Charting.Chart chart2;
         private RadioButton radioButton6;
         private RadioButton radioButton5;
+        private Panel panel6;
+        private Label label7;
+        private TableLayoutPanel tableLayoutPanel4;
+        private Label label8;
     }
 }
 
