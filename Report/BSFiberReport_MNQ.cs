@@ -21,6 +21,8 @@ namespace BSFiberConcrete
             m_Coeffs = new Dictionary<string, double>();
             m_PhysParams = new Dictionary<string, double>();
             m_CalcResults = new Dictionary<string, double>();
+
+            ReportName = typeof(BSFiberCalc_MNQ).GetCustomAttribute<DisplayNameAttribute>().DisplayName;
         }
 
         public virtual void InitFromFiberCalc(BSFiberCalc_MNQ _fiberCalc)
@@ -28,9 +30,7 @@ namespace BSFiberConcrete
             m_FiberCalc = _fiberCalc;
             m_Messages = _fiberCalc.Msg;
             m_Efforts = new Dictionary<string, double> (_fiberCalc.m_Efforts);
-
-            ReportName = typeof(BSFiberCalc_MNQ).GetCustomAttribute<DisplayNameAttribute>().DisplayName;
-
+            
             GetPropertiesAttr();
 
             InitFromAttr();

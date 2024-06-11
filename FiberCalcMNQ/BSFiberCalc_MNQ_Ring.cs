@@ -47,6 +47,9 @@ namespace BSFiberConcrete
             base.GetParams(_t);            
         }
 
+        /// <summary>
+        /// Расчет на действие продольной силы внутри сечения
+        /// </summary>
         private new void Calculate_N()
         {
             double Ar = beam.Area();
@@ -65,7 +68,8 @@ namespace BSFiberConcrete
 
             N_ult = Ar * (Rfb * Math.Sin(Math.PI * alfa_r) / Math.PI + Rfbt3 * (1 - 1.35 * alfa_r) * 1.6 * alfa_r) * beam.r_m / e_N;
 
-            N_ult *= 0.001d;
+            //Коэффициент использования
+            UtilRate_N = (N_ult != 0) ? m_Efforts["N"] / N_ult : 0;
         }
 
         /// <summary>
@@ -161,6 +165,7 @@ namespace BSFiberConcrete
             }
             else
             {
+                N_In = true;
                 Calculate_N();
             }
 

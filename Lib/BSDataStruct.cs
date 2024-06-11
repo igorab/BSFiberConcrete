@@ -99,7 +99,16 @@ namespace BSFiberConcrete
         public double Eb { get; set; }
         public double mu_fv { get; set; }
         public double omega { get; set; }
+
+        /// <summary>
+        /// Модуль упругости фибробетона расчитанный
+        /// </summary>
         public double Efb => Eb * (1 - mu_fv) + Ef * mu_fv;
+
+        /// <summary>
+        /// Модуль упругости фибробетона - введен вручную
+        /// </summary>
+        public double Efib { get; set; }
 
         public object Clone()
         {

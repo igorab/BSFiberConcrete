@@ -26,7 +26,9 @@ namespace BSFiberConcrete
         //private BetonType
         private Dictionary<string, double> m_Iniv;
         private BSFiberCalculation bsCalc;
-        private BSFiberLoadData m_BSLoadData;
+
+        private BSFiberLoadData m_BSLoadData { get; set; }
+
         private List<Rebar> m_Rebar;
         private BSMatFiber m_MatFiber;
         private List<Elements> FiberConcrete;
@@ -109,7 +111,7 @@ namespace BSFiberConcrete
 
                 m_BSLoadData.ReadParamsFromJson();
                 m_MatFiber.e_b2 = m_BSLoadData.Beton2.eps_b2;
-                m_MatFiber.Efb = m_BSLoadData.Fiber.Efb;
+                m_MatFiber.Efb = m_BSLoadData.Fiber.Efb; // TODO на значения с формы
 
                 m_Rebar = BSData.LoadRebar();
 
@@ -280,7 +282,9 @@ namespace BSFiberConcrete
             Beton fb = Lib.BSQuery.BetonTableFind(cmbBfn.Text);
             // Растяжение Rfbt
             FiberBft fbt = (FiberBft)cmbBftn.SelectedItem;
-            
+
+            m_BSLoadData.Fiber.Efib = (double) numE_fiber.Value;
+
             // сжатие:
             m_MatFiber.B = fb.B;
             m_MatFiber.Rfbn = BSHelper.MPA2kgsm2(fb.Rbn);
@@ -289,6 +293,7 @@ namespace BSFiberConcrete
             //остаточное растяжение:            
             m_MatFiber.Rfbt2n = (double)numRfbt2n.Value; // кг/см2
             m_MatFiber.Rfbt3n = (double)numRfbt3n.Value; // кг/см2
+            m_MatFiber.Efb = (double)numE_fiber.Value;
         }
 
 
@@ -698,7 +703,6 @@ namespace BSFiberConcrete
         private void FiberCalculate_N()
         {
             BSFiberCalc_MNQ fiberCalc = new BSFiberCalc_MNQ();
-
             try
             {
                 FiberCalc_MNQ(out fiberCalc, checkBoxRebar.Checked );
@@ -709,7 +713,7 @@ namespace BSFiberConcrete
             }
             finally
             {
-                BSFiberReport_N report = new BSFiberReport_N();
+                BSFiberReport_N report = new BSFiberReport_N();                
                 report.ImageCalc = fiberCalc.ImageCalc();
                 report.BeamSection = m_BeamSection;                
                 report.InitFromFiberCalc(fiberCalc);
