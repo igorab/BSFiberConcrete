@@ -838,8 +838,9 @@ namespace BSFiberConcrete
         private void btnCalc_Deform_Click(object sender, EventArgs e)
         {
             int deformDiagram = cmbDeformDiagram.SelectedIndex;
+            /*
             BSMatFiber material;
-
+            
             material = new BSMatFiber(numYft.Value, numYb.Value, numYb1.Value, numYb2.Value, numYb3.Value, numYb5.Value)
             {
                 Efb = (double)numEfb.Value,                
@@ -855,7 +856,7 @@ namespace BSFiberConcrete
                 Eps_fb_ult = (double) numEps_fb_ult.Value,
                 Eps_fbt_ult = (double)numEps_fbt_ult.Value
             };
-
+            */
             // Beton bt = Lib.BSQuery.BetonTableFind(cmbBfn.Text);
 
             // Настройки из файла Templates\BSFiberParams.json
@@ -1007,14 +1008,14 @@ namespace BSFiberConcrete
                     m_Reinforcement.Add("Площадь арматуры, см2", area_total);
                 };
 
-                material = new BSMatFiber(cEb)
+                BSMatFiber material = new BSMatFiber(cEb)
                 {
                     BTCls = cBtCls,
                     Nu_fb = 1,
                     Rfbn = cRb, 
-                    Rfbt = 0,
-                    Rfbt2 = 0,
-                    Rfbt3 = 0,
+                    //Rfbt = 0,
+                    //Rfbt2 = 0,
+                    //Rfbt3 = 0,
                     e_b1_red = c_eps_b1_red,
                     e_b1 = c_eps_b1,
                     e_b2 = c_eps_b2,
