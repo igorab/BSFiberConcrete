@@ -34,20 +34,18 @@ namespace BSBeamCalculator.model
             //{ throw new Exception("Программная ошибка. Неккорректно определены характеристики балки"); }
 
             // to do
-            //
-            // написать пролверки
-            if (x1 > length)
-            { throw new Exception("Программная ошибка. Неккорректно определены характеристики бакли."); }
-
+            // дописать проверки
+            if (loadype == "Concentrated" && x1 > length )
+            { throw new Exception("Пользовательская ошибка. Значение 'Позиция x' не должно превышать 'Длина'."); }
 
             _beamLength = length;
             _diagramType = new SimpleBeamDiagramCase(supportType, loadype);
             //_supportBeamType = supportType;
             //_loadBeamTupe = loadype;
             _force = force;
-            _startPointForce = x1; 
+            _startPointForce = x1;
             //_endPointForce;
-         }
+        }
 
         public DiagramResult CalculateBeamDiagram()
         {
