@@ -1099,7 +1099,7 @@ namespace BSFiberConcrete
                         ["b"] = sz[0], ["h"] = sz[1]                        
                     };
                 }
-                else if (m_BeamSection == BeamSection.IBeam || m_BeamSection == BeamSection.TBeam)
+                else if (m_BeamSection == BeamSection.IBeam || m_BeamSection == BeamSection.TBeam || m_BeamSection == BeamSection.LBeam)
                 {
                     ef = new Dictionary<string, double> {
                         ["bf"] = sz[0], ["hf"] = sz[1], ["bw"] = sz[2], ["hw"] = sz[3], ["b1f"] = sz[4], ["h1f"] = sz[5]

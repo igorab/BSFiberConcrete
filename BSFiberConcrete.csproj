@@ -439,6 +439,7 @@
     <Content Include="Resources\TBeam.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\СК.jpg" />
     <Content Include="Templates\FiberConcrete.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
