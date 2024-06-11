@@ -123,7 +123,18 @@ namespace BSFiberConcrete
 
         public override Dictionary<string, double> Results()
         {
-            return new Dictionary<string, double>() { { "M_ult", M_ult }, { "Q_ult", Q_ult }, { "N_ult", N_ult } };
+            if (N_Out)
+            {
+                return new Dictionary<string, double>() { 
+                    { "N_ult", N_ult },
+                    { "UtilRate_N", UtilRate_N }
+                };
+            }
+
+            return new Dictionary<string, double>() 
+            { 
+                { "M_ult", M_ult }, { "Q_ult", Q_ult }, { "N_ult", N_ult } 
+            };
         }
     }
 }

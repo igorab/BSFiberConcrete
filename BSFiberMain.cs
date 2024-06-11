@@ -709,7 +709,7 @@ namespace BSFiberConcrete
             }
             finally
             {
-                BSFiberReport_MNQ report = new BSFiberReport_MNQ();
+                BSFiberReport_N report = new BSFiberReport_N();
                 report.ImageCalc = fiberCalc.ImageCalc();
                 report.BeamSection = m_BeamSection;                
                 report.InitFromFiberCalc(fiberCalc);
@@ -799,6 +799,13 @@ namespace BSFiberConcrete
             GetEffortsFromForm(out Dictionary<string, double> MNQ);
 
             (double _M, double _N, double _Q) = (MNQ["My"], MNQ["N"], MNQ["Q"]);
+
+            if (_M < 0 || _N < 0)
+            {
+                MessageBox.Show("Расчет по методу статического равновесия не реализован для отрицательных значений M и N.\n Воспользуйтесь расчетом по методу НДМ");
+
+                return;
+            }
 
             if (_M != 0 && _N == 0)
             {
@@ -1076,11 +1083,18 @@ namespace BSFiberConcrete
 
         // сохранить усилия
         private void btnEffortsRefresh_Click(object sender, EventArgs e)
-        {            
-            GetEffortsFromForm(out Dictionary<string, double> MNQ);
+        {
+            try
+            {
+                GetEffortsFromForm(out Dictionary<string, double> MNQ);
 
-            Efforts ef = new Efforts() {Id = 1, Mx = MNQ["Mx"], My = MNQ["My"], N = MNQ["N"], Q = MNQ["Q"], Ml = MNQ["Ml"], eN = MNQ["eN"] };
-            Lib.BSData.SaveEfforts(ef);
+                Efforts ef = new Efforts() { Id = 1, Mx = MNQ["Mx"], My = MNQ["My"], N = MNQ["N"], Q = MNQ["Q"], Ml = MNQ["Ml"], eN = MNQ["eN"] };
+                Lib.BSData.SaveEfforts(ef);
+            }
+            catch (Exception _ex)
+            {
+                MessageBox.Show(_ex.Message);
+            }
         }
 
 

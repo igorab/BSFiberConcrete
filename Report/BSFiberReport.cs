@@ -83,31 +83,30 @@ namespace BSFiberConcrete
                     w.WriteLine($"<td><b>{_pair.Key}</b></td>");
                     w.WriteLine($"<td colspan=2>| {_pair.Value} </td>");
                     w.WriteLine("</tr>");
-                }                
+                }
                 w.WriteLine("</Table>");
                 w.WriteLine("<br>");
-
-                if (m_GeomParams != null)
-                {
-                    w.WriteLine("<Table border=1 bordercolor = darkblue>");
-                    w.WriteLine("<caption>Геометрия</caption>");
-
-                    foreach (var _pair in m_GeomParams)
-                    {
-                        if (_pair.Value != 0)
-                        {
-                            w.WriteLine("<tr>");
-                            w.WriteLine($"<td><b>{_pair.Key}</b></td>");
-                            w.WriteLine($"<td>| {_pair.Value}</td>");
-                            w.WriteLine("</tr>");
-                        }
-                    }
-
-                    w.WriteLine("</tr>");
-                    w.WriteLine("</Table>");
-                    w.WriteLine("<br>");
-                }
             }
+            if (m_GeomParams != null)
+            {
+                w.WriteLine("<Table border=1 bordercolor = darkblue>");
+                w.WriteLine("<caption>Геометрия</caption>");
+
+                foreach (var _pair in m_GeomParams)
+                {
+                    if (_pair.Value != 0)
+                    {
+                        w.WriteLine("<tr>");
+                        w.WriteLine($"<td><b>{_pair.Key}</b></td>");
+                        w.WriteLine($"<td>| {_pair.Value}</td>");
+                        w.WriteLine("</tr>");
+                    }
+                }
+
+                w.WriteLine("</tr>");
+                w.WriteLine("</Table>");
+                w.WriteLine("<br>");
+            }            
         }
 
         /// <summary>

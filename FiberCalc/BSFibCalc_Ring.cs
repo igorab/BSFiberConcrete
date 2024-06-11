@@ -13,8 +13,11 @@ namespace BSFiberConcrete
         [DisplayName("Радиус наружней грани, см")]
         public double r2 { get; private set; }
        
-        [DisplayName("Предельный момент сечения")]
+        [DisplayName("Предельный момент сечения, кг*см")]
         public double Mult { get; private set; }
+
+        [DisplayName("Коэффициент использования по усилию")]
+        public double UtilRate { get; protected set; }
 
         public override void GetParams(double[] _t)
         {
@@ -41,7 +44,8 @@ namespace BSFiberConcrete
         {
             return new Dictionary<string, double>() {
                 { DN(typeof(BSFibCalc_Ring), "Rfbt3"), Rfbt3 },
-                { DN(typeof(BSFibCalc_Ring), "Mult"), Mult }
+                { DN(typeof(BSFibCalc_Ring), "Mult"), Mult },
+                { DN(typeof(BSFibCalc_Ring), "UtilRate"), UtilRate }
             };
         }
 
@@ -58,7 +62,9 @@ namespace BSFiberConcrete
             return ret;
         }
 
-
+        /// <summary>
+        /// Расчет сечения
+        /// </summary>        
         public override bool Calculate()
         {
             if (!Validate())
@@ -78,13 +84,13 @@ namespace BSFiberConcrete
 
             double ar = (0.73d * Rfbt3) / (Rfb + 2 * Rfbt3);
 
-            //Предельный момент сечения
+            //Предельный момент сечения , кг*см
             Mult = Ar * (Rfb * Math.Sin(Math.PI * ar) / Math.PI + 0.234d * Rfbt3) * rm;
 
-            InfoCheckM(Mult);
+            //Коэффициент использования
+            UtilRate = (Mult != 0) ? m_Efforts["My"] / Mult : 0;
 
-            //Предельный момент сечения  (т*м)
-            Mult = BSHelper.Kgsm2Tm( Mult );
+            InfoCheckM(Mult);            
 
             return true;
         }

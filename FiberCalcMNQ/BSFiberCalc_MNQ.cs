@@ -53,10 +53,10 @@ namespace BSFiberConcrete
         [DisplayName("Доля постоянной нагрузки в общей нагрузке на элемент"), Description("Phys")]
         public double Ml1toM1 { get; protected set; }
 
-        [DisplayName("Коэффициент ф."), Description("Coef")]
+        [DisplayName("Коэффициент ф.")]
         public double k_b { get; protected set; }
 
-        [DisplayName("Коэффициент, учитывающий влияние длительности действия нагрузки  (6.27)"), Description("Coef")]
+        [DisplayName("Коэффициент, учитывающий влияние длительности действия нагрузки  (6.27)")]
         public double fi1 { get; protected set; }
 
         [DisplayName("Коэффициент надежности Yft"), Description("Coef")]
@@ -78,8 +78,12 @@ namespace BSFiberConcrete
         [DisplayName("Предельная поперечная сила"), Description("Res")]
         public double Q_ult { get; protected set; }
 
-        [DisplayName("Предельная продольная сила, Т"), Description("Res")]
+        [DisplayName("Предельная продольная сила, кг"), Description("Res")]
         public double N_ult { get; protected set; }
+
+        [DisplayName("Коэффициент использования по усилию")]
+        public double UtilRate_N { get; protected set; }
+
 
         #endregion
         public BetonType BetonType { get; set; }
@@ -282,9 +286,7 @@ namespace BSFiberConcrete
                 N_ult = Rfb * Ab;
             }
 
-            InfoCheckN(N_ult);
-
-            N_ult = BSHelper.Kg2T(N_ult);
+            InfoCheckN(N_ult);            
         }
 
         /// <summary>
@@ -328,8 +330,11 @@ namespace BSFiberConcrete
             double denom = A / I * m_Fiber.e_tot * eta * m_Beam.y_t - 1; 
 
             // Предельная сила сечения
-            N_ult = 1/denom * Rfbt * A;
-            
+            N_ult = (denom != 0) ? 1/denom * Rfbt * A : 0;
+
+            //Коэффициент использования
+            UtilRate_N = (N_ult != 0) ? m_Efforts["N"] / N_ult : 0;
+
             string info;
 
             if (N <= N_ult)
@@ -338,8 +343,7 @@ namespace BSFiberConcrete
                 info = "Прочность не обеспечена. Продольная сила превышает допустимое значение.";
 
             Msg.Add(info);
-
-            N_ult = BSHelper.Kg2T(N_ult);
+            
         }
 
         // жесткость элемента в предельной по прочности стадии, определяемая по формуле (6.31)
