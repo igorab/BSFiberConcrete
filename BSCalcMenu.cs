@@ -1,4 +1,5 @@
-﻿using BSFiberConcrete;
+﻿using BSBeamCalculator;
+using BSFiberConcrete;
 using BSFiberConcrete.Beam;
 using BSFiberConcrete.BSRFib;
 using BSFiberConcrete.LocalStrength;
@@ -115,8 +116,12 @@ namespace BSCalcMenu
 
         private void btnBeamCalc_Click(object sender, EventArgs e)
         {
-            BSBeamCalcView beamCalcView = new BSBeamCalcView();
-            beamCalcView.Show();
+            //BSBeamCalcView beamCalcView = new BSBeamCalcView();
+            //beamCalcView.Show();
+
+            BeamCalculator beamCalculator = new BeamCalculator();
+            beamCalculator.Show();
+
 
         }
 
