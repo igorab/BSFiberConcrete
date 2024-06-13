@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Schema;
 
-namespace BSBeamCalculator.model
+namespace BSBeamCalculator
 {
     public class BeamDiagram
     {
