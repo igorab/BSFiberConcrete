@@ -1,5 +1,4 @@
-﻿using BSBeamCalculator.model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +11,9 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace BSBeamCalculator
 {
-    public partial class Form1 : Form
+    public partial class BeamCalculator : Form
     {
-        public Form1()
+        public BeamCalculator()
         {
                 InitializeComponent();
 
