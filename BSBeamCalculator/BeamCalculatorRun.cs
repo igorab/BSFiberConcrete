@@ -4,11 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Schema;
-using BSBeamCalculator.model;
 
 namespace BSBeamCalculator
 {
-    internal static class Program
+    internal static class BeamCalculatorRun
     {
         /// <summary>
         /// Главная точка входа для приложения.
@@ -19,7 +18,7 @@ namespace BSBeamCalculator
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new Form1());
+                Application.Run(new BeamCalculator());
             }
         }
 
@@ -56,7 +55,9 @@ namespace BSBeamCalculator
         /// (для распределенной нагрузки)
         /// </summary>
         public static double x2;
-
+        /// <summary>
+        /// DiagramResult - класс для данных необходимых для построения грфика
+        /// </summary>
         public static DiagramResult result;
         public static void RunCalculation()
         {
