@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BSFem", "BSFem\BSFem.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BSBeamCalc", "BSBeamCalc\BSBeamCalc.csproj", "{61CF8666-2B4D-09E9-0AC7-4131F588C8ED}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BSBeamCalculator", "BSBeamCalculator\BSBeamCalculator.csproj", "{95FCDEF9-D035-4D3D-B7AA-FC523917D607}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
