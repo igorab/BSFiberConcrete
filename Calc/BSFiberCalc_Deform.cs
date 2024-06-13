@@ -47,8 +47,8 @@ namespace BSFiberConcrete
 
         private BSBeam m_Beam { get; set; }
 
-        private BSMatFiber m_Fiber = new BSMatFiber();
-        private BSMatRod m_Rod = new BSMatRod();
+        private BSMatFiber m_Fiber;
+        private BSMatRod m_Rod;
 
         // расчетная схема сечения
         private int m_Y_N = 1; // разбиение по высоте
@@ -70,6 +70,9 @@ namespace BSFiberConcrete
 
         [DisplayName("Кривизна 1/Ry, 1/см")]
         public double Ky { get; private set; }
+
+        [DisplayName("Максимальная относительная деформация")]
+        public double e_fb_calc { get; private set; }
 
         // жесткостные характеристики
         private const int I1 = 0, I2 = 1, I3 = 2;
@@ -128,6 +131,8 @@ namespace BSFiberConcrete
             }
         }
 
+        public Dictionary<string, double> Reinforcement { get; internal set; }
+
 
         /// <summary>
         /// 
@@ -141,9 +146,12 @@ namespace BSFiberConcrete
             My = _My;
             N  = _N;
 
-            rx = 1;
-            ry = 1;
+            rx = 0;
+            ry = 0;
             eps_0 = 1;
+
+            m_Fiber = new BSMatFiber();
+            m_Rod = new BSMatRod();
 
             Msg = new List<string>();
         }
@@ -223,10 +231,7 @@ namespace BSFiberConcrete
             foreach (var elem in m_BElem)
             {
                 sigma_fb[i] = beam.Sigma_Z(N, Mx, My, elem.Z_X, elem.Z_Y);
-
-                //double  eps = 0; 
-                //double sgm = m_Fiber.Eps_StateDiagram(eps);
-                                
+                                             
                 epsilon_fb[i] = 1; 
 
                 Nju_fb[i] = m_BElem[i].Nu; // sigma_fb[i] / (m_Fiber.Efb * epsilon_fb[i]);
@@ -234,9 +239,7 @@ namespace BSFiberConcrete
             }
 
             for (int j = 0; j < m_Rods.Count; j++)
-            {
-                //MatRebar.Eps_StateDiagram(0);
-
+            {                
                 sigma_s[j] = 1;
 
                 epsilon_s[j] = 1; 
@@ -403,7 +406,8 @@ namespace BSFiberConcrete
         {
             bool doNextIter = true;
 
-            double kx = 1/rx, ky = 1/ry;
+            double kx = (rx != 0) ? 1/rx : 0,
+                   ky = (ry != 0) ? 1 /ry : 0;
 
             Kx = kx;
             Ky = ky;
@@ -428,8 +432,8 @@ namespace BSFiberConcrete
                 double _e = eps_0 + ky * Zsy[j];
                 epsilon_s[j] = _e;
 
-                double sgm = MatRebar.Eps_StD(_e);
-                sigma_s[j] = sgm;
+                double sgm = MatRebar.Eps_StD( Math.Abs(_e));
+                sigma_s[j] = Math.Sign(_e) * sgm;
 
                 double nju_s = sgm / (MatRebar.Es * _e);
 
@@ -457,9 +461,9 @@ namespace BSFiberConcrete
                 N_s_calc += Fj;
             }
 
-            double Mx_calc = Mx_b_calc + Mx_s_calc;
-            double My_calc =  My_b_calc + My_s_calc;
-            double N_calc = N_b_calc + N_s_calc;
+            double Mx_calc = Math.Abs(Mx_b_calc + Mx_s_calc);
+            double My_calc =  Math.Abs(My_b_calc + My_s_calc);
+            double N_calc = Math.Abs(N_b_calc + N_s_calc);
 
             if (Math.Abs(Mx - Mx_calc) <= BSHelper.Epsilon &&
                 Math.Abs(My - My_calc) <= BSHelper.Epsilon && 
@@ -498,18 +502,12 @@ namespace BSFiberConcrete
         /// <param name="_usemesh"></param>
         /// <returns></returns>
         private List<BSElement> CalculationScheme(bool _usemesh = true)
-        {
-            int Nx = 10;
-            int Ny = 10;
-
+        {            
             List<BSElement> bs = new List<BSElement>();
             BSBeam_Rect beam = (BSBeam_Rect)m_Beam;
 
             // центр тяжести сечения           
             (double X0, double Y0) = (CG.X, CG.Y);
-            
-            double elX = 0,
-                   elY = 0;
                         
             foreach (var t in triCGs)
             {                               
@@ -526,8 +524,7 @@ namespace BSFiberConcrete
 
                 bsElement.E = beam.Mat.Eb;
 
-                bs.Add(bsElement);
-                                                          
+                bs.Add(bsElement);                                                          
             }
 
             return bs;
@@ -592,14 +589,16 @@ namespace BSFiberConcrete
                 if (!doNextIter) 
                     break;
             }
-            
-            AddToResult( "eps_0", eps_0);
+
+            e_fb_calc = epsilon_fb.AbsoluteMaximum();
+
+            AddToResult("eps_0", eps_0);
             AddToResult("rx", rx);
             AddToResult("Kx", Kx);
             AddToResult("ry", ry);
             AddToResult("Ky", Ky);
-
-            double e_fb_calc = epsilon_fb.AbsoluteMaximum();
+            AddToResult("e_fb_calc", e_fb_calc);
+            
 
             bool res_fb = e_fb_calc <=  m_Fiber.Eps_fb_ult;            
             if (res_fb)

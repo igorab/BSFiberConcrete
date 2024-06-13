@@ -123,13 +123,8 @@ namespace BSFiberConcrete
             UtilRate = (Mult!=0)? m_Efforts["My"] / Mult : 0; 
 
             InfoCheckM(Mult);
-
-            //Предельный момент сечения  (т*м)
-            //Mult = BSHelper.Kgsm2Tm(Mult);
-
+            
             return true;
-        }
-
-       
+        }       
     }
 }

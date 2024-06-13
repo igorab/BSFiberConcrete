@@ -59,7 +59,7 @@ namespace BSFiberConcrete
 
         public override void GetSize(double[] _t)
         {
-            (bf, hf, hw, bw, b1f, h1f) = (_t[0], _t[1], _t[2], _t[3], _t[4], _t[5]);
+            (bf, hf, bw, hw, b1f, h1f) = (_t[0], _t[1], _t[2], _t[3], _t[4], _t[5]);
         }
 
         protected void Calc_Pre()
@@ -99,7 +99,7 @@ namespace BSFiberConcrete
 
             Action calc_b = delegate
             {
-                x = Rfbt3 * (bw * h1f + bw * hw + bw * h1f) / (bw * (Rfbt3 + Rfb));
+                x = (Rfbt3 * (bw * h1f + bw * hw + bw * h1f) + Rfb * h1f * (b1f - bw))/ (bw * (Rfbt3 + Rfb));
 
                 Mult = Rfb * bw * (x - h1f) * (x - 0.5 * h1f) + Rfbt3 * (bw * (hw + h1f - x) + bw * hf * (h - 0.5 * (h1f + hf)));
             };

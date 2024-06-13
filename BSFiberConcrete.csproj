@@ -9,7 +9,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>BSFiberConcrete</RootNamespace>
     <AssemblyName>BSFiberConcrete</AssemblyName>
-    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -30,6 +30,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -257,6 +258,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BSLocalStrengthRes.resx</DependentUpon>
     </Compile>
+    <Compile Include="Mat\BSMatFiber.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -279,6 +281,7 @@
     <Compile Include="Mat\BSMaterial.cs" />
     <Compile Include="BSElements\BSRod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Report\BSFiberReport_N.cs" />
     <Compile Include="Section\BSSection.cs" />
     <Compile Include="Section\BSSectionChart.cs">
       <SubType>Form</SubType>
@@ -438,6 +441,7 @@
     <Content Include="Resources\TBeam.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\СК.jpg" />
     <Content Include="Templates\FiberConcrete.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -463,6 +467,10 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="BSBeamCalc\BSBeamCalc.csproj">
+      <Project>{61cf8666-2b4d-09e9-0ac7-4131f588c8ed}</Project>
+      <Name>BSBeamCalc</Name>
+    </ProjectReference>
     <ProjectReference Include="BSCalcLib\BSCalcLib.csproj">
       <Project>{368408f1-6648-4b55-9853-85a86dd47a2f}</Project>
       <Name>BSCalcLib</Name>

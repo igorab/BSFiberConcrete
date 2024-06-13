@@ -47,6 +47,7 @@ namespace BSFiberConcrete
         /// </summary>
         protected new void Calculate_N()
         {
+            N_In = true;
             base.Calculate_N();            
         }
 
@@ -123,7 +124,18 @@ namespace BSFiberConcrete
 
         public override Dictionary<string, double> Results()
         {
-            return new Dictionary<string, double>() { { "M_ult", M_ult }, { "Q_ult", Q_ult }, { "N_ult", N_ult } };
+            if (N_Out || N_In)
+            {
+                return new Dictionary<string, double>() {
+                    { DN(typeof(BSFiberCalc_MNQ), "N_ult"), N_ult },
+                    { DN(typeof(BSFiberCalc_MNQ), "UtilRate_N"), UtilRate_N }                    
+                };
+            }
+
+            return new Dictionary<string, double>() 
+            { 
+                { "M_ult", M_ult }, { "Q_ult", Q_ult }, { "N_ult", N_ult } 
+            };
         }
     }
 }

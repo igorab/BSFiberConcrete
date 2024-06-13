@@ -26,6 +26,8 @@ namespace BSFiberConcrete
         public Dictionary<string, double> PhysParams { set { m_PhysParams = value; } }
         public Dictionary<string, double> GeomParams { set { m_GeomParams = value; } }
         public Dictionary<string, double> CalcResults { set { m_CalcResults = value; } }
+        public Dictionary<string, double> Reinforcement { set { m_Reinforcement = value; } }
+
         public List<string> Messages { set { m_Messages = value; }}
         public BeamSection BeamSection { set { m_BeamSection = value; } }
 
@@ -37,11 +39,13 @@ namespace BSFiberConcrete
         protected Dictionary<string, double> m_PhysParams;
         protected Dictionary<string, double> m_GeomParams;
         protected Dictionary<string, double> m_CalcResults;
+        protected Dictionary<string, double> m_Reinforcement;
         protected List<string> m_Messages;
 
         protected BeamSection m_BeamSection { get; set; }
 
         public string ImageCalc { get; set; }
+        
 
         public BSFiberReport()
         {
@@ -79,31 +83,30 @@ namespace BSFiberConcrete
                     w.WriteLine($"<td><b>{_pair.Key}</b></td>");
                     w.WriteLine($"<td colspan=2>| {_pair.Value} </td>");
                     w.WriteLine("</tr>");
-                }                
+                }
                 w.WriteLine("</Table>");
                 w.WriteLine("<br>");
-
-                if (m_GeomParams != null)
-                {
-                    w.WriteLine("<Table border=1 bordercolor = darkblue>");
-                    w.WriteLine("<caption>Геометрия</caption>");
-
-                    foreach (var _pair in m_GeomParams)
-                    {
-                        if (_pair.Value != 0)
-                        {
-                            w.WriteLine("<tr>");
-                            w.WriteLine($"<td><b>{_pair.Key}</b></td>");
-                            w.WriteLine($"<td>| {_pair.Value}</td>");
-                            w.WriteLine("</tr>");
-                        }
-                    }
-
-                    w.WriteLine("</tr>");
-                    w.WriteLine("</Table>");
-                    w.WriteLine("<br>");
-                }
             }
+            if (m_GeomParams != null)
+            {
+                w.WriteLine("<Table border=1 bordercolor = darkblue>");
+                w.WriteLine("<caption>Геометрия</caption>");
+
+                foreach (var _pair in m_GeomParams)
+                {
+                    if (_pair.Value != 0)
+                    {
+                        w.WriteLine("<tr>");
+                        w.WriteLine($"<td><b>{_pair.Key}</b></td>");
+                        w.WriteLine($"<td>| {_pair.Value}</td>");
+                        w.WriteLine("</tr>");
+                    }
+                }
+
+                w.WriteLine("</tr>");
+                w.WriteLine("</Table>");
+                w.WriteLine("<br>");
+            }            
         }
 
         /// <summary>
@@ -123,6 +126,22 @@ namespace BSFiberConcrete
                     w.WriteLine("</tr>");
                 }
                
+                w.WriteLine("</Table>");
+                w.WriteLine("<br>");
+            }
+
+            if (m_Reinforcement != null)
+            {
+                w.WriteLine("<Table border=1 bordercolor = darkblue>");
+                w.WriteLine("<caption>Армирование</caption>");
+                foreach (var _pair in m_Reinforcement)
+                {
+                    w.WriteLine("<tr>");
+                    w.WriteLine($"<td>{_pair.Key}</td>");
+                    w.WriteLine($"<td>| {Math.Round(_pair.Value, 4)} </td>");
+                    w.WriteLine("</tr>");
+                }
+
                 w.WriteLine("</Table>");
                 w.WriteLine("<br>");
             }

@@ -20,6 +20,7 @@ namespace BSCalcLib
     {
         public static int Nx { get; set; }
         public static int Ny { get; set; }
+        public static double MinAngle { get; set; }
 
         public static Mesh Mesh { get; set; }
         
@@ -31,6 +32,7 @@ namespace BSCalcLib
         {
             Nx = 2;
             Ny = 2;
+            MinAngle = 30;
 
             Center = new Point(0, 0);
         }
@@ -96,7 +98,8 @@ namespace BSCalcLib
         {           
             try
             {
-                Contour contour =  BSMesh.Circle(r, center, r/10.0, label);
+                double _h = Nx / 10.0;
+                Contour contour =  BSMesh.Circle(r, center, _h, label);
 
                 Polygon poly = new Polygon();                                                
                 poly.Add(contour);
@@ -104,7 +107,7 @@ namespace BSCalcLib
                 ConstraintOptions options = new ConstraintOptions() { Convex = false, ConformingDelaunay = true };
                 QualityOptions quality = new QualityOptions()
                 {
-                    MinimumAngle = 40.0,
+                    MinimumAngle = MinAngle,
                     VariableArea = true
                 };
                 //Mesh = poly.Triangulate() as Mesh;
@@ -158,11 +161,11 @@ namespace BSCalcLib
         public static string GenerateRing(double _R, double _r,  bool print = false)
         {
             // Generate the input geometry.
-            double h = (_R - _r) / 2;
+            double h = Nx / 10.0;  //(_R - _r) / 2.0;
             var poly = CreateRing(_R, _r, h);
 
             // Set minimum angle quality option.
-            var quality = new QualityOptions() { MinimumAngle = 30.0 };
+            var quality = new QualityOptions() { MinimumAngle = MinAngle };
 
             // Generate mesh using the polygons Triangulate extension method.
             Mesh = poly.Triangulate(quality) as TriangleNet.Mesh;
@@ -186,7 +189,7 @@ namespace BSCalcLib
             poly.Add(Circle(_r, center, h, 1), center);
 
             // Internal contour.
-            poly.Add(Circle((_R + _r)/2.0, center, h, 2));
+            //poly.Add(Circle((_R + _r)/2.0, center, h, 2));
 
             // Outer contour.
             poly.Add(Circle(_R, center, h, 3));

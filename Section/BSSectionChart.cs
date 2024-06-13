@@ -9,15 +9,25 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TreeView;
+using System.Xml.Linq;
 
 namespace BSFiberConcrete.Section
 {
     public partial class BSSectionChart : Form
     {
-        public BeamSection m_BeamSection { get; set; }
+        public List<PointF> RodPoints 
+        {
+            get { return m_RodPoints; }
+            set { m_RodPoints = value;}
+        }
 
-        private List<PointF> PointsSection;        
-        private List<PointF> RodPoints;
+        public BeamSection m_BeamSection { get; set; }
+        private List<PointF> m_RodPoints;
+
+        private List<PointF> PointsSection;
+
+        public PointF Center { get; set; }
 
         public float Wdth { set { w = value; } }
         public float Hght { set { h = value; } }
@@ -32,17 +42,18 @@ namespace BSFiberConcrete.Section
         {
             InitializeComponent();
 
+            Center = new PointF(0, 0);
+
             m_BeamSection = BeamSection.Rect;
             w = 100;
             h = 100;
-
             Sz = new double[] { 79, 19, 22, 18, 81, 21 };
+
         }
 
         private void InitPoints()
         {
-            if (m_BeamSection == BeamSection.Rect 
-                || m_BeamSection == BeamSection.Ring) //TODO для кольцевого сечения будет отдельный алгоритм
+            if (m_BeamSection == BeamSection.Rect)                 
             {
                 PointsSection = new List<PointF>()
                 {
@@ -53,31 +64,61 @@ namespace BSFiberConcrete.Section
                     new PointF(0, 0)
                 };
 
-                RodPoints = new List<PointF>()
+                m_RodPoints = new List<PointF>()
                 {
-                    new PointF(0+4, h-4),
-                    new PointF(w/2f, h-4) ,
-                    new PointF(w-4, h-4),
+                    //new PointF(0+4, h-4),
+                    //new PointF(w/2f, h-4) ,
+                    //new PointF(w-4, h-4),
 
                     new PointF(0+4, 4),
                     new PointF(w/2f, 4) ,
                     new PointF(w-4, 4),
                 };
             }
-            else if (m_BeamSection == BeamSection.IBeam || m_BeamSection == BeamSection.TBeam)
+            else if (m_BeamSection == BeamSection.IBeam ||                      
+                     m_BeamSection == BeamSection.LBeam)
             {                
                 BSSection.IBeam(Sz, out PointsSection, out PointF _center);
 
-                RodPoints = new List<PointF>()
+                m_RodPoints = new List<PointF>()
                 {
-                    new PointF((w-4)/2f, h-4),
-                    new PointF(0, h-4) ,
-                    new PointF(-(w-4)/2f, h-4),
+                    //new PointF((w-4)/2f, h-4),
+                    //new PointF(0, h-4) ,
+                    //new PointF(-(w-4)/2f, h-4),
 
                     new PointF((w-4)/2f, 4),
                     new PointF(0, 4) ,
                     new PointF(-(w-4)/2f, 4),
                 };
+            }
+            else if (m_BeamSection == BeamSection.TBeam)
+            {
+                BSSection.IBeam(Sz, out PointsSection, out PointF _center);
+
+                m_RodPoints = new List<PointF>()
+                {
+                    new PointF((w-4)/2f, h-4),
+                    new PointF(0, h-4) ,
+                    new PointF(-(w-4)/2f, h-4)                    
+                };
+            }
+            else if (m_BeamSection == BeamSection.Ring)
+            {
+                PointsSection = new List<PointF>();
+                int amountOfEdges = 40;
+
+                double radius =  Sz[1];
+                double r2 = Sz[0];
+
+                for (int k = 0; k <= amountOfEdges; k++)
+                {
+                    double x = Center.X + radius * Math.Cos(k * 2 * Math.PI / amountOfEdges);
+                    double y = Center.Y + radius * Math.Sin(k * 2 * Math.PI / amountOfEdges);
+
+                    PointsSection.Add(new PointF((float)x, (float)y));
+
+                    m_RodPoints = new List<PointF>() { new PointF(0, -(h - 4)) };
+                }
             }
         }
 
@@ -103,24 +144,31 @@ namespace BSFiberConcrete.Section
                 chart.Series[1].Points.Clear();
             }
 
-            var points = new List<PointF>();
+            List<PointF> points = new List<PointF>();
 
             foreach (BSPoint bsp in pointBS)
             {
                 points.Add(new PointF(bsp.X, bsp.Y));
             }
 
+            Series serieSection = chart.Series[0];
             for (int j = 0; j < points.Count; j++)
             {
                 var pt = points[j];
-                chart.Series[0].Points.Add(new DataPoint(pt.X, pt.Y));
+                serieSection.Points.Add(new DataPoint(pt.X, pt.Y));
             }
 
-            for (int j = 0; j < RodPoints.Count; j++)
+            Series serieRods = chart.Series[1];
+            for (int j = 0; j < m_RodPoints.Count; j++)
             {
-                var pt = RodPoints[j];
-                chart.Series[1].Points.Add(new DataPoint(pt.X, pt.Y));
+                var rod_pt = m_RodPoints[j];
+                serieRods.Points.Add(new DataPoint(rod_pt.X, rod_pt.Y));
             }
+
+            //serieSection.ChartType.
+
+
+
         }
 
 

@@ -52,8 +52,8 @@ namespace BSFiberConcrete
                 }
             }
 
-            listView.Columns.Add("Параметр", 100, HorizontalAlignment.Left);
-            listView.Columns.Add("Значение", 100, HorizontalAlignment.Left);
+            listView.Columns.Add("Параметр", 500, HorizontalAlignment.Left);
+            listView.Columns.Add("Значение", 200, HorizontalAlignment.Left);
 
             //Add the items to the ListView.
             listView.Items.AddRange(items);

@@ -24,6 +24,7 @@ namespace BSCalcLib
     public abstract class Tri
     {
         public static string FilePath { get; set; }
+        public static double MinAngle { get; set; }
 
         public static List<double> triAreas;
         public static List<Point> triCGs;
@@ -33,18 +34,17 @@ namespace BSCalcLib
         /// </summary>
         public static Point Oxy { get; set; } 
 
-
         public static Mesh Mesh { get; set; }
 
         static Tri()
         {
             triAreas = new List<double>();
             triCGs = new List<Point>();
-
+            MinAngle = 25.0;
             Oxy = new Point() {ID = 0, X = 0, Y = 0 };
         }
 
-        public static List<object> CalculationScheme(int _N = 10, int _M = 1)
+        public static List<object> CalculationScheme()
         {            
             List<object> result = new List<object> { new object() };
             if (Mesh is null) return result;
@@ -139,7 +139,7 @@ namespace BSCalcLib
 
             QualityOptions quality = new QualityOptions()
             {
-                MinimumAngle = 25.0,
+                MinimumAngle = MinAngle,
                 VariableArea = true
             };
 

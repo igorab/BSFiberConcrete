@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 
 namespace BSFiberConcrete
 {    
@@ -34,6 +35,18 @@ namespace BSFiberConcrete
 
         [DisplayName("Момент инерции сечения"), Description("Geom")]
         public double I { get; protected set; }
+        
+        [DisplayName("Модуль упругости сталефибробетона, кг/см2"), Description("Phys")]
+        public double Efb { get; protected set; }
+        
+        [DisplayName("Нормативное сопротивление осевому сжатию, кг/см2"), Description("Phys")]
+        public double Rfbn { get => MatFiber.Rfbn; }
+        
+        [DisplayName("Нормативное сопротивление осевому растяжению, кг/см2"), Description("Phys")]
+        public double Rfbtn { get => MatFiber.Rfbtn; }
+        
+        [DisplayName("Нормативное остаточное сопротивления осевому растяжению, кг/см2"), Description("Phys")]
+        public double Rfbt3n { get => MatFiber.Rfbt3n; }
 
         [DisplayName("Продольное усилие, кг"), Description("Phys")]
         public double N { get; protected set; }
@@ -53,10 +66,10 @@ namespace BSFiberConcrete
         [DisplayName("Доля постоянной нагрузки в общей нагрузке на элемент"), Description("Phys")]
         public double Ml1toM1 { get; protected set; }
 
-        [DisplayName("Коэффициент ф."), Description("Coef")]
+        [DisplayName("Коэффициент ф.")]
         public double k_b { get; protected set; }
 
-        [DisplayName("Коэффициент, учитывающий влияние длительности действия нагрузки  (6.27)"), Description("Coef")]
+        [DisplayName("Коэффициент, учитывающий влияние длительности действия нагрузки  (6.27)")]
         public double fi1 { get; protected set; }
 
         [DisplayName("Коэффициент надежности Yft"), Description("Coef")]
@@ -72,36 +85,39 @@ namespace BSFiberConcrete
         [DisplayName("Коэффициент условия работы Yb5"), Description("Coef")]
         public double Yb5 { get; protected set; }
 
-        [DisplayName("Предельный момент, Т*м"), Description("Res")]
+        [DisplayName("Предельный момент, кг*см"), Description("Res")]
         public double M_ult { get; protected set; }
 
         [DisplayName("Предельная поперечная сила"), Description("Res")]
         public double Q_ult { get; protected set; }
 
-        [DisplayName("Предельная продольная сила, Т"), Description("Res")]
+        [DisplayName("Предельная продольная сила, кг"), Description("Res")]
         public double N_ult { get; protected set; }
 
+        [DisplayName("Коэффициент использования по усилию")]
+        public double UtilRate_N { get; protected set; }
+
+        public string DN(Type _T, string _property) => _T.GetProperty(_property).GetCustomAttribute<DisplayNameAttribute>().DisplayName;
         #endregion
         public BetonType BetonType { get; set; }
         public Rebar Rebar {get; set;}
         public bool UseRebar { get; set; }
+
+        /// <summary>
+        /// Сила вне сечения
+        /// </summary>
         public bool N_Out{ get; set; }
+        /// <summary>
+        /// Сила внутри сечения
+        /// </summary>
+        public bool N_In { get; set; }
         public bool Shear { get; set; }
 
         protected Fiber m_Fiber;
 
         public BSMatRod MatRod { get; set; }
         public BSMatFiber MatFiber { get; set; }
-        
-        //Нормативное сопротивление осевому сжатию
-        protected double Rfbn { get => MatFiber.Rfbn; }
-
-        //Нормативное сопротивление осевому растяжению кг/см2 табл.2
-        public double Rfbtn { get => MatFiber.Rfbtn; }
-
-        //Нормативное остаточное сопротивления осевому растяжению кг/см2 табл.2
-        public double Rfbt3n { get => MatFiber.Rfbt3n; }
-
+                
         protected double Rfb;
 
         //Расчетное остаточное остаточного сопротивления осевому растяжению 
@@ -114,8 +130,7 @@ namespace BSFiberConcrete
         protected double Eb; //Начальный модуль упругости бетона-матрицы B30 СП63
         //коэффициент фибрового армирования по объему
         protected double mu_fv;
-        //Модуль упругости сталефибробетона п.п. (5.2.7)
-        protected double Efb;
+       
         // жесткость элемента в предельной по прочности стадии,определяемая по формуле (6.25)
         protected double D;
         //условная критическая сила, определяемая по формуле (6.24)
@@ -216,7 +231,8 @@ namespace BSFiberConcrete
             Ef = m_Fiber.Ef;
             Eb = m_Fiber.Eb;
             mu_fv = m_Fiber.mu_fv;
-            Efb = m_Fiber.Efb;
+
+            Efb = m_Fiber.Efib != 0 ? m_Fiber.Efib :  m_Fiber.Efb;
         } 
         
         // параметры арматуры
@@ -255,7 +271,7 @@ namespace BSFiberConcrete
             k_b = K_b(fi1, delta_e);
 
             // Модуль упругости сталефибробетона п.п. (5.2.7)
-            Efb = m_Fiber.Eb * (1 - m_Fiber.mu_fv) + m_Fiber.Ef * m_Fiber.mu_fv;
+            Efb = MatFiber.Efb; //  m _Fiber.Eb * (1 - m_Fiber.mu_fv) + m_Fiber.Ef * m_Fiber.mu_fv;
 
             //жесткость элемента в предельной по прочности стадии,определяемая по формуле (6.25)
             D = k_b * Efb * I;
@@ -282,9 +298,10 @@ namespace BSFiberConcrete
                 N_ult = Rfb * Ab;
             }
 
-            InfoCheckN(N_ult);
-
-            N_ult = BSHelper.Kg2T(N_ult);
+            //Коэффициент использования
+            UtilRate_N = (N_ult != 0) ? m_Efforts["N"] / N_ult : 0;
+            
+            InfoCheckN(N_ult);            
         }
 
         /// <summary>
@@ -305,7 +322,7 @@ namespace BSFiberConcrete
             k_b = K_b(fi1, delta_e);
 
             // Модуль упругости сталефибробетона п.п. (5.2.7)
-            Efb = m_Fiber.Eb * (1 - m_Fiber.mu_fv) + m_Fiber.Ef * m_Fiber.mu_fv;
+            Efb = MatFiber.Efb;   // m_Fiber.Eb * (1 - m_Fiber.mu_fv) + m_Fiber.Ef * m_Fiber.mu_fv;
 
             //Модуль упругости арматуры
             double? Es = Rebar?.Es;
@@ -328,8 +345,11 @@ namespace BSFiberConcrete
             double denom = A / I * m_Fiber.e_tot * eta * m_Beam.y_t - 1; 
 
             // Предельная сила сечения
-            N_ult = 1/denom * Rfbt * A;
-            
+            N_ult = (denom != 0) ? 1/denom * Rfbt * A : 0;
+
+            //Коэффициент использования
+            UtilRate_N = (N_ult != 0) ? m_Efforts["N"] / N_ult : 0;
+
             string info;
 
             if (N <= N_ult)
@@ -338,8 +358,7 @@ namespace BSFiberConcrete
                 info = "Прочность не обеспечена. Продольная сила превышает допустимое значение.";
 
             Msg.Add(info);
-
-            N_ult = BSHelper.Kg2T(N_ult);
+            
         }
 
         // жесткость элемента в предельной по прочности стадии, определяемая по формуле (6.31)
@@ -429,9 +448,10 @@ namespace BSFiberConcrete
                 info = "Прочность не обеспечена";
 
             Msg.Add(info);
-
-            M_ult = BSHelper.Kg2T(M_ult);
-            N_ult = BSHelper.Kg2T(N_ult);
+            //
+            //M_ult = BSHelper.Kg2T(M_ult);
+            //N_ult = BSHelper.Kg2T(N_ult);
+            //
         }
 
         protected void InitC(ref List<double> _lst, double _from, double _to, double _dx)
@@ -646,10 +666,7 @@ namespace BSFiberConcrete
                 lst_M_ult.Add(M_ult);
             }
 
-            M_ult = (lst_M_ult.Count > 0) ? lst_M_ult.Min() : 0;
-
-            // предельный момент сечения (т*м)
-            M_ult = BSHelper.Kg2T(M_ult);
+            M_ult = (lst_M_ult.Count > 0) ? lst_M_ult.Min() : 0;            
         }
 
         public virtual bool Calculate() 
@@ -713,7 +730,8 @@ namespace BSFiberConcrete
         {
             return new Dictionary<string, double>() 
             { 
-                { "Rfb", Rfb }, { "N_ult", N_ult } 
+                { "Rfb", Rfb }, 
+                { "N_ult", N_ult } 
             };
         }
     }
