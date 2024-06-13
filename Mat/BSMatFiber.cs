@@ -48,6 +48,10 @@ namespace BSFiberConcrete
         public double Eps_fbt2 { get; set; }
         public double Eps_fbt3 { get; set; }
 
+        //Расчетные значения сопротивления фибробетона растяжению
+        private double m_Rfbt;
+        private double m_Rfbt2;
+        private double m_Rfbt3;
 
         public BSMatFiber(decimal _Yft, decimal _Yb, decimal _Yb1, decimal _Yb2, decimal _Yb3, decimal _Yb5)
         {
@@ -75,19 +79,28 @@ namespace BSFiberConcrete
         public double Rfbtn { get; set; }
 
         [DisplayName("Расчетное сопротивление сталефибробетона осевому растяжению Rfbt")]
-        public double Rfbt { get { return R_fbt_calc();  } set { Rfbt = value; } }
+        public double Rfbt { 
+            get { return R_fbt_calc(); } 
+            set { m_Rfbt = value; } 
+        }
 
         [DisplayName("Остаточное нормативное сопротивление на растяжение Rfbt2,n")]
         public double Rfbt2n { get; set; }
 
         [DisplayName("Остаточное расчетное сопротивление на растяжение Rfbt2")]
-        public double Rfbt2 { get { return R_fbt2_calc(); } set { Rfbt2 = value; } }
+        public double Rfbt2 { 
+            get { return (m_Rfbt2 > 0) ? m_Rfbt2 : R_fbt2_calc(); }
+            set { m_Rfbt2 = value; }
+        }
 
         [DisplayName("Остаточное нормативное сопротивление осевому растяжению Rfbt3,n")]
         public double Rfbt3n { get; set; }
 
         [DisplayName("Остаточное расчетное сопротивление осевому растяжению Rfbt3")]
-        public double Rfbt3 { get { return R_fbt3_calc(); } set { Rfbt3 = value; } }
+        public double Rfbt3 { 
+            get { return (m_Rfbt3 > 0) ? m_Rfbt3 : R_fbt3_calc(); } 
+            set { m_Rfbt3 = value; } 
+        }
 
         public double R_fb { get => Rfbn; }
         public double e_b1_red { get; set; }

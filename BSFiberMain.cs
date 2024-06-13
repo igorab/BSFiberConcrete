@@ -865,10 +865,13 @@ namespace BSFiberConcrete
 
             string cBtCls = b2.Cls_b;
 
-            double cRb = BSHelper.MPA2kgsm2( b2.Rb ); // МПа -> кгс/см2
-            double cRs = BSHelper.MPA2kgsm2(r2.Rs ); // МПа -> кгс/см2
-            double cEb = BSHelper.MPA2kgsm2( b2.Eb ); // Мпа -> кгс/см2
-            double cEs = BSHelper.MPA2kgsm2( r2.Es ); // Мпа -> кгс/см2
+            // Фибробетон:
+            double cRb = (double) numRfb_n.Value; // сопротивление сжатию, кгс/см2
+            double cEb = (double)numEfb.Value; // модуль упругости,  кгс/см2
+
+            // арматура ()
+            double cRs = (double) numRs.Value; // кгс/см2            
+            double cEs = (double) numEs.Value; // кгс/см2
 
             double c_eps_s0 = r2.eps_s0;// 0.00175; 
             double c_eps_s2 = r2.eps_s2; // 0.025; 
@@ -876,61 +879,45 @@ namespace BSFiberConcrete
             double c_eps_b1 = b2.eps_b1;
             double c_eps_b1_red = b2.eps_b1_red;
             double c_eps_b2 = b2.eps_b2;
-
-            double c_h = 0, // см 
-                   c_b = 0; // см
-           
-            double c_L = Convert.ToDouble(tbLength.Text); // см
+               
+            // длина балки, см 
+            double c_L = Convert.ToDouble(tbLength.Text); 
             string cRCls = r2.Cls_s;
-            
-            const int c_Y_N = 10; // разбиение по высоте
-            const int c_X_M = 1; // разбиение по ширине
-
-            // Mx, My - моменты, кгс*см
-            double c_Mx = 0; // 0; 
-            double c_My = 0;  // 0; 
-            // N - силы, кгс
-            double c_N = 0;  //0; 
-            
-            List<double[]> l_r = new List<double[]>(); // параметры продольной арматуры
-            double[] t_r = new double[5];  // параметры поперечной арматуры
-
+                                                            
             // расстановка арматурных стержней
             List<BSRod> rods = new List<BSRod>();
 
-            //использовать  пользовательские данные
-            if (UserInput)
+            // Усилия Mx, My - моменты, кгс*см , N - сила, кгс              
+            GetEffortsFromForm(out Dictionary<string, double> MNQ);
+            double c_Mx = MNQ["Mx"];
+            double c_My = MNQ["My"];
+            double c_N = MNQ["N"];
+
+            // поперечные размеры балки, см 
+            double[] rect = BeamSizes();
+            double c_b = rect[0]; 
+            double c_h = rect[1];
+
+            m_GeomParams = new Dictionary<string, double>
             {
-                // Усилия                
-                GetEffortsFromForm(out Dictionary<string, double> MNQ);
-                c_Mx = MNQ["Mx"];
-                c_My = MNQ["My"];
-                c_N = MNQ["N"];
+                { "b, см", c_b },
+                { "h, см", c_h }
+            };
 
-                // Размеры балки
-                double[] rect = BeamSizes();
-                c_b = rect[0];
-                c_h = rect[1];
+            // продольная арматура
+            List<double[]> l_r; 
+            InitLRebar(out l_r);
 
-                m_GeomParams = new Dictionary<string, double>
-                {
-                    { "b, см", c_b },
-                    { "h, см", c_h }
-                };
-
-                // Арматура
-                // продольная
-                InitLRebar(out l_r);
-                    // поперечная
-                InitTRebar(out t_r);
-            }
-
+            // поперечная арматура
+            double[] t_r;
+            InitTRebar(out t_r);
+            
             try
             {                
                 BSFiberCalc_Deform fiberCalc_Deform = new BSFiberCalc_Deform(_Mx: c_Mx, _My: c_My, _N: c_N);
-
-                // построить сетку сечения
-                GenerateMesh();
+                // 
+                GenerateMesh(); // покрыть сечение сеткой
+                //
                 fiberCalc_Deform.CG = CG;
                 fiberCalc_Deform.triAreas = triAreas;
                 fiberCalc_Deform.triCGs = triCGs;
@@ -950,8 +937,9 @@ namespace BSFiberConcrete
 
                 m_Reinforcement = new Dictionary<string, double>();
 
-                // расстановка арматурных стержней
-                //  пример фибробетон                  
+                ///
+                /// расстановка арматурных стержней                
+                /// 
                 Action RodsReinforcement = delegate()
                 {
                     int d_qty = 0; //количество стержней
@@ -1008,14 +996,14 @@ namespace BSFiberConcrete
                     m_Reinforcement.Add("Площадь арматуры, см2", area_total);
                 };
 
-                BSMatFiber material = new BSMatFiber(cEb)
+                BSMatFiber beamMaterial = new BSMatFiber(cEb)
                 {
                     BTCls = cBtCls,
                     Nu_fb = 1,
                     Rfbn = cRb, 
-                    //Rfbt = 0,
-                    //Rfbt2 = 0,
-                    //Rfbt3 = 0,
+                    Rfbt = 0,
+                    Rfbt2 = 0,
+                    Rfbt3 = 0,
                     e_b1_red = c_eps_b1_red,
                     e_b1 = c_eps_b1,
                     e_b2 = c_eps_b2,
@@ -1024,7 +1012,7 @@ namespace BSFiberConcrete
                 };
 
                 // задать свойства бетона
-                fiberCalc_Deform.MatFiber = material;
+                fiberCalc_Deform.MatFiber = beamMaterial;
 
                 RodsReinforcement();
                 
@@ -1035,10 +1023,10 @@ namespace BSFiberConcrete
                 {
                     Length = c_L,
                     Rods = rods,
-                    Mat = material
+                    Mat = beamMaterial
                 };
 
-                double[] NM = new double[] { c_Y_N, c_X_M };
+                double[] NM = new double[] { 10, 1 };
                 fiberCalc_Deform.GetParams(NM);
 
                 // рассчитать
