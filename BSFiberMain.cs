@@ -833,27 +833,105 @@ namespace BSFiberConcrete
             bsFactors.Show();
         }
 
-        private bool UserInput = true;
+        /// <summary>
+        /// Арматурные стержни
+        /// </summary>
+        private void AddRodsReinforcement()
+        {
+            // расстановка арматурных стержней
+            List<BSRod> rods = new List<BSRod>();
+
+            // Начало координат:
+            double X0 = CG.X;
+            double Y0 = CG.Y;
+
+            // поперечные размеры балки, см 
+            double[] rect = BeamSizes();
+            double c_b = rect[0];
+            double c_h = rect[1];
+
+
+            // продольная арматура
+            List<double[]> l_r;
+            InitLRebar(out l_r);
+
+            // поперечная арматура
+            double[] t_r;
+            InitTRebar(out t_r);
+
+            int d_qty = 0; //количество стержней
+            double area_total = 0;
+            foreach (var lr in l_r)
+            {
+                d_qty += 1; // (int)lr[1];
+            }
+
+            //координаты, формат:  { { 4, 4 }, { 15, 4 }, { 26, 4 } } :
+            double[,] rdYdX = new double[d_qty, 2];
+            //диаметры,  формат { 2.5, 1.8, 2.5 }; // D , см
+            double[] rD_lng = new double[d_qty];
+            //площади арматуры: { 4.909, 2.545, 4.909 };
+            double[] _As = new double[d_qty];
+
+            double a_r = l_r[0][2]; // защитный слой арматуры
+
+            // ширина минус защитный слой слева и справа:
+            double bx = c_b - a_r - a_r;
+
+            // расстояние между стержнями
+            double d_bx = bx / (d_qty - 1);
+
+            int idx = 0; // Индекс стержня
+            foreach (double[] lr in l_r)
+            {
+                // диаметр стержня, см
+                double d_r = lr[0];
+                double qty_r = lr[1];
+
+                rdYdX[idx, 0] = a_r + d_bx * idx;
+                rdYdX[idx, 1] = a_r;
+
+                rD_lng[idx] = d_r;
+                _As[idx] = qty_r * BSHelper.AreaCircle(d_r);
+                area_total += _As[idx];
+
+                BSRod rod = new BSRod()
+                {
+                    Id = idx,
+                    LTType = RebarLTType.Longitudinal,
+                    D = rD_lng[idx],
+                    CG_X = rdYdX[idx, 0] - X0,
+                    CG_Y = rdYdX[idx, 1] - Y0,
+                    
+                    Nu = 1.0 // на первой итерации задаем 1
+                };
+                idx++;
+                rods.Add(rod);
+            }
+
+            m_Reinforcement.Add("Количество стержней, шт", d_qty);
+            m_Reinforcement.Add("Площадь арматуры, см2", area_total);
+        }
+    
         
         [DisplayName("Расчет по прочности нормальных сечений на основе нелинейной деформационной модели")]
         private void btnCalc_Deform_Click(object sender, EventArgs e)
         {
             int deformDiagram = cmbDeformDiagram.SelectedIndex;
             
-            BSMatFiber beamMaterial;
-                        
+            BSMatFiber beamMaterial;                       
             // Beton bt = Lib.BSQuery.BetonTableFind(cmbBfn.Text);
-
-            // Настройки из файла Templates\BSFiberParams.json
+            
             Beton2 b2 = m_BSLoadData.Beton2;
             Rod2 r2 = m_BSLoadData.Rod2;
+
             // класс фибробетона (бетона) на сжатие
             string cBt_class = cmbBfn.Text;
             // Фибробетон:
             double cRb = (double) numRfb_n.Value; // сопротивление сжатию, кгс/см2
             double cEb = (double)numEfb.Value; // модуль упругости,  кгс/см2
 
-            // арматура ()
+            // арматура
             string cR_class = cmbRebarClass.Text;
             double cRs = (double) numRs.Value; // кгс/см2            
             double cEs = (double) numEs.Value; // кгс/см2
@@ -964,11 +1042,11 @@ namespace BSFiberConcrete
 
                         BSRod rod = new BSRod()
                         {
-                            Num = idx,
+                            Id = idx,
                             LTType = RebarLTType.Longitudinal,
                             D = rD_lng[idx],
-                            Z_X = rdYdX[idx, 0] - X0,
-                            Z_Y = rdYdX[idx, 1] - Y0,
+                            CG_X = rdYdX[idx, 0] - X0,
+                            CG_Y = rdYdX[idx, 1] - Y0,
                             MatRod = fiberCalc_Deform.MatRebar,
                             Nu = 1.0 // на первой итерации задаем 1
                         };
@@ -1227,6 +1305,12 @@ namespace BSFiberConcrete
 
             sectionChart.Wdth = (float)b;
             sectionChart.Hght = (float)h;
+            // стержни
+            sectionChart.RodPoints  = new List<PointF>()
+            {
+                new PointF(-60, 40),
+                new PointF(60, 40)
+            };
 
             sectionChart.Sz = sz;
 

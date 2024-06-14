@@ -13,37 +13,58 @@ namespace BSFiberConcrete
 
 
     /// <summary>
-    /// арматурный стержень
+    /// Арматурный стержень
     /// </summary>
     public class BSRod
     {
-        // Номер стержня
-        public int Num { get; set; } = 0;
+        /// <summary>
+        /// Номер стержня
+        /// </summary>
+        public int Id { get; set; } = 0;
 
-        // Координаты Ц.Т.
-        public double Z_X { get; set; }
-        public double Z_Y { get; set; }
+        /// <summary>
+        /// Координата X Ц.Т.
+        /// </summary>
+        public double CG_X { get; set; }
 
-        // напряжение в стержне
-        public double Sigma_s { get; set; }
-
-        // Диаметр стержня, мм
+        /// <summary>
+        /// Координата Y Ц.Т.
+        /// </summary>
+        public double CG_Y { get; set; }
+       
+        /// <summary>
+        /// Диаметр стержня, мм
+        /// </summary>
         public double D { get; set; }
 
-        // Площадь стержня
+        /// <summary>
+        /// Площадь стержня
+        /// </summary>
         public double As { get => Math.PI * Math.Pow(D, 2) / 4; }
 
-        // Расстояние до ц.т. растянутой арматуры
+        /// <summary>
+        /// Расстояние до ц.т. растянутой арматуры
+        /// </summary>
         public double a { get; set; }
 
-        // Расстояние до ц.т. сжатой арматуры
+        /// <summary>
+        /// Расстояние до ц.т. сжатой арматуры
+        /// </summary>
         public double a1 { get; set; }
 
-        // Коэффициент упругости
+        /// <summary>
+        /// Коэффициент упругости
+        /// </summary>
         public double Nu { get; set; }
 
+        /// <summary>
+        /// Тип продольная/поперечная
+        /// </summary>
         public RebarLTType LTType { get; set; }
 
+        /// <summary>
+        /// Материал
+        /// </summary>
         public BSMatRod MatRod { get; set; }
     }
 }

@@ -130,6 +130,10 @@ namespace BSFiberConcrete.Lib
             }
         }
 
+        /// <summary>
+        /// Тип арматуры
+        /// </summary>
+        /// <returns></returns>
         public static List<Rebar> LoadRebar()
         {
             try
@@ -145,6 +149,28 @@ namespace BSFiberConcrete.Lib
                 return new List<Rebar>();
             }
         }
+
+        /// <summary>
+        /// Армирование
+        /// </summary>
+        /// <returns></returns>
+        public static List<BSRod> LoadBSRod()
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    var output = cnn.Query<BSRod>("select * from BSRod", new DynamicParameters());
+                    return output.ToList();
+                }
+            }
+            catch
+            {
+                return new List<BSRod>();
+            }
+        }
+
+
 
         /// <summary>
         /// Усилия 
