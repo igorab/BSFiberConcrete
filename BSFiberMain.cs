@@ -14,6 +14,7 @@ using System.Drawing;
 using TriangleNet.Geometry;
 using TriangleNet.Topology;
 using MathNet.Numerics.Distributions;
+using BSFiberConcrete.DeformationDiagram;
 
 namespace BSFiberConcrete
 {
@@ -1368,6 +1369,31 @@ namespace BSFiberConcrete
         private void dataGridSection_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void btnCalcDeformDiagram_Click(object sender, EventArgs e)
+        {
+            DataForDeformDiagram.typeDiagram = cmbDeformDiagram.Text;
+            DataForDeformDiagram.typeMaterial = cmbTypeMaterial.Text;
+
+
+            DataForDeformDiagram.Eb = numEfb.Value;
+            DataForDeformDiagram.Rb_n = numRfb_n.Value;
+            DataForDeformDiagram.eb0 = numEps_fb0.Value;
+            DataForDeformDiagram.eb2 = numEps_fb2.Value;
+            //DataForDeformDiagram.eb0 = 0.003m;
+            //DataForDeformDiagram.eb2 = 0.0042m;
+
+            DataForDeformDiagram.Efb = DataForDeformDiagram.Eb;
+            DataForDeformDiagram.Rfbt_n = numRfbt_n.Value;
+            DataForDeformDiagram.Rfbt2_n = numRfbt3n.Value;
+            DataForDeformDiagram.Rfbt3_n = numRfbt2n.Value;
+            DataForDeformDiagram.efbt2 = numEps_fbt2.Value;
+            DataForDeformDiagram.efbt3 = numEps_fbt3.Value;
+
+
+            DeformDiagram deformDiagram = new DeformDiagram();
+            deformDiagram.Show();
         }
     }
 }

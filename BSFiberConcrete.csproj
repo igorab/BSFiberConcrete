@@ -218,6 +218,13 @@
     <Compile Include="Calc\BSFiberCalc_Deform.cs" />
     <Compile Include="Calc\BSFiberCalc_IBeamRods.cs" />
     <Compile Include="Calc\BSFiberCalc_NormRods.cs" />
+    <Compile Include="DeformationDiagram\DeformDiagram.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DeformationDiagram\DeformDiagram.Designer.cs">
+      <DependentUpon>DeformDiagram.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DeformationDiagram\ModelDeformDiagram.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Lib\BSHelper.cs" />
     <Compile Include="Calc\BSFiberCalculation.cs" />
@@ -340,6 +347,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BSRFib\RSRFibDeflection.resx">
       <DependentUpon>RSRFibDeflection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DeformationDiagram\DeformDiagram.resx">
+      <DependentUpon>DeformDiagram.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LocalStrength\BSLocalStrength.resx">
       <DependentUpon>BSLocalStrength.cs</DependentUpon>
