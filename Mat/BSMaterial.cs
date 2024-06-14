@@ -6,7 +6,14 @@ namespace BSFiberConcrete
 {
     public interface IMaterial
     {
+        /// <summary>
+        /// Наименование материала
+        /// </summary>
         string Name { get; }        
+        /// <summary>
+        /// Модуль упругости
+        /// </summary>
+        double E_young { get; }
     }
 
     public interface INonlinear
@@ -22,6 +29,8 @@ namespace BSFiberConcrete
     {
         public string Name => "Бетон";
         public string BT { get; set; }
+        public double E_young => Eb;
+
 
         [DisplayName("Сопротивление на сжатие")]
         public double Rb { get; set; }
@@ -85,6 +94,7 @@ namespace BSFiberConcrete
     public class BSMatRod : IMaterial, INonlinear
     {
         public string Name => "Сталь";
+        public double E_young => Es;
 
         // Класс
         public string RCls { get; set; }

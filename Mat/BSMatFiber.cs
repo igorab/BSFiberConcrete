@@ -14,6 +14,7 @@ namespace BSFiberConcrete
     public class BSMatFiber : IMaterial, INonlinear
     {
         public string Name => "Фибробетон";
+        public double E_young => Efb;
 
         // Начальный модуль упругости бетона-матрицы B30 СП63
         public double Eb { get => Efb; }
@@ -53,8 +54,12 @@ namespace BSFiberConcrete
         private double m_Rfbt2;
         private double m_Rfbt3;
 
-        public BSMatFiber(decimal _Yft, decimal _Yb, decimal _Yb1, decimal _Yb2, decimal _Yb3, decimal _Yb5)
+        /// <summary>
+        /// Инициализация данными с формы
+        /// </summary>        
+        public BSMatFiber(double _Efb, decimal _Yft, decimal _Yb, decimal _Yb1, decimal _Yb2, decimal _Yb3, decimal _Yb5)
         {
+            Efb =  _Efb;
             Yft = (double) _Yft; 
             Yb = (double) _Yb; 
             Yb1 = (double) _Yb1; 
@@ -80,7 +85,7 @@ namespace BSFiberConcrete
 
         [DisplayName("Расчетное сопротивление сталефибробетона осевому растяжению Rfbt")]
         public double Rfbt { 
-            get { return R_fbt_calc(); } 
+            get { return (m_Rfbt > 0) ? m_Rfbt : R_fbt_calc(); } 
             set { m_Rfbt = value; } 
         }
 
@@ -132,20 +137,23 @@ namespace BSFiberConcrete
         // сталефибробетона из тяжелого бетона классов до В60 включительно равной 0,8
         public static double omega = 0.8;
 
-        // Диаграмма состояния
+        /// <summary>
+        /// Диаграмма состояния растяжения-сжатия фибробетона 
+        /// </summary>
+        /// <param name="_eps">Деформация</param>
+        /// <returns>Напряжение</returns>       
         public double Eps_StateDiagram(double _eps)
         {
-            double sigma_fbt = 0;
-
-            // Относительные деформации
+            if (Efb == 0 || Rfbt == 0 || Rfbt2 == 0 || Rfbt3 == 0)
+                return 0;
+                        
             double e_fbt0 = Rfbt / Efb;
-            double e_fbt = e_fbt0;
+            double e_fbt  = e_fbt0;
             double e_fbt1 = e_fbt0 + 0.0001;
-
             double e_fbt2 = 0.004;
-
             double e_fbt3 = (Rfbt2 != 0) ? 0.02 - 0.0125 * (Rfbt3 / Rfbt2 - 0.5) : 0;
 
+            double sigma_fbt = 0;
             if (e_fbt1 < e_fbt && e_fbt <= e_fbt2)
             {
                 if (Rfbt != 0)
@@ -160,7 +168,12 @@ namespace BSFiberConcrete
             return sigma_fbt;
         }
 
-        // Диаграмма деформирования  
+        /// <summary>
+        /// Диаграмма деформирования двухлинейная
+        /// на сжатие, как для бетона
+        /// </summary>
+        /// <param name="_e">Деформация</param>
+        /// <returns>Напряжение</returns>        
         public double Eps_StD(double _e)
         {
             double sgm = 0;
@@ -192,8 +205,6 @@ namespace BSFiberConcrete
         public BSMatFiber(double _Eb)
         {
             Efb = _Eb;
-        }
-
-       
+        }       
     }
 }

@@ -216,7 +216,7 @@ namespace BSFiberConcrete
         /// <summary>
         ///  Параметры разбиения поперечного сечения
         /// </summary>
-        /// <param name="_t"></param>
+        /// <param name="_t">N, M</param>
         public void GetParams(double[] _t = null)
         {
             m_Y_N = (int)_t[0];
