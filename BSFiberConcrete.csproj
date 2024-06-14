@@ -9,12 +9,14 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>BSFiberConcrete</RootNamespace>
     <AssemblyName>BSFiberConcrete</AssemblyName>
-    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -27,7 +29,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -217,6 +218,13 @@
     <Compile Include="Calc\BSFiberCalc_Deform.cs" />
     <Compile Include="Calc\BSFiberCalc_IBeamRods.cs" />
     <Compile Include="Calc\BSFiberCalc_NormRods.cs" />
+    <Compile Include="DeformationDiagram\DeformDiagram.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DeformationDiagram\DeformDiagram.Designer.cs">
+      <DependentUpon>DeformDiagram.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DeformationDiagram\ModelDeformDiagram.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Lib\BSHelper.cs" />
     <Compile Include="Calc\BSFiberCalculation.cs" />
@@ -280,6 +288,7 @@
     <Compile Include="Mat\BSMaterial.cs" />
     <Compile Include="BSElements\BSRod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Report\BSFiberReport_N.cs" />
     <Compile Include="Section\BSSection.cs" />
     <Compile Include="Section\BSSectionChart.cs">
       <SubType>Form</SubType>
@@ -338,6 +347,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BSRFib\RSRFibDeflection.resx">
       <DependentUpon>RSRFibDeflection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DeformationDiagram\DeformDiagram.resx">
+      <DependentUpon>DeformDiagram.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LocalStrength\BSLocalStrength.resx">
       <DependentUpon>BSLocalStrength.cs</DependentUpon>
@@ -465,6 +477,10 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="BSBeamCalculator\BSBeamCalculator.csproj">
+      <Project>{95fcdef9-d035-4d3d-b7aa-fc523917d607}</Project>
+      <Name>BSBeamCalculator</Name>
+    </ProjectReference>
     <ProjectReference Include="BSBeamCalc\BSBeamCalc.csproj">
       <Project>{61cf8666-2b4d-09e9-0ac7-4131f588c8ed}</Project>
       <Name>BSBeamCalc</Name>
