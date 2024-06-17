@@ -29,6 +29,15 @@ namespace BSFiberConcrete
 
         public static double Dec2Dbl(decimal _val, int _dec=2) => Math.Round( (double)_val, _dec);
 
+        public const string Concrete = "Бетон";
+        
+        public const string FiberConcrete = "Фибробетон";
+
+        public const string TwoLineDiagram = "Двухлинейная";
+
+        public const string ThreLineDiagram = "Трехлинейная";
+
+
 
         public static string ImgResource(BeamSection _bs, bool _useReinforcement = false)
         {
