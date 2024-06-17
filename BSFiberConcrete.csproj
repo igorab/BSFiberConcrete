@@ -378,6 +378,7 @@
     <None Include="BSClassDiagram.cd" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\BSFiberConcrete.Section.BSPoint.datasource" />
+    <None Include="Properties\DataSources\BSRod.datasource" />
     <None Include="Properties\DataSources\Deflection_f_aF.datasource" />
     <None Include="Properties\DataSources\FaF.datasource" />
     <None Include="Properties\DataSources\FibLab.datasource" />

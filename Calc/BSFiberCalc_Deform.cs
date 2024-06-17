@@ -33,6 +33,7 @@ namespace BSFiberConcrete
         public double My { get; set; }
         // продольная сила от внешней нагрузки
         public double N { get; set; }
+
         // балка
         public BSBeam Beam
         {
@@ -40,6 +41,15 @@ namespace BSFiberConcrete
             set { m_Beam = value;
                 m_Rods = value.Rods; }
         }
+
+        /// <summary>
+        /// Расстановка стержней арматуры
+        /// </summary>
+        public List<BSRod> Rods {
+            get { return m_Rods; }
+            set { m_Rods = value; } 
+        }
+
         // свойства бетона
         public BSMatFiber MatFiber { get { return m_Fiber; } set { m_Fiber = value; } }
         // свойства арматуры
@@ -53,7 +63,9 @@ namespace BSFiberConcrete
         // расчетная схема сечения
         private int m_Y_N = 1; // разбиение по высоте
         private int m_X_M = 1; // разбиение по ширине
+
         private List<BSElement> m_BElem;
+
         private List<BSRod> m_Rods;
 
         [DisplayName("Радиус кривизны продольной оси в плоскости действия моментов, Rx, см")]
@@ -112,7 +124,9 @@ namespace BSFiberConcrete
         {
             get { return new Dictionary<string, double> 
             { 
-                { "Mx, кгс*см", Mx }, { "My, кгс*см", My }, { "N, кгс", N } }; 
+                { "Mx, кгс*см", Mx }, 
+                { "My, кгс*см", My }, 
+                { "N, кгс", N } }; 
             }
         }
 
@@ -204,10 +218,10 @@ namespace BSFiberConcrete
             // цикл по стержням
             foreach (var rod in m_Rods)
             {
-                int j = rod.Num;
+                int j = rod.Id;
 
-                Zsx[j] = rod.Z_X;
-                Zsy[j] = rod.Z_Y;
+                Zsx[j] = rod.CG_X;
+                Zsy[j] = rod.CG_Y;
                 As[j] = rod.As;
                 Nju_s[j] = rod.Nu;
             }

@@ -41,35 +41,49 @@
             this.chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.btnDraw = new System.Windows.Forms.Button();
             this.dataGrid = new System.Windows.Forms.DataGridView();
+            this.labelSection = new System.Windows.Forms.Label();
+            this.labelRods = new System.Windows.Forms.Label();
+            this.bSRodDataGridView = new System.Windows.Forms.DataGridView();
             this.numDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.xDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.yDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pointBS = new System.Windows.Forms.BindingSource(this.components);
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.RodBS = new System.Windows.Forms.BindingSource(this.components);
             this.tableLayoutPanel.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bSRodDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pointBS)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RodBS)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel
             // 
-            this.tableLayoutPanel.ColumnCount = 3;
+            this.tableLayoutPanel.ColumnCount = 4;
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.83517F));
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 225F));
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 85.16483F));
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 36F));
             this.tableLayoutPanel.Controls.Add(this.tableLayoutPanel2, 0, 2);
-            this.tableLayoutPanel.Controls.Add(this.chart, 1, 1);
-            this.tableLayoutPanel.Controls.Add(this.btnDraw, 1, 2);
+            this.tableLayoutPanel.Controls.Add(this.chart, 2, 1);
+            this.tableLayoutPanel.Controls.Add(this.btnDraw, 2, 2);
             this.tableLayoutPanel.Controls.Add(this.dataGrid, 0, 1);
+            this.tableLayoutPanel.Controls.Add(this.labelSection, 0, 0);
+            this.tableLayoutPanel.Controls.Add(this.labelRods, 1, 0);
+            this.tableLayoutPanel.Controls.Add(this.bSRodDataGridView, 1, 1);
             this.tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel.Name = "tableLayoutPanel";
             this.tableLayoutPanel.RowCount = 3;
-            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.730769F));
-            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 93.26923F));
+            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.865772F));
+            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 95.13423F));
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 104F));
-            this.tableLayoutPanel.Size = new System.Drawing.Size(899, 701);
+            this.tableLayoutPanel.Size = new System.Drawing.Size(1131, 717);
             this.tableLayoutPanel.TabIndex = 0;
             // 
             // tableLayoutPanel2
@@ -80,7 +94,7 @@
             this.tableLayoutPanel2.Controls.Add(this.btnSave, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.btnDel, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.btnAdd, 0, 0);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 599);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 615);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -130,7 +144,7 @@
             this.chart.Dock = System.Windows.Forms.DockStyle.Fill;
             legend1.Name = "Legend1";
             this.chart.Legends.Add(legend1);
-            this.chart.Location = new System.Drawing.Point(131, 43);
+            this.chart.Location = new System.Drawing.Point(357, 32);
             this.chart.Name = "chart";
             series1.BorderWidth = 3;
             series1.ChartArea = "ChartArea1";
@@ -147,13 +161,13 @@
             series2.Name = "Армирование";
             this.chart.Series.Add(series1);
             this.chart.Series.Add(series2);
-            this.chart.Size = new System.Drawing.Size(734, 550);
+            this.chart.Size = new System.Drawing.Size(734, 577);
             this.chart.TabIndex = 0;
             this.chart.Click += new System.EventHandler(this.chart_Click);
             // 
             // btnDraw
             // 
-            this.btnDraw.Location = new System.Drawing.Point(131, 599);
+            this.btnDraw.Location = new System.Drawing.Point(357, 615);
             this.btnDraw.Name = "btnDraw";
             this.btnDraw.Size = new System.Drawing.Size(75, 23);
             this.btnDraw.TabIndex = 1;
@@ -171,10 +185,48 @@
             this.yDataGridViewTextBoxColumn});
             this.dataGrid.DataSource = this.pointBS;
             this.dataGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGrid.Location = new System.Drawing.Point(3, 43);
+            this.dataGrid.Location = new System.Drawing.Point(3, 32);
             this.dataGrid.Name = "dataGrid";
-            this.dataGrid.Size = new System.Drawing.Size(122, 550);
+            this.dataGrid.RowHeadersVisible = false;
+            this.dataGrid.Size = new System.Drawing.Size(123, 577);
             this.dataGrid.TabIndex = 2;
+            // 
+            // labelSection
+            // 
+            this.labelSection.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.labelSection.AutoSize = true;
+            this.labelSection.Location = new System.Drawing.Point(3, 8);
+            this.labelSection.Name = "labelSection";
+            this.labelSection.Size = new System.Drawing.Size(49, 13);
+            this.labelSection.TabIndex = 6;
+            this.labelSection.Text = "Сечение";
+            // 
+            // labelRods
+            // 
+            this.labelRods.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.labelRods.AutoSize = true;
+            this.labelRods.Location = new System.Drawing.Point(132, 8);
+            this.labelRods.Name = "labelRods";
+            this.labelRods.Size = new System.Drawing.Size(76, 13);
+            this.labelRods.TabIndex = 7;
+            this.labelRods.Text = "Армирование";
+            // 
+            // bSRodDataGridView
+            // 
+            this.bSRodDataGridView.AutoGenerateColumns = false;
+            this.bSRodDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.bSRodDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewTextBoxColumn2,
+            this.dataGridViewTextBoxColumn3,
+            this.dataGridViewTextBoxColumn4});
+            this.bSRodDataGridView.DataSource = this.RodBS;
+            this.bSRodDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.bSRodDataGridView.Location = new System.Drawing.Point(132, 32);
+            this.bSRodDataGridView.Name = "bSRodDataGridView";
+            this.bSRodDataGridView.RowHeadersVisible = false;
+            this.bSRodDataGridView.Size = new System.Drawing.Size(219, 577);
+            this.bSRodDataGridView.TabIndex = 7;
             // 
             // numDataGridViewTextBoxColumn
             // 
@@ -201,20 +253,59 @@
             // 
             this.pointBS.DataSource = typeof(BSFiberConcrete.Section.BSPoint);
             // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.DataPropertyName = "Id";
+            this.dataGridViewTextBoxColumn1.HeaderText = "Id";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ToolTipText = "Номер стержня";
+            this.dataGridViewTextBoxColumn1.Width = 20;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.DataPropertyName = "CG_X";
+            this.dataGridViewTextBoxColumn2.HeaderText = "X";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.ToolTipText = "X, см";
+            this.dataGridViewTextBoxColumn2.Width = 50;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.DataPropertyName = "CG_Y";
+            this.dataGridViewTextBoxColumn3.HeaderText = "Y";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.ToolTipText = "Y, см";
+            this.dataGridViewTextBoxColumn3.Width = 50;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.DataPropertyName = "D";
+            this.dataGridViewTextBoxColumn4.HeaderText = "D";
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            this.dataGridViewTextBoxColumn4.ToolTipText = "Диаметр, см";
+            this.dataGridViewTextBoxColumn4.Width = 50;
+            // 
+            // RodBS
+            // 
+            this.RodBS.DataSource = typeof(BSFiberConcrete.BSRod);
+            // 
             // BSSectionChart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(899, 701);
+            this.ClientSize = new System.Drawing.Size(1131, 717);
             this.Controls.Add(this.tableLayoutPanel);
             this.Name = "BSSectionChart";
             this.Text = "Сечение";
             this.Load += new System.EventHandler(this.BSSectionChart_Load);
             this.tableLayoutPanel.ResumeLayout(false);
+            this.tableLayoutPanel.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bSRodDataGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pointBS)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RodBS)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -233,5 +324,13 @@
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnDel;
         private System.Windows.Forms.Button btnAdd;
+        private System.Windows.Forms.Label labelSection;
+        private System.Windows.Forms.Label labelRods;
+        private System.Windows.Forms.DataGridView bSRodDataGridView;
+        private System.Windows.Forms.BindingSource RodBS;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
     }
 }
