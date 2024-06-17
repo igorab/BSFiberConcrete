@@ -34,8 +34,8 @@
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.btnSave = new System.Windows.Forms.Button();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.btnDel = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
             this.chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
@@ -68,7 +68,8 @@
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.83517F));
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 225F));
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 85.16483F));
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 36F));
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 55F));
+            this.tableLayoutPanel.Controls.Add(this.btnSave, 1, 2);
             this.tableLayoutPanel.Controls.Add(this.tableLayoutPanel2, 0, 2);
             this.tableLayoutPanel.Controls.Add(this.chart, 2, 1);
             this.tableLayoutPanel.Controls.Add(this.btnDraw, 2, 2);
@@ -86,26 +87,10 @@
             this.tableLayoutPanel.Size = new System.Drawing.Size(1131, 717);
             this.tableLayoutPanel.TabIndex = 0;
             // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.ColumnCount = 2;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Controls.Add(this.btnSave, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.btnDel, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.btnAdd, 0, 0);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 615);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 2;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(122, 99);
-            this.tableLayoutPanel2.TabIndex = 5;
-            // 
             // btnSave
             // 
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnSave.Location = new System.Drawing.Point(3, 52);
+            this.btnSave.Location = new System.Drawing.Point(129, 615);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(41, 35);
             this.btnSave.TabIndex = 4;
@@ -113,10 +98,25 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 2;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Controls.Add(this.btnDel, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.btnAdd, 0, 0);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 615);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 2;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(120, 99);
+            this.tableLayoutPanel2.TabIndex = 5;
+            // 
             // btnDel
             // 
             this.btnDel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnDel.Location = new System.Drawing.Point(64, 3);
+            this.btnDel.Location = new System.Drawing.Point(63, 3);
             this.btnDel.Name = "btnDel";
             this.btnDel.Size = new System.Drawing.Size(41, 35);
             this.btnDel.TabIndex = 3;
@@ -144,7 +144,7 @@
             this.chart.Dock = System.Windows.Forms.DockStyle.Fill;
             legend1.Name = "Legend1";
             this.chart.Legends.Add(legend1);
-            this.chart.Location = new System.Drawing.Point(357, 32);
+            this.chart.Location = new System.Drawing.Point(354, 32);
             this.chart.Name = "chart";
             series1.BorderWidth = 3;
             series1.ChartArea = "ChartArea1";
@@ -161,13 +161,12 @@
             series2.Name = "Армирование";
             this.chart.Series.Add(series1);
             this.chart.Series.Add(series2);
-            this.chart.Size = new System.Drawing.Size(734, 577);
+            this.chart.Size = new System.Drawing.Size(718, 577);
             this.chart.TabIndex = 0;
-            this.chart.Click += new System.EventHandler(this.chart_Click);
             // 
             // btnDraw
             // 
-            this.btnDraw.Location = new System.Drawing.Point(357, 615);
+            this.btnDraw.Location = new System.Drawing.Point(354, 615);
             this.btnDraw.Name = "btnDraw";
             this.btnDraw.Size = new System.Drawing.Size(75, 23);
             this.btnDraw.TabIndex = 1;
@@ -188,7 +187,7 @@
             this.dataGrid.Location = new System.Drawing.Point(3, 32);
             this.dataGrid.Name = "dataGrid";
             this.dataGrid.RowHeadersVisible = false;
-            this.dataGrid.Size = new System.Drawing.Size(123, 577);
+            this.dataGrid.Size = new System.Drawing.Size(120, 577);
             this.dataGrid.TabIndex = 2;
             // 
             // labelSection
@@ -205,7 +204,7 @@
             // 
             this.labelRods.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelRods.AutoSize = true;
-            this.labelRods.Location = new System.Drawing.Point(132, 8);
+            this.labelRods.Location = new System.Drawing.Point(129, 8);
             this.labelRods.Name = "labelRods";
             this.labelRods.Size = new System.Drawing.Size(76, 13);
             this.labelRods.TabIndex = 7;
@@ -222,7 +221,7 @@
             this.dataGridViewTextBoxColumn4});
             this.bSRodDataGridView.DataSource = this.RodBS;
             this.bSRodDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.bSRodDataGridView.Location = new System.Drawing.Point(132, 32);
+            this.bSRodDataGridView.Location = new System.Drawing.Point(129, 32);
             this.bSRodDataGridView.Name = "bSRodDataGridView";
             this.bSRodDataGridView.RowHeadersVisible = false;
             this.bSRodDataGridView.Size = new System.Drawing.Size(219, 577);

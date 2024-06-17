@@ -54,7 +54,7 @@ namespace BSFiberConcrete.Section
 
         private void InitRods()
         {
-            RodBS.DataSource =  BSData.LoadBSRod();
+            RodBS.DataSource =  BSData.LoadBSRod(m_BeamSection);
         }
 
         private void InitPoints()
@@ -178,10 +178,6 @@ namespace BSFiberConcrete.Section
             DrawFromDatasource(true);
         }
 
-        private void chart_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
@@ -200,7 +196,35 @@ namespace BSFiberConcrete.Section
             }
         }
 
+        private void SaveRods2DB()
+        {
+            List<BSRod> bSRods = (List<BSRod>) RodBS.List; 
+            
+            BSData.SaveRods(bSRods, m_BeamSection);            
+        }
+
         private void btnSave_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SaveRods2DB();
+
+                Save2PolyFile();
+            }
+            catch (Exception _e)
+            {
+                MessageBox.Show(_e.Message);
+            }
+        }
+
+        private void BSSectionChart_Load(object sender, EventArgs e)
+        {
+            InitDataSource();
+
+            DrawFromDatasource();
+        }
+
+        private void Save2PolyFile()
         {
             /*
              * TODO save to .poly file
@@ -235,11 +259,5 @@ namespace BSFiberConcrete.Section
              */
         }
 
-        private void BSSectionChart_Load(object sender, EventArgs e)
-        {
-            InitDataSource();
-
-            DrawFromDatasource();
-        }
     }
 }
