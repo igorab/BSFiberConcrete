@@ -1,8 +1,10 @@
-﻿using MathNet.Numerics.Providers.LinearAlgebra;
+﻿using MathNet.Numerics;
+using MathNet.Numerics.Providers.LinearAlgebra;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Entity.Core.Metadata.Edm;
 using System.Drawing;
 using System.Linq;
 using System.Reflection.Emit;
@@ -23,35 +25,35 @@ namespace BSFiberConcrete.DeformationDiagram
         {
             InitializeComponent();
 
-            decimal[,] result = DataForDeformDiagram.Calculate();
-            // построение диаграммы
+            CalcDeformDiagram calculation = new CalcDeformDiagram(DataForDeformDiagram.typesDiagram, DataForDeformDiagram.resists,
+                DataForDeformDiagram.deforms, DataForDeformDiagram.E);
+
+            //double[,] result = calculation.Calculate();
+
             chartDeformDiagram.Series.Add("Series1");
             chartDeformDiagram.Series["Series1"].BorderWidth = 4;
             chartDeformDiagram.Series["Series1"].Color = System.Drawing.Color.Red;
             chartDeformDiagram.Series["Series1"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            chartDeformDiagram.Titles["Title1"].Text = DataForDeformDiagram.typeMaterial + ". Диаграмма " + DataForDeformDiagram.typeDiagram + ".";
-            for (int i = 0; i < result.Length/2; i++)
-            { 
-                chartDeformDiagram.Series["Series1"].Points.AddXY(result[0,i], result[1,i]);
-                if (result[0, i] == 0m)
+            chartDeformDiagram.Titles["Title1"].Text = calculation.typeMaterial + ". Диаграмма " + calculation.typeDiagram + ".";
+
+            for (int i = 0; i < calculation.deformsArray.Length/ 2; i++)
+            {
+                double tmpEpsilon = calculation.deformsArray[i];
+                double tmpResits = calculation.getResists(tmpEpsilon);
+                chartDeformDiagram.Series["Series3"].Points.AddXY(tmpEpsilon, tmpResits);
+                if (tmpResits == 0)
                 { continue; }
-                string pointLableX = decimal.Round(result[0, i], 5).ToString();
-                string pointLableY = decimal.Round(result[1, i], 2).ToString();
+                string pointLableX = Math.Round(tmpEpsilon, 5).ToString();
+                string pointLableY = Math.Round(tmpResits, 2).ToString();
                 chartDeformDiagram.Series["Series1"].Points[i].Label = $"X={pointLableX}, Y= {pointLableY}";
-                //chartDeformDiagram.Series["Series1"].Points[i].Label.
             }
-            //
-
-
             chartDeformDiagram.Series["Series1"].Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F, 
                 ((System.Drawing.FontStyle)(System.Drawing.FontStyle.Bold)), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            //chartDeformDiagram.Series["Series1"].Points[0].Lab
             //chartDeformDiagram.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
             //chartDeformDiagram.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
             chartDeformDiagram.ChartAreas[0].AxisX.Crossing = 0;
             chartDeformDiagram.ChartAreas[0].AxisY.Crossing = 0;
             //chartDeformDiagram.ChartAreas[0].AxisX.Enabled = AxisEnabled.False;
-
             chartDeformDiagram.Series["Series1"].ToolTip = "X = #VALX, Y = #VALY";
 
             //double maxValueX = (double)result[0, result.Length/2-1];
@@ -73,6 +75,6 @@ namespace BSFiberConcrete.DeformationDiagram
             //chartDeformDiagram.Series["Abscissa"].Points.AddXY(-maxValueX / 10, 0);
             //chartDeformDiagram.Series["Abscissa"].Points.AddXY(maxValueX + maxValueX / 10, 0);
 
-        }
+            }
     }
 }

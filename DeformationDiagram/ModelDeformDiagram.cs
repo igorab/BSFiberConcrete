@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MathNet.Numerics.Integration;
+using Microsoft.SqlServer.Server;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,31 +8,33 @@ using System.Threading.Tasks;
 
 namespace BSFiberConcrete.DeformationDiagram
 {
-    public static class DataForDeformDiagram 
+    public class CalcDeformDiagram 
     {
-        public static string typeMaterial;
-        public static string typeDiagram;
+        public string typeMaterial;
+        public string typeDiagram;
 
         #region Характеристики Фибробетона для построения диаграммы деформации на растяжение
         /// <summary>
         /// норматиыное сопротивление на Растяжение кг/см2
         /// </summary>
-        public static decimal Rfbt_n;
+        public double Rfbt_n;
         /// <summary>
         /// Нормативное остаточное сопротивление осевому растяжению кг/см2
         /// </summary>
-        public static decimal Rfbt2_n;
+        public double Rfbt2_n;
         /// <summary>
         /// Нормативное остаточное сопротивление осевому растяжению кг/см2
         /// </summary>
-        public static decimal Rfbt3_n;
+        public double Rfbt3_n;
         /// <summary>
         /// Начальный модуль упругости кг/см2
         /// </summary>
-        public static decimal Efb;
+        public double Efb;
         // Относительные деформации
-        public static decimal efbt2;
-        public static decimal efbt3;
+        public double efbt0;
+        public double efbt1;
+        public double efbt2;
+        public double efbt3;
         #endregion
 
 
@@ -38,61 +42,168 @@ namespace BSFiberConcrete.DeformationDiagram
         /// <summary>
         /// норматиыное сопротивление на сжатие кг/см2
         /// </summary>
-        public static decimal Rb_n;
+        public double Rb_n;
+        /// <summary>
+        /// сопротивление на сжатие кг/см2
+        /// </summary>
+        public double Rb1;
         /// <summary>
         /// Начальный модуль упругости кг/см2
         /// </summary>
-        public static decimal Eb;
+        public double Eb;
         // Относительные деформации
-        public static decimal eb0;
-        public static decimal eb2;
+        public double eb0;
+        public double eb1;
+        public double eb2;
         # endregion 
 
-        public static decimal[,] Calculate()
+
+        public double[] deformsArray;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="types">types[0] = typeMaterial; types[1] = typeDiagram</param>
+        /// <param name="resists">Rb_n = resists[0]; Rfbt_n = resists[1]; Rfbt2_n = resists[2]; Rfbt3_n = resists[3];</param>
+        /// <param name="deforms"> eb0 = deforms[0]; eb2 = deforms[1]; efbt2 = deforms[2]; efbt3 = deforms[3];</param>
+        /// <param name="E"> Eb = E[0]; Efb = E[1];</param>
+        public CalcDeformDiagram(string[] types, double[] resists, double[] deforms, double[] E )
         {
-            decimal[,] result = new decimal[1, 1];
+            typeMaterial = types[0];
+            typeDiagram = types[1];
+            Rb_n = resists[0];
+            Rfbt_n = resists[1];
+            Rfbt2_n = resists[2];
+            Rfbt3_n = resists[3];
+
+            eb0 = deforms[0];
+            eb2 = deforms[1];
+            efbt2 = deforms[2];
+            efbt3 = deforms[3];
+
+            Eb = E[0];
+            Efb = E[1];
+
+            if (typeDiagram == "Двухлинейная")
+            { Rb1 = Rb_n; }
+            else if (typeDiagram == "Трехлинейная")
+            { Rb1 = Rb_n * 0.6; }
+            eb1 = Rb1 / Eb;
+
             if (typeMaterial == "Бетон")
             {
-                decimal eb1 = Rb_n / Eb;
                 if (typeDiagram == "Двухлинейная")
-                {
-                    result = new decimal[2, 3]
-                    { {0, eb1, eb2 }, { 0, Rb_n, Rb_n} };
-                }
+                { deformsArray = new double[] { 0, eb1, eb2 }; }
                 else if (typeDiagram == "Трехлинейная")
-                {
-                    decimal Rb1 = Rb_n * 0.6m;
-                    result = new decimal[2, 4]
-                    { {0, eb1, eb0, eb2 }, { 0, Rb1, Rb_n, Rb_n} };
-                }
-
+                { { deformsArray = new double[] { 0, eb1, eb0, eb2 }; } }
             }
             else if (typeMaterial == "Фибробетон")
             {
-                decimal efbt0 = Rfbt_n / Efb;
-                decimal efbt1 = efbt0 + 0.0001m;
+                efbt0 = Rfbt_n / Efb;
+                efbt1 = efbt0 + 0.0001;
                 //efbt2 = 0.004m;
                 //efbt3 = Math.Abs(0.02m - 0.0125m * (Rfbt3_n / Rfbt2_n));
-                decimal eb1 = Rb_n / Eb;
+                if (typeDiagram == "Двухлинейная")
+                { deformsArray = new double[] { -efbt3, -efbt2, -efbt1, -efbt0, 0, eb1, eb2 }; }
+                else if (typeDiagram == "Трехлинейная")
+                { { deformsArray = new double[] { -efbt3, -efbt2, -efbt1, -efbt0, 0, eb1, eb0, eb2 }; } }
+            }
+        }
+
+
+        /// <summary>
+        /// Определяется массив относительных деформаций и напряжений
+        /// </summary>
+        /// <returns></returns>
+        public double[,] Calculate()
+        {
+            double[,] result = new double[1, 1];
+            if (typeMaterial == "Бетон")
+            {
+                if (typeDiagram == "Двухлинейная")
+                { result = new double[2, 3] { {0, eb1, eb2 }, { 0, Rb_n, Rb_n} }; }
+                else if (typeDiagram == "Трехлинейная")
+                { result = new double[2, 4]{ {0, eb1, eb0, eb2 }, { 0, Rb1, Rb_n, Rb_n} }; }
+            }
+            else if (typeMaterial == "Фибробетон")
+            {
+                //efbt2 = 0.004m;
+                //efbt3 = Math.Abs(0.02m - 0.0125m * (Rfbt3_n / Rfbt2_n));
                 if (typeDiagram == "Двухлинейная")
                 {
-                    result = new decimal[2, 7]
-                    { {-efbt3, -efbt2, -efbt1, -efbt0, 0, eb0, eb2 }, { -Rfbt3_n, -Rfbt2_n, -Rfbt_n, -Rfbt_n, 0, Rb_n, Rb_n} };
+                    result = new double[2, 7]
+                    { {-efbt3, -efbt2, -efbt1, -efbt0, 0, eb1, eb2 }, { -Rfbt3_n, -Rfbt2_n, -Rfbt_n, -Rfbt_n, 0, Rb_n, Rb_n} };
                 }
                 else if (typeDiagram == "Трехлинейная")
                 {
-                    decimal Rb1 = Rb_n * 0.6m;
-                    result = new decimal[2, 8]
+                    result = new double[2, 8]
                     { {-efbt3, -efbt2, -efbt1, -efbt0, 0, eb1, eb0, eb2 }, { -Rfbt3_n, -Rfbt2_n, -Rfbt_n, -Rfbt_n, 0, Rb1, Rb_n, Rb_n} };
                 }
             }    
             return result;
         }
 
+        /// <summary>
+        /// определяется напряжение для относительной деформации epsilon
+        /// </summary>
+        /// <param name="epsilon"></param>
+        /// <returns></returns>
+        public double getResists(double epsilon)
+        {
+            double res = 0;
+            if (epsilon > 0)
+            {
+                if (epsilon > eb2)
+                { return res; }
+                if (typeDiagram == "Трехлинейная")
+                {
+                    if (0 < epsilon && epsilon <= eb1)
+                    { res = Eb * epsilon; }
+                    else if (eb1 < epsilon && epsilon <= eb0)
+                    {
+                        //res = ((1 - 0.6) * (epsilon - eb1) / (eb0 - eb1) + 0.6) * Rb_n;
+                        res = (Rb1 + (Rb_n - Rb1) * (epsilon - eb1) / (eb0 - eb1));
+                    }
+                    else if (eb0 < epsilon && epsilon <= eb2)
+                    { res = Rb_n; }
+                }
+                else if (typeDiagram == "Двухлинейная")
+                {
+                    if (0 < epsilon && epsilon <= eb1)
+                    { res = Eb * epsilon; }
+                    else if (eb1 < epsilon && epsilon <= eb2)
+                    { res = Rb_n; }
+                }
+            }
+            else if (epsilon < 0 && typeMaterial == "Фибробетон")
+            {
+                if (epsilon < -efbt3)
+                { return res; }
 
-
-
-
+                if (epsilon < 0 && -efbt0 <= epsilon)
+                { res = Efb * epsilon; }
+                if (epsilon < -efbt0 && -efbt1 <= epsilon)
+                { res = - Rfbt_n; }
+                else if (epsilon < -efbt1 && -efbt2 <= epsilon)
+                {
+                    res = - Rfbt_n * (1 + (1 - Rfbt2_n / Rfbt_n) * (epsilon - efbt1) / (efbt2 - efbt1));
+                    //res = Rfbt2_n * (1 - (1 - Rfbt_n / Rfbt2_n) * (epsilon + efbt2) / (efbt1 + efbt2));    
+                }
+                else if (epsilon < -efbt2 && -efbt3 <= epsilon)
+                {
+                    res = - Rfbt2_n * (1 + (1- Rfbt3_n / Rfbt2_n) * (epsilon + efbt2) / (efbt3 - efbt2));
+                    //res = (Rfbt3_n + (Rfbt3_n - Rfbt2_n) * (epsilon + efbt3) / (efbt2 - efbt3));  
+                }
+            }
+            return res;
+        }
     }
 
+    public static class DataForDeformDiagram
+    {
+        public static string[] typesDiagram;
+        public static double[] resists;
+        public static double[] deforms;
+        public static double[] E;
+    }
 }
