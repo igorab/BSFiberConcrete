@@ -2141,13 +2141,13 @@
             this.cmbDeformDiagram.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.cmbDeformDiagram.FormattingEnabled = true;
             this.cmbDeformDiagram.Items.AddRange(new object[] {
-            "Трехлинейная",
-            "Двухлинейная"});
+            BSHelper.ThreLineDiagram,
+            BSHelper.TwoLineDiagram});
             this.cmbDeformDiagram.Location = new System.Drawing.Point(123, 148);
             this.cmbDeformDiagram.Name = "cmbDeformDiagram";
             this.cmbDeformDiagram.Size = new System.Drawing.Size(100, 21);
             this.cmbDeformDiagram.TabIndex = 16;
-            this.cmbDeformDiagram.Text = "Трехлинейная";
+            this.cmbDeformDiagram.Text = BSHelper.ThreLineDiagram;
             // 
             // labelTypeMaterial
             // 
@@ -2163,13 +2163,13 @@
             // 
             this.cmbTypeMaterial.FormattingEnabled = true;
             this.cmbTypeMaterial.Items.AddRange(new object[] {
-            "Фибробетон",
-            "Бетон"});
+            BSHelper.FiberConcrete,
+            BSHelper.Concrete });
             this.cmbTypeMaterial.Location = new System.Drawing.Point(123, 182);
             this.cmbTypeMaterial.Name = "cmbTypeMaterial";
             this.cmbTypeMaterial.Size = new System.Drawing.Size(100, 21);
             this.cmbTypeMaterial.TabIndex = 18;
-            this.cmbTypeMaterial.Text = "Фибробетон";
+            this.cmbTypeMaterial.Text = BSHelper.FiberConcrete;
             // 
             // panelRods
             // 
