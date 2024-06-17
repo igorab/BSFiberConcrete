@@ -25,22 +25,22 @@ namespace BSFiberConcrete.DeformationDiagram
         {
             InitializeComponent();
 
-            CalcDeformDiagram calculation = new CalcDeformDiagram(DataForDeformDiagram.typesDiagram, DataForDeformDiagram.resists,
-                DataForDeformDiagram.deforms, DataForDeformDiagram.E);
-
+            //CalcDeformDiagram calculation = new CalcDeformDiagram(DataForDeformDiagram.typesDiagram, DataForDeformDiagram.resists,
+            //    DataForDeformDiagram.deforms, DataForDeformDiagram.E);
             //double[,] result = calculation.Calculate();
 
+            CalcDeformDiagram calculation = new CalcDeformDiagram();
             chartDeformDiagram.Series.Add("Series1");
             chartDeformDiagram.Series["Series1"].BorderWidth = 4;
             chartDeformDiagram.Series["Series1"].Color = System.Drawing.Color.Red;
             chartDeformDiagram.Series["Series1"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             chartDeformDiagram.Titles["Title1"].Text = calculation.typeMaterial + ". Диаграмма " + calculation.typeDiagram + ".";
 
-            for (int i = 0; i < calculation.deformsArray.Length/ 2; i++)
+            for (int i = 0; i < calculation.deformsArray.Length; i++)
             {
                 double tmpEpsilon = calculation.deformsArray[i];
                 double tmpResits = calculation.getResists(tmpEpsilon);
-                chartDeformDiagram.Series["Series3"].Points.AddXY(tmpEpsilon, tmpResits);
+                chartDeformDiagram.Series["Series1"].Points.AddXY(tmpEpsilon, tmpResits);
                 if (tmpResits == 0)
                 { continue; }
                 string pointLableX = Math.Round(tmpEpsilon, 5).ToString();

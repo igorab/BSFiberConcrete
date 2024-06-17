@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TreeView;
 using System.Xml.Linq;
+using BSFiberConcrete.Lib;
 
 namespace BSFiberConcrete.Section
 {
@@ -49,6 +50,11 @@ namespace BSFiberConcrete.Section
             h = 100;
             Sz = new double[] { 79, 19, 22, 18, 81, 21 };
 
+        }
+
+        private void InitRods()
+        {
+            RodBS.DataSource =  BSData.LoadBSRod();
         }
 
         private void InitPoints()
@@ -93,14 +99,7 @@ namespace BSFiberConcrete.Section
             }
             else if (m_BeamSection == BeamSection.TBeam)
             {
-                BSSection.IBeam(Sz, out PointsSection, out PointF _center);
-
-                m_RodPoints = new List<PointF>()
-                {
-                    new PointF((w-4)/2f, h-4),
-                    new PointF(0, h-4) ,
-                    new PointF(-(w-4)/2f, h-4)                    
-                };
+                BSSection.IBeam(Sz, out PointsSection, out PointF _center);                
             }
             else if (m_BeamSection == BeamSection.Ring)
             {
@@ -126,6 +125,8 @@ namespace BSFiberConcrete.Section
         {
             InitPoints();
            
+            InitRods();
+
             int idx = 0;    
             foreach(PointF p in PointsSection) 
             {
@@ -145,11 +146,17 @@ namespace BSFiberConcrete.Section
             }
 
             List<PointF> points = new List<PointF>();
-
             foreach (BSPoint bsp in pointBS)
             {
                 points.Add(new PointF(bsp.X, bsp.Y));
             }
+
+            List<PointF> rod_points = new List<PointF>();
+            foreach (BSRod _rod in RodBS)
+            {
+                rod_points.Add(new PointF((float)_rod.CG_X, (float)_rod.CG_Y) );
+            }
+
 
             Series serieSection = chart.Series[0];
             for (int j = 0; j < points.Count; j++)
@@ -159,18 +166,12 @@ namespace BSFiberConcrete.Section
             }
 
             Series serieRods = chart.Series[1];
-            for (int j = 0; j < m_RodPoints.Count; j++)
+            for (int j = 0; j < rod_points.Count; j++)
             {
-                var rod_pt = m_RodPoints[j];
+                var rod_pt = rod_points[j];
                 serieRods.Points.Add(new DataPoint(rod_pt.X, rod_pt.Y));
-            }
-
-            //serieSection.ChartType.
-
-
-
+            }         
         }
-
 
         private void btnDraw_Click(object sender, EventArgs e)
         {            

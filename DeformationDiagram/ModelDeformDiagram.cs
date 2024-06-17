@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BSFiberConcrete.DeformationDiagram
 {
-    public class CalcDeformDiagram 
+    public class CalcDeformDiagram
     {
         public string typeMaterial;
         public string typeDiagram;
@@ -37,7 +37,6 @@ namespace BSFiberConcrete.DeformationDiagram
         public double efbt3;
         #endregion
 
-
         #region Характеристик бетона (фибробетона) для построения диаграммы деформации на сжатие 
         /// <summary>
         /// норматиыное сопротивление на сжатие кг/см2
@@ -57,8 +56,54 @@ namespace BSFiberConcrete.DeformationDiagram
         public double eb2;
         # endregion 
 
-
+        /// <summary>
+        /// Массив, определяющий характерные значения относительных деформаций
+        /// </summary>
         public double[] deformsArray;
+
+        public CalcDeformDiagram()
+        {
+            typeMaterial = DataForDeformDiagram.typesDiagram[0];
+            typeDiagram = DataForDeformDiagram.typesDiagram[1];
+            Rb_n = DataForDeformDiagram.resists[0];
+            Rfbt_n = DataForDeformDiagram.resists[1];
+            Rfbt2_n =DataForDeformDiagram.resists[2];
+            Rfbt3_n = DataForDeformDiagram.resists[3];
+
+            eb0 = DataForDeformDiagram.deforms[0];
+            eb2 = DataForDeformDiagram.deforms[1];
+            efbt2 = DataForDeformDiagram.deforms[2];
+            efbt3 = DataForDeformDiagram.deforms[3];
+
+            Eb = DataForDeformDiagram.E[0];
+            Efb = DataForDeformDiagram.E[1];
+
+            if (typeDiagram == BSHelper.TwoLineDiagram)
+            { Rb1 = Rb_n; }
+            else if (typeDiagram == BSHelper.ThreLineDiagram)
+            { Rb1 = Rb_n * 0.6; }
+            eb1 = Rb1 / Eb;
+
+            if (typeMaterial == BSHelper.Concrete)
+            {
+                if (typeDiagram == BSHelper.TwoLineDiagram)
+                { deformsArray = new double[] { 0, eb1, eb2 }; }
+                else if (typeDiagram == BSHelper.ThreLineDiagram)
+                { { deformsArray = new double[] { 0, eb1, eb0, eb2 }; } }
+            }
+            else if (typeMaterial == BSHelper.FiberConcrete)
+            {
+                efbt0 = Rfbt_n / Efb;
+                efbt1 = efbt0 + 0.0001;
+                //efbt2 = 0.004m;
+                //efbt3 = Math.Abs(0.02m - 0.0125m * (Rfbt3_n / Rfbt2_n));
+                if (typeDiagram == BSHelper.TwoLineDiagram)
+                { deformsArray = new double[] { -efbt3, -efbt2, -efbt1, -efbt0, 0, eb1, eb2 }; }
+                else if (typeDiagram == BSHelper.ThreLineDiagram)
+                { { deformsArray = new double[] { -efbt3, -efbt2, -efbt1, -efbt0, 0, eb1, eb0, eb2 }; } }
+            }
+        }
+    
 
         /// <summary>
         /// 
@@ -84,28 +129,28 @@ namespace BSFiberConcrete.DeformationDiagram
             Eb = E[0];
             Efb = E[1];
 
-            if (typeDiagram == "Двухлинейная")
+            if (typeDiagram == BSHelper.TwoLineDiagram)
             { Rb1 = Rb_n; }
-            else if (typeDiagram == "Трехлинейная")
+            else if (typeDiagram == BSHelper.ThreLineDiagram)
             { Rb1 = Rb_n * 0.6; }
             eb1 = Rb1 / Eb;
 
-            if (typeMaterial == "Бетон")
+            if (typeMaterial == BSHelper.Concrete)
             {
-                if (typeDiagram == "Двухлинейная")
+                if (typeDiagram == BSHelper.TwoLineDiagram)
                 { deformsArray = new double[] { 0, eb1, eb2 }; }
-                else if (typeDiagram == "Трехлинейная")
+                else if (typeDiagram == BSHelper.ThreLineDiagram)
                 { { deformsArray = new double[] { 0, eb1, eb0, eb2 }; } }
             }
-            else if (typeMaterial == "Фибробетон")
+            else if (typeMaterial == BSHelper.FiberConcrete)
             {
                 efbt0 = Rfbt_n / Efb;
                 efbt1 = efbt0 + 0.0001;
                 //efbt2 = 0.004m;
                 //efbt3 = Math.Abs(0.02m - 0.0125m * (Rfbt3_n / Rfbt2_n));
-                if (typeDiagram == "Двухлинейная")
+                if (typeDiagram == BSHelper.TwoLineDiagram)
                 { deformsArray = new double[] { -efbt3, -efbt2, -efbt1, -efbt0, 0, eb1, eb2 }; }
-                else if (typeDiagram == "Трехлинейная")
+                else if (typeDiagram == BSHelper.ThreLineDiagram)
                 { { deformsArray = new double[] { -efbt3, -efbt2, -efbt1, -efbt0, 0, eb1, eb0, eb2 }; } }
             }
         }
@@ -118,23 +163,23 @@ namespace BSFiberConcrete.DeformationDiagram
         public double[,] Calculate()
         {
             double[,] result = new double[1, 1];
-            if (typeMaterial == "Бетон")
+            if (typeMaterial == BSHelper.Concrete)
             {
-                if (typeDiagram == "Двухлинейная")
+                if (typeDiagram == BSHelper.TwoLineDiagram)
                 { result = new double[2, 3] { {0, eb1, eb2 }, { 0, Rb_n, Rb_n} }; }
-                else if (typeDiagram == "Трехлинейная")
+                else if (typeDiagram == BSHelper.ThreLineDiagram)
                 { result = new double[2, 4]{ {0, eb1, eb0, eb2 }, { 0, Rb1, Rb_n, Rb_n} }; }
             }
-            else if (typeMaterial == "Фибробетон")
+            else if (typeMaterial == BSHelper.FiberConcrete)
             {
                 //efbt2 = 0.004m;
                 //efbt3 = Math.Abs(0.02m - 0.0125m * (Rfbt3_n / Rfbt2_n));
-                if (typeDiagram == "Двухлинейная")
+                if (typeDiagram == BSHelper.TwoLineDiagram)
                 {
                     result = new double[2, 7]
                     { {-efbt3, -efbt2, -efbt1, -efbt0, 0, eb1, eb2 }, { -Rfbt3_n, -Rfbt2_n, -Rfbt_n, -Rfbt_n, 0, Rb_n, Rb_n} };
                 }
-                else if (typeDiagram == "Трехлинейная")
+                else if (typeDiagram == BSHelper.ThreLineDiagram)
                 {
                     result = new double[2, 8]
                     { {-efbt3, -efbt2, -efbt1, -efbt0, 0, eb1, eb0, eb2 }, { -Rfbt3_n, -Rfbt2_n, -Rfbt_n, -Rfbt_n, 0, Rb1, Rb_n, Rb_n} };
@@ -155,7 +200,7 @@ namespace BSFiberConcrete.DeformationDiagram
             {
                 if (epsilon > eb2)
                 { return res; }
-                if (typeDiagram == "Трехлинейная")
+                if (typeDiagram == BSHelper.ThreLineDiagram)
                 {
                     if (0 < epsilon && epsilon <= eb1)
                     { res = Eb * epsilon; }
@@ -167,7 +212,7 @@ namespace BSFiberConcrete.DeformationDiagram
                     else if (eb0 < epsilon && epsilon <= eb2)
                     { res = Rb_n; }
                 }
-                else if (typeDiagram == "Двухлинейная")
+                else if (typeDiagram == BSHelper.TwoLineDiagram)
                 {
                     if (0 < epsilon && epsilon <= eb1)
                     { res = Eb * epsilon; }
@@ -175,7 +220,7 @@ namespace BSFiberConcrete.DeformationDiagram
                     { res = Rb_n; }
                 }
             }
-            else if (epsilon < 0 && typeMaterial == "Фибробетон")
+            else if (epsilon < 0 && typeMaterial == BSHelper.FiberConcrete)
             {
                 if (epsilon < -efbt3)
                 { return res; }
@@ -204,6 +249,7 @@ namespace BSFiberConcrete.DeformationDiagram
         public static string[] typesDiagram;
         public static double[] resists;
         public static double[] deforms;
-        public static double[] E;
+        public static double[] E; 
+
     }
 }
