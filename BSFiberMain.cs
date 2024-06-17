@@ -1355,24 +1355,29 @@ namespace BSFiberConcrete
 
         private void btnCalcDeformDiagram_Click(object sender, EventArgs e)
         {
-            DataForDeformDiagram.typeDiagram = cmbDeformDiagram.Text;
-            DataForDeformDiagram.typeMaterial = cmbTypeMaterial.Text;
+            string typeDiagram = cmbDeformDiagram.Text;
+            string typeMaterial = cmbTypeMaterial.Text;
 
+            double eb0 = (double)numEps_fb0.Value;
+            double eb2 = (double)numEps_fb2.Value;
+            //double eb0 = (double)0.003m;
+            //double eb2 = (double)0.0042m;
 
-            DataForDeformDiagram.Eb = numEfb.Value;
-            DataForDeformDiagram.Rb_n = numRfb_n.Value;
-            DataForDeformDiagram.eb0 = numEps_fb0.Value;
-            DataForDeformDiagram.eb2 = numEps_fb2.Value;
-            //DataForDeformDiagram.eb0 = 0.003m;
-            //DataForDeformDiagram.eb2 = 0.0042m;
+            double Eb = (double)numEfb.Value;
+            double Efb = Eb;                    // !!!
 
-            DataForDeformDiagram.Efb = DataForDeformDiagram.Eb;
-            DataForDeformDiagram.Rfbt_n = numRfbt_n.Value;
-            DataForDeformDiagram.Rfbt2_n = numRfbt3n.Value;
-            DataForDeformDiagram.Rfbt3_n = numRfbt2n.Value;
-            DataForDeformDiagram.efbt2 = numEps_fbt2.Value;
-            DataForDeformDiagram.efbt3 = numEps_fbt3.Value;
+            double Rb_n = (double)numRfb_n.Value;
+            double Rfbt_n = (double)numRfbt_n.Value;
+            double Rfbt2_n = (double)numRfbt3n.Value;
+            double Rfbt3_n = (double)numRfbt2n.Value;
 
+            double efbt2 = (double)numEps_fbt2.Value;
+            double efbt3 = (double)numEps_fbt3.Value;
+
+            DataForDeformDiagram.typesDiagram  = new string[] { typeMaterial, typeDiagram };
+            DataForDeformDiagram.resists = new double[] { Rb_n, Rfbt_n, Rfbt2_n, Rfbt3_n };
+            DataForDeformDiagram.deforms = new double[] { eb0, eb2, efbt2, efbt3 }; 
+            DataForDeformDiagram.E = new double[] { Eb, Efb };
 
             DeformDiagram deformDiagram = new DeformDiagram();
             deformDiagram.Show();
