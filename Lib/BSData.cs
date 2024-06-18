@@ -415,6 +415,27 @@ namespace BSFiberConcrete.Lib
             }
         }
 
+
+        /// <summary>
+        /// Относительные деформации бетона в зависимости от влажности воздуха
+        /// </summary>
+        /// <returns>Список</returns>
+        public static List<EpsilonFromAirHumidity> LoadBetonEpsilonFromAirHumidity()
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    var output = cnn.Query<EpsilonFromAirHumidity>("select * from EpsilonFromAirHumidity", new DynamicParameters());
+                    return output.ToList();
+                }
+            }
+            catch
+            {
+                return new List<EpsilonFromAirHumidity>();
+            }
+        }
+
         public static void SaveRods(List<BSRod>  _ds, BeamSection  _BeamSection)
         {
             try
