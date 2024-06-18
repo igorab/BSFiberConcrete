@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Policy;
 
 namespace BSFiberConcrete
 {
@@ -13,14 +14,14 @@ namespace BSFiberConcrete
 
 
     /// <summary>
-    /// Арматурный стержень
+    /// Арматурные стержни - расстановка
     /// </summary>
     public class BSRod
     {
         /// <summary>
         /// Номер стержня
         /// </summary>
-        public int Id { get; set; } = 0;
+        public int Id { get; set; }
 
         /// <summary>
         /// Координата X Ц.Т.
@@ -36,6 +37,11 @@ namespace BSFiberConcrete
         /// Диаметр стержня, мм
         /// </summary>
         public double D { get; set; }
+
+        /// <summary>
+        /// Тип сечения балки
+        /// </summary>
+        public BeamSection SectionType { get; set; }
 
         /// <summary>
         /// Площадь стержня
@@ -61,7 +67,7 @@ namespace BSFiberConcrete
         /// Тип продольная/поперечная
         /// </summary>
         public RebarLTType LTType { get; set; }
-
+       
         /// <summary>
         /// Материал
         /// </summary>

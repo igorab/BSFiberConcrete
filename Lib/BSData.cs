@@ -154,13 +154,14 @@ namespace BSFiberConcrete.Lib
         /// Армирование
         /// </summary>
         /// <returns></returns>
-        public static List<BSRod> LoadBSRod()
+        public static List<BSRod> LoadBSRod(BeamSection _SectionType)
         {
             try
             {
                 using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
                 {
-                    var output = cnn.Query<BSRod>("select * from BSRod", new DynamicParameters());
+                    var output = cnn.Query<BSRod>(string.Format("select * from BSRod where SectionType = {0}", (int)_SectionType), 
+                                                new DynamicParameters());
                     return output.ToList();
                 }
             }
@@ -414,5 +415,31 @@ namespace BSFiberConcrete.Lib
             }
         }
 
+        public static void SaveRods(List<BSRod>  _ds, BeamSection  _BeamSection)
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    cnn.Open();
+                    using (var tr = cnn.BeginTransaction())
+                    {
+                        cnn.Execute(string.Format("delete from BSRod where SectionType = {0}", (int)_BeamSection), null , tr);
+
+                        foreach (BSRod rod in _ds)
+                        {
+                            rod.SectionType = _BeamSection;
+                            int cnt = cnn.Execute("insert into BSRod (CG_X, CG_Y, D, SectionType) values (@CG_X, @CG_Y, @D, @SectionType)", rod, tr);
+                            
+                        }
+                        tr.Commit();
+                    }
+                }
+            }
+            catch
+            {
+                throw ;
+            }
+        }
     }
 }
