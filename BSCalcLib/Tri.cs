@@ -14,7 +14,9 @@ using TriangleNet;
 using TriangleNet.Geometry;
 using TriangleNet.IO;
 using TriangleNet.Meshing;
+using TriangleNet.Meshing.Algorithm;
 using TriangleNet.Rendering.Text;
+using TriangleNet.Smoothing;
 using TriangleNet.Tools;
 using TriangleNet.Topology;
 
@@ -52,8 +54,6 @@ namespace BSCalcLib
             HashSet<Rectangle> rects = new HashSet<Rectangle>();
             triAreas = new List<double>();
             triCGs = new List<Point>();
-
-
 
             string msg = "";
             int triIdx = 0;
@@ -135,16 +135,28 @@ namespace BSCalcLib
             // Add the outer box contour with boundary marker 1.
             p.Add(new Contour(vrtx, 1));
 
-            ConstraintOptions options = new ConstraintOptions() { Convex = false, ConformingDelaunay = true };
-
+            ConstraintOptions options = new ConstraintOptions() { ConformingDelaunay = true };
+            
             QualityOptions quality = new QualityOptions()
             {
-                MinimumAngle = MinAngle,
-                VariableArea = true
+                MinimumAngle = MinAngle
+                //,VariableArea = false
             };
-
+            quality.UseLegacyRefinement = true;
+            quality.MaximumAngle = 180;
+            quality.MaximumArea = 5;
+            //SweepLine();
             Mesh = p.Triangulate(options, quality) as Mesh;
+
+            var statistic = new Statistic();
+            statistic.Update(Mesh, 1);
+
+            // Refine by setting a custom maximum area constraint.
             
+            Mesh.Refine(quality);
+            
+            //var smoother = new SimpleSmoother();
+            //smoother.Smooth(Mesh, 5);
             string svgPath = Path.Combine(FilePath, "IBeam.svg");
 
             SvgImage.Save(Mesh, svgPath, 800);

@@ -46,60 +46,42 @@ namespace BSFiberConcrete.Section
             Center = new PointF(0, 0);
 
             m_BeamSection = BeamSection.Rect;
-            w = 100;
-            h = 100;
-            Sz = new double[] { 79, 19, 22, 18, 81, 21 };
-
+            w = 0;
+            h = 0;
+            Sz = new double[]  { 0, 0, 0, 0, 0, 0 };
         }
 
         private void InitRods()
         {
-            RodBS.DataSource =  BSData.LoadBSRod(m_BeamSection);
+            List<BSRod> bsRods =  BSData.LoadBSRod(m_BeamSection);
+
+            if (bsRods.Count == 0)
+            {
+                foreach (var _rod in m_RodPoints)
+                    bsRods.Add(new BSRod() { CG_X = _rod.X, CG_Y = _rod.Y, D = 14.0 } );
+            }
+
+            RodBS.DataSource = bsRods;
         }
 
         private void InitPoints()
         {
             if (m_BeamSection == BeamSection.Rect)                 
             {
-                PointsSection = new List<PointF>()
-                {
-                    new PointF(0, 0),
-                    new PointF(0, h) ,
-                    new PointF(w, h),
-                    new PointF(w, 0),
-                    new PointF(0, 0)
-                };
-
-                m_RodPoints = new List<PointF>()
-                {
-                    //new PointF(0+4, h-4),
-                    //new PointF(w/2f, h-4) ,
-                    //new PointF(w-4, h-4),
-
-                    new PointF(0+4, 4),
-                    new PointF(w/2f, 4) ,
-                    new PointF(w-4, 4),
-                };
+                BSSection.RectangleBeam(Sz);
+                PointsSection = BSSection.SectionPoints;
+                m_RodPoints = BSSection.RodPoints;               
             }
             else if (m_BeamSection == BeamSection.IBeam ||                      
                      m_BeamSection == BeamSection.LBeam)
             {                
                 BSSection.IBeam(Sz, out PointsSection, out PointF _center);
-
-                m_RodPoints = new List<PointF>()
-                {
-                    //new PointF((w-4)/2f, h-4),
-                    //new PointF(0, h-4) ,
-                    //new PointF(-(w-4)/2f, h-4),
-
-                    new PointF((w-4)/2f, 4),
-                    new PointF(0, 4) ,
-                    new PointF(-(w-4)/2f, 4),
-                };
+                m_RodPoints = BSSection.RodPoints;
             }
             else if (m_BeamSection == BeamSection.TBeam)
             {
-                BSSection.IBeam(Sz, out PointsSection, out PointF _center);                
+                BSSection.IBeam(Sz, out PointsSection, out PointF _center);
+                m_RodPoints = BSSection.RodPoints;
             }
             else if (m_BeamSection == BeamSection.Ring)
             {
@@ -219,9 +201,22 @@ namespace BSFiberConcrete.Section
 
         private void BSSectionChart_Load(object sender, EventArgs e)
         {
-            InitDataSource();
+            try
+            {                
+                InitDataSource();
 
-            DrawFromDatasource();
+                DrawFromDatasource();
+                /*
+                chart.ChartAreas[0].Axes[0].Minimum = -100;
+                chart.ChartAreas[0].Axes[0].Maximum = 100;
+                chart.ChartAreas[0].Axes[1].Minimum = -100;
+                chart.ChartAreas[0].Axes[1].Maximum = 100;
+                */
+            }
+            catch (Exception _e)
+            {
+                MessageBox.Show(_e.Message);
+            }
         }
 
         private void Save2PolyFile()
