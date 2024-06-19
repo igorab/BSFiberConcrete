@@ -1470,11 +1470,8 @@ namespace BSFiberConcrete
 
         private void cmbWetAir_SelectedIndexChanged(object sender, EventArgs e)
         {
-
-
-
             string title = cmbWetAir.Text;
-            if (title == "Не учитывать")
+            if (title == BSHelper.IgnoreHumidity)
             {
                 numEps_fb0.Enabled = true;
                 numEps_fb2.Enabled = true;
@@ -1483,21 +1480,16 @@ namespace BSFiberConcrete
             {
                 numEps_fb0.Enabled = false;
                 numEps_fb2.Enabled = false;
-
                 List<EpsilonFromAirHumidity> e_DB = BSData.LoadBetonEpsilonFromAirHumidity();
-
                 foreach (EpsilonFromAirHumidity rowEps in e_DB)
                 {
                     if (title == rowEps.AirHumidityStr)
                     {
                         numEps_fb0.Value = (decimal)rowEps.Eps_b0;
                         numEps_fb2.Value = (decimal)rowEps.Eps_b2;
-                        //numEps_fb2.Value = new decimal(new int[] { 3, 0, 0, 196608});
                         break;
                     }
                 }
-
-
             }
         }
     }

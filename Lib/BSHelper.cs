@@ -35,8 +35,9 @@ namespace BSFiberConcrete
 
         public const string TwoLineDiagram = "Двухлинейная";
 
-        public const string ThreLineDiagram = "Трехлинейная";
+        public const string ThreeLineDiagram = "Трехлинейная";
 
+        public const string IgnoreHumidity = "Не учитывать";
 
 
         public static string ImgResource(BeamSection _bs, bool _useReinforcement = false)
