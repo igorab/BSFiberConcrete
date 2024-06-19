@@ -71,7 +71,7 @@ namespace BSCalcLib
             {
                 // Create unit square.
                 Rectangle bounds = new Rectangle(x, y, w, h);
-                
+                                
                 // Generate mesh.
                 Mesh = GenericMesher.StructuredMesh(bounds, Nx, Ny) as Mesh;
             

@@ -1305,14 +1305,7 @@ namespace BSFiberConcrete
             var sz = BeamWidtHeight(out double b, out double h);
 
             sectionChart.Wdth = (float)b;
-            sectionChart.Hght = (float)h;
-            // стержни
-            sectionChart.RodPoints  = new List<PointF>()
-            {
-                new PointF(-60, 40),
-                new PointF(60, 40)
-            };
-
+            sectionChart.Hght = (float)h;            
             sectionChart.Sz = sz;
 
             sectionChart.Show();
@@ -1338,7 +1331,7 @@ namespace BSFiberConcrete
             if (m_BeamSection == BeamSection.Rect)
             {
                 List<double> rect = new List<double> { 0, 0, b, h };
-                CG = new TriangleNet.Geometry.Point(b/2.0, h/2.0);                
+                CG = new TriangleNet.Geometry.Point(0.0, h/2.0);                
                 pathToSvgFile = BSCalcLib.BSMesh.GenerateRectangle(rect);
                 Tri.Mesh = BSMesh.Mesh;
                 Tri.CalculationScheme();
