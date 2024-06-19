@@ -254,5 +254,18 @@ namespace BSFiberConcrete.Section
              */
         }
 
+        private void BSSectionChart_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            try
+            {
+                SaveRods2DB();
+
+                Save2PolyFile();
+            }
+            catch (Exception _e)
+            {
+                MessageBox.Show(_e.Message);
+            }
+        }
     }
 }
