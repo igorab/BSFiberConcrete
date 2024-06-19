@@ -419,6 +419,30 @@ namespace BSFiberConcrete
         public int Type { get; set; }
     }
 
+    /// <summary>
+    /// зависимость относительных диформаций от влажности воздуха
+    /// </summary>
+    public class EpsilonFromAirHumidity
+    {
+        public int Id { get; set; }
+        /// <summary>
+        /// строковое название диапазона влажности
+        /// </summary>
+        public string AirHumidityStr { get; set; }
+        /// <summary>
+        /// Левая граница диапазона влажности
+        /// </summary>
+        public double FirstBorder { get; set; }
+        /// <summary>
+        /// Правая граница диапазона влажногсти
+        /// </summary>
+        public double SecondBorder { get; set; }
+        public double Eps_b0 { get; set; }
+        public double Eps_b2 { get; set; }
+        public double Eps_bt0 { get; set; }
+        public double Eps_bt2 { get; set; }
+    }
+
 
 
 }

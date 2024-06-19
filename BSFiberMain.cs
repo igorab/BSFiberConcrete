@@ -15,6 +15,7 @@ using TriangleNet.Geometry;
 using TriangleNet.Topology;
 using MathNet.Numerics.Distributions;
 using BSFiberConcrete.DeformationDiagram;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace BSFiberConcrete
 {
