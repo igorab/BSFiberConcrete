@@ -80,7 +80,7 @@ namespace BSFiberConcrete.DeformationDiagram
 
             if (typeDiagram == BSHelper.TwoLineDiagram)
             { Rb1 = Rb_n; }
-            else if (typeDiagram == BSHelper.ThreLineDiagram)
+            else if (typeDiagram == BSHelper.ThreeLineDiagram)
             { Rb1 = Rb_n * 0.6; }
             eb1 = Rb1 / Eb;
 
@@ -88,7 +88,7 @@ namespace BSFiberConcrete.DeformationDiagram
             {
                 if (typeDiagram == BSHelper.TwoLineDiagram)
                 { deformsArray = new double[] { 0, eb1, eb2 }; }
-                else if (typeDiagram == BSHelper.ThreLineDiagram)
+                else if (typeDiagram == BSHelper.ThreeLineDiagram)
                 { { deformsArray = new double[] { 0, eb1, eb0, eb2 }; } }
             }
             else if (typeMaterial == BSHelper.FiberConcrete)
@@ -99,7 +99,7 @@ namespace BSFiberConcrete.DeformationDiagram
                 //efbt3 = Math.Abs(0.02m - 0.0125m * (Rfbt3_n / Rfbt2_n));
                 if (typeDiagram == BSHelper.TwoLineDiagram)
                 { deformsArray = new double[] { -efbt3, -efbt2, -efbt1, -efbt0, 0, eb1, eb2 }; }
-                else if (typeDiagram == BSHelper.ThreLineDiagram)
+                else if (typeDiagram == BSHelper.ThreeLineDiagram)
                 { { deformsArray = new double[] { -efbt3, -efbt2, -efbt1, -efbt0, 0, eb1, eb0, eb2 }; } }
             }
         }
@@ -131,7 +131,7 @@ namespace BSFiberConcrete.DeformationDiagram
 
             if (typeDiagram == BSHelper.TwoLineDiagram)
             { Rb1 = Rb_n; }
-            else if (typeDiagram == BSHelper.ThreLineDiagram)
+            else if (typeDiagram == BSHelper.ThreeLineDiagram)
             { Rb1 = Rb_n * 0.6; }
             eb1 = Rb1 / Eb;
 
@@ -139,7 +139,7 @@ namespace BSFiberConcrete.DeformationDiagram
             {
                 if (typeDiagram == BSHelper.TwoLineDiagram)
                 { deformsArray = new double[] { 0, eb1, eb2 }; }
-                else if (typeDiagram == BSHelper.ThreLineDiagram)
+                else if (typeDiagram == BSHelper.ThreeLineDiagram)
                 { { deformsArray = new double[] { 0, eb1, eb0, eb2 }; } }
             }
             else if (typeMaterial == BSHelper.FiberConcrete)
@@ -150,7 +150,7 @@ namespace BSFiberConcrete.DeformationDiagram
                 //efbt3 = Math.Abs(0.02m - 0.0125m * (Rfbt3_n / Rfbt2_n));
                 if (typeDiagram == BSHelper.TwoLineDiagram)
                 { deformsArray = new double[] { -efbt3, -efbt2, -efbt1, -efbt0, 0, eb1, eb2 }; }
-                else if (typeDiagram == BSHelper.ThreLineDiagram)
+                else if (typeDiagram == BSHelper.ThreeLineDiagram)
                 { { deformsArray = new double[] { -efbt3, -efbt2, -efbt1, -efbt0, 0, eb1, eb0, eb2 }; } }
             }
         }
@@ -167,7 +167,7 @@ namespace BSFiberConcrete.DeformationDiagram
             {
                 if (typeDiagram == BSHelper.TwoLineDiagram)
                 { result = new double[2, 3] { {0, eb1, eb2 }, { 0, Rb_n, Rb_n} }; }
-                else if (typeDiagram == BSHelper.ThreLineDiagram)
+                else if (typeDiagram == BSHelper.ThreeLineDiagram)
                 { result = new double[2, 4]{ {0, eb1, eb0, eb2 }, { 0, Rb1, Rb_n, Rb_n} }; }
             }
             else if (typeMaterial == BSHelper.FiberConcrete)
@@ -179,7 +179,7 @@ namespace BSFiberConcrete.DeformationDiagram
                     result = new double[2, 7]
                     { {-efbt3, -efbt2, -efbt1, -efbt0, 0, eb1, eb2 }, { -Rfbt3_n, -Rfbt2_n, -Rfbt_n, -Rfbt_n, 0, Rb_n, Rb_n} };
                 }
-                else if (typeDiagram == BSHelper.ThreLineDiagram)
+                else if (typeDiagram == BSHelper.ThreeLineDiagram)
                 {
                     result = new double[2, 8]
                     { {-efbt3, -efbt2, -efbt1, -efbt0, 0, eb1, eb0, eb2 }, { -Rfbt3_n, -Rfbt2_n, -Rfbt_n, -Rfbt_n, 0, Rb1, Rb_n, Rb_n} };
@@ -200,7 +200,7 @@ namespace BSFiberConcrete.DeformationDiagram
             {
                 if (epsilon > eb2)
                 { return res; }
-                if (typeDiagram == BSHelper.ThreLineDiagram)
+                if (typeDiagram == BSHelper.ThreeLineDiagram)
                 {
                     if (0 < epsilon && epsilon <= eb1)
                     { res = Eb * epsilon; }

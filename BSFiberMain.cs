@@ -1459,5 +1459,30 @@ namespace BSFiberConcrete
             DeformDiagram deformDiagram = new DeformDiagram();
             deformDiagram.Show();
         }
+
+        private void cmbWetAir_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string title = cmbWetAir.Text;
+            if (title == BSHelper.IgnoreHumidity)
+            {
+                numEps_fb0.Enabled = true;
+                numEps_fb2.Enabled = true;
+            }
+            else
+            {
+                numEps_fb0.Enabled = false;
+                numEps_fb2.Enabled = false;
+                List<EpsilonFromAirHumidity> e_DB = BSData.LoadBetonEpsilonFromAirHumidity();
+                foreach (EpsilonFromAirHumidity rowEps in e_DB)
+                {
+                    if (title == rowEps.AirHumidityStr)
+                    {
+                        numEps_fb0.Value = (decimal)rowEps.Eps_b0;
+                        numEps_fb2.Value = (decimal)rowEps.Eps_b2;
+                        break;
+                    }
+                }
+            }
+        }
     }
 }
