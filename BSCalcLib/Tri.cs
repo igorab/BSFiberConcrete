@@ -28,6 +28,8 @@ namespace BSCalcLib
         public static string FilePath { get; set; }
         public static double MinAngle { get; set; }
 
+        public static double MaxArea { get; set; }
+
         public static List<double> triAreas;
         public static List<Point> triCGs;
 
@@ -43,6 +45,7 @@ namespace BSCalcLib
             triAreas = new List<double>();
             triCGs = new List<Point>();
             MinAngle = 25.0;
+            MaxArea = 10;
             Oxy = new Point() {ID = 0, X = 0, Y = 0 };
         }
 
@@ -144,7 +147,7 @@ namespace BSCalcLib
             };
             quality.UseLegacyRefinement = true;
             quality.MaximumAngle = 180;
-            quality.MaximumArea = 5;
+            quality.MaximumArea = MaxArea;
             //SweepLine();
             Mesh = p.Triangulate(options, quality) as Mesh;
 

@@ -948,7 +948,7 @@ namespace BSFiberConcrete
             double c_Length = Convert.ToDouble(tbLength.Text); 
                                                                         
             // расстановка арматурных стержней
-            List<BSRod> rods = new List<BSRod>();
+            List<BSRod> Rods = new List<BSRod>();
 
             // Усилия Mx, My - моменты, кгс*см , N - сила, кгс              
             GetEffortsFromForm(out Dictionary<string, double> MNQ);
@@ -1005,55 +1005,40 @@ namespace BSFiberConcrete
                 /// 
                 Action RodsReinforcement = delegate()
                 {
-                    int d_qty = 0; //количество стержней
+                    // значения из БД
+                    var _rods = BSData.LoadBSRod(m_BeamSection);
+
+                    // количество стержней
+                    int d_qty = _rods.Count; 
+
+                    // площадь арматуры
                     double area_total = 0;
-                    foreach (var lr in l_r)
+                    foreach (var lr in _rods)
                     {
-                        d_qty += 1; // (int)lr[1];
+                        area_total += BSHelper.AreaCircle(lr.D); 
                     }
-
-                    //координаты, формат:  { { 4, 4 }, { 15, 4 }, { 26, 4 } } :
-                    double[,] rdYdX = new double[d_qty, 2];
-                    //диаметры,  формат { 2.5, 1.8, 2.5 }; // D , см
-                    double[] rD_lng = new double[d_qty];
-                    //площади арматуры: { 4.909, 2.545, 4.909 };
-                    double[] _As = new double[d_qty];
-
-                    double a_r = l_r[0][2]; // защитный слой арматуры
-
-                    // ширина минус защитный слой слева и справа:
-                    double bx = c_b - a_r - a_r;
-
-                    // расстояние между стержнями
-                    double d_bx = bx / (d_qty - 1);
-
+                                        
                     int idx = 0; // Индекс стержня
-                    foreach (double[] lr in l_r)
+                    foreach (var lr in _rods)
                     {
-                        // диаметр стержня, см
-                        double d_r = lr[0];                      
-                        double qty_r = lr[1];
-                        
-                        rdYdX[idx, 0] = a_r + d_bx * idx;
-                        rdYdX[idx, 1] = a_r;
-
-                        rD_lng[idx] = d_r;
-                        _As[idx] = qty_r * BSHelper.AreaCircle(d_r);
-                        area_total += _As[idx];
-
+                                                                                                                                          
                         BSRod rod = new BSRod()
                         {
                             Id = idx,
                             LTType = RebarLTType.Longitudinal,
-                            D = rD_lng[idx],
-                            CG_X = rdYdX[idx, 0] - X0,
-                            CG_Y = rdYdX[idx, 1] - Y0,
+                            D = lr.D,
+                            CG_X = lr.CG_X - X0,
+                            CG_Y = lr.CG_Y - Y0,
                             MatRod = fiberCalc_Deform.MatRebar,
                             Nu = 1.0 // на первой итерации задаем 1
                         };
+
                         idx++;
-                        rods.Add(rod);                        
+                        Rods.Add(rod);                        
                     }
+
+                    fiberCalc_Deform.Rods = Rods;
+
 
                     m_Reinforcement.Add("Количество стержней, шт", d_qty);
                     m_Reinforcement.Add("Площадь арматуры, см2", area_total);
@@ -1085,7 +1070,7 @@ namespace BSFiberConcrete
                 fiberCalc_Deform.Beam = new BSBeam_Rect(c_b, c_h)
                 {
                     Length = c_Length,
-                    Rods = rods,
+                    Rods = Rods,
                     Mat = beamMaterial
                 };
                 
@@ -1321,8 +1306,10 @@ namespace BSFiberConcrete
 
             BSMesh.Nx = (int) numMeshN.Value;
             BSMesh.Ny = (int)numMeshN.Value;
+
             BSMesh.MinAngle = (double) numTriAngle.Value;
             Tri.MinAngle = (double)numTriAngle.Value;
+            Tri.MaxArea = (double)numMeshN.Value;    
 
             BSMesh.FilePath = Path.Combine(Environment.CurrentDirectory, "Templates");
             Tri.FilePath = BSMesh.FilePath;
