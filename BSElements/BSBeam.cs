@@ -107,6 +107,16 @@ namespace BSFiberConcrete
 
         public double Length { get; set; }
 
+        public virtual double Width { get; }
+        public virtual double Height { get; }
+
+        /// <summary>
+        /// Центр тяжести сечения
+        /// </summary>
+        /// <returns>X, Y</returns>
+        public virtual (double, double) CG() => (Width / 2.0, Height / 2.0);
+
+
         [DisplayName("Площадь армирования, см2")]
         public double AreaS()
         {            
@@ -144,5 +154,24 @@ namespace BSFiberConcrete
         public BSBeam()
         {            
         }
+
+        public virtual void GetSizes(double[] _t) { }
+
+        public static BSBeam construct(BeamSection _BeamSection)
+        {
+            switch (_BeamSection)
+            {
+                case BeamSection.Rect:
+                    return new BSBeam_Rect();
+                case BeamSection.IBeam:
+                case BeamSection.LBeam:
+                case BeamSection.TBeam:
+                    return new BSBeam_IT();
+                case BeamSection.Ring:
+                    return new BSBeam_Ring();
+            }
+            return new BSBeam();
+        }
+
     }           
 }

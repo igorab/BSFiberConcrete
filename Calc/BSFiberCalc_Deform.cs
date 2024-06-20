@@ -518,16 +518,15 @@ namespace BSFiberConcrete
         private List<BSElement> CalculationScheme(bool _usemesh = true)
         {            
             List<BSElement> bs = new List<BSElement>();
-            BSBeam_Rect beam = (BSBeam_Rect)m_Beam;
-
+            
             // центр тяжести сечения           
             (double X0, double Y0) = (CG.X, CG.Y);
                         
             foreach (var t in triCGs)
             {                               
                 // начало координат переносим в ц.т. сечения
-                double cgX = t.X - X0;                
-                double cgY = t.Y - Y0;
+                double cgX = t.X ;                
+                double cgY = t.Y ;
 
                 BSElement bsElement = new BSElement(t.ID, cgX, cgY) 
                 { 
@@ -536,7 +535,7 @@ namespace BSFiberConcrete
                     B = 1 
                 };
 
-                bsElement.E = beam.Mat.Eb;
+                bsElement.E = m_Beam.Mat.Eb;
 
                 bs.Add(bsElement);                                                          
             }
@@ -544,9 +543,10 @@ namespace BSFiberConcrete
             return bs;
         }
 
-        //
-        // Рассчитать
-        //
+        /// <summary>
+        ///  Рассчитать
+        /// </summary>
+        /// <returns>Успешно</returns>        
         public bool Calculate()
         {
             int cIters = 10000;
@@ -613,7 +613,6 @@ namespace BSFiberConcrete
             AddToResult("Ky", Ky);
             AddToResult("e_fb_calc", e_fb_calc);
             
-
             bool res_fb = e_fb_calc <=  m_Fiber.Eps_fb_ult;            
             if (res_fb)
                 Msg.Add("Проверка сечения по фибробетону пройдена");            

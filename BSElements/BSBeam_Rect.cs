@@ -24,15 +24,15 @@ namespace BSFiberConcrete
         [DisplayName("Расстояние от центра тяжести сечения сталефибробетонного элемента до наиболее растянутого волокна, см")]
         public double y_t() => h / 2.0;
 
-        // Центр тяжести сечения
-        public (double, double) CG() => (b / 2, h / 2);
-
+        public override double Width => b;
+        public override double Height => h;
+       
         public BSBeam_Rect(double _b = 0, double _h = 0)
         {
             b = _b;
             h = _h;
-            Zfb_X = _b / 2;
-            Z_fb_Y = _h / 2;
+            Zfb_X = _b / 2.0;
+            Z_fb_Y = _h / 2.0;
         }
 
         // Моменты инерции сечения
@@ -50,6 +50,11 @@ namespace BSFiberConcrete
         {
             double sgm_z = _N / Area() + _Mx / Jx() * _X - _My / Jy() * _Y;
             return sgm_z;
+        }
+
+        public override void GetSizes(double[] _t)
+        {
+            (b, h, Length) = (_t[0], _t[1], _t[2]);
         }
     }
 }
