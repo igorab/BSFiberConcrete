@@ -462,5 +462,34 @@ namespace BSFiberConcrete.Lib
                 throw ;
             }
         }
+
+
+
+
+        /// <summary>
+        /// Относительные деформации бетона в зависимости от влажности воздуха
+        /// </summary>
+        /// <returns>Список</returns>
+        public static List<InitBeamSection> LoadBeamSection(BeamSection _SectionType)
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    var output = cnn.Query<InitBeamSection>("select * from InitBeamSection", new DynamicParameters());
+                    
+                    
+                    //var outputTest = cnn.Query<BSRod>(string.Format("select * from InitBeamSection where SectionTypeNum = {0}", (int)_SectionType),
+                    //                            new DynamicParameters());
+
+
+                    return output.ToList();
+                }
+            }
+            catch
+            {
+                return new List<InitBeamSection>();
+            }
+        }
     }
 }

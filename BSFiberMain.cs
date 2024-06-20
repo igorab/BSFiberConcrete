@@ -35,6 +35,7 @@ namespace BSFiberConcrete
         private BSMatFiber m_MatFiber;
         private List<Elements> FiberConcrete;
         private List<Beton> m_Beton;
+        private List<InitBeamSection> m_InitBeamSections;
 
         public Dictionary<string, double> m_Beam { get; private set; }
         private Dictionary<string, double> m_Coeffs;
@@ -116,6 +117,7 @@ namespace BSFiberConcrete
                 m_MatFiber.Efb = m_BSLoadData.Fiber.Efb; // TODO на значения с формы
 
                 m_Rebar = BSData.LoadRebar();
+                m_InitBeamSections = Lib.BSData.LoadBeamSection(m_BeamSection);
 
                 numRandomEccentricity.Value = (decimal)m_BSLoadData.Fiber.e_tot;
 
@@ -409,18 +411,34 @@ namespace BSFiberConcrete
         // Прямоугольное сечение
         private void LoadRectangle(double _b, double _h)
         {
+
+            // TO DO избавится от входных аргументов
+
+
             m_BeamSection = BeamSection.Rect;
             m_BeamSectionReport = m_BeamSection;
 
             dataGridSection.DataSource = null;
-
+            
             m_Table = new DataTable();
             m_Table.Columns.Add("b, cm", typeof(double));
             m_Table.Columns.Add("h, cm", typeof(double));
 
             dataGridSection.DataSource = m_Table;
-            m_Table.Rows.Add( _b, _h);
 
+            double b = 0;
+            double h = 0;
+            foreach (InitBeamSection beamSection in m_InitBeamSections)
+            {
+                if (beamSection.SectionTypeNum == m_BeamSection)
+                {
+                    b = beamSection.bw;
+                    h = beamSection.hw;
+                    break;
+                }
+            }
+
+            m_Table.Rows.Add( b, h);
             foreach (DataGridViewColumn column in dataGridSection.Columns)
             {
                 column.SortMode = DataGridViewColumnSortMode.NotSortable;
@@ -439,6 +457,9 @@ namespace BSFiberConcrete
 
         private void TSection(char _T_L)
         {
+
+            // TO DO удалить неиспользуемый код
+
             m_BeamSection = BeamSection.TBeam;
             
             dataGridSection.DataSource = null;
@@ -456,7 +477,30 @@ namespace BSFiberConcrete
             if (_T_L == 'T')
             {
                 m_BeamSectionReport = BeamSection.TBeam;
-                m_Table.Rows.Add(0, 0, m_Iniv["bw"], m_Iniv["hw"], m_Iniv["b1f"], m_Iniv["h1f"]);
+
+
+
+                double bw = 0;
+                double hw = 0;
+                double b1f = 0;
+                double h1f = 0;
+                foreach (InitBeamSection beamSection in m_InitBeamSections)
+                {
+                    if (beamSection.SectionTypeNum == m_BeamSection)
+                    {
+                        bw = beamSection.bw;
+                        hw = beamSection.hw;
+                        h1f= beamSection.h1f;
+                        b1f= beamSection.b1f;
+                        break;
+                    }
+                }
+                m_Table.Rows.Add(0, 0, bw, hw, b1f, h1f);
+
+
+                //m_Table.Rows.Add(0, 0, m_Iniv["bw"], m_Iniv["hw"], m_Iniv["b1f"], m_Iniv["h1f"]);
+
+
                 dataGridSection.Columns[0].Visible = false;
                 dataGridSection.Columns[1].Visible = false;
                 picBeton.Image = global::BSFiberConcrete.Properties.Resources.TBeam;
@@ -464,7 +508,28 @@ namespace BSFiberConcrete
             else if (_T_L == 'L')
             {
                 m_BeamSectionReport = BeamSection.LBeam;
-                m_Table.Rows.Add(m_Iniv["bf"], m_Iniv["hf"], m_Iniv["bw"], m_Iniv["hw"], 0, 0);
+
+
+
+                double bw = 0;
+                double hw = 0;
+                double bf = 0;
+                double hf = 0;
+                foreach (InitBeamSection beamSection in m_InitBeamSections)
+                {
+                    if (beamSection.SectionTypeNum == m_BeamSection)
+                    {
+                        bw = beamSection.bw;
+                        hw = beamSection.hw;
+                        hf = beamSection.hf;
+                        bf = beamSection.bf;
+                        break;
+                    }
+                }
+                m_Table.Rows.Add(bw, hw, bf, hf, 0, 0);
+
+
+                //m_Table.Rows.Add(m_Iniv["bf"], m_Iniv["hf"], m_Iniv["bw"], m_Iniv["hw"], 0, 0);
                 dataGridSection.Columns[4].Visible = false;
                 dataGridSection.Columns[5].Visible = false;
                 picBeton.Image = global::BSFiberConcrete.Properties.Resources.LBeam;
@@ -516,6 +581,8 @@ namespace BSFiberConcrete
 
         // двутавровое сечение
         private void btnIBeam_Click(object sender, EventArgs e)
+
+            // TO DO избавиться от неиспользуемого кода
         {
             m_BeamSection = BeamSection.IBeam;
             m_BeamSectionReport = m_BeamSection;
@@ -530,9 +597,33 @@ namespace BSFiberConcrete
             m_Table.Columns.Add("b1f, cm", typeof(double));
             m_Table.Columns.Add("h1f, cm", typeof(double));
 
-            dataGridSection.DataSource = m_Table;
-            m_Table.Rows.Add(m_Iniv["bf"], m_Iniv["hf"], m_Iniv["bw"], m_Iniv["hw"], m_Iniv["b1f"], m_Iniv["h1f"]);
 
+
+
+            double bw = 0;
+            double hw = 0;
+            double bf = 0;
+            double hf = 0;
+            double b1f = 0;
+            double h1f = 0;
+            foreach (InitBeamSection beamSection in m_InitBeamSections)
+            {
+                if (beamSection.SectionTypeNum == m_BeamSection)
+                {
+                    bw = beamSection.bw;
+                    hw = beamSection.hw;
+                    bf = beamSection.bf;
+                    hf = beamSection.hf;
+                    h1f = beamSection.h1f;
+                    b1f = beamSection.b1f;
+                    break;
+                }
+            }
+            m_Table.Rows.Add(bf, hf, bw, hw, b1f, h1f);
+
+
+            //m_Table.Rows.Add(m_Iniv["bf"], m_Iniv["hf"], m_Iniv["bw"], m_Iniv["hw"], m_Iniv["b1f"], m_Iniv["h1f"]);
+            dataGridSection.DataSource = m_Table;
             foreach (DataGridViewColumn column in dataGridSection.Columns)
             {
                 column.SortMode = DataGridViewColumnSortMode.NotSortable;
