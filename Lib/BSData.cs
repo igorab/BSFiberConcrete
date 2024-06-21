@@ -467,16 +467,16 @@ namespace BSFiberConcrete.Lib
 
 
         /// <summary>
-        /// Относительные деформации бетона в зависимости от влажности воздуха
+        /// Загружается геометрия сечений
         /// </summary>
         /// <returns>Список</returns>
-        public static List<InitBeamSection> LoadBeamSection(BeamSection _SectionType)
+        public static List<InitBeamSectionGeometry> LoadBeamSectionGeometry(BeamSection _SectionType)
         {
             try
             {
                 using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
                 {
-                    var output = cnn.Query<InitBeamSection>("select * from InitBeamSection", new DynamicParameters());
+                    var output = cnn.Query<InitBeamSectionGeometry>("select * from InitBeamSection", new DynamicParameters());
                     
                     
                     //var outputTest = cnn.Query<BSRod>(string.Format("select * from InitBeamSection where SectionTypeNum = {0}", (int)_SectionType),
@@ -488,7 +488,7 @@ namespace BSFiberConcrete.Lib
             }
             catch
             {
-                return new List<InitBeamSection>();
+                return new List<InitBeamSectionGeometry>();
             }
         }
     }

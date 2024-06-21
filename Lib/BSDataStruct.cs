@@ -448,7 +448,7 @@ namespace BSFiberConcrete
     /// <summary>
     /// геометрия сечений
     /// </summary>
-    public class InitBeamSection
+    public class InitBeamSectionGeometry
     {
         /// <summary>
         /// нумерация соответсвует BeamSection
@@ -461,14 +461,14 @@ namespace BSFiberConcrete
 
         # region Габаритные размеры сечения. 
         //Для каждого типа сечения свой набор переменных, определяющий размеры.
-        public double bw { get; set; }
-        public double hw { get; set; }
-        public double bf { get; set; }
-        public double hf { get; set; }
-        public double b1f { get; set; }
-        public double h1f { get; set; }
-        public double r1 { get; set; }
-        public double r2 { get; set; }
+        public double? bw { get; set; }
+        public double? hw { get; set; }
+        public double? bf { get; set; }
+        public double? hf { get; set; }
+        public double? b1f { get; set; }
+        public double? h1f { get; set; }
+        public double? r1 { get; set; }
+        public double? r2 { get; set; }
         #endregion
     }
 
