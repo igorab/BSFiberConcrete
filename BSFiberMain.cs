@@ -90,7 +90,7 @@ namespace BSFiberConcrete
                 m_BSLoadData = new BSFiberLoadData();
                 m_MatFiber = new BSMatFiber();
 
-                flowLayoutPanelRebar.Enabled = (checkBoxRebar.Checked == true);
+                flowLayoutPanelRebar.Enabled = true;// (checkBoxRebar.Checked == true);
 
                 FiberConcrete = BSData.LoadFiberConcreteTable();
                 cmbFib_i.SelectedIndex = 0;
@@ -945,8 +945,8 @@ namespace BSFiberConcrete
                             Id = idx,
                             LTType = RebarLTType.Longitudinal,
                             D = lr.D,
-                            CG_X = lr.CG_X,
-                            CG_Y = lr.CG_Y - dY0,
+                            CG_X = -(lr.CG_X),
+                            CG_Y = -(lr.CG_Y - dY0),
                             MatRod = fiberCalc_Deform.MatRebar,
                             Nu = 1.0 // на первой итерации задаем 1
                         };
@@ -1387,6 +1387,11 @@ namespace BSFiberConcrete
                     }
                 }
             }
+        }
+
+        private void numEs_ValueChanged(object sender, EventArgs e)
+        {
+            labelEsMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numEs.Value));
         }
     }
 }

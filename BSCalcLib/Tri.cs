@@ -78,8 +78,8 @@ namespace BSCalcLib
                 Vertex v2 = tri.GetVertex(2);
 
                 // ц.т. треугольника - смещение начала координат
-                double cg_X = (v0.X + v1.X + v2.X) / 3.0 - Oxy.X;
-                double cg_Y = (v0.Y + v1.Y + v2.Y) / 3.0 - Oxy.Y;
+                double cg_X = - ((v0.X + v1.X + v2.X) / 3.0 - Oxy.X);
+                double cg_Y = - ((v0.Y + v1.Y + v2.Y) / 3.0 - Oxy.Y);
 
                 // Центр тяжести треугольника
                 Point triCG = new Point() 

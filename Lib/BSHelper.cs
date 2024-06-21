@@ -11,7 +11,7 @@ namespace BSFiberConcrete
 {
     public class BSHelper
     {
-        public const double Epsilon = 0.1d;
+        public const double Epsilon = 0.00001d;
 
         public string UnitLength = Units.L;
 

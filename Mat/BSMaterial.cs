@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 
 
 namespace BSFiberConcrete
@@ -166,7 +167,13 @@ namespace BSFiberConcrete
             return sigma_s;
         }
 
-        // Диаграмма состояния двухлинейная
+        //
+        /// <summary>
+        /// Диаграмма состояния двухлинейная 
+        /// на сжатие и растяжение
+        /// </summary>
+        /// <param name="_e"></param>
+        /// <returns></returns>        
         public double Eps_StD(double _e)
         {
             double sgm = 0;
@@ -177,6 +184,11 @@ namespace BSFiberConcrete
             }
             else if (e_s0 <= _e && _e <= e_s2)
             {
+                sgm = Rs;
+            }
+            else if (_e > e_s2) //теоретически это разрыв
+            {
+                Debug.Assert(true, "Превышен предел прочности (временное сопротивление) ");
                 sgm = Rs;
             }
 
