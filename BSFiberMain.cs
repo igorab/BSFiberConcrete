@@ -201,17 +201,38 @@ namespace BSFiberConcrete
             return sz;
         }
 
-        private double[] BeamWidtHeight(out double _w, out double _h)
+        /// <summary>
+        /// Максимальные размеры сечения
+        /// </summary>
+        /// <param name="_w">максимальная ширина</param>
+        /// <param name="_h">максимальная высота</param>
+        /// <returns>массив размеров</returns>
+        /// <exception cref="Exception"></exception>
+        private double[] BeamWidtHeight(out double _w, out double _h, out double _area)
         {
             double[] sz = BeamSizes();
 
-            _w = sz[0];
-            _h = sz[1];
-
-            if (m_BeamSection == BeamSection.TBeam || m_BeamSection == BeamSection.IBeam)            
+            if (m_BeamSection == BeamSection.Rect)
+            {
+                _w = sz[0];
+                _h = sz[1];
+                _area = _w * _h;
+            }
+            else if (m_BeamSection == BeamSection.Ring)
+            {
+                _w = Math.Max( sz[0], sz[1]);
+                _h = Math.Max(sz[0], sz[1]);
+                _area = Math.PI * Math.Pow(Math.Abs(_w - _h), 2)/4.0;
+            }            
+            else if (m_BeamSection == BeamSection.TBeam || m_BeamSection == BeamSection.IBeam || m_BeamSection == BeamSection.LBeam )            
             {
                 _w = Math.Max(sz[0], sz[4]);
                 _h = sz[1] + sz[3] + sz[5];
+                _area = sz[0] * sz[1] + sz[2] * sz[3] + sz[4] * sz[5];
+            }
+            else
+            {
+                throw new Exception("Неопределен тип сечения");
             }
 
             return sz;
@@ -840,29 +861,27 @@ namespace BSFiberConcrete
             // центр тяжести сечения
             TriangleNet.Geometry.Point CG = new TriangleNet.Geometry.Point(0.0, 0.0);
 
-            int deformDiagram = cmbDeformDiagram.SelectedIndex;
-            
+            int deformDiagram = cmbDeformDiagram.SelectedIndex;            
             BSMatFiber beamMaterial;                                               
-            Beton2 b2 = m_BSLoadData.Beton2;
-            Rod2 r2 = m_BSLoadData.Rod2;
-
+                        
             // класс фибробетона (бетона) на сжатие
             string cBt_class = cmbBfn.Text;
             // Фибробетон:
-            double cRb = (double) numRfb_n.Value; // сопротивление сжатию, кгс/см2
+            double cRb = (double)numRfb_n.Value; // сопротивление сжатию, кгс/см2
             double cEb = (double)numEfb.Value; // модуль упругости,  кгс/см2
 
+            // диаграмма:
             // арматура
             string cR_class = cmbRebarClass.Text;
-            double cRs = (double) numRs.Value; // кгс/см2            
-            double cEs = (double) numEs.Value; // кгс/см2
+            double cRs = (double)numRs.Value; // кгс/см2            
+            double cEs = (double)numEs.Value; // кгс/см2
+            double c_eps_s0 = (double)numEpsilonS0.Value;// 0.00175; 
+            double c_eps_s2 = (double)numEpsilonS2.Value; ; // 0.025; 
 
-            double c_eps_s0 = r2.eps_s0;// 0.00175; 
-            double c_eps_s2 = r2.eps_s2; // 0.025; 
-
-            double c_eps_b1 = b2.eps_b1;
-            double c_eps_b1_red = b2.eps_b1_red;
-            double c_eps_b2 = b2.eps_b2;
+            //бетон
+            double c_eps_b1 =  (double)numEps_fb0.Value;
+            double c_eps_b1_red = (double)numEps_fb0.Value; // уточнить
+            double c_eps_b2 = (double)numEps_fb2.Value;
                
             // длина балки, см 
             double c_Length = Convert.ToDouble(tbLength.Text); 
@@ -1199,7 +1218,7 @@ namespace BSFiberConcrete
             BSSectionChart sectionChart = new BSSectionChart();
             sectionChart.m_BeamSection = m_BeamSectionReport;
 
-            var sz = BeamWidtHeight(out double b, out double h);
+            var sz = BeamWidtHeight(out double b, out double h, out double area);
 
             sectionChart.Wdth = (float)b;
             sectionChart.Hght = (float)h;            
@@ -1214,13 +1233,14 @@ namespace BSFiberConcrete
         private string GenerateMesh(ref TriangleNet.Geometry.Point _CG)
         {            
             string pathToSvgFile = "";
-            double[] sz = BeamWidtHeight(out double b, out double h);
+            double[] sz = BeamWidtHeight(out double b, out double h, out double area);
 
             BSMesh.Nx = (int) numMeshN.Value;
             BSMesh.Ny = (int)numMeshN.Value;
 
             BSMesh.MinAngle = (double) numTriAngle.Value;
             Tri.MinAngle = (double)numTriAngle.Value;
+
             Tri.MaxArea = (double)numMeshN.Value;    
 
             BSMesh.FilePath = Path.Combine(Environment.CurrentDirectory, "Templates");
@@ -1271,8 +1291,6 @@ namespace BSFiberConcrete
 
             return pathToSvgFile;
         }
-
-
 
         /// <summary>
         /// Покрыть сечение сеткой

@@ -168,6 +168,8 @@
     <Compile Include="BSElements\BSBeam_IT.cs" />
     <Compile Include="BSElements\BSBeam_Rect.cs" />
     <Compile Include="BSElements\BSBeam_Ring.cs" />
+    <Compile Include="BSElements\BSElement.cs" />
+    <Compile Include="BSElements\IBeamGeometry.cs" />
     <Compile Include="BSFactors.cs">
       <SubType>Form</SubType>
     </Compile>

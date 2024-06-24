@@ -1,89 +1,10 @@
-﻿using MathNet.Numerics.Integration;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using System.Security.Permissions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BSFiberConcrete
-{
-    public interface IBeamGeometry
-    {
-        double Area();
-
-        // section moment of inertia
-        double W_s();
-
-        double Jy();
-        double Jx();
-
-        double b { get; set; }
-
-        double h { get; set; }
-    }
-
-    /// <summary>
-    /// конечный элемент
-    /// </summary>
-    public class BSElement
-    {
-        // Номер
-        public int Num;
-
-        /// <summary>
-        /// Координата X центра тяжести
-        /// </summary>
-        public double Z_X { get; }
-
-        /// <summary>
-        /// Координата Y ц.т.
-        /// </summary>
-        public double Z_Y { get; }
-
-        /// <summary>
-        /// Площадь элемента
-        /// </summary>
-        public double Area { get; set; }
-
-        /// <summary>
-        /// Границы
-        /// </summary>
-        public double A { get; set; }
-        public double B { get; set; }
-
-        /// <summary>
-        /// Border Area
-        /// </summary>
-        public double Ab {  get => AreaAB(); } 
-
-        // напряжение на уровне Ц.Т.
-        public double Sigma { get; set; }
-
-        // модуль упругости
-        public double E { get; set; }
-
-        // относительная деформация
-        public double Epsilon { get; set; }
-
-        public double Nu { get => calcNu(); }
-
-        private double AreaAB() => A * B;
-
-        public double calcNu() => Epsilon != 0 ? Sigma / (E * Epsilon) : 1;
-
-
-        public BSElement (int _N, double _X, double _Y)
-        {
-            Num = _N;
-            Z_X = _X;
-            Z_Y = _Y;            
-        }
-    }
-
-    
+{       
     /// <summary>
     /// Балка
     /// </summary>
@@ -141,12 +62,12 @@ namespace BSFiberConcrete
 
         public virtual double Jy()
         {
-            throw new NotImplementedException();
+            return 0;
         }
 
         public virtual double Jx()
         {
-            throw new NotImplementedException();
+            return 0;
         }
 
         public virtual double y_t => h / 2; 
@@ -157,6 +78,33 @@ namespace BSFiberConcrete
 
         public virtual void GetSizes(double[] _t) { }
 
+        /// <summary>
+        /// Нормальные напряжения в сечении
+        /// </summary>
+        /// <param name="_N">кгс</param>
+        /// <param name="_Mx">кгс*см</param>
+        /// <param name="_My">кгс*см</param>
+        /// <param name="_X">см</param>
+        /// <param name="_Y">см</param>
+        /// <returns>кгс/см2</returns>       
+        public double Sigma_Z(double _N, double _Mx, double _My, double _X, double _Y)
+        {
+            double _Jx = Jx();
+            double _Jy = Jy();
+            double _Area = Area();
+
+            double sgm_z = (_Area >0) ? _N / _Area : 0;
+            sgm_z += (_Jx != 0) ? _Mx / _Jx * _X : 0;
+            sgm_z += (_Jy != 0) ?  _My / _Jy * _Y : 0 ;
+
+            return sgm_z;
+        }
+
+        /// <summary>
+        /// Создать экземпляр балки
+        /// </summary>
+        /// <param name="_BeamSection">Тип сечения</param>
+        /// <returns>Балка</returns>
         public static BSBeam construct(BeamSection _BeamSection)
         {
             switch (_BeamSection)
@@ -172,6 +120,9 @@ namespace BSFiberConcrete
             }
             return new BSBeam();
         }
+
+
+
 
     }           
 }

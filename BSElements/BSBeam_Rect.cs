@@ -44,14 +44,7 @@ namespace BSFiberConcrete
         public static double Wx(double _b, double _h) => _b * _h * _h / 6.0;
         public static double Wy(double _b, double _h) => _b * _b * _h / 6.0;
 
-        // Нормальные напряжения в сечении
-        //КН, КНм, КНм  _X см, _Y см
-        public double Sigma_Z(double _N, double _Mx, double _My, double _X, double _Y)
-        {
-            double sgm_z = _N / Area() + _Mx / Jx() * _X - _My / Jy() * _Y;
-            return sgm_z;
-        }
-
+                
         public override void GetSizes(double[] _t)
         {
             (b, h, Length) = (_t[0], _t[1], _t[2]);

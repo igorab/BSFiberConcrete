@@ -239,12 +239,12 @@ namespace BSFiberConcrete
 
         private void InitElementParams()
         {
-            BSBeam_Rect beam = (BSBeam_Rect)m_Beam;
+            //BSBeam_Rect beam = (BSBeam_Rect)m_Beam;
 
             int i = 0;
-            foreach (var elem in m_BElem)
+            foreach (BSElement elem in m_BElem)
             {
-                sigma_fb[i] = beam.Sigma_Z(N, Mx, My, elem.Z_X, elem.Z_Y);
+                sigma_fb[i] = m_Beam.Sigma_Z(N, Mx, My, elem.Z_X, elem.Z_Y);
                                              
                 epsilon_fb[i] = 1; 
 
