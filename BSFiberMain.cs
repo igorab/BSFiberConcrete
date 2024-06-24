@@ -893,6 +893,7 @@ namespace BSFiberConcrete
             try
             {
                 BSFiberCalc_Deform fiberCalc_Deform = new BSFiberCalc_Deform(_Mx: c_Mx, _My: c_My, _N: c_N);
+                fiberCalc_Deform.DeformDiagram =  deformDiagram;
                 fiberCalc_Deform.Beam = bsBeam;
                 // 
                 GenerateMesh(ref CG); // покрыть сечение сеткой
