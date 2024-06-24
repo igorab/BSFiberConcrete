@@ -18,6 +18,7 @@ using BSFiberConcrete.DeformationDiagram;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Xml.Linq;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
+using BSFiberConcrete.Control;
 
 namespace BSFiberConcrete
 {
@@ -133,7 +134,7 @@ namespace BSFiberConcrete
 
                 numRandomEccentricity.Value = (decimal)m_BSLoadData.Fiber.e_tot;
 
-                LoadRectangle(m_Iniv["b"], m_Iniv["h"]);
+                LoadRectangle();
 
                 cmbBetonClass.DataSource = BSFiberLib.BetonList;
                 cmbBetonClass.DisplayMember = "Name";
@@ -421,42 +422,17 @@ namespace BSFiberConcrete
         }
 
         // Прямоугольное сечение
-        private void LoadRectangle(double _b, double _h)
+        private void LoadRectangle()
         {
-            // TO DO избавится от входных аргументов
             m_BeamSection = BeamSection.Rect;
             m_BeamSectionReport = m_BeamSection;
-
-
             dataGridSection.DataSource = null;
 
-            m_Table = GetTableFrombeamSections(m_InitBeamSectionsGeometry, m_BeamSection);
+            m_Table = FiberMainFormHelper.GetTableFromBeamSections(m_InitBeamSectionsGeometry, m_BeamSectionReport);
             dataGridSection.DataSource = m_Table;
-            //m_Table = new DataTable();
-            //m_Table.Columns.Add("b, cm", typeof(double));
-            //m_Table.Columns.Add("h, cm", typeof(double));
-
-            //dataGridSection.DataSource = m_Table;
-
-
-            //double b = 0;
-            //double h = 0;
-            //foreach (InitBeamSectionGeometry sectionGeometry in m_InitBeamSectionsGeometry)
-            //{
-            //    if (sectionGeometry.SectionTypeNum == m_BeamSection)
-            //    {
-            //        b = sectionGeometry.bw;
-            //        h = sectionGeometry.hw;
-            //        break;
-            //    }
-            //}
-
-            //m_Table.Rows.Add(b, h);
 
             foreach (DataGridViewColumn column in dataGridSection.Columns)
-            {
-                column.SortMode = DataGridViewColumnSortMode.NotSortable;
-            }
+            { column.SortMode = DataGridViewColumnSortMode.NotSortable; }
 
             picBeton.Image = global::BSFiberConcrete.Properties.Resources.FiberBeton;
             picBeton.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -466,100 +442,37 @@ namespace BSFiberConcrete
         private void btnRectang_Click(object sender, EventArgs e)
         {
 
-            LoadRectangle(m_Iniv["b"], m_Iniv["h"]);
+            LoadRectangle();
         }
 
 
         private void TSection(char _T_L)
         {
 
-            // TO DO удалить неиспользуемый код
-
-            m_BeamSection = BeamSection.TBeam;
-
-            dataGridSection.DataSource = null;
-
-            m_Table = new DataTable();
-            m_Table.Columns.Add("bf, cm", typeof(double));
-            m_Table.Columns.Add("hf, cm", typeof(double));
-            m_Table.Columns.Add("bw, cm", typeof(double));
-            m_Table.Columns.Add("hw, cm", typeof(double));
-            m_Table.Columns.Add("b1f, cm", typeof(double));
-            m_Table.Columns.Add("h1f, cm", typeof(double));
-
-            dataGridSection.DataSource = m_Table;
+            // TO DO доработать использование переменных m_BeamSection и m_BeamSectionReport
 
             if (_T_L == 'T')
             {
+                m_BeamSection = BeamSection.TBeam; // 
                 m_BeamSectionReport = BeamSection.TBeam;
 
-
-                m_Table = GetTableFrombeamSections(m_InitBeamSectionsGeometry, m_BeamSection);
+                m_Table = FiberMainFormHelper.GetTableFromBeamSections(m_InitBeamSectionsGeometry, m_BeamSectionReport);
                 dataGridSection.DataSource = m_Table;
-
-                //double bw = 0;
-                //double hw = 0;
-                //double b1f = 0;
-                //double h1f = 0;
-                //foreach (InitBeamSectionGeometry sectionGeometry in m_InitBeamSectionsGeometry)
-                //{
-                //    if (sectionGeometry.SectionTypeNum == m_BeamSection)
-                //    {
-                //        bw = sectionGeometry.bw;
-                //        hw = sectionGeometry.hw;
-                //        h1f = sectionGeometry.h1f;
-                //        b1f = sectionGeometry.b1f;
-                //        break;
-                //    }
-                //}
-                //m_Table.Rows.Add(0, 0, bw, hw, b1f, h1f);
-
-
-                //m_Table.Rows.Add(0, 0, m_Iniv["bw"], m_Iniv["hw"], m_Iniv["b1f"], m_Iniv["h1f"]);
-
-
-                dataGridSection.Columns[0].Visible = false;
-                dataGridSection.Columns[1].Visible = false;
                 picBeton.Image = global::BSFiberConcrete.Properties.Resources.TBeam;
             }
             else if (_T_L == 'L')
             {
+
+                m_BeamSection = BeamSection.TBeam; // Переделать
                 m_BeamSectionReport = BeamSection.LBeam;
 
-
-                m_Table = GetTableFrombeamSections(m_InitBeamSectionsGeometry, m_BeamSection);
+                m_Table = FiberMainFormHelper.GetTableFromBeamSections(m_InitBeamSectionsGeometry, m_BeamSectionReport);
                 dataGridSection.DataSource = m_Table;
-
-
-                //double bw = 0;
-                //double hw = 0;
-                //double bf = 0;
-                //double hf = 0;
-                //foreach (InitBeamSectionGeometry sectionGeometry in m_InitBeamSectionsGeometry)
-                //{
-                //    if (sectionGeometry.SectionTypeNum == m_BeamSection)
-                //    {
-                //        bw = sectionGeometry.bw;
-                //        hw = sectionGeometry.hw;
-                //        hf = sectionGeometry.hf;
-                //        bf = sectionGeometry.bf;
-                //        break;
-                //    }
-                //}
-                //m_Table.Rows.Add(bw, hw, bf, hf, 0, 0);
-
-
-                //m_Table.Rows.Add(m_Iniv["bf"], m_Iniv["hf"], m_Iniv["bw"], m_Iniv["hw"], 0, 0);
-                dataGridSection.Columns[4].Visible = false;
-                dataGridSection.Columns[5].Visible = false;
                 picBeton.Image = global::BSFiberConcrete.Properties.Resources.LBeam;
             }
 
             foreach (DataGridViewColumn column in dataGridSection.Columns)
-            {
-                column.SortMode = DataGridViewColumnSortMode.NotSortable;
-            }
-
+            { column.SortMode = DataGridViewColumnSortMode.NotSortable; }
             picBeton.SizeMode = PictureBoxSizeMode.StretchImage;
         }
 
@@ -582,76 +495,27 @@ namespace BSFiberConcrete
         {
             m_BeamSection = BeamSection.Ring;
             m_BeamSectionReport = m_BeamSection;
-            dataGridSection.DataSource = null;
 
-            m_Table = new DataTable();
-            m_Table.Columns.Add("r1, cm", typeof(double));
-            m_Table.Columns.Add("r2, cm", typeof(double));
-
+            m_Table = FiberMainFormHelper.GetTableFromBeamSections(m_InitBeamSectionsGeometry, m_BeamSectionReport);
             dataGridSection.DataSource = m_Table;
-            m_Table.Rows.Add(m_Iniv["r1"], m_Iniv["r2"]);
 
             foreach (DataGridViewColumn column in dataGridSection.Columns)
-            {
-                column.SortMode = DataGridViewColumnSortMode.NotSortable;
-            }
-
+            { column.SortMode = DataGridViewColumnSortMode.NotSortable; }
             picBeton.Image = global::BSFiberConcrete.Properties.Resources.Ring;
         }
 
         // двутавровое сечение
         private void btnIBeam_Click(object sender, EventArgs e)
-
-        // TO DO избавиться от неиспользуемого кода
         {
             m_BeamSection = BeamSection.IBeam;
             m_BeamSectionReport = m_BeamSection;
-
             dataGridSection.DataSource = null;
 
-
-
-            m_Table = GetTableFrombeamSections(m_InitBeamSectionsGeometry, m_BeamSection);
+            m_Table = FiberMainFormHelper.GetTableFromBeamSections(m_InitBeamSectionsGeometry, m_BeamSectionReport);
             dataGridSection.DataSource = m_Table;
 
-            //m_Table = new DataTable();
-            //m_Table.Columns.Add("bf, cm", typeof(double));
-            //m_Table.Columns.Add("hf, cm", typeof(double));
-            //m_Table.Columns.Add("bw, cm", typeof(double));
-            //m_Table.Columns.Add("hw, cm", typeof(double));
-            //m_Table.Columns.Add("b1f, cm", typeof(double));
-            //m_Table.Columns.Add("h1f, cm", typeof(double));
-
-
-            //double bw = 0;
-            //double hw = 0;
-            //double bf = 0;
-            //double hf = 0;
-            //double b1f = 0;
-            //double h1f = 0;
-            //foreach (InitBeamSectionGeometry sectionGeometry in m_InitBeamSectionsGeometry)
-            //{
-            //    if (sectionGeometry.SectionTypeNum == m_BeamSection)
-            //    {
-            //        bw = sectionGeometry.bw;
-            //        hw = sectionGeometry.hw;
-            //        bf = sectionGeometry.bf;
-            //        hf = sectionGeometry.hf;
-            //        h1f = sectionGeometry.h1f;
-            //        b1f = sectionGeometry.b1f;
-            //        break;
-            //    }
-            //}
-            //m_Table.Rows.Add(bf, hf, bw, hw, b1f, h1f);
-            //m_Table.Rows.Add(m_Iniv["bf"], m_Iniv["hf"], m_Iniv["bw"], m_Iniv["hw"], m_Iniv["b1f"], m_Iniv["h1f"]);
-
-
-            dataGridSection.DataSource = m_Table;
             foreach (DataGridViewColumn column in dataGridSection.Columns)
-            {
-                column.SortMode = DataGridViewColumnSortMode.NotSortable;
-            }
-
+            { column.SortMode = DataGridViewColumnSortMode.NotSortable; }
             picBeton.Image = global::BSFiberConcrete.Properties.Resources.IBeam;
             picBeton.SizeMode = PictureBoxSizeMode.StretchImage;
         }
@@ -1255,6 +1119,7 @@ namespace BSFiberConcrete
         // сохранить геометрические размеры
         private void btnSaveParams_Click(object sender, EventArgs e)
         {
+            // TO DO Удалить кнопку 
             try
             {
                 Dictionary<string, double> SZ = new Dictionary<string, double>();
@@ -1522,16 +1387,6 @@ namespace BSFiberConcrete
             }
         }
 
-        private void dataGridSection_MouseClick(object sender, MouseEventArgs e)
-        {
-
-        }
-
-        private void dataGridSection_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            int a = 7;
-        }
-
         private void btnCalcDeformDiagram_Click(object sender, EventArgs e)
         {
             string typeDiagram = cmbDeformDiagram.Text;
@@ -1587,113 +1442,27 @@ namespace BSFiberConcrete
             }
         }
 
-        private void TestMethood2(object sender, DataGridViewCellEventArgs e)
-        {
-            //MessageBox.Show("end");
-            //m_Table
-            DataTable a = (DataTable)dataGridSection.DataSource;
-            //for (int i = 0; i < dataGridSection.DataSource.R; i++)
-            //{
-
-            //}
-            //GetTableFrombeamSections(m_InitBeamSectionsGeometry, m_BeamSection);
-        }
-
-        private void Test(object sender, FormClosingEventArgs e)
-        {
-            MessageBox.Show("Form is Closing");
-        }
-
-
         /// <summary>
-        /// Метод возращает индекс beamSectionsGeometry соответсвующий beamSectionType
+        /// При изменении пользователем dataGridSection.DataSource производится перезапись поля m_InitBeamSectionsGeometry
         /// </summary>
-        /// <param name="beamSectionsGeometry"></param>
-        /// <param name="beamSectionType"></param>
-        /// <returns></returns>
-        public static int IndexOfSectionGeometry(List<InitBeamSectionGeometry> beamSectionsGeometry, BeamSection beamSectionType)
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UserEditGridSection(object sender, DataGridViewCellEventArgs e)
         {
-            int indexOfLiest = -1;
-            for (int i = 0; i < beamSectionsGeometry.Count; i++)
-            {
-                if (beamSectionsGeometry[i].SectionTypeNum == beamSectionType)
-                {
-                    indexOfLiest = i;
-                    break;
-                }
-            }
-            return indexOfLiest;
+            // To Do необходимо выполнять проверку пользовательских данных
+            InitBeamSectionGeometry beamSectionGeometry = FiberMainFormHelper.CreateBeamSectionsGeometry((DataTable)dataGridSection.DataSource, m_BeamSectionReport);
+            int index = FiberMainFormHelper.IndexOfSectionGeometry(m_InitBeamSectionsGeometry, m_BeamSectionReport);
+            m_InitBeamSectionsGeometry[index] = beamSectionGeometry;
+            
+        }
+        //
+        private void CloseFiberMainForm(object sender, FormClosingEventArgs e)
+        {
+            BSData.UpdateBeamSectionGeometry(m_InitBeamSectionsGeometry);
         }
 
-        public static DataTable GetTableFrombeamSections(List<InitBeamSectionGeometry> beamSectionsGeometry, BeamSection beamSectionType)
+        private void tabNDM_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int index = IndexOfSectionGeometry(beamSectionsGeometry, beamSectionType);
-            InitBeamSectionGeometry SectionGeomet = beamSectionsGeometry[index];
-
-
-            DataTable sectionGeometryTable =  new DataTable();
-            DataRow row = sectionGeometryTable.NewRow();
-            List<double> valueRow =new List<double>();
-
-            if (!(SectionGeomet.bw is null))
-            { 
-                sectionGeometryTable.Columns.Add("bw, cm", typeof(double));
-                valueRow.Add((double)SectionGeomet.bw);
-                row["bw, cm"] = (double)SectionGeomet.bw;
-            }
-            if (!(SectionGeomet.hw is null))
-            {
-                sectionGeometryTable.Columns.Add("hw, cm", typeof(double));
-                valueRow.Add((double)SectionGeomet.hw);
-                row["hw, cm"] = (double)SectionGeomet.hw;
-            }
-            if (!(SectionGeomet.bf is null))
-            { 
-                sectionGeometryTable.Columns.Add("bf, cm", typeof(double));
-                valueRow.Add((double)SectionGeomet.bf);
-                row["bf, cm"] = (double)SectionGeomet.bf;
-            }
-            if (!(SectionGeomet.hf is null))
-            {
-                sectionGeometryTable.Columns.Add("hf, cm", typeof(double));
-                valueRow.Add((double)SectionGeomet.hf);
-                row["hf, cm"] = (double)SectionGeomet.hf;
-            }
-            if (!(SectionGeomet.b1f is null))
-            { 
-                sectionGeometryTable.Columns.Add("b1f, cm", typeof(double));
-                valueRow.Add((double)SectionGeomet.b1f);
-                row["b1f, cm"] = (double)SectionGeomet.b1f;
-            }
-            if
-                (!(SectionGeomet.h1f is null))
-            { sectionGeometryTable.Columns.Add("h1f, cm", typeof(double));
-                valueRow.Add((double)SectionGeomet.h1f);
-                row["h1f, cm"] = (double)SectionGeomet.h1f;
-            }
-            if (!(SectionGeomet.r1 is null))
-            { 
-                sectionGeometryTable.Columns.Add("r1, cm", typeof(double));
-                valueRow.Add((double)SectionGeomet.r1);
-                row["r1, cm"] = (double)SectionGeomet.r1;
-            }
-            if (!(SectionGeomet.r2 is null))
-            {
-                sectionGeometryTable.Columns.Add("r2, cm", typeof(double));
-                valueRow.Add((double)SectionGeomet.r2);
-                row["r2, cm"] = (double)SectionGeomet.r2;
-            }
-
-
-            sectionGeometryTable.Rows.Add(row);
-
-            return sectionGeometryTable;
-
-            // Хотелось сделать все это в цикле... но не вышло
-            foreach (PropertyInfo property in typeof(InitBeamSectionGeometry).GetProperties())
-            {
-                string pName = property.Name;
-            }
 
         }
     }

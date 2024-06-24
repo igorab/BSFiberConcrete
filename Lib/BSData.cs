@@ -476,19 +476,42 @@ namespace BSFiberConcrete.Lib
             {
                 using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
                 {
-                    var output = cnn.Query<InitBeamSectionGeometry>("select * from InitBeamSection", new DynamicParameters());
-                    
-                    
+                    var output = cnn.Query<InitBeamSectionGeometry>("select * from InitBeamSection", new DynamicParameters());                    
                     //var outputTest = cnn.Query<BSRod>(string.Format("select * from InitBeamSection where SectionTypeNum = {0}", (int)_SectionType),
                     //                            new DynamicParameters());
-
 
                     return output.ToList();
                 }
             }
             catch
             {
-                return new List<InitBeamSectionGeometry>();
+                throw;
+            }
+        }
+
+        public static void UpdateBeamSectionGeometry(List<InitBeamSectionGeometry> beamSections)
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    cnn.Open();
+                    using (var tr = cnn.BeginTransaction())
+                    {
+                        foreach (InitBeamSectionGeometry bSection in beamSections)
+                        {
+                            cnn.Execute("update InitBeamSection set bw = @bw, hw = @hw, bf = @bf, hf = @hf, b1f = @b1f, h1f = @h1f, r1 = @r1, r2 = @r2 where SectionTypeNum = @SectionTypeNum", bSection, tr);
+                            
+                            //cnn.Execute($"delete from InitBeamSection where SectionTypeNum = {(int)bSection.SectionTypeNum}", null, tr);
+                            //int cnt = cnn.Execute("insert into InitBeamSection (SectionTypeNum, SectionTypeStr, bw, hw, bf, hf, b1f, h1f, r1, r2) values (@SectionTypeNum, @SectionTypeStr, @bw, @hw, @bf, @hf, @b1f, @h1f, @r1, @r2)", bSection, tr);
+                        }
+                        tr.Commit();
+                    }
+                }
+            }
+            catch
+            {
+                throw;
             }
         }
     }
