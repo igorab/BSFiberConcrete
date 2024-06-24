@@ -274,6 +274,9 @@
       <DependentUpon>BSLocalStrengthRes.resx</DependentUpon>
     </Compile>
     <Compile Include="Mat\BSMatFiber.cs" />
+    <Compile Include="Mat\BSMatRod.cs" />
+    <Compile Include="Mat\IMaterial.cs" />
+    <Compile Include="Mat\INonlinear.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

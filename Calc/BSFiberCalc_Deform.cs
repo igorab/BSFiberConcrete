@@ -438,9 +438,9 @@ namespace BSFiberConcrete
             {
                 double _e = eps_0 + ky * Zfby[i] + kx * Zfbx[i];
                 epsilon_fb[i] = _e;
-
+                
                 // двухлинейная диаграмма для бетона
-                double sgm = MatFiber.Eps_StD(_e);
+                double sgm = MatFiber.Eps_StD(_e, out int _res);
                 sigma_fb[i] = Math.Sign(_e) * sgm;
 
                 double nju_b = sigma_fb[i] / (MatFiber.Eb * _e);
@@ -455,7 +455,7 @@ namespace BSFiberConcrete
                 epsilon_s[j] = _e;
 
                 // двухлинейная диаграмма для арматуры
-                double sgm = MatRebar.Eps_StD( Math.Abs(_e));
+                double sgm = MatRebar.Eps_StD( Math.Abs(_e), out int _res);
                 sigma_s[j] = Math.Sign(_e) * sgm;
 
                 double nju_s = sigma_s[j] / (MatRebar.Es * _e);

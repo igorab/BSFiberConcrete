@@ -34,6 +34,7 @@ namespace BSFiberConcrete.Section
         public float Hght { set { h = value; } }
 
         public double[] Sz { get; set; }
+        public double NumArea {set { numArea.Value = (decimal) value; }}
 
         private float w;
         private float h;
