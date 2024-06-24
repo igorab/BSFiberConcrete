@@ -138,7 +138,7 @@ namespace BSFiberConcrete
         /// </summary>
         /// <param name="_eps">Деформация</param>
         /// <returns>Напряжение</returns>       
-        public double Eps_StateDiagram(double _eps, out int _res)
+        public double Eps_StateDiagram3L(double _eps, out int _res)
         {
             _res = 0;
             if (Efb == 0 || Rfbt == 0 || Rfbt2 == 0 || Rfbt3 == 0)

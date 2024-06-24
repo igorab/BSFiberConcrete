@@ -233,6 +233,7 @@
     <Compile Include="DeformationDiagram\DeformDiagram.Designer.cs">
       <DependentUpon>DeformDiagram.cs</DependentUpon>
     </Compile>
+    <Compile Include="DeformationDiagram\DeformDiagramType.cs" />
     <Compile Include="DeformationDiagram\ModelDeformDiagram.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Lib\BSHelper.cs" />

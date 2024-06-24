@@ -839,7 +839,7 @@ namespace BSFiberConcrete
             // центр тяжести сечения
             TriangleNet.Geometry.Point CG = new TriangleNet.Geometry.Point(0.0, 0.0);
 
-            int deformDiagram = cmbDeformDiagram.SelectedIndex;            
+            DeformDiagramType deformDiagram = (DeformDiagramType) cmbDeformDiagram.SelectedIndex;            
             BSMatFiber beamMaterial;                                               
                         
             // класс фибробетона (бетона) на сжатие

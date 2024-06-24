@@ -145,7 +145,7 @@ namespace BSFiberConcrete
         }
 
         public Dictionary<string, double> Reinforcement { get; internal set; }
-        public int DeformDiagram { get; internal set; }
+        public DeformDiagramType DeformDiagram { get; internal set; }
 
         /// <summary>
         /// 
@@ -452,9 +452,17 @@ namespace BSFiberConcrete
             {
                 double _e = eps_0 + ky * Zsy[j] + kx * Zsx[j];
                 epsilon_s[j] = _e;
+                
+                double sgm = 0;
+                if (DeformDiagram == DeformDiagramType.D2Linear)
+                {
+                    sgm = MatRebar.Eps_StD(Math.Abs(_e), out int _res);
+                }
+                else if (DeformDiagram == DeformDiagramType.D3Linear)
+                {
+                    sgm = MatRebar.Eps_StateDiagram3L(Math.Abs(_e), out int _res);
+                }
 
-                // двухлинейная диаграмма для арматуры
-                double sgm = MatRebar.Eps_StD( Math.Abs(_e), out int _res);
                 sigma_s[j] = Math.Sign(_e) * sgm;
 
                 double nju_s = sigma_s[j] / (MatRebar.Es * _e);
