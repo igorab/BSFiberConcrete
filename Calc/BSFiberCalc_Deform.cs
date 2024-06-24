@@ -65,7 +65,6 @@ namespace BSFiberConcrete
         private int m_X_M = 1; // разбиение по ширине
 
         private List<BSElement> m_BElem;
-
         private List<BSRod> m_Rods;
 
         [DisplayName("Радиус кривизны продольной оси в плоскости действия моментов, Rx, см")]
@@ -146,7 +145,7 @@ namespace BSFiberConcrete
         }
 
         public Dictionary<string, double> Reinforcement { get; internal set; }
-
+        public int DeformDiagram { get; internal set; }
 
         /// <summary>
         /// 
