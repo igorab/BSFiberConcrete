@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BSFiberConcrete
 {
@@ -143,8 +138,9 @@ namespace BSFiberConcrete
         /// </summary>
         /// <param name="_eps">Деформация</param>
         /// <returns>Напряжение</returns>       
-        public double Eps_StateDiagram(double _eps)
+        public double Eps_StateDiagram(double _eps, out int _res)
         {
+            _res = 0;
             if (Efb == 0 || Rfbt == 0 || Rfbt2 == 0 || Rfbt3 == 0)
                 return 0;
                         
@@ -176,9 +172,10 @@ namespace BSFiberConcrete
         /// </summary>
         /// <param name="_e">Деформация</param>
         /// <returns>Напряжение</returns>        
-        public double Eps_StD(double _e)
+        public double Eps_StD(double _e, out int _res)
         {
             double sgm = 0;
+            _res = 0;
 
             _e = -1 * _e;  
 

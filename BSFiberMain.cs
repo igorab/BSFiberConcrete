@@ -1197,11 +1197,12 @@ namespace BSFiberConcrete
             BSSectionChart sectionChart = new BSSectionChart();
             sectionChart.m_BeamSection = m_BeamSectionReport;
 
-            var sz = BeamWidtHeight(out double b, out double h, out double area);
+            var sz = BeamWidtHeight(out double b, out double h, out double _area);
 
             sectionChart.Wdth = (float)b;
             sectionChart.Hght = (float)h;
             sectionChart.Sz = sz;
+            sectionChart.NumArea = _area;
 
             sectionChart.Show();
         }
@@ -1214,13 +1215,16 @@ namespace BSFiberConcrete
             string pathToSvgFile = "";
             double[] sz = BeamWidtHeight(out double b, out double h, out double area);
 
-            BSMesh.Nx = (int)numMeshN.Value;
-            BSMesh.Ny = (int)numMeshN.Value;
+            double meshSize = (double)numMeshN.Value;
+
+            BSMesh.Nx = (int)meshSize;
+            BSMesh.Ny = (int)meshSize;
 
             BSMesh.MinAngle = (double)numTriAngle.Value;
             Tri.MinAngle = (double)numTriAngle.Value;
 
-            Tri.MaxArea = (double)numMeshN.Value;    
+            if (meshSize > 0)
+                Tri.MaxArea = area / meshSize ;    
 
             BSMesh.FilePath = Path.Combine(Environment.CurrentDirectory, "Templates");
             Tri.FilePath = BSMesh.FilePath;
