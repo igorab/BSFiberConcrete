@@ -1402,8 +1402,6 @@ namespace BSFiberConcrete
         private void tabNDM_SelectedIndexChanged(object sender, EventArgs e)
         {
 
-                }
-            }
         }
 
         private void numEs_ValueChanged(object sender, EventArgs e)
