@@ -28,7 +28,8 @@ namespace BSFiberConcrete
 
         public override void GetSize(double[] _t)
         {
-            (r1, r2, l0) = (beam.r1, beam.r2, beam.Length) = (_t[0], _t[1], _t[2]);
+            beam.GetSizes(_t);
+            (r1, r2, l0) = (_t[0], _t[1], _t[2]);
             A = beam.Area();
             
             h = beam.h;

@@ -2,6 +2,7 @@
 using BSFiberConcrete;
 using BSFiberConcrete.Beam;
 using BSFiberConcrete.BSRFib;
+using BSFiberConcrete.Calc;
 using BSFiberConcrete.LocalStrength;
 using BSFiberConcrete.Section;
 using CBAnsDes;
@@ -187,11 +188,11 @@ namespace BSCalcMenu
             bsEFib.Show();
         }
 
-        private void btnSection_Click(object sender, EventArgs e)
+        private void btnUnitCalculator_Click(object sender, EventArgs e)
         {
-            BSSectionChart sectionChart = new BSSectionChart();
+            BSFiberConcrete.Calc.BSUnitCalculator unitCalculator = new BSUnitCalculator();
 
-            sectionChart.Show();
+            unitCalculator.Show();
         }
 
         [STAThread]

@@ -61,8 +61,7 @@ namespace BSFiberConcrete
         private List<double> triAreas;
         // координаты центра тяжести элементов (треугольников)
         private List<TriangleNet.Geometry.Point> triCGs;
-        // центр тяжести сечения
-        private TriangleNet.Geometry.Point CG { get; set; }
+        
 
         public BSFiberMain()
         {
@@ -105,7 +104,7 @@ namespace BSFiberConcrete
                 m_BSLoadData = new BSFiberLoadData();
                 m_MatFiber = new BSMatFiber();
 
-                flowLayoutPanelRebar.Enabled = (checkBoxRebar.Checked == true);
+                flowLayoutPanelRebar.Enabled = true;// (checkBoxRebar.Checked == true);
 
                 FiberConcrete = BSData.LoadFiberConcreteTable();
                 cmbFib_i.SelectedIndex = 0;
@@ -217,17 +216,38 @@ namespace BSFiberConcrete
             return sz;
         }
 
-        private double[] BeamWidtHeight(out double _w, out double _h)
+        /// <summary>
+        /// Максимальные размеры сечения
+        /// </summary>
+        /// <param name="_w">максимальная ширина</param>
+        /// <param name="_h">максимальная высота</param>
+        /// <returns>массив размеров</returns>
+        /// <exception cref="Exception"></exception>
+        private double[] BeamWidtHeight(out double _w, out double _h, out double _area)
         {
             double[] sz = BeamSizes();
 
-            _w = sz[0];
-            _h = sz[1];
-
-            if (m_BeamSection == BeamSection.TBeam || m_BeamSection == BeamSection.IBeam)
+            if (m_BeamSection == BeamSection.Rect)
+            {
+                _w = sz[0];
+                _h = sz[1];
+                _area = _w * _h;
+            }
+            else if (m_BeamSection == BeamSection.Ring)
+            {
+                _w = Math.Max( sz[0], sz[1]);
+                _h = Math.Max(sz[0], sz[1]);
+                _area = Math.PI * Math.Pow(Math.Abs(_w - _h), 2)/4.0;
+            }            
+            else if (m_BeamSection == BeamSection.TBeam || m_BeamSection == BeamSection.IBeam || m_BeamSection == BeamSection.LBeam )            
             {
                 _w = Math.Max(sz[0], sz[4]);
                 _h = sz[1] + sz[3] + sz[5];
+                _area = sz[0] * sz[1] + sz[2] * sz[3] + sz[4] * sz[5];
+            }
+            else
+            {
+                throw new Exception("Неопределен тип сечения");
             }
 
             return sz;
@@ -291,16 +311,16 @@ namespace BSFiberConcrete
                 _bsCalcRods.GetLTRebar(_l_rebar[0], _t_rebar, matRod);
             }
         }
-
+        
         // Определение классов фибробетона по данным, введенным пользователем
         private void InitMatFiber()
-        {
+        {            
             // Сжатие Rfb
             Beton fb = Lib.BSQuery.BetonTableFind(cmbBfn.Text);
             // Растяжение Rfbt
             FiberBft fbt = (FiberBft)cmbBftn.SelectedItem;
 
-            m_BSLoadData.Fiber.Efib = (double)numE_fiber.Value;
+            m_BSLoadData.Fiber.Efib = (double) numE_fiber.Value;
 
             // сжатие:
             m_MatFiber.B = fb.B;
@@ -812,116 +832,35 @@ namespace BSFiberConcrete
             bsFactors.Show();
         }
 
-        /// <summary>
-        /// Арматурные стержни
-        /// </summary>
-        private void AddRodsReinforcement()
-        {
-            // расстановка арматурных стержней
-            List<BSRod> rods = new List<BSRod>();
-
-            // Начало координат:
-            double X0 = CG.X;
-            double Y0 = CG.Y;
-
-            // поперечные размеры балки, см 
-            double[] rect = BeamSizes();
-            double c_b = rect[0];
-            double c_h = rect[1];
-
-
-            // продольная арматура
-            List<double[]> l_r;
-            InitLRebar(out l_r);
-
-            // поперечная арматура
-            double[] t_r;
-            InitTRebar(out t_r);
-
-            int d_qty = 0; //количество стержней
-            double area_total = 0;
-            foreach (var lr in l_r)
-            {
-                d_qty += 1; // (int)lr[1];
-            }
-
-            //координаты, формат:  { { 4, 4 }, { 15, 4 }, { 26, 4 } } :
-            double[,] rdYdX = new double[d_qty, 2];
-            //диаметры,  формат { 2.5, 1.8, 2.5 }; // D , см
-            double[] rD_lng = new double[d_qty];
-            //площади арматуры: { 4.909, 2.545, 4.909 };
-            double[] _As = new double[d_qty];
-
-            double a_r = l_r[0][2]; // защитный слой арматуры
-
-            // ширина минус защитный слой слева и справа:
-            double bx = c_b - a_r - a_r;
-
-            // расстояние между стержнями
-            double d_bx = bx / (d_qty - 1);
-
-            int idx = 0; // Индекс стержня
-            foreach (double[] lr in l_r)
-            {
-                // диаметр стержня, см
-                double d_r = lr[0];
-                double qty_r = lr[1];
-
-                rdYdX[idx, 0] = a_r + d_bx * idx;
-                rdYdX[idx, 1] = a_r;
-
-                rD_lng[idx] = d_r;
-                _As[idx] = qty_r * BSHelper.AreaCircle(d_r);
-                area_total += _As[idx];
-
-                BSRod rod = new BSRod()
-                {
-                    Id = idx,
-                    LTType = RebarLTType.Longitudinal,
-                    D = rD_lng[idx],
-                    CG_X = rdYdX[idx, 0] - X0,
-                    CG_Y = rdYdX[idx, 1] - Y0,
-
-                    Nu = 1.0 // на первой итерации задаем 1
-                };
-                idx++;
-                rods.Add(rod);
-            }
-
-            m_Reinforcement.Add("Количество стержней, шт", d_qty);
-            m_Reinforcement.Add("Площадь арматуры, см2", area_total);
-        }
-
-
+                    
         [DisplayName("Расчет по прочности нормальных сечений на основе нелинейной деформационной модели")]
         private void btnCalc_Deform_Click(object sender, EventArgs e)
         {
-            int deformDiagram = cmbDeformDiagram.SelectedIndex;
+            // центр тяжести сечения
+            TriangleNet.Geometry.Point CG = new TriangleNet.Geometry.Point(0.0, 0.0);
 
-            BSMatFiber beamMaterial;
-            // Beton bt = Lib.BSQuery.BetonTableFind(cmbBfn.Text);
-
-            Beton2 b2 = m_BSLoadData.Beton2;
-            Rod2 r2 = m_BSLoadData.Rod2;
-
+            int deformDiagram = cmbDeformDiagram.SelectedIndex;            
+            BSMatFiber beamMaterial;                                               
+                        
             // класс фибробетона (бетона) на сжатие
             string cBt_class = cmbBfn.Text;
             // Фибробетон:
             double cRb = (double)numRfb_n.Value; // сопротивление сжатию, кгс/см2
             double cEb = (double)numEfb.Value; // модуль упругости,  кгс/см2
 
+            // диаграмма:
             // арматура
             string cR_class = cmbRebarClass.Text;
             double cRs = (double)numRs.Value; // кгс/см2            
             double cEs = (double)numEs.Value; // кгс/см2
+            double c_eps_s0 = (double)numEpsilonS0.Value;// 0.00175; 
+            double c_eps_s2 = (double)numEpsilonS2.Value; ; // 0.025; 
 
-            double c_eps_s0 = r2.eps_s0;// 0.00175; 
-            double c_eps_s2 = r2.eps_s2; // 0.025; 
-
-            double c_eps_b1 = b2.eps_b1;
-            double c_eps_b1_red = b2.eps_b1_red;
-            double c_eps_b2 = b2.eps_b2;
-
+            //бетон
+            double c_eps_b1 =  (double)numEps_fb0.Value;
+            double c_eps_b1_red = (double)numEps_fb0.Value; // уточнить
+            double c_eps_b2 = (double)numEps_fb2.Value;
+               
             // длина балки, см 
             double c_Length = Convert.ToDouble(tbLength.Text);
 
@@ -934,38 +873,37 @@ namespace BSFiberConcrete
             double c_My = MNQ["My"];
             double c_N = MNQ["N"];
 
-            // поперечные размеры балки, см 
-            double[] rect = BeamSizes();
-            double c_b = rect[0];
-            double c_h = rect[1];
+            // сечение балки балки, см 
+            double[] beam_sizes = BeamSizes(c_Length);
+            
+            var bsBeam = BSBeam.construct(m_BeamSectionReport);
+            bsBeam.GetSizes(beam_sizes);
+            bsBeam.Length = c_Length;
 
-            m_GeomParams = new Dictionary<string, double>
-            {
-                { "b, см", c_b },
-                { "h, см", c_h }
-            };
+            double c_b = bsBeam.Width; 
+            double c_h = bsBeam.Height;             
+            m_GeomParams = new Dictionary<string, double> { { "b, см", c_b }, { "h, см", c_h }};
 
-            // продольная арматура
-            List<double[]> l_r;
-            InitLRebar(out l_r);
-
-            // поперечная арматура
-            double[] t_r;
-            InitTRebar(out t_r);
-
+            //смещение начала координат            
+            double dX0, dY0;           
+            
+            // координаты ц.т. сечения, если т. 0 - левый нижний угол
+            (CG.X, CG.Y) = bsBeam.CG();
+            
             try
             {
                 BSFiberCalc_Deform fiberCalc_Deform = new BSFiberCalc_Deform(_Mx: c_Mx, _My: c_My, _N: c_N);
+                fiberCalc_Deform.Beam = bsBeam;
                 // 
-                GenerateMesh(); // покрыть сечение сеткой
+                GenerateMesh(ref CG); // покрыть сечение сеткой
                 //
                 fiberCalc_Deform.CG = CG;
                 fiberCalc_Deform.triAreas = triAreas;
                 fiberCalc_Deform.triCGs = triCGs;
 
                 // Начало координат:
-                double X0 = CG.X;
-                double Y0 = CG.Y;
+                dX0 = CG.X;
+                dY0 = CG.Y;
 
                 // задать тип арматуры
                 fiberCalc_Deform.MatRebar = new BSMatRod(cEs)
@@ -998,15 +936,14 @@ namespace BSFiberConcrete
 
                     int idx = 0; // Индекс стержня
                     foreach (var lr in _rods)
-                    {
-
+                    {                                                                                                                                          
                         BSRod rod = new BSRod()
                         {
                             Id = idx,
                             LTType = RebarLTType.Longitudinal,
                             D = lr.D,
-                            CG_X = lr.CG_X - X0,
-                            CG_Y = lr.CG_Y - Y0,
+                            CG_X = -(lr.CG_X),
+                            CG_Y = -(lr.CG_Y - dY0),
                             MatRod = fiberCalc_Deform.MatRebar,
                             Nu = 1.0 // на первой итерации задаем 1
                         };
@@ -1041,18 +978,12 @@ namespace BSFiberConcrete
                 fiberCalc_Deform.MatFiber = beamMaterial;
 
                 RodsReinforcement();
-
-                // задать размеры балки,
-                // задать материал,
-                // присвоить арматуру
-                fiberCalc_Deform.Beam = new BSBeam_Rect(c_b, c_h)
-                {
-                    Length = c_Length,
-                    Rods = Rods,
-                    Mat = beamMaterial
-                };
-
-                fiberCalc_Deform.GetParams(new double[] { 10, 1 });
+                                
+                // арматура балки                                                
+                fiberCalc_Deform.Beam.Rods = Rods;
+                // материал
+                fiberCalc_Deform.Beam.Mat = beamMaterial;                                
+                fiberCalc_Deform.GetParams(new double[] { 10, 1});
 
                 // рассчитать
                 fiberCalc_Deform.Calculate();
@@ -1266,7 +1197,7 @@ namespace BSFiberConcrete
             BSSectionChart sectionChart = new BSSectionChart();
             sectionChart.m_BeamSection = m_BeamSectionReport;
 
-            var sz = BeamWidtHeight(out double b, out double h);
+            var sz = BeamWidtHeight(out double b, out double h, out double area);
 
             sectionChart.Wdth = (float)b;
             sectionChart.Hght = (float)h;
@@ -1278,17 +1209,18 @@ namespace BSFiberConcrete
         // <summary>
         /// Покрыть сечение сеткой
         /// </summary>
-        private string GenerateMesh()
-        {
+        private string GenerateMesh(ref TriangleNet.Geometry.Point _CG)
+        {            
             string pathToSvgFile = "";
-            double[] sz = BeamWidtHeight(out double b, out double h);
+            double[] sz = BeamWidtHeight(out double b, out double h, out double area);
 
             BSMesh.Nx = (int)numMeshN.Value;
             BSMesh.Ny = (int)numMeshN.Value;
 
             BSMesh.MinAngle = (double)numTriAngle.Value;
             Tri.MinAngle = (double)numTriAngle.Value;
-            Tri.MaxArea = (double)numMeshN.Value;
+
+            Tri.MaxArea = (double)numMeshN.Value;    
 
             BSMesh.FilePath = Path.Combine(Environment.CurrentDirectory, "Templates");
             Tri.FilePath = BSMesh.FilePath;
@@ -1297,35 +1229,37 @@ namespace BSFiberConcrete
             if (m_BeamSection == BeamSection.Rect)
             {
                 List<double> rect = new List<double> { 0, 0, b, h };
-                CG = new TriangleNet.Geometry.Point(0.0, h / 2.0);
+                //_CG = new TriangleNet.Geometry.Point(0.0, h/2.0);                
                 pathToSvgFile = BSCalcLib.BSMesh.GenerateRectangle(rect);
                 Tri.Mesh = BSMesh.Mesh;
-                Tri.CalculationScheme();
+                // сместить начало координат из левого нижнего угла в центр тяжести
+                Tri.Oxy = _CG; 
+                var xxTr = Tri.CalculationScheme();
             }
             else if (m_BeamSection == BeamSection.Ring)
             {
-                CG = new TriangleNet.Geometry.Point(0, 0);
-
+                _CG = new TriangleNet.Geometry.Point(0, 0);
+                
                 double R = sz[1];
                 double r = sz[0];
                 if (r > R)
                     throw BSBeam_Ring.RadiiError();
 
-                BSMesh.Center = CG;
+                BSMesh.Center = _CG;
                 pathToSvgFile = BSMesh.GenerateRing(R, r, true);
 
                 Tri.Mesh = BSMesh.Mesh;
-                Tri.CalculationScheme();
+                var xxTr =  Tri.CalculationScheme();
             }
             else if (T.HasFlag(m_BeamSection))
             {
                 List<PointF> pts;
                 BSSection.IBeam(sz, out pts, out PointF _center);
-                CG = new TriangleNet.Geometry.Point(_center.X, _center.Y);
-
+                _CG = new TriangleNet.Geometry.Point(_center.X, _center.Y);
+                
                 pathToSvgFile = BSCalcLib.Tri.CreateIBeamContour(pts);
-                Tri.CalculationScheme();
-            }
+                var xxTr = Tri.CalculationScheme();                
+            }            
             else
             {
                 throw new Exception("Не задано сечение");
@@ -1337,8 +1271,6 @@ namespace BSFiberConcrete
             return pathToSvgFile;
         }
 
-
-
         /// <summary>
         /// Покрыть сечение сеткой
         /// </summary>
@@ -1346,12 +1278,14 @@ namespace BSFiberConcrete
         /// <param name="e"></param>
         private void btnMesh_Click(object sender, EventArgs e)
         {
+            // центр тяжести сечения            
             try
             {
                 string pathToSvgFile = "";
 
-                pathToSvgFile = GenerateMesh();
-
+                TriangleNet.Geometry.Point cg = new TriangleNet.Geometry.Point();
+                pathToSvgFile = GenerateMesh(ref cg);
+               
                 Process.Start(new ProcessStartInfo { FileName = pathToSvgFile, UseShellExecute = true });
 
             }
@@ -1464,6 +1398,13 @@ namespace BSFiberConcrete
         private void tabNDM_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+                }
+            }
+        }
+
+        private void numEs_ValueChanged(object sender, EventArgs e)
+        {
+            labelEsMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numEs.Value));
         }
     }
 }

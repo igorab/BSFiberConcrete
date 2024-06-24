@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -171,12 +172,15 @@ namespace BSFiberConcrete
         /// <summary>
         /// Диаграмма деформирования двухлинейная
         /// на сжатие, как для бетона
+        /// знак + для деформаций сжатия - для растяжения (такая диаграмма в СП 63)
         /// </summary>
         /// <param name="_e">Деформация</param>
         /// <returns>Напряжение</returns>        
         public double Eps_StD(double _e)
         {
             double sgm = 0;
+
+            _e = -1 * _e;  
 
             if (0 <= _e && _e < e_b1_red)
             {
@@ -186,12 +190,14 @@ namespace BSFiberConcrete
             {
                 sgm = R_fb;
             }
-            else if (_e < 0) // по теории такого быть не должно
+            else if (_e < 0) // растяжение
             {
-                sgm = Eb_red * _e;
+                sgm = 0; //  Eb_red * _e;
             }
-            else if (_e >= e_b2) // и такого быть не должно
+            else if (_e >= e_b2) // уточнить такую ситуацию
             {
+                Debug.Assert(true, "Превышен предел прочности (временное сопротивление) ");
+
                 sgm = R_fb;
             }
 

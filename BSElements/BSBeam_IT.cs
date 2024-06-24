@@ -28,6 +28,12 @@ namespace BSFiberConcrete
         [DisplayName("Высота верхней полки двутавра")]
         public double h1f { get; set; }
 
+        public override double Width => Math.Max(bf, bw);
+        public override double Height => hf + hw + h1f;
+
+        // Центр тяжести сечения
+        public override (double, double) CG() => (Width / 2.0, Height / 2.0);
+
         /// <summary>
         ///  В обозначениях справочника проектировщика стр 357
         /// </summary>
@@ -72,6 +78,24 @@ namespace BSFiberConcrete
         public override double I_s()
         {
             return Jx();
+        }
+
+        public static Exception SizeError(string _txt)
+        {
+            return new Exception("Некорректные размеры сечения: " + _txt);
+        }
+
+        public override void GetSizes(double[] _t) 
+        {
+            (bf, hf, bw, hw, b1f, h1f, Length) = (_t[0], _t[1], _t[2], _t[3], _t[4], _t[5], _t[6]);
+            
+            if (bw <= 0 || hw <= 0) 
+                throw SizeError("должен быть положительным");
+
+            if ((bf > 0 &&  bw > bf) || (b1f > 0 && bw > b1f))
+                throw SizeError("ширина стенки не может быть больше ширины полки");
+
+
         }
     }
 }

@@ -168,6 +168,8 @@
     <Compile Include="BSElements\BSBeam_IT.cs" />
     <Compile Include="BSElements\BSBeam_Rect.cs" />
     <Compile Include="BSElements\BSBeam_Ring.cs" />
+    <Compile Include="BSElements\BSElement.cs" />
+    <Compile Include="BSElements\IBeamGeometry.cs" />
     <Compile Include="BSFactors.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -219,6 +221,12 @@
     <Compile Include="Calc\BSFiberCalc_IBeamRods.cs" />
     <Compile Include="Calc\BSFiberCalc_NormRods.cs" />
     <Compile Include="Control\FiberMainFormHelper.cs" />
+    <Compile Include="Calc\BSUnitCalculator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Calc\BSUnitCalculator.Designer.cs">
+      <DependentUpon>BSUnitCalculator.cs</DependentUpon>
+    </Compile>
     <Compile Include="DeformationDiagram\DeformDiagram.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -348,6 +356,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BSRFib\RSRFibDeflection.resx">
       <DependentUpon>RSRFibDeflection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Calc\BSUnitCalculator.resx">
+      <DependentUpon>BSUnitCalculator.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DeformationDiagram\DeformDiagram.resx">
       <DependentUpon>DeformDiagram.cs</DependentUpon>

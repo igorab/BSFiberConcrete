@@ -34,7 +34,7 @@ namespace BSCalcLib
         public static List<Point> triCGs;
 
         /// <summary>
-        /// Начало координат
+        /// смещение начала координат
         /// </summary>
         public static Point Oxy { get; set; } 
 
@@ -49,6 +49,10 @@ namespace BSCalcLib
             Oxy = new Point() {ID = 0, X = 0, Y = 0 };
         }
 
+        /// <summary>
+        /// Расчетная схема сечения
+        /// </summary>
+        /// <returns>ц.т. треугольников и их площади</returns>
         public static List<object> CalculationScheme()
         {            
             List<object> result = new List<object> { new object() };
@@ -58,18 +62,11 @@ namespace BSCalcLib
             triAreas = new List<double>();
             triCGs = new List<Point>();
 
-            string msg = "";
             int triIdx = 0;
             foreach (Triangle tri in Mesh.Triangles)
             {
                 Rectangle rec = tri.Bounds();               
                 rects.Add(rec);
-
-                msg += string.Format("{0} {1} {2} {3} {4} {5} {6} {7} \\t\\n", rec.Bottom, rec.Height, rec.Left, rec.Right, rec.Top, rec.Width, rec.X, rec.Y);
-
-                //MessageBox.Show(msg);
-
-                Debug.Assert(true, msg);                
 
                 double a = tri.Area;
                 int vId0 = tri.GetVertexID(0);
@@ -80,14 +77,28 @@ namespace BSCalcLib
                 Vertex v1 = tri.GetVertex(1);
                 Vertex v2 = tri.GetVertex(2);
 
+                // ц.т. треугольника - смещение начала координат
+                double cg_X = - ((v0.X + v1.X + v2.X) / 3.0 - Oxy.X);
+                double cg_Y = - ((v0.Y + v1.Y + v2.Y) / 3.0 - Oxy.Y);
+
                 // Центр тяжести треугольника
-                Point triCG = new Point() {ID = triIdx,  X = (float) (v0.X + v1.X + v2.X)/3.0 , Y = (float) (v0.Y + v1.Y + v2.Y) / 3.0 };
+                Point triCG = new Point() 
+                {
+                    ID = triIdx,  
+                    X = cg_X, 
+                    Y = cg_Y 
+                };
+
                 triCGs.Add(triCG);
-                triAreas.Add(rec.Width * rec.Height);
+                triAreas.Add((rec.Width * rec.Height)/2.0);
 
                 triIdx++;
             }
 
+            result.Add(triAreas);
+            result.Add(triCGs);
+
+            /*
             TriangleQuadTree qtree = new TriangleQuadTree(Mesh);
             var xTri = qtree.Query(0, 0);
            
@@ -108,11 +119,10 @@ namespace BSCalcLib
             {
                 var v_x = vertex.X;
                 var v_y = vertex.Y;
-
                 var v_Num = vertex.Label;
-
                 var v_Id = vertex.ID;
             }
+            */
 
             return result;
         }

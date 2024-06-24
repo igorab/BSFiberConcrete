@@ -24,10 +24,14 @@ namespace BSFiberConcrete
         [DisplayName("Общая площадь кольцевого сечения")]
         public double A_r => Area();
 
-        public double A_s => 9.04; 
+        public double A_s => 9.04;
 
         // TODO выяснить алгоритм
-        public double r_s => 36; 
+        public double r_s => 36;
+
+        public override double Width => r2;
+        public override double Height => r2;
+
 
         public override double Area()
         {
@@ -46,21 +50,21 @@ namespace BSFiberConcrete
 
         public double alfa => d / D;
 
-        public double F => (Math.PI * D * D / 4d) * (1 - Math.Pow(alfa, 4)); 
+        public double F => (Math.PI * D * D / 4d) * (1 - Math.Pow(alfa, 4));
 
         public override double b { get => D - d; }
 
         public override double h { get => D - d; }
 
         public override double Jx()
-        {          
+        {
             double jx = Math.PI * Math.Pow(D, 4) / 64d * (1 - Math.Pow(alfa, 4));
             return jx;
         }
 
         public override double Jy()
         {
-            return Jx();                
+            return Jx();
         }
 
         public override double W_s()
@@ -72,17 +76,21 @@ namespace BSFiberConcrete
         //Момент инерции тонкого кольца РТ СП
         public override double I_s()
         {
-            double i_s = A_s * Math.Pow(2 * r_s, 2) / 8d;  
+            double i_s = A_s * Math.Pow(2 * r_s, 2) / 8d;
             return i_s;
         }
 
-        public double A_red (double _Es, double _Efb) => A_r + (_Es/ _Efb) * A_s;
+        public double A_red(double _Es, double _Efb) => A_r + (_Es / _Efb) * A_s;
 
         public double Is_red(double _Es, double _Efb) => (_Es / _Efb) * I_s();
 
         public static Exception RadiiError()
         {
             return new Exception("Внутренний радиус больше внешнего");
+        }
+        public override void GetSizes(double[] _t)
+        {
+            (r1, r2, Length) = (_t[0], _t[1], _t[2]);
         }
     }
 }
