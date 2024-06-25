@@ -45,31 +45,31 @@
             this.chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.btnDraw = new System.Windows.Forms.Button();
             this.dataGrid = new System.Windows.Forms.DataGridView();
-            this.labelSection = new System.Windows.Forms.Label();
-            this.labelRods = new System.Windows.Forms.Label();
-            this.bSRodDataGridView = new System.Windows.Forms.DataGridView();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.labelArea = new System.Windows.Forms.Label();
-            this.numArea = new System.Windows.Forms.NumericUpDown();
-            this.labelAreaUnits = new System.Windows.Forms.Label();
             this.numDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.xDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.yDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pointBS = new System.Windows.Forms.BindingSource(this.components);
+            this.labelSection = new System.Windows.Forms.Label();
+            this.labelRods = new System.Windows.Forms.Label();
+            this.bSRodDataGridView = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.RodBS = new System.Windows.Forms.BindingSource(this.components);
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.labelArea = new System.Windows.Forms.Label();
+            this.numArea = new System.Windows.Forms.NumericUpDown();
+            this.labelAreaUnits = new System.Windows.Forms.Label();
             this.tableLayoutPanel.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pointBS)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bSRodDataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RodBS)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numArea)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pointBS)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.RodBS)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel
@@ -78,7 +78,7 @@
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.83517F));
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 225F));
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 85.16483F));
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 97F));
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 98F));
             this.tableLayoutPanel.Controls.Add(this.btnSave, 1, 2);
             this.tableLayoutPanel.Controls.Add(this.tableLayoutPanel2, 0, 2);
             this.tableLayoutPanel.Controls.Add(this.chart, 2, 1);
@@ -101,7 +101,7 @@
             // btnSave
             // 
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnSave.Location = new System.Drawing.Point(123, 615);
+            this.btnSave.Location = new System.Drawing.Point(122, 615);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(41, 35);
             this.btnSave.TabIndex = 4;
@@ -121,13 +121,13 @@
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(114, 99);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(113, 99);
             this.tableLayoutPanel2.TabIndex = 5;
             // 
             // btnDel
             // 
             this.btnDel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnDel.Location = new System.Drawing.Point(60, 3);
+            this.btnDel.Location = new System.Drawing.Point(59, 3);
             this.btnDel.Name = "btnDel";
             this.btnDel.Size = new System.Drawing.Size(41, 35);
             this.btnDel.TabIndex = 3;
@@ -155,7 +155,7 @@
             this.chart.Dock = System.Windows.Forms.DockStyle.Fill;
             legend1.Name = "Legend1";
             this.chart.Legends.Add(legend1);
-            this.chart.Location = new System.Drawing.Point(348, 32);
+            this.chart.Location = new System.Drawing.Point(347, 32);
             this.chart.Name = "chart";
             series1.BorderWidth = 3;
             series1.ChartArea = "ChartArea1";
@@ -182,7 +182,7 @@
             // 
             // btnDraw
             // 
-            this.btnDraw.Location = new System.Drawing.Point(348, 615);
+            this.btnDraw.Location = new System.Drawing.Point(347, 615);
             this.btnDraw.Name = "btnDraw";
             this.btnDraw.Size = new System.Drawing.Size(75, 23);
             this.btnDraw.TabIndex = 1;
@@ -203,95 +203,8 @@
             this.dataGrid.Location = new System.Drawing.Point(3, 32);
             this.dataGrid.Name = "dataGrid";
             this.dataGrid.RowHeadersVisible = false;
-            this.dataGrid.Size = new System.Drawing.Size(114, 577);
+            this.dataGrid.Size = new System.Drawing.Size(113, 577);
             this.dataGrid.TabIndex = 2;
-            // 
-            // labelSection
-            // 
-            this.labelSection.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.labelSection.AutoSize = true;
-            this.labelSection.Location = new System.Drawing.Point(3, 8);
-            this.labelSection.Name = "labelSection";
-            this.labelSection.Size = new System.Drawing.Size(49, 13);
-            this.labelSection.TabIndex = 6;
-            this.labelSection.Text = "Сечение";
-            // 
-            // labelRods
-            // 
-            this.labelRods.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.labelRods.AutoSize = true;
-            this.labelRods.Location = new System.Drawing.Point(123, 8);
-            this.labelRods.Name = "labelRods";
-            this.labelRods.Size = new System.Drawing.Size(76, 13);
-            this.labelRods.TabIndex = 7;
-            this.labelRods.Text = "Армирование";
-            // 
-            // bSRodDataGridView
-            // 
-            this.bSRodDataGridView.AutoGenerateColumns = false;
-            this.bSRodDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.bSRodDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn1,
-            this.dataGridViewTextBoxColumn2,
-            this.dataGridViewTextBoxColumn3,
-            this.dataGridViewTextBoxColumn4});
-            this.bSRodDataGridView.DataSource = this.RodBS;
-            this.bSRodDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.bSRodDataGridView.Location = new System.Drawing.Point(123, 32);
-            this.bSRodDataGridView.Name = "bSRodDataGridView";
-            this.bSRodDataGridView.RowHeadersVisible = false;
-            this.bSRodDataGridView.Size = new System.Drawing.Size(219, 577);
-            this.bSRodDataGridView.TabIndex = 7;
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 3;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 43F));
-            this.tableLayoutPanel1.Controls.Add(this.labelArea, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.numArea, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.labelAreaUnits, 2, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(348, 3);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(227, 23);
-            this.tableLayoutPanel1.TabIndex = 8;
-            // 
-            // labelArea
-            // 
-            this.labelArea.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.labelArea.AutoSize = true;
-            this.labelArea.Location = new System.Drawing.Point(3, 5);
-            this.labelArea.Name = "labelArea";
-            this.labelArea.Size = new System.Drawing.Size(54, 13);
-            this.labelArea.TabIndex = 0;
-            this.labelArea.Text = "Площадь";
-            // 
-            // numArea
-            // 
-            this.numArea.AccessibleName = "NumArea";
-            this.numArea.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.numArea.Location = new System.Drawing.Point(95, 3);
-            this.numArea.Maximum = new decimal(new int[] {
-            -159383552,
-            46653770,
-            5421,
-            0});
-            this.numArea.Name = "numArea";
-            this.numArea.Size = new System.Drawing.Size(86, 20);
-            this.numArea.TabIndex = 1;
-            // 
-            // labelAreaUnits
-            // 
-            this.labelAreaUnits.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.labelAreaUnits.AutoSize = true;
-            this.labelAreaUnits.Location = new System.Drawing.Point(187, 5);
-            this.labelAreaUnits.Name = "labelAreaUnits";
-            this.labelAreaUnits.Size = new System.Drawing.Size(27, 13);
-            this.labelAreaUnits.TabIndex = 2;
-            this.labelAreaUnits.Text = "см2";
             // 
             // numDataGridViewTextBoxColumn
             // 
@@ -317,6 +230,43 @@
             // pointBS
             // 
             this.pointBS.DataSource = typeof(BSFiberConcrete.Section.BSPoint);
+            // 
+            // labelSection
+            // 
+            this.labelSection.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.labelSection.AutoSize = true;
+            this.labelSection.Location = new System.Drawing.Point(3, 8);
+            this.labelSection.Name = "labelSection";
+            this.labelSection.Size = new System.Drawing.Size(49, 13);
+            this.labelSection.TabIndex = 6;
+            this.labelSection.Text = "Сечение";
+            // 
+            // labelRods
+            // 
+            this.labelRods.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.labelRods.AutoSize = true;
+            this.labelRods.Location = new System.Drawing.Point(122, 8);
+            this.labelRods.Name = "labelRods";
+            this.labelRods.Size = new System.Drawing.Size(76, 13);
+            this.labelRods.TabIndex = 7;
+            this.labelRods.Text = "Армирование";
+            // 
+            // bSRodDataGridView
+            // 
+            this.bSRodDataGridView.AutoGenerateColumns = false;
+            this.bSRodDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.bSRodDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewTextBoxColumn2,
+            this.dataGridViewTextBoxColumn3,
+            this.dataGridViewTextBoxColumn4});
+            this.bSRodDataGridView.DataSource = this.RodBS;
+            this.bSRodDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.bSRodDataGridView.Location = new System.Drawing.Point(122, 32);
+            this.bSRodDataGridView.Name = "bSRodDataGridView";
+            this.bSRodDataGridView.RowHeadersVisible = false;
+            this.bSRodDataGridView.Size = new System.Drawing.Size(219, 577);
+            this.bSRodDataGridView.TabIndex = 7;
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -363,6 +313,56 @@
             // 
             this.RodBS.DataSource = typeof(BSFiberConcrete.BSRod);
             // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 3;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 43F));
+            this.tableLayoutPanel1.Controls.Add(this.labelArea, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.numArea, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.labelAreaUnits, 2, 0);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(347, 3);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(227, 23);
+            this.tableLayoutPanel1.TabIndex = 8;
+            // 
+            // labelArea
+            // 
+            this.labelArea.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.labelArea.AutoSize = true;
+            this.labelArea.Location = new System.Drawing.Point(3, 5);
+            this.labelArea.Name = "labelArea";
+            this.labelArea.Size = new System.Drawing.Size(54, 13);
+            this.labelArea.TabIndex = 0;
+            this.labelArea.Text = "Площадь";
+            // 
+            // numArea
+            // 
+            this.numArea.AccessibleName = "NumArea";
+            this.numArea.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.numArea.Location = new System.Drawing.Point(95, 3);
+            this.numArea.Maximum = new decimal(new int[] {
+            -159383552,
+            46653770,
+            5421,
+            0});
+            this.numArea.Name = "numArea";
+            this.numArea.Size = new System.Drawing.Size(86, 20);
+            this.numArea.TabIndex = 1;
+            // 
+            // labelAreaUnits
+            // 
+            this.labelAreaUnits.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.labelAreaUnits.AutoSize = true;
+            this.labelAreaUnits.Location = new System.Drawing.Point(187, 5);
+            this.labelAreaUnits.Name = "labelAreaUnits";
+            this.labelAreaUnits.Size = new System.Drawing.Size(27, 13);
+            this.labelAreaUnits.TabIndex = 2;
+            this.labelAreaUnits.Text = "см2";
+            // 
             // BSSectionChart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -378,12 +378,12 @@
             this.tableLayoutPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pointBS)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bSRodDataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RodBS)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numArea)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pointBS)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.RodBS)).EndInit();
             this.ResumeLayout(false);
 
         }

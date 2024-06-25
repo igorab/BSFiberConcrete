@@ -213,6 +213,17 @@ namespace BSFiberConcrete
                 sz[idx] = _length;
             }
 
+            double bf=0, hf=0, bw=0, hw=0, b1f=0, h1f=0;
+            if (m_BeamSection == BeamSection.TBeam)
+            {
+                bw = sz[0]; hw = sz[1]; b1f = sz[2]; h1f = sz[3];
+            }
+
+            if (m_BeamSection == BeamSection.TBeam || m_BeamSection == BeamSection.IBeam || m_BeamSection == BeamSection.LBeam)
+            {
+                sz = new double[] { bf, hf, bw, hw, b1f, h1f, _length};
+            }
+
             return sz;
         }
 
