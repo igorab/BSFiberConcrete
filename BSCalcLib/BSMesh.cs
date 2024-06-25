@@ -142,7 +142,7 @@ namespace BSCalcLib
         /// <returns>A circular contour.</returns>
         public static Contour Circle(double r, Point center, double h, int label = 0)
         {
-            int n = (int)(2 * Math.PI * r / h);
+            int n = (int)h; // (int)(2 * Math.PI * r / h);
 
             var points = new List<Vertex>(n);
 
@@ -162,14 +162,14 @@ namespace BSCalcLib
         public static string GenerateRing(double _R, double _r,  bool print = false)
         {
             // Generate the input geometry.
-            double h = Nx / 10.0;  //(_R - _r) / 2.0;
+            double h = Nx ;  //(_R - _r) / 2.0;
             var poly = CreateRing(_R, _r, h);
 
             // Set minimum angle quality option.
             var quality = new QualityOptions() 
             { 
                 MinimumAngle = MinAngle, 
-                MaximumArea = MaxArea 
+                //MaximumArea = MaxArea 
             };
 
             // Generate mesh using the polygons Triangulate extension method.
