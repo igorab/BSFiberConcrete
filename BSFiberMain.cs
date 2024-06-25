@@ -251,18 +251,12 @@ namespace BSFiberConcrete
                 _h = Math.Max(sz[0], sz[1]);
                 _area = Math.PI * Math.Pow(Math.Abs(sz[1] - sz[0]), 2)/4.0;
             }            
-            else if (m_BeamSection == BeamSection.IBeam)            
+            else if (m_BeamSection == BeamSection.TBeam || m_BeamSection == BeamSection.IBeam || m_BeamSection == BeamSection.LBeam)            
             {
                 _w = Math.Max(sz[0], sz[4]);
                 _h = sz[1] + sz[3] + sz[5];
                 _area = sz[0] * sz[1] + sz[2] * sz[3] + sz[4] * sz[5];
-            }
-            else if (m_BeamSection == BeamSection.TBeam  || m_BeamSection == BeamSection.LBeam)
-            {
-                _w = sz[0];
-                _h = sz[1] + sz[3];
-                _area = sz[0] * sz[1] + sz[2] * sz[3];
-            }
+            }            
             else
             {
                 throw new Exception("Неопределен тип сечения");

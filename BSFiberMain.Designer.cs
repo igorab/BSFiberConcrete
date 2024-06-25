@@ -30,17 +30,17 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BSFiberMain));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabNDM = new System.Windows.Forms.TabControl();
             this.tabParams = new System.Windows.Forms.TabPage();
             this.groupVar = new System.Windows.Forms.GroupBox();
@@ -1314,45 +1314,45 @@
             // 
             // Mx
             // 
-            dataGridViewCellStyle1.Format = "N2";
-            dataGridViewCellStyle1.NullValue = "0";
-            this.Mx.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle12.Format = "N2";
+            dataGridViewCellStyle12.NullValue = "0";
+            this.Mx.DefaultCellStyle = dataGridViewCellStyle12;
             this.Mx.HeaderText = "Mx";
             this.Mx.Name = "Mx";
             this.Mx.ToolTipText = "Момент от действия полной нагрузки";
             // 
             // My
             // 
-            dataGridViewCellStyle2.Format = "N2";
-            dataGridViewCellStyle2.NullValue = "0";
-            this.My.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle13.Format = "N2";
+            dataGridViewCellStyle13.NullValue = "0";
+            this.My.DefaultCellStyle = dataGridViewCellStyle13;
             this.My.HeaderText = "My, кг*см";
             this.My.Name = "My";
             this.My.ToolTipText = "Момент отн оси Y";
             // 
             // N
             // 
-            dataGridViewCellStyle3.Format = "N2";
-            dataGridViewCellStyle3.NullValue = "0";
-            this.N.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle14.Format = "N2";
+            dataGridViewCellStyle14.NullValue = "0";
+            this.N.DefaultCellStyle = dataGridViewCellStyle14;
             this.N.HeaderText = "N, кг";
             this.N.Name = "N";
             this.N.ToolTipText = "Продольная сила";
             // 
             // Q
             // 
-            dataGridViewCellStyle4.Format = "N2";
-            dataGridViewCellStyle4.NullValue = "0";
-            this.Q.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle15.Format = "N2";
+            dataGridViewCellStyle15.NullValue = "0";
+            this.Q.DefaultCellStyle = dataGridViewCellStyle15;
             this.Q.HeaderText = "Q, кг";
             this.Q.Name = "Q";
             this.Q.ToolTipText = "Поперечная сила";
             // 
             // Ml
             // 
-            dataGridViewCellStyle5.Format = "N2";
-            dataGridViewCellStyle5.NullValue = "0";
-            this.Ml.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle16.Format = "N2";
+            dataGridViewCellStyle16.NullValue = "0";
+            this.Ml.DefaultCellStyle = dataGridViewCellStyle16;
             this.Ml.HeaderText = "Ml";
             this.Ml.Name = "Ml";
             this.Ml.ToolTipText = "Момент от действия постянных и длительных нагрузок нагрузок";
@@ -1360,9 +1360,9 @@
             // 
             // eN
             // 
-            dataGridViewCellStyle6.Format = "N2";
-            dataGridViewCellStyle6.NullValue = "0";
-            this.eN.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle17.Format = "N2";
+            dataGridViewCellStyle17.NullValue = "0";
+            this.eN.DefaultCellStyle = dataGridViewCellStyle17;
             this.eN.HeaderText = "eN";
             this.eN.Name = "eN";
             this.eN.ToolTipText = "Эксцентриситет приложения силы";
@@ -2351,9 +2351,9 @@
             // 
             // D
             // 
-            dataGridViewCellStyle7.Format = "N2";
-            dataGridViewCellStyle7.NullValue = "0";
-            this.D.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle18.Format = "N2";
+            dataGridViewCellStyle18.NullValue = "0";
+            this.D.DefaultCellStyle = dataGridViewCellStyle18;
             this.D.HeaderText = "D см";
             this.D.Name = "D";
             this.D.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -2361,9 +2361,9 @@
             // 
             // Qty
             // 
-            dataGridViewCellStyle8.Format = "N0";
-            dataGridViewCellStyle8.NullValue = "0";
-            this.Qty.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle19.Format = "N0";
+            dataGridViewCellStyle19.NullValue = "0";
+            this.Qty.DefaultCellStyle = dataGridViewCellStyle19;
             this.Qty.HeaderText = "Шт";
             this.Qty.Name = "Qty";
             this.Qty.Width = 50;
@@ -2417,9 +2417,9 @@
             // 
             // dataGridViewTextBoxColumn1
             // 
-            dataGridViewCellStyle9.Format = "N2";
-            dataGridViewCellStyle9.NullValue = "0";
-            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle20.Format = "N2";
+            dataGridViewCellStyle20.NullValue = "0";
+            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle20;
             this.dataGridViewTextBoxColumn1.HeaderText = "D cм";
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             this.dataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -2427,18 +2427,18 @@
             // 
             // Sw
             // 
-            dataGridViewCellStyle10.Format = "N2";
-            dataGridViewCellStyle10.NullValue = "0";
-            this.Sw.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle21.Format = "N2";
+            dataGridViewCellStyle21.NullValue = "0";
+            this.Sw.DefaultCellStyle = dataGridViewCellStyle21;
             this.Sw.HeaderText = "Шаг (Sw y)";
             this.Sw.Name = "Sw";
             this.Sw.Width = 50;
             // 
             // dataGridViewTextBoxColumn2
             // 
-            dataGridViewCellStyle11.Format = "N0";
-            dataGridViewCellStyle11.NullValue = "0";
-            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle22.Format = "N0";
+            dataGridViewCellStyle22.NullValue = "0";
+            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle22;
             this.dataGridViewTextBoxColumn2.HeaderText = "Шт";
             this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             this.dataGridViewTextBoxColumn2.Width = 50;

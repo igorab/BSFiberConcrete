@@ -78,7 +78,7 @@
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.83517F));
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 225F));
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 85.16483F));
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 98F));
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 99F));
             this.tableLayoutPanel.Controls.Add(this.btnSave, 1, 2);
             this.tableLayoutPanel.Controls.Add(this.tableLayoutPanel2, 0, 2);
             this.tableLayoutPanel.Controls.Add(this.chart, 2, 1);
@@ -177,7 +177,7 @@
             this.chart.Series.Add(series1);
             this.chart.Series.Add(series2);
             this.chart.Series.Add(series3);
-            this.chart.Size = new System.Drawing.Size(682, 577);
+            this.chart.Size = new System.Drawing.Size(681, 577);
             this.chart.TabIndex = 0;
             // 
             // btnDraw

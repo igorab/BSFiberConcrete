@@ -545,6 +545,11 @@ namespace BSFiberConcrete
 
         private void AddToResult(string _attr, double _value)
         {
+            if (Math.Abs(_value) < 10e-15 || Math.Abs(_value) > 10e15)
+            {
+                return;
+            }
+
             Res.Add(BSFiberCalculation.DsplN(typeof(BSFiberCalc_Deform), _attr), _value);
         }
 
