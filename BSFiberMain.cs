@@ -481,6 +481,7 @@ namespace BSFiberConcrete
             {
                 m_BeamSection = BeamSection.TBeam; // 
                 m_BeamSectionReport = BeamSection.TBeam;
+                dataGridSection.DataSource = null;
 
                 m_Table = FiberMainFormHelper.GetTableFromBeamSections(m_InitBeamSectionsGeometry, m_BeamSectionReport);
                 dataGridSection.DataSource = m_Table;
@@ -491,6 +492,7 @@ namespace BSFiberConcrete
 
                 m_BeamSection = BeamSection.TBeam; // Переделать
                 m_BeamSectionReport = BeamSection.LBeam;
+                dataGridSection.DataSource = null;
 
                 m_Table = FiberMainFormHelper.GetTableFromBeamSections(m_InitBeamSectionsGeometry, m_BeamSectionReport);
                 dataGridSection.DataSource = m_Table;
@@ -522,6 +524,7 @@ namespace BSFiberConcrete
         {
             m_BeamSection = BeamSection.Ring;
             m_BeamSectionReport = m_BeamSection;
+            dataGridSection.DataSource = null;
 
             m_Table = FiberMainFormHelper.GetTableFromBeamSections(m_InitBeamSectionsGeometry, m_BeamSectionReport);
             dataGridSection.DataSource = m_Table;

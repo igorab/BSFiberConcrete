@@ -459,12 +459,12 @@ namespace BSFiberConcrete
         /// </summary>
         public string SectionTypeStr { get; set; }
 
-        # region Габаритные размеры сечения. 
+        #region Габаритные размеры сечения. 
         //Для каждого типа сечения свой набор переменных, определяющий размеры.
-        public double? bw { get; set; }
-        public double? hw { get; set; }
         public double? bf { get; set; }
         public double? hf { get; set; }
+        public double? bw { get; set; }
+        public double? hw { get; set; }
         public double? b1f { get; set; }
         public double? h1f { get; set; }
         public double? r1 { get; set; }
