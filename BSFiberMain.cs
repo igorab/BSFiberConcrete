@@ -1129,6 +1129,7 @@ namespace BSFiberConcrete
             {
                 var rb = Lib.BSQuery.RebarFind(cmbRebarClass.Text);
                 numRs.Value = (decimal)BSHelper.MPA2kgsm2(rb.Rs);
+                numRsc.Value = (decimal)BSHelper.MPA2kgsm2(rb.Rsc);
             }
             catch { }
         }
@@ -1176,6 +1177,7 @@ namespace BSFiberConcrete
         private void numRs_ValueChanged(object sender, EventArgs e)
         {
             labelRsMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numRs.Value));
+            numEpsilonS1.Value = numRs.Value / numEs.Value;
         }
 
         private void numRsw_ValueChanged(object sender, EventArgs e)
@@ -1329,31 +1331,93 @@ namespace BSFiberConcrete
         private void btnCalcDeformDiagram_Click(object sender, EventArgs e)
         {
             string typeDiagram = cmbDeformDiagram.Text;
+            
             string typeMaterial = cmbTypeMaterial.Text;
 
-            double eb0 = (double)numEps_fb0.Value;
-            double eb2 = (double)numEps_fb2.Value;
-            //double eb0 = (double)0.003m;
-            //double eb2 = (double)0.0042m;
+            // сжатие
+            double R_n = 0;
+            double e0 = 0;
+            double e2 = 0;
+            double E = 0;
+            // растяжение
+            double Rt_n = 0;
+            double Rt2_n = 0;
+            double Rt3_n = 0; 
+            double Et = 0;
+            double et0 = 0;
+            double et2 = 0;
+            double et3 = 0;
 
-            double Eb = (double)numEfb.Value;
-            double Efb = Eb;                    // !!!
+            if (typeMaterial == BSHelper.Concrete)
+            {
+                // Характеристики по сжатию
+                R_n = (double)numRfb_n.Value;       // Rb_n 
+                e0 = (double)numEps_fb0.Value;      // eb0
+                e2 = (double)numEps_fb2.Value;      // eb2
+                E = (double)numEfb.Value;           // Eb
 
-            double Rb_n = (double)numRfb_n.Value;
-            double Rfbt_n = (double)numRfbt_n.Value;
-            double Rfbt2_n = (double)numRfbt3n.Value;
-            double Rfbt3_n = (double)numRfbt2n.Value;
+            }
+            else if (typeMaterial == BSHelper.FiberConcrete)
+            {
+                // Характеристики по сжатию такие же как у бетона
+                R_n = (double)numRfb_n.Value;       // Rb_n 
+                e0 = (double)numEps_fb0.Value;      // eb0
+                e2 = (double)numEps_fb2.Value;      // eb2
+                //e0 = (double)0.003m;
+                //e2 = (double)0.0042m;
+                E = (double)numEfb.Value;           //Eb
+                // Характеристики по растяжению
+                Rt_n = (double)numRfbt_n.Value;     // Rfbt_n
+                Rt2_n = (double)numRfbt3n.Value;    // Rfbt2_n
+                Rt3_n = (double)numRfbt2n.Value;    // Rfbt3_n
+                Et = E;                    // !!!   // Efbt
+                et2 = (double)numEps_fbt2.Value;    // efbt2
+                et3 = (double)numEps_fbt3.Value;    // efbt3
+            }
+            else if (typeMaterial == BSHelper.Rebar)
+            {
+          
+                // Характеристики по растяжению
+                Rt_n = (double)numRs.Value;         // 
+                Et = (double)numEs.Value;           //
+                et0 = (double)numEpsilonS0.Value;   //
+                et2 = (double)numEpsilonS2.Value;   //
 
-            double efbt2 = (double)numEps_fbt2.Value;
-            double efbt3 = (double)numEps_fbt3.Value;
+                // Характеристики по сжатию
+                R_n = (double)numRsc.Value;         
+                e0 = et0;
+                e2 = et2;
+                E = Et;
+            }
+            else
+            {
+                throw new Exception("Выбрано значение материала, выходящее за предел предопределенных значений.");
+            }
 
             DataForDeformDiagram.typesDiagram = new string[] { typeMaterial, typeDiagram };
-            DataForDeformDiagram.resists = new double[] { Rb_n, Rfbt_n, Rfbt2_n, Rfbt3_n };
-            DataForDeformDiagram.deforms = new double[] { eb0, eb2, efbt2, efbt3 };
-            DataForDeformDiagram.E = new double[] { Eb, Efb };
+            DataForDeformDiagram.resists = new double[] { R_n, Rt_n, Rt2_n, Rt3_n };
+            DataForDeformDiagram.deforms = new double[] { e0, e2, et0, et2, et3 };
+            DataForDeformDiagram.E = new double[] { E, Et };
 
             DeformDiagram deformDiagram = new DeformDiagram();
             deformDiagram.Show();
+
+
+            //double eb0 = (double)numEps_fb0.Value;
+            //double eb2 = (double)numEps_fb2.Value;
+            ////double eb0 = (double)0.003m;
+            ////double eb2 = (double)0.0042m;
+
+            //double Eb = (double)numEfb.Value;
+            //double Efb = Eb;                    // !!!
+
+            //double Rb_n = (double)numRfb_n.Value;
+            //double Rfbt_n = (double)numRfbt_n.Value;
+            //double Rfbt2_n = (double)numRfbt3n.Value;
+            //double Rfbt3_n = (double)numRfbt2n.Value;
+
+            //double efbt2 = (double)numEps_fbt2.Value;
+            //double efbt3 = (double)numEps_fbt3.Value;
         }
 
         private void cmbWetAir_SelectedIndexChanged(object sender, EventArgs e)
@@ -1408,6 +1472,12 @@ namespace BSFiberConcrete
         private void numEs_ValueChanged(object sender, EventArgs e)
         {
             labelEsMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numEs.Value));
+            numEpsilonS1.Value = numRs.Value/numEs.Value;
+        }
+
+        private void numRsc_ValueChanged(object sender, EventArgs e)
+        {
+            labelRscMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numRsc.Value));
         }
     }
 }
