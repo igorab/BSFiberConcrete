@@ -237,13 +237,19 @@ namespace BSFiberConcrete
             {
                 _w = Math.Max( sz[0], sz[1]);
                 _h = Math.Max(sz[0], sz[1]);
-                _area = Math.PI * Math.Pow(Math.Abs(_w - _h), 2)/4.0;
+                _area = Math.PI * Math.Pow(Math.Abs(sz[1] - sz[0]), 2)/4.0;
             }            
-            else if (m_BeamSection == BeamSection.TBeam || m_BeamSection == BeamSection.IBeam || m_BeamSection == BeamSection.LBeam )            
+            else if (m_BeamSection == BeamSection.IBeam)            
             {
                 _w = Math.Max(sz[0], sz[4]);
                 _h = sz[1] + sz[3] + sz[5];
                 _area = sz[0] * sz[1] + sz[2] * sz[3] + sz[4] * sz[5];
+            }
+            else if (m_BeamSection == BeamSection.TBeam  || m_BeamSection == BeamSection.LBeam)
+            {
+                _w = sz[0];
+                _h = sz[1] + sz[3];
+                _area = sz[0] * sz[1] + sz[2] * sz[3];
             }
             else
             {
@@ -469,7 +475,7 @@ namespace BSFiberConcrete
         private void TSection(char _T_L)
         {
 
-            // TO DO доработать использование переменных m_BeamSection и m_BeamSectionReport
+            // TODO доработать использование переменных m_BeamSection и m_BeamSectionReport
 
             if (_T_L == 'T')
             {
@@ -491,8 +497,9 @@ namespace BSFiberConcrete
                 picBeton.Image = global::BSFiberConcrete.Properties.Resources.LBeam;
             }
 
-            foreach (DataGridViewColumn column in dataGridSection.Columns)
-            { column.SortMode = DataGridViewColumnSortMode.NotSortable; }
+            foreach (DataGridViewColumn column in dataGridSection.Columns) 
+                column.SortMode = DataGridViewColumnSortMode.NotSortable;             
+
             picBeton.SizeMode = PictureBoxSizeMode.StretchImage;
         }
 
@@ -534,8 +541,10 @@ namespace BSFiberConcrete
             m_Table = FiberMainFormHelper.GetTableFromBeamSections(m_InitBeamSectionsGeometry, m_BeamSectionReport);
             dataGridSection.DataSource = m_Table;
 
-            foreach (DataGridViewColumn column in dataGridSection.Columns)
-            { column.SortMode = DataGridViewColumnSortMode.NotSortable; }
+            foreach (DataGridViewColumn column in dataGridSection.Columns) {             
+                column.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+
             picBeton.Image = global::BSFiberConcrete.Properties.Resources.IBeam;
             picBeton.SizeMode = PictureBoxSizeMode.StretchImage;
         }
@@ -839,7 +848,9 @@ namespace BSFiberConcrete
             // центр тяжести сечения
             TriangleNet.Geometry.Point CG = new TriangleNet.Geometry.Point(0.0, 0.0);
 
-            DeformDiagramType deformDiagram = (DeformDiagramType) cmbDeformDiagram.SelectedIndex;            
+            DeformDiagramType deformDiagramType = (DeformDiagramType) cmbDeformDiagram.SelectedIndex;
+            DeformMaterialType deformMaterialType = (DeformMaterialType) cmbTypeMaterial.SelectedIndex;
+
             BSMatFiber beamMaterial;                                               
                         
             // класс фибробетона (бетона) на сжатие
@@ -893,7 +904,8 @@ namespace BSFiberConcrete
             try
             {
                 BSFiberCalc_Deform fiberCalc_Deform = new BSFiberCalc_Deform(_Mx: c_Mx, _My: c_My, _N: c_N);
-                fiberCalc_Deform.DeformDiagram =  deformDiagram;
+                fiberCalc_Deform.DeformDiagram = deformDiagramType;
+                fiberCalc_Deform.DeformMaterialType = deformMaterialType;
                 fiberCalc_Deform.Beam = bsBeam;
                 // 
                 GenerateMesh(ref CG); // покрыть сечение сеткой
@@ -954,7 +966,6 @@ namespace BSFiberConcrete
                     }
 
                     fiberCalc_Deform.Rods = Rods;
-
 
                     m_Reinforcement.Add("Количество стержней, шт", d_qty);
                     m_Reinforcement.Add("Площадь арматуры, см2", area_total);
@@ -1225,7 +1236,10 @@ namespace BSFiberConcrete
             Tri.MinAngle = (double)numTriAngle.Value;
 
             if (meshSize > 0)
-                Tri.MaxArea = area / meshSize ;    
+            {
+                Tri.MaxArea = area / meshSize;
+                BSMesh.MaxArea = Tri.MaxArea;
+            }
 
             BSMesh.FilePath = Path.Combine(Environment.CurrentDirectory, "Templates");
             Tri.FilePath = BSMesh.FilePath;
@@ -1397,7 +1411,17 @@ namespace BSFiberConcrete
         //
         private void CloseFiberMainForm(object sender, FormClosingEventArgs e)
         {
-            BSData.UpdateBeamSectionGeometry(m_InitBeamSectionsGeometry);
+            try
+            {
+                BSData.UpdateBeamSectionGeometry(m_InitBeamSectionsGeometry);
+
+                GetEffortsFromForm(out Dictionary<string, double> MNQ);
+                Lib.BSData.SaveEfforts(new Efforts() { Id = 1, Mx = MNQ["Mx"], My = MNQ["My"], N = MNQ["N"], Q = MNQ["Q"], Ml = MNQ["Ml"], eN = MNQ["eN"] });
+            }
+            catch (Exception _e) 
+            {
+                MessageBox.Show(_e.Message);
+            }
         }
 
         private void tabNDM_SelectedIndexChanged(object sender, EventArgs e)
@@ -1408,6 +1432,11 @@ namespace BSFiberConcrete
         private void numEs_ValueChanged(object sender, EventArgs e)
         {
             labelEsMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numEs.Value));
+        }
+
+        private void BSFiberMain_Leave(object sender, EventArgs e)
+        {
+
         }
     }
 }

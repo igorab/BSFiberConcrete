@@ -275,6 +275,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BSLocalStrengthRes.resx</DependentUpon>
     </Compile>
+    <Compile Include="Mat\BSMaterialType.cs" />
     <Compile Include="Mat\BSMatFiber.cs" />
     <Compile Include="Mat\BSMatRod.cs" />
     <Compile Include="Mat\IMaterial.cs" />
