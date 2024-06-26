@@ -1150,8 +1150,7 @@ namespace BSFiberConcrete
             {
                 var rb = Lib.BSQuery.RebarFind(cmbRebarClass.Text);
                 numRs.Value = (decimal)BSHelper.MPA2kgsm2(rb.Rs);
-                // 26.06.24
-                //numRsc.Value = (decimal)BSHelper.MPA2kgsm2(rb.Rsc);
+                numRsc.Value = (decimal)BSHelper.MPA2kgsm2(rb.Rsc);
             }
             catch { }
         }
@@ -1409,8 +1408,7 @@ namespace BSFiberConcrete
                 et2 = (double)numEpsilonS2.Value;   //
 
                 // Характеристики по сжатию
-                //R_n = (double)numRsc.Value;         
-                //26.06.24
+                R_n = (double)numRsc.Value;         
                 e0 = et0;
                 e2 = et2;
                 E = Et;
