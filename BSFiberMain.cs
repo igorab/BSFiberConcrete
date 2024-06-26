@@ -1129,7 +1129,8 @@ namespace BSFiberConcrete
             {
                 var rb = Lib.BSQuery.RebarFind(cmbRebarClass.Text);
                 numRs.Value = (decimal)BSHelper.MPA2kgsm2(rb.Rs);
-                numRsc.Value = (decimal)BSHelper.MPA2kgsm2(rb.Rsc);
+                // 26.06.24
+                //numRsc.Value = (decimal)BSHelper.MPA2kgsm2(rb.Rsc);
             }
             catch { }
         }
@@ -1384,7 +1385,8 @@ namespace BSFiberConcrete
                 et2 = (double)numEpsilonS2.Value;   //
 
                 // Характеристики по сжатию
-                R_n = (double)numRsc.Value;         
+                //R_n = (double)numRsc.Value;         
+                //26.06.24
                 e0 = et0;
                 e2 = et2;
                 E = Et;
@@ -1473,11 +1475,6 @@ namespace BSFiberConcrete
         {
             labelEsMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numEs.Value));
             numEpsilonS1.Value = numRs.Value/numEs.Value;
-        }
-
-        private void numRsc_ValueChanged(object sender, EventArgs e)
-        {
-            labelRscMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numRsc.Value));
         }
 
         private void numEpsilonS1_ValueChanged(object sender, EventArgs e)
