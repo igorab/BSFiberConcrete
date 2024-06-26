@@ -114,9 +114,12 @@ namespace BSFiberConcrete.DeformationDiagram
                     Rt1 = Rt_n * 0.9;
                 }
                 e1 = R1 / E;
-               et1 = Rt1 / Et;
+                et1 = Rt1 / Et;
 
-
+                e0 = e1 + 0.002;
+                et0 = et1 + 0.002;
+                //e0 = 2 * (e0 - e1) + e1;
+                //e0 = R_n * 1.5 / E;
             }
 
             if (typeMaterial == BSHelper.Concrete)
