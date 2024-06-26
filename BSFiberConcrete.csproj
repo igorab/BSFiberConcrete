@@ -340,6 +340,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BSFiberMain.resx">
       <DependentUpon>BSFiberMain.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="BSFiberSetup.resx">
       <DependentUpon>BSFiberSetup.cs</DependentUpon>

@@ -33,6 +33,8 @@ namespace BSFiberConcrete
         
         public const string FiberConcrete = "Фибробетон";
 
+        public const string Rebar = "Арматура"; // TO Do утвердить нейминг константы
+
         public const string TwoLineDiagram = "Двухлинейная";
 
         public const string ThreeLineDiagram = "Трехлинейная";
