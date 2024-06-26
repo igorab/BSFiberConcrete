@@ -111,7 +111,7 @@ namespace BSFiberConcrete
             {
                 Debug.Assert(true, "Превышен предел прочности (временное сопротивление) ");
                 _res = -1;
-                sgm = Rs;
+                sgm = 0;//  Rs;
             }
 
             return sgm;

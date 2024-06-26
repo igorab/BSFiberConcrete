@@ -433,11 +433,12 @@ namespace BSFiberConcrete
 
             ArraysClear();
 
-            // бетон
+            // бетон, фибробетон
             for (int i = 0; i < Zfby.Count; i++) 
             {
-                double _e = eps_0 + ky * Zfby[i] + kx * Zfbx[i];
-                epsilon_fb[i] = _e;
+                double eps = eps_0 + ky * Zfby[i] + kx * Zfbx[i];
+
+                epsilon_fb[i] = eps;
 
                 double sgm = 0;
                 if (DeformDiagram == DeformDiagramType.D2Linear)
@@ -446,7 +447,7 @@ namespace BSFiberConcrete
                     {
                         case DeformMaterialType.Fiber: 
                         case DeformMaterialType.Beton:                        
-                            sgm = MatFiber.Eps_StDiagram2L(_e, out int _res);
+                            sgm = MatFiber.Eps_StDiagram2L(eps, out int _res);
                             break;                        
                     }
                 }
@@ -456,14 +457,14 @@ namespace BSFiberConcrete
                     {
                         case DeformMaterialType.Fiber:
                         case DeformMaterialType.Beton:
-                            sgm = MatFiber.Eps_StateDiagram3L(Math.Abs(_e), out int _res);
+                            sgm = MatFiber.Eps_StateDiagram3L(eps, out int _res);
                             break;
                     }
                 }
                 
-                sigma_fb[i] = Math.Sign(_e) * sgm;
+                sigma_fb[i] = Math.Sign(eps) * sgm;
 
-                double nju_b = sigma_fb[i] / (MatFiber.Eb * _e);
+                double nju_b = sigma_fb[i] / (MatFiber.Eb * eps);
 
                 Nju_fb[i] = nju_b;
             }
@@ -592,9 +593,11 @@ namespace BSFiberConcrete
         /// </summary>
         /// <returns>Успешно</returns>        
         public bool Calculate()
-        {
+        {            
             int cIters = 10000;
-
+            var zero3x3 = new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
+            var Zeros3x3 = DenseMatrix.OfArray(zero3x3);
+            
             if (triAreas.Count > 0)
             {
                 m_BElem = CalculationScheme(true);
@@ -615,37 +618,55 @@ namespace BSFiberConcrete
 
             InitElementParams();
 
+            bool doNextIter = true;
+
             for (int iter = 0; iter < cIters; iter++)
             {
-                D = DenseMatrix.OfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } });
-                Db = new double[I3 + 1, I3 + 1];
-                Ds = new double[I3 + 1, I3 + 1];
-                
-                for (int i = 0; i < qty_I; i++)
-                {
-                    Calc_D(i);
-                }
-
-                if (_A_s > 0)
-                {
-                    for (int j = 0; j < qty_J; j++)
-                    {
-                        Calc_D(-1, j);
-                    }
-                }
-
-                var M = Matrix<double>.Build;
-                D = M.DenseOfArray(Db);
-
-                var _Ds = M.DenseOfArray(Ds);
-                D = D.Add(_Ds);
-              
-                Calc_MxMyN();
-
-                bool doNextIter = CalcResult();
-                
-                if (!doNextIter) 
+                if (!doNextIter)
                     break;
+
+                try
+                {
+                    D = DenseMatrix.OfArray(zero3x3);
+                    Db = new double[I3 + 1, I3 + 1];
+                    Ds = new double[I3 + 1, I3 + 1];
+
+                    for (int i = 0; i < qty_I; i++)
+                    {
+                        Calc_D(i);
+                    }
+
+                    if (_A_s > 0)
+                    {
+                        for (int j = 0; j < qty_J; j++)
+                        {
+                            Calc_D(-1, j);
+                        }
+                    }
+
+                    MatrixBuilder<double> M = Matrix<double>.Build;
+                    D = M.DenseOfArray(Db);
+
+                    var _Ds = M.DenseOfArray(Ds);
+                    D = D.Add(_Ds);
+
+                    if (D.Equals(Zeros3x3))
+                    {
+                        break;
+                    }
+
+                    Calc_MxMyN();
+
+                    doNextIter = CalcResult();                    
+                }
+                catch
+                {
+
+                }
+                finally
+                {
+                    doNextIter = false;
+                }
             }
 
             e_fb_calc = epsilon_fb.AbsoluteMaximum();

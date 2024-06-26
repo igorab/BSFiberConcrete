@@ -285,5 +285,36 @@ namespace BSFiberConcrete.Section
                 MessageBox.Show(_e.Message);
             }
         }
+
+        /// <summary>
+        /// Добавить стержень
+        /// </summary>        
+        private void btnAddRod_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                RodBS.AddNew();
+            }
+            catch (Exception _e)
+            {
+                MessageBox.Show(_e.Message);
+            }
+        }
+
+
+        /// <summary>
+        /// Удалить стержень
+        /// </summary>        
+        private void btnDelRod_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                RodBS.RemoveAt(RodBS.Count - 1);
+            }
+            catch (Exception _e)
+            {
+                MessageBox.Show(_e.Message);
+            }
+        }
     }
 }

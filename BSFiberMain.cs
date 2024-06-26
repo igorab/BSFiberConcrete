@@ -110,7 +110,8 @@ namespace BSFiberConcrete
                 cmbFib_i.SelectedIndex = 0;
                 comboBetonType.SelectedIndex = 0;
                 cmbRebarClass.SelectedIndex = 1;
-
+                cmbDeformDiagram.SelectedIndex = (int)DeformDiagramType.D2Linear;
+                
                 m_Iniv = m_BSLoadData.ReadInitFromJson();
                 List<Efforts> eff = Lib.BSData.LoadEfforts();
                 if (eff.Count > 0)
@@ -1483,6 +1484,7 @@ namespace BSFiberConcrete
             m_InitBeamSectionsGeometry[index] = beamSectionGeometry;
             
         }
+
         //
         private void CloseFiberMainForm(object sender, FormClosingEventArgs e)
         {
@@ -1498,12 +1500,7 @@ namespace BSFiberConcrete
                 MessageBox.Show(_e.Message);
             }
         }
-
-        private void tabNDM_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
+        
         private void numEs_ValueChanged(object sender, EventArgs e)
         {
             labelEsMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numEs.Value));
