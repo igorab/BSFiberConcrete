@@ -24,9 +24,15 @@ namespace BSFiberConcrete.Section
         }
 
         public BeamSection m_BeamSection { get; set; }
+
+        // Точки на диаграмме для отрисовки стержней арматуры  
         private List<PointF> m_RodPoints;
 
+        // Точки на диаграмме, для отрисовки сечения        
         private List<PointF> PointsSection;
+
+        // точки на диаграмме для отображения отверстия в сечении
+        private List<PointF> InnerPoints;
 
         public PointF Center { get; set; }
 
@@ -45,6 +51,8 @@ namespace BSFiberConcrete.Section
             InitializeComponent();
 
             Center = new PointF(0, 0);
+
+            InnerPoints = new List<PointF>();
 
             m_BeamSection = BeamSection.Rect;
             w = 0;
@@ -90,15 +98,19 @@ namespace BSFiberConcrete.Section
                 int amountOfEdges = 40;
 
                 double radius =  Sz[1];
-                double r2 = Sz[0];
+                double inner_radius = Sz[0];
 
                 for (int k = 0; k <= amountOfEdges; k++)
                 {
+                    // внешняя граница
                     double x = Center.X + radius * Math.Cos(k * 2 * Math.PI / amountOfEdges);
                     double y = Center.Y + radius * Math.Sin(k * 2 * Math.PI / amountOfEdges);
-
                     PointsSection.Add(new PointF((float)x, (float)y));
-
+                    // отверстие
+                    x = Center.X + inner_radius * Math.Cos(k * 2 * Math.PI / amountOfEdges);
+                    y = Center.Y + inner_radius * Math.Sin(k * 2 * Math.PI / amountOfEdges);
+                    InnerPoints.Add(new PointF((float)x, (float)y));
+                    // арматура
                     m_RodPoints = new List<PointF>() { new PointF(0, -(h - 4)) };
                 }
             }
@@ -140,12 +152,17 @@ namespace BSFiberConcrete.Section
                 rod_points.Add(new PointF((float)_rod.CG_X, (float)_rod.CG_Y) );
             }
 
-
             Series serieSection = chart.Series[0];
             for (int j = 0; j < points.Count; j++)
             {
                 var pt = points[j];
                 serieSection.Points.Add(new DataPoint(pt.X, pt.Y));
+            }
+
+            Series serieInnerSection = chart.Series[2];
+            foreach (var p in InnerPoints)
+            {                
+                serieInnerSection.Points.Add(new DataPoint(p.X, p.Y));
             }
 
             Series serieRods = chart.Series[1];

@@ -50,8 +50,8 @@ namespace BSFiberConcrete
             Dictionary<string, double> geom = base.GeomParams();
             geom.Add(DN(typeof(BSFibCalc_IBeam), "bf"), bf);
             geom.Add(DN(typeof(BSFibCalc_IBeam), "hf"), hf);
-            geom.Add(DN(typeof(BSFibCalc_IBeam), "hw"), hw);
             geom.Add(DN(typeof(BSFibCalc_IBeam), "bw"), bw);
+            geom.Add(DN(typeof(BSFibCalc_IBeam), "hw"), hw);            
             geom.Add(DN(typeof(BSFibCalc_IBeam), "b1f"), b1f);
             geom.Add(DN(typeof(BSFibCalc_IBeam), "h1f"), h1f);
             return geom;

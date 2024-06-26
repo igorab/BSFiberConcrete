@@ -146,6 +146,7 @@ namespace BSFiberConcrete
 
         public Dictionary<string, double> Reinforcement { get; internal set; }
         public DeformDiagramType DeformDiagram { get; internal set; }
+        public DeformMaterialType DeformMaterialType { get; set; }
 
         /// <summary>
         /// 
@@ -437,9 +438,29 @@ namespace BSFiberConcrete
             {
                 double _e = eps_0 + ky * Zfby[i] + kx * Zfbx[i];
                 epsilon_fb[i] = _e;
+
+                double sgm = 0;
+                if (DeformDiagram == DeformDiagramType.D2Linear)
+                {                 
+                    switch (DeformMaterialType)
+                    {
+                        case DeformMaterialType.Fiber: 
+                        case DeformMaterialType.Beton:                        
+                            sgm = MatFiber.Eps_StDiagram2L(_e, out int _res);
+                            break;                        
+                    }
+                }
+                else if (DeformDiagram == DeformDiagramType.D3Linear)
+                {                    
+                    switch (DeformMaterialType)
+                    {
+                        case DeformMaterialType.Fiber:
+                        case DeformMaterialType.Beton:
+                            sgm = MatFiber.Eps_StateDiagram3L(Math.Abs(_e), out int _res);
+                            break;
+                    }
+                }
                 
-                // двухлинейная диаграмма для бетона
-                double sgm = MatFiber.Eps_StD(_e, out int _res);
                 sigma_fb[i] = Math.Sign(_e) * sgm;
 
                 double nju_b = sigma_fb[i] / (MatFiber.Eb * _e);
@@ -456,7 +477,7 @@ namespace BSFiberConcrete
                 double sgm = 0;
                 if (DeformDiagram == DeformDiagramType.D2Linear)
                 {
-                    sgm = MatRebar.Eps_StD(Math.Abs(_e), out int _res);
+                    sgm = MatRebar.Eps_StDiagram2L(Math.Abs(_e), out int _res);
                 }
                 else if (DeformDiagram == DeformDiagramType.D3Linear)
                 {
@@ -524,6 +545,11 @@ namespace BSFiberConcrete
 
         private void AddToResult(string _attr, double _value)
         {
+            if (Math.Abs(_value) < 10e-15 || Math.Abs(_value) > 10e15)
+            {
+                return;
+            }
+
             Res.Add(BSFiberCalculation.DsplN(typeof(BSFiberCalc_Deform), _attr), _value);
         }
 

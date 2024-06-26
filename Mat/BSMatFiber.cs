@@ -172,7 +172,7 @@ namespace BSFiberConcrete
         /// </summary>
         /// <param name="_e">Деформация</param>
         /// <returns>Напряжение</returns>        
-        public double Eps_StD(double _e, out int _res)
+        public double Eps_StDiagram2L(double _e, out int _res)
         {
             double sgm = 0;
             _res = 0;
