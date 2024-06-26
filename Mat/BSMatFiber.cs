@@ -1,5 +1,7 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace BSFiberConcrete
 {
@@ -134,7 +136,7 @@ namespace BSFiberConcrete
         public static double omega = 0.8;
 
         /// <summary>
-        /// Диаграмма состояния растяжения-сжатия фибробетона 
+        /// Диаграмма состояния растяжения-сжатия фибробетона, в обозначениях СП360 
         /// </summary>
         /// <param name="_eps">Деформация</param>
         /// <returns>Напряжение</returns>       
@@ -143,26 +145,57 @@ namespace BSFiberConcrete
             _res = 0;
             if (Efb == 0 || Rfbt == 0 || Rfbt2 == 0 || Rfbt3 == 0)
                 return 0;
-                        
-            double e_fbt0 = Rfbt / Efb;
-            double e_fbt  = e_fbt0;
-            double e_fbt1 = e_fbt0 + 0.0001;
-            double e_fbt2 = 0.004;
-            double e_fbt3 = (Rfbt2 != 0) ? 0.02 - 0.0125 * (Rfbt3 / Rfbt2 - 0.5) : 0;
 
-            double sigma_fbt = 0;
-            if (e_fbt1 < e_fbt && e_fbt <= e_fbt2)
+            double sigma;
+
+            Func<double> TensileStrength = delegate()
             {
-                if (Rfbt != 0)
+                double e_fbt = _eps;
+
+                double e_fbt0 = Rfbt / Efb;
+                double e_fbt1 = e_fbt0 + 0.0001;
+                double e_fbt2 = 0.004;
+                double e_fbt3 = (Rfbt2 != 0) ? 0.02 - 0.0125 * (Rfbt3 / Rfbt2 - 0.5) : 0;
+                double sigma_fbt = 0;
+
+                if (0 <= e_fbt && e_fbt <= e_fbt0)
+                {
+                    sigma_fbt = Efb * e_fbt;
+                }
+                else if (e_fbt0 < e_fbt && e_fbt <= e_fbt1)
+                {
+                    sigma_fbt = Rfbt;
+                }
+                else if (e_fbt1 < e_fbt && e_fbt <= e_fbt2)
+                {                    
                     sigma_fbt = Rfbt * (1 - (1 - Rfbt2 / Rfbt) * (e_fbt - e_fbt1) / (e_fbt2 - e_fbt1));
-            }
-            else if (e_fbt1 < e_fbt && e_fbt <= e_fbt3)
-            {
-                if (Rfbt2 != 0)
+                }
+                else if (e_fbt1 < e_fbt && e_fbt <= e_fbt3)
+                {                   
                     sigma_fbt = Rfbt * (1 - (1 - Rfbt3 / Rfbt2) * (e_fbt - e_fbt2) / (e_fbt3 - e_fbt2));
+                }
+                else if (e_fbt > e_fbt3)
+                {
+                    Debug.Assert(true, "Превышено остаточное сопротиваление");
+
+                    sigma_fbt = 0;
+                }
+
+                return sigma_fbt;
+
+            };
+            
+            // Знаки НЕ соответствуют диаграмме деформирования фибробетона в СП360
+            if (_eps > 0) // растягивающие напряжения:  
+            {
+                sigma = TensileStrength();
+            }
+            else // сжимающие напряжения   
+            {                
+                sigma = 0;
             }
 
-            return sigma_fbt;
+            return sigma;
         }
 
         /// <summary>
@@ -195,7 +228,7 @@ namespace BSFiberConcrete
             {
                 Debug.Assert(true, "Превышен предел прочности (временное сопротивление) ");
 
-                sgm = R_fb;
+                sgm = 0;// R_fb;
             }
 
             return sgm;
