@@ -65,23 +65,28 @@ namespace BSFiberConcrete
         public double Eps_StateDiagram3L(double e_s, out int _res)
         {
             _res = 0;
-            double sigma_s = Rs;
-            double sigma_s1 = 0.6 * Rs;
-            e_s0 = 1;
+            double sigma_s = 0;
+
+            double sigma_s1 = 0.6 * Rs;            
             double e_s1 = sigma_s1 / Es;
             e_s2 = 1;
 
             if (0 <= e_s && e_s <= e_s1)
             {
-                sigma_s = Es * e_s;
+                sigma_s = Rs * e_s;
             }
-            else if (e_s1 < e_s && e_s < e_s0)
+            else if (e_s1 <= e_s && e_s <= e_s2)
             {
                 sigma_s = ((1 - sigma_s1 / Rs) * (e_s - e_s1) / (e_s0 - e_s1) + sigma_s1 / Rs) * Rs;
             }
             else if (e_s0 <= e_s && e_s <= e_s2)
             {
                 sigma_s = Rs;
+            }
+            else if (e_s > e_s2)
+            {
+                Debug.Assert(true, "Превышена деформация арматуры");
+                sigma_s = 0;
             }
 
             return sigma_s;

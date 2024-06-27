@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using MathNet.Numerics;
 using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics.LinearAlgebra.Double;
+using Microsoft.VisualBasic;
 using TriangleNet.Geometry;
 
 namespace BSFiberConcrete
@@ -481,7 +482,7 @@ namespace BSFiberConcrete
                     sgm = MatRebar.Eps_StDiagram2L(Math.Abs(_e), out int _res);
                 }
                 else if (DeformDiagram == DeformDiagramType.D3Linear)
-                {
+                {                    
                     sgm = MatRebar.Eps_StateDiagram3L(Math.Abs(_e), out int _res);
                 }
 
@@ -659,13 +660,14 @@ namespace BSFiberConcrete
 
                     doNextIter = CalcResult();                    
                 }
-                catch
+                catch (Exception ex) 
                 {
-
+                    var ex_type = ex.GetType().Name;
+                    MessageBox.Show($"Исключение: {ex.Message} Тип: {ex_type}  Итерация: {iter}   Метод: {ex.TargetSite} Трассировка стека: {ex.StackTrace}");
+                    doNextIter = false;
                 }
                 finally
-                {
-                    doNextIter = false;
+                {                    
                 }
             }
 
