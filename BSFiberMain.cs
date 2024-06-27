@@ -1514,5 +1514,16 @@ namespace BSFiberConcrete
         {
 
         }
+
+        private void numRsc_ValueChanged(object sender, EventArgs e)
+        {
+            labelRsсMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numRsc.Value));
+            
+        }
+
+        private void numEpsilonS1_ValueChanged_1(object sender, EventArgs e)
+        {
+            numEpsilonS0.Value = numEpsilonS1.Value + 0.002m;
+        }
     }
 }
