@@ -31,8 +31,8 @@ namespace BSBeamCalculator
                 //tableLayoutPanel1.ColumnStyles[0].SizeType = SizeType.Absolute;
                 //tableLayoutPanel1.ColumnStyles[0].Width = 50;
 
-                Controller.load = "Concentrated";
-                Controller.support = "Fixed-Fixed";
+                ControllerBeamDiagram.load = "Concentrated";
+                ControllerBeamDiagram.support = "Fixed-Fixed";
 
         }
 
@@ -63,18 +63,18 @@ namespace BSBeamCalculator
                 //double supportBeam = 
                 //double loadBeam = 
 
-                //Controller.support =
-                //Controller.load =
-                Controller.l = lengthBeam;
-                Controller.f = force;
-                Controller.x1 = startPointForce;
-                Controller.x2 = 0;
+                //ControllerBeamDiagram.support =
+                //ControllerBeamDiagram.load =
+                ControllerBeamDiagram.l = lengthBeam;
+                ControllerBeamDiagram.f = force;
+                ControllerBeamDiagram.x1 = startPointForce;
+                ControllerBeamDiagram.x2 = 0;
 
                 // запуск расчета
-                Controller.RunCalculation();
+                ControllerBeamDiagram.RunCalculation();
 
                 // Вывод результатов расчета
-                DiagramResult result = Controller.result;
+                DiagramResult result = ControllerBeamDiagram.result;
                 chart1.Series.Add("Series1");
                 chart1.Series["Series1"].BorderWidth = 4;
                 chart1.ChartAreas[0].AxisX.Minimum = 0;
@@ -135,7 +135,7 @@ namespace BSBeamCalculator
         {
             //numericUpDown4.Enabled = true;
             numericUpDown3.Enabled = false;
-            Controller.load = "Uniformly-Distributed";
+            ControllerBeamDiagram.load = "Uniformly-Distributed";
         }
 
         private void radioButton11_CheckedChanged(object sender, EventArgs e)
@@ -143,7 +143,7 @@ namespace BSBeamCalculator
             //numericUpDown4.Enabled = false;
             //numericUpDown4.Value = 0;
             numericUpDown3.Enabled = true;
-            Controller.load = "Concentrated";
+            ControllerBeamDiagram.load = "Concentrated";
         }
 
         //void listBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -154,32 +154,32 @@ namespace BSBeamCalculator
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
-            Controller.support = "Fixed-Fixed";
+            ControllerBeamDiagram.support = "Fixed-Fixed";
         }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
-            Controller.support = "Fixed-No";
+            ControllerBeamDiagram.support = "Fixed-No";
         }
 
         private void radioButton3_CheckedChanged(object sender, EventArgs e)
         {
-            Controller.support = "Pinned-Movable";
+            ControllerBeamDiagram.support = "Pinned-Movable";
         }
 
         private void radioButton4_CheckedChanged(object sender, EventArgs e)
         {
-            Controller.support = "Fixed-Movable";
+            ControllerBeamDiagram.support = "Fixed-Movable";
         }
 
         private void radioButton5_CheckedChanged(object sender, EventArgs e)
         {
-            Controller.support = "No-Fixed";
+            ControllerBeamDiagram.support = "No-Fixed";
         }
 
         private void radioButton6_CheckedChanged(object sender, EventArgs e)
         {
-            Controller.support = "Movable-Fixed";
+            ControllerBeamDiagram.support = "Movable-Fixed";
         }
     }
 }

@@ -14,10 +14,15 @@ namespace BSBeamCalculator
 {
     public class BeamDiagram
     {
-        
+        /// <summary>
+        /// величина нагрузки
+        /// </summary>
         protected double _force;
         protected double _startPointForce;
         protected double _endPointForce;
+        /// <summary>
+        /// Длинна балки
+        /// </summary>
         protected double _beamLength;
         //protected string _supportBeamType;
         //protected string _loadBeamTupe;
@@ -25,16 +30,12 @@ namespace BSBeamCalculator
 
         public BeamDiagram(string supportType, string loadype, double length, double force, double x1, double x2)
         {
-            bool a = SimpleBeamDiagramCase.supportBeamTypeValue.Contains(supportType);
-            bool b = SimpleBeamDiagramCase.loadBeamTypeValue.Contains(loadype);
 
             //// проверка на корректность типа опор и типа нагрузки
             //if (!SimpleBeamDiagramCase.supportBeamTypeValue.Contains(supportType)
             //    && !SimpleBeamDiagramCase.loadBeamTypeValue.Contains(loadype))
             //{ throw new Exception("Программная ошибка. Неккорректно определены характеристики балки"); }
 
-            // to do
-            // дописать проверки
             if (loadype == "Concentrated" && x1 > length )
             { throw new Exception("Пользовательская ошибка. Значение 'Позиция x' не должно превышать 'Длина'."); }
 
@@ -49,8 +50,6 @@ namespace BSBeamCalculator
 
         public DiagramResult CalculateBeamDiagram()
         {
-
-
             //List<double> x, double length, double c1, double c2, double F
 
             // кол-во точек
@@ -65,9 +64,6 @@ namespace BSBeamCalculator
 
             return result;
         }
-
-
-
     }
 
 
@@ -349,63 +345,4 @@ namespace BSBeamCalculator
             return new double[4][] { xQ, Q, xM, M };
         }
     }
-
-    public class DiagramResult 
-    {
-        public double[][] pointQ;
-        public double[][] pointM;
-        public double maxM;
-        public double minM;
-        public double maxAbsQ;
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="values_xQ_xM">4 мерный вложенный массив
-        /// 0 - значения x для Q, 1 - значения Q; 2 - значения x для M, 3 - значения M  
-        /// </param>
-        public DiagramResult(double[][] values_xQ_xM)
-        {
-            //pointQ = new double[,] { values_xQ_xM[0], values_xQ_xM[1] }
-            pointQ = new double[][]{
-                values_xQ_xM[0],
-                values_xQ_xM[1]
-            };
-            pointM = new double[][]{
-                values_xQ_xM[2],
-                values_xQ_xM[3]
-            };
-            //maxPointQ = FindeMaxAbsValue(new double[][] { values_xQ_xM[0], values_xQ_xM[1] });
-            //maxPointM= FindeMaxAbsValue(new double[][] { values_xQ_xM[2], values_xQ_xM[3] });
-            List<double> maxAbsPointQ = FindeMaxAbsValue(new double[][] { values_xQ_xM[0], values_xQ_xM[1] });
-            maxAbsQ = maxAbsPointQ[1];
-            maxM = values_xQ_xM[3].Max();
-            minM = values_xQ_xM[3].Min();
-
-        }
-
-        /// <summary>
-        /// Функция определяет максимальное (по модолю) значение во втором массиве
-        /// и возвращает пару x_value[i][0] x_value[i][1], i - индекс максимального значения
-        /// </summary>
-        /// <param name="x_value"></param>
-        /// <returns></returns>
-        public static List<double> FindeMaxAbsValue(double[][]x_value)
-        {
-            List<double>  maxAbsPoint = new List<double>();
-            int indMaxAbs_Value;
-            double max_value = x_value[1].Max();
-            double min_value = x_value[1].Min();
-            if (max_value >= Math.Abs(min_value))
-            { indMaxAbs_Value = x_value[1].ToList().IndexOf(max_value); }
-            else 
-            { indMaxAbs_Value = x_value[1].ToList().IndexOf(min_value); }
-            maxAbsPoint = new List<double>() { x_value[0][indMaxAbs_Value], x_value[1][indMaxAbs_Value] };
-
-            return maxAbsPoint;
-        }
-
-    }
-
 }

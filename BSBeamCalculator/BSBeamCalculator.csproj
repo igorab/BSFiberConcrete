@@ -54,6 +54,7 @@
     <Compile Include="BeamCalculator.Designer.cs">
       <DependentUpon>BeamCalculator.cs</DependentUpon>
     </Compile>
+    <Compile Include="controller\ControllerBeamDiagram.cs" />
     <Compile Include="model\BeamDiagram.cs" />
     <Compile Include="BeamCalculatorRun.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -70,6 +71,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -86,5 +88,6 @@
   <ItemGroup>
     <None Include="Resources\Жестко-защемленная балка.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

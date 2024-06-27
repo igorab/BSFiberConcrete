@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="BSBeamCalculator.BeamCalculator" Collapsed="true">
+    <Position X="0.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>/wAAABCQgCAAABAAAACAAAASYAAYAAACAHQAAQQAgDI=</HashCode>
+      <FileName>BeamCalculator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BSBeamCalculator.BeamCalculatorRun" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>BeamCalculatorRun.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BSBeamCalculator.ControllerBeamDiagram">
+    <Position X="3" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAABAAAAAAAAQAAAACQBAAIAAAAAgA=</HashCode>
+      <FileName>controller\ControllerBeamDiagram.cs</FileName>
+      <NewMemberFileName>BeamCalculatorRun.cs</NewMemberFileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BSBeamCalculator.BeamDiagram">
+    <Position X="8" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAABAAAAIQAAQAAAAAAAAAAAAABAAAAAAA=</HashCode>
+      <FileName>model\BeamDiagram.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BSBeamCalculator.SimpleBeamDiagramCase">
+    <Position X="10.25" Y="0.5" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAYAAAAAAgAAAAAABgAAABAAAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>model\BeamDiagram.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BSBeamCalculator.DiagramResult">
+    <Position X="5.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAACAAAAAAAAAAAAAAAAAAABAAAAAAAAAAgAAQAA=</HashCode>
+      <FileName>controller\ControllerBeamDiagram.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
