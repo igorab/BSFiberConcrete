@@ -59,31 +59,36 @@ namespace BSFiberConcrete
         /// <summary>
         /// Диграмма состояния трехлинейная
         /// </summary>
-        /// <param name="e_s">отн деформация </param>
+        /// <param name="_e_s">отн деформация </param>
         /// <param name="_res"></param>
         /// <returns>Напряжение</returns>
-        public double Eps_StateDiagram3L(double e_s, out int _res)
+        public double Eps_StateDiagram3L(double _e_s, out int _res)
         {
             _res = 0;
             double sigma_s = 0;
 
-            double sigma_s1 = 0.6 * Rs;            
-            double e_s1 = sigma_s1 / Es;
-            e_s2 = 1;
+            double sigma_s1 = 0.9 * Rs;
+            double sigma_s2 = 1.1 * Rs;
 
-            if (0 <= e_s && e_s <= e_s1)
+            double e_s0 = Rs / Es + 0.002;
+
+            double e_s1 = sigma_s1 / Es;
+
+            //e_s2 = 1;
+
+            if (0 <= _e_s && _e_s <= e_s1)
             {
-                sigma_s = Rs * e_s;
+                sigma_s = Rs * _e_s;
             }
-            else if (e_s1 <= e_s && e_s <= e_s2)
+            else if (e_s1 <= _e_s && _e_s <= e_s2)
             {
-                sigma_s = ((1 - sigma_s1 / Rs) * (e_s - e_s1) / (e_s0 - e_s1) + sigma_s1 / Rs) * Rs;
+                sigma_s = ((1 - sigma_s1 / Rs) * (_e_s - e_s1) / (e_s0 - e_s1) + sigma_s1 / Rs) * Rs;
             }
-            else if (e_s0 <= e_s && e_s <= e_s2)
+            else if (e_s0 <= _e_s && _e_s <= e_s2)
             {
                 sigma_s = Rs;
             }
-            else if (e_s > e_s2)
+            else if (_e_s > e_s2)
             {
                 Debug.Assert(true, "Превышена деформация арматуры");
                 sigma_s = 0;
