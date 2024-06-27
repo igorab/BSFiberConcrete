@@ -35,7 +35,26 @@ namespace BSFiberConcrete
         /// </summary>
         public double Nju_s { get; set; }
 
-        public double Eps_s_ult { get; set; }
+        /// <summary>
+        /// СП 6.1.25
+        /// </summary>
+        /// <param name="diagramType">физический или условный предел текучести </param>
+        /// <returns></returns>
+        public double Eps_s_ult(DeformDiagramType diagramType) 
+        { 
+            double esult = 0;
+
+            if (diagramType == DeformDiagramType.D2Linear)
+            {
+                esult = 0.025;
+            }
+            else if (diagramType == DeformDiagramType.D3Linear)
+            {
+                esult = 0.015;
+            }
+
+            return esult;
+        }
 
         /// <summary>
         /// Значения относительных деформаций арматуры для арматуры с физическим пределом текучести СП 63 п.п. 6.2.11
@@ -60,7 +79,7 @@ namespace BSFiberConcrete
         /// Диграмма состояния трехлинейная
         /// </summary>
         /// <param name="_e_s">отн деформация </param>
-        /// <param name="_res"></param>
+        /// <param name="_res">СП 63.13 6.2.15 </param>
         /// <returns>Напряжение</returns>
         public double Eps_StateDiagram3L(double _e_s, out int _res)
         {
@@ -83,11 +102,11 @@ namespace BSFiberConcrete
             else if (e_s1 <= _e_s && _e_s <= e_s2)
             {
                 sigma_s = ((1 - sigma_s1 / Rs) * (_e_s - e_s1) / (e_s0 - e_s1) + sigma_s1 / Rs) * Rs;
-            }
-            else if (e_s0 <= _e_s && _e_s <= e_s2)
-            {
-                sigma_s = Rs;
-            }
+
+                if (sigma_s > sigma_s2)
+                    sigma_s = sigma_s2;
+
+            }            
             else if (_e_s > e_s2)
             {
                 Debug.Assert(true, "Превышена деформация арматуры");

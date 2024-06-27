@@ -190,6 +190,9 @@ namespace BSFiberConcrete
                 num_a.Value = (decimal)m_Iniv["_a"];
                 num_a1.Value = (decimal)m_Iniv["_a_1"];
 
+                numEps_fb2.Value = 0.0042M;
+                numEps_fbt3.Value = 0.006M;
+
                 CalcTypeShow();
             }
             catch (Exception _ex)
@@ -992,8 +995,8 @@ namespace BSFiberConcrete
                     e_b1_red = c_eps_b1_red,
                     e_b1 = c_eps_b1,
                     e_b2 = c_eps_b2,
-                    Eps_fb_ult = 0.002,
-                    Eps_fbt_ult = 0.0001,
+                    Eps_fb_ult = (double)numEps_fb_ult.Value,
+                    Eps_fbt_ult = (double) numEps_fbt_ult.Value,
                 };
 
                 // задать свойства бетона
@@ -1524,6 +1527,22 @@ namespace BSFiberConcrete
         private void numEpsilonS1_ValueChanged_1(object sender, EventArgs e)
         {
             numEpsilonS0.Value = numEpsilonS1.Value + 0.002m;
+        }
+
+        /// <summary>
+        /// СП360 6.1.25
+        /// </summary>        
+        private void numEps_fbt3_ValueChanged(object sender, EventArgs e)
+        {
+            numEps_fbt_ult.Value = numEps_fbt3.Value;
+        }
+
+        /// <summary>
+        /// СП 8.1.30
+        /// </summary>        
+        private void numEps_fb2_ValueChanged(object sender, EventArgs e)
+        {
+            numEps_fb_ult.Value = numEps_fb2.Value;
         }
     }
 }

@@ -84,7 +84,7 @@ namespace BSFiberConcrete
         public double Ky { get; private set; }
 
         [DisplayName("Максимальная относительная деформация")]
-        public double e_fb_calc { get; private set; }
+        public double e_fb_max { get; private set; }
 
         // жесткостные характеристики
         private const int I1 = 0, I2 = 1, I3 = 2;
@@ -140,7 +140,7 @@ namespace BSFiberConcrete
                     { "e_fb_ult", m_Fiber.Eps_fb_ult },
                     { "Rs, кгс/см2", m_Rod.Rs }, 
                     { "Es, кгс/см2", m_Rod.Es }, 
-                    { "e_s_ult", m_Rod.Eps_s_ult }
+                    { "e_s_ult", m_Rod.Eps_s_ult(DeformDiagram) }
                 };
             }
         }
@@ -544,7 +544,7 @@ namespace BSFiberConcrete
             var y = m.Solve(v);
 
         }
-
+        
         private void AddToResult(string _attr, double _value)
         {
             if (Math.Abs(_value) < 10e-15 || Math.Abs(_value) > 10e15)
@@ -552,7 +552,15 @@ namespace BSFiberConcrete
                 return;
             }
 
-            Res.Add(BSFiberCalculation.DsplN(typeof(BSFiberCalc_Deform), _attr), _value);
+            try
+            {
+                Res.Add(BSFiberCalculation.DsplN(typeof(BSFiberCalc_Deform), _attr), _value);
+            }
+            catch (Exception _E)
+            {
+                MessageBox.Show(_E.Message);
+            }
+
         }
 
 
@@ -671,28 +679,29 @@ namespace BSFiberConcrete
                 }
             }
 
-            e_fb_calc = epsilon_fb.AbsoluteMaximum();
+            e_fb_max = epsilon_fb.AbsoluteMaximum();
 
             AddToResult("eps_0", eps_0);
             AddToResult("rx", rx);
             AddToResult("Kx", Kx);
             AddToResult("ry", ry);
             AddToResult("Ky", Ky);
-            AddToResult("e_fb_calc", e_fb_calc);
+            AddToResult("e_fb_max", e_fb_max);
             
-            bool res_fb = e_fb_calc <=  m_Fiber.Eps_fb_ult;            
+            bool res_fb = e_fb_max <=  m_Fiber.Eps_fb_ult;            
             if (res_fb)
-                Msg.Add("Проверка сечения по фибробетону пройдена");            
+                Msg.Add( string.Format("Проверка сечения по фибробетону пройдена. e_fb_max={0} <= e_fb_ult={1} ", Math.Round(e_fb_max, 6), m_Fiber.Eps_fb_ult));            
             else
-                Msg.Add("Не пройдена проверка сечения по фибробетону");
+                Msg.Add(string.Format("Не пройдена проверка сечения по фибробетону. e_fb_max={0} <= e_fb_ult={1} ", Math.Round(e_fb_max, 6), m_Fiber.Eps_fb_ult));
 
-            double e_s_calc = epsilon_s.AbsoluteMaximum();
-
-            bool res_s = e_s_calc <= m_Rod.Eps_s_ult;
+            double e_s_max = epsilon_s.AbsoluteMaximum();
+            double e_s_ult = m_Rod.Eps_s_ult(DeformDiagram);
+            bool res_s = e_s_max <= e_s_ult;
+            
             if (res_s)
-                Msg.Add("Проверка сечения по арматуре пройдена");
+                Msg.Add( string.Format("Проверка сечения по арматуре пройдена. e_s_max={0} <= e_s_ult={1} ", Math.Round(e_s_max, 6), e_s_ult));
             else
-                Msg.Add("Не пройдена проверка сечения по арматуре");
+                Msg.Add(string.Format("Не пройдена проверка сечения по арматуре. e_s_max={0} <= e_s_ult={1}", Math.Round(e_s_max,6), e_s_ult));
 
             return true;
         }
