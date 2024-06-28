@@ -18,7 +18,7 @@ namespace BSBeamCalculator
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new BeamCalculatorForm1());
+                Application.Run(new BeamCalculatorForm());
             }
         }
 

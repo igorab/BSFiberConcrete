@@ -60,21 +60,12 @@
     <Compile Include="BeamCalculatorForm.Designer.cs">
       <DependentUpon>BeamCalculatorForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="BeamCalculatorForm1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="BeamCalculatorForm1.Designer.cs">
-      <DependentUpon>BeamCalculatorForm1.cs</DependentUpon>
-    </Compile>
     <Compile Include="controller\ControllerBeamDiagram.cs" />
     <Compile Include="model\BeamDiagram.cs" />
     <Compile Include="BeamCalculatorRun.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="BeamCalculatorControl.resx">
       <DependentUpon>BeamCalculatorControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="BeamCalculatorForm1.resx">
-      <DependentUpon>BeamCalculatorForm1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
