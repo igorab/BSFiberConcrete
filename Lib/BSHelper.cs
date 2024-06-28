@@ -40,6 +40,16 @@ namespace BSFiberConcrete
         public const string ThreeLineDiagram = "Трехлинейная";
 
         public const string IgnoreHumidity = "Не учитывать";
+        
+        /// <summary>
+        /// физический предел текучести
+        /// </summary>
+        public const string PhysicalYieldStress = "physical";
+        /// <summary>
+        /// условный предел текучести
+        /// </summary>
+        public const string OffsetYieldStress = "offset";
+
 
 
         public static string ImgResource(BeamSection _bs, bool _useReinforcement = false)

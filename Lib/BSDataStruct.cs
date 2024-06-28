@@ -136,6 +136,7 @@ namespace BSFiberConcrete
         public double Rsw { get; set; }
         public double Asw { get; set; }
         public double s_w { get; set; }
+        public string typeYieldStress { get; set; }
         public double k_s { get; set; }
         public double ls { get; set; }
         
@@ -144,6 +145,31 @@ namespace BSFiberConcrete
         //Растояние до цента тяжести сжатой арматуры см
         public double a1 { get; set; }
         public double Epsilon_s => (Es > 0 ) ? Rs / Es : 0;
+
+        public string TypeDiagramm
+        { get
+            {
+                string res = "";
+                if (typeYieldStress == BSHelper.PhysicalYieldStress)
+                { res = BSHelper.TwoLineDiagram; }
+                if (typeYieldStress == BSHelper.OffsetYieldStress)
+                { res = BSHelper.ThreeLineDiagram; }
+                return res;
+            }
+        }
+
+        public double Epsilon_s_ult
+        {
+            get
+            {
+                double res = 0;
+                if (typeYieldStress == BSHelper.OffsetYieldStress)
+                { res = 0.015; }
+                if (typeYieldStress == BSHelper.PhysicalYieldStress)
+                { res = 0.025; }
+                return res;
+            }
+        }
 
         public double Dzeta_R(double omega, double eps_fb2) => omega / (1 + Epsilon_s / eps_fb2);
 

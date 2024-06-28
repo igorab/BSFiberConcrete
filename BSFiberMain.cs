@@ -98,6 +98,7 @@ namespace BSFiberConcrete
             {
                 m_Beam = new Dictionary<string, double>();
                 m_Table = new DataTable();
+                m_Rebar = BSData.LoadRebar();
 
                 dataGridSection.DataSource = m_Table;
 
@@ -129,7 +130,7 @@ namespace BSFiberConcrete
                 m_MatFiber.e_b2 = m_BSLoadData.Beton2.eps_b2;
                 m_MatFiber.Efb = m_BSLoadData.Fiber.Efb; // TODO на значения с формы
 
-                m_Rebar = BSData.LoadRebar();
+                
                 m_InitBeamSectionsGeometry = Lib.BSData.LoadBeamSectionGeometry(m_BeamSection);
 
                 numRandomEccentricity.Value = (decimal)m_BSLoadData.Fiber.e_tot;
@@ -1149,13 +1150,22 @@ namespace BSFiberConcrete
 
         private void cmbRebarClass_SelectedIndexChanged(object sender, EventArgs e)
         {
-            try
-            {
-                var rb = Lib.BSQuery.RebarFind(cmbRebarClass.Text);
-                numRs.Value = (decimal)BSHelper.MPA2kgsm2(rb.Rs);
-                numRsc.Value = (decimal)BSHelper.MPA2kgsm2(rb.Rsc);
-            }
-            catch { }
+                foreach (Rebar rebar in m_Rebar)
+                {
+                    if (rebar.ID == cmbRebarClass.Text)
+                    {
+                        numRs.Value = (decimal)BSHelper.MPA2kgsm2(rebar.Rs);
+                        numRsc.Value = (decimal)BSHelper.MPA2kgsm2(rebar.Rsc);
+                        labelTypeDDRebar.Text = rebar.TypeDiagramm;
+                        numEps_s_ult.Value = (decimal)rebar.Epsilon_s_ult;
+
+                        break;
+                    }
+                }
+                
+                //var rb = Lib.BSQuery.RebarFind(cmbRebarClass.Text);
+                //numRs.Value = (decimal)BSHelper.MPA2kgsm2(rb.Rs);
+                //numRsc.Value = (decimal)BSHelper.MPA2kgsm2(rb.Rsc);
         }
 
         private void helpToolStripMenuItem_Click(object sender, EventArgs e)
