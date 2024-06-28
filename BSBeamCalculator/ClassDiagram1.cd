@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="BSBeamCalculator.BeamCalculator" Collapsed="true">
+  <Class Name="BSBeamCalculator.BeamCalculatorForm1" Collapsed="true">
     <Position X="0.5" Y="1.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>/wAAABCQgCAAABAAAACAAAASYAAYAAACAHQAAQQAgDI=</HashCode>
-      <FileName>BeamCalculator.cs</FileName>
+      <FileName>BeamCalculatorForm1.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BSBeamCalculator.BeamCalculatorRun" Collapsed="true">
@@ -17,7 +17,7 @@
   <Class Name="BSBeamCalculator.ControllerBeamDiagram">
     <Position X="3" Y="0.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAIAAAAAABAAAAAAAAQAAAACQBAAIAAAAAgA=</HashCode>
+      <HashCode>AAAIAAAAAIAAAAAABAAAAAAAAQAAAACQBAAIAAAAAgA=</HashCode>
       <FileName>controller\ControllerBeamDiagram.cs</FileName>
       <NewMemberFileName>BeamCalculatorRun.cs</NewMemberFileName>
     </TypeIdentifier>
@@ -37,7 +37,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="BSBeamCalculator.DiagramResult">
-    <Position X="5.75" Y="2" Width="1.5" />
+    <Position X="5.5" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AgAAAACAAAAAAAAAAAAAAAAAAABAAAAAAAAAAgAAQAA=</HashCode>
       <FileName>controller\ControllerBeamDiagram.cs</FileName>

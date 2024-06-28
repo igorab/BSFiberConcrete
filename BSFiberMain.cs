@@ -19,6 +19,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 using System.Xml.Linq;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using BSFiberConcrete.Control;
+using BSBeamCalculator;
 
 namespace BSFiberConcrete
 {
@@ -38,6 +39,10 @@ namespace BSFiberConcrete
         private BSMatFiber m_MatFiber;
         private List<Elements> FiberConcrete;
         private List<Beton> m_Beton;
+        /// <summary>
+        /// Временная переменая, не должна попасть за рамки ветки v.filatov
+        /// </summary>
+        private Dictionary<string,double> test_Efforts;
         /// <summary>
         /// Список, в котором хранится актуальные данные геометрии сечений
         /// </summary>
@@ -84,6 +89,50 @@ namespace BSFiberConcrete
                 panelRods.Visible = true;
                 gridEfforts.Columns["Mx"].Visible = true;
             }
+            else if (CalcType == CalcType.BeamCalc)
+            {
+
+                //for (int i = 0; i < tabNDM.TabCount; i++)
+                //{
+                //    TabPage tmpTabPage = tabNDM.TabPages[i];
+                //    if (tmpTabPage.Name == "tabStrength")
+                //    {
+                //        tabNDM.TabPages.Remove(tmpTabPage);
+                //    }
+                //}
+
+
+                tabNDM.TabPages.Remove(tabStrength);
+
+
+                btnStaticEqCalc.Visible = false;
+                btnCalc_Deform.Visible = true;
+                panelRods.Visible = true;
+
+
+                //TabPage tabPageBeam = new System.Windows.Forms.TabPage();
+                //tabPageBeam.Location = new System.Drawing.Point(4, 22);
+                //tabPageBeam.Name = "tabPageBeam";
+                //tabPageBeam.Size = new System.Drawing.Size(1098, 327);
+                ////tabPageBeam.TabIndex = 5;
+                //tabPageBeam.Text = "Балка";
+                //tabPageBeam.UseVisualStyleBackColor = true;
+
+
+                BeamCalculatorControl beamCalculatorControl = new BeamCalculatorControl(test_Efforts);
+                tabPBeam.Controls.Add(beamCalculatorControl);
+
+
+                //tabNDM.TabPages.Add(tabPBeam);
+
+                //tabNDM.TabPages.Remove(tabNDM.TabPages[2]);
+
+                gridEfforts.Columns["Mx"].Visible = true;
+
+
+
+
+            }
         }
 
         private void PerformBinding()
@@ -96,6 +145,16 @@ namespace BSFiberConcrete
         {
             try
             {
+
+                test_Efforts = new Dictionary<string, double>()
+                {
+                    { "Mmin",0},
+                    { "Mmax",0},
+                    { "Q", 0 }
+
+                };
+
+
                 m_Beam = new Dictionary<string, double>();
                 m_Table = new DataTable();
 

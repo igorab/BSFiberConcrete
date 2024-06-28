@@ -62,6 +62,7 @@ namespace BSBeamCalculator
             double[][] values_xQ_xM= _diagramType.CalculateValuesForDiagram(_beamLength, _startPointForce, _endPointForce, _force);
             DiagramResult result = new DiagramResult(values_xQ_xM);
 
+
             return result;
         }
     }

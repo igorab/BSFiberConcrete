@@ -42,10 +42,22 @@ namespace BSBeamCalculator
         /// DiagramResult - класс для данных необходимых для построения грфика
         /// </summary>
         public static DiagramResult result;
+
+        public static Dictionary<string, double> resultEfforts;
+
+
         public static void RunCalculation()
         {
             BeamDiagram BD = new BeamDiagram(support, load, l, f, x1, x2);
             result = BD.CalculateBeamDiagram();
+
+
+            if (resultEfforts.ContainsKey("Mmax"))
+                resultEfforts["Mmax"] = result.maxM;
+            if (resultEfforts.ContainsKey("Mmin"))
+                resultEfforts["Mmin"] = result.minM;
+            if (resultEfforts.ContainsKey("Q"))
+                resultEfforts["Q"] = result.maxAbsQ;
         }
 
     }
@@ -80,6 +92,7 @@ namespace BSBeamCalculator
             //maxPointQ = FindeMaxAbsValue(new double[][] { values_xQ_xM[0], values_xQ_xM[1] });
             //maxPointM= FindeMaxAbsValue(new double[][] { values_xQ_xM[2], values_xQ_xM[3] });
             List<double> maxAbsPointQ = FindeMaxAbsValue(new double[][] { values_xQ_xM[0], values_xQ_xM[1] });
+
             maxAbsQ = maxAbsPointQ[1];
             maxM = values_xQ_xM[3].Max();
             minM = values_xQ_xM[3].Min();

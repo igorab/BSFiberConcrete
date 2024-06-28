@@ -27,7 +27,9 @@ namespace BSFiberConcrete
         [Description("Статическое равновесие")]
         Static = 1,
         [Description("Нелинейная деформационная модель")]
-        Nonlinear = 2
+        Nonlinear = 2,
+        [Description("Расчет балки")]
+        BeamCalc = 3
     }
 
     

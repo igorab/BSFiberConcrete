@@ -11,9 +11,9 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace BSBeamCalculator
 {
-    public partial class BeamCalculator : Form
+    public partial class BeamCalculatorForm1 : Form
     {
-        public BeamCalculator()
+        public BeamCalculatorForm1()
         {
                 InitializeComponent();
 
