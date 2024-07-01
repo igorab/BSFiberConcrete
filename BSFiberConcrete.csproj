@@ -280,6 +280,7 @@
     <Compile Include="Mat\BSMatRod.cs" />
     <Compile Include="Mat\IMaterial.cs" />
     <Compile Include="Mat\INonlinear.cs" />
+    <Compile Include="Mat\RebarEnums.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
