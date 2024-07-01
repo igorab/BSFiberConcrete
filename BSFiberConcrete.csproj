@@ -146,6 +146,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Beam\BeamSection.cs" />
     <Compile Include="Beam\BSBeamCalcView.cs">
       <SubType>Form</SubType>
     </Compile>
