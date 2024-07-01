@@ -123,9 +123,9 @@ namespace BSBeamCalculator
             this.label16.AutoSize = true;
             this.label16.Location = new System.Drawing.Point(187, 92);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(15, 13);
+            this.label16.Size = new System.Drawing.Size(21, 13);
             this.label16.TabIndex = 8;
-            this.label16.Text = "м";
+            this.label16.Text = "см";
             // 
             // radioButton6
             // 
@@ -261,18 +261,18 @@ namespace BSBeamCalculator
             this.label15.AutoSize = true;
             this.label15.Location = new System.Drawing.Point(157, 103);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(15, 13);
+            this.label15.Size = new System.Drawing.Size(21, 13);
             this.label15.TabIndex = 7;
-            this.label15.Text = "м";
+            this.label15.Text = "см";
             // 
             // label14
             // 
             this.label14.AutoSize = true;
             this.label14.Location = new System.Drawing.Point(157, 79);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(14, 13);
+            this.label14.Size = new System.Drawing.Size(18, 13);
             this.label14.TabIndex = 6;
-            this.label14.Text = "Т";
+            this.label14.Text = "кг";
             // 
             // numericUpDown3
             // 
@@ -477,7 +477,7 @@ namespace BSBeamCalculator
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(57, 25);
             this.label13.TabIndex = 7;
-            this.label13.Text = "Т*м";
+            this.label13.Text = "кг*см";
             this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label12
@@ -499,7 +499,7 @@ namespace BSBeamCalculator
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(57, 28);
             this.label11.TabIndex = 5;
-            this.label11.Text = "Т";
+            this.label11.Text = "кг*см";
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label17
@@ -532,7 +532,7 @@ namespace BSBeamCalculator
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(57, 21);
             this.label19.TabIndex = 10;
-            this.label19.Text = "Т";
+            this.label19.Text = "к";
             this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label6
