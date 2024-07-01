@@ -117,12 +117,12 @@ namespace BSCalcMenu
 
         private void btnBeamCalc_Click(object sender, EventArgs e)
         {
-            //BSBeamCalcView beamCalcView = new BSBeamCalcView();
-            //beamCalcView.Show();
+            //BeamCalculatorForm beamCalculator = new BeamCalculatorForm();
+            //beamCalculator.Show();
 
-            BeamCalculator beamCalculator = new BeamCalculator();
-            beamCalculator.Show();
-
+            BSFiberMain bsFiberMain = new BSFiberMain();
+            bsFiberMain.CalcType = CalcType.BeamCalc;
+            bsFiberMain.Show();
 
         }
 
