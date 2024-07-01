@@ -19,6 +19,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 using System.Xml.Linq;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using BSFiberConcrete.Control;
+using BSBeamCalculator;
 
 namespace BSFiberConcrete
 {
@@ -38,6 +39,11 @@ namespace BSFiberConcrete
         private BSMatFiber m_MatFiber;
         private List<Elements> FiberConcrete;
         private List<Beton> m_Beton;
+        //TODO должна быть удалена/переработана после объединения кода
+        /// <summary>
+        /// Перменная для хранения нагрузок
+        /// </summary>
+        private Dictionary<string,double> test_Efforts;
         /// <summary>
         /// Список, в котором хранится актуальные данные геометрии сечений
         /// </summary>
@@ -76,6 +82,7 @@ namespace BSFiberConcrete
                 btnCalc_Deform.Visible = false;
                 panelRods.Visible = false;
                 gridEfforts.Columns["Mx"].Visible = false;
+                tabNDM.TabPages.Remove(tabPBeam);
             }
             else if (CalcType == CalcType.Nonlinear)
             {
@@ -83,6 +90,19 @@ namespace BSFiberConcrete
                 btnCalc_Deform.Visible = true;
                 panelRods.Visible = true;
                 gridEfforts.Columns["Mx"].Visible = true;
+                tabNDM.TabPages.Remove(tabPBeam);
+            }
+            else if (CalcType == CalcType.BeamCalc)
+            {
+                tabNDM.TabPages.Remove(tabStrength);
+
+                btnStaticEqCalc.Visible = false;
+                btnCalc_Deform.Visible = true;
+                panelRods.Visible = true;
+
+                BeamCalculatorControl beamCalculatorControl = new BeamCalculatorControl(test_Efforts);
+                tabPBeam.Controls.Add(beamCalculatorControl);
+
             }
         }
 
@@ -96,6 +116,16 @@ namespace BSFiberConcrete
         {
             try
             {
+
+                test_Efforts = new Dictionary<string, double>()
+                {
+                    { "Mmin",0},
+                    { "Mmax",0},
+                    { "Q", 0 }
+
+                };
+
+
                 m_Beam = new Dictionary<string, double>();
                 m_Table = new DataTable();
                 m_Rebar = BSData.LoadRebar();
@@ -128,7 +158,7 @@ namespace BSFiberConcrete
 
                 m_BSLoadData.ReadParamsFromJson();
                 m_MatFiber.e_b2 = m_BSLoadData.Beton2.eps_b2;
-                m_MatFiber.Efb = m_BSLoadData.Fiber.Efb; // TODO на значения с формы
+                m_MatFiber.Efb = m_BSLoadData.Fiber.Efb; // TODO источником должно быть значение с формы.
 
                 
                 m_InitBeamSectionsGeometry = Lib.BSData.LoadBeamSectionGeometry(m_BeamSection);

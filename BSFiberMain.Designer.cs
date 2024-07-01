@@ -237,6 +237,7 @@
             this.btnSaveParams = new System.Windows.Forms.Button();
             this.flowLayoutBtns = new System.Windows.Forms.FlowLayoutPanel();
             this.btnLSection = new System.Windows.Forms.Button();
+            this.tabPBeam = new System.Windows.Forms.TabPage();
             this.tabNDM.SuspendLayout();
             this.tabParams.SuspendLayout();
             this.groupVar.SuspendLayout();
@@ -316,6 +317,7 @@
             this.tabNDM.Controls.Add(this.tabStrength);
             this.tabNDM.Controls.Add(this.tabRebar);
             this.tabNDM.Controls.Add(this.tabPage1);
+            this.tabNDM.Controls.Add(this.tabPBeam);
             this.tabNDM.Location = new System.Drawing.Point(15, 27);
             this.tabNDM.Name = "tabNDM";
             this.tabNDM.SelectedIndex = 0;
@@ -2782,6 +2784,15 @@
             this.btnLSection.UseVisualStyleBackColor = true;
             this.btnLSection.Click += new System.EventHandler(this.btn_LSection_Click);
             // 
+            // tabPBeam
+            // 
+            this.tabPBeam.Location = new System.Drawing.Point(4, 22);
+            this.tabPBeam.Name = "tabPBeam";
+            this.tabPBeam.Size = new System.Drawing.Size(1098, 327);
+            this.tabPBeam.TabIndex = 5;
+            this.tabPBeam.Text = "Балка";
+            this.tabPBeam.UseVisualStyleBackColor = true;
+            // 
             // BSFiberMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -3089,6 +3100,7 @@
         private System.Windows.Forms.Label labelTypeDDRebar;
         private System.Windows.Forms.NumericUpDown numEps_s_ult;
         private System.Windows.Forms.Label labelEpsilonsult;
+        private System.Windows.Forms.TabPage tabPBeam;
     }
 }
 
