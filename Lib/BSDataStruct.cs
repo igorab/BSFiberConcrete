@@ -136,7 +136,7 @@ namespace BSFiberConcrete
         public double Rsw { get; set; }
         public double Asw { get; set; }
         public double s_w { get; set; }
-        public string typeYieldStress { get; set; }
+        public TypeYieldStress typeYieldStress { get; set; }
         public double k_s { get; set; }
         public double ls { get; set; }
         
@@ -147,12 +147,13 @@ namespace BSFiberConcrete
         public double Epsilon_s => (Es > 0 ) ? Rs / Es : 0;
 
         public string TypeDiagramm
-        { get
+        { 
+            get
             {
                 string res = "";
-                if (typeYieldStress == BSHelper.PhysicalYieldStress)
+                if (typeYieldStress == TypeYieldStress.Physical)
                 { res = BSHelper.TwoLineDiagram; }
-                if (typeYieldStress == BSHelper.OffsetYieldStress)
+                if (typeYieldStress == TypeYieldStress.Offset)
                 { res = BSHelper.ThreeLineDiagram; }
                 return res;
             }
@@ -163,9 +164,9 @@ namespace BSFiberConcrete
             get
             {
                 double res = 0;
-                if (typeYieldStress == BSHelper.OffsetYieldStress)
+                if (typeYieldStress == TypeYieldStress.Physical)
                 { res = 0.015; }
-                if (typeYieldStress == BSHelper.PhysicalYieldStress)
+                if (typeYieldStress == TypeYieldStress.Offset)
                 { res = 0.025; }
                 return res;
             }
