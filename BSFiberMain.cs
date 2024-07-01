@@ -39,8 +39,9 @@ namespace BSFiberConcrete
         private BSMatFiber m_MatFiber;
         private List<Elements> FiberConcrete;
         private List<Beton> m_Beton;
+        //TODO должна быть удалена/переработана после объединения кода
         /// <summary>
-        /// Временная переменая, не должна попасть за рамки ветки v.filatov
+        /// Перменная для хранения нагрузок
         /// </summary>
         private Dictionary<string,double> test_Efforts;
         /// <summary>
@@ -81,6 +82,7 @@ namespace BSFiberConcrete
                 btnCalc_Deform.Visible = false;
                 panelRods.Visible = false;
                 gridEfforts.Columns["Mx"].Visible = false;
+                tabNDM.TabPages.Remove(tabPBeam);
             }
             else if (CalcType == CalcType.Nonlinear)
             {
@@ -88,49 +90,18 @@ namespace BSFiberConcrete
                 btnCalc_Deform.Visible = true;
                 panelRods.Visible = true;
                 gridEfforts.Columns["Mx"].Visible = true;
+                tabNDM.TabPages.Remove(tabPBeam);
             }
             else if (CalcType == CalcType.BeamCalc)
             {
-
-                //for (int i = 0; i < tabNDM.TabCount; i++)
-                //{
-                //    TabPage tmpTabPage = tabNDM.TabPages[i];
-                //    if (tmpTabPage.Name == "tabStrength")
-                //    {
-                //        tabNDM.TabPages.Remove(tmpTabPage);
-                //    }
-                //}
-
-
                 tabNDM.TabPages.Remove(tabStrength);
-
 
                 btnStaticEqCalc.Visible = false;
                 btnCalc_Deform.Visible = true;
                 panelRods.Visible = true;
 
-
-                //TabPage tabPageBeam = new System.Windows.Forms.TabPage();
-                //tabPageBeam.Location = new System.Drawing.Point(4, 22);
-                //tabPageBeam.Name = "tabPageBeam";
-                //tabPageBeam.Size = new System.Drawing.Size(1098, 327);
-                ////tabPageBeam.TabIndex = 5;
-                //tabPageBeam.Text = "Балка";
-                //tabPageBeam.UseVisualStyleBackColor = true;
-
-
                 BeamCalculatorControl beamCalculatorControl = new BeamCalculatorControl(test_Efforts);
                 tabPBeam.Controls.Add(beamCalculatorControl);
-
-
-                //tabNDM.TabPages.Add(tabPBeam);
-
-                //tabNDM.TabPages.Remove(tabNDM.TabPages[2]);
-
-                gridEfforts.Columns["Mx"].Visible = true;
-
-
-
 
             }
         }
@@ -186,7 +157,7 @@ namespace BSFiberConcrete
 
                 m_BSLoadData.ReadParamsFromJson();
                 m_MatFiber.e_b2 = m_BSLoadData.Beton2.eps_b2;
-                m_MatFiber.Efb = m_BSLoadData.Fiber.Efb; // TODO на значения с формы
+                m_MatFiber.Efb = m_BSLoadData.Fiber.Efb; // TODO источником должно быть значение с формы.
 
                 m_Rebar = BSData.LoadRebar();
                 m_InitBeamSectionsGeometry = Lib.BSData.LoadBeamSectionGeometry(m_BeamSection);
