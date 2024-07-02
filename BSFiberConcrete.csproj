@@ -146,6 +146,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Beam\BeamSection.cs" />
     <Compile Include="Beam\BSBeamCalcView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -217,6 +218,7 @@
     <Compile Include="BSRFib\RSRFibDeflection.Designer.cs">
       <DependentUpon>RSRFibDeflection.cs</DependentUpon>
     </Compile>
+    <Compile Include="CalcGroup2\BSCalcNDM.cs" />
     <Compile Include="Calc\BSFiberCalc_Deform.cs" />
     <Compile Include="Calc\BSFiberCalc_IBeamRods.cs" />
     <Compile Include="Calc\BSFiberCalc_NormRods.cs" />

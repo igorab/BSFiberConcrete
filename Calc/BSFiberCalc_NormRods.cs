@@ -27,6 +27,29 @@ namespace BSFiberConcrete
 
         public double Dzeta(double _x, double _h0) => (_h0 != 0) ? _x / _h0 : 0;
 
+        public override Dictionary<string, double> PhysParams {
+            get {
+                return new Dictionary<string, double> { { "Rfbt3n", Rfbt3n }, { "B", B }, { "Rfbn", Rfbn } };
+            }
+        }
+
+        public override Dictionary<string, double> PhysicalParameters()
+        {
+            Dictionary<string, double> phys = new Dictionary<string, double>
+            {
+                { DN(typeof(BSFiberCalculation), "Rfbt3n"), Rfbt3n },
+                { DN(typeof(BSFiberCalculation), "B"), B },
+                { DN(typeof(BSFiberCalculation), "Rfbn"), Rfbn }
+            };
+
+            return phys;
+        }
+
+
+        public override Dictionary<string, double> Coeffs => new Dictionary<string, double>() {
+            { "Yft", Yft }, { "Yb", Yb }, { "Yb1", Yb1 }, { "Yb2", Yb2 }, { "Yb3", Yb3 }, { "Yb5", Yb5 }
+        };
+
         public void GetLTRebar(double[]  _LRebar, double[] _TRebar, double[] _MatRod)
         {
             LRebar = _LRebar;
@@ -53,14 +76,15 @@ namespace BSFiberConcrete
             return res;
         }
 
-        public double Dzeta_R() => omega / (1 + MatRod.epsilon_s() / MatFiber.e_b2);
+        public double Dzeta_R()
+        {
+            double eps_s = MatRod.epsilon_s();
+            double dz_r =  omega / (1 +  eps_s/ MatFiber.e_b2);
+            return dz_r;
+        }
 
         public override bool Calculate()
-        {
-            //Расчетное остаточное остаточного сопротивления осевому растяжению
-            //Rfbt3 = R_fbt3();
-            //Rfb = R_fb();
-
+        {          
             // Расчетная высота сечения
             double h0 = h - Rod.a;
 
@@ -87,12 +111,23 @@ namespace BSFiberConcrete
 
             Mult = Mult_arm(b, h0, _x, h, Rod.a, Rod.a1);
 
+            //Коэффициент использования
+            UtilRateCalc();
+
             InfoCheckM(Mult);
-
-            //Mult = BSHelper.Kgsm2Tm(Mult);            
-
+            
             return true;
-        }        
+        }
+
+        public override Dictionary<string, double> Results()
+        {
+            return new Dictionary<string, double>() {         
+                    { DN(typeof(BSFibCalc_Rect), "Mult"), Mult},
+                    { DN(typeof(BSFibCalc_Rect), "UtilRate"), UtilRate}
+            };
+        }
+
+
     }
     
 }

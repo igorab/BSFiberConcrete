@@ -17,16 +17,16 @@ namespace BSFiberConcrete
         [DisplayName("Сопротивление сталефибробетона осевому растяжению, Rfbt, кг/см2")]
         public double Rfbt { get => R_fbt(); }
 
-        [DisplayName("Нормативное остаточное сопротивления осевому растяжению, Rfbt3n, кг/см2")]
+        [DisplayName("Нормативное остаточное сопротивления осевому растяжению Rfbt3,n , кг/см2")]
         public double Rfbt3n { get => MatFiber.Rfbt3n; }
 
         [DisplayName("Остаточное сопротивление сталефибробетона осевому растяжению, Rfbt3, кг/см2")]
         public double Rfbt3 { get => R_fbt3(); }
 
-        [DisplayName("Числовая характеристика класса фибробетона по прочности на осевое сжатие")]
+        [DisplayName("Числовая характеристика класса фибробетона по прочности на осевое сжатие, B")]
         public double B { get => MatFiber.B; }
 
-        [DisplayName("Нормативное значение сопротивления сталефибробетона на осевое сжатие по СП63, кг/см2")]
+        [DisplayName("Нормативное значение сопротивления сталефибробетона на осевое сжатие Rfb,n , кг/см2")]
         public double Rfbn { get => MatFiber.Rfbn; }
 
         [DisplayName("Расчетные значения сопротивления  на сжатиие по B30 СП63, кг/см2")]
@@ -56,7 +56,7 @@ namespace BSFiberConcrete
                 return  new Dictionary<string, double>() { { "Yft", Yft }, { "Yb", Yb }, { "Yb1", Yb1 }, { "Yb2", Yb2 }, { "Yb3", Yb3 }, { "Yb5", Yb5 } };
             }             
         }
-        public Dictionary<string, double> PhysParams {
+        public virtual Dictionary<string, double> PhysParams {
             get {
                 return new Dictionary<string, double> { { "Rfbt3n", Rfbt3n }, { "B", B }, { "Rfbn", Rfbn } };
                 }            
