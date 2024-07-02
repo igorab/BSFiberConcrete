@@ -126,6 +126,8 @@ namespace BSFiberConcrete
                 };
 
 
+                var a = BSData.LoadRebarDiameters();
+
                 m_Beam = new Dictionary<string, double>();
                 m_Table = new DataTable();
                 m_Rebar = BSData.LoadRebar();
@@ -1188,22 +1190,27 @@ namespace BSFiberConcrete
 
         private void cmbRebarClass_SelectedIndexChanged(object sender, EventArgs e)
         {
-                foreach (Rebar rebar in m_Rebar)
+            foreach (Rebar rebar in m_Rebar)
+            {
+                if (rebar.ID == cmbRebarClass.Text)
                 {
-                    if (rebar.ID == cmbRebarClass.Text)
-                    {
-                        numRs.Value = (decimal)BSHelper.MPA2kgsm2(rebar.Rs);
-                        numRsc.Value = (decimal)BSHelper.MPA2kgsm2(rebar.Rsc);
-                        labelTypeDDRebar.Text = rebar.TypeDiagramm;
-                        numEps_s_ult.Value = (decimal)rebar.Epsilon_s_ult;
+                    numRs.Value = (decimal)BSHelper.MPA2kgsm2(rebar.Rs);
+                    numRsc.Value = (decimal)BSHelper.MPA2kgsm2(rebar.Rsc);
+                    labelTypeDDRebar.Text = rebar.TypeDiagramm;
+                    numEps_s_ult.Value = (decimal)rebar.Epsilon_s_ult;
 
-                        break;
-                    }
+                    break;
                 }
-                
-                //var rb = Lib.BSQuery.RebarFind(cmbRebarClass.Text);
-                //numRs.Value = (decimal)BSHelper.MPA2kgsm2(rb.Rs);
-                //numRsc.Value = (decimal)BSHelper.MPA2kgsm2(rb.Rsc);
+            }
+
+
+            List<RebarDiameters> rebarDiameters = Lib.BSQuery.DiametersOfTypeRebar(cmbRebarClass.Text);
+
+
+
+            //var rb = Lib.BSQuery.RebarFind(cmbRebarClass.Text);
+            //numRs.Value = (decimal)BSHelper.MPA2kgsm2(rb.Rs);
+            //numRsc.Value = (decimal)BSHelper.MPA2kgsm2(rb.Rsc);
         }
 
         private void helpToolStripMenuItem_Click(object sender, EventArgs e)

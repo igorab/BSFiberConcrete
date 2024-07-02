@@ -13,6 +13,7 @@ using Dapper;
 using System.Linq.Expressions;
 using MathNet.Numerics;
 using System.Reflection.Emit;
+using System.Security.Cryptography;
 
 namespace BSFiberConcrete.Lib
 {
@@ -507,6 +508,44 @@ namespace BSFiberConcrete.Lib
                         }
                         tr.Commit();
                     }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+
+
+        public static List<RebarDiameters> LoadRebarDiameters()
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    var output = cnn.Query<RebarDiameters>("select * from RebarDiameters", new RebarDiameters());
+                    return output.ToList();
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+
+        public static List<RebarDiameters> DiametersOfTypeRebar(string typeRebar)
+        {
+            List<RebarDiameters> rD = new List<RebarDiameters>();
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    string query = $"select * from RebarDiameters where TypeRebar = '{typeRebar}'";
+                    var output = cnn.Query<RebarDiameters>(query, new RebarDiameters());
+                    rD = output.ToList();
+                    return rD;
                 }
             }
             catch

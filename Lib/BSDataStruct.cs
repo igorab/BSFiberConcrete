@@ -501,5 +501,21 @@ namespace BSFiberConcrete
 
 
 
+    /// <summary>
+    /// Клас описывает диаметр[мм] и площадь[мм2] для Класса арматуры
+    /// </summary>
+    public class RebarDiameters
+    { 
+        public int ID { get; set; }
+    
+        public string TypeRebar { get; set; }
+
+        public double Diameter { get; set; }    
+
+        public double Square { get; set; }
+    }
+
+
+
 }
 
