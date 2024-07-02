@@ -49,7 +49,6 @@ namespace BSFiberConcrete
                     { DN(typeof(BSFibCalc_Rect), "Wpl"), Wpl},
                     { DN(typeof(BSFibCalc_Rect), "Mult"), Mult},
                     { DN(typeof(BSFibCalc_Rect), "UtilRate"), UtilRate}
-
             };
         }
 
@@ -105,6 +104,15 @@ namespace BSFiberConcrete
             return ret;
         }
 
+        /// <summary>
+        /// Коэффициент использования
+        /// </summary>
+        protected void UtilRateCalc()
+        {
+            //Коэффициент использования
+            UtilRate = (Mult != 0) ? m_Efforts["My"] / Mult : 0;
+        }
+
         public override bool Calculate()
         {
             if (!Validate())            
@@ -118,9 +126,8 @@ namespace BSFiberConcrete
 
             //Значение предельного момента сечения для изгибаемых сталефибробетонных элементов определяют по формуле (6.3) (кг*см)
             Mult = Rfbt * Wpl;
-
-            //Коэффициент использования
-            UtilRate = (Mult!=0)? m_Efforts["My"] / Mult : 0; 
+            
+            UtilRateCalc();
 
             InfoCheckM(Mult);
             

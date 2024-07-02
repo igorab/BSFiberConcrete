@@ -334,9 +334,16 @@ namespace BSFiberConcrete
         /// <param name="_bsCalc"></param>
         private void InitRebar(BSFiberCalculation _bsCalc)
         {
-            double[] matRod = new double[] { m_BSLoadData.Rebar.Rs, m_BSLoadData.Rebar.Rsc,
-                                                (double)numAs.Value, (double)numAs1.Value,  m_BSLoadData.Rebar.Es,
-                                                (double)num_a.Value, (double)num_a1.Value };
+            double[] matRod = new double[] 
+            { 
+                (double) numRs.Value,
+                (double) numRsc.Value,
+                (double) numAs.Value, 
+                (double) numAs1.Value,
+                (double) numEs.Value,                                                
+                (double) num_a.Value, 
+                (double) num_a1.Value 
+            };
 
             if (_bsCalc is BSFiberCalc_RectRods)
             {
@@ -344,6 +351,7 @@ namespace BSFiberConcrete
 
                 InitLRebar(out List<double[]> _l_rebar);
                 InitTRebar(out double[] _t_rebar);
+
                 //TODO refactoring
                 _bsCalcRods.GetLTRebar(_l_rebar[0], _t_rebar, matRod);
             }
@@ -407,13 +415,13 @@ namespace BSFiberConcrete
 
                 calcOk = bsCalc.Calculate();
 
-                m_PhysParams = bsCalc.PhysParams;
+                m_PhysParams = bsCalc.PhysParams; 
                 m_Coeffs = bsCalc.Coeffs;
                 m_Efforts = bsCalc.Efforts;
                 m_GeomParams = bsCalc.GeomParams();
                 m_CalcResults = bsCalc.Results();
                 m_Message = bsCalc.Msg;
-
+                //TODO need refactoring - параметры с описанием
                 m_PhysParams = bsCalc.PhysicalParameters();
 
             }
@@ -1252,6 +1260,11 @@ namespace BSFiberConcrete
         private void checkBoxRebar_CheckedChanged(object sender, EventArgs e)
         {
             flowLayoutPanelRebar.Enabled = (checkBoxRebar.Checked == true);
+
+            if (checkBoxRebar.Checked)
+                numYb2.Value = 1.0M;
+            else
+                numYb2.Value = 0.9M;
         }
 
         /// <summary>
