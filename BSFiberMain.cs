@@ -39,6 +39,7 @@ namespace BSFiberConcrete
         private BSMatFiber m_MatFiber;
         private List<Elements> FiberConcrete;
         private List<Beton> m_Beton;
+        private List<RebarDiameters> m_RebarDiameters;
         //TODO должна быть удалена/переработана после объединения кода
         /// <summary>
         /// Перменная для хранения нагрузок
@@ -126,7 +127,7 @@ namespace BSFiberConcrete
                 };
 
 
-                var a = BSData.LoadRebarDiameters();
+                m_RebarDiameters = BSData.LoadRebarDiameters();
 
                 m_Beam = new Dictionary<string, double>();
                 m_Table = new DataTable();
@@ -1203,10 +1204,34 @@ namespace BSFiberConcrete
                 }
             }
 
-
-            List<RebarDiameters> rebarDiameters = Lib.BSQuery.DiametersOfTypeRebar(cmbRebarClass.Text);
-
-
+            # region Выбираем список диаметров и площадь в зависимости от класса арматуры
+            double? valueDiameterPreviosRebar = null;
+            int newSelectedIndex = 0;
+            if (cmbRebarDiameters.Items.Count > 0)
+            {
+                valueDiameterPreviosRebar = (double)cmbRebarDiameters.Items[cmbRebarDiameters.SelectedIndex];
+                cmbRebarDiameters.Items.Clear();
+                cmbRebarSquare.Items.Clear();
+            }
+            List<object> diametersForRebar = new List<object>();
+            List<object> squareForRebar = new List<object>();
+            foreach (RebarDiameters tmpRebarD in m_RebarDiameters)
+            {
+                if (tmpRebarD.TypeRebar == cmbRebarClass.Text)
+                {
+                    diametersForRebar.Add(tmpRebarD.Diameter);
+                    squareForRebar.Add(tmpRebarD.Square);
+                    if ((valueDiameterPreviosRebar != null) && (tmpRebarD.Diameter == valueDiameterPreviosRebar))
+                    {
+                        newSelectedIndex = diametersForRebar.Count - 1;
+                    }
+                }
+            }
+            cmbRebarSquare.Items.AddRange(squareForRebar.ToArray());
+            cmbRebarSquare.SelectedIndex = newSelectedIndex;
+            cmbRebarDiameters.Items.AddRange(diametersForRebar.ToArray());
+            cmbRebarDiameters.SelectedIndex = newSelectedIndex;
+            #endregion
 
             //var rb = Lib.BSQuery.RebarFind(cmbRebarClass.Text);
             //numRs.Value = (decimal)BSHelper.MPA2kgsm2(rb.Rs);
@@ -1603,6 +1628,17 @@ namespace BSFiberConcrete
         private void numEps_fb2_ValueChanged(object sender, EventArgs e)
         {
             numEps_fb_ult.Value = numEps_fb2.Value;
+        }
+
+        /// <summary>
+        /// обновление плоащди сечения в зависимости от изменения диаметра
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cmbRebarDiameters_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int previosIndexRebarDiameter = cmbRebarDiameters.SelectedIndex;
+            cmbRebarSquare.SelectedIndex = previosIndexRebarDiameter;
         }
     }
 }
