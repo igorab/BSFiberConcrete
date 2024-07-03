@@ -20,6 +20,7 @@ using System.Xml.Linq;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using BSFiberConcrete.Control;
 using BSBeamCalculator;
+using BSFiberConcrete.CalcGroup2;
 
 namespace BSFiberConcrete
 {
@@ -893,13 +894,28 @@ namespace BSFiberConcrete
             bsFactors.Show();
         }
 
+        [DisplayName("Расчет по прочности нормальных сечений на основе нелинейной деформационной модели")]
+        private void CalcDeformNDM(int _LSD)
+        {
+            // Усилия Mx, My - моменты, кгс*см , N - сила, кгс              
+            GetEffortsFromForm(out Dictionary<string, double> MNQ);
+                        
+            BSCalcNDM_Fiber bSCalc = new BSCalcNDM_Fiber();
+
+            bSCalc.N = MNQ["N"]; 
+            bSCalc.e_x = MNQ["eN"];
+
+            bSCalc.Calculate();            
+        }
+
+
         /// <summary>
         /// Расчет по прочности нормальных сечений на основе нелинейной деформационной модели
         /// </summary>
         /// <param name="_LSD">Группа предельных состояний</param>
         ///
         [DisplayName("Расчет по прочности нормальных сечений на основе нелинейной деформационной модели")]
-        private void CalcDeformNDM(int _LSD)
+        private void CalcDeformNDM()
         {
             // центр тяжести сечения
             TriangleNet.Geometry.Point CG = new TriangleNet.Geometry.Point(0.0, 0.0);
@@ -1058,10 +1074,7 @@ namespace BSFiberConcrete
                 //
                 m_Efforts = fiberCalc_Deform.Efforts;
 
-                m_PhysParams = fiberCalc_Deform.PhysParams;
-
-                //m_Reinforcement = fiberCalc_Deform.Reinforcement;
-
+                m_PhysParams = fiberCalc_Deform.PhysParams;                
                 // получить результат
                 m_CalcResults = fiberCalc_Deform.Results();
 
@@ -1107,7 +1120,7 @@ namespace BSFiberConcrete
             if (checkBoxNDM2Group.Checked)
                 CalcDeformNDM(2);
             else
-                CalcDeformNDM(1);
+                CalcDeformNDM();
         }
 
         private void gridEfforts_CellValueChanged(object sender, DataGridViewCellEventArgs e)

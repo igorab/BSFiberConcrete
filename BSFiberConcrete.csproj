@@ -330,6 +330,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BSCalcMenu.resx">
       <DependentUpon>BSCalcMenu.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="BSCalcResults.resx">
       <DependentUpon>BSCalcResults.cs</DependentUpon>
