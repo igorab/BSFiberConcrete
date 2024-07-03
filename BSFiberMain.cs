@@ -896,18 +896,22 @@ namespace BSFiberConcrete
             bsFactors.Show();
         }
 
-                    
+        /// <summary>
+        /// Расчет по прочности нормальных сечений на основе нелинейной деформационной модели
+        /// </summary>
+        /// <param name="_LSD">Группа предельных состояний</param>
+        ///
         [DisplayName("Расчет по прочности нормальных сечений на основе нелинейной деформационной модели")]
-        private void btnCalc_Deform_Click(object sender, EventArgs e)
+        private void CalcDeformNDM(int _LSD)
         {
             // центр тяжести сечения
             TriangleNet.Geometry.Point CG = new TriangleNet.Geometry.Point(0.0, 0.0);
 
-            DeformDiagramType deformDiagramType = (DeformDiagramType) cmbDeformDiagram.SelectedIndex;
-            DeformMaterialType deformMaterialType = (DeformMaterialType) cmbTypeMaterial.SelectedIndex;
+            DeformDiagramType deformDiagramType = (DeformDiagramType)cmbDeformDiagram.SelectedIndex;
+            DeformMaterialType deformMaterialType = (DeformMaterialType)cmbTypeMaterial.SelectedIndex;
 
-            BSMatFiber beamMaterial;                                               
-                        
+            BSMatFiber beamMaterial;
+
             // класс фибробетона (бетона) на сжатие
             string cBt_class = cmbBfn.Text;
             // Фибробетон:
@@ -923,10 +927,10 @@ namespace BSFiberConcrete
             double c_eps_s2 = (double)numEpsilonS2.Value; ; // 0.025; 
 
             //бетон
-            double c_eps_b1 =  (double)numEps_fb0.Value;
+            double c_eps_b1 = (double)numEps_fb0.Value;
             double c_eps_b1_red = (double)numEps_fb0.Value; // уточнить
             double c_eps_b2 = (double)numEps_fb2.Value;
-               
+
             // длина балки, см 
             double c_Length = Convert.ToDouble(tbLength.Text);
 
@@ -941,21 +945,21 @@ namespace BSFiberConcrete
 
             // сечение балки балки, см 
             double[] beam_sizes = BeamSizes(c_Length);
-            
+
             var bsBeam = BSBeam.construct(m_BeamSectionReport);
             bsBeam.GetSizes(beam_sizes);
             bsBeam.Length = c_Length;
 
-            double c_b = bsBeam.Width; 
-            double c_h = bsBeam.Height;             
-            m_GeomParams = new Dictionary<string, double> { { "b, см", c_b }, { "h, см", c_h }};
+            double c_b = bsBeam.Width;
+            double c_h = bsBeam.Height;
+            m_GeomParams = new Dictionary<string, double> { { "b, см", c_b }, { "h, см", c_h } };
 
             //смещение начала координат            
-            double dX0, dY0;           
-            
+            double dX0, dY0;
+
             // координаты ц.т. сечения, если т. 0 - левый нижний угол
             (CG.X, CG.Y) = bsBeam.CG();
-            
+
             try
             {
                 BSFiberCalc_Deform fiberCalc_Deform = new BSFiberCalc_Deform(_Mx: c_Mx, _My: c_My, _N: c_N);
@@ -1004,7 +1008,7 @@ namespace BSFiberConcrete
 
                     int idx = 0; // Индекс стержня
                     foreach (var lr in _rods)
-                    {                                                                                                                                          
+                    {
                         BSRod rod = new BSRod()
                         {
                             Id = idx,
@@ -1038,19 +1042,19 @@ namespace BSFiberConcrete
                     e_b1 = c_eps_b1,
                     e_b2 = c_eps_b2,
                     Eps_fb_ult = (double)numEps_fb_ult.Value,
-                    Eps_fbt_ult = (double) numEps_fbt_ult.Value,
+                    Eps_fbt_ult = (double)numEps_fbt_ult.Value,
                 };
 
                 // задать свойства бетона
                 fiberCalc_Deform.MatFiber = beamMaterial;
 
                 RodsReinforcement();
-                                
+
                 // арматура балки                                                
                 fiberCalc_Deform.Beam.Rods = Rods;
                 // материал
-                fiberCalc_Deform.Beam.Mat = beamMaterial;                                
-                fiberCalc_Deform.GetParams(new double[] { 10, 1});
+                fiberCalc_Deform.Beam.Mat = beamMaterial;
+                fiberCalc_Deform.GetParams(new double[] { 10, 1 });
 
                 // рассчитать
                 fiberCalc_Deform.Calculate();
@@ -1078,9 +1082,17 @@ namespace BSFiberConcrete
             {
                 InitBeamLength();
 
-                MethodBase method = MethodBase.GetCurrentMethod();
-                DisplayNameAttribute attr = (DisplayNameAttribute)method.GetCustomAttributes(typeof(DisplayNameAttribute), true)[0];
-                string value = attr.DisplayName;
+                string value = "";
+                try
+                {
+                    MethodBase method = MethodBase.GetCurrentMethod();
+                    DisplayNameAttribute attr = (DisplayNameAttribute)method.GetCustomAttributes(typeof(DisplayNameAttribute), true)[0];
+                    value = attr.DisplayName;
+                }
+                catch 
+                {
+                    MessageBox.Show("Не задан атрибут DisplayName метода");
+                }
 
                 string pathToHtmlFile = CreateReport(1, m_BeamSectionReport, value);
 
@@ -1090,6 +1102,15 @@ namespace BSFiberConcrete
             {
                 MessageBox.Show("Ошибка в отчете " + _e.Message);
             }
+        }
+
+        // Расчет по НДМ            
+        private void btnCalc_Deform_Click(object sender, EventArgs e)
+        {
+            if (checkBoxNDM2Group.Checked)
+                CalcDeformNDM(2);
+            else
+                CalcDeformNDM(1);
         }
 
         private void gridEfforts_CellValueChanged(object sender, DataGridViewCellEventArgs e)

@@ -44,8 +44,9 @@ namespace BSFiberConcrete.CalcGroup2
                 for (int iy = 0; iy < ny; ny++)
                     z0b.Add(iz * sz + sz / 2.0);
 
-            List<double> y0s = new List<double>();
-            List<double> z0s = new List<double>();
+            // привязки арматуры
+            List<double> y0s = new List<double>() {5.0, 15.0, 5.0, 15.0 };
+            List<double> z0s = new List<double>() {5.0, 5.0, 35.0, 35.0 }; 
 
             // диаметры арматурных стержней
             List<double> ds = new List<double>() {16.0, 16.0, 16.0, 16.0};
@@ -56,6 +57,7 @@ namespace BSFiberConcrete.CalcGroup2
                 As.Add(Math.PI * Math.Pow(d/10, 2) / 4.0);
             }
 
+            
             int m = As.Count;
 
             // Бетон B25
