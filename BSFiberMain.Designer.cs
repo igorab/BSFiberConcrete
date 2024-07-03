@@ -157,6 +157,7 @@
             this.numAs = new System.Windows.Forms.NumericUpDown();
             this.numAs1 = new System.Windows.Forms.NumericUpDown();
             this.label15 = new System.Windows.Forms.Label();
+            this.cmbRebarDiameters = new System.Windows.Forms.ComboBox();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tableLayoutEpsilonS = new System.Windows.Forms.TableLayoutPanel();
             this.labelTypeDDRebar = new System.Windows.Forms.Label();
@@ -240,6 +241,10 @@
             this.flowLayoutBtns = new System.Windows.Forms.FlowLayoutPanel();
             this.btnLSection = new System.Windows.Forms.Button();
             this.checkBoxNDM2Group = new System.Windows.Forms.CheckBox();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.cmbRebarSquare = new System.Windows.Forms.ComboBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
             this.tabNDM.SuspendLayout();
             this.tabParams.SuspendLayout();
             this.groupVar.SuspendLayout();
@@ -310,6 +315,7 @@
             this.panelCalc.SuspendLayout();
             this.flowLayoutPanelArea.SuspendLayout();
             this.flowLayoutBtns.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabNDM
@@ -765,7 +771,7 @@
             // 
             this.labelRfbt3n.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelRfbt3n.AutoSize = true;
-            this.labelRfbt3n.Location = new System.Drawing.Point(342, 9);
+            this.labelRfbt3n.Location = new System.Drawing.Point(341, 9);
             this.labelRfbt3n.Name = "labelRfbt3n";
             this.labelRfbt3n.Size = new System.Drawing.Size(45, 13);
             this.labelRfbt3n.TabIndex = 3;
@@ -795,7 +801,7 @@
             // 
             this.labelRfbtn.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelRfbtn.AutoSize = true;
-            this.labelRfbtn.Location = new System.Drawing.Point(342, 102);
+            this.labelRfbtn.Location = new System.Drawing.Point(341, 102);
             this.labelRfbtn.Name = "labelRfbtn";
             this.labelRfbtn.Size = new System.Drawing.Size(39, 13);
             this.labelRfbtn.TabIndex = 11;
@@ -831,7 +837,7 @@
             // 
             this.labelRfbn.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelRfbn.AutoSize = true;
-            this.labelRfbn.Location = new System.Drawing.Point(342, 71);
+            this.labelRfbn.Location = new System.Drawing.Point(341, 71);
             this.labelRfbn.Name = "labelRfbn";
             this.labelRfbn.Size = new System.Drawing.Size(36, 13);
             this.labelRfbn.TabIndex = 2;
@@ -866,7 +872,7 @@
             // 
             this.labelRfbt2n.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelRfbt2n.AutoSize = true;
-            this.labelRfbt2n.Location = new System.Drawing.Point(342, 40);
+            this.labelRfbt2n.Location = new System.Drawing.Point(341, 40);
             this.labelRfbt2n.Name = "labelRfbt2n";
             this.labelRfbt2n.Size = new System.Drawing.Size(45, 13);
             this.labelRfbt2n.TabIndex = 15;
@@ -961,7 +967,7 @@
             "Мелкозернистый Б",
             "Мелкозернистый В",
             "Легкий"});
-            this.comboBetonType.Location = new System.Drawing.Point(65, 6);
+            this.comboBetonType.Location = new System.Drawing.Point(64, 6);
             this.comboBetonType.Name = "comboBetonType";
             this.comboBetonType.Size = new System.Drawing.Size(121, 21);
             this.comboBetonType.TabIndex = 1;
@@ -1415,6 +1421,7 @@
             // 
             this.flowLayoutPanelRebar.Controls.Add(this.tableLayoutPanelRebar);
             this.flowLayoutPanelRebar.Controls.Add(this.tableLayoutAreaRebar);
+            this.flowLayoutPanelRebar.Controls.Add(this.tableLayoutPanel1);
             this.flowLayoutPanelRebar.Dock = System.Windows.Forms.DockStyle.Top;
             this.flowLayoutPanelRebar.FlowDirection = System.Windows.Forms.FlowDirection.BottomUp;
             this.flowLayoutPanelRebar.Location = new System.Drawing.Point(3, 3);
@@ -1812,6 +1819,16 @@
             this.label15.Size = new System.Drawing.Size(214, 13);
             this.label15.TabIndex = 2;
             this.label15.Text = "Площадь растянутой арматуры As,  см2 ";
+            // 
+            // cmbRebarDiameters
+            // 
+            this.cmbRebarDiameters.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.cmbRebarDiameters.FormattingEnabled = true;
+            this.cmbRebarDiameters.Location = new System.Drawing.Point(223, 4);
+            this.cmbRebarDiameters.Name = "cmbRebarDiameters";
+            this.cmbRebarDiameters.Size = new System.Drawing.Size(121, 21);
+            this.cmbRebarDiameters.TabIndex = 8;
+            this.cmbRebarDiameters.SelectedIndexChanged += new System.EventHandler(this.cmbRebarDiameters_SelectedIndexChanged);
             // 
             // tabPage1
             // 
@@ -2826,6 +2843,53 @@
             this.checkBoxNDM2Group.Text = "2 гр пр сост";
             this.checkBoxNDM2Group.UseVisualStyleBackColor = true;
             // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
+            this.tableLayoutPanel1.Controls.Add(this.cmbRebarDiameters, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.cmbRebarSquare, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.label22, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label24, 0, 1);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(376, 23);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(367, 59);
+            this.tableLayoutPanel1.TabIndex = 8;
+            // 
+            // cmbRebarSquare
+            // 
+            this.cmbRebarSquare.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.cmbRebarSquare.Enabled = false;
+            this.cmbRebarSquare.FormattingEnabled = true;
+            this.cmbRebarSquare.Location = new System.Drawing.Point(223, 33);
+            this.cmbRebarSquare.Name = "cmbRebarSquare";
+            this.cmbRebarSquare.Size = new System.Drawing.Size(121, 21);
+            this.cmbRebarSquare.TabIndex = 9;
+            // 
+            // label22
+            // 
+            this.label22.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(3, 8);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(147, 13);
+            this.label22.TabIndex = 10;
+            this.label22.Text = "Номинальный диаметр, мм";
+            // 
+            // label24
+            // 
+            this.label24.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(3, 37);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(136, 13);
+            this.label24.TabIndex = 11;
+            this.label24.Text = "Расчетная площадь, мм2";
+            // 
             // BSFiberMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2930,6 +2994,8 @@
             this.panelCalc.PerformLayout();
             this.flowLayoutPanelArea.ResumeLayout(false);
             this.flowLayoutBtns.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -3136,6 +3202,11 @@
         private System.Windows.Forms.Label labelReinforcementDeformType;
         private System.Windows.Forms.Label labelTypeDDRebar;
         private System.Windows.Forms.CheckBox checkBoxNDM2Group;
+        private System.Windows.Forms.ComboBox cmbRebarDiameters;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.ComboBox cmbRebarSquare;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Label label24;
     }
 }
 
