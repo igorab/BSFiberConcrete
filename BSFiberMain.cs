@@ -58,6 +58,7 @@ namespace BSFiberConcrete
         private Dictionary<string, double> m_Reinforcement;
         private Dictionary<string, double> m_GeomParams;
         private Dictionary<string, double> m_CalcResults;
+        private Dictionary<string, double> m_CalcResults2Group;
 
         private List<string> m_Message;
 
@@ -414,9 +415,7 @@ namespace BSFiberConcrete
                 bsCalc.GetParams(prms);
                 bsCalc.GetSize(BeamSizes());
                 bsCalc.Efforts = new Dictionary<string, double> { { "My", _M } };
-
-                //InitBeamLength();
-
+                
                 calcOk = bsCalc.Calculate();
 
                 m_PhysParams = bsCalc.PhysParams; 
@@ -427,7 +426,6 @@ namespace BSFiberConcrete
                 m_Message = bsCalc.Msg;
                 //TODO need refactoring - параметры с описанием
                 m_PhysParams = bsCalc.PhysicalParameters();
-
             }
             catch (Exception _e)
             {
@@ -488,6 +486,7 @@ namespace BSFiberConcrete
                 report.Reinforcement = m_Reinforcement;
                 report.BeamSection = _BeamSection;
                 report.CalcResults = m_CalcResults;
+                report.CalcResults2Group = m_CalcResults2Group;
                 report.Messages = m_Message;
                 report.UseReinforcement = _useReinforcement;
 
@@ -993,11 +992,13 @@ namespace BSFiberConcrete
                 dX0 = CG.X;
                 dY0 = CG.Y;
 
-                // задать тип арматуры
+                // задать класс арматуры
                 fiberCalc_Deform.MatRebar = new BSMatRod(cEs)
                 {
                     RCls = cR_class,
+                    Rsn = (double) numRsn.Value,
                     Rs = cRs,
+                    Rsc = (double) numRsc.Value,
                     e_s0 = c_eps_s0,
                     e_s2 = c_eps_s2
                 };
@@ -1081,10 +1082,16 @@ namespace BSFiberConcrete
                 // получить результат
                 m_CalcResults = fiberCalc_Deform.Results();
 
+                // Расчет по 2 группе предельных состояний
+                m_CalcResults2Group = fiberCalc_Deform.Results();
+
                 m_Message = fiberCalc_Deform.Msg;
 
                 if (m_CalcResults?.Count > 0)
                     fiberCalc_Deform.Msg.Add("Расчет успешно выполнен!");
+
+
+
             }
             catch (Exception _ex)
             {

@@ -28,6 +28,8 @@ namespace BSFiberConcrete
         // продольная сила от внешней нагрузки
         public double N { get; set; }
 
+        private int m_Group = 1;
+
         // балка
         public BSBeam Beam
         {
@@ -364,43 +366,21 @@ namespace BSFiberConcrete
         private void Calc_MxMyN()
         {
             const int I1=0, I2=1, I3=2;
-
             double[] v_eff = { Mx, My, N};
-
-            //if (Mx == 0)
-            //{
-            //    v_eff = new double[] {My, N};
-            //    D = D.RemoveRow(0);
-            //    D = D.RemoveColumn(0);
-            //}
-
+          
             Vector<double> V_Eff = Vector<double>.Build.Dense(v_eff);                          
             Vector<double> X  = D.Solve(V_Eff);
 
             double kx, ky;
+            
+            // решение:
+            (kx, ky, eps_0) = (X[I1], X[I2], X[I3]);
+            
+            rx = (kx != 0) ? 1 / kx : float.MaxValue;
+            ry = (ky != 0) ? 1 / ky : float.MaxValue; 
 
-            if (My == 0 && Mx == 0 && N == 0) // todo удалить
-            {
-                (ky, eps_0) = (X[I1], X[I2]);
-                
-                ry = (ky != 0) ? 1 / ky : 0;
-                Ky = ky;
-            }
-            else
-            {
-                // решение:
-                (kx, ky, eps_0) = (X[I1], X[I2], X[I3]);
-
-                // TODO ??
-                //kx = Math.Abs(kx);
-                //ky = Math.Abs(ky); 
-
-                rx = (kx != 0) ? 1 / kx : float.MaxValue;
-                ry = (ky != 0) ? 1 / ky :float.MaxValue; 
-
-                Kx = kx;
-                Ky = ky;
-            }                        
+            Kx = kx;
+            Ky = ky;                                    
         }
 
         private void ArraysClear()
@@ -415,7 +395,7 @@ namespace BSFiberConcrete
             Nju_s.Clear();
         }
 
-        private bool CalcResult()
+        private bool CalcResult(int _group = 1)
         {
             bool doNextIter = true;
 
@@ -441,7 +421,7 @@ namespace BSFiberConcrete
                     {
                         case DeformMaterialType.Fiber: 
                         case DeformMaterialType.Beton:                        
-                            sgm = MatFiber.Eps_StDiagram2L(eps, out int _res);
+                            sgm = MatFiber.Eps_StDiagram2L(eps, out int _res, _group);
                             break;                        
                     }
                 }
@@ -451,7 +431,7 @@ namespace BSFiberConcrete
                     {
                         case DeformMaterialType.Fiber:
                         case DeformMaterialType.Beton:
-                            sgm = MatFiber.Eps_StateDiagram3L(eps, out int _res);
+                            sgm = MatFiber.Eps_StateDiagram3L(eps, out int _res, _group);
                             break;
                     }
                 }
@@ -472,11 +452,11 @@ namespace BSFiberConcrete
                 double sgm = 0;
                 if (DeformDiagram == DeformDiagramType.D2Linear)
                 {
-                    sgm = MatRebar.Eps_StDiagram2L(Math.Abs(_e), out int _res);
+                    sgm = MatRebar.Eps_StDiagram2L(Math.Abs(_e), out int _res, _group);
                 }
                 else if (DeformDiagram == DeformDiagramType.D3Linear)
                 {                    
-                    sgm = MatRebar.Eps_StateDiagram3L(Math.Abs(_e), out int _res);
+                    sgm = MatRebar.Eps_StateDiagram3L(Math.Abs(_e), out int _res, _group);
                 }
 
                 sigma_s[j] = Math.Sign(_e) * sgm;
@@ -612,7 +592,7 @@ namespace BSFiberConcrete
             int qty_J = m_Beam.RodsQty; // количество стержней           
             int qty_I = m_BElem.Count; // количество элементов сечения
 
-             double _A_s = m_Beam.AreaS(); 
+            double _A_s = m_Beam.AreaS(); 
 
             InitVectors(qty_I, qty_J);
            
@@ -659,7 +639,7 @@ namespace BSFiberConcrete
 
                     Calc_MxMyN();
 
-                    doNextIter = CalcResult();                    
+                    doNextIter = CalcResult(1);                    
                 }
                 catch (Exception ex) 
                 {

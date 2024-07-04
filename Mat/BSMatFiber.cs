@@ -146,7 +146,7 @@ namespace BSFiberConcrete
         /// </summary>
         /// <param name="_eps">Деформация</param>
         /// <returns>Напряжение</returns>       
-        public double Eps_StateDiagram3L(double _eps, out int _res)
+        public double Eps_StateDiagram3L(double _eps, out int _res, int _group = 1 )
         {
             _res = 0;
             if (Efb == 0 || Rfbt == 0 || Rfbt2 == 0 || Rfbt3 == 0)
@@ -211,7 +211,7 @@ namespace BSFiberConcrete
         /// </summary>
         /// <param name="_e">Деформация</param>
         /// <returns>Напряжение</returns>        
-        public double Eps_StDiagram2L(double _e, out int _res)
+        public double Eps_StDiagram2L(double _e, out int _res, int _group = 1)
         {
             double sgm = 0;
             _res = 0;
@@ -228,13 +228,13 @@ namespace BSFiberConcrete
             }
             else if (_e < 0) // растяжение
             {
-                sgm = 0; //  Eb_red * _e;
+                sgm = 0; 
             }
             else if (_e >= e_b2) // уточнить такую ситуацию
             {
                 Debug.Assert(true, "Превышен предел прочности (временное сопротивление) ");
 
-                sgm = 0;// R_fb;
+                sgm = 0; 
             }
 
             return sgm;

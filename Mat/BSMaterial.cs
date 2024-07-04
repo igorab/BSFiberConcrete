@@ -24,7 +24,7 @@ namespace BSFiberConcrete
         public double e_b2;
 
         // Диаграмма состояния
-        public  double Eps_StateDiagram3L(double e_b, out int _res)
+        public  double Eps_StateDiagram3L(double e_b, out int _res, int _group = 1)
         {
             double sigma_b = Rb;
             double sigma_b1 = 0.6 * Rb;
@@ -48,7 +48,7 @@ namespace BSFiberConcrete
             return sigma_b;
         }
 
-        public double Eps_StDiagram2L(double _e, out int _res)
+        public double Eps_StDiagram2L(double _e, out int _res, int _group = 1)
         {
             double sgm = 0;
             _res = 0;
