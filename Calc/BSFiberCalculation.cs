@@ -35,7 +35,7 @@ namespace BSFiberConcrete
                        
         public double Gamma(double _B) => 1.73 - 0.005 * (_B - 15);
         
-        protected double omega = BSMatFiber.omega;
+        protected double Omega { get => MatFiber.Omega; }
 
         [BSFiberCalculation(Name = "Коэффициент надежности для расчета по предельным состояниям первой группы при назначении класса сталефибробетона по прочности на растяжение")]
         protected double Yft;

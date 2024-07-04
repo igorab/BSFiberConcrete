@@ -28,7 +28,7 @@ namespace BSFiberConcrete
 
         public double Dzeta(double _x, double _h0) => (_h0 != 0) ? _x / _h0 : 0;
 
-        public double Dzeta_R() => omega / (1 + MatRod.epsilon_s() / MatFiber.e_b2);
+        public double Dzeta_R() => Omega / (1 + MatRod.epsilon_s() / MatFiber.e_b2);
 
         public double h { get => hf + hw + h1f; }
 

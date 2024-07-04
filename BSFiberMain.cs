@@ -1231,6 +1231,9 @@ namespace BSFiberConcrete
                 {
                     numRs.Value = (decimal)BSHelper.MPA2kgsm2(rebar.Rs);
                     numRsc.Value = (decimal)BSHelper.MPA2kgsm2(rebar.Rsc);
+                    numRsn.Value = (decimal)BSHelper.MPA2kgsm2(rebar.Rsn);
+                    numRsсn.Value = (decimal)BSHelper.MPA2kgsm2(rebar.Rsn);
+
                     labelTypeDDRebar.Text = rebar.TypeDiagramm;
                     numEps_s_ult.Value = (decimal)rebar.Epsilon_s_ult;
 
@@ -1673,6 +1676,16 @@ namespace BSFiberConcrete
         {
             int previosIndexRebarDiameter = cmbRebarDiameters.SelectedIndex;
             cmbRebarSquare.SelectedIndex = previosIndexRebarDiameter;
+        }
+
+        private void tableLayoutPanelRebar_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void cmbFib_i_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // SelectedFiberBetonValues();
         }
     }
 }

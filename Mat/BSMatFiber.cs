@@ -78,6 +78,9 @@ namespace BSFiberConcrete
         [DisplayName("Расчетное сопротивление сталефибробетона осевому сжатию Rfbn")]
         public double Rfb { get { return R_fb_calc(); } set { Rfb = value; } }
 
+        [DisplayName("Расчетное сопротивление сталефибробетона осевому сжатию 2-й группы Rfb, ser")]
+        public double Rfb_ser => Rfbn;
+
         [DisplayName("Нормативное сопротивление сталефибробетона осевому растяжению Rfbt")]
         public double Rfbtn { get; set; }
 
@@ -86,6 +89,9 @@ namespace BSFiberConcrete
             get { return (m_Rfbt > 0) ? m_Rfbt : R_fbt_calc(); } 
             set { m_Rfbt = value; } 
         }
+
+        [DisplayName("Расчетное сопротивление сталефибробетона осевому растяжению 2-й группы Rfbt, ser")]
+        public double Rfbt_ser => Rfbtn;
 
         [DisplayName("Остаточное нормативное сопротивление на растяжение Rfbt2,n")]
         public double Rfbt2n { get; set; }
@@ -133,7 +139,7 @@ namespace BSFiberConcrete
 
         //характеристика сжатой зоны сталефибробетона, принимаемая для
         // сталефибробетона из тяжелого бетона классов до В60 включительно равной 0,8
-        public static double omega = 0.8;
+        public double Omega => (B<=60) ? 0.8 : 0.9; 
 
         /// <summary>
         /// Диаграмма состояния растяжения-сжатия фибробетона, в обозначениях СП360 

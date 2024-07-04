@@ -18,11 +18,20 @@ namespace BSFiberConcrete
         /// </summary>
         public double Es { get; set; }
 
+        //Нормативное сопротивление растяжению кг/см2
+        public double Rsn { get; set; }
+
         // Расчетное сопротивление растяжению кг/см2
         public double Rs { get; set; }
 
+        // Расчетное сопротивление растяжению 2 гр, кг/см2
+        public double Rs_ser => Rsn;
+        
         // Расчетное сопротивление сжатию кг/см2
         public double Rsc { get; set; }
+
+        // Расчетное сопротивление сжатию 2 гр, кг/см2
+        public double Rsc_ser => Rsn;
 
         // Площадь растянутой арматуры
         public double As { get; set; }
