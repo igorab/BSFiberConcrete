@@ -1083,14 +1083,12 @@ namespace BSFiberConcrete
                 m_CalcResults = fiberCalc_Deform.Results();
 
                 // Расчет по 2 группе предельных состояний
-                m_CalcResults2Group = fiberCalc_Deform.Results();
+                m_CalcResults2Group = fiberCalc_Deform.Result2Group;
 
                 m_Message = fiberCalc_Deform.Msg;
 
                 if (m_CalcResults?.Count > 0)
                     fiberCalc_Deform.Msg.Add("Расчет успешно выполнен!");
-
-
 
             }
             catch (Exception _ex)

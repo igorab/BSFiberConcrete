@@ -79,6 +79,7 @@ namespace BSFiberConcrete
             if (m_Beam != null)
             {
                 w.WriteLine("<Table border=1 bordercolor = darkblue>");
+                w.WriteLine("<caption>Балка</caption>");
                 foreach (var _pair in m_Beam)
                 {
                     w.WriteLine("<tr>");
@@ -92,7 +93,7 @@ namespace BSFiberConcrete
             if (m_GeomParams != null)
             {
                 w.WriteLine("<Table border=1 bordercolor = darkblue>");
-                w.WriteLine("<caption>Геометрия</caption>");
+                w.WriteLine("<caption>Геометрия сечения</caption>");
 
                 foreach (var _pair in m_GeomParams)
                 {
