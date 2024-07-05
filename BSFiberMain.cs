@@ -557,8 +557,6 @@ namespace BSFiberConcrete
             picBeton.SizeMode = PictureBoxSizeMode.StretchImage;
         }
 
-
-
         // тавровое сечение
         // Принимаем как двутавровое, у которого нижняя полка равна по толщине стенке
         private void btnTSection_Click(object sender, EventArgs e)
@@ -1064,16 +1062,16 @@ namespace BSFiberConcrete
 
                 // задать свойства бетона
                 fiberCalc_Deform.MatFiber = beamMaterial;
-
+                // расстановка стержней арматуры
                 RodsReinforcement();
-
                 // арматура балки                                                
                 fiberCalc_Deform.Beam.Rods = Rods;
                 // материал
                 fiberCalc_Deform.Beam.Mat = beamMaterial;
+                // параметры расчета:  (кол-во точек разбиения )
                 fiberCalc_Deform.GetParams(new double[] { 10, 1 });
-
-                // рассчитать
+                //
+                // рассчитать                
                 fiberCalc_Deform.Calculate();
                 //
                 m_Efforts = fiberCalc_Deform.Efforts;
@@ -1122,13 +1120,15 @@ namespace BSFiberConcrete
             }
         }
 
-        // Расчет по НДМ            
+        /// <summary>
+        /// Расчет по НДМ            
+        /// </summary>        
         private void btnCalc_Deform_Click(object sender, EventArgs e)
         {
+            CalcDeformNDM();
+
             if (checkBoxNDM2Group.Checked)
-                CalcDeformNDM(2);
-            else
-                CalcDeformNDM();
+                CalcDeformNDM(2);                        
         }
 
         private void gridEfforts_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -1156,7 +1156,7 @@ namespace BSFiberConcrete
         // сохранить геометрические размеры
         private void btnSaveParams_Click(object sender, EventArgs e)
         {
-            // TO DO Удалить кнопку 
+            //TODO Удалить кнопку 
             try
             {
                 Dictionary<string, double> SZ = new Dictionary<string, double>();

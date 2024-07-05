@@ -411,9 +411,10 @@ namespace BSFiberConcrete
             Nju_s.Clear();
         }
 
-        private bool CalcResult(int _group = 1)
+        private bool CalcResult(out int _res, int _group = 1)
         {
             bool doNextIter = true;
+            _res = 0;
 
             double kx = (rx != 0) ? 1 / rx : float.MaxValue;
             double ky = (ry != 0) ? 1 / ry : float.MaxValue;
@@ -437,7 +438,7 @@ namespace BSFiberConcrete
                     {
                         case DeformMaterialType.Fiber: 
                         case DeformMaterialType.Beton:                        
-                            sgm = MatFiber.Eps_StDiagram2L(eps, out int _res, _group);
+                            sgm = MatFiber.Eps_StDiagram2L(eps, out _res, _group);
                             break;                        
                     }
                 }
@@ -447,7 +448,7 @@ namespace BSFiberConcrete
                     {
                         case DeformMaterialType.Fiber:
                         case DeformMaterialType.Beton:
-                            sgm = MatFiber.Eps_StateDiagram3L(eps, out int _res, _group);
+                            sgm = MatFiber.Eps_StateDiagram3L(eps, out _res, _group);
                             break;
                     }
                 }
@@ -468,11 +469,11 @@ namespace BSFiberConcrete
                 double sgm = 0;
                 if (DeformDiagram == DeformDiagramType.D2Linear)
                 {
-                    sgm = MatRebar.Eps_StDiagram2L(Math.Abs(_e), out int _res, _group);
+                    sgm = MatRebar.Eps_StDiagram2L(Math.Abs(_e), out _res, _group);
                 }
                 else if (DeformDiagram == DeformDiagramType.D3Linear)
                 {                    
-                    sgm = MatRebar.Eps_StateDiagram3L(Math.Abs(_e), out int _res, _group);
+                    sgm = MatRebar.Eps_StateDiagram3L(Math.Abs(_e), out _res, _group);
                 }
 
                 sigma_s[j] = Math.Sign(_e) * sgm;
@@ -593,9 +594,7 @@ namespace BSFiberConcrete
         /// </summary>
         /// <returns>Успешно</returns>        
         public bool Calculate()
-        {
-            DenseMatrix Zeros3x3 = DenseMatrix.OfArray(zero3x3);
-            
+        {            
             if (triAreas.Count > 0)
             {
                 m_BElem = CalculationScheme(true);
@@ -609,9 +608,7 @@ namespace BSFiberConcrete
             int qty_J = m_Beam.RodsQty;
             // количество элементов сечения
             int qty_I = m_BElem.Count; 
-            // площадь сечения
-            double _A_s = m_Beam.AreaS(); 
-
+            
             InitVectors(qty_I, qty_J);
            
             GetSize();
@@ -681,7 +678,7 @@ namespace BSFiberConcrete
 
                     Calc_MxMyN();
 
-                    doNextIter = CalcResult(groupLSD);
+                    doNextIter = CalcResult(out int res, groupLSD);
                 }
                 catch (Exception ex)
                 {
@@ -737,8 +734,8 @@ namespace BSFiberConcrete
             AddToResult("ry", ry, groupLSD);
         }
 
-
-        /// Разбиваем сечение на конечные элементы
+        /// <summary>
+        /// Разбиваем сечение на прямоугольные конечные элементы
         /// </summary>
         /// <param name="_N">количество делений</param>
         private List<BSElement> CalculationScheme(int _N = 10, int _M = 1)

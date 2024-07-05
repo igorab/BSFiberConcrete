@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace BSFiberConcrete
 {
@@ -145,7 +146,10 @@ namespace BSFiberConcrete
             {
                 Debug.Assert(true, "Превышен предел прочности (временное сопротивление) ");
                 _res = -1;
-                sgm = 0;
+                if (_group == 1)
+                    sgm = 0;
+                else if (_group == 2)
+                    sgm = Rs_ser;
             }
 
             return sgm;
