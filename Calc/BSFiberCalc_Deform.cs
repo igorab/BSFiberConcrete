@@ -157,6 +157,10 @@ namespace BSFiberConcrete
         public DeformDiagramType DeformDiagram { get; internal set; }
         public DeformMaterialType DeformMaterialType { get; set; }
 
+        private double Mx_b_calc = 0;
+        private double My_b_calc = 0;
+        private double N_b_calc = 0;
+
         /// <summary>
         /// 
         /// </summary>
@@ -483,9 +487,9 @@ namespace BSFiberConcrete
                 Nju_s[j] = nju_s;
             }
 
-            double Mx_b_calc = 0;
-            double My_b_calc = 0;
-            double N_b_calc = 0;
+            Mx_b_calc = 0;
+            My_b_calc = 0;
+            N_b_calc = 0;
 
             for (int i = 0; i < Zfby.Count; i ++)
             {
@@ -677,8 +681,16 @@ namespace BSFiberConcrete
                     }
 
                     Calc_MxMyN();
-
+                    
                     doNextIter = CalcResult(out int res, groupLSD);
+
+                    if (res == 2)
+                    {
+                        // Трещинообразование
+                        double M_crc = 0;
+                        double k_crc = Ky; // 1/r
+                    }
+
                 }
                 catch (Exception ex)
                 {
