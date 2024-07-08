@@ -1,4 +1,5 @@
-﻿using CBAnsDes.My;
+﻿using BSFiberConcrete.BSRFib;
+using CBAnsDes.My;
 using MathNet.Numerics;
 using Microsoft.Win32;
 using System;
@@ -91,6 +92,73 @@ namespace BSFiberConcrete.CalcGroup2
         // число элементов вдоль z шт.
         int nz = 4;
 
+        // Параметры материалов
+        // Бетон B25
+        static double Eb0 = 30 * Math.Pow(10, 3) / 10.0;
+        // Арматура
+        static double Es0 = 2 * Math.Pow(10, 5) / 10.0;
+        //  Прочность арматуры на растяжение
+        static double  Rst = 435 / 10d;
+        //  Прочность арматуры на сжатие
+        static double Rsc = 400 / 10d;
+
+        static double est2 = 0.025;
+        static double esc2 = 0.025;
+        static double esc0 = Rsc / Es0;
+        static double est0 = Rst / Es0;
+
+        // Диаграмма деформирования арматуры (двухлинейная)
+        double dia_S(double _e)
+        {
+            double s = 0;
+
+            if (_e > est2 || _e < -esc2)
+                s = 0;
+            else if (est0 <= _e && _e <= est2)
+                s = Rst;
+            else if (-esc2 <= _e && _e <= -esc0)
+                s = -Rst;
+            else if (0 <= _e && _e <= est0 )                
+                s = Math.Min(_e * Es0, Rst);
+            else if (-esc0 <= _e && _e <= 0)
+                s = Math.Min(_e * Es0, -Rsc);
+
+            return s;
+        }
+
+        double Rbc = 14.5 / 10d; // Расчетное сопротивление бетона на сжатие, кН/см2
+        double Rbt = 1.05 / 10d; // Расчетное сопротивление бетона на сжатие, кН/см2
+        double ebc2 = 0.0035; // Предельная деформация бетона на сжатие
+        double ebt2 = 0.00015; // Предельная деформация бетона на растяжение
+        double ebc0 = 0.002; // Деформация бетона на сжатие
+        double ebt0 = 0.0001; // Деформация бетона на растяжение
+
+        // Диаграмма деформирования бетона (трехлинейная)
+        double dia_B(double _e)
+        {
+            double s = 0;
+            double sc1 = 0.6 * Rbc;
+            double st1 = 0.6 * Rbt;
+            double ebc1 = sc1 /Eb0 ;
+            double ebt1 = st1 /Eb0;
+
+            if (_e > ebt2 || _e < -ebc2)
+                s = 0;            
+            else if (-ebc2 <= _e && _e <= - ebc0)
+                s = -Rbc;
+            else if (ebt0 <= _e && _e <= ebt2)
+                s = Rbt;
+            else if (-ebc0 <= _e && _e <= -ebc1)
+                s = -Rbc * ((1 - sc1/Rbc) * (Math.Abs(_e) - ebc1) / (ebc0 - ebc1) + sc1/Rbc);
+            else if (-ebt1 <= _e && _e <= -ebt0)
+                s = Rbt * ((1 - st1/Rbt) * (Math.Abs(_e)-ebt1)/(ebc0 - ebc1) + st1/Rbt);
+            if (-ebc1 <= _e && _e <= ebt1)
+                s = _e * Eb0;
+
+            return s;
+        }
+
+
         private List<double> My, Mz;
 
         void Init()
@@ -134,15 +202,9 @@ namespace BSFiberConcrete.CalcGroup2
             {
                 As.Add(Math.PI * Math.Pow(d/10, 2) / 4.0);
             }
-
             
             int m = As.Count;
-
-            // Бетон B25
-            double Eb0 = 30 * Math.Pow(10, 3)/ 10.0;
-
-            // Арматура
-            double Es0 = 2 * Math.Pow(10, 5) / 10.0;
+                                   
 
             List<double> Eb = new List<double>();
             List<double> Es = new List<double>();
@@ -234,8 +296,7 @@ namespace BSFiberConcrete.CalcGroup2
             List<double> ep0 = new List<double>();
             List<double> Ky = new List<double>();
             List<double> Kz = new List<double>();
-                        
-            
+                                    
             //Вычисляем параметры деформаций на нулевой итерации
             ep0.Add(N / Dxx[0]);
             double denomK = Dyy[0] * Dzz[0] - Math.Pow(Dyz[0], 2) ;
@@ -248,6 +309,11 @@ namespace BSFiberConcrete.CalcGroup2
             List<double> epS = new List<double>();
 
             //Вычисляем деформации на нулевой итерации   
+            for (int k=0; k < n; k ++)
+                epB.Add(ep0[0] + yb[k] * Ky[0] + zb[k] * Kz[0]);
+
+            for (int l = 0; l < m; l++)
+                epS.Add(ep0[0] + ys[l] * Kz[0] + zs[l] * Kz[0] );
 
         }
 
