@@ -4,10 +4,12 @@ using MathNet.Numerics;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.ModelConfiguration.Configuration;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms.DataVisualization.Charting;
 
 // Рачеты по второй группе предельных состояний
 namespace BSFiberConcrete.CalcGroup2
@@ -156,6 +158,15 @@ namespace BSFiberConcrete.CalcGroup2
                 s = _e * Eb0;
 
             return s;
+        }
+
+        // секущий модуль
+        private double E_sec(double _s, double _e, double _E0 )
+        {
+            if (_e == 0)
+                return _E0;
+            else
+                return _s / _e;
         }
 
 
@@ -315,6 +326,97 @@ namespace BSFiberConcrete.CalcGroup2
             for (int l = 0; l < m; l++)
                 epS.Add(ep0[0] + ys[l] * Kz[0] + zs[l] * Kz[0] );
 
+            // Создаем массивы для напряжений
+            List<double> sigB = new List<double>();
+            List<double> sigS = new List<double>();
+            List<double> sigBS = new List<double>();
+
+            // Заполняем напряжения на нулевой итерации
+            for (int k = 0; k < n; k++)
+                sigB.Add( dia_B( epB[k] ));
+
+            for (int l = 0; l < m; l++)
+                sigS.Add( dia_S( epS[l] ));
+
+            for (int l = 0; l < m; l++)
+                sigBS.Add( dia_B( epS[l] ));
+
+            // максимальное число итераций
+            int jmax = 1000;
+            double tolmax = 10E-10;
+            int err = 0;
+
+            for (int j=1; j<jmax+1; j ++)
+            {
+                // пересчитываем секущие модули
+                for (int k = 0; k < n; k++)
+                    Eb.Add(E_sec(sigB[k], epB[k], Eb0)); // sigB[j-1, k], epB[j-1, k]
+
+                for (int l = 0; l < m; l++)
+                    Es.Add(E_sec(sigS[l], epS[l], Es0)); // sigB[j-1, k], epB[j-1, k]
+
+                for (int l = 0; l < m; l++)
+                    Ebs.Add(E_sec(sigBS[l], epS[l], Eb0)); // sigB[j-1, k], epB[j-1, k]
+
+                var d1 = Eb.Zip(Ab, (E, A) => E * A).Sum();
+                var d2 = Es.Zip(As, (E, A) => E * A).Sum();
+                var d3 = Ebs.Zip(As, (E, A) => E * A).Sum();
+
+                // пересчитываем упруго-геометрические характеристики
+                Dxx.Add(d1 - d2 + d3);
+                if (Dxx[j] == 0)
+                {
+                    err = 1;
+                    break;
+                }
+
+                // пересчитываем положение упруго-геометрического положения ц.т.
+                //Eb.Zip(Ab, y0b, (x, y, z)=> x*y*z);
+
+                // пересчитываем привязки бетона и арматуры к центру тяжести    
+                yb.Add(1);
+                zb.Add(1);
+
+                ys.Add(1);
+                zs.Add(1);
+                // пересчитываем жесткости
+                Dyy.Add(1);
+
+                Dzz.Add(1);
+
+                Dyz.Add(1);
+
+                denomK = Dyy[j] * Dzz[j] - Math.Pow(Dyz[j], 2) ;
+                if (denomK == 0)
+                {
+                    err = 1;
+                    break;
+                }
+                // Пересчитываем моменты
+                My.Add(My[0] + N * zcm[j] - zcm[0]);
+                Mz.Add(Mz[0] + N * ycm[j] - ycm[0]);
+                // Пересчитываем параметры деформаций
+                ep0.Add(N / Dxx[j]);
+                Ky.Add(1/denomK);
+                Kz.Add(1/denomK);
+                // Пересчитываем деформации
+                epB.Add(ep0[j] + yb[j] * Ky[0] + zb[j] * Kz[0] );
+                epS.Add(ep0[j] + ys[j] * Ky[0] + zs[j] * Kz[0]);
+                // Пересчитываем напряжения
+                for (int k=0; k<n; k++)
+                    sigB.Add(dia_B(epB[j]));
+                for (int l = 0; l < m; l++)
+                    sigS.Add(dia_S(epS[l]));
+                for (int l = 0; l < m; l++)
+                    sigBS.Add(dia_B(epS[l]));
+
+                // Вычисление погрешностей
+                double tol_ep0 = 0;
+                double tol_Ky = 0;
+                double tol_Kz = 0;
+                //double tol = Math.Max(tol_ep0, tol_Ky, tol_Kz);
+
+            }
         }
 
     }
