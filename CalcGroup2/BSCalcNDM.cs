@@ -75,13 +75,48 @@ namespace BSFiberConcrete.CalcGroup2
 
     }
 
+    public static class MyFunkyExtensions
+    {
+        public static IEnumerable<TResult> ZipThree<T1, T2, T3, TResult>(
+            this IEnumerable<T1> source,
+            IEnumerable<T2> second,
+            IEnumerable<T3> third,
+            Func<T1, T2, T3, TResult> func)
+        {
+            using (var e1 = source.GetEnumerator())
+            using (var e2 = second.GetEnumerator())
+            using (var e3 = third.GetEnumerator())
+            {
+                while (e1.MoveNext() && e2.MoveNext() && e3.MoveNext())
+                    yield return func(e1.Current, e2.Current, e3.Current);
+            }
+        }
+
+        public static IEnumerable<TResult> ZipFour<T1, T2, T3, T4, TResult>(
+            this IEnumerable<T1> source,
+            IEnumerable<T2> second,
+            IEnumerable<T3> third,
+            IEnumerable<T4> fourth,
+            Func<T1, T2, T3, T4, TResult> func)
+        {
+            using (var e1 = source.GetEnumerator())
+            using (var e2 = second.GetEnumerator())
+            using (var e3 = third.GetEnumerator())
+            using (var e4 = fourth.GetEnumerator())
+            {
+                while (e1.MoveNext() && e2.MoveNext() && e3.MoveNext() && e4.MoveNext())
+                    yield return func(e1.Current, e2.Current, e3.Current, e4.Current);
+            }
+        }
+
+    }
 
     public class BSCalcNDM 
     {
         // Продольная сила, кН, - сжатие
         double N = -400.0;
         // Момент отн. оси Y, кН*см
-        double My0 = 100.0 * 100;
+        double My0 = 90.0 * 100;
         // Момент отн. оси Z, кН*см
         double Mz0 = 10.0 * 100;
         // Ширина сечения, см
@@ -90,7 +125,6 @@ namespace BSFiberConcrete.CalcGroup2
         double h = 40.0;
         // число элементов вдоль y, шт
         int ny = 4;
-
         // число элементов вдоль z шт.
         int nz = 4;
 
@@ -172,7 +206,7 @@ namespace BSFiberConcrete.CalcGroup2
 
         private List<double> My, Mz;
 
-        void Init()
+        private void Init()
         {            
             int n = ny * nz;
 
@@ -215,19 +249,21 @@ namespace BSFiberConcrete.CalcGroup2
             }
             
             int m = As.Count;
-                                   
-
-            List<double> Eb = new List<double>();
-            List<double> Es = new List<double>();
-            List<double> Ebs = new List<double>();
+            
+            //Массивы секущих модулей
+            List<List<double>> Eb = new List<List<double>>();
+            List <List<double>> Es = new List<List<double>>();
+            List <List<double>> Ebs = new List<List<double>>();
 
             for (int i = 0; i < n; n++)
-                Eb.Add(Eb0);
+            {
+                Eb[0].Add(Eb0);
+            }
 
             for (int i = 0; i < As.Count; n++)
             {
-                Es.Add(Eb0);
-                Ebs.Add(Eb0);
+                Es[0].Add(Es0);
+                Ebs[0].Add(Eb0);
             }
 
             // Массив привязок центра тяжести
@@ -283,25 +319,26 @@ namespace BSFiberConcrete.CalcGroup2
             // Вычисляем упруго-геометрические характеристики на нулевой итерации
             double dxx = 0;
             foreach (double _A in  Ab)            
-                dxx += _A * Eb[0];
+                dxx += _A * Eb[0][0];
             foreach (double _A in As)
-                dxx += _A * Eb[0];
-            dxx -= As.Sum(_A => _A * Ebs[0]);
+                dxx += _A * Eb[0][0];
+            dxx -= As.Sum(_A => _A * Ebs[0][0]);
             Dxx.Add(dxx);
 
-            double dyy = 0;
+            double dyy0 = Eb[0].ZipThree(Ab, zb, (E, A, z) => E*A*z*z).Sum() +
+                         Es[0].ZipThree(As, zs, (E, A, z) => E*A*z*z).Sum() -
+                         Ebs[0].ZipThree(As, zs, (E, A, z) => E*A*z*z).Sum();
+            Dyy.Add(dyy0);
 
-            Dyy.Add(dyy);
+            double dzz0 = Eb[0].ZipThree(Ab, yb, (E, A, y) => E*A*y*y).Sum() + 
+                         Es[0].ZipThree(As, ys, (E, A, y) => E*A*y*y).Sum() - 
+                         Ebs[0].ZipThree(As, ys, (E, A, y) => E*A*y*y).Sum();
+            Dzz.Add(dzz0);
 
-
-            double dzz = 0;
-
-            Dyy.Add(dzz);
-
-
-            double dyz = 0;
-
-            Dyy.Add(dyz);
+            double dyz0 = Eb[0].ZipFour(Ab, yb, zb, (E, A, y, z)=> E*A*y*z).Sum() + 
+                         Es[0].ZipFour(As, ys, zs, (E, A, y, z)=> E*A*y*z).Sum() - 
+                         Ebs[0].ZipFour(As, ys, zs, (E, A, y, z) => E*A*y*z).Sum();
+            Dyz.Add(dyz0);
 
             // Создаем массивы параметров деформаций
             List<double> ep0 = new List<double>();
@@ -350,17 +387,17 @@ namespace BSFiberConcrete.CalcGroup2
             {
                 // пересчитываем секущие модули
                 for (int k = 0; k < n; k++)
-                    Eb.Add(E_sec(sigB[k], epB[k], Eb0)); // sigB[j-1, k], epB[j-1, k]
+                    Eb[0].Add(E_sec(sigB[k], epB[k], Eb0)); // sigB[j-1, k], epB[j-1, k]
 
                 for (int l = 0; l < m; l++)
-                    Es.Add(E_sec(sigS[l], epS[l], Es0)); // sigB[j-1, k], epB[j-1, k]
+                    Es[0].Add(E_sec(sigS[l], epS[l], Es0)); // sigB[j-1, k], epB[j-1, k]
 
                 for (int l = 0; l < m; l++)
-                    Ebs.Add(E_sec(sigBS[l], epS[l], Eb0)); // sigB[j-1, k], epB[j-1, k]
+                    Ebs[0].Add(E_sec(sigBS[l], epS[l], Eb0)); // sigB[j-1, k], epB[j-1, k]
 
-                var d1 = Eb.Zip(Ab, (E, A) => E * A).Sum();
-                var d2 = Es.Zip(As, (E, A) => E * A).Sum();
-                var d3 = Ebs.Zip(As, (E, A) => E * A).Sum();
+                var d1 = Eb[0].Zip(Ab, (E, A) => E * A).Sum();
+                var d2 = Es[0].Zip(As, (E, A) => E * A).Sum();
+                var d3 = Ebs[0].Zip(As, (E, A) => E * A).Sum();
 
                 // пересчитываем упруго-геометрические характеристики
                 Dxx.Add(d1 - d2 + d3);
@@ -371,20 +408,45 @@ namespace BSFiberConcrete.CalcGroup2
                 }
 
                 // пересчитываем положение упруго-геометрического положения ц.т.
-                //Eb.Zip(Ab, y0b, (x, y, z)=> x*y*z);
+                double _numcy = Eb[0].ZipThree(Ab, y0b, (E, A, y0) => E*A*y0).Sum() + 
+                                Es[0].ZipThree(As, y0s, (E, A, y0) => E * A * y0).Sum() - 
+                                Ebs[0].ZipThree(Ab, y0s, (E, A, y0) => E*A*y0).Sum() ;
+
+                double _numcz = Eb[0].ZipThree(Ab, z0b, (E, A, z0) => E * A * z0).Sum() +
+                                Es[0].ZipThree(As, z0s, (E, A, z0) => E * A * z0).Sum() -
+                                Ebs[0].ZipThree(Ab, z0s, (E, A, z0) => E * A * z0).Sum();
+
+                ycm.Add(_numcy / Dxx[j]);
+                zcm.Add(_numcz / Dxx[j]);
 
                 // пересчитываем привязки бетона и арматуры к центру тяжести    
-                yb.Add(1);
-                zb.Add(1);
+                for (int k = 0; k < n; k++)
+                {
+                    yb.Add(y0b[k] - ycm[j]);
+                    zb.Add(z0b[k] - zcm[j] );
+                }
 
-                ys.Add(1);
-                zs.Add(1);
+                for (int l = 0; l < m; l++)
+                {
+                    ys.Add(y0s[l] - ycm[l]);
+                    zs.Add(z0s[l] - zcm[l]);
+                }
+
                 // пересчитываем жесткости
-                Dyy.Add(1);
+                double dyy = Eb[0].ZipThree(Ab, zb, (E, A, z) => E * A * z * z).Sum() +
+                           Es[0].ZipThree(As, zs, (E, A, z) => E * A * z * z).Sum() -
+                           Ebs[0].ZipThree(As, zs, (E, A, z) => E * A * z * z).Sum();
+                Dyy.Add(dyy);
 
-                Dzz.Add(1);
+                double dzz = Eb[0].ZipThree(Ab, yb, (E, A, y) => E * A * y * y).Sum() +
+                             Es[0].ZipThree(As, ys, (E, A, y) => E * A * y * y).Sum() -
+                             Ebs[0].ZipThree(As, ys, (E, A, y) => E * A * y * y).Sum();
+                Dzz.Add(dzz);
 
-                Dyz.Add(1);
+                double dyz = Eb[0].ZipFour(Ab, yb, zb, (E, A, y, z) => E * A * y * z).Sum() +
+                             Es[0].ZipFour(As, ys, zs, (E, A, y, z) => E * A * y * z).Sum() -
+                             Ebs[0].ZipFour(As, ys, zs, (E, A, y, z) => E * A * y * z).Sum();
+                Dyz.Add(dyz);
 
                 denomK = Dyy[j] * Dzz[j] - Math.Pow(Dyz[j], 2) ;
                 if (denomK == 0)
@@ -393,15 +455,20 @@ namespace BSFiberConcrete.CalcGroup2
                     break;
                 }
                 // Пересчитываем моменты
-                My.Add(My[0] + N * zcm[j] - zcm[0]);
-                Mz.Add(Mz[0] + N * ycm[j] - ycm[0]);
+                My.Add(My[0] + N * (zcm[j] - zcm[0]));
+                Mz.Add(Mz[0] + N * (ycm[j] - ycm[0]));
+
                 // Пересчитываем параметры деформаций
                 ep0.Add(N / Dxx[j]);
-                Ky.Add(1/denomK);
-                Kz.Add(1/denomK);
+                Ky.Add((Mz[j]*Dyy[j]  + My[j]*Dyz[j]) / denomK );
+                Kz.Add(-(My[j]*Dzz[j] + Mz[j]*Dyz[j]) /denomK);
+
                 // Пересчитываем деформации
-                epB.Add(ep0[j] + yb[j] * Ky[0] + zb[j] * Kz[0] );
-                epS.Add(ep0[j] + ys[j] * Ky[0] + zs[j] * Kz[0]);
+                for (int k = 0; k < n; k ++)
+                    epB.Add(ep0[j] + yb[j] * Ky[0] + zb[j] * Kz[0]);
+                for (int l=0; l < m; m ++ )
+                    epS.Add(ep0[j] + ys[j] * Ky[0] + zs[j] * Kz[0]);
+
                 // Пересчитываем напряжения
                 for (int k=0; k<n; k++)
                     sigB.Add(dia_B(epB[j]));
@@ -411,13 +478,21 @@ namespace BSFiberConcrete.CalcGroup2
                     sigBS.Add(dia_B(epS[l]));
 
                 // Вычисление погрешностей
-                double tol_ep0 = 0;
-                double tol_Ky = 0;
-                double tol_Kz = 0;
-                //double tol = Math.Max(tol_ep0, tol_Ky, tol_Kz);
+                double tol_ep0 = Math.Abs(ep0[j] - ep0[j-1]) ;
+                double tol_Ky = Math.Abs(Ky[j] - Ky[j - 1]);
+                double tol_Kz = Math.Abs(Kz[j] - Ky[j-1]) ;                
+                double tol = new double[] { tol_ep0, tol_Ky, tol_Kz }.Max();
+                if (tol < tolmax)
+                    break;
 
+                if (j == jmax)
+                    err = 2;
+
+                double Nint = sigB.Zip(Ab, (s, A) => s * A).Sum() + sigS.Zip(As, (s, A) => s * A).Sum() - sigBS.Zip(As, (s, A) => s * A).Sum();
             }
         }
+
+        
 
     }
 }
