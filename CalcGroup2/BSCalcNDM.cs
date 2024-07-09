@@ -129,9 +129,9 @@ namespace BSFiberConcrete.CalcGroup2
         int nz = 4;
 
         // Параметры материалов
-        // Бетон B25
+        // Бетон B25 кН/см2
         static double Eb0 = 30 * Math.Pow(10, 3) / 10.0;
-        // Арматура
+        // Арматура кН/см2
         static double Es0 = 2 * Math.Pow(10, 5) / 10.0;
         //  Прочность арматуры на растяжение
         static double  Rst = 435 / 10d;
@@ -254,7 +254,7 @@ namespace BSFiberConcrete.CalcGroup2
             List<List<double>> Eb = new List<List<double>>();
             List <List<double>> Es = new List<List<double>>();
             List <List<double>> Ebs = new List<List<double>>();
-
+            // Заполняем секущие модули для нулевой итерации
             for (int i = 0; i < n; n++)
             {
                 Eb[0].Add(Eb0);
@@ -271,18 +271,12 @@ namespace BSFiberConcrete.CalcGroup2
             List<double> zcm = new List<double>();
 
             // Вычисляем положение начального (геометрического) центра тяжести
-            IEnumerable<double> numcy = Ab.Zip(y0b, (A, y)=> A * y);
-            IEnumerable<double> numcz = Ab.Zip(z0b, (A, z) => A * z);
-            double denomc = Ab.Sum(A => A);
-
-            double cy = 0;
-            foreach (double x in numcy) 
-                cy += x/denomc;
-            ycm.Add(cy);
-
-            double cz = 0;
-            foreach (double x in numcz)
-                cz += x / denomc;
+            var numcy = Ab.Zip(y0b, (A, y)=> A * y).Sum();
+            var numcz = Ab.Zip(z0b, (A, z) => A * z).Sum();
+            double denomc = Ab.Sum(A => A);            
+            double cy = numcy / denomc;
+            ycm.Add(cy);                        
+            double cz = numcz / denomc;
             zcm.Add(cz);
 
             List<double> yb = new List<double>();
