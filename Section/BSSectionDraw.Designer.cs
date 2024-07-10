@@ -34,6 +34,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnSectionGrid = new System.Windows.Forms.Button();
             this.pic = new System.Windows.Forms.PictureBox();
+            this.btnCalcGo = new System.Windows.Forms.Button();
             this.panelTop.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic)).BeginInit();
@@ -68,12 +69,12 @@
             this.btnLine.Size = new System.Drawing.Size(43, 37);
             this.btnLine.TabIndex = 0;
             this.btnLine.Text = "-------";
-            this.btnLine.UseVisualStyleBackColor = true;
-            this.btnLine.Click += new System.EventHandler(this.btnLine_Click);
+            this.btnLine.UseVisualStyleBackColor = true;            
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.panel1.Controls.Add(this.btnCalcGo);
             this.panel1.Controls.Add(this.btnSectionGrid);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 571);
@@ -99,11 +100,18 @@
             this.pic.Name = "pic";
             this.pic.Size = new System.Drawing.Size(1002, 496);
             this.pic.TabIndex = 2;
-            this.pic.TabStop = false;
-            this.pic.Click += new System.EventHandler(this.pic_Click);
-            this.pic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pic_MouseDown);
-            this.pic.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pic_MouseMove);
-            this.pic.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pic_MouseUp);
+            this.pic.TabStop = false;            
+            this.pic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pic_MouseDown);                        
+            // 
+            // btnCalcGo
+            // 
+            this.btnCalcGo.Location = new System.Drawing.Point(32, 8);
+            this.btnCalcGo.Name = "btnCalcGo";
+            this.btnCalcGo.Size = new System.Drawing.Size(75, 32);
+            this.btnCalcGo.TabIndex = 1;
+            this.btnCalcGo.Text = "Go";
+            this.btnCalcGo.UseVisualStyleBackColor = true;
+            this.btnCalcGo.Click += new System.EventHandler(this.btnCalcGo_Click);
             // 
             // BSSectionDraw
             // 
@@ -132,5 +140,6 @@
         private System.Windows.Forms.Button btnPoint;
         private System.Windows.Forms.Button btnLine;
         private System.Windows.Forms.Button btnSectionGrid;
+        private System.Windows.Forms.Button btnCalcGo;
     }
 }
