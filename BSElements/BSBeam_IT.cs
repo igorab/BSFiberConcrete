@@ -72,13 +72,27 @@ namespace BSFiberConcrete
 
         public override double Jy()
         {
-            return base.Jy();
+            // момент инерции нижнего прямоугольника относительно центральной системы координат
+            // Формула вида: Iy1 = Iy + delataY^2 * A,
+            // Iy - ОСЕВОЙ момент инерции фигуры;   delataY - осевое смещение;  A - площадь фигуры
+            double I_1 = b1f * Math.Pow(h1f,3) / 12 + Math.Pow(hw / 2 + h1f / 2, 2) * b1f * h1f;
+            double I_2 = bw * Math.Pow(hw,3) / 12;
+            double I_3 = bf * Math.Pow(hf,3) / 12 + Math.Pow(hw / 2 + hf / 2, 2) * bf * hf;
+            return I_1 + I_2 + I_3;
+
+
         }
 
         public override double I_s()
         {
             return Jx();
         }
+
+
+        // статические моменты относительно осей 
+        public override double Sy() => hf * bf * hf / 2 + hw * bw * (hf + hw / 2) + h1f * b1f * (Height - h1f / 2);
+        public override double Sx() => (hf * bf + hw * bw + h1f * b1f) * Width / 2; // не на 100% уверен в формуле
+
 
         public static Exception SizeError(string _txt)
         {

@@ -254,12 +254,12 @@ namespace BSFiberConcrete
             }
 
             double bf=0, hf=0, bw, hw, b1f=0, h1f=0;
-            if (m_BeamSection == BeamSection.TBeam)
+            if (m_BeamSectionReport == BeamSection.TBeam)
             {
                 bw = sz[0]; hw = sz[1]; b1f = sz[2]; h1f = sz[3];
                 sz = new double[] { bf, hf, bw, hw, b1f, h1f, _length };
             }            
-            else if (m_BeamSection == BeamSection.LBeam)
+            else if (m_BeamSectionReport == BeamSection.LBeam)
             {
                 bf = sz[0]; hf = sz[1]; bw = sz[2]; hw = sz[3];
                 sz = new double[] { bf, hf, bw, hw, b1f, h1f, _length };
@@ -426,6 +426,7 @@ namespace BSFiberConcrete
                 m_Message = bsCalc.Msg;
                 //TODO need refactoring - параметры с описанием
                 m_PhysParams = bsCalc.PhysicalParameters();
+
             }
             catch (Exception _e)
             {
@@ -436,6 +437,241 @@ namespace BSFiberConcrete
             {
                 if (bsCalc is null)
                     throw new Exception("Не выполнен расчет");
+
+                if (calcOk)
+                {
+                    string pathToHtmlFile = CreateReport(1, m_BeamSectionReport, _useReinforcement: useReinforcement);
+
+                    System.Diagnostics.Process.Start(pathToHtmlFile);
+                }
+                else
+                {
+                    string errMsg = "";
+                    foreach (string ms in m_Message) errMsg += ms + ";\t\n";
+
+                    MessageBox.Show(errMsg);
+                }
+
+            }
+            catch (Exception _e)
+            {
+                MessageBox.Show("Ошибка в отчете " + _e.Message);
+            }
+
+        }
+
+
+
+
+
+        /// <summary>
+        /// Расчет прочности сечения на действие момента
+        /// </summary>        
+        private void FiberCalculate_Cracking()
+        {
+            bool useReinforcement = checkBoxRebar.Checked;
+            bool calcOk = false;
+            try
+            {
+
+
+                // центр тяжести сечения
+                TriangleNet.Geometry.Point CG = new TriangleNet.Geometry.Point(0.0, 0.0);
+
+                DeformDiagramType deformDiagramType = (DeformDiagramType)cmbDeformDiagram.SelectedIndex;
+                DeformMaterialType deformMaterialType = (DeformMaterialType)cmbTypeMaterial.SelectedIndex;
+
+                BSMatFiber beamMaterial;
+
+                // класс фибробетона (бетона) на сжатие
+                string cBt_class = cmbBfn.Text;
+                // Фибробетон:
+                double cRb = (double)numRfb_n.Value; // сопротивление сжатию, кгс/см2
+                double cEb = (double)numEfb.Value; // модуль упругости,  кгс/см2
+
+                // диаграмма:
+                // арматура
+                string cR_class = cmbRebarClass.Text;
+                double cRs = (double)numRs.Value; // кгс/см2            
+                double cEs = (double)numEs.Value; // кгс/см2
+                double c_eps_s0 = (double)numEpsilonS0.Value;// 0.00175; 
+                double c_eps_s2 = (double)numEpsilonS2.Value; ; // 0.025; 
+
+                double c_As = (double)numAs.Value;
+                double c_As1 = (double)numAs1.Value;
+                double c_a_s = (double)num_a.Value;
+                double c_a_s1 = (double)num_a1.Value;
+                //бетон
+                double c_eps_b1 = (double)numEps_fb0.Value;
+                double c_eps_b1_red = (double)numEps_fb0.Value; // уточнить
+                double c_eps_b2 = (double)numEps_fb2.Value;
+
+                // длина балки, см 
+                double c_Length = Convert.ToDouble(tbLength.Text);
+
+                // расстановка арматурных стержней
+                List<BSRod> Rods = new List<BSRod>();
+
+                // Усилия Mx, My - моменты, кгс*см , N - сила, кгс              
+                GetEffortsFromForm(out Dictionary<string, double> MNQ);
+                double c_Mx = MNQ["Mx"];
+                double c_My = MNQ["My"];
+                double c_N = MNQ["N"];
+
+                // сечение балки балки, см 
+                double[] beam_sizes = BeamSizes(c_Length);
+
+                var bsBeam = BSBeam.construct(m_BeamSectionReport);
+                bsBeam.GetSizes(beam_sizes);
+                bsBeam.Length = c_Length;
+
+                double c_b = bsBeam.Width;
+                double c_h = bsBeam.Height;
+                m_GeomParams = new Dictionary<string, double> { { "b, см", c_b }, { "h, см", c_h } };
+
+                //смещение начала координат            
+                double dX0, dY0;
+
+                // координаты ц.т. сечения, если т. 0 - левый нижний угол
+                (CG.X, CG.Y) = bsBeam.CG();
+
+
+
+
+
+
+
+                BSFiberCalc_Cracking calc_Cracking = new BSFiberCalc_Cracking(_Mx: c_Mx, _My: c_My, _N: c_N);
+                //calc_Cracking.DeformDiagram = deformDiagramType;
+                //calc_Cracking.DeformMaterialType = deformMaterialType;
+                calc_Cracking.Beam = bsBeam;
+                calc_Cracking.typeOfBeamSection = m_BeamSectionReport;
+
+
+                GenerateMesh(ref CG); // покрыть сечение сеткой
+                //
+                //calc_Cracking.CG = CG;
+                //calc_Cracking.triAreas = triAreas;
+                //calc_Cracking.triCGs = triCGs;
+
+                // Начало координат:
+                dX0 = CG.X;
+                dY0 = CG.Y;
+
+                // задать тип арматуры
+                calc_Cracking.MatRebar = new BSMatRod(cEs)
+                {
+                    RCls = cR_class,
+                    Rs = cRs,
+                    e_s0 = c_eps_s0,
+                    e_s2 = c_eps_s2,
+                    As = c_As,
+                    As1 = c_As1,
+                    a_s = c_a_s,
+                    a_s1 = c_a_s1
+                };
+
+                m_Reinforcement = new Dictionary<string, double>();
+
+
+
+                beamMaterial = new BSMatFiber(cEb, numYft.Value, numYb.Value, numYb1.Value, numYb2.Value, numYb3.Value, numYb5.Value)
+                {
+                    BTCls = cBt_class,
+                    Nu_fb = 1,
+                    Rfbn = cRb,
+                    Rfbtn = (double)numRfbt_n.Value,
+                    Rfbt2n = (double)numRfbt2n.Value,
+                    Rfbt3n = (double)numRfbt3n.Value,
+                    e_b1_red = c_eps_b1_red,
+                    e_b1 = c_eps_b1,
+                    e_b2 = c_eps_b2,
+                    Eps_fb_ult = (double)numEps_fb_ult.Value,
+                    Eps_fbt_ult = (double)numEps_fbt_ult.Value,
+                };
+
+                // задать свойства
+                // бетона
+                calc_Cracking.MatFiber = beamMaterial;
+
+                //RodsReinforcement();
+
+                // арматура балки                                                
+                calc_Cracking.Beam.Rods = Rods;
+                // материал
+                calc_Cracking.Beam.Mat = beamMaterial;
+                calc_Cracking.GetParams(new double[] { 10, 1 });
+
+                // рассчитать 
+                calcOk = calc_Cracking.CalculateUltM();
+
+
+
+
+
+                // old
+
+                //// определяется расчетный класс в соответсвии с задаными сечеением
+                //// Также определяется арматуры
+
+                //bsCalc = BSFiberCalculation.construct(m_BeamSection, useReinforcement);
+
+                //var beamSection = BSBeam.construct(m_BeamSection);
+
+                //BSFiberCalc_Cracking bsCracing = new BSFiberCalc_Cracking();
+                
+                ////bsCracing.MatFiber = m_MatFiber;
+                ////bsCracing.m_BeamSectionType = m_BeamSection;
+                ////bsCracing.m_beamSection = beamSection; // может потребоваться приведение
+
+                //// Переопределение переменной bsCalc с учетом продольной арматуры, при неаличии арматуры
+                //// не точно ?
+                ////InitRebar(bsCalc);
+
+
+
+
+                //// Почему 0?
+                //double[] prms = m_BSLoadData.Params;
+                //// ну ладно
+                //// Некоторые Rfb и Y
+                //InitUserParams(prms);
+
+                //// определяются атрибуты расчетного класса, заданные пользователем на форме 
+                //bsCracing.GetParams(prms);
+                //// Определяются размеры сечения и длина балки.
+                //double[] testBeamSize = BeamSizes();
+                ////bsCalc.GetSize()
+
+                ////bsCalc.Efforts = new Dictionary<string, double> { { "My", _M } };
+                ////InitBeamLength();
+                ////calcOk = bsCalc.Calculate();
+
+                //var bsBeam2 = BSBeam.construct(m_BeamSection);
+                //double[] beam_sizes2 = BeamSizes(10);
+                //bsBeam.GetSizes(beam_sizes2);
+
+                ////calcOk = bsCracing.Calculate();
+
+                //m_PhysParams = bsCalc.PhysParams;
+                //m_Coeffs = bsCalc.Coeffs;
+                //m_Efforts = bsCalc.Efforts;
+                //m_GeomParams = bsCalc.GeomParams();
+                //m_CalcResults = bsCalc.Results();
+                //m_Message = bsCalc.Msg;
+                //TODO need refactoring - параметры с описанием
+                //m_PhysParams = bsCalc.PhysicalParameters();
+
+            }
+            catch (Exception _e)
+            {
+                MessageBox.Show("Ошибка в расчете: " + _e.Message);
+            }
+
+            try
+            {
+                //if (bsCalc is null)
+                //    throw new Exception("Не выполнен расчет");
 
                 if (calcOk)
                 {
@@ -1128,7 +1364,9 @@ namespace BSFiberConcrete
             CalcDeformNDM();
 
             if (checkBoxNDM2Group.Checked)
-                CalcDeformNDM(2);                        
+                CalcDeformNDM(2);
+
+            FiberCalculate_Cracking();
         }
 
         private void gridEfforts_CellValueChanged(object sender, DataGridViewCellEventArgs e)
