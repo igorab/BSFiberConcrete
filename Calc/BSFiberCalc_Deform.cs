@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing.Text;
 using System.Windows.Forms;
+using BSFiberConcrete.CalcGroup2;
 using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics.LinearAlgebra.Double;
 using TriangleNet.Geometry;
@@ -184,6 +185,16 @@ namespace BSFiberConcrete
             Msg = new List<string>();
             m_Res = new Dictionary<string, double>();
             m_Res2Group = new Dictionary<string, double>();
+        }
+
+        public void CalcNDM()
+        {
+            Dictionary<string, double> pairs = new Dictionary<string, double>();
+
+            BSCalcNDM calcNDM = new BSCalcNDM(pairs);
+            calcNDM.GetRods(m_Rods);
+            calcNDM.Run();
+             
         }
 
         /// <summary>

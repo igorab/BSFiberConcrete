@@ -53,20 +53,60 @@ namespace BSFiberConcrete.CalcGroup2
 
     public class BSCalcNDM 
     {
+        public BSCalcNDM()
+        {
+        }
+
+        public BSCalcNDM(Dictionary<string, double> D)
+        {
+            // enforce
+            N = D["N"];
+            My0 = D["My"];
+            Mz0 = D["Mz"];
+            //size
+            b = D["b"];
+            h = D["h"];
+            //Mesh
+            ny = (int)D["ny"];
+            nz = (int)D["nz"];
+            // beton
+            Eb0 = D["Eb0"];
+            Rbc = D["Rbc"];
+            Rbt = D["Rbt"];
+            ebc0 = D["ebc0"];
+            ebc2 = D["ebc2"];
+            ebt0 = D["ebt0"];
+            ebt2 = D["ebt2"];
+            // steel
+            Es0 = D["Es0"];
+            Rsc = D["Rsc"];
+            Rst = D["Rst"];
+            esc2 = D["esc2"];
+            est2 = D["est2"];            
+        }
+
+        // стержни арматуры
+        public void GetRods(double[] _ds, double[] _y0s, double[] _z0s)
+        {
+            ds = _ds.ToList();
+            y0s = _y0s.ToList();
+            z0s = _z0s.ToList();
+        }
+
         // Продольная сила, кН, - сжатие
-        double N = -400.0;
+        private double N = -400.0;
         // Момент отн. оси Y, кН*см
-        double My0 = 90 * 100;
+        private double My0 = 90 * 100;
         // Момент отн. оси Z, кН*см
-        double Mz0 = 10.0 * 100;
+        private double Mz0 = 10.0 * 100;
         // Ширина сечения, см
-        double b = 20.0;
+        private double b = 20.0;
         // высота сечения, см
-        double h = 40.0;
+        private double h = 40.0;
         // число элементов вдоль y, шт
-        int ny = 4;
+        private int ny = 4;
         // число элементов вдоль z шт.
-        int nz = 4;
+        private int nz = 4;
 
         // диаметры арматурных стержней
         private List<double> ds = new List<double>() { 16.0, 16.0, 16.0, 16.0 };
@@ -76,37 +116,37 @@ namespace BSFiberConcrete.CalcGroup2
 
         // Параметры материалов
         // Бетон B25 кН/см2
-        static readonly double Eb0 = 30.0 * Math.Pow(10, 3) / 10.0; //Начальный модуль бетона, кН/см2
-        static readonly double Rbc = 14.5 / 10d; // Расчетное сопротивление бетона на сжатие, кН/см2
-        static readonly double Rbt = 1.05 / 10d; // Расчетное сопротивление бетона на сжатие, кН/см2
-        static readonly double ebc0 = 0.002; // Деформация бетона на сжатие
-        static readonly double ebc2 = 0.0035; // Предельная деформация бетона на сжатие                
-        static readonly double ebt0 = 0.0001; // Деформация бетона на растяжение
-        static readonly double ebt2 = 0.00015; // Предельная деформация бетона на растяжение
+        private static double Eb0 = 30.0 * Math.Pow(10, 3) / 10.0; //Начальный модуль бетона, кН/см2
+        private static double Rbc = 14.5 / 10d; // Расчетное сопротивление бетона на сжатие, кН/см2
+        private static double Rbt = 1.05 / 10d; // Расчетное сопротивление бетона на сжатие, кН/см2
+        private static double ebc0 = 0.002; // Деформация бетона на сжатие
+        private static double ebc2 = 0.0035; // Предельная деформация бетона на сжатие                
+        private static double ebt0 = 0.0001; // Деформация бетона на растяжение
+        private static double ebt2 = 0.00015; // Предельная деформация бетона на растяжение
 
         // Арматура кН/см2
-        static readonly double Es0 = 2.0 * Math.Pow(10, 5) / 10.0; //Начальный модуль арматуры, кН/см2       
-        static readonly double  Rst = 435 / 10d; // Прочность арматуры на растяжение        
-        static readonly double Rsc = 400 / 10d;  // Прочность арматуры на сжатие
-        static double est2 = 0.025;
-        static double esc2 = 0.025;
-        static double esc0 = Rsc / Es0;
-        static double est0 = Rst / Es0;
+        private static double Es0 = 2.0 * Math.Pow(10, 5) / 10.0; //Начальный модуль арматуры, кН/см2       
+        private static double Rst = 435 / 10d; // Прочность арматуры на растяжение        
+        private static double Rsc = 400 / 10d;  // Прочность арматуры на сжатие
+        private static double est2 = 0.025;
+        private static double esc2 = 0.025;
+        private static double esc0 = Rsc / Es0;
+        private static double est0 = Rst / Es0;
 
         private List<double> My, Mz;
 
-        public static double Nint;
-        public static double Myint;
-        public static double Mzint;
+        public static double Nint { get; private set; }
+        public static double Myint { get; private set; }
+        public static double Mzint { get; private set; }
 
         // максимальное число итераций
-        static int jmax = 1000;
+        private static int jmax = 1000;
         // Максимальная абсолютная погрешность
-        static double tolmax = Math.Pow(10, -10); 
-        static int err = 0;
+        private static double tolmax = Math.Pow(10, -10);
+        private static int err = 0;
 
         // Диаграмма деформирования арматуры (двухлинейная)
-        public double dia_S(double _e)
+        private double Diagr_S(double _e)
         {
             double s = 0;
 
@@ -125,7 +165,7 @@ namespace BSFiberConcrete.CalcGroup2
         }
                 
         // Диаграмма деформирования бетона (трехлинейная)
-        double dia_B(double _e)
+        private double Diagr_B(double _e)
         {
             double s = 0;
             double sc1 = 0.6 * Rbc;
@@ -311,13 +351,13 @@ namespace BSFiberConcrete.CalcGroup2
 
             // Заполняем напряжения на нулевой итерации
             for (int k = 0; k < n; k++)
-                sigB[0].Add( dia_B( epB[0][k] ));
+                sigB[0].Add( Diagr_B( epB[0][k] ));
 
             for (int l = 0; l < m; l++)
             {
-                sigS[0].Add(dia_S(epS[0][l]));
+                sigS[0].Add(Diagr_S(epS[0][l]));
 
-                sigBS[0].Add(dia_B(epS[0][l]));
+                sigBS[0].Add(Diagr_B(epS[0][l]));
             }
             #endregion
                       
@@ -419,14 +459,14 @@ namespace BSFiberConcrete.CalcGroup2
                 // Пересчитываем напряжения
                 sigB.Add(new List<double>());
                 for (int k = 0; k < n; k++)
-                    sigB[j].Add(dia_B(epB[j][k]));
+                    sigB[j].Add(Diagr_B(epB[j][k]));
 
                 sigS.Add(new List<double>());
                 sigBS.Add(new List<double>());
                 for (int l = 0; l < m; l++)
                 {
-                    sigS[j].Add(dia_S(epS[j][l]));
-                    sigBS[j].Add(dia_B(epS[j][l]));
+                    sigS[j].Add(Diagr_S(epS[j][l]));
+                    sigBS[j].Add(Diagr_B(epS[j][l]));
                 }
 
                 // Вычисление погрешностей
@@ -459,12 +499,27 @@ namespace BSFiberConcrete.CalcGroup2
 
         }
 
-        internal void Run()
+        public void Run()
         {
             Init();
 
 
             //throw new NotImplementedException();
+        }
+
+        internal void GetRods(List<BSRod> _Rods)
+        {
+            ds.Clear();
+            y0s.Clear();
+            z0s.Clear();
+            
+            foreach(var rod in _Rods)
+            {
+                ds.Add(rod.D);
+                y0s.Add(rod.CG_Y);
+                z0s.Add(rod.CG_X);
+            }
+            
         }
     }
 }
