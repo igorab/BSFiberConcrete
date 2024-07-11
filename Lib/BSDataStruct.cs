@@ -284,6 +284,7 @@ namespace BSFiberConcrete
         public int Id { get; set; }
         public double Mx { get; set; }
         public double My { get; set; }
+        public double Mz { get; set; }
         public double N { get; set; }
         public double Q { get; set; }
         public double Ml { get; set; }

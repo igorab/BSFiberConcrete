@@ -219,6 +219,7 @@
       <DependentUpon>RSRFibDeflection.cs</DependentUpon>
     </Compile>
     <Compile Include="CalcGroup2\BSCalcNDM.cs" />
+    <Compile Include="CalcGroup2\BSCalcNDM_Fiber2Group.cs" />
     <Compile Include="Calc\BSFiberCalc_Cracking.cs" />
     <Compile Include="Calc\BSFiberCalc_Deform.cs" />
     <Compile Include="Calc\BSFiberCalc_IBeamRods.cs" />
