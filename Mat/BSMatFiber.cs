@@ -78,6 +78,9 @@ namespace BSFiberConcrete
         [DisplayName("Расчетное сопротивление сталефибробетона осевому сжатию Rfbn")]
         public double Rfb { get { return R_fb_calc(); } set { Rfb = value; } }
 
+        [DisplayName("Расчетное сопротивление сталефибробетона осевому сжатию 2-й группы Rfb, ser")]
+        public double Rfb_ser => Rfbn;
+
         [DisplayName("Нормативное сопротивление сталефибробетона осевому растяжению Rfbt")]
         public double Rfbtn { get; set; }
 
@@ -86,6 +89,9 @@ namespace BSFiberConcrete
             get { return (m_Rfbt > 0) ? m_Rfbt : R_fbt_calc(); } 
             set { m_Rfbt = value; } 
         }
+
+        [DisplayName("Расчетное сопротивление сталефибробетона осевому растяжению 2-й группы Rfbt, ser")]
+        public double Rfbt_ser => Rfbtn;
 
         [DisplayName("Остаточное нормативное сопротивление на растяжение Rfbt2,n")]
         public double Rfbt2n { get; set; }
@@ -133,14 +139,17 @@ namespace BSFiberConcrete
 
         //характеристика сжатой зоны сталефибробетона, принимаемая для
         // сталефибробетона из тяжелого бетона классов до В60 включительно равной 0,8
-        public static double omega = 0.8;
+        public double Omega => (B<=60) ? 0.8 : 0.9;
+
+        // предельная относительная деформация бетона при растяжении
+        public const double Ebt0 = 0.0001;
 
         /// <summary>
         /// Диаграмма состояния растяжения-сжатия фибробетона, в обозначениях СП360 
         /// </summary>
         /// <param name="_eps">Деформация</param>
         /// <returns>Напряжение</returns>       
-        public double Eps_StateDiagram3L(double _eps, out int _res)
+        public double Eps_StateDiagram3L(double _eps, out int _res, int _group = 1 )
         {
             _res = 0;
             if (Efb == 0 || Rfbt == 0 || Rfbt2 == 0 || Rfbt3 == 0)
@@ -205,7 +214,7 @@ namespace BSFiberConcrete
         /// </summary>
         /// <param name="_e">Деформация</param>
         /// <returns>Напряжение</returns>        
-        public double Eps_StDiagram2L(double _e, out int _res)
+        public double Eps_StDiagram2L(double _e, out int _res, int _group = 1)
         {
             double sgm = 0;
             _res = 0;
@@ -222,13 +231,27 @@ namespace BSFiberConcrete
             }
             else if (_e < 0) // растяжение
             {
-                sgm = 0; //  Eb_red * _e;
+                if (_group == 1)
+                {
+                    sgm = 0;
+                }
+                else if (_group == 2)
+                {
+                    sgm = Rfbt_ser;
+
+                    // условие образование трещины
+                    if (Math.Abs(_e) > Ebt0)
+                    {
+                        _res = 2;
+                    }
+                }
+
             }
             else if (_e >= e_b2) // уточнить такую ситуацию
             {
                 Debug.Assert(true, "Превышен предел прочности (временное сопротивление) ");
 
-                sgm = 0;// R_fb;
+                sgm = 0; 
             }
 
             return sgm;

@@ -20,6 +20,7 @@ using System.Xml.Linq;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using BSFiberConcrete.Control;
 using BSBeamCalculator;
+using BSFiberConcrete.CalcGroup2;
 
 namespace BSFiberConcrete
 {
@@ -57,6 +58,7 @@ namespace BSFiberConcrete
         private Dictionary<string, double> m_Reinforcement;
         private Dictionary<string, double> m_GeomParams;
         private Dictionary<string, double> m_CalcResults;
+        private Dictionary<string, double> m_CalcResults2Group;
 
         private List<string> m_Message;
 
@@ -413,9 +415,7 @@ namespace BSFiberConcrete
                 bsCalc.GetParams(prms);
                 bsCalc.GetSize(BeamSizes());
                 bsCalc.Efforts = new Dictionary<string, double> { { "My", _M } };
-
-                //InitBeamLength();
-
+                
                 calcOk = bsCalc.Calculate();
 
                 m_PhysParams = bsCalc.PhysParams; 
@@ -722,6 +722,7 @@ namespace BSFiberConcrete
                 report.Reinforcement = m_Reinforcement;
                 report.BeamSection = _BeamSection;
                 report.CalcResults = m_CalcResults;
+                report.CalcResults2Group = m_CalcResults2Group;
                 report.Messages = m_Message;
                 report.UseReinforcement = _useReinforcement;
 
@@ -791,8 +792,6 @@ namespace BSFiberConcrete
 
             picBeton.SizeMode = PictureBoxSizeMode.StretchImage;
         }
-
-
 
         // тавровое сечение
         // Принимаем как двутавровое, у которого нижняя полка равна по толщине стенке
@@ -1131,13 +1130,28 @@ namespace BSFiberConcrete
             bsFactors.Show();
         }
 
+        [DisplayName("Расчет по прочности нормальных сечений на основе нелинейной деформационной модели")]
+        private void CalcDeformNDM(int _LSD)
+        {
+            // Усилия Mx, My - моменты, кгс*см , N - сила, кгс              
+            GetEffortsFromForm(out Dictionary<string, double> MNQ);
+                        
+            BSCalcNDM_Fiber bSCalc = new BSCalcNDM_Fiber();
+
+            bSCalc.N = MNQ["N"]; 
+            bSCalc.e_x = MNQ["eN"];
+
+            bSCalc.Calculate();            
+        }
+
+
         /// <summary>
         /// Расчет по прочности нормальных сечений на основе нелинейной деформационной модели
         /// </summary>
         /// <param name="_LSD">Группа предельных состояний</param>
         ///
         [DisplayName("Расчет по прочности нормальных сечений на основе нелинейной деформационной модели")]
-        private void CalcDeformNDM(int _LSD)
+        private void CalcDeformNDM()
         {
             // центр тяжести сечения
             TriangleNet.Geometry.Point CG = new TriangleNet.Geometry.Point(0.0, 0.0);
@@ -1212,11 +1226,13 @@ namespace BSFiberConcrete
                 dX0 = CG.X;
                 dY0 = CG.Y;
 
-                // задать тип арматуры
+                // задать класс арматуры
                 fiberCalc_Deform.MatRebar = new BSMatRod(cEs)
                 {
                     RCls = cR_class,
+                    Rsn = (double) numRsn.Value,
                     Rs = cRs,
+                    Rsc = (double) numRsc.Value,
                     e_s0 = c_eps_s0,
                     e_s2 = c_eps_s2
                 };
@@ -1282,31 +1298,32 @@ namespace BSFiberConcrete
 
                 // задать свойства бетона
                 fiberCalc_Deform.MatFiber = beamMaterial;
-
+                // расстановка стержней арматуры
                 RodsReinforcement();
-
                 // арматура балки                                                
                 fiberCalc_Deform.Beam.Rods = Rods;
                 // материал
                 fiberCalc_Deform.Beam.Mat = beamMaterial;
+                // параметры расчета:  (кол-во точек разбиения )
                 fiberCalc_Deform.GetParams(new double[] { 10, 1 });
-
-                // рассчитать
+                //
+                // рассчитать                
                 fiberCalc_Deform.Calculate();
                 //
                 m_Efforts = fiberCalc_Deform.Efforts;
 
-                m_PhysParams = fiberCalc_Deform.PhysParams;
-
-                //m_Reinforcement = fiberCalc_Deform.Reinforcement;
-
+                m_PhysParams = fiberCalc_Deform.PhysParams;                
                 // получить результат
                 m_CalcResults = fiberCalc_Deform.Results();
+
+                // Расчет по 2 группе предельных состояний
+                m_CalcResults2Group = fiberCalc_Deform.Result2Group;
 
                 m_Message = fiberCalc_Deform.Msg;
 
                 if (m_CalcResults?.Count > 0)
                     fiberCalc_Deform.Msg.Add("Расчет успешно выполнен!");
+
             }
             catch (Exception _ex)
             {
@@ -1339,16 +1356,15 @@ namespace BSFiberConcrete
             }
         }
 
-        // Расчет по НДМ            
+        /// <summary>
+        /// Расчет по НДМ            
+        /// </summary>        
         private void btnCalc_Deform_Click(object sender, EventArgs e)
         {
-            if (checkBoxNDM2Group.Checked)
-                CalcDeformNDM(2);
-            else
-                CalcDeformNDM(1);
-            
-            FiberCalculate_Cracking();
+            CalcDeformNDM();
 
+            if (checkBoxNDM2Group.Checked)
+                CalcDeformNDM(2);                        
         }
 
         private void gridEfforts_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -1376,7 +1392,7 @@ namespace BSFiberConcrete
         // сохранить геометрические размеры
         private void btnSaveParams_Click(object sender, EventArgs e)
         {
-            // TO DO Удалить кнопку 
+            //TODO Удалить кнопку 
             try
             {
                 Dictionary<string, double> SZ = new Dictionary<string, double>();
@@ -1456,6 +1472,9 @@ namespace BSFiberConcrete
                 {
                     numRs.Value = (decimal)BSHelper.MPA2kgsm2(rebar.Rs);
                     numRsc.Value = (decimal)BSHelper.MPA2kgsm2(rebar.Rsc);
+                    numRsn.Value = (decimal)BSHelper.MPA2kgsm2(rebar.Rsn);
+                    numRsсn.Value = (decimal)BSHelper.MPA2kgsm2(rebar.Rsn);
+
                     labelTypeDDRebar.Text = rebar.TypeDiagramm;
                     numEps_s_ult.Value = (decimal)rebar.Epsilon_s_ult;
 
@@ -1898,6 +1917,16 @@ namespace BSFiberConcrete
         {
             int previosIndexRebarDiameter = cmbRebarDiameters.SelectedIndex;
             cmbRebarSquare.SelectedIndex = previosIndexRebarDiameter;
+        }
+
+        private void tableLayoutPanelRebar_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void cmbFib_i_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // SelectedFiberBetonValues();
         }
     }
 }

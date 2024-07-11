@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BSFiberConcrete.CalcGroup2;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -72,16 +73,6 @@ namespace BSFiberConcrete.Section
             }
         }
 
-        private void pic_MouseMove(object sender, MouseEventArgs e)
-        {
-
-        }
-
-        private void pic_MouseUp(object sender, MouseEventArgs e)
-        {
-
-        }
-
         private void btnPoint_Click(object sender, EventArgs e)
         {
             drawPoint = !drawPoint;
@@ -92,15 +83,12 @@ namespace BSFiberConcrete.Section
             BSSectionGrid sectionGrid   = new BSSectionGrid();
             sectionGrid.Show();
         }
-
-        private void btnLine_Click(object sender, EventArgs e)
+        
+        private void btnCalcGo_Click(object sender, EventArgs e)
         {
-
+            BSCalcNDM calcNDM = new BSCalcNDM();
+            calcNDM.Run();
         }
 
-        private void pic_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

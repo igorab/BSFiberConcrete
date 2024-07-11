@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace BSFiberConcrete
 {
@@ -18,11 +19,20 @@ namespace BSFiberConcrete
         /// </summary>
         public double Es { get; set; }
 
+        //Нормативное сопротивление растяжению кг/см2
+        public double Rsn { get; set; }
+
         // Расчетное сопротивление растяжению кг/см2
         public double Rs { get; set; }
 
+        // Расчетное сопротивление растяжению 2 гр, кг/см2
+        public double Rs_ser => Rsn;
+        
         // Расчетное сопротивление сжатию кг/см2
         public double Rsc { get; set; }
+
+        // Расчетное сопротивление сжатию 2 гр, кг/см2
+        public double Rsc_ser => Rsn;
 
         // Площадь растянутой арматуры
         public double As { get; set; }
@@ -89,31 +99,25 @@ namespace BSFiberConcrete
         /// <param name="_e_s">отн деформация </param>
         /// <param name="_res">СП 63.13 6.2.15 </param>
         /// <returns>Напряжение</returns>
-        public double Eps_StateDiagram3L(double _e_s, out int _res)
+        public double Eps_StateDiagram3L(double _e_s, out int _res, int _group = 1)
         {
+            double rs = Rs;
             _res = 0;
             double sigma_s = 0;
-
-            double sigma_s1 = 0.9 * Rs;
-            double sigma_s2 = 1.1 * Rs;
-
-            double e_s0 = Rs / Es + 0.002;
-
+            double sigma_s1 = 0.9 * rs;
+            double sigma_s2 = 1.1 * rs;
+            double e_s0 = rs / Es + 0.002;
             double e_s1 = sigma_s1 / Es;
-
-            //e_s2 = 1;
-
+            
             if (0 <= _e_s && _e_s <= e_s1)
             {
-                sigma_s = Rs * _e_s;
+                sigma_s = rs * _e_s;
             }
             else if (e_s1 <= _e_s && _e_s <= e_s2)
             {
-                sigma_s = ((1 - sigma_s1 / Rs) * (_e_s - e_s1) / (e_s0 - e_s1) + sigma_s1 / Rs) * Rs;
+                sigma_s = ((1 - sigma_s1 / rs) * (_e_s - e_s1) / (e_s0 - e_s1) + sigma_s1 / rs) * rs;
 
-                if (sigma_s > sigma_s2)
-                    sigma_s = sigma_s2;
-
+                if (sigma_s > sigma_s2) sigma_s = sigma_s2;
             }            
             else if (_e_s > e_s2)
             {
@@ -131,9 +135,11 @@ namespace BSFiberConcrete
         /// </summary>
         /// <param name="_e"></param>
         /// <returns></returns>        
-        public double Eps_StDiagram2L(double _e, out int _res)
+        public double Eps_StDiagram2L(double _e, out int _res, int _group = 1)
         {
             double sgm = 0;
+            double rs = Rs;
+
             _res = 0;
 
             if (0 < _e && _e < e_s0)
@@ -142,13 +148,16 @@ namespace BSFiberConcrete
             }
             else if (e_s0 <= _e && _e <= e_s2)
             {
-                sgm = Rs;
+                sgm = rs;
             }
             else if (_e > e_s2) //теоретически это разрыв
             {
                 Debug.Assert(true, "Превышен предел прочности (временное сопротивление) ");
                 _res = -1;
-                sgm = 0;//  Rs;
+                if (_group == 1)
+                    sgm = 0;
+                else if (_group == 2)
+                    sgm = Rs_ser;
             }
 
             return sgm;

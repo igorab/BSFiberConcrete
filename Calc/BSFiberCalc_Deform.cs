@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing.Text;
 using System.Windows.Forms;
 using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics.LinearAlgebra.Double;
@@ -15,6 +16,9 @@ namespace BSFiberConcrete
     {
         public List<string> Msg { get; private set; }
 
+        //Limit state design
+        public int groupLSD { get; set; } 
+
         // координаты центра тяжести сечения 
         public Point CG { get; set; }
         public List<double> triAreas { get; set; }
@@ -27,6 +31,9 @@ namespace BSFiberConcrete
         public double My { get; set; }
         // продольная сила от внешней нагрузки
         public double N { get; set; }
+
+        private const int cIters = 10000;
+        private double[,] zero3x3 = new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
 
         // балка
         public BSBeam Beam
@@ -79,6 +86,9 @@ namespace BSFiberConcrete
         [DisplayName("Максимальная относительная деформация")]
         public double e_fb_max { get; private set; }
 
+        [DisplayName("Максимальный момент возникновения трещины")]
+        public double Mcrc { get; private set; }
+
         // жесткостные характеристики
         private const int I1 = 0, I2 = 1, I3 = 2;
         private Matrix<double> D = DenseMatrix.OfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } });
@@ -110,8 +120,13 @@ namespace BSFiberConcrete
 
         // коэффициенты упругости сталефибробетона
         private Vector<double> Nju_fb;
+        
+        private readonly Dictionary<string, double> m_Res;
+        private readonly Dictionary<string, double> m_Res2Group;
 
-        private Dictionary<string, double> Res = new Dictionary<string, double>();
+        // Вернуть результат
+        public Dictionary<string, double> Results() => m_Res;
+        public Dictionary<string, double> Result2Group => m_Res2Group;
 
         public Dictionary<string, double> Efforts
         {
@@ -142,6 +157,10 @@ namespace BSFiberConcrete
         public DeformDiagramType DeformDiagram { get; internal set; }
         public DeformMaterialType DeformMaterialType { get; set; }
 
+        private double Mx_b_calc = 0;
+        private double My_b_calc = 0;
+        private double N_b_calc = 0;
+
         /// <summary>
         /// 
         /// </summary>
@@ -149,7 +168,9 @@ namespace BSFiberConcrete
         /// <param name="_My">кНм</param>
         /// <param name="_N">кН</param>
         public BSFiberCalc_Deform (double _Mx = 0, double _My = 0, double _N = 0)
-        {            
+        {
+            groupLSD = 1;
+
             Mx = _Mx;
             My = _My;
             N  = _N;
@@ -160,8 +181,9 @@ namespace BSFiberConcrete
 
             m_Fiber = new BSMatFiber();
             m_Rod = new BSMatRod();
-
             Msg = new List<string>();
+            m_Res = new Dictionary<string, double>();
+            m_Res2Group = new Dictionary<string, double>();
         }
 
         /// <summary>
@@ -364,43 +386,21 @@ namespace BSFiberConcrete
         private void Calc_MxMyN()
         {
             const int I1=0, I2=1, I3=2;
-
             double[] v_eff = { Mx, My, N};
-
-            //if (Mx == 0)
-            //{
-            //    v_eff = new double[] {My, N};
-            //    D = D.RemoveRow(0);
-            //    D = D.RemoveColumn(0);
-            //}
-
+          
             Vector<double> V_Eff = Vector<double>.Build.Dense(v_eff);                          
             Vector<double> X  = D.Solve(V_Eff);
 
             double kx, ky;
+            
+            // решение:
+            (kx, ky, eps_0) = (X[I1], X[I2], X[I3]);
+            
+            rx = (kx != 0) ? 1 / kx : float.MaxValue;
+            ry = (ky != 0) ? 1 / ky : float.MaxValue; 
 
-            if (My == 0 && Mx == 0 && N == 0) // todo удалить
-            {
-                (ky, eps_0) = (X[I1], X[I2]);
-                
-                ry = (ky != 0) ? 1 / ky : 0;
-                Ky = ky;
-            }
-            else
-            {
-                // решение:
-                (kx, ky, eps_0) = (X[I1], X[I2], X[I3]);
-
-                // TODO ??
-                //kx = Math.Abs(kx);
-                //ky = Math.Abs(ky); 
-
-                rx = (kx != 0) ? 1 / kx : float.MaxValue;
-                ry = (ky != 0) ? 1 / ky :float.MaxValue; 
-
-                Kx = kx;
-                Ky = ky;
-            }                        
+            Kx = kx;
+            Ky = ky;                                    
         }
 
         private void ArraysClear()
@@ -415,9 +415,10 @@ namespace BSFiberConcrete
             Nju_s.Clear();
         }
 
-        private bool CalcResult()
+        private bool CalcResult(out int _res, int _group = 1)
         {
             bool doNextIter = true;
+            _res = 0;
 
             double kx = (rx != 0) ? 1 / rx : float.MaxValue;
             double ky = (ry != 0) ? 1 / ry : float.MaxValue;
@@ -441,7 +442,7 @@ namespace BSFiberConcrete
                     {
                         case DeformMaterialType.Fiber: 
                         case DeformMaterialType.Beton:                        
-                            sgm = MatFiber.Eps_StDiagram2L(eps, out int _res);
+                            sgm = MatFiber.Eps_StDiagram2L(eps, out _res, _group);
                             break;                        
                     }
                 }
@@ -451,7 +452,7 @@ namespace BSFiberConcrete
                     {
                         case DeformMaterialType.Fiber:
                         case DeformMaterialType.Beton:
-                            sgm = MatFiber.Eps_StateDiagram3L(eps, out int _res);
+                            sgm = MatFiber.Eps_StateDiagram3L(eps, out _res, _group);
                             break;
                     }
                 }
@@ -472,11 +473,11 @@ namespace BSFiberConcrete
                 double sgm = 0;
                 if (DeformDiagram == DeformDiagramType.D2Linear)
                 {
-                    sgm = MatRebar.Eps_StDiagram2L(Math.Abs(_e), out int _res);
+                    sgm = MatRebar.Eps_StDiagram2L(Math.Abs(_e), out _res, _group);
                 }
                 else if (DeformDiagram == DeformDiagramType.D3Linear)
                 {                    
-                    sgm = MatRebar.Eps_StateDiagram3L(Math.Abs(_e), out int _res);
+                    sgm = MatRebar.Eps_StateDiagram3L(Math.Abs(_e), out _res, _group);
                 }
 
                 sigma_s[j] = Math.Sign(_e) * sgm;
@@ -486,9 +487,9 @@ namespace BSFiberConcrete
                 Nju_s[j] = nju_s;
             }
 
-            double Mx_b_calc = 0;
-            double My_b_calc = 0;
-            double N_b_calc = 0;
+            Mx_b_calc = 0;
+            My_b_calc = 0;
+            N_b_calc = 0;
 
             for (int i = 0; i < Zfby.Count; i ++)
             {
@@ -538,8 +539,10 @@ namespace BSFiberConcrete
 
         }
         
-        private void AddToResult(string _attr, double _value)
+        private void AddToResult(string _attr, double _value, int _group = 1)
         {
+            var res = (_group == 1) ? m_Res : m_Res2Group;
+
             if (Math.Abs(_value) < 10e-15 || Math.Abs(_value) > 10e15)
             {
                 return;
@@ -547,7 +550,7 @@ namespace BSFiberConcrete
 
             try
             {
-                Res.Add(BSFiberCalculation.DsplN(typeof(BSFiberCalc_Deform), _attr), _value);
+                res.Add(BSFiberCalculation.DsplN(typeof(BSFiberCalc_Deform), _attr), _value);
             }
             catch (Exception _E)
             {
@@ -596,10 +599,6 @@ namespace BSFiberConcrete
         /// <returns>Успешно</returns>        
         public bool Calculate()
         {            
-            int cIters = 10000;
-            var zero3x3 = new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
-            var Zeros3x3 = DenseMatrix.OfArray(zero3x3);
-            
             if (triAreas.Count > 0)
             {
                 m_BElem = CalculationScheme(true);
@@ -609,16 +608,41 @@ namespace BSFiberConcrete
                 m_BElem = CalculationScheme(m_Y_N, m_X_M);
             }
 
-            int qty_J = m_Beam.RodsQty; // количество стержней           
-            int qty_I = m_BElem.Count; // количество элементов сечения
-
-             double _A_s = m_Beam.AreaS(); 
-
+            // количество стержней   
+            int qty_J = m_Beam.RodsQty;
+            // количество элементов сечения
+            int qty_I = m_BElem.Count; 
+            
             InitVectors(qty_I, qty_J);
            
             GetSize();
 
             InitElementParams();
+            
+            CalculateGroupLSD(1);
+            ResultsGroup1();
+
+            CalculateGroupLSD(2);
+            ResultsGroup2();
+
+            return true;
+        }
+
+        /// <summary>
+        /// Расчет по НДМ
+        /// </summary>
+        /// <param name="_group">Группа предельеных состояний</param>
+        private void CalculateGroupLSD(int _group)
+        {
+            groupLSD = _group;                 
+            // количество стержней   
+            int qty_J = m_Beam.RodsQty;
+            // количество элементов сечения
+            int qty_I = m_BElem.Count;
+            // площадь сечения
+            double _A_s = m_Beam.AreaS();
+
+            DenseMatrix Zeros3x3 = DenseMatrix.OfArray(zero3x3);
 
             bool doNextIter = true;
 
@@ -626,7 +650,6 @@ namespace BSFiberConcrete
             {
                 if (!doNextIter)
                     break;
-
                 try
                 {
                     D = DenseMatrix.OfArray(zero3x3);
@@ -658,20 +681,36 @@ namespace BSFiberConcrete
                     }
 
                     Calc_MxMyN();
+                    
+                    doNextIter = CalcResult(out int res, groupLSD);
 
-                    doNextIter = CalcResult();                    
+                    if (res == 2)
+                    {
+                        // Трещинообразование
+                        double M_crc = 0;
+                        double k_crc = Ky; // 1/r
+                    }
+
                 }
-                catch (Exception ex) 
+                catch (Exception ex)
                 {
                     var ex_type = ex.GetType().Name;
                     MessageBox.Show($"Исключение: {ex.Message} Тип: {ex_type}  Итерация: {iter}   Метод: {ex.TargetSite} Трассировка стека: {ex.StackTrace}");
                     doNextIter = false;
                 }
                 finally
-                {                    
+                {
                 }
             }
+        }
 
+
+
+        /// <summary>
+        ///  Результаты расчета по 1 группе предельных состояний
+        /// </summary>
+        private void ResultsGroup1()
+        {
             e_fb_max = epsilon_fb.AbsoluteMaximum();
 
             AddToResult("eps_0", eps_0);
@@ -680,27 +719,35 @@ namespace BSFiberConcrete
             AddToResult("ry", ry);
             AddToResult("Ky", Ky);
             AddToResult("e_fb_max", e_fb_max);
-            
-            bool res_fb = e_fb_max <=  m_Fiber.Eps_fb_ult;            
+
+            bool res_fb = e_fb_max <= m_Fiber.Eps_fb_ult;
             if (res_fb)
-                Msg.Add( string.Format("Проверка сечения по фибробетону пройдена. e_fb_max={0} <= e_fb_ult={1} ", Math.Round(e_fb_max, 6), m_Fiber.Eps_fb_ult));            
+                Msg.Add(string.Format("Проверка сечения по фибробетону пройдена. e_fb_max={0} <= e_fb_ult={1} ", Math.Round(e_fb_max, 6), m_Fiber.Eps_fb_ult));
             else
                 Msg.Add(string.Format("Не пройдена проверка сечения по фибробетону. e_fb_max={0} <= e_fb_ult={1} ", Math.Round(e_fb_max, 6), m_Fiber.Eps_fb_ult));
 
             double e_s_max = epsilon_s.AbsoluteMaximum();
             double e_s_ult = m_Rod.Eps_s_ult(DeformDiagram);
             bool res_s = e_s_max <= e_s_ult;
-            
-            if (res_s)
-                Msg.Add( string.Format("Проверка сечения по арматуре пройдена. e_s_max={0} <= e_s_ult={1} ", Math.Round(e_s_max, 6), e_s_ult));
-            else
-                Msg.Add(string.Format("Не пройдена проверка сечения по арматуре. e_s_max={0} <= e_s_ult={1}", Math.Round(e_s_max,6), e_s_ult));
 
-            return true;
+            if (res_s)
+                Msg.Add(string.Format("Проверка сечения по арматуре пройдена. e_s_max={0} <= e_s_ult={1} ", Math.Round(e_s_max, 6), e_s_ult));
+            else
+                Msg.Add(string.Format("Не пройдена проверка сечения по арматуре. e_s_max={0} <= e_s_ult={1}", Math.Round(e_s_max, 6), e_s_ult));
         }
 
         /// <summary>
-        /// Разбиваем сечение на конечные элементы
+        ///  Результаты расчета по 2 группе предельных состояний
+        /// </summary>
+        private void ResultsGroup2()
+        {
+            Mcrc = 1234345678;
+            AddToResult("Mcrc", Mcrc, groupLSD);
+            AddToResult("ry", ry, groupLSD);
+        }
+
+        /// <summary>
+        /// Разбиваем сечение на прямоугольные конечные элементы
         /// </summary>
         /// <param name="_N">количество делений</param>
         private List<BSElement> CalculationScheme(int _N = 10, int _M = 1)
@@ -744,10 +791,6 @@ namespace BSFiberConcrete
         }
 
               
-        // Вернуть результат
-        public Dictionary<string, double> Results()
-        {
-            return Res;
-        }        
+         
     }
 }

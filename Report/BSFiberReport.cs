@@ -26,11 +26,10 @@ namespace BSFiberConcrete
         public Dictionary<string, double> PhysParams { set { m_PhysParams = value; } }
         public Dictionary<string, double> GeomParams { set { m_GeomParams = value; } }
         public Dictionary<string, double> CalcResults { set { m_CalcResults = value; } }
+        public Dictionary<string, double> CalcResults2Group { set { m_CalcResults2Group = value; } }
         public Dictionary<string, double> Reinforcement { set { m_Reinforcement = value; } }
-
         public List<string> Messages { set { m_Messages = value; }}
         public BeamSection BeamSection { set { m_BeamSection = value; } }
-
         public bool UseReinforcement { get; set; }
 
         protected Dictionary<string, double> m_Beam;
@@ -39,6 +38,7 @@ namespace BSFiberConcrete
         protected Dictionary<string, double> m_PhysParams;
         protected Dictionary<string, double> m_GeomParams;
         protected Dictionary<string, double> m_CalcResults;
+        protected Dictionary<string, double> m_CalcResults2Group;
         protected Dictionary<string, double> m_Reinforcement;
         protected List<string> m_Messages;
 
@@ -52,6 +52,8 @@ namespace BSFiberConcrete
             ReportName = "Сопротивление сечения из фибробетона";
             UseReinforcement = false;
         }
+
+        private const int bk = 800, bv = 200;
 
         /// <summary>
         ///  Верхняя часть отчета
@@ -77,11 +79,12 @@ namespace BSFiberConcrete
             if (m_Beam != null)
             {
                 w.WriteLine("<Table border=1 bordercolor = darkblue>");
+                w.WriteLine("<caption>Балка</caption>");
                 foreach (var _pair in m_Beam)
                 {
                     w.WriteLine("<tr>");
-                    w.WriteLine($"<td><b>{_pair.Key}</b></td>");
-                    w.WriteLine($"<td colspan=2>| {_pair.Value} </td>");
+                    w.WriteLine($"<td width={bk}><b>{_pair.Key}</b></td>");
+                    w.WriteLine($"<td width={bv} align=center colspan=2>{_pair.Value} </td>");
                     w.WriteLine("</tr>");
                 }
                 w.WriteLine("</Table>");
@@ -90,15 +93,15 @@ namespace BSFiberConcrete
             if (m_GeomParams != null)
             {
                 w.WriteLine("<Table border=1 bordercolor = darkblue>");
-                w.WriteLine("<caption>Геометрия</caption>");
+                w.WriteLine("<caption>Геометрия сечения</caption>");
 
                 foreach (var _pair in m_GeomParams)
                 {
                     if (_pair.Value != 0)
                     {
                         w.WriteLine("<tr>");
-                        w.WriteLine($"<td><b>{_pair.Key}</b></td>");
-                        w.WriteLine($"<td>| {_pair.Value}</td>");
+                        w.WriteLine($"<td width={bk}><b>{_pair.Key}</b></td>");
+                        w.WriteLine($"<td width={bv} align=center>{_pair.Value}</td>");
                         w.WriteLine("</tr>");
                     }
                 }
@@ -121,8 +124,8 @@ namespace BSFiberConcrete
                 foreach (var _pair in m_PhysParams)
                 {
                     w.WriteLine("<tr>");
-                    w.WriteLine($"<td>{_pair.Key}</td>");
-                    w.WriteLine($"<td>| {Math.Round(_pair.Value, 4)} </td>");
+                    w.WriteLine($"<td width={bk}>{_pair.Key}</td>");
+                    w.WriteLine($"<td width={bv} align=center>{Math.Round(_pair.Value, 4)} </td>");
                     w.WriteLine("</tr>");
                 }
                
@@ -137,8 +140,8 @@ namespace BSFiberConcrete
                 foreach (var _pair in m_Reinforcement)
                 {
                     w.WriteLine("<tr>");
-                    w.WriteLine($"<td>{_pair.Key}</td>");
-                    w.WriteLine($"<td>| {Math.Round(_pair.Value, 4)} </td>");
+                    w.WriteLine($"<td width={bk}>{_pair.Key}</td>");
+                    w.WriteLine($"<td width={bv} align=center>{Math.Round(_pair.Value, 4)} </td>");
                     w.WriteLine("</tr>");
                 }
 
@@ -153,8 +156,8 @@ namespace BSFiberConcrete
                 foreach (var _pair in m_Coeffs)
                 {
                     w.WriteLine("<tr>");
-                    w.WriteLine($"<td>{_pair.Key}</td>");
-                    w.WriteLine($"<td>| {Math.Round(_pair.Value, 4)} </td>");
+                    w.WriteLine($"<td width={bk}>{_pair.Key}</td>");
+                    w.WriteLine($"<td width={bv} align=center>{Math.Round(_pair.Value, 4)} </td>");
                     w.WriteLine("</tr>");
                 }                                
                 w.WriteLine("</Table>");
@@ -168,8 +171,8 @@ namespace BSFiberConcrete
                 foreach (var _pair in m_Efforts)
                 {
                     w.WriteLine("<tr>");
-                    w.WriteLine($"<td>{_pair.Key}</td>");
-                    w.WriteLine($"<td>| {_pair.Value} </td>");
+                    w.WriteLine($"<td width={bk}>{_pair.Key}</td>");
+                    w.WriteLine($"<td width={bv} align=center>{_pair.Value} </td>");
                     w.WriteLine("</tr>");
                 }
                 w.WriteLine("</Table>");
@@ -182,22 +185,49 @@ namespace BSFiberConcrete
         {
             w.WriteLine("<H3>Расчет:</H3>");
             if (m_CalcResults != null)
-            {
+            {                
                 w.WriteLine("<Table border=1 bordercolor = darkblue>");
                 w.WriteLine("<tr>");
 
                 foreach (var _pair in m_CalcResults)
                 {
                     w.WriteLine("<tr>");
-                    w.WriteLine($"<td><b>{_pair.Key}</b></td>");
+                    w.WriteLine($"<td width={bk}><b>{_pair.Key}</b></td>");
 
                     if (_pair.Value < 0.001)
-                        w.WriteLine($"<td colspan=2>| {_pair.Value.ToString("E") } </td>");
+                        w.WriteLine($"<td width={bv} align=center colspan=2>{_pair.Value.ToString("E") } </td>");
                     else
-                        w.WriteLine($"<td colspan=2>| {Math.Round(_pair.Value, 4)} </td>");
+                        w.WriteLine($"<td width={bv} align=center colspan=2>{Math.Round(_pair.Value, 4)} </td>");
                     w.WriteLine("</tr>");
                 }
                 
+                w.WriteLine("</tr>");
+                w.WriteLine("</Table>");
+                w.WriteLine("<br>");
+            }
+            else
+            {
+                w.WriteLine("<th>Расчет не выполнен</th>");
+            }
+
+            w.WriteLine("<H3>Расчет по 2-й группе предельных состояний:</H3>");
+            if (m_CalcResults2Group != null)
+            {
+                w.WriteLine("<Table border=2 bordercolor = darkblue>");
+                w.WriteLine("<tr>");
+
+                foreach (var _pair in m_CalcResults2Group)
+                {
+                    w.WriteLine("<tr>");
+                    w.WriteLine($"<td width={bk}><b>{_pair.Key}</b></td>");
+
+                    if (_pair.Value < 0.001)
+                        w.WriteLine($"<td width={bv} align=center colspan=2> {_pair.Value.ToString("E")} </td>");
+                    else
+                        w.WriteLine($"<td width={bv} align=center colspan=2> {Math.Round(_pair.Value, 4)} </td>");
+                    w.WriteLine("</tr>");
+                }
+
                 w.WriteLine("</tr>");
                 w.WriteLine("</Table>");
                 w.WriteLine("<br>");
@@ -246,7 +276,7 @@ namespace BSFiberConcrete
                 foreach (var _value in m_Messages)
                 {
                     w.WriteLine("<tr>");                    
-                    w.WriteLine($"<td>| {_value} </td>");
+                    w.WriteLine($"<td width={bk}>| {_value} </td>");
                     w.WriteLine("</tr>");
                 }
                 w.WriteLine("</Table>");

@@ -123,6 +123,8 @@ namespace BSFiberConcrete
     {
         public string ID { get; set; }
 
+        //Нормативное сопротивление арматуры
+        public double Rsn { get; set; }
         //Расчетное сопротивление арматуры
         public double Rs { get; set; }
         //Расчетное сопротивление арматуры сжатию

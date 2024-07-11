@@ -79,7 +79,7 @@ namespace BSFiberConcrete
         public double Dzeta_R()
         {
             double eps_s = MatRod.epsilon_s();
-            double dz_r =  omega / (1 +  eps_s/ MatFiber.e_b2);
+            double dz_r =  Omega / (1 +  eps_s/ MatFiber.e_b2);
             return dz_r;
         }
 
