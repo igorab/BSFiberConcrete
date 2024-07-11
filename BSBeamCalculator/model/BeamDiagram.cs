@@ -26,7 +26,7 @@ namespace BSBeamCalculator
         protected double _beamLength;
         //protected string _supportBeamType;
         //protected string _loadBeamTupe;
-        protected SimpleBeamDiagramCase _diagramType;
+        protected SimpleBeamDiagramCase _simpleDiagram;
 
         public BeamDiagram(string supportType, string loadype, double length, double force, double x1, double x2)
         {
@@ -40,7 +40,7 @@ namespace BSBeamCalculator
             { throw new Exception("Пользовательская ошибка. Значение 'Позиция x' не должно превышать 'Длина'."); }
 
             _beamLength = length;
-            _diagramType = new SimpleBeamDiagramCase(supportType, loadype);
+            _simpleDiagram = new SimpleBeamDiagramCase(supportType, loadype);
             //_supportBeamType = supportType;
             //_loadBeamTupe = loadype;
             _force = force;
@@ -59,7 +59,7 @@ namespace BSBeamCalculator
             double m = _beamLength / (n - 1);
             for (int i = 0; i < n; i++)
             { x[i] = i * m;  }
-            double[][] values_xQ_xM= _diagramType.CalculateValuesForDiagram(_beamLength, _startPointForce, _endPointForce, _force);
+            double[][] values_xQ_xM= _simpleDiagram.CalculateValuesForDiagram(_beamLength, _startPointForce, _endPointForce, _force);
             DiagramResult result = new DiagramResult(values_xQ_xM);
 
 
