@@ -29,11 +29,19 @@ namespace BSFiberConcrete
 
         // Площадь сжатой арматуры
         public double As1 { get; set; }
-
         /// <summary>
-        /// коэффициент упругости
+        /// расстояние до центра растянутой арматуры, см
         /// </summary>
-        public double Nju_s { get; set; }
+        public double a_s { get; set; }
+        /// <summary>
+        /// расстояние до центра сжатой арматуры, см
+        /// </summary>
+        public double a_s1 { get; set; }
+
+    /// <summary>
+    /// коэффициент упругости
+    /// </summary>
+    public double Nju_s { get; set; }
 
         /// <summary>
         /// СП 6.1.25

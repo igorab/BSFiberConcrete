@@ -80,6 +80,11 @@ namespace BSFiberConcrete
             return i_s;
         }
 
+        // статические моменты относительно осей
+        public override double Sy() => Area() * r2;
+        public override double Sx() => Sy();
+
+
         public double A_red(double _Es, double _Efb) => A_r + (_Es / _Efb) * A_s;
 
         public double Is_red(double _Es, double _Efb) => (_Es / _Efb) * I_s();

@@ -70,6 +70,23 @@ namespace BSFiberConcrete
             return 0;
         }
 
+        /// <summary>
+        /// Статический момент относительно оси oY
+        /// </summary>
+        /// <returns></returns>
+        public virtual double Sy()
+        {
+            return 0;
+        }
+        /// <summary>
+        /// Статический момент относительно оси oX
+        /// </summary>
+        /// <returns></returns>
+        public virtual double Sx()
+        {
+            return 0;
+        }
+
         public virtual double y_t => h / 2; 
         
         public BSBeam()
