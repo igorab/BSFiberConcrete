@@ -1366,7 +1366,7 @@ namespace BSFiberConcrete
             if (checkBoxNDM2Group.Checked)
                 CalcDeformNDM(2);
 
-            FiberCalculate_Cracking();
+            //FiberCalculate_Cracking();
         }
 
         private void gridEfforts_CellValueChanged(object sender, DataGridViewCellEventArgs e)
