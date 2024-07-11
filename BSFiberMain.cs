@@ -603,7 +603,7 @@ namespace BSFiberConcrete
                 calc_Cracking.GetParams(new double[] { 10, 1 });
 
                 // рассчитать 
-                calc_Cracking.CalculateUltM();
+                calcOk = calc_Cracking.CalculateUltM();
 
 
 
@@ -654,11 +654,11 @@ namespace BSFiberConcrete
                 ////calcOk = bsCracing.Calculate();
 
                 //m_PhysParams = bsCalc.PhysParams;
-                m_Coeffs = bsCalc.Coeffs;
-                m_Efforts = bsCalc.Efforts;
-                m_GeomParams = bsCalc.GeomParams();
-                m_CalcResults = bsCalc.Results();
-                m_Message = bsCalc.Msg;
+                //m_Coeffs = bsCalc.Coeffs;
+                //m_Efforts = bsCalc.Efforts;
+                //m_GeomParams = bsCalc.GeomParams();
+                //m_CalcResults = bsCalc.Results();
+                //m_Message = bsCalc.Msg;
                 //TODO need refactoring - параметры с описанием
                 //m_PhysParams = bsCalc.PhysicalParameters();
 
@@ -670,8 +670,8 @@ namespace BSFiberConcrete
 
             try
             {
-                if (bsCalc is null)
-                    throw new Exception("Не выполнен расчет");
+                //if (bsCalc is null)
+                //    throw new Exception("Не выполнен расчет");
 
                 if (calcOk)
                 {
@@ -1364,7 +1364,9 @@ namespace BSFiberConcrete
             CalcDeformNDM();
 
             if (checkBoxNDM2Group.Checked)
-                CalcDeformNDM(2);                        
+                CalcDeformNDM(2);
+
+            FiberCalculate_Cracking();
         }
 
         private void gridEfforts_CellValueChanged(object sender, DataGridViewCellEventArgs e)
