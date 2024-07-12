@@ -85,12 +85,20 @@ namespace BSFiberConcrete.CalcGroup2
             est2 = D["est2"];            
         }
 
-        // стержни арматуры
-        public void GetRods(double[] _ds, double[] _y0s, double[] _z0s)
+        // стержни арматуры       
+        public void GetRods(List<BSRod> _Rods, double _dx = 0, double _dy = 0)
         {
-            ds = _ds.ToList();
-            y0s = _y0s.ToList();
-            z0s = _z0s.ToList();
+            ds.Clear();
+            y0s.Clear();
+            z0s.Clear();
+
+            // вычисляем привязки арматуры ( 0 - левый нижний угол)
+            foreach (var rod in _Rods)
+            {
+                ds.Add(rod.D);
+                z0s.Add(rod.CG_X + _dx);
+                y0s.Add(rod.CG_Y + _dy);                
+            }
         }
 
         // Продольная сила, кН, - сжатие
@@ -109,7 +117,7 @@ namespace BSFiberConcrete.CalcGroup2
         private int nz = 4;
 
         // диаметры арматурных стержней
-        private List<double> ds = new List<double>() { 16.0, 16.0, 16.0, 16.0 };
+        private List<double> ds = new List<double>() { 1.6, 1.6, 1.6, 1.6 };
         // привязки арматуры
         private List<double> y0s = new List<double>() { 5.0, 15.0, 5.0, 15.0 };
         private List<double> z0s = new List<double>() { 5.0, 5.0, 35.0, 35.0 };
@@ -170,8 +178,8 @@ namespace BSFiberConcrete.CalcGroup2
             double s = 0;
             double sc1 = 0.6 * Rbc;
             double st1 = 0.6 * Rbt;
-            double ebc1 = sc1 /Eb0 ;
-            double ebt1 = st1 /Eb0;
+            double ebc1 = sc1 / Eb0 ;
+            double ebt1 = st1 / Eb0;
 
             if ((_e > ebt2) || (_e < -ebc2))
                 s = 0;            
@@ -232,7 +240,7 @@ namespace BSFiberConcrete.CalcGroup2
             List<double> As = new List<double>();
             foreach (double d in ds)
             {
-                As.Add(Math.PI * Math.Pow(d/10.0, 2) / 4.0);
+                As.Add(Math.PI * Math.Pow(d, 2) / 4.0);
             }
             
             int m = As.Count;
@@ -507,19 +515,6 @@ namespace BSFiberConcrete.CalcGroup2
             //throw new NotImplementedException();
         }
 
-        internal void GetRods(List<BSRod> _Rods)
-        {
-            ds.Clear();
-            y0s.Clear();
-            z0s.Clear();
-            
-            foreach(var rod in _Rods)
-            {
-                ds.Add(rod.D);
-                y0s.Add(rod.CG_Y);
-                z0s.Add(rod.CG_X);
-            }
-            
-        }
+        
     }
 }
