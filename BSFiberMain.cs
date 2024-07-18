@@ -1306,9 +1306,12 @@ namespace BSFiberConcrete
                 // материал
                 fiberCalc_Deform.Beam.Mat = beamMaterial;
                 // параметры расчета:  (кол-во точек разбиения )
-                fiberCalc_Deform.GetParams(new double[] { 10, 1 });
+                fiberCalc_Deform.GetParams(new double[] { (int)numMeshN.Value, (int)numMeshN.Value });
                 //
                 // рассчитать                
+
+                fiberCalc_Deform.CalcNDM();
+
                 fiberCalc_Deform.Calculate();
                 //
                 m_Efforts = fiberCalc_Deform.Efforts;
@@ -1367,7 +1370,7 @@ namespace BSFiberConcrete
             if (checkBoxNDM2Group.Checked)
                 CalcDeformNDM(2);
 
-            FiberCalculate_Cracking();
+            //FiberCalculate_Cracking();
         }
 
         private void gridEfforts_CellValueChanged(object sender, DataGridViewCellEventArgs e)

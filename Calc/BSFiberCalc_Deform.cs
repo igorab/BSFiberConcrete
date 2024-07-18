@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing.Text;
+using System.Security.Cryptography;
 using System.Windows.Forms;
+using BSFiberConcrete.CalcGroup2;
 using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics.LinearAlgebra.Double;
 using TriangleNet.Geometry;
@@ -162,7 +164,7 @@ namespace BSFiberConcrete
         private double N_b_calc = 0;
 
         /// <summary>
-        /// 
+        /// Constructor
         /// </summary>
         /// <param name="_Mx">кНм</param>
         /// <param name="_My">кНм</param>
@@ -184,6 +186,47 @@ namespace BSFiberConcrete
             Msg = new List<string>();
             m_Res = new Dictionary<string, double>();
             m_Res2Group = new Dictionary<string, double>();
+        }
+
+        public void CalcNDM()
+        {
+            try
+            {
+                Dictionary<string, double> pD = new Dictionary<string, double>()
+                {
+                    ["N"] = N,
+                    ["My"] = My,
+                    ["Mz"] = Mx,
+                    //size
+                    ["b"] = m_Beam.b,
+                    ["h"] = m_Beam.h,
+                    //Mesh
+                    ["ny"] = m_Y_N,
+                    ["nz"] = m_X_M,
+                    // beton
+                    ["Eb0"] = m_Fiber.Eb,
+                    ["Rbc"] = m_Fiber.Rfb,
+                    ["Rbt"] = m_Fiber.Rfbt,
+                    ["ebc0"] = m_Fiber.e_b1, // ?
+                    ["ebc2"] = m_Fiber.e_b1, // ?
+                    ["ebt0"] = m_Fiber.e_b1, // ?
+                    ["ebt2"] = m_Fiber.e_b2, // ?
+                    // steel
+                    ["Es0"] = m_Rod.Es,
+                    ["Rsc"] = m_Rod.Rsc,
+                    ["Rst"] = m_Rod.Rs,
+                    ["esc2"] = m_Rod.e_s0, //?
+                    ["est2"] = m_Rod.e_s2 // ?
+                };
+
+                BSCalcNDM calcNDM = new BSCalcNDM(pD);
+                calcNDM.GetRods(m_Rods, m_Beam.h / 2.0, m_Beam.b /2.0);
+                calcNDM.Run();
+            }
+            catch
+            {
+
+            }
         }
 
         /// <summary>
