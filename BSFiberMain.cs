@@ -1665,15 +1665,10 @@ namespace BSFiberConcrete
                 throw new Exception("Не задано сечение");
             }
 
-            //
-
-            //BeamSectionMesh1 beamSectionMesh = new BeamSectionMesh1();
-            //beamSectionMesh.TestCreateMeshSection(Tri.Mesh);
-            //beamSectionMesh.Show();
             MeshDraw md = new MeshDraw(Tri.Mesh);
             md.CreatePLot();
             md.ShowMesh();
-            md.SaveToPNG();
+            //md.SaveToPNG();
 
 
             triAreas = Tri.triAreas; // площади треугольников

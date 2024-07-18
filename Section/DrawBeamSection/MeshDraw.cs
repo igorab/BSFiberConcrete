@@ -1,4 +1,5 @@
-﻿using ScottPlot.WinForms;
+﻿using BSFiberConcrete.Section.DrawBeamSection;
+using ScottPlot.WinForms;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -46,9 +47,9 @@ namespace BSFiberConcrete
         {
             if (_formsPlot == null)
                 return;
-            BeamSectionMesh testTest = new BeamSectionMesh();
-            testTest.PlotForForms = _formsPlot;
-            testTest.Show();
+            DrawBeamSection drawBS = new DrawBeamSection();
+            drawBS.PlotForForms = _formsPlot;
+            drawBS.Show();
                 
         }
 
