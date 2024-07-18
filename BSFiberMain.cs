@@ -603,7 +603,7 @@ namespace BSFiberConcrete
                 calc_Cracking.GetParams(new double[] { 10, 1 });
 
                 // рассчитать 
-                calcOk = calc_Cracking.CalculateUltM();
+                //calcOk = calc_Cracking.CalculateUltM();
 
 
 
@@ -1021,6 +1021,7 @@ namespace BSFiberConcrete
                 System.Diagnostics.Process.Start(pathToHtmlFile);
             }
         }
+
 
         /// <summary>
         ///  Расчет по наклонному сечению на действие Q
@@ -1667,6 +1668,12 @@ namespace BSFiberConcrete
                 throw new Exception("Не задано сечение");
             }
 
+            MeshDraw md = new MeshDraw(Tri.Mesh);
+            md.CreatePLot();
+            md.ShowMesh();
+            //md.SaveToPNG();
+
+
             triAreas = Tri.triAreas; // площади треугольников
             triCGs = Tri.triCGs; // ц.т. треугольников
 
@@ -1689,6 +1696,9 @@ namespace BSFiberConcrete
                 pathToSvgFile = GenerateMesh(ref cg);
                
                 Process.Start(new ProcessStartInfo { FileName = pathToSvgFile, UseShellExecute = true });
+
+
+
 
             }
             catch (Exception _e)
