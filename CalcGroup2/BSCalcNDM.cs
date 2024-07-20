@@ -1,6 +1,7 @@
 ﻿using BSFiberConcrete.BSRFib;
 using CBAnsDes.My;
 using MathNet.Numerics;
+using MathNet.Numerics.Statistics;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
 // Рачеты по второй группе предельных состояний
@@ -60,9 +62,9 @@ namespace BSFiberConcrete.CalcGroup2
         public BSCalcNDM(Dictionary<string, double> D)
         {
             // enforce
-            N = D["N"];
-            My0 = D["My"];
-            Mz0 = D["Mz"];
+            N = BSHelper.Kgs2kN(D["N"]);
+            My0 = BSHelper.Kgs2kN(D["My"]);
+            Mz0 = BSHelper.Kgs2kN(D["Mz"]);
             //size
             b = D["b"];
             h = D["h"];
@@ -70,20 +72,43 @@ namespace BSFiberConcrete.CalcGroup2
             ny = (int)D["ny"];
             nz = (int)D["nz"];
             // beton
-            Eb0 = D["Eb0"];
-            Rbc = D["Rbc"];
-            Rbt = D["Rbt"];
+            Eb0 = BSHelper.Kgssm2ToKNsm2(D["Eb0"]);
+            Rbc = BSHelper.Kgssm2ToKNsm2(D["Rbc"]);
+            Rbt = BSHelper.Kgssm2ToKNsm2(D["Rbt"]);
             ebc0 = D["ebc0"];
             ebc2 = D["ebc2"];
             ebt0 = D["ebt0"];
             ebt2 = D["ebt2"];
             // steel
-            Es0 = D["Es0"];
-            Rsc = D["Rsc"];
-            Rst = D["Rst"];
+            Es0 = BSHelper.Kgssm2ToKNsm2(D["Es0"]);
+            Rsc = BSHelper.Kgssm2ToKNsm2(D["Rsc"]);
+            Rst = BSHelper.Kgssm2ToKNsm2(D["Rst"]);
             esc2 = D["esc2"];
             est2 = D["est2"];            
         }
+
+        /// <summary>
+        /// Привязки арматуры
+        /// </summary>
+        /// <param name="_bD"></param>
+        /// <param name="_bX"></param>
+        /// <param name="_bY"></param>
+        public void GetRods(List<double> _bD, List<double> _bX, List<double> _bY )
+        {
+            ds.Clear();
+            y0s.Clear();
+            z0s.Clear();
+            
+            int idx = 0;
+            foreach (var d in _bD)
+            {
+                ds.Add(d);
+                z0s.Add(_bX[idx]);
+                y0s.Add(_bY[idx]);
+                idx++;
+            }
+        }
+
 
         // стержни арматуры       
         public void GetRods(List<BSRod> _Rods, double _dx = 0, double _dy = 0)
@@ -104,9 +129,9 @@ namespace BSFiberConcrete.CalcGroup2
         // Продольная сила, кН, - сжатие
         private double N = -400.0;
         // Момент отн. оси Y, кН*см
-        private double My0 = 90 * 100;
+        private double My0 = 9000;
         // Момент отн. оси Z, кН*см
-        private double Mz0 = 10.0 * 100;
+        private double Mz0 = 1000;
         // Ширина сечения, см
         private double b = 20.0;
         // высота сечения, см
@@ -152,6 +177,12 @@ namespace BSFiberConcrete.CalcGroup2
         // Максимальная абсолютная погрешность
         private static double tolmax = Math.Pow(10, -10);
         private static int err = 0;
+        private Dictionary<string, double> m_Results = new Dictionary<string, double>();
+
+
+        public int Err => err;
+        public Dictionary<string, double> Results => m_Results;
+
 
         // Диаграмма деформирования арматуры (двухлинейная)
         private double Diagr_S(double _e)
@@ -206,7 +237,7 @@ namespace BSFiberConcrete.CalcGroup2
                 return _s / _e;
         }
         
-        private void Init()
+        private void Calculate()
         {
            
             #region Params initialisatioin
@@ -505,13 +536,28 @@ namespace BSFiberConcrete.CalcGroup2
                     sigS[jend].ZipThree(As, ys[0], (s, A, y) => s * A * y).Sum() -
                     sigBS[jend].ZipThree(As, ys[0], (s, A, y) => s * A * y).Sum();
 
+            m_Results = new Dictionary<string, double>
+            {
+                ["ep0"] = ep0[jend],
+                ["Ky"] = Ky[jend],
+                ["ry"] = 1/Ky[jend],
+                ["Kz"] = Kz[jend],
+                ["rz"] = 1/Kz[jend],
+                ["sigB"] = sigB[jend].MaximumAbsolute(),
+                ["sigS"] = sigS[jend].MaximumAbsolute(),
+            };
         }
 
         public void Run()
         {
-            Init();
-
-
+            try
+            {
+                Calculate();
+            }
+            catch (Exception ex) 
+            {
+                MessageBox.Show(ex.Message);
+            }            
             //throw new NotImplementedException();
         }
 

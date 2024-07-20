@@ -10,7 +10,7 @@ using MathNet.Numerics.LinearAlgebra.Double;
 using TriangleNet.Geometry;
 
 namespace BSFiberConcrete
-{
+{     
     /// <summary>
     /// Расчет по прочности нормальных сечений на основе нелинейной деформационной модели
     /// </summary>
@@ -187,48 +187,7 @@ namespace BSFiberConcrete
             m_Res = new Dictionary<string, double>();
             m_Res2Group = new Dictionary<string, double>();
         }
-
-        public void CalcNDM()
-        {
-            try
-            {
-                Dictionary<string, double> pD = new Dictionary<string, double>()
-                {
-                    ["N"] = N,
-                    ["My"] = My,
-                    ["Mz"] = Mx,
-                    //size
-                    ["b"] = m_Beam.b,
-                    ["h"] = m_Beam.h,
-                    //Mesh
-                    ["ny"] = m_Y_N,
-                    ["nz"] = m_X_M,
-                    // beton
-                    ["Eb0"] = m_Fiber.Eb,
-                    ["Rbc"] = m_Fiber.Rfb,
-                    ["Rbt"] = m_Fiber.Rfbt,
-                    ["ebc0"] = m_Fiber.e_b1, // ?
-                    ["ebc2"] = m_Fiber.e_b1, // ?
-                    ["ebt0"] = m_Fiber.e_b1, // ?
-                    ["ebt2"] = m_Fiber.e_b2, // ?
-                    // steel
-                    ["Es0"] = m_Rod.Es,
-                    ["Rsc"] = m_Rod.Rsc,
-                    ["Rst"] = m_Rod.Rs,
-                    ["esc2"] = m_Rod.e_s0, //?
-                    ["est2"] = m_Rod.e_s2 // ?
-                };
-
-                BSCalcNDM calcNDM = new BSCalcNDM(pD);
-                calcNDM.GetRods(m_Rods, m_Beam.h / 2.0, m_Beam.b /2.0);
-                calcNDM.Run();
-            }
-            catch
-            {
-
-            }
-        }
-
+       
         /// <summary>
         /// 
         /// </summary>
@@ -599,7 +558,6 @@ namespace BSFiberConcrete
             {
                 MessageBox.Show(_E.Message);
             }
-
         }
 
 
