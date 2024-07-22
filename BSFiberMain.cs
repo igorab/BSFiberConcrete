@@ -1230,10 +1230,12 @@ namespace BSFiberConcrete
             bsCalc.Run();
             var err = bsCalc.Err;
 
-            var res = new BSCalcResultNDM(bsCalc.Results);            
-            res.Results1Group(m_CalcResults);
-            res.Results2Group(m_CalcResults2Group);
-            m_Message = res.Msg;
+            BSCalcResultNDM calcRes = new BSCalcResultNDM(bsCalc.Results);            
+            calcRes.Results1Group();
+            m_CalcResults  = calcRes.Res1Group;
+            calcRes.Results2Group();
+            m_CalcResults2Group = calcRes.Res2Group;
+            m_Message = calcRes.Msg;
         }
 
         /// <summary>

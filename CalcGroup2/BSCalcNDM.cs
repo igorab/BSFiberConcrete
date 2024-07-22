@@ -545,6 +545,8 @@ namespace BSFiberConcrete.CalcGroup2
                 ["rz"] = 1/Kz[jend],
                 ["sigB"] = sigB[jend].MaximumAbsolute(),
                 ["sigS"] = sigS[jend].MaximumAbsolute(),
+                ["epsB"] = epB[jend].MaximumAbsolute(),
+                ["epsS"] = epS[jend].MaximumAbsolute(),
             };
         }
 

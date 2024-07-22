@@ -35,19 +35,19 @@ namespace BSFiberConcrete
         [DisplayName("Напряжение в арматуре, кгс/см2")]
         public double sigmaS { get; set; }
 
-
-        [DisplayName("Максимальная относительная деформация")]
+        [DisplayName("Максимальная относительная деформация в бетоне")]
         public double e_fb_max { get; set; }
+
+        [DisplayName("Максимальная относительная деформация в арматуре")]
+        public double e_s_max { get; set; }
 
         [DisplayName("Максимальный момент возникновения трещины")]
         public double Mcrc { get; set; }
-
         public int groupLSD;
         public List<string> Msg { get; set; }
         public double Eps_fb_ult;
-        private readonly Dictionary<string, double> m_Res1Group;
-        private readonly Dictionary<string, double> m_Res2Group;
-
+        public Dictionary<string, double> Res1Group { get; private set; }
+        public Dictionary<string, double> Res2Group { get; private set; }
 
         public BSCalcResultNDM(Dictionary<string, double> _D)
         {
@@ -58,15 +58,17 @@ namespace BSFiberConcrete
             rx = _D["rz"];
             sigmaB = _D["sigB"];
             sigmaS = _D["sigS"];
+            e_fb_max = _D["epsB"];
+            e_s_max = _D["epsS"];
 
             Msg = new List<string>();
-            m_Res1Group = new Dictionary<string, double>();
-            m_Res2Group = new Dictionary<string, double>();
+            Res1Group = new Dictionary<string, double>();
+            Res2Group = new Dictionary<string, double>();
         }
 
         private void AddToResult(string _attr, double _value, int _group = 1)
         {
-            var res = (_group == 1) ? m_Res1Group : m_Res2Group;
+            var res = (_group == 1) ? Res1Group : Res2Group;
 
             if (Math.Abs(_value) < 10e-15 || Math.Abs(_value) > 10e15)
             {
@@ -75,7 +77,7 @@ namespace BSFiberConcrete
 
             try
             {
-                res.Add(BSFiberCalculation.DsplN(typeof(BSFiberCalc_Deform), _attr), _value);
+                res.Add(BSFiberCalculation.DsplN(typeof(BSCalcResultNDM), _attr), _value);
             }
             catch (Exception _E)
             {
@@ -86,28 +88,27 @@ namespace BSFiberConcrete
         /// <summary>
         ///  Результаты расчета по 1 группе предельных состояний
         /// </summary>
-        public void Results1Group(Dictionary<string, double> _CalcResults)
+        public void Results1Group()
         {           
             AddToResult("eps_0", eps_0);
             AddToResult("rx", rx);
             AddToResult("Kx", Kx);
             AddToResult("ry", ry);
             AddToResult("Ky", Ky);
+
+            AddToResult("sigmaB", sigmaB);
+            AddToResult("sigmaS", sigmaS);
+
             AddToResult("e_fb_max", e_fb_max);
+            AddToResult("e_s_max", e_s_max);            
 
-            //_CalcResults["sigB"] = 0;
-            //_CalcResults["sigS"] = 0;
-
-            _CalcResults = m_Res1Group;
-            
-
+                                    
             bool res_fb = e_fb_max <= Eps_fb_ult;
             if (res_fb)
                 Msg.Add(string.Format("Проверка сечения по фибробетону пройдена. e_fb_max={0} <= e_fb_ult={1} ", Math.Round(e_fb_max, 6), Eps_fb_ult));
             else
                 Msg.Add(string.Format("Не пройдена проверка сечения по фибробетону. e_fb_max={0} <= e_fb_ult={1} ", Math.Round(e_fb_max, 6), Eps_fb_ult));
-
-            double e_s_max = 0; // epsilon_s.AbsoluteMaximum();
+            
             double e_s_ult = 0; // m_Rod.Eps_s_ult(DeformDiagram);
             bool res_s = e_s_max <= e_s_ult;
 
@@ -120,7 +121,7 @@ namespace BSFiberConcrete
         /// <summary>
         ///  Результаты расчета по 2 группе предельных состояний
         /// </summary>
-        public void Results2Group(Dictionary<string, double> _CalcResults)
+        public void Results2Group()
         {
             Mcrc = 1234345678;
             AddToResult("Mcrc", Mcrc, groupLSD);
