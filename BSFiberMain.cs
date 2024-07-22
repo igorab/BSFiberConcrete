@@ -1188,18 +1188,30 @@ namespace BSFiberConcrete
                 ["nz"] = (int)numMeshN.Value,
                 // beton
                 ["Eb0"] = (double)numEfb.Value,
+                // - нормативные
+                ["Rbcn"] = (double)(numRfb_n.Value),
+                ["Rbtn"] = (double)(numRfbt_n.Value),
+                // - расчетные
                 ["Rbc"] = (double)(numRfb_n.Value / numYb.Value),
                 ["Rbt"] = (double)(numRfbt_n.Value / numYft.Value),
+                // - деформации
                 ["ebc0"] = (double)numEps_fb0.Value, // ? 
                 ["ebc2"] = (double)numEps_fb2.Value, // ?
                 ["ebt0"] = 0.0001, // (double)numEps_fb0.Value, // ? Валера добавить поле на форму
                 ["ebt2"] = (double)numEps_fbt2.Value, // ?
+                ["ebt_ult"] = (double)numEps_fbt_ult.Value,
                 // steel
                 ["Es0"] = (double)numEs.Value,
+                // нормативные 
+                ["Rscn"] = (double)(numRfb_n.Value),
+                ["Rstn"] = (double)(numRfbt_n.Value),
+                // расчетные
                 ["Rsc"] = (double)numRsc.Value,
                 ["Rst"] = (double)numRs.Value,
+                // деформации
                 ["esc2"] = (double)numEpsilonS2.Value, // уточнить
-                ["est2"] = (double)numEpsilonS2.Value // уточнить
+                ["est2"] = (double)numEpsilonS2.Value, // уточнить
+                ["es_ult"] = (double)numEps_s_ult.Value,
             };
 
             if (_LSD == 2) 
@@ -1214,28 +1226,48 @@ namespace BSFiberConcrete
             return D;
         }
 
-
-        [DisplayName("Расчет по прочности нормальных сечений на основе нелинейной деформационной модели")]
-        private void CalcDeformNDM(int _LSD)
-        {
-            var D = DictCalcParams(_LSD);
+        /// <summary>
+        /// "Расчет по прочности нормальных сечений на основе нелинейной деформационной модели"
+        /// </summary>        
+        private void CalcNDM()
+        {            
+            var D = DictCalcParams(0);
             double b = D["b"];
 
             //привязка арматуры (по X - высота, по Y ширина балки)
-            (List<double> listD, List<double> listX, List<double> listY, double qty, double area) =
+            (List<double> listD, List<double> listX, List<double> listY, double _qty, double _area) =
                 ReinforcementBinding(BeamSection.Rect, -b / 2.0, 0);
 
-            BSCalcNDM bsCalc = new BSCalcNDM(D);            
+            m_Reinforcement = new Dictionary<string, double>
+            {
+                { "Количество стержней арматуры, [шт]", _qty },
+                { "Общая площадь продольной арматуры, [см2]", _area }
+            };
+
+            BSCalcNDM bsCalc;
+            bsCalc = new BSCalcNDM(1);
+            bsCalc.DictParams(D);
             bsCalc.GetRods(listD, listX, listY);
             bsCalc.Run();
             var err = bsCalc.Err;
 
-            BSCalcResultNDM calcRes = new BSCalcResultNDM(bsCalc.Results);            
+            BSCalcResultNDM calcRes = new BSCalcResultNDM(bsCalc.Results);
+            calcRes.Eps_fb_ult = D["ebt_ult"];
+            calcRes.Eps_s_ult = D["es_ult"];
             calcRes.Results1Group();
             m_CalcResults  = calcRes.Res1Group;
             calcRes.Results2Group();
             m_CalcResults2Group = calcRes.Res2Group;
             m_Message = calcRes.Msg;
+
+
+            bsCalc = new BSCalcNDM(2);
+            bsCalc.DictParams(D);
+            bsCalc.GetRods(listD, listX, listY);
+            bsCalc.Run();
+            err = bsCalc.Err;
+
+
         }
 
         /// <summary>
@@ -1460,9 +1492,13 @@ namespace BSFiberConcrete
         private void btnCalc_Deform_Click(object sender, EventArgs e)
         {
             if (m_BeamSection == BeamSection.Rect)
-                CalcDeformNDM(2);
+            {
+                CalcNDM();
+            }
             else
+            {
                 CalcDeformNDM();
+            }
 
             CreateReportNDM();
         }

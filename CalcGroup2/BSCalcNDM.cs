@@ -55,36 +55,57 @@ namespace BSFiberConcrete.CalcGroup2
 
     public class BSCalcNDM 
     {
-        public BSCalcNDM()
+        // группа предельных состояний
+        private int GroupLSD;
+
+        
+        public BSCalcNDM(int _groupLSD)
         {
+            GroupLSD = _groupLSD;
         }
 
-        public BSCalcNDM(Dictionary<string, double> D)
+        public void DictParams(Dictionary<string, double> _D)
         {
             // enforce
-            N = BSHelper.Kgs2kN(D["N"]);
-            My0 = BSHelper.Kgs2kN(D["My"]);
-            Mz0 = BSHelper.Kgs2kN(D["Mz"]);
+            N = BSHelper.Kgs2kN(_D["N"]);
+            My0 = BSHelper.Kgs2kN(_D["My"]);
+            Mz0 = BSHelper.Kgs2kN(_D["Mz"]);
             //size
-            b = D["b"];
-            h = D["h"];
+            b = _D["b"];
+            h = _D["h"];
             //Mesh
-            ny = (int)D["ny"];
-            nz = (int)D["nz"];
+            ny = (int)_D["ny"];
+            nz = (int)_D["nz"];
             // beton
-            Eb0 = BSHelper.Kgssm2ToKNsm2(D["Eb0"]);
-            Rbc = BSHelper.Kgssm2ToKNsm2(D["Rbc"]);
-            Rbt = BSHelper.Kgssm2ToKNsm2(D["Rbt"]);
-            ebc0 = D["ebc0"];
-            ebc2 = D["ebc2"];
-            ebt0 = D["ebt0"];
-            ebt2 = D["ebt2"];
-            // steel
-            Es0 = BSHelper.Kgssm2ToKNsm2(D["Es0"]);
-            Rsc = BSHelper.Kgssm2ToKNsm2(D["Rsc"]);
-            Rst = BSHelper.Kgssm2ToKNsm2(D["Rst"]);
-            esc2 = D["esc2"];
-            est2 = D["est2"];            
+            Eb0 = BSHelper.Kgssm2ToKNsm2(_D["Eb0"]);
+            if (GroupLSD == 2)
+            {
+                Rbc = BSHelper.Kgssm2ToKNsm2(_D["Rbcn"]);
+                Rbt = BSHelper.Kgssm2ToKNsm2(_D["Rbtn"]);
+            }
+            else
+            {
+                Rbc = BSHelper.Kgssm2ToKNsm2(_D["Rbc"]);
+                Rbt = BSHelper.Kgssm2ToKNsm2(_D["Rbt"]);
+            }
+            ebc0 = _D["ebc0"];
+            ebc2 = _D["ebc2"];
+            ebt0 = _D["ebt0"];
+            ebt2 = _D["ebt2"];
+            // steel / rebar
+            Es0 = BSHelper.Kgssm2ToKNsm2(_D["Es0"]);
+            if (GroupLSD == 2)
+            {
+                Rsc = BSHelper.Kgssm2ToKNsm2(_D["Rscn"]);
+                Rst = BSHelper.Kgssm2ToKNsm2(_D["Rstn"]);
+            }
+            else
+            {
+                Rsc = BSHelper.Kgssm2ToKNsm2(_D["Rsc"]);
+                Rst = BSHelper.Kgssm2ToKNsm2(_D["Rst"]);
+            }
+            esc2 = _D["esc2"];
+            est2 = _D["est2"];            
         }
 
         /// <summary>
