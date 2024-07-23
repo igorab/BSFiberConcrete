@@ -1166,6 +1166,11 @@ namespace BSFiberConcrete
             return (rodD, hX, bY, d_qty, area_total);           
         }
 
+        /// <summary>
+        ///  данные с формы
+        /// </summary>
+        /// <param name="_LSD"></param>
+        /// <returns>словарь данных</returns>
         private Dictionary<string, double> DictCalcParams(int _LSD)
         {
             double[] beam_sizes = BeamSizes();
@@ -1230,14 +1235,16 @@ namespace BSFiberConcrete
         /// "Расчет по прочности нормальных сечений на основе нелинейной деформационной модели"
         /// </summary>        
         private void CalcNDM()
-        {            
+        {
+            // данные с формы
             var D = DictCalcParams(0);
             double b = D["b"];
-
             //привязка арматуры (по X - высота, по Y ширина балки)
             (List<double> listD, List<double> listX, List<double> listY, double _qty, double _area) =
                 ReinforcementBinding(BeamSection.Rect, -b / 2.0, 0);
-            
+            D.Add("rods_qty", _qty);
+            D.Add("rods_area", _area);
+
             // выполнить расчет по 1 группе п.с.
             BSCalcNDM bsCalc1 = new BSCalcNDM(1);
             bsCalc1.DictParams(D);
@@ -1245,9 +1252,7 @@ namespace BSFiberConcrete
             bsCalc1.Run(); 
             
             BSCalcResultNDM calcRes = new BSCalcResultNDM(bsCalc1.Results);
-
-            calcRes.InitCalcParams(D);
-            
+            calcRes.InitCalcParams(D);            
             calcRes.ErrorIdx.Add(bsCalc1.Err); // вывести описание ошибки
             calcRes.Results1Group(ref m_CalcResults);
             calcRes.ResultsMsg1Group(ref m_Message);
@@ -1260,10 +1265,10 @@ namespace BSFiberConcrete
             calcRes.ErrorIdx.Add(bsCalc2.Err);
             calcRes.GetRes2Group(bsCalc2.Results);
             calcRes.Results2Group(ref m_CalcResults2Group);
-
-            m_Reinforcement = calcRes.Reinforcement;
+            
             m_Efforts = calcRes.Efforts;
             m_PhysParams = calcRes.PhysParams;
+            m_Reinforcement = calcRes.Reinforcement;
         }
 
         /// <summary>

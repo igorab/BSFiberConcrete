@@ -141,11 +141,27 @@ namespace BSFiberConcrete
             { DN("rods_area"), rods_area }
         };
 
-
+        /// <summary>
+        /// Параметры расчета
+        /// </summary>
+        /// <param name="_D"></param>
         public void InitCalcParams(Dictionary<string, double> _D)
         {
+            Mx = _D["Mz"];
+            My = _D["My"];
+            N = _D["N"];
+
+            Eb = _D["Eb0"];
+            Rfbn = _D["Rbcn"];
+
+            Es = _D["Es0"];
+            Rs = _D["Rscn"];
+
             Eps_fb_ult = _D["ebt_ult"];
             Eps_s_ult = _D["es_ult"];
+
+            rods_qty = _D["rods_qty"];
+            rods_area = _D["rods_area"];
         }
 
         public BSCalcResultNDM(Dictionary<string, double> _D1gr)
