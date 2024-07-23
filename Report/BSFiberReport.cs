@@ -182,8 +182,10 @@ namespace BSFiberConcrete
         }
 
         protected virtual void ReportResult(StreamWriter w)
-        {
-            w.WriteLine("<H3>Расчет:</H3>");
+        {            
+            w.WriteLine("<H2>Расчет:</H2>");
+            if (m_CalcResults2Group != null)
+                w.WriteLine("<H3>Расчет по 1-й группе предельных состояний:</H3>");
             if (m_CalcResults != null)
             {                
                 w.WriteLine("<Table border=1 bordercolor = darkblue>");

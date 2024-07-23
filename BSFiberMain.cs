@@ -1203,8 +1203,8 @@ namespace BSFiberConcrete
                 // steel
                 ["Es0"] = (double)numEs.Value,
                 // нормативные 
-                ["Rscn"] = (double)(numRfb_n.Value),
-                ["Rstn"] = (double)(numRfbt_n.Value),
+                ["Rscn"] = (double)(numRscn.Value),
+                ["Rstn"] = (double)(numRsn.Value),
                 // расчетные
                 ["Rsc"] = (double)numRsc.Value,
                 ["Rst"] = (double)numRs.Value,
@@ -1237,37 +1237,33 @@ namespace BSFiberConcrete
             //привязка арматуры (по X - высота, по Y ширина балки)
             (List<double> listD, List<double> listX, List<double> listY, double _qty, double _area) =
                 ReinforcementBinding(BeamSection.Rect, -b / 2.0, 0);
+            
+            // выполнить расчет по 1 группе п.с.
+            BSCalcNDM bsCalc1 = new BSCalcNDM(1);
+            bsCalc1.DictParams(D);
+            bsCalc1.GetRods(listD, listX, listY);
+            bsCalc1.Run(); 
+            
+            BSCalcResultNDM calcRes = new BSCalcResultNDM(bsCalc1.Results);
 
-            m_Reinforcement = new Dictionary<string, double>
-            {
-                { "Количество стержней арматуры, [шт]", _qty },
-                { "Общая площадь продольной арматуры, [см2]", _area }
-            };
+            calcRes.InitCalcParams(D);
+            
+            calcRes.ErrorIdx.Add(bsCalc1.Err); // вывести описание ошибки
+            calcRes.Results1Group(ref m_CalcResults);
+            calcRes.ResultsMsg1Group(ref m_Message);
 
-            BSCalcNDM bsCalc;
-            bsCalc = new BSCalcNDM(1);
-            bsCalc.DictParams(D);
-            bsCalc.GetRods(listD, listX, listY);
-            bsCalc.Run();
-            var err = bsCalc.Err;
+            // выполнить расчет по 2 группе п.с.
+            BSCalcNDM bsCalc2 = new BSCalcNDM(2);
+            bsCalc2.DictParams(D);
+            bsCalc2.GetRods(listD, listX, listY);
+            bsCalc2.Run();
+            calcRes.ErrorIdx.Add(bsCalc2.Err);
+            calcRes.GetRes2Group(bsCalc2.Results);
+            calcRes.Results2Group(ref m_CalcResults2Group);
 
-            BSCalcResultNDM calcRes = new BSCalcResultNDM(bsCalc.Results);
-            calcRes.Eps_fb_ult = D["ebt_ult"];
-            calcRes.Eps_s_ult = D["es_ult"];
-            calcRes.Results1Group();
-            m_CalcResults  = calcRes.Res1Group;
-            calcRes.Results2Group();
-            m_CalcResults2Group = calcRes.Res2Group;
-            m_Message = calcRes.Msg;
-
-
-            bsCalc = new BSCalcNDM(2);
-            bsCalc.DictParams(D);
-            bsCalc.GetRods(listD, listX, listY);
-            bsCalc.Run();
-            err = bsCalc.Err;
-
-
+            m_Reinforcement = calcRes.Reinforcement;
+            m_Efforts = calcRes.Efforts;
+            m_PhysParams = calcRes.PhysParams;
         }
 
         /// <summary>
@@ -1493,7 +1489,14 @@ namespace BSFiberConcrete
         {
             if (m_BeamSection == BeamSection.Rect)
             {
-                CalcNDM();
+                try
+                {
+                    CalcNDM();
+                }
+                catch (Exception _e)
+                {
+                    MessageBox.Show(_e.Message);
+                }
             }
             else
             {

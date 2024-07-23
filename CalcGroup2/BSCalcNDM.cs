@@ -57,7 +57,6 @@ namespace BSFiberConcrete.CalcGroup2
     {
         // группа предельных состояний
         private int GroupLSD;
-
         
         public BSCalcNDM(int _groupLSD)
         {
@@ -568,6 +567,8 @@ namespace BSFiberConcrete.CalcGroup2
                 ["sigS"] = sigS[jend].MaximumAbsolute(),
                 ["epsB"] = epB[jend].MaximumAbsolute(),
                 ["epsS"] = epS[jend].MaximumAbsolute(),
+                ["My_crc"] = Myint,
+                ["Mx_crc"] = Mzint
             };
         }
 
