@@ -224,8 +224,8 @@ namespace BSFiberConcrete
             AddToResult("ry", ry);
             AddToResult("Ky", Ky);
 
-            AddToResult("sigmaB", sigmaB);
-            AddToResult("sigmaS", sigmaS);
+            AddToResult("sigmaB", BSHelper.KNsm2ToKgssm2(sigmaB));
+            AddToResult("sigmaS", BSHelper.KNsm2ToKgssm2(sigmaS));
 
             AddToResult("e_fb_max", e_fb_max);
             AddToResult("e_s_max", e_s_max);
@@ -261,7 +261,7 @@ namespace BSFiberConcrete
         /// </summary>
         public void Results2Group(ref Dictionary<string, double> _CalcResults)
         {            
-            AddToResult("M_crc", M_crc, 2);                                  
+            AddToResult("M_crc", BSHelper.kNsm2kgssm( M_crc), 2);                                  
             AddToResult("Kx", Kx_crc, 2);            
             AddToResult("Ky", Ky_crc, 2);
             
