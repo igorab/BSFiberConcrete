@@ -65,6 +65,11 @@ namespace BSFiberConcrete
 
         #region Параметры расчета
 
+        [DisplayName("Ширина сечения, b [см]")]
+        public double b { get; set; }
+        [DisplayName("Высота сечения, h [см]")]
+        public double h { get; set; }
+
         [DisplayName("Mx [кгс*см]")]
         public double Mx { get; set; }
         [DisplayName("My [кгс*см]")]
@@ -141,12 +146,21 @@ namespace BSFiberConcrete
             { DN("rods_area"), rods_area }
         };
 
+        public Dictionary<string, double> GeomParams =>  new Dictionary<string, double>
+        {
+            { DN("b"), b },
+            { DN("h"), h }
+        };
+
         /// <summary>
         /// Параметры расчета
         /// </summary>
         /// <param name="_D"></param>
         public void InitCalcParams(Dictionary<string, double> _D)
         {
+            b = _D["b"];
+            h = _D["h"];
+
             Mx = _D["Mz"];
             My = _D["My"];
             N = _D["N"];

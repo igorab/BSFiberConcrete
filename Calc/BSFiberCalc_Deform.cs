@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing.Text;
 using System.Security.Cryptography;
 using System.Windows.Forms;
 using BSFiberConcrete.CalcGroup2;
+using MathNet.Numerics;
 using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics.LinearAlgebra.Double;
 using TriangleNet.Geometry;
@@ -385,24 +387,33 @@ namespace BSFiberConcrete
         //My = D[I1, I2] * 1 / ry + D[I2, I2] * 1 / ry + D[I2, I3] * eps_0; 
         //N = D[I1, I3] * 1 / rx + D[I2, I3] * 1/ry + D[I3, I3] * eps_0;
         //
-        private void Calc_MxMyN()
+        private bool Calc_MxMyN()
         {
             const int I1=0, I2=1, I3=2;
             double[] v_eff = { Mx, My, N};
-          
-            Vector<double> V_Eff = Vector<double>.Build.Dense(v_eff);                          
-            Vector<double> X  = D.Solve(V_Eff);
+            
+            Vector<double> V_Eff = Vector<double>.Build.Dense(v_eff);
+
+            Vector<double> Xsol  = D.Solve(V_Eff);
+
+            foreach (var _x in Xsol)
+            {
+                if (!_x.IsFinite())
+                    return false;
+            }
 
             double kx, ky;
             
             // решение:
-            (kx, ky, eps_0) = (X[I1], X[I2], X[I3]);
+            (kx, ky, eps_0) = (Xsol[I1], Xsol[I2], Xsol[I3]);
             
             rx = (kx != 0) ? 1 / kx : float.MaxValue;
             ry = (ky != 0) ? 1 / ky : float.MaxValue; 
 
             Kx = kx;
-            Ky = ky;                                    
+            Ky = ky;
+
+            return true;
         }
 
         private void ArraysClear()
@@ -646,9 +657,13 @@ namespace BSFiberConcrete
             DenseMatrix Zeros3x3 = DenseMatrix.OfArray(zero3x3);
 
             bool doNextIter = true;
+           
 
             for (int iter = 0; iter < cIters; iter++)
             {
+                if (iter == 3)
+                    Debug.Assert(true);
+
                 if (!doNextIter)
                     break;
                 try
@@ -681,7 +696,9 @@ namespace BSFiberConcrete
                         break;
                     }
 
-                    Calc_MxMyN();
+                    bool ret = Calc_MxMyN();
+                    if (!ret)
+                        break;
                     
                     doNextIter = CalcResult(out int res, groupLSD);
 
@@ -727,14 +744,17 @@ namespace BSFiberConcrete
             else
                 Msg.Add(string.Format("Не пройдена проверка сечения по фибробетону. e_fb_max={0} <= e_fb_ult={1} ", Math.Round(e_fb_max, 6), m_Fiber.Eps_fb_ult));
 
-            double e_s_max = epsilon_s.AbsoluteMaximum();
-            double e_s_ult = m_Rod.Eps_s_ult(DeformDiagram);
-            bool res_s = e_s_max <= e_s_ult;
+            if (epsilon_s != null && epsilon_s.Count > 0)
+            {
+                double e_s_max = epsilon_s.AbsoluteMaximum();
+                double e_s_ult = m_Rod.Eps_s_ult(DeformDiagram);
+                bool res_s = e_s_max <= e_s_ult;
 
-            if (res_s)
-                Msg.Add(string.Format("Проверка сечения по арматуре пройдена. e_s_max={0} <= e_s_ult={1} ", Math.Round(e_s_max, 6), e_s_ult));
-            else
-                Msg.Add(string.Format("Не пройдена проверка сечения по арматуре. e_s_max={0} <= e_s_ult={1}", Math.Round(e_s_max, 6), e_s_ult));
+                if (res_s)
+                    Msg.Add(string.Format("Проверка сечения по арматуре пройдена. e_s_max={0} <= e_s_ult={1} ", Math.Round(e_s_max, 6), e_s_ult));
+                else
+                    Msg.Add(string.Format("Не пройдена проверка сечения по арматуре. e_s_max={0} <= e_s_ult={1}", Math.Round(e_s_max, 6), e_s_ult));
+            }
         }
 
         /// <summary>

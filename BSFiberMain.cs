@@ -1239,6 +1239,7 @@ namespace BSFiberConcrete
             // данные с формы
             var D = DictCalcParams(0);
             double b = D["b"];
+            
             //привязка арматуры (по X - высота, по Y ширина балки)
             (List<double> listD, List<double> listX, List<double> listY, double _qty, double _area) =
                 ReinforcementBinding(BeamSection.Rect, -b / 2.0, 0);
@@ -1265,7 +1266,8 @@ namespace BSFiberConcrete
             calcRes.ErrorIdx.Add(bsCalc2.Err);
             calcRes.GetRes2Group(bsCalc2.Results);
             calcRes.Results2Group(ref m_CalcResults2Group);
-            
+
+            m_GeomParams = calcRes.GeomParams;
             m_Efforts = calcRes.Efforts;
             m_PhysParams = calcRes.PhysParams;
             m_Reinforcement = calcRes.Reinforcement;
@@ -1505,6 +1507,7 @@ namespace BSFiberConcrete
             }
             else
             {
+                Math.Sign(0);
                 CalcDeformNDM();
             }
 
