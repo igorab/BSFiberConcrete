@@ -1506,8 +1506,7 @@ namespace BSFiberConcrete
                 }
             }
             else
-            {
-                Math.Sign(0);
+            {             
                 CalcDeformNDM();
             }
 

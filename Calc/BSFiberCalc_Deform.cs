@@ -428,7 +428,7 @@ namespace BSFiberConcrete
             Nju_s.Clear();
         }
 
-        private bool CalcResult(out int _res, int _group = 1)
+        private bool CalcResult(out int _res, int _group, ref double Mx_calc, ref double My_calc, ref double N_calc)
         {
             bool doNextIter = true;
             _res = 0;
@@ -523,9 +523,9 @@ namespace BSFiberConcrete
                 N_s_calc += Fj;
             }
 
-            double Mx_calc = Math.Abs(Mx_b_calc + Mx_s_calc);
-            double My_calc =  Math.Abs(My_b_calc + My_s_calc);
-            double N_calc = Math.Abs(N_b_calc + N_s_calc);
+            Mx_calc = Math.Abs(Mx_b_calc + Mx_s_calc);
+            My_calc =  Math.Abs(My_b_calc + My_s_calc);
+            N_calc = Math.Abs(N_b_calc + N_s_calc);
 
             if (Math.Abs(Mx - Mx_calc) <= BSHelper.Epsilon &&
                 Math.Abs(My - My_calc) <= BSHelper.Epsilon && 
@@ -699,16 +699,16 @@ namespace BSFiberConcrete
                     bool ret = Calc_MxMyN();
                     if (!ret)
                         break;
+
+                    double Mx_calc = 0, My_calc = 0, N_calc = 0;
+                    doNextIter = CalcResult(out int res, groupLSD, ref Mx_calc, ref My_calc, ref N_calc);
+
+
+                    // Трещинообразование
+                    Mcrc = My_calc;
+                    double ky_crc = Ky; 
+                    double kx_crc = Kx; 
                     
-                    doNextIter = CalcResult(out int res, groupLSD);
-
-                    if (res == 2)
-                    {
-                        // Трещинообразование
-                        double M_crc = 0;
-                        double k_crc = Ky; // 1/r
-                    }
-
                 }
                 catch (Exception ex)
                 {
@@ -721,7 +721,6 @@ namespace BSFiberConcrete
                 }
             }
         }
-
 
 
         /// <summary>
@@ -761,8 +760,7 @@ namespace BSFiberConcrete
         ///  Результаты расчета по 2 группе предельных состояний
         /// </summary>
         private void ResultsGroup2()
-        {
-            Mcrc = 1234345678;
+        {            
             AddToResult("Mcrc", Mcrc, groupLSD);
             AddToResult("ry", ry, groupLSD);
         }
