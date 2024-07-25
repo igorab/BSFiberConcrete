@@ -38,8 +38,8 @@ namespace BSFiberConcrete
 
         private List<Rebar> m_Rebar;
         private BSMatFiber m_MatFiber;
+        private BSMatConcrete m_MatConcrate;
         private List<Elements> FiberConcrete;
-        private List<Beton> m_Beton;
         private List<RebarDiameters> m_RebarDiameters;
         //TODO должна быть удалена/переработана после объединения кода
         /// <summary>
@@ -120,6 +120,12 @@ namespace BSFiberConcrete
             try
             {
 
+                m_MatConcrate = new BSMatConcrete();
+
+
+
+
+
                 test_Efforts = new Dictionary<string, double>()
                 {
                     { "Mmin",0},
@@ -137,15 +143,23 @@ namespace BSFiberConcrete
 
                 dataGridSection.DataSource = m_Table;
 
+
+
                 m_BSLoadData = new BSFiberLoadData();
-                m_MatFiber = new BSMatFiber();
+                
 
                 flowLayoutPanelRebar.Enabled = true;// (checkBoxRebar.Checked == true);
 
                 FiberConcrete = BSData.LoadFiberConcreteTable();
-                cmbFib_i.SelectedIndex = 0;
+                
+                
+                
+                
                 comboBetonType.SelectedIndex = 0;
                 cmbRebarClass.SelectedIndex = 1;
+
+
+
                 cmbDeformDiagram.SelectedIndex = (int)DeformDiagramType.D2Linear;
                 
                 m_Iniv = m_BSLoadData.ReadInitFromJson();
@@ -161,14 +175,14 @@ namespace BSFiberConcrete
                 num_eN.Value = (decimal)m_Iniv["eN"];
                 num_Ml1_M1.Value = (decimal)m_Iniv["Ml"];
 
-                m_BSLoadData.ReadParamsFromJson();
-                m_MatFiber.e_b2 = m_BSLoadData.Beton2.eps_b2;
-                m_MatFiber.Efb = m_BSLoadData.Fiber.Efb; // TODO источником должно быть значение с формы.
-
                 
                 m_InitBeamSectionsGeometry = Lib.BSData.LoadBeamSectionGeometry(m_BeamSection);
-
+                
+                
+                m_BSLoadData.ReadParamsFromJson();
                 numRandomEccentricity.Value = (decimal)m_BSLoadData.Fiber.e_tot;
+
+
 
                 LoadRectangle();
 
@@ -177,11 +191,16 @@ namespace BSFiberConcrete
                 cmbBetonClass.ValueMember = "Name";
                 cmbBetonClass.SelectedValue = BSFiberLib.BetonList[5].Name;
 
-                m_Beton = BSData.LoadBetonData();
-                cmbBfn.DataSource = m_Beton;
+                cmbFib_i.SelectedIndex = 0;
+
+                // DEL
+                //m_Beton = BSData.LoadBetonData();
+                //cmbBfn.DataSource = m_Beton;
+                cmbBfn.DataSource = m_MatConcrate.m_Beton;
                 cmbBfn.DisplayMember = "BT";
                 cmbBfn.ValueMember = "BT";
-                cmbBfn.SelectedValue = (m_Beton.Count > 7) ? m_Beton[7].BT : ""; // в настройки
+                //cmbBfn.SelectedValue = m_MatConcrate.m_Beton[m_MatConcrate.BetonIndex].BT;
+
 
                 cmbBftn.DataSource = BSData.LoadFiberBft();
                 cmbBftn.DisplayMember = "ID";
@@ -229,6 +248,28 @@ namespace BSFiberConcrete
                 numEps_fb2.Value = 0.0042M;
                 numEps_fbt3.Value = 0.006M;
 
+
+                // DEL
+                //string betonClass = (ComboBoxItem)cmbBfn.SelectedItem.BT;
+                //int indexBetonClass = cmbBfn.SelectedIndex;
+                //Beton tmmpBeton = m_Beton[indexBetonClass];
+
+
+                m_MatFiber = new BSMatFiber(m_MatConcrate);
+                m_MatFiber.e_b2 = m_BSLoadData.Beton2.eps_b2;
+                // DEL
+                //m_MatFiber.Efb = m_BSLoadData.Fiber.Efb; // TODO источником должно быть значение с формы.
+
+
+
+                numRfb_n.DataBindings.Add(new Binding("Value", m_MatConcrate, "Rb_n", false, DataSourceUpdateMode.OnPropertyChanged));
+                numE_fiber.DataBindings.Add(new Binding("Value", m_MatConcrate, "Eb", false, DataSourceUpdateMode.OnPropertyChanged));
+
+                numEps_b0.DataBindings.Add(new Binding("Value", m_MatConcrate, "Eps_b0", false, DataSourceUpdateMode.OnPropertyChanged));
+                numEps_b1.DataBindings.Add(new Binding("Value", m_MatConcrate, "Eps_b1", false, DataSourceUpdateMode.OnPropertyChanged));
+                numEps_b2.DataBindings.Add(new Binding("Value", m_MatConcrate, "Eps_b2", false, DataSourceUpdateMode.OnPropertyChanged));
+
+                //numE_fiber.DataBindings.Clear();
                 CalcTypeShow();
             }
             catch (Exception _ex)
@@ -380,17 +421,20 @@ namespace BSFiberConcrete
             // Растяжение Rfbt
             FiberBft fbt = (FiberBft)cmbBftn.SelectedItem;
 
-            m_BSLoadData.Fiber.Efib = (double) numE_fiber.Value;
+            m_BSLoadData.Fiber.Efib = (double) numE_fiber_t.Value;
 
+            // DEL
             // сжатие:
-            m_MatFiber.B = fb.B;
-            m_MatFiber.Rfbn = BSHelper.MPA2kgsm2(fb.Rbn);
+            //m_MatFiber.B = fb.B;
+            //m_MatFiber.Efb = (double)numE_fiber_t.Value;
+            //m_MatFiber.Rfbn = BSHelper.MPA2kgsm2(fb.Rbn);
             // растяжение:            
             m_MatFiber.Rfbtn = BSHelper.MPA2kgsm2(fbt.Rfbtn);
             //остаточное растяжение:            
             m_MatFiber.Rfbt2n = (double)numRfbt2n.Value; // кг/см2
             m_MatFiber.Rfbt3n = (double)numRfbt3n.Value; // кг/см2
-            m_MatFiber.Efb = (double)numE_fiber.Value;
+
+            
         }
 
 
@@ -577,9 +621,12 @@ namespace BSFiberConcrete
 
                 beamMaterial = new BSMatFiber(cEb, numYft.Value, numYb.Value, numYb1.Value, numYb2.Value, numYb3.Value, numYb5.Value)
                 {
-                    BTCls = cBt_class,
+
+                    
                     Nu_fb = 1,
-                    Rfbn = cRb,
+                    // DEL
+                    //Rfbn = cRb,
+                    //BTCls = cBt_class,
                     Rfbtn = (double)numRfbt_n.Value,
                     Rfbt2n = (double)numRfbt2n.Value,
                     Rfbt3n = (double)numRfbt3n.Value,
@@ -1284,9 +1331,11 @@ namespace BSFiberConcrete
 
                 beamMaterial = new BSMatFiber(cEb, numYft.Value, numYb.Value, numYb1.Value, numYb2.Value, numYb3.Value, numYb5.Value)
                 {
-                    BTCls = cBt_class,
+                    
                     Nu_fb = 1,
-                    Rfbn = cRb,
+                    // DEL
+                    //Rfbn = cRb,
+                    // BTCls = cBt_class,
                     Rfbtn = (double)numRfbt_n.Value,
                     Rfbt2n = (double)numRfbt2n.Value,
                     Rfbt3n = (double)numRfbt3n.Value,
@@ -1438,11 +1487,6 @@ namespace BSFiberConcrete
             SelectedFiberBetonValues();
         }
 
-        private void cmbBetonClass_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnCalcResults_Click(object sender, EventArgs e)
         {
             BSCalcResults bSCalcResults = new BSCalcResults();
@@ -1464,8 +1508,21 @@ namespace BSFiberConcrete
         {
             try
             {
-                Beton bt = Lib.BSQuery.BetonTableFind(cmbBfn.Text);
-                numRfb_n.Value = (decimal)BSHelper.MPA2kgsm2(bt.Rbn);
+                int newIndex = cmbBfn.SelectedIndex;
+                m_MatConcrate.BetonIndex = newIndex;
+                
+                
+                //cmbBfn.SelectedIndex()
+
+
+
+                // DEL
+                //string ValueTest = cmbBfn.SelectedItem.ToString();
+                //Beton bt = Lib.BSQuery.BetonTableFind(cmbBfn.Text);
+                //numRfb_n.Value = (decimal)BSHelper.MPA2kgsm2(bt.Rbn);
+                // !!! bt.Eb Значенние в МПА/1000
+                //double k = 1000;
+                //numE_fiber.Value = (decimal)BSHelper.MPA2kgsm2(bt.Eb * k);
             }
             catch { }
         }
@@ -1941,7 +1998,24 @@ namespace BSFiberConcrete
 
         private void cmbFib_i_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // SelectedFiberBetonValues();
+            SelectedFiberBetonValues();
         }
+
+        private void cmbDeformDiagram_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+            int a = cmbDeformDiagram.SelectedIndex;
+
+            if (cmbDeformDiagram.SelectedIndex == (int)DeformDiagramType.D2Linear)
+            {
+                //m_MatConcrate.TypeDiagram = DeformDiagramType.D2Linear;
+                //TODO Вносить изменение в класс фибробетона, арматуры
+            }
+            else if (cmbDeformDiagram.SelectedIndex == (int)DeformDiagramType.D3Linear)
+            {
+                //m_MatConcrate.TypeDiagram = DeformDiagramType.D3Linear;
+            }
+        }
+
     }
 }

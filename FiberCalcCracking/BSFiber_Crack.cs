@@ -150,6 +150,7 @@ namespace BSFiberConcrete
             Msg = new List<string>();
         }
 
+
         /// <summary>
         /// Возвращает результаты расчета геометрических характеристик балки
         /// </summary>
@@ -158,6 +159,7 @@ namespace BSFiberConcrete
         {
             return new Dictionary<string, double>() { };
         }
+
 
         /// <summary>
         /// Физические свойства материала
@@ -243,7 +245,6 @@ namespace BSFiberConcrete
             double S;
             #endregion
 
-            ///
             A_s = MatRebar.As;
             A_1s = MatRebar.As1;
             a = MatRebar.a_s;
@@ -256,7 +257,6 @@ namespace BSFiberConcrete
             A = Beam.Area();
             I = Beam.Jy();
             S = Beam.Sy();
-
 
             #region Расчет
             // Коэф Привендения арматуры к стальфибробетону
@@ -308,23 +308,8 @@ namespace BSFiberConcrete
 
             double M_crc = R_fbt_ser * W_pl + N * e_x;                                                              // (6.107)
             #endregion
-
             return true;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         /// <summary>
@@ -335,14 +320,6 @@ namespace BSFiberConcrete
         {
             if (!Validate())
                 return false;
-
-
-
-
-
-
-
-
 
             // Продольная сила расположенная в центре тяжести приведенного элемента
             // Сжатие       - "+"
@@ -544,6 +521,7 @@ namespace BSFiberConcrete
             return new Dictionary<string, double>() { };
         }
 
+
         /// <summary>
         /// Информация о результате проверки сечения на действие изгибающего момента
         /// </summary>                
@@ -560,6 +538,7 @@ namespace BSFiberConcrete
             info = "Расчет успешно выполнен!";
             Msg.Add(info);
         }
+
 
         /// <summary>
         /// Расчет прочности сечения
@@ -585,92 +564,11 @@ namespace BSFiberConcrete
                     else
                         return new BSFibCalc_Rect();
             }
-
             return new BSFiberCalculation();
         }
-        //public bool Calculate()
-        //{
-        //    throw new NotImplementedException();
-        //}
 
-        //public Dictionary<string, double> GeomParams()
-        //{
-        //    throw new NotImplementedException();
-        //}
 
-        //public void GetParams(double[] _t = null)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public void GetSize(double[] _t = null)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public Dictionary<string, double> Results()
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
-
-
-
-
-
-
-    //public class Efforts
-    //{
-    //    public double My;
-    //    public double Mx;
-    //    public double N;
-    //    public double Q;
-    //    /// <summary>
-    //    /// значение полученное с формы
-    //    /// BeamAndEfforts.lengthBeam имеет больший приоритет
-    //    /// </summary>
-    //    public double lengthBeam;
-
-    //    public BeamAndEfforts beamAndEfforts;
-
-
-    //}
-
-
-    //public class BeamAndEfforts
-    //{
-    //    /// <summary>
-    //    /// тип нагрузки на балку
-    //    /// </summary>
-    //    public LoadBeamType typeOfLoad;
-    //    /// <summary>
-    //    /// тип закрепления бакли
-    //    /// </summary>
-    //    public SupportBeamType typeOfSupport;
-    //    /// <summary>
-    //    /// Данные для построения эпюры
-    //    /// </summary>
-    //    public DiagramResult result;
-
-    //    /// <summary>
-    //    /// длина балки
-    //    /// </summary>
-    //    public double lengthBeam;
-    //    /// <summary>
-    //    /// Величина приложенный силы
-    //    /// </summary>
-    //    public double forceValue;
-    //    /// <summary>
-    //    /// удаленность от левого края балки до первой точки приложения силы
-    //    /// </summary>
-    //    public double x1;
-    //    /// <summary>
-    //    /// удаленность от левого края второй точки приложения силы на балку
-    //    /// </summary>
-    //    public double x2;
-
-    //}
-
 
     [Description("Тип нагрузки")]
     public enum LoadBeamType
