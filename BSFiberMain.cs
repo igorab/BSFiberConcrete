@@ -1168,14 +1168,10 @@ namespace BSFiberConcrete
         /// <summary>
         ///  данные с формы
         /// </summary>
-        /// <param name="_LSD"></param>
+        /// <param name="_beamSection">Тип сечения </param>
         /// <returns>словарь данных</returns>
-        private Dictionary<string, double> DictCalcParams(int _LSD)
-        {
-            double[] beam_sizes = BeamSizes();
-            double b = beam_sizes[0];
-            double h = beam_sizes[1];
-
+        private Dictionary<string, double> DictCalcParams(BeamSection _beamSection)
+        {            
             // Усилия Mx, My - моменты, кгс*см , N - сила, кгс              
             GetEffortsFromForm(out Dictionary<string, double> MNQ);
            
@@ -1184,9 +1180,18 @@ namespace BSFiberConcrete
                 ["N"] = -MNQ["N"],
                 ["My"] = MNQ["My"],
                 ["Mz"] = MNQ["Mx"],
+
                 //size
-                ["b"] = b,
-                ["h"] = h,
+                ["b"] = 0,
+                ["h"] = 0,
+
+                ["bf"] = 0,
+                ["hf"] = 0,
+                ["bw"] = 0,
+                ["hw"] = 0,
+                ["b1f"] = 0,
+                ["h1f"] = 0,
+
                 //Mesh
                 ["ny"] = (int)numMeshN.Value,
                 ["nz"] = (int)numMeshN.Value,
@@ -1218,14 +1223,31 @@ namespace BSFiberConcrete
                 ["es_ult"] = (double)numEps_s_ult.Value,
             };
 
-            if (_LSD == 2) 
-            {
-                D["Rbc"] = (double)(numRfb_n.Value);
-                D["Rbt"] = (double)(numRfbt_n.Value);
+            double[] beam_sizes = BeamSizes();
 
-                D["Rsc"] = (double)numRscn.Value;
-                D["Rst"] = (double)numRsn.Value;
+            double b = 0; 
+            double h = 0; 
+
+            if (_beamSection == BeamSection.Rect)
+            {
+                b = beam_sizes[0];
+                h = beam_sizes[1];
             }
+            else if (_beamSection == BeamSection.IBeam) 
+            {
+                D["bf"] = beam_sizes[0];
+                D["hf"] = beam_sizes[1];
+                D["bw"] = beam_sizes[2];
+                D["hw"] = beam_sizes[3];
+                D["b1f"] = beam_sizes[4];
+                D["h1f"] = beam_sizes[5];
+
+                b = D["bf"] + D["bw"] + D["b1f"];
+                h = D["hf"] + D["hw"] + D["h1f"];
+            }
+
+            D["b"] = b;
+            D["h"] = h;
 
             return D;
         }
@@ -1236,7 +1258,7 @@ namespace BSFiberConcrete
         private void CalcNDM(BeamSection _beamSection)
         {
             // данные с формы
-            var D = DictCalcParams(0);
+            var D = DictCalcParams(_beamSection);
             double b = D["b"];
             
             //привязка арматуры (по X - высота, по Y ширина балки)
