@@ -6,6 +6,7 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration.Configuration;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -15,49 +16,18 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 // Рачеты по второй группе предельных состояний
 namespace BSFiberConcrete.CalcGroup2
-{
-    
-    public static class MyFunkyExtensions
+{       
+    public partial class  BSCalcNDM 
     {
-        public static IEnumerable<TResult> ZipThree<T1, T2, T3, TResult>(
-            this IEnumerable<T1> source,
-            IEnumerable<T2> second,
-            IEnumerable<T3> third,
-            Func<T1, T2, T3, TResult> func)
-        {
-            using (var e1 = source.GetEnumerator())
-            using (var e2 = second.GetEnumerator())
-            using (var e3 = third.GetEnumerator())
-            {
-                while (e1.MoveNext() && e2.MoveNext() && e3.MoveNext())
-                    yield return func(e1.Current, e2.Current, e3.Current);
-            }
-        }
-
-        public static IEnumerable<TResult> ZipFour<T1, T2, T3, T4, TResult>(
-            this IEnumerable<T1> source,
-            IEnumerable<T2> second,
-            IEnumerable<T3> third,
-            IEnumerable<T4> fourth,
-            Func<T1, T2, T3, T4, TResult> func)
-        {
-            using (var e1 = source.GetEnumerator())
-            using (var e2 = second.GetEnumerator())
-            using (var e3 = third.GetEnumerator())
-            using (var e4 = fourth.GetEnumerator())
-            {
-                while (e1.MoveNext() && e2.MoveNext() && e3.MoveNext() && e4.MoveNext())
-                    yield return func(e1.Current, e2.Current, e3.Current, e4.Current);
-            }
-        }
-
-    }
-
-    public class BSCalcNDM 
-    {
-        // группа предельных состояний
-        private int GroupLSD;
+        /// <summary>
+        /// группа предельных состояний
+        /// </summary>
+        private readonly int GroupLSD;
         
+        /// <summary>
+        /// Конструктор
+        /// </summary>
+        /// <param name="_groupLSD"> группа предельных состояний</param>
         public BSCalcNDM(int _groupLSD)
         {
             GroupLSD = _groupLSD;
@@ -130,7 +100,9 @@ namespace BSFiberConcrete.CalcGroup2
         }
 
 
-        // стержни арматуры       
+        /// <summary>
+        /// стержни арматуры       
+        /// </summary>        
         public void GetRods(List<BSRod> _Rods, double _dx = 0, double _dy = 0)
         {
             ds.Clear();
@@ -146,6 +118,14 @@ namespace BSFiberConcrete.CalcGroup2
             }
         }
 
+        public BeamSection BeamSection  {
+            set {
+                m_BeamSection = value;
+            }
+        }
+        private BeamSection m_BeamSection = BeamSection.Rect;
+
+        #region Поля, свойства  - данные для расчета
         // Продольная сила, кН, - сжатие
         private double N = -400.0;
         // Момент отн. оси Y, кН*см
@@ -192,6 +172,8 @@ namespace BSFiberConcrete.CalcGroup2
         public static double Myint { get; private set; }
         public static double Mzint { get; private set; }
 
+        #endregion
+
         // максимальное число итераций
         private static int jmax = 1000;
         // Максимальная абсолютная погрешность
@@ -199,102 +181,88 @@ namespace BSFiberConcrete.CalcGroup2
         private static int err = 0;
         private Dictionary<string, double> m_Results = new Dictionary<string, double>();
 
-
         public int Err => err;
         public Dictionary<string, double> Results => m_Results;
 
-
-        // Диаграмма деформирования арматуры (двухлинейная)
-        private double Diagr_S(double _e)
-        {
-            double s = 0;
-
-            if (_e > est2 || _e < -esc2)
-                s = 0;
-            else if (est0 <= _e && _e <= est2)
-                s = Rst;
-            else if (-esc2 <= _e && _e <= -esc0)
-                s = -Rsc;
-            else if (0 <= _e && _e <= est0 )                
-                s = Math.Min(_e * Es0, Rst);
-            else if (-esc0 <= _e && _e <= 0)
-                s = Math.Max(_e * Es0, -Rsc);
-
-            return s;
-        }
-                
-        // Диаграмма деформирования бетона (трехлинейная)
-        private double Diagr_B(double _e)
-        {
-            double s = 0;
-            double sc1 = 0.6 * Rbc;
-            double st1 = 0.6 * Rbt;
-            double ebc1 = sc1 / Eb0 ;
-            double ebt1 = st1 / Eb0;
-
-            if ((_e > ebt2) || (_e < -ebc2))
-                s = 0;            
-            else if (-ebc2 <= _e && _e <= - ebc0)
-                s = -Rbc;
-            else if (ebt0 <= _e && _e <= ebt2)
-                s = Rbt;
-            else if (-ebc0 <= _e && _e <= -ebc1)
-                s = -Rbc * ((1 - sc1/Rbc) * (Math.Abs(_e) - ebc1) / (ebc0 - ebc1) + sc1/Rbc);
-            else if (ebt1 <= _e && _e <= ebt0)
-                s = Rbt * ((1 - st1/Rbt) * (Math.Abs(_e)-ebt1)/(ebt0 - ebt1) + st1/Rbt);
-            else if (-ebc1 <= _e && _e <= ebt1)
-                s = _e * Eb0;
-
-            return s;
-        }
-
-        // секущий модуль
-        private double E_sec(double _s, double _e, double _E0 )
-        {
-            if (_e == 0)
-                return _E0;
-            else
-                return _s / _e;
-        }
         
-        private void Calculate()
+        #region разбивка сечения на элементы
+        // массив привязок бетонных эл-в к вспомогательной оси y0
+        private List<double> y0b = new List<double>();
+
+        // массив привязок бетонных эл-в к вспомогательной оси z0
+        private List<double> z0b = new List<double>();
+
+        // массив площадей элементов
+        private List<double> Ab = new List<double>();
+
+        // массив площадей арматуры
+        private List<double> As = new List<double>();
+        #endregion
+
+        private void InitSectionsLists()
         {
-           
-            #region Params initialisatioin
+            Ab = new List<double>();
+            y0b = new List<double>();
+            z0b = new List<double>();
+            As = new List<double>();
+        }
+
+        public (int, int) InitRectangleSection(double _b, double _h)
+        {
+            // количество элементов сечения
             int n = ny * nz;
+            // количество элементов арматуры
+            int m = 0;
 
-            double sy = b / ny;
-            double sz = h / nz;
-
-            My = new List<double> { My0 };
-            Mz = new List<double> { Mz0 };
-
+            double sy = _b / ny;
+            double sz = _h / nz;
             // площадь 1 элемента
             double Ab1 = sy * sz;
-            List<double> Ab = new List<double>();
 
-            for (int i=0; i<n; i++)
+            //заполнить массив площадей элементов            
+            for (int i = 0; i < n; i++)
                 Ab.Add(Ab1);
 
-            // массив привязок бетонных эл-в к вспомогательной оси y0
-            List<double> y0b = new List<double>();
+            //заполнить массив привязок бетонных эл-в к вспомогательной оси y0            
             for (int iz = 0; iz < nz; iz++)
                 for (int iy = 0; iy < ny; iy++)
                     y0b.Add(iy * sy + sy / 2.0);
 
-            // массив привязок бетонных эл-в к вспомогательной оси z0
-            List<double> z0b = new List<double>();
+            //заполнить массив привязок бетонных эл-в к вспомогательной оси z0            
             for (int iz = 0; iz < nz; iz++)
                 for (int iy = 0; iy < ny; iy++)
                     z0b.Add(iz * sz + sz / 2.0);
-                        
-            List<double> As = new List<double>();
+
+            //заполнить  массив площадей арматуры            
             foreach (double d in ds)
             {
                 As.Add(Math.PI * Math.Pow(d, 2) / 4.0);
             }
-            
-            int m = As.Count;
+
+            m = As.Count;
+
+            return (n, m);
+        }
+
+        /// <summary>
+        ///  рассчитать
+        /// </summary>
+        private void Calculate()
+        {
+            #region Enforces initialization
+            My = new List<double> { My0 };
+            Mz = new List<double> { Mz0 };
+            #endregion
+
+            #region Section initialization
+            InitSectionsLists();
+
+            int n, m;
+
+            if (m_BeamSection == BeamSection.IBeam)
+                (n, m) = InitIBeamSection(b, h, b, h, b, h);
+            else             
+                (n, m) = InitRectangleSection(b, h);
             #endregion
 
 
@@ -575,7 +543,7 @@ namespace BSFiberConcrete.CalcGroup2
         public void Run()
         {
             try
-            {
+            {                
                 Calculate();
             }
             catch (Exception ex) 

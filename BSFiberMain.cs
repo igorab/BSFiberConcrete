@@ -1144,8 +1144,7 @@ namespace BSFiberConcrete
             List<double> rodD = new List<double>();
             List<double> bY = new List<double>(); // по ширине
             List<double> hX = new List<double>(); // по высоте
-            
-            
+                        
             // количество стержней
             int d_qty = _rods.Count;
 
@@ -1234,7 +1233,7 @@ namespace BSFiberConcrete
         /// <summary>
         /// "Расчет по прочности нормальных сечений на основе нелинейной деформационной модели"
         /// </summary>        
-        private void CalcNDM()
+        private void CalcNDM(BeamSection _beamSection)
         {
             // данные с формы
             var D = DictCalcParams(0);
@@ -1248,6 +1247,7 @@ namespace BSFiberConcrete
 
             // выполнить расчет по 1 группе п.с.
             BSCalcNDM bsCalc1 = new BSCalcNDM(1);
+            bsCalc1.BeamSection = _beamSection;
             bsCalc1.DictParams(D);
             bsCalc1.GetRods(listD, listX, listY);
             bsCalc1.Run(); 
@@ -1260,6 +1260,7 @@ namespace BSFiberConcrete
 
             // выполнить расчет по 2 группе п.с.
             BSCalcNDM bsCalc2 = new BSCalcNDM(2);
+            bsCalc2.BeamSection = _beamSection;
             bsCalc2.DictParams(D);
             bsCalc2.GetRods(listD, listX, listY);
             bsCalc2.Run();
@@ -1494,22 +1495,28 @@ namespace BSFiberConcrete
         /// </summary>        
         private void btnCalc_Deform_Click(object sender, EventArgs e)
         {
-            if (m_BeamSection == BeamSection.Rect)
+            try
             {
-                try
+                if (m_BeamSectionReport == BeamSection.Rect)
                 {
-                    CalcNDM();
+                    CalcNDM(BeamSection.Rect);
                 }
-                catch (Exception _e)
+                else if (m_BeamSectionReport == BeamSection.IBeam || 
+                         m_BeamSectionReport == BeamSection.TBeam || 
+                         m_BeamSectionReport == BeamSection.LBeam)
                 {
-                    MessageBox.Show(_e.Message);
+                    CalcNDM(BeamSection.IBeam);
+                }
+                else
+                {
+                    CalcDeformNDM();
                 }
             }
-            else
-            {             
-                CalcDeformNDM();
+            catch (Exception _e)
+            {
+                MessageBox.Show(_e.Message);
             }
-
+        
             CreateReportNDM();
         }
 
