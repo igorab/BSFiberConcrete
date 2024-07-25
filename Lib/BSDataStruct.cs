@@ -469,8 +469,11 @@ namespace BSFiberConcrete
         public double SecondBorder { get; set; }
         public double Eps_b0 { get; set; }
         public double Eps_b2 { get; set; }
+        public double Eps_b1_red { get; set; }
+
         public double Eps_bt0 { get; set; }
         public double Eps_bt2 { get; set; }
+        public double Eps_bt1_red { get; set; }
     }
 
 
