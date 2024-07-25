@@ -42,6 +42,14 @@ namespace BSFiberConcrete.CalcGroup2
             //size
             b = _D["b"];
             h = _D["h"];
+
+            bf = _D["bf"];
+            hf = _D["hf"];
+            bw = _D["bw"];
+            hw = _D["hw"]; 
+            b1f = _D["b1f"]; 
+            h1f = _D["h1f"];
+
             //Mesh
             ny = (int)_D["ny"];
             nz = (int)_D["nz"];
@@ -136,6 +144,9 @@ namespace BSFiberConcrete.CalcGroup2
         private double b = 20.0;
         // высота сечения, см
         private double h = 40.0;
+        // тавр-двутавр
+        private double bf, hf, bw, hw, b1f, h1f;
+
         // число элементов вдоль y, шт
         private int ny = 4;
         // число элементов вдоль z шт.
@@ -206,44 +217,7 @@ namespace BSFiberConcrete.CalcGroup2
             z0b = new List<double>();
             As = new List<double>();
         }
-
-        public (int, int) InitRectangleSection(double _b, double _h)
-        {
-            // количество элементов сечения
-            int n = ny * nz;
-            // количество элементов арматуры
-            int m = 0;
-
-            double sy = _b / ny;
-            double sz = _h / nz;
-            // площадь 1 элемента
-            double Ab1 = sy * sz;
-
-            //заполнить массив площадей элементов            
-            for (int i = 0; i < n; i++)
-                Ab.Add(Ab1);
-
-            //заполнить массив привязок бетонных эл-в к вспомогательной оси y0            
-            for (int iz = 0; iz < nz; iz++)
-                for (int iy = 0; iy < ny; iy++)
-                    y0b.Add(iy * sy + sy / 2.0);
-
-            //заполнить массив привязок бетонных эл-в к вспомогательной оси z0            
-            for (int iz = 0; iz < nz; iz++)
-                for (int iy = 0; iy < ny; iy++)
-                    z0b.Add(iz * sz + sz / 2.0);
-
-            //заполнить  массив площадей арматуры            
-            foreach (double d in ds)
-            {
-                As.Add(Math.PI * Math.Pow(d, 2) / 4.0);
-            }
-
-            m = As.Count;
-
-            return (n, m);
-        }
-
+        
         /// <summary>
         ///  рассчитать
         /// </summary>
@@ -256,13 +230,24 @@ namespace BSFiberConcrete.CalcGroup2
 
             #region Section initialization
             InitSectionsLists();
-
             int n, m;
 
             if (m_BeamSection == BeamSection.IBeam)
-                (n, m) = InitIBeamSection(b, h, b, h, b, h);
-            else             
-                (n, m) = InitRectangleSection(b, h);
+            {
+                n = InitIBeamSection(bf, hf, bw, hw, b1f, h1f);
+            }
+            else if (m_BeamSection == BeamSection.Rect)
+            {
+                //n = InitRectangleSection(b, h);
+                //n = InitRectangleSection(b, h, -b/2.0, -h/2.0);
+                n = InitRectangleSection(b, h, -b/2.0);
+            }
+            else
+                throw new Exception($"Тип сечения {m_BeamSection} не поддерживается в данном расчете ");
+
+            //m = InitReinforcement();
+            //m = InitReinforcement(-b / 2.0, -h / 2.0);
+            m = InitReinforcement(-b/2.0);
             #endregion
 
 
