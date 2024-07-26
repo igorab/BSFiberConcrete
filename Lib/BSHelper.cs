@@ -23,12 +23,19 @@ namespace BSFiberConcrete
         public static double Kg2T(double _kg) => _kg * 0.001d;
 
         public static double kN2Kgs(double? _kN) => _kN * 101.97162129779284d ?? 0;
+        public static double Kgs2kN(double? _kgs) => _kgs * 0.00980664999999998d ?? 0;        
 
         // конвертор моментов
         public static double Kgsm2Tm(double _kgsm) => _kgsm * 0.00001d;
-        public static double MPA2kgsm2(double? _mpa) => 10.197162d * _mpa ?? 0;
+        public static double kgssm2kNsm(double? _kgssm) => _kgssm * 0.00980664999999998d ?? 0;
+        public static double kNsm2kgssm(double? _kNsm) => _kNsm * 101.97162129779284d ?? 0;
 
+        // конвертор напряжений 
+        public static double MPA2kgsm2(double? _mpa) => 10.197162d * _mpa ?? 0;
         public static double MPA2kNsm2(double? _mpa) => 0.1d * _mpa ?? 0;
+        public static double Kgssm2ToKNsm2(double? _kgssm2) => _kgssm2 * 0.00980664999999998d ?? 0;
+
+        public static double KNsm2ToKgssm2(double? _KNsm2) => _KNsm2 * 101.97162129779d ?? 0;
 
         public static double Kgsm2MPa(double? _val, int _dec = 2) => Math.Round( 0.098067d * _val ?? 0, _dec);
 
@@ -130,6 +137,40 @@ namespace BSFiberConcrete
             var memInfo = type.GetMember(enumVal.ToString());
             var attributes = memInfo[0].GetCustomAttributes(typeof(T), false);
             return (attributes.Length > 0) ? (T)attributes[0] : null;
+        }
+    }
+
+    public static class StringExtensions
+    {
+        private static char open = '[';
+        private static char close = ']';
+        public static string[] Brackets(this string str)
+        {
+            //Set up vars
+            StringBuilder[] builders = new StringBuilder[str.Count(x => x == open)];
+            for (int h = 0; h < builders.Count(); h++)
+                builders[h] = new StringBuilder();
+            string[] results = new string[builders.Count()];
+            bool[] tracker = new bool[builders.Count()];
+            int haveOpen = 0;
+            //loop up string
+            for (int i = 0; i < str.Length; i++)
+            {
+                //if opening bracket
+                if (str[i] == open)
+                    tracker[haveOpen++] = true;
+                //loop over tracker
+                for (int j = 0; j < tracker.Length; j++)
+                    if (tracker[j])
+                        //if in this bracket append to the string
+                        builders[j].Append(str[i]);
+                //if closing bracket
+                if (str[i] == close)
+                    tracker[Array.FindLastIndex<bool>(tracker, p => p == true)] = false;
+            }
+            for (int i = 0; i < builders.Length; i++)
+                results[i] = builders[i].ToString();
+            return results;
         }
     }
 

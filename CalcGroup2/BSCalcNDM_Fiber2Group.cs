@@ -9,63 +9,67 @@ namespace BSFiberConcrete.CalcGroup2
     /// <summary>
     /// Расчет по 2 группе предельных состояний
     /// </summary>
-    public class BSCalcNDM_Fiber
+    public partial class BSCalcNDM
     {
-        private double Rbt_ser = 0;
-        // Изгибающий момент, воспр нормальным сечением элемента при образовании трещин
-        private double Mcrс = 0;
-        // упругопластический момент сопротивления сечения для крайнего растчянутого волокна
-        private double Wpl = 0;
-
-        // изгиб момент от внешней нагрузки
-        public double M = 0;
-
-        public double N = 0;
-        public double e_x = 0;
-
-        public BSCalcNDM_Fiber()
+        /// <summary>
+        /// Диаграмма деформирования арматуры (двухлинейная) 
+        /// </summary>
+        /// <param name="_e">деформация</param>
+        /// <returns>Напряжение</returns>
+        private double Diagr_S(double _e)
         {
+            double s = 0;
 
+            if (_e > est2 || _e < -esc2)
+                s = 0;
+            else if (est0 <= _e && _e <= est2)
+                s = Rst;
+            else if (-esc2 <= _e && _e <= -esc0)
+                s = -Rsc;
+            else if (0 <= _e && _e <= est0)
+                s = Math.Min(_e * Es0, Rst);
+            else if (-esc0 <= _e && _e <= 0)
+                s = Math.Max(_e * Es0, -Rsc);
+
+            return s;
         }
 
         /// <summary>
-        /// Условие
+        /// Диаграмма деформирования бетона (трехлинейная) 
         /// </summary>
-        /// <returns>Выполнено?</returns>
-        public bool Condition()
+        /// <param name="_e">деформация</param>
+        /// <returns>напряжение</returns>
+        private double Diagr_B(double _e)
         {
-            return M > Mcrс;
+            double s = 0;
+            double sc1 = 0.6 * Rbc;
+            double st1 = 0.6 * Rbt;
+            double ebc1 = sc1 / Eb0;
+            double ebt1 = st1 / Eb0;
+
+            if ((_e > ebt2) || (_e < -ebc2))
+                s = 0;
+            else if (-ebc2 <= _e && _e <= -ebc0)
+                s = -Rbc;
+            else if (ebt0 <= _e && _e <= ebt2)
+                s = Rbt;
+            else if (-ebc0 <= _e && _e <= -ebc1)
+                s = -Rbc * ((1 - sc1 / Rbc) * (Math.Abs(_e) - ebc1) / (ebc0 - ebc1) + sc1 / Rbc);
+            else if (ebt1 <= _e && _e <= ebt0)
+                s = Rbt * ((1 - st1 / Rbt) * (Math.Abs(_e) - ebt1) / (ebt0 - ebt1) + st1 / Rbt);
+            else if (-ebc1 <= _e && _e <= ebt1)
+                s = _e * Eb0;
+
+            return s;
         }
 
-        public void Calculate()
+        // секущий модуль
+        private double E_sec(double _s, double _e, double _E0)
         {
-            double Wred = 0;
-
-            Wpl = Wred; //6.2.9
-
-
-            // 6.107
-            Mcrс = Rbt_ser * Wpl + N * e_x;
-        }
-
-        //6.2.13
-        private void CalcMcr()
-        {
-
-        }
-
-        /// <summary>
-        /// Расчет кривизны 
-        /// п 6.2.31
-        /// </summary>
-        public void CalcCurvature()
-        {
-            double r, r1 = float.MaxValue, r2 = float.MaxValue;
-            double k;
-
-            k = 1 / r1 + 1 / r2;
-
-
+            if (_e == 0)
+                return _E0;
+            else
+                return _s / _e;
         }
 
     }

@@ -1,91 +1,119 @@
 ﻿using BSFiberConcrete.BSRFib;
 using CBAnsDes.My;
 using MathNet.Numerics;
+using MathNet.Numerics.Statistics;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration.Configuration;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
 // Рачеты по второй группе предельных состояний
 namespace BSFiberConcrete.CalcGroup2
-{
-    
-    public static class MyFunkyExtensions
+{       
+    public partial class  BSCalcNDM 
     {
-        public static IEnumerable<TResult> ZipThree<T1, T2, T3, TResult>(
-            this IEnumerable<T1> source,
-            IEnumerable<T2> second,
-            IEnumerable<T3> third,
-            Func<T1, T2, T3, TResult> func)
+        /// <summary>
+        /// группа предельных состояний
+        /// </summary>
+        private readonly int GroupLSD;
+        
+        /// <summary>
+        /// Конструктор
+        /// </summary>
+        /// <param name="_groupLSD"> группа предельных состояний</param>
+        public BSCalcNDM(int _groupLSD)
         {
-            using (var e1 = source.GetEnumerator())
-            using (var e2 = second.GetEnumerator())
-            using (var e3 = third.GetEnumerator())
-            {
-                while (e1.MoveNext() && e2.MoveNext() && e3.MoveNext())
-                    yield return func(e1.Current, e2.Current, e3.Current);
-            }
+            GroupLSD = _groupLSD;
         }
 
-        public static IEnumerable<TResult> ZipFour<T1, T2, T3, T4, TResult>(
-            this IEnumerable<T1> source,
-            IEnumerable<T2> second,
-            IEnumerable<T3> third,
-            IEnumerable<T4> fourth,
-            Func<T1, T2, T3, T4, TResult> func)
-        {
-            using (var e1 = source.GetEnumerator())
-            using (var e2 = second.GetEnumerator())
-            using (var e3 = third.GetEnumerator())
-            using (var e4 = fourth.GetEnumerator())
-            {
-                while (e1.MoveNext() && e2.MoveNext() && e3.MoveNext() && e4.MoveNext())
-                    yield return func(e1.Current, e2.Current, e3.Current, e4.Current);
-            }
-        }
-
-    }
-
-    public class BSCalcNDM 
-    {
-        public BSCalcNDM()
-        {
-        }
-
-        public BSCalcNDM(Dictionary<string, double> D)
+        public void DictParams(Dictionary<string, double> _D)
         {
             // enforce
-            N = D["N"];
-            My0 = D["My"];
-            Mz0 = D["Mz"];
+            N = BSHelper.Kgs2kN(_D["N"]);
+            My0 = BSHelper.Kgs2kN(_D["My"]);
+            Mz0 = BSHelper.Kgs2kN(_D["Mz"]);
             //size
-            b = D["b"];
-            h = D["h"];
+            b = _D["b"];
+            h = _D["h"];
+
+            bf = _D["bf"];
+            hf = _D["hf"];
+            bw = _D["bw"];
+            hw = _D["hw"]; 
+            b1f = _D["b1f"]; 
+            h1f = _D["h1f"];
+
+            r1 = _D["r1"];
+            R2 = _D["R2"];
+            //
             //Mesh
-            ny = (int)D["ny"];
-            nz = (int)D["nz"];
+            ny = (int)_D["ny"];
+            nz = (int)_D["nz"];
             // beton
-            Eb0 = D["Eb0"];
-            Rbc = D["Rbc"];
-            Rbt = D["Rbt"];
-            ebc0 = D["ebc0"];
-            ebc2 = D["ebc2"];
-            ebt0 = D["ebt0"];
-            ebt2 = D["ebt2"];
-            // steel
-            Es0 = D["Es0"];
-            Rsc = D["Rsc"];
-            Rst = D["Rst"];
-            esc2 = D["esc2"];
-            est2 = D["est2"];            
+            Eb0 = BSHelper.Kgssm2ToKNsm2(_D["Eb0"]);
+            if (GroupLSD == 2)
+            {
+                Rbc = BSHelper.Kgssm2ToKNsm2(_D["Rbcn"]);
+                Rbt = BSHelper.Kgssm2ToKNsm2(_D["Rbtn"]);
+            }
+            else
+            {
+                Rbc = BSHelper.Kgssm2ToKNsm2(_D["Rbc"]);
+                Rbt = BSHelper.Kgssm2ToKNsm2(_D["Rbt"]);
+            }
+            ebc0 = _D["ebc0"];
+            ebc2 = _D["ebc2"];
+            ebt0 = _D["ebt0"];
+            ebt2 = _D["ebt2"];
+            // steel / rebar
+            Es0 = BSHelper.Kgssm2ToKNsm2(_D["Es0"]);
+            if (GroupLSD == 2)
+            {
+                Rsc = BSHelper.Kgssm2ToKNsm2(_D["Rscn"]);
+                Rst = BSHelper.Kgssm2ToKNsm2(_D["Rstn"]);
+            }
+            else
+            {
+                Rsc = BSHelper.Kgssm2ToKNsm2(_D["Rsc"]);
+                Rst = BSHelper.Kgssm2ToKNsm2(_D["Rst"]);
+            }
+            esc2 = _D["esc2"];
+            est2 = _D["est2"];            
         }
 
-        // стержни арматуры       
+        /// <summary>
+        /// Привязки арматуры
+        /// </summary>
+        /// <param name="_bD"></param>
+        /// <param name="_bX"></param>
+        /// <param name="_bY"></param>
+        public void GetRods(List<double> _bD, List<double> _bX, List<double> _bY )
+        {
+            ds.Clear();
+            y0s.Clear();
+            z0s.Clear();
+            
+            int idx = 0;
+            foreach (var d in _bD)
+            {
+                ds.Add(d);
+                z0s.Add(_bX[idx]);
+                y0s.Add(_bY[idx]);
+                idx++;
+            }
+        }
+
+
+        /// <summary>
+        /// стержни арматуры       
+        /// </summary>        
         public void GetRods(List<BSRod> _Rods, double _dx = 0, double _dy = 0)
         {
             ds.Clear();
@@ -101,16 +129,29 @@ namespace BSFiberConcrete.CalcGroup2
             }
         }
 
+        public BeamSection BeamSection  {
+            set {
+                m_BeamSection = value;
+            }
+        }
+        private BeamSection m_BeamSection = BeamSection.Rect;
+
+        #region Поля, свойства  - данные для расчета
         // Продольная сила, кН, - сжатие
         private double N = -400.0;
         // Момент отн. оси Y, кН*см
-        private double My0 = 90 * 100;
+        private double My0 = 9000;
         // Момент отн. оси Z, кН*см
-        private double Mz0 = 10.0 * 100;
+        private double Mz0 = 1000;
         // Ширина сечения, см
         private double b = 20.0;
         // высота сечения, см
         private double h = 40.0;
+        // тавр-двутавр
+        private double bf, hf, bw, hw, b1f, h1f;
+        // кольцо
+        private double r1, R2;
+
         // число элементов вдоль y, шт
         private int ny = 4;
         // число элементов вдоль z шт.
@@ -147,103 +188,76 @@ namespace BSFiberConcrete.CalcGroup2
         public static double Myint { get; private set; }
         public static double Mzint { get; private set; }
 
+        #endregion
+
         // максимальное число итераций
         private static int jmax = 1000;
         // Максимальная абсолютная погрешность
         private static double tolmax = Math.Pow(10, -10);
         private static int err = 0;
+        private Dictionary<string, double> m_Results = new Dictionary<string, double>();
 
-        // Диаграмма деформирования арматуры (двухлинейная)
-        private double Diagr_S(double _e)
+        public int Err => err;
+        public Dictionary<string, double> Results => m_Results;
+
+        
+        #region разбивка сечения на элементы
+        // массив привязок бетонных эл-в к вспомогательной оси y0
+        private List<double> y0b = new List<double>();
+
+        // массив привязок бетонных эл-в к вспомогательной оси z0
+        private List<double> z0b = new List<double>();
+
+        // массив площадей элементов
+        private List<double> Ab = new List<double>();
+
+        // массив площадей арматуры
+        private List<double> As = new List<double>();
+        #endregion
+
+        private void InitSectionsLists()
         {
-            double s = 0;
-
-            if (_e > est2 || _e < -esc2)
-                s = 0;
-            else if (est0 <= _e && _e <= est2)
-                s = Rst;
-            else if (-esc2 <= _e && _e <= -esc0)
-                s = -Rsc;
-            else if (0 <= _e && _e <= est0 )                
-                s = Math.Min(_e * Es0, Rst);
-            else if (-esc0 <= _e && _e <= 0)
-                s = Math.Max(_e * Es0, -Rsc);
-
-            return s;
-        }
-                
-        // Диаграмма деформирования бетона (трехлинейная)
-        private double Diagr_B(double _e)
-        {
-            double s = 0;
-            double sc1 = 0.6 * Rbc;
-            double st1 = 0.6 * Rbt;
-            double ebc1 = sc1 / Eb0 ;
-            double ebt1 = st1 / Eb0;
-
-            if ((_e > ebt2) || (_e < -ebc2))
-                s = 0;            
-            else if (-ebc2 <= _e && _e <= - ebc0)
-                s = -Rbc;
-            else if (ebt0 <= _e && _e <= ebt2)
-                s = Rbt;
-            else if (-ebc0 <= _e && _e <= -ebc1)
-                s = -Rbc * ((1 - sc1/Rbc) * (Math.Abs(_e) - ebc1) / (ebc0 - ebc1) + sc1/Rbc);
-            else if (ebt1 <= _e && _e <= ebt0)
-                s = Rbt * ((1 - st1/Rbt) * (Math.Abs(_e)-ebt1)/(ebt0 - ebt1) + st1/Rbt);
-            else if (-ebc1 <= _e && _e <= ebt1)
-                s = _e * Eb0;
-
-            return s;
-        }
-
-        // секущий модуль
-        private double E_sec(double _s, double _e, double _E0 )
-        {
-            if (_e == 0)
-                return _E0;
-            else
-                return _s / _e;
+            Ab = new List<double>();
+            y0b = new List<double>();
+            z0b = new List<double>();
+            As = new List<double>();
         }
         
-        private void Init()
+        /// <summary>
+        ///  рассчитать
+        /// </summary>
+        private void Calculate()
         {
-           
-            #region Params initialisatioin
-            int n = ny * nz;
-
-            double sy = b / ny;
-            double sz = h / nz;
-
+            #region Enforces initialization
             My = new List<double> { My0 };
             Mz = new List<double> { Mz0 };
+            #endregion
 
-            // площадь 1 элемента
-            double Ab1 = sy * sz;
-            List<double> Ab = new List<double>();
-
-            for (int i=0; i<n; i++)
-                Ab.Add(Ab1);
-
-            // массив привязок бетонных эл-в к вспомогательной оси y0
-            List<double> y0b = new List<double>();
-            for (int iz = 0; iz < nz; iz++)
-                for (int iy = 0; iy < ny; iy++)
-                    y0b.Add(iy * sy + sy / 2.0);
-
-            // массив привязок бетонных эл-в к вспомогательной оси z0
-            List<double> z0b = new List<double>();
-            for (int iz = 0; iz < nz; iz++)
-                for (int iy = 0; iy < ny; iy++)
-                    z0b.Add(iz * sz + sz / 2.0);
-                        
-            List<double> As = new List<double>();
-            foreach (double d in ds)
+            #region Section initialization
+            InitSectionsLists();
+            int n, m;
+            
+            if (m_BeamSection == BeamSection.Rect)
+            {                
+                n = InitRectangleSection(b, h, -b / 2.0);
+                m = InitReinforcement(-b / 2.0);
+            }
+            else if (m_BeamSection == BeamSection.IBeam)
             {
-                As.Add(Math.PI * Math.Pow(d, 2) / 4.0);
+                n = InitIBeamSection(bf, hf, bw, hw, b1f, h1f);
+                m = InitReinforcement(-b / 2.0);
+            }
+            else if (m_BeamSection == BeamSection.Ring)
+            {
+                n = InitRingSection(r1, R2);
+                m = InitReinforcement();
+            }
+            else
+            {
+                throw new Exception($"Тип сечения {m_BeamSection} не поддерживается в данном расчете ");
             }
             
-            int m = As.Count;
+            
             #endregion
 
 
@@ -505,13 +519,32 @@ namespace BSFiberConcrete.CalcGroup2
                     sigS[jend].ZipThree(As, ys[0], (s, A, y) => s * A * y).Sum() -
                     sigBS[jend].ZipThree(As, ys[0], (s, A, y) => s * A * y).Sum();
 
+            m_Results = new Dictionary<string, double>
+            {
+                ["ep0"] = ep0[jend],
+                ["Ky"] = Ky[jend],
+                ["ry"] = 1/Ky[jend],
+                ["Kz"] = Kz[jend],
+                ["rz"] = 1/Kz[jend],
+                ["sigB"] = sigB[jend].MaximumAbsolute(),
+                ["sigS"] = sigS[jend].MaximumAbsolute(),
+                ["epsB"] = epB[jend].MaximumAbsolute(),
+                ["epsS"] = epS[jend].MaximumAbsolute(),
+                ["My_crc"] = Myint,
+                ["Mx_crc"] = Mzint
+            };
         }
-
+      
         public void Run()
         {
-            Init();
-
-
+            try
+            {                
+                Calculate();
+            }
+            catch (Exception ex) 
+            {
+                MessageBox.Show(ex.Message);
+            }            
             //throw new NotImplementedException();
         }
 
