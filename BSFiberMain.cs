@@ -603,7 +603,8 @@ namespace BSFiberConcrete
                 calc_Cracking.GetParams(new double[] { 10, 1 });
 
                 // рассчитать 
-                //calcOk = calc_Cracking.CalculateUltM();
+                calcOk = calc_Cracking.CalculateUltM();
+                calcOk = calc_Cracking.CalculateWidthCrack();
 
 
 
@@ -619,7 +620,7 @@ namespace BSFiberConcrete
                 //var beamSection = BSBeam.construct(m_BeamSection);
 
                 //BSFiberCalc_Cracking bsCracing = new BSFiberCalc_Cracking();
-                
+
                 ////bsCracing.MatFiber = m_MatFiber;
                 ////bsCracing.m_BeamSectionType = m_BeamSection;
                 ////bsCracing.m_beamSection = beamSection; // может потребоваться приведение
@@ -668,30 +669,30 @@ namespace BSFiberConcrete
                 MessageBox.Show("Ошибка в расчете: " + _e.Message);
             }
 
-            try
-            {
-                //if (bsCalc is null)
-                //    throw new Exception("Не выполнен расчет");
+            //try
+            //{
+            //    //if (bsCalc is null)
+            //    //    throw new Exception("Не выполнен расчет");
 
-                if (calcOk)
-                {
-                    string pathToHtmlFile = CreateReport(1, m_BeamSectionReport, _useReinforcement: useReinforcement);
+            //    if (calcOk)
+            //    {
+            //        string pathToHtmlFile = CreateReport(1, m_BeamSectionReport, _useReinforcement: useReinforcement);
 
-                    System.Diagnostics.Process.Start(pathToHtmlFile);
-                }
-                else
-                {
-                    string errMsg = "";
-                    foreach (string ms in m_Message) errMsg += ms + ";\t\n";
+            //        System.Diagnostics.Process.Start(pathToHtmlFile);
+            //    }
+            //    else
+            //    {
+            //        string errMsg = "";
+            //        foreach (string ms in m_Message) errMsg += ms + ";\t\n";
 
-                    MessageBox.Show(errMsg);
-                }
+            //        MessageBox.Show(errMsg);
+            //    }
 
-            }
-            catch (Exception _e)
-            {
-                MessageBox.Show("Ошибка в отчете " + _e.Message);
-            }
+            //}
+            //catch (Exception _e)
+            //{
+            //    MessageBox.Show("Ошибка в отчете " + _e.Message);
+            //}
 
         }
 
@@ -1365,12 +1366,12 @@ namespace BSFiberConcrete
         /// </summary>        
         private void btnCalc_Deform_Click(object sender, EventArgs e)
         {
-            CalcDeformNDM();
+            //CalcDeformNDM();
 
-            if (checkBoxNDM2Group.Checked)
-                CalcDeformNDM(2);
+            //if (checkBoxNDM2Group.Checked)
+            //    CalcDeformNDM(2);
 
-            //FiberCalculate_Cracking();
+            FiberCalculate_Cracking();
         }
 
         private void gridEfforts_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -1958,6 +1959,11 @@ namespace BSFiberConcrete
             numEps_fbt1.Value = numEps_fbt0.Value + 0.0001m;
             numEps_fb1.Value = numRfb_n.Value * 0.6m / numE_fiber.Value;
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }
