@@ -38,8 +38,8 @@ namespace BSFiberConcrete
 
         private List<Rebar> m_Rebar;
         private BSMatFiber m_MatFiber;
-        private BSMatConcrete m_MatConcrete;
         private List<Elements> FiberConcrete;
+        private List<Beton> m_Beton;
         private List<RebarDiameters> m_RebarDiameters;
         //TODO должна быть удалена/переработана после объединения кода
         /// <summary>
@@ -129,14 +129,6 @@ namespace BSFiberConcrete
                 };
 
 
-
-                m_MatConcrete = new BSMatConcrete();
-
-
-
-
-
-
                 m_RebarDiameters = BSData.LoadRebarDiameters();
 
                 m_Beam = new Dictionary<string, double>();
@@ -185,10 +177,11 @@ namespace BSFiberConcrete
                 cmbBetonClass.ValueMember = "Name";
                 cmbBetonClass.SelectedValue = BSFiberLib.BetonList[5].Name;
 
-
-                cmbBfn.DataSource = m_MatConcrete.NameOfBetonClassNames;
-                cmbBfn.SelectedIndex = 0;
-
+                m_Beton = BSData.LoadBetonData();
+                cmbBfn.DataSource = m_Beton;
+                cmbBfn.DisplayMember = "BT";
+                cmbBfn.ValueMember = "BT";
+                cmbBfn.SelectedValue = (m_Beton.Count > 7) ? m_Beton[7].BT : ""; // в настройки
 
                 cmbBftn.DataSource = BSData.LoadFiberBft();
                 cmbBftn.DisplayMember = "ID";
@@ -235,15 +228,6 @@ namespace BSFiberConcrete
 
                 numEps_fb2.Value = 0.0042M;
                 numEps_fbt3.Value = 0.006M;
-
-
-
-                numRfb_n.DataBindings.Add(new Binding("Value", m_MatConcrete, "Rb_n", false, DataSourceUpdateMode.OnPropertyChanged));
-                numE_fiber.DataBindings.Add(new Binding("Value", m_MatConcrete, "Eb", false, DataSourceUpdateMode.OnPropertyChanged));
-
-                numEps_b0.DataBindings.Add(new Binding("Value", m_MatConcrete, "Eps_b0", false, DataSourceUpdateMode.OnPropertyChanged));
-                numEps_b1.DataBindings.Add(new Binding("Value", m_MatConcrete, "Eps_b1", false, DataSourceUpdateMode.OnPropertyChanged));
-                numEps_b2.DataBindings.Add(new Binding("Value", m_MatConcrete, "Eps_b2", false, DataSourceUpdateMode.OnPropertyChanged));
 
                 CalcTypeShow();
             }
@@ -390,19 +374,17 @@ namespace BSFiberConcrete
         
         // Определение классов фибробетона по данным, введенным пользователем
         private void InitMatFiber()
-        {
-            // CORRECT
-
-
+        {            
+            // Сжатие Rfb
+            Beton fb = Lib.BSQuery.BetonTableFind(cmbBfn.Text);
             // Растяжение Rfbt
             FiberBft fbt = (FiberBft)cmbBftn.SelectedItem;
 
             m_BSLoadData.Fiber.Efib = (double) numE_fiber.Value;
 
             // сжатие:
-            // Фибробитон на сжатие работает также как бетона
-            m_MatFiber.B = m_MatConcrete.B;
-            m_MatFiber.Rfbn = m_MatConcrete.Rb_n; 
+            m_MatFiber.B = fb.B;
+            m_MatFiber.Rfbn = BSHelper.MPA2kgsm2(fb.Rbn);
             // растяжение:            
             m_MatFiber.Rfbtn = BSHelper.MPA2kgsm2(fbt.Rfbtn);
             //остаточное растяжение:            
@@ -1456,6 +1438,11 @@ namespace BSFiberConcrete
             SelectedFiberBetonValues();
         }
 
+        private void cmbBetonClass_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
         private void btnCalcResults_Click(object sender, EventArgs e)
         {
             BSCalcResults bSCalcResults = new BSCalcResults();
@@ -1475,8 +1462,12 @@ namespace BSFiberConcrete
 
         private void cmbBfn_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Изменяем характеристику бетона
-            m_MatConcrete.BetonIndex = cmbBfn.SelectedIndex;
+            try
+            {
+                Beton bt = Lib.BSQuery.BetonTableFind(cmbBfn.Text);
+                numRfb_n.Value = (decimal)BSHelper.MPA2kgsm2(bt.Rbn);
+            }
+            catch { }
         }
 
         private void cmbRebarClass_SelectedIndexChanged(object sender, EventArgs e)
@@ -1554,21 +1545,29 @@ namespace BSFiberConcrete
         private void numRfbt_n_ValueChanged(object sender, EventArgs e)
         {
             labelRfbtnMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numRfbt_n.Value));
+
+            numEps_fbt0.Value = numRfbt_n.Value / numE_fiber.Value;
+            numEps_fbt1.Value = numEps_fbt0.Value + 0.0001m;
         }
 
         private void numRfb_n_ValueChanged(object sender, EventArgs e)
         {
             labelRfbnMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numRfb_n.Value));
+            numEps_fb1.Value = numRfb_n.Value * 0.6m / numE_fiber.Value;
         }
 
         private void numRfbt2n_ValueChanged(object sender, EventArgs e)
         {
             labelRfbt2nMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numRfbt2n.Value));
+            // выражение домножено на -1
+            numEps_fbt3.Value = -0.02m + 0.0125m * (numRfbt2n.Value / numRfbt3n.Value - 0.5m);
         }
 
         private void numRfbt3n_ValueChanged(object sender, EventArgs e)
         {
             labelRfbt3nMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numRfbt3n.Value));
+            // выражение домножено на -1
+            numEps_fbt3.Value = -0.02m + 0.0125m * (numRfbt2n.Value / numRfbt3n.Value - 0.5m);
         }
 
         private void numRs_ValueChanged(object sender, EventArgs e)
@@ -1839,19 +1838,24 @@ namespace BSFiberConcrete
             string title = cmbWetAir.Text;
             if (title == BSHelper.IgnoreHumidity)
             {
-                // numEps_fb0.Enabled = true;
-                // numEps_fb2.Enabled = true;
+                numEps_fb0.Enabled = true;
+                numEps_fb2.Enabled = true;
             }
             else
             {
-                //numEps_fb0.Enabled = false;
-                //numEps_fb2.Enabled = false;
-
-                m_MatConcrete.AirHumidity = title;
+                numEps_fb0.Enabled = false;
+                numEps_fb2.Enabled = false;
+                List<EpsilonFromAirHumidity> e_DB = BSData.LoadBetonEpsilonFromAirHumidity();
+                foreach (EpsilonFromAirHumidity rowEps in e_DB)
+                {
+                    if (title == rowEps.AirHumidityStr)
+                    {
+                        numEps_fb0.Value = (decimal)rowEps.Eps_b0;
+                        numEps_fb2.Value = (decimal)rowEps.Eps_b2;
+                        break;
+                    }
+                }
             }
-
-
-            //m_MatConcrete.AirHumidity =
         }
 
         /// <summary>
@@ -1946,6 +1950,14 @@ namespace BSFiberConcrete
         private void cmbFib_i_SelectedIndexChanged(object sender, EventArgs e)
         {
             // SelectedFiberBetonValues();
+        }
+
+        private void numE_fiber_ValueChanged(object sender, EventArgs e)
+        {
+            numEps_fbt0.Value = numRfbt_n.Value / numE_fiber.Value;
+            numEps_fbt1.Value = numEps_fbt0.Value + 0.0001m;
+            numEps_fb1.Value = numRfb_n.Value * 0.6m / numE_fiber.Value;
+
         }
     }
 }

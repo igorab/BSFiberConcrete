@@ -25,7 +25,7 @@ namespace BSFiberConcrete
         {
             Records = new List<Elements>();
             try
-            {
+            {                
                 comboBetonType.DataSource = BSData.LoadBetonTypeName();
 
                 string i_b = Convert.ToString(comboBox_i.Text);
