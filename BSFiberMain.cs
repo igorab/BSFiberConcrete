@@ -1219,7 +1219,7 @@ namespace BSFiberConcrete
                 // steel
                 ["Es0"] = (double)numEs.Value,
                 // нормативные 
-                ["Rscn"] = (double)(numRsсn.Value),
+                ["Rscn"] = (double)(numRscn.Value),
                 ["Rstn"] = (double)(numRsn.Value),
                 // расчетные
                 ["Rsc"] = (double)numRsc.Value,
@@ -1706,7 +1706,7 @@ namespace BSFiberConcrete
                     numRs.Value = (decimal)BSHelper.MPA2kgsm2(rebar.Rs);
                     numRsc.Value = (decimal)BSHelper.MPA2kgsm2(rebar.Rsc);
                     numRsn.Value = (decimal)BSHelper.MPA2kgsm2(rebar.Rsn);
-                    numRsсn.Value = (decimal)BSHelper.MPA2kgsm2(rebar.Rsn);
+                    numRscn.Value = (decimal)BSHelper.MPA2kgsm2(rebar.Rsn);
 
                     labelTypeDDRebar.Text = rebar.TypeDiagramm;
                     numEps_s_ult.Value = (decimal)rebar.Epsilon_s_ult;
