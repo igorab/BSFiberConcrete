@@ -1545,21 +1545,29 @@ namespace BSFiberConcrete
         private void numRfbt_n_ValueChanged(object sender, EventArgs e)
         {
             labelRfbtnMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numRfbt_n.Value));
+
+            numEps_fbt0.Value = numRfbt_n.Value / numE_fiber.Value;
+            numEps_fbt1.Value = numEps_fbt0.Value + 0.0001m;
         }
 
         private void numRfb_n_ValueChanged(object sender, EventArgs e)
         {
             labelRfbnMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numRfb_n.Value));
+            numEps_fb1.Value = numRfb_n.Value * 0.6m / numE_fiber.Value;
         }
 
         private void numRfbt2n_ValueChanged(object sender, EventArgs e)
         {
             labelRfbt2nMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numRfbt2n.Value));
+            // выражение домножено на -1
+            numEps_fbt3.Value = -0.02m + 0.0125m * (numRfbt2n.Value / numRfbt3n.Value - 0.5m);
         }
 
         private void numRfbt3n_ValueChanged(object sender, EventArgs e)
         {
             labelRfbt3nMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numRfbt3n.Value));
+            // выражение домножено на -1
+            numEps_fbt3.Value = -0.02m + 0.0125m * (numRfbt2n.Value / numRfbt3n.Value - 0.5m);
         }
 
         private void numRs_ValueChanged(object sender, EventArgs e)
@@ -1942,6 +1950,14 @@ namespace BSFiberConcrete
         private void cmbFib_i_SelectedIndexChanged(object sender, EventArgs e)
         {
             // SelectedFiberBetonValues();
+        }
+
+        private void numE_fiber_ValueChanged(object sender, EventArgs e)
+        {
+            numEps_fbt0.Value = numRfbt_n.Value / numE_fiber.Value;
+            numEps_fbt1.Value = numEps_fbt0.Value + 0.0001m;
+            numEps_fb1.Value = numRfb_n.Value * 0.6m / numE_fiber.Value;
+
         }
     }
 }
