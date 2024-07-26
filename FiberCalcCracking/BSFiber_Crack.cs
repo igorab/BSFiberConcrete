@@ -348,7 +348,6 @@ namespace BSFiberConcrete
             // Сжатие       - "+"
             // Растяжение   - "-"
             // N
-
             #region Характеристики материала
             // Площадь растянутой арматуры
             double A_s;
@@ -361,7 +360,6 @@ namespace BSFiberConcrete
             // модуль упрогости арматуры
             double Es;
 
-
             // нормативное остаточное сопротивление осевому растяжению для bft3i
             double R_fbt_ser;
             // модуль упругости фибробетона
@@ -373,19 +371,13 @@ namespace BSFiberConcrete
             #endregion
 
             #region Геометрические характеристики сечения 
-            // прямоугольное сечение
-            double h = 0;
-            double b = 0;
-            double A = h * b;
+            // Площадь сечения
+            double A;
             // момент инерции сечения 
-            double I = b * Math.Pow(h, 3) / 12;
+            double I;
             // статический момент сечения фибробетона
-            double S = A * h / 2; // прямоугольное сечение ?
-
-            double height = h;
+            double S;
             #endregion
-
-
 
             ///
             A_s = MatRebar.As;
@@ -393,48 +385,56 @@ namespace BSFiberConcrete
             a = MatRebar.a_s;
             a_1 = MatRebar.a_s1;
             Es = MatRebar.Es;
-
             ///
             Efb = MatFiber.Efb;
             R_fbt_ser = MatFiber.Rfbt;
-
             ///
             A = Beam.Area();
-            height = Beam.Height;
             I = Beam.Jy();
+            S = Beam.Sy();
 
 
-
-
-
-
+            #region Расчет
             // Коэф Привендения арматуры к стальфибробетону
             double alpha = Es / Efb;                                                                                //  (6.113)
-
             // Площадь приведенного поперечного сечения элемента 
             double A_red = A + A_s * alpha + A_1s * alpha;                                                          //  (6.112)
 
-            // Статический момент площади приведенного поперечного сечеиня элемента
-            // относительо наиболе ерастянутого волокна стальфибробетона
-            double S_t_red = S + alpha * A_s * alpha + alpha * A_1s * (h - a_1);
-            // Расстояние от центра тяжести приведенного сечения до расстянутой в стадии эксплуатауции грани
-            double Y_t = S_t_red / A_red;                                                                           //  (6.114)
+            double Y_t;
+            double I_red;
+            if (typeOfBeamSection == BeamSection.Ring)
+            {
+                BSBeam_Ring tmpBeam = (BSBeam_Ring)Beam;
+                Y_t = tmpBeam.r2;
+                double r_m = tmpBeam.r_m;
 
+                double SS = (A_s + A_1s) / Math.PI * 2 * r_m;
+                double Is = Math.PI / 64 * (Math.Pow(2 * (r_m + SS / 2), 4) - Math.Pow(2 * (r_m - SS / 2), 4));
+                I_red = I + alpha * Is;
+            }
+            else
+            {
+                double height = Beam.Height;
 
-            // расстояние от центра тяжести приведенного сечения до расстянутой арматуры
-            double Y_s = Y_t - a;
-            // расстояние от центра тяжести приведенного сечения до сжатой арматуры
-            double Y_1s = height - Y_t - a_1;
+                // Статический момент площади приведенного поперечного сечеиня элемента
+                // относительо наиболе ерастянутого волокна стальфибробетона
+                double S_t_red = S + alpha * A_s * alpha + alpha * A_1s * (height - a_1);
+                // Расстояние от центра тяжести приведенного сечения до расстянутой в стадии эксплуатауции грани
+                Y_t = S_t_red / A_red;                                                                           //  (6.114)
 
-            // Момент инерции 
-            double I_s = A_s * Y_s * Y_s;
-            // Момент инерции
-            double I_1s = A_1s * Y_1s * Y_1s;
+                // расстояние от центра тяжести приведенного сечения до расстянутой арматуры
+                double Y_s = Y_t - a;
+                // расстояние от центра тяжести приведенного сечения до сжатой арматуры
+                double Y_1s = height - Y_t - a_1;
 
+                // Момент инерции растянутой арматуры
+                double I_s = A_s * Y_s * Y_s;
+                // Момент инерции сжатой арматуры
+                double I_1s = A_1s * Y_1s * Y_1s;
 
-
-            // в сп формула без упоминания alpha
-            double I_red = I + alpha * I_s + alpha * I_1s;                                                          // (6.131) не (6.111) 
+                // в сп формула без упоминания alpha
+                I_red = I + alpha * I_s + alpha * I_1s;                                                          // (6.131) не (6.111)
+            }
 
             double W_red = I_red / Y_t;                                                                               // (6.109)
 
@@ -443,9 +443,6 @@ namespace BSFiberConcrete
             double W_pl = Y * W_red;                                                                                // (6.108)
 
             double M_crc = R_fbt_ser * W_pl + N * e_x;                                                              // (6.107)
-
-
-
 
 
 
@@ -477,26 +474,63 @@ namespace BSFiberConcrete
 
 
 
-
-
+            
             // Приведенный модуль деформации сжатого стальфибробетона, учитьывающий неупругие деформации сжатого стальффиброрбетона
-
             double E_fb_red = R_fb_n / epsilon_fb1_red;
-
+            //  Коэф. приведения арматуры
             double alpha_s1 = Es / E_fb_red;
-
             double alpha_s2 = alpha_s1;
-
+            // Приведенный модуль деформации сжатого стальфибробетона, учитывающий неупругие деформации сжатого стальфибробетона
             double E_fbt_red = R_fbt_ser / epslion_fbt2;
-
-
-
+            // Коэф. стальфибробетона растянутой зоны к стальфибробетону сжатой зоны
             double alpha_fbt = E_fbt_red / E_fb_red;
 
 
 
+            double b;
+            double h_0;
+
+            if (typeOfBeamSection == BeamSection.Rect)
+            {
+                BSBeam_Rect tmpBeam = (BSBeam_Rect)Beam;
+                b = tmpBeam.b;
+                h_0 = tmpBeam.h;
+
+            }
+            else
+            {
+                b = 0;
+                h_0 = 0;
+            }
+            
+            double mi = A_s / (b * h_0);
+            double mi_1 = A_1s / (b * h_0);
 
 
+
+            // Высота сжатой зоны
+            double y_c = 0; // для каждого типа сечени своя формаула
+
+            // формула 6.140
+
+
+            // момент инерции сжатой зоны
+
+            // момент инерции растянутой зоны
+
+
+            // момент инерции
+            I_red = 0;
+
+            // Напряжение в растянутой арматуре изгибаемых элементов
+            double sigma_s = 0;
+
+
+            // базовое расстояние между смежными нормальными трещинами
+            double l_s = 0;
+
+
+            #endregion
 
             return true;
         }
