@@ -175,9 +175,12 @@ namespace BSCalcLib
             // Generate mesh using the polygons Triangulate extension method.
             Mesh = poly.Triangulate(quality) as TriangleNet.Mesh;
 
-            string svgPath = Path.Combine(FilePath, "Ring.svg");
-
-            if (print) SvgImage.Save(Mesh, svgPath, 500);
+            string svgPath = "";
+            if (print)
+            {
+                svgPath = Path.Combine(FilePath, "Ring.svg");
+                SvgImage.Save(Mesh, svgPath, 500);
+            }
 
             return svgPath;
         }

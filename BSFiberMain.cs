@@ -937,11 +937,13 @@ namespace BSFiberConcrete
            
             Dictionary<string, double> D = new Dictionary<string, double>()
             {
+                // enforces
                 ["N"] = -MNQ["N"],
                 ["My"] = MNQ["My"],
                 ["Mz"] = MNQ["Mx"],
+                //
 
-                //size
+                //section size
                 ["b"] = 0,
                 ["h"] = 0,
 
@@ -951,6 +953,10 @@ namespace BSFiberConcrete
                 ["hw"] = 0,
                 ["b1f"] = 0,
                 ["h1f"] = 0,
+
+                ["r1"] = 0,
+                ["R2"] = 0,
+                //
 
                 //Mesh
                 ["ny"] = (int)numMeshN.Value,
@@ -1005,6 +1011,15 @@ namespace BSFiberConcrete
                 b = D["bf"];
                 h = D["hf"] + D["hw"] + D["h1f"];
             }
+            else if (_beamSection == BeamSection.Ring)
+            {
+                D["r1"] = beam_sizes[0];
+                D["R2"] = beam_sizes[1];
+                
+                b = 2*D["R2"];
+                h = 2*D["R2"];
+            }
+
 
             D["b"] = b;
             D["h"] = h;
@@ -1019,11 +1034,13 @@ namespace BSFiberConcrete
         {
             // данные с формы
             var D = DictCalcParams(_beamSection);
-            double b = D["b"];
-            
+
             //привязка арматуры (по X - высота, по Y ширина балки)
-            (List<double> listD, List<double> listX, List<double> listY, double _qty, double _area) =
-                ReinforcementBinding(_beamSection, -b / 2.0, 0);
+            double leftX = 0;
+            // для прямоугольных и тавровых сечений привязка к центу нижней грани 
+            if (_beamSection == BeamSection.Rect || _beamSection == BeamSection.IBeam) leftX = -D["b"] / 2.0;
+            (List<double> listD, List<double> listX, List<double> listY, double _qty, double _area) = ReinforcementBinding(_beamSection, leftX , 0);
+
             D.Add("rods_qty", _qty);
             D.Add("rods_area", _area);
 
@@ -1289,14 +1306,20 @@ namespace BSFiberConcrete
                 {
                     CalcNDM(BeamSection.IBeam);
                 }
-                else
+                else if (m_BeamSectionReport == BeamSection.Ring)
                 {
                     //
-                    var CG = new TriangleNet.Geometry.Point(0, 0);
-                    GenerateMesh(ref CG); // покрыть сечение сеткой
+                    //var CG = new TriangleNet.Geometry.Point(0, 0);
+                    //GenerateMesh(ref CG); // покрыть сечение сеткой
                     //
+                    CalcNDM(BeamSection.Ring);
+                    
+                }
+                else
+                {
                     CalcDeformNDM();
                 }
+
             }
             catch (Exception _e)
             {

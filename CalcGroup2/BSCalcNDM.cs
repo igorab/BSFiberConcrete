@@ -50,6 +50,9 @@ namespace BSFiberConcrete.CalcGroup2
             b1f = _D["b1f"]; 
             h1f = _D["h1f"];
 
+            r1 = _D["r1"];
+            R2 = _D["R2"];
+            //
             //Mesh
             ny = (int)_D["ny"];
             nz = (int)_D["nz"];
@@ -146,6 +149,8 @@ namespace BSFiberConcrete.CalcGroup2
         private double h = 40.0;
         // тавр-двутавр
         private double bf, hf, bw, hw, b1f, h1f;
+        // кольцо
+        private double r1, R2;
 
         // число элементов вдоль y, шт
         private int ny = 4;
@@ -231,23 +236,28 @@ namespace BSFiberConcrete.CalcGroup2
             #region Section initialization
             InitSectionsLists();
             int n, m;
-
-            if (m_BeamSection == BeamSection.IBeam)
+            
+            if (m_BeamSection == BeamSection.Rect)
+            {                
+                n = InitRectangleSection(b, h, -b / 2.0);
+                m = InitReinforcement(-b / 2.0);
+            }
+            else if (m_BeamSection == BeamSection.IBeam)
             {
                 n = InitIBeamSection(bf, hf, bw, hw, b1f, h1f);
+                m = InitReinforcement(-b / 2.0);
             }
-            else if (m_BeamSection == BeamSection.Rect)
+            else if (m_BeamSection == BeamSection.Ring)
             {
-                //n = InitRectangleSection(b, h);
-                //n = InitRectangleSection(b, h, -b/2.0, -h/2.0);
-                n = InitRectangleSection(b, h, -b/2.0);
+                n = InitRingSection(r1, R2);
+                m = InitReinforcement();
             }
             else
+            {
                 throw new Exception($"Тип сечения {m_BeamSection} не поддерживается в данном расчете ");
-
-            //m = InitReinforcement();
-            //m = InitReinforcement(-b / 2.0, -h / 2.0);
-            m = InitReinforcement(-b/2.0);
+            }
+            
+            
             #endregion
 
 
@@ -524,7 +534,7 @@ namespace BSFiberConcrete.CalcGroup2
                 ["Mx_crc"] = Mzint
             };
         }
-
+      
         public void Run()
         {
             try
