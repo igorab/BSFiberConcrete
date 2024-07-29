@@ -603,9 +603,11 @@ namespace BSFiberConcrete
                 calc_Cracking.GetParams(new double[] { 10, 1 });
 
                 // рассчитать 
-                //calcOk = calc_Cracking.CalculateUltM();
+                calcOk = calc_Cracking.CalculateUltM();
+                calcOk = calc_Cracking.CalculateWidthCrack();
 
 
+                calc_Cracking.ShowResult();
 
 
 
@@ -619,7 +621,7 @@ namespace BSFiberConcrete
                 //var beamSection = BSBeam.construct(m_BeamSection);
 
                 //BSFiberCalc_Cracking bsCracing = new BSFiberCalc_Cracking();
-                
+
                 ////bsCracing.MatFiber = m_MatFiber;
                 ////bsCracing.m_BeamSectionType = m_BeamSection;
                 ////bsCracing.m_beamSection = beamSection; // может потребоваться приведение
@@ -668,30 +670,30 @@ namespace BSFiberConcrete
                 MessageBox.Show("Ошибка в расчете: " + _e.Message);
             }
 
-            try
-            {
-                //if (bsCalc is null)
-                //    throw new Exception("Не выполнен расчет");
+            //try
+            //{
+            //    //if (bsCalc is null)
+            //    //    throw new Exception("Не выполнен расчет");
 
-                if (calcOk)
-                {
-                    string pathToHtmlFile = CreateReport(1, m_BeamSectionReport, _useReinforcement: useReinforcement);
+            //    if (calcOk)
+            //    {
+            //        string pathToHtmlFile = CreateReport(1, m_BeamSectionReport, _useReinforcement: useReinforcement);
 
-                    System.Diagnostics.Process.Start(pathToHtmlFile);
-                }
-                else
-                {
-                    string errMsg = "";
-                    foreach (string ms in m_Message) errMsg += ms + ";\t\n";
+            //        System.Diagnostics.Process.Start(pathToHtmlFile);
+            //    }
+            //    else
+            //    {
+            //        string errMsg = "";
+            //        foreach (string ms in m_Message) errMsg += ms + ";\t\n";
 
-                    MessageBox.Show(errMsg);
-                }
+            //        MessageBox.Show(errMsg);
+            //    }
 
-            }
-            catch (Exception _e)
-            {
-                MessageBox.Show("Ошибка в отчете " + _e.Message);
-            }
+            //}
+            //catch (Exception _e)
+            //{
+            //    MessageBox.Show("Ошибка в отчете " + _e.Message);
+            //}
 
         }
 

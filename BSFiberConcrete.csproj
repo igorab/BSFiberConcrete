@@ -272,6 +272,12 @@
     <Compile Include="DeformationDiagram\DeformDiagramType.cs" />
     <Compile Include="DeformationDiagram\ModelDeformDiagram.cs" />
     <Compile Include="FiberCalcCracking\BSFiber_Crack.cs" />
+    <Compile Include="FiberCalcCracking\CalcCrackingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FiberCalcCracking\CalcCrackingForm.Designer.cs">
+      <DependentUpon>CalcCrackingForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Lib\BSHelper.cs" />
     <Compile Include="Calc\BSFiberCalculation.cs" />
@@ -414,6 +420,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DeformationDiagram\DeformDiagram.resx">
       <DependentUpon>DeformDiagram.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FiberCalcCracking\CalcCrackingForm.resx">
+      <DependentUpon>CalcCrackingForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LocalStrength\BSLocalStrength.resx">
       <DependentUpon>BSLocalStrength.cs</DependentUpon>
