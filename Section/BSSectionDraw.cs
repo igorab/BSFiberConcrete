@@ -86,7 +86,7 @@ namespace BSFiberConcrete.Section
         
         private void btnCalcGo_Click(object sender, EventArgs e)
         {
-            BSCalcNDM calcNDM = new BSCalcNDM();
+            BSCalcNDM calcNDM = new BSCalcNDM(1);
             calcNDM.Run();
         }
 

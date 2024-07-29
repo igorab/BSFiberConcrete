@@ -13,7 +13,11 @@ namespace BSFiberConcrete
 {
     public partial class BSCalcResults : Form
     {
+        public Dictionary<string, double> CalcUnits { get; private set; }
+
+        public Dictionary<string, double> CalcParams { get; set; }
         public Dictionary<string, double> CalcResults { get; set; }
+
 
         public BSCalcResults()
         {
@@ -34,6 +38,22 @@ namespace BSFiberConcrete
             listView.FullRowSelect = true;
             listView.GridLines = true;            
             listView.Sorting = SortOrder.Ascending;
+
+            if (CalcParams != null)
+            {
+                items = new ListViewItem[CalcParams.Count];
+
+                int idx = -1;
+
+                foreach (var item in CalcParams)
+                {
+                    items[++idx] = new ListViewItem(item.Key, 0);
+                    items[idx].Checked = true;
+                    items[idx].SubItems.Add(item.Value.ToString());
+                    items[idx].SubItems.Add(item.Key);
+                    items[idx].SubItems.Add("кг/см2");
+                }
+            }
 
             if (CalcResults != null)
             {
