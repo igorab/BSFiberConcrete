@@ -1,10 +1,16 @@
-﻿using System;
+﻿using ScottPlot.Statistics;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Data;
+using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace BSFiberConcrete
 {
@@ -31,6 +37,9 @@ namespace BSFiberConcrete
                 m_Rods = value.Rods;
             }
         }
+
+        // Результаты расчета
+        public DataTable resultTable;
 
         /// <summary>
         /// Расстановка стержней арматуры
@@ -148,6 +157,11 @@ namespace BSFiberConcrete
             m_Rod = new BSMatRod();
 
             Msg = new List<string>();
+
+
+            CreateResTable();
+            AddRowInResTable("", "Mx", Mx, "кг∙см2");
+            AddRowInResTable("", "N", N, "кг");
         }
 
         /// <summary>
@@ -309,6 +323,9 @@ namespace BSFiberConcrete
 
             double M_crc = R_fbt_ser * W_pl + N * e_x;                                                              // (6.107)
             #endregion
+
+
+            AddRowInResTable("Момент образования трещин с учетом неупругих деформаций растянутого стальфибробетона", "Mcrc", M_crc, "кг∙см2");
 
             return true;
         }
@@ -576,10 +593,57 @@ namespace BSFiberConcrete
 
             #endregion
 
+
+            // f (класс арматуры и продолжительности нагрузки)acrc_ult
+
+            AddRowInResTable("Предельно допустимая ширина раскрытия трещин", "acrc_ult", a_crc_ult, "мм");
+
+            AddRowInResTable("Ширина раскрытия трещин от действия внешней нагрузки", "acrc", a_crc_1, "мм");
+
             return true;
         }
 
 
+        /// <summary>
+        /// Создается форма, выводится результат из ResultTable
+        /// </summary>
+        public void ShowResult()
+        {
+            CalcCrackingForm ccForm= new CalcCrackingForm(resultTable);
+            ccForm.Show();
+        }
+
+
+        /// <summary>
+        /// Создается новая таблица параметра ResultTable
+        /// </summary>
+        protected void CreateResTable()
+        {
+            resultTable = new DataTable();
+            resultTable.Columns.Add("Описание");
+            resultTable.Columns.Add("Параметр");
+            resultTable.Columns.Add("Значение");
+            resultTable.Columns.Add("Ед. Измерения");
+        }
+
+
+        /// <summary>
+        /// Добавление строки в таблицу ResultTable
+        /// </summary>
+        /// <param name="description"></param>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        /// <param name="units"></param>
+        protected void AddRowInResTable(string description, string name, double value, string units)
+        {
+            double valueRound =Math.Round(value,3);
+            DataRow row = resultTable.NewRow();
+            row["Описание"] = description;
+            row["Параметр"] = name;
+            row["Значение"] = valueRound.ToString();
+            row["Ед. Измерения"] = units;
+            resultTable.Rows.Add(row);
+        }
 
 
 

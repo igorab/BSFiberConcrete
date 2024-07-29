@@ -607,6 +607,7 @@ namespace BSFiberConcrete
                 calcOk = calc_Cracking.CalculateWidthCrack();
 
 
+                calc_Cracking.ShowResult();
 
 
 
