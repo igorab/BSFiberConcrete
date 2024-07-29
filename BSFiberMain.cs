@@ -1580,8 +1580,8 @@ namespace BSFiberConcrete
                 else if (m_BeamSectionReport == BeamSection.Ring)
                 {
                     //
-                    //var CG = new TriangleNet.Geometry.Point(0, 0);
-                    //GenerateMesh(ref CG); // покрыть сечение сеткой
+                    var CG = new TriangleNet.Geometry.Point(0, 0);
+                    GenerateMesh(ref CG); // покрыть сечение сеткой
                     //
                     CalcNDM(BeamSection.Ring);
 
@@ -1673,6 +1673,7 @@ namespace BSFiberConcrete
         private void btnCalcResults_Click(object sender, EventArgs e)
         {
             BSCalcResults bSCalcResults = new BSCalcResults();
+            bSCalcResults.CalcParams = DictCalcParams(m_BeamSectionReport);
             bSCalcResults.CalcResults = m_CalcResults;
             bSCalcResults.Show();
         }

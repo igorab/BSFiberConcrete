@@ -11,7 +11,7 @@ using BSFiberConcrete;
 namespace BSFiberConcrete
 {
     internal class BSFiberLib
-    {
+    {        
         /// <summary>
         /// Прочности фибробетона на растяжение
         /// </summary>
