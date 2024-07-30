@@ -207,7 +207,7 @@ namespace BSFiberConcrete
                     gridEfforts.Rows[0].Cells[i].Value = mnq[i];
                 }
 
-                double[] t_rebar = { m_Iniv["D_t"], m_Iniv["Qty_t"], m_Iniv["a_t"], m_Iniv["Cls_t"], m_Iniv["Coef_t"] }; // поперечная арматура
+                double[] t_rebar = { m_Iniv["D_t"], m_Iniv["Qty_t"], m_Iniv["a_t"], m_Iniv["Cls_t"], m_Iniv["Coef_t"] }; // поперечная арматура               
                 gridTRebar.Rows.Add(t_rebar);
                 for (int i = 0; i < t_rebar.Length; i++)
                 {
@@ -216,14 +216,14 @@ namespace BSFiberConcrete
 
                 double[] long_rebar = { m_Iniv["D_l"], m_Iniv["Qty_l"], m_Iniv["a_l"], m_Iniv["Cls_l"], m_Iniv["Coef_l"] }; // продольная арматура
                 for (int i = 0; i < 3; i++) gridLRebar.Rows.Add(long_rebar);
-
+                
                 for (int i = 0; i < long_rebar.Length; i++)
                 {
                     gridLRebar.Rows[0].Cells[i].Value = long_rebar[i];
                     gridLRebar.Rows[1].Cells[i].Value = long_rebar[i];// (i==1)? 0: long_rebar[i];
                     gridLRebar.Rows[2].Cells[i].Value = long_rebar[i];  // (i==1) ? 0 : long_rebar[i];
                 }
-
+                               
                 numAs.Value = (decimal)m_Iniv["As"];
                 numAs1.Value = (decimal)m_Iniv["As1"];
                 num_a.Value = (decimal)m_Iniv["_a"];
@@ -1218,7 +1218,8 @@ namespace BSFiberConcrete
                 // - деформации
                 ["ebc0"] = (double)numEps_fb0.Value, // ? 
                 ["ebc2"] = (double)numEps_fb2.Value, // ?
-                ["ebt0"] = 0.0001, // (double)numEps_fb0.Value, // ? Валера добавить поле на форму
+                ["ebt0"] = (double)numEps_fbt0.Value, // ? 
+                ["ebt1"] = (double)numEps_fbt1.Value, // ? 
                 ["ebt2"] = (double)numEps_fbt2.Value, // ?
                 ["ebt_ult"] = (double)numEps_fbt_ult.Value,
                 // steel
