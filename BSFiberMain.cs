@@ -83,6 +83,7 @@ namespace BSFiberConcrete
             {
                 btnStaticEqCalc.Visible = true;
                 btnCalc_Deform.Visible = false;
+                btnCalcCrack.Visible = false;
                 panelRods.Visible = false;
                 gridEfforts.Columns["Mx"].Visible = false;
                 tabNDM.TabPages.Remove(tabPBeam);
@@ -91,6 +92,7 @@ namespace BSFiberConcrete
             {
                 btnStaticEqCalc.Visible = false;
                 btnCalc_Deform.Visible = true;
+                btnCalcCrack.Visible = true;
                 panelRods.Visible = true;
                 gridEfforts.Columns["Mx"].Visible = true;
                 tabNDM.TabPages.Remove(tabPBeam);
@@ -101,6 +103,7 @@ namespace BSFiberConcrete
 
                 btnStaticEqCalc.Visible = false;
                 btnCalc_Deform.Visible = true;
+                btnCalcCrack.Visible = true;
                 panelRods.Visible = true;
 
                 BeamCalculatorControl beamCalculatorControl = new BeamCalculatorControl(test_Efforts);
@@ -603,9 +606,11 @@ namespace BSFiberConcrete
                 calc_Cracking.GetParams(new double[] { 10, 1 });
 
                 // рассчитать 
-                //calcOk = calc_Cracking.CalculateUltM();
+                calcOk = calc_Cracking.CalculateUltM();
+                calcOk = calc_Cracking.CalculateWidthCrack();
 
 
+                calc_Cracking.ShowResult();
 
 
 
@@ -619,7 +624,7 @@ namespace BSFiberConcrete
                 //var beamSection = BSBeam.construct(m_BeamSection);
 
                 //BSFiberCalc_Cracking bsCracing = new BSFiberCalc_Cracking();
-                
+
                 ////bsCracing.MatFiber = m_MatFiber;
                 ////bsCracing.m_BeamSectionType = m_BeamSection;
                 ////bsCracing.m_beamSection = beamSection; // может потребоваться приведение
@@ -668,30 +673,30 @@ namespace BSFiberConcrete
                 MessageBox.Show("Ошибка в расчете: " + _e.Message);
             }
 
-            try
-            {
-                //if (bsCalc is null)
-                //    throw new Exception("Не выполнен расчет");
+            //try
+            //{
+            //    //if (bsCalc is null)
+            //    //    throw new Exception("Не выполнен расчет");
 
-                if (calcOk)
-                {
-                    string pathToHtmlFile = CreateReport(1, m_BeamSectionReport, _useReinforcement: useReinforcement);
+            //    if (calcOk)
+            //    {
+            //        string pathToHtmlFile = CreateReport(1, m_BeamSectionReport, _useReinforcement: useReinforcement);
 
-                    System.Diagnostics.Process.Start(pathToHtmlFile);
-                }
-                else
-                {
-                    string errMsg = "";
-                    foreach (string ms in m_Message) errMsg += ms + ";\t\n";
+            //        System.Diagnostics.Process.Start(pathToHtmlFile);
+            //    }
+            //    else
+            //    {
+            //        string errMsg = "";
+            //        foreach (string ms in m_Message) errMsg += ms + ";\t\n";
 
-                    MessageBox.Show(errMsg);
-                }
+            //        MessageBox.Show(errMsg);
+            //    }
 
-            }
-            catch (Exception _e)
-            {
-                MessageBox.Show("Ошибка в отчете " + _e.Message);
-            }
+            //}
+            //catch (Exception _e)
+            //{
+            //    MessageBox.Show("Ошибка в отчете " + _e.Message);
+            //}
 
         }
 
@@ -2185,6 +2190,24 @@ namespace BSFiberConcrete
             numEps_fbt0.Value = numRfbt_n.Value / numE_fiber.Value;
             numEps_fbt1.Value = numEps_fbt0.Value + 0.0001m;
             numEps_fb1.Value = numRfb_n.Value * 0.6m / numE_fiber.Value;
+
+        }
+
+        /// <summary>
+        /// Запуск расчета по второй грппе предельных состояний
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                FiberCalculate_Cracking();
+            }
+            catch (Exception _ex)
+            {
+                MessageBox.Show(_ex.Message);
+            }
 
         }
     }

@@ -1,10 +1,16 @@
-﻿using System;
+﻿using ScottPlot.Statistics;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Data;
+using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace BSFiberConcrete
 {
@@ -31,6 +37,9 @@ namespace BSFiberConcrete
                 m_Rods = value.Rods;
             }
         }
+
+        // Результаты расчета
+        public DataTable resultTable;
 
         /// <summary>
         /// Расстановка стержней арматуры
@@ -148,6 +157,11 @@ namespace BSFiberConcrete
             m_Rod = new BSMatRod();
 
             Msg = new List<string>();
+
+
+            CreateResTable();
+            AddRowInResTable("", "Mx", Mx, "кг∙см2");
+            AddRowInResTable("", "N", N, "кг");
         }
 
         /// <summary>
@@ -251,7 +265,8 @@ namespace BSFiberConcrete
             Es = MatRebar.Es;
             ///
             Efb = MatFiber.Efb;
-            R_fbt_ser = MatFiber.Rfbt;
+            R_fbt_ser = MatFiber.Rfbt_ser;
+
             ///
             A = Beam.Area();
             I = Beam.Jy();
@@ -308,6 +323,9 @@ namespace BSFiberConcrete
 
             double M_crc = R_fbt_ser * W_pl + N * e_x;                                                              // (6.107)
             #endregion
+
+
+            AddRowInResTable("Момент образования трещин с учетом неупругих деформаций растянутого стальфибробетона", "Mcrc", M_crc, "кг∙см2");
 
             return true;
         }
@@ -388,6 +406,8 @@ namespace BSFiberConcrete
             ///
             Efb = MatFiber.Efb;
             R_fbt_ser = MatFiber.Rfbt;
+
+            
             ///
             A = Beam.Area();
             I = Beam.Jy();
@@ -428,25 +448,21 @@ namespace BSFiberConcrete
                 double Y_1s = height - Y_t - a_1;
 
                 // Момент инерции растянутой арматуры
-                double I_s = A_s * Y_s * Y_s;
+                //double I_s = A_s * Y_s * Y_s;
                 // Момент инерции сжатой арматуры
-                double I_1s = A_1s * Y_1s * Y_1s;
+                //double I_1s = A_1s * Y_1s * Y_1s;
 
                 // в сп формула без упоминания alpha
-                I_red = I + alpha * I_s + alpha * I_1s;                                                          // (6.131) не (6.111)
+                //I_red = I + alpha * I_s + alpha * I_1s;                                                          // (6.131) не (6.111)
             }
 
-            double W_red = I_red / Y_t;                                                                               // (6.109)
+            //double W_red = I_red / Y_t;                                                                               // (6.109)
 
-            double e_x = W_red / A_red;                                                                              // (6.110)
+            //double e_x = W_red / A_red;                                                                              // (6.110)
 
-            double W_pl = Y * W_red;                                                                                // (6.108)
+            //double W_pl = Y * W_red;                                                                                // (6.108)
 
-            double M_crc = R_fbt_ser * W_pl + N * e_x;                                                              // (6.107)
-
-
-
-
+            //double M_crc = R_fbt_ser * W_pl + N * e_x;                                                              // (6.107)
 
 
 
@@ -460,21 +476,43 @@ namespace BSFiberConcrete
             // деформаций растянутой арматуры между трещинами
             double psi_s = 1;
 
+            // коэф, учитывающий профиль продольной раматуры, для гладкой арматуры: 
+            double fi_2 = 0.8;
+            double fi_13 = 0.8;
+
+
+
             // предельно-допустимая ширина раскрытия трещин
             // Принимается в зависимости класса арматуры
             double a_crc_ult = 0.3;
 
-            double R_fb_n = 300;
+
+
+
+
+
+
 
             double epsilon_fb1_red = 0.00015;
-
-
             double epslion_fbt2 = 0.004;
 
+            double d_s = 12;
+            // диаметр арматуры достать бы
+            // MatRebar.
+
+            // длина фибры
+            double l_f = 50;
+            // диаметр фибры
+            double d_f = 0.8;
+
+            // коэф фиброго армирования по объему
+            double Mu_fv = 0.0174;
 
 
+            //R_fb_n = MatFiber.Rfbn;
+            double R_fb_n = 300;
 
-            
+
             // Приведенный модуль деформации сжатого стальфибробетона, учитьывающий неупругие деформации сжатого стальффиброрбетона
             double E_fb_red = R_fb_n / epsilon_fb1_red;
             //  Коэф. приведения арматуры
@@ -496,46 +534,116 @@ namespace BSFiberConcrete
                 b = tmpBeam.b;
                 h_0 = tmpBeam.h;
 
+
+
             }
             else
             {
                 b = 0;
                 h_0 = 0;
             }
-            
-            double mi = A_s / (b * h_0);
-            double mi_1 = A_1s / (b * h_0);
+            double Mu_s = A_s / (b * h_0);
+            double Mu_1s = A_1s / (b * h_0);
 
 
-
+            // для каждого типа сечени своя формаула
             // Высота сжатой зоны
-            double y_c = 0; // для каждого типа сечени своя формаула
-
+            double Xm = (h_0 / (1 - alpha_fbt)) * (Math.Sqrt(Math.Pow(Mu_s * alpha_s2 + Mu_1s * alpha_s1 + alpha_fbt, 2) +
+                (1 - alpha_fbt) * (2 * Mu_s * alpha_s2 + 2 * Mu_1s * alpha_s1 * (a_1 / h_0) + alpha_fbt))) -
+                (Mu_s * alpha_s2 + Mu_1s * alpha_s1 + alpha_fbt);
             // формула 6.140
 
+            double y_c = Xm; 
 
+            
+            // В ДВУХ ФОРМУЛАХ НИЖЕ ДОЛЖНО БЫТЬ h  вместо h_0 !!!!
             // момент инерции сжатой зоны
-
+            double I_fb = b * Math.Pow(y_c, 3) / 12 + b * y_c * Math.Pow(h_0 / 2 + y_c / 2,2);
             // момент инерции растянутой зоны
+            double I_fbt = b * Math.Pow(h_0 - y_c, 3) / 12 + b * (h_0 - y_c)  * Math.Pow(h_0 / 2 + ( h_0 - y_c) / 2, 2);
 
-
+            double I_1s = A_1s * Math.Pow(y_c - a_1, 2);
+            double I_s = A_s * Math.Pow(h_0 - y_c - a, 2); //  В ФОРМУЛЕ НУЖНО ИСПОЛЬЗОВАТЬ h, а не h_0 !!!!
             // момент инерции
-            I_red = 0;
+            I_red = I_fb + I_fbt * alpha_fbt + I_s * alpha_s2 + I_1s * alpha_s1;
 
             // Напряжение в растянутой арматуре изгибаемых элементов
-            double sigma_s = 0;
+            double sigma_s = Mx * (h_0 - y_c) / I_red * alpha_s1;
 
+
+
+            double k_f;
+
+            if (l_f / d_f < 50)
+                k_f = 50;
+            else if (l_f / d_f >= 50 || l_f / d_f <= 100)
+                k_f = 50 * d_f / l_f;
+            else
+            {
+                //(l_f / d_f > 100)
+                k_f = 0.5;
+            }
 
             // базовое расстояние между смежными нормальными трещинами
-            double l_s = 0;
+            double l_s = k_f * (50 + 0.5 * fi_2 * fi_13 * d_s / Mu_fv);
+
+            // Ширина раскрытия трещин
+            double a_crc_1 = fi_1 * fi_3 * psi_s * sigma_s / Es * l_s;
 
 
             #endregion
+
+
+            // f (класс арматуры и продолжительности нагрузки)acrc_ult
+
+            AddRowInResTable("Предельно допустимая ширина раскрытия трещин", "acrc_ult", a_crc_ult, "мм");
+
+            AddRowInResTable("Ширина раскрытия трещин от действия внешней нагрузки", "acrc", a_crc_1, "мм");
 
             return true;
         }
 
 
+        /// <summary>
+        /// Создается форма, выводится результат из ResultTable
+        /// </summary>
+        public void ShowResult()
+        {
+            CalcCrackingForm ccForm= new CalcCrackingForm(resultTable);
+            ccForm.Show();
+        }
+
+
+        /// <summary>
+        /// Создается новая таблица параметра ResultTable
+        /// </summary>
+        protected void CreateResTable()
+        {
+            resultTable = new DataTable();
+            resultTable.Columns.Add("Описание");
+            resultTable.Columns.Add("Параметр");
+            resultTable.Columns.Add("Значение");
+            resultTable.Columns.Add("Ед. Измерения");
+        }
+
+
+        /// <summary>
+        /// Добавление строки в таблицу ResultTable
+        /// </summary>
+        /// <param name="description"></param>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        /// <param name="units"></param>
+        protected void AddRowInResTable(string description, string name, double value, string units)
+        {
+            double valueRound =Math.Round(value,3);
+            DataRow row = resultTable.NewRow();
+            row["Описание"] = description;
+            row["Параметр"] = name;
+            row["Значение"] = valueRound.ToString();
+            row["Ед. Измерения"] = units;
+            resultTable.Rows.Add(row);
+        }
 
 
 
