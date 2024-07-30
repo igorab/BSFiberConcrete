@@ -53,7 +53,7 @@
             // numFrom
             // 
             this.numFrom.DecimalPlaces = 4;
-            this.numFrom.Location = new System.Drawing.Point(146, 35);
+            this.numFrom.Location = new System.Drawing.Point(146, 34);
             this.numFrom.Maximum = new decimal(new int[] {
             1569325056,
             23283064,
@@ -90,7 +90,7 @@
             // labelFrom
             // 
             this.labelFrom.AutoSize = true;
-            this.labelFrom.Location = new System.Drawing.Point(49, 37);
+            this.labelFrom.Location = new System.Drawing.Point(49, 36);
             this.labelFrom.Name = "labelFrom";
             this.labelFrom.Size = new System.Drawing.Size(21, 13);
             this.labelFrom.TabIndex = 2;
@@ -108,9 +108,9 @@
             // comboBoxFrom
             // 
             this.comboBoxFrom.FormattingEnabled = true;
-            this.comboBoxFrom.Location = new System.Drawing.Point(77, 33);
+            this.comboBoxFrom.Location = new System.Drawing.Point(69, 33);
             this.comboBoxFrom.Name = "comboBoxFrom";
-            this.comboBoxFrom.Size = new System.Drawing.Size(63, 21);
+            this.comboBoxFrom.Size = new System.Drawing.Size(71, 21);
             this.comboBoxFrom.TabIndex = 4;
             this.comboBoxFrom.Text = "МПа";
             // 
@@ -171,7 +171,7 @@
             // labelFromF
             // 
             this.labelFromF.AutoSize = true;
-            this.labelFromF.Location = new System.Drawing.Point(317, 39);
+            this.labelFromF.Location = new System.Drawing.Point(318, 37);
             this.labelFromF.Name = "labelFromF";
             this.labelFromF.Size = new System.Drawing.Size(21, 13);
             this.labelFromF.TabIndex = 10;
@@ -192,23 +192,23 @@
             0,
             -2147483648});
             this.numFromF.Name = "numFromF";
-            this.numFromF.Size = new System.Drawing.Size(120, 20);
+            this.numFromF.Size = new System.Drawing.Size(98, 20);
             this.numFromF.TabIndex = 9;
             this.numFromF.ValueChanged += new System.EventHandler(this.numFromF_ValueChanged);
             // 
             // comboBoxToF
             // 
             this.comboBoxToF.FormattingEnabled = true;
-            this.comboBoxToF.Location = new System.Drawing.Point(337, 77);
+            this.comboBoxToF.Location = new System.Drawing.Point(345, 77);
             this.comboBoxToF.Name = "comboBoxToF";
-            this.comboBoxToF.Size = new System.Drawing.Size(71, 21);
+            this.comboBoxToF.Size = new System.Drawing.Size(63, 21);
             this.comboBoxToF.TabIndex = 14;
             this.comboBoxToF.Text = "кгс";
             // 
             // labelToF
             // 
             this.labelToF.AutoSize = true;
-            this.labelToF.Location = new System.Drawing.Point(317, 79);
+            this.labelToF.Location = new System.Drawing.Point(325, 81);
             this.labelToF.Name = "labelToF";
             this.labelToF.Size = new System.Drawing.Size(14, 13);
             this.labelToF.TabIndex = 13;
@@ -229,7 +229,7 @@
             0,
             -2147483648});
             this.numToF.Name = "numToF";
-            this.numToF.Size = new System.Drawing.Size(120, 20);
+            this.numToF.Size = new System.Drawing.Size(98, 20);
             this.numToF.TabIndex = 12;
             // 
             // BSUnitCalculator
