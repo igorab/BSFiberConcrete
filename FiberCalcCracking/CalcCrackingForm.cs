@@ -19,6 +19,8 @@ namespace BSFiberConcrete
             if (resultTable != null)
             {
                 dataGridView1.DataSource = resultTable;
+                
+                dataGridView1.Columns[resultTable.Columns[0].Caption].MinimumWidth = 500;
             }
         }
     }

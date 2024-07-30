@@ -551,15 +551,15 @@ namespace BSFiberConcrete
                 calc_Cracking.typeOfBeamSection = m_BeamSectionReport;
 
 
-                GenerateMesh(ref CG); // покрыть сечение сеткой
+                //GenerateMesh(ref CG); // покрыть сечение сеткой
                 //
                 //calc_Cracking.CG = CG;
                 //calc_Cracking.triAreas = triAreas;
                 //calc_Cracking.triCGs = triCGs;
 
                 // Начало координат:
-                dX0 = CG.X;
-                dY0 = CG.Y;
+                //dX0 = CG.X;
+                //dY0 = CG.Y;
 
                 // задать тип арматуры
                 calc_Cracking.MatRebar = new BSMatRod(cEs)
