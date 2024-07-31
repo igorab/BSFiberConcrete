@@ -795,15 +795,20 @@ namespace BSFiberConcrete
             {
                 var b_i = Convert.ToString(cmbFib_i.SelectedItem);
                 BSFiberBeton beton = (BSFiberBeton)cmbBetonClass.SelectedItem;
+                if (beton == null)
+                    return;
+
                 string btName = beton.Name.Replace("i", b_i);
 
                 var getQuery = FiberConcrete.Where(f => f.BT == btName);
                 if (getQuery?.Count() > 0)
                 {
-                    var fib = getQuery?.First();
+                    Elements fib = getQuery?.First();
 
-                    numRfbt3n.Value = Convert.ToDecimal(BSHelper.MPA2kgsm2(fib?.Rfbt3n));
-                    numRfbt2n.Value = Convert.ToDecimal(BSHelper.MPA2kgsm2(fib?.Rfbt2n));
+                    double rfbt3n = BSHelper.MPA2kgsm2(fib.Rfbt3n);
+
+                    numRfbt3n.Value = (decimal)rfbt3n;
+                    numRfbt2n.Value = Convert.ToDecimal(BSHelper.MPA2kgsm2(fib.Rfbt2n));
 
                     numYft.Value = Convert.ToDecimal(fib?.Yft);
                     numYb.Value = Convert.ToDecimal(fib?.Yb);
@@ -1553,12 +1558,7 @@ namespace BSFiberConcrete
                 MessageBox.Show(_e.Message);
             }
         }
-
-        private void cmbBetonClass_SelectedValueChanged(object sender, EventArgs e)
-        {
-            SelectedFiberBetonValues();
-        }
-       
+               
         private void btnCalcResults_Click(object sender, EventArgs e)
         {
             BSCalcResults bSCalcResults = new BSCalcResults();
@@ -1670,7 +1670,7 @@ namespace BSFiberConcrete
         {
             labelRfbt3nMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numRfbt3n.Value));
             // выражение домножено на -1
-            numEps_fbt3.Value = -0.02m + 0.0125m * (numRfbt2n.Value / numRfbt3n.Value - 0.5m);
+            numEps_fbt3.Value = -0.02m + 0.0125m * (numRfbt2n.Value / numRfbt3n.Value - 0.5m);             
         }
 
         private void numRs_ValueChanged(object sender, EventArgs e)
@@ -2067,6 +2067,14 @@ namespace BSFiberConcrete
             MessageBox.Show("Значения коэффициента надежности по бетону при сжатии ", "Информация");            
         }
 
-      
+        private void cmbFib_i_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SelectedFiberBetonValues();
+        }
+
+        private void cmbBetonClass_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SelectedFiberBetonValues();
+        }
     }
 }
