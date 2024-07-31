@@ -50,11 +50,8 @@ namespace BSFiberConcrete
             { "Yft", Yft }, { "Yb", Yb }, { "Yb1", Yb1 }, { "Yb2", Yb2 }, { "Yb3", Yb3 }, { "Yb5", Yb5 }
         };
 
-        public void GetLTRebar(double[]  _LRebar, double[] _TRebar, double[] _MatRod)
-        {
-            LRebar = _LRebar;
-            TRebar = _TRebar;
-            
+        public void GetLTRebar( double[] _MatRod)
+        {                        
             int idx = -1;
             MatRod = new BSMatRod();
             MatRod.Rs = _MatRod[++idx]; // кг/см2

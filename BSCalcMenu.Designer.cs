@@ -82,7 +82,7 @@
             this.tableLayoutPanelMain.ColumnCount = 3;
             this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.57915F));
             this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.42085F));
-            this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 320F));
+            this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 322F));
             this.tableLayoutPanelMain.Controls.Add(this.btnUnitCalculator, 0, 3);
             this.tableLayoutPanelMain.Controls.Add(this.tableLayoutPanel4, 2, 1);
             this.tableLayoutPanelMain.Controls.Add(this.lblInfo, 0, 0);
@@ -109,7 +109,7 @@
             // 
             this.btnUnitCalculator.ImageKey = "CM.png";
             this.btnUnitCalculator.ImageList = this.imageList;
-            this.btnUnitCalculator.Location = new System.Drawing.Point(273, 418);
+            this.btnUnitCalculator.Location = new System.Drawing.Point(272, 418);
             this.btnUnitCalculator.Name = "btnUnitCalculator";
             this.btnUnitCalculator.Size = new System.Drawing.Size(25, 22);
             this.btnUnitCalculator.TabIndex = 10;
@@ -151,7 +151,7 @@
             this.tableLayoutPanel4.Controls.Add(this.btnRFiberTensileStrength, 0, 7);
             this.tableLayoutPanel4.Controls.Add(this.btnBeamDeflection, 0, 8);
             this.tableLayoutPanel4.Controls.Add(this.btnEfib, 0, 4);
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(536, 29);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(534, 29);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 9;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 21.00457F));
@@ -277,7 +277,7 @@
             // 
             this.lblExpertise.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblExpertise.AutoSize = true;
-            this.lblExpertise.Location = new System.Drawing.Point(273, 6);
+            this.lblExpertise.Location = new System.Drawing.Point(272, 6);
             this.lblExpertise.Name = "lblExpertise";
             this.lblExpertise.Size = new System.Drawing.Size(70, 13);
             this.lblExpertise.TabIndex = 1;
@@ -287,7 +287,7 @@
             // 
             this.lblLocalStrength.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblLocalStrength.AutoSize = true;
-            this.lblLocalStrength.Location = new System.Drawing.Point(536, 6);
+            this.lblLocalStrength.Location = new System.Drawing.Point(534, 6);
             this.lblLocalStrength.Name = "lblLocalStrength";
             this.lblLocalStrength.Size = new System.Drawing.Size(109, 13);
             this.lblLocalStrength.TabIndex = 2;
@@ -295,7 +295,7 @@
             // 
             // btnUnits
             // 
-            this.btnUnits.Location = new System.Drawing.Point(273, 387);
+            this.btnUnits.Location = new System.Drawing.Point(272, 387);
             this.btnUnits.Name = "btnUnits";
             this.btnUnits.Size = new System.Drawing.Size(109, 24);
             this.btnUnits.TabIndex = 4;
@@ -322,7 +322,7 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(262, 332);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(261, 332);
             this.tableLayoutPanel2.TabIndex = 5;
             // 
             // btnFiberClass
@@ -330,7 +330,7 @@
             this.btnFiberClass.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnFiberClass.Location = new System.Drawing.Point(3, 3);
             this.btnFiberClass.Name = "btnFiberClass";
-            this.btnFiberClass.Size = new System.Drawing.Size(256, 49);
+            this.btnFiberClass.Size = new System.Drawing.Size(255, 49);
             this.btnFiberClass.TabIndex = 0;
             this.btnFiberClass.Text = "Класс фибробетона";
             this.btnFiberClass.UseVisualStyleBackColor = true;
@@ -341,7 +341,7 @@
             this.btnRebarClass.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnRebarClass.Location = new System.Drawing.Point(3, 58);
             this.btnRebarClass.Name = "btnRebarClass";
-            this.btnRebarClass.Size = new System.Drawing.Size(256, 49);
+            this.btnRebarClass.Size = new System.Drawing.Size(255, 49);
             this.btnRebarClass.TabIndex = 1;
             this.btnRebarClass.Text = "Класс арматуры";
             this.btnRebarClass.UseVisualStyleBackColor = true;
@@ -352,7 +352,7 @@
             this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.button5.Location = new System.Drawing.Point(3, 223);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(256, 49);
+            this.button5.Size = new System.Drawing.Size(255, 49);
             this.button5.TabIndex = 4;
             this.button5.Text = "Предельные прогибы";
             this.button5.UseVisualStyleBackColor = true;
@@ -362,7 +362,7 @@
             this.button6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.button6.Location = new System.Drawing.Point(3, 278);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(256, 51);
+            this.button6.Size = new System.Drawing.Size(255, 51);
             this.button6.TabIndex = 5;
             this.button6.Text = "Класс фибры";
             this.button6.UseVisualStyleBackColor = true;
@@ -372,7 +372,7 @@
             this.btnBetonClass.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnBetonClass.Location = new System.Drawing.Point(3, 168);
             this.btnBetonClass.Name = "btnBetonClass";
-            this.btnBetonClass.Size = new System.Drawing.Size(256, 49);
+            this.btnBetonClass.Size = new System.Drawing.Size(255, 49);
             this.btnBetonClass.TabIndex = 2;
             this.btnBetonClass.Text = "Класс бетона-матрицы";
             this.btnBetonClass.UseVisualStyleBackColor = true;
@@ -383,7 +383,7 @@
             this.btnCoefY.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnCoefY.Location = new System.Drawing.Point(3, 113);
             this.btnCoefY.Name = "btnCoefY";
-            this.btnCoefY.Size = new System.Drawing.Size(256, 49);
+            this.btnCoefY.Size = new System.Drawing.Size(255, 49);
             this.btnCoefY.TabIndex = 3;
             this.btnCoefY.Text = "Коэффициенты условий работы";
             this.btnCoefY.UseVisualStyleBackColor = true;
@@ -399,7 +399,7 @@
             this.tableLayoutPanel3.Controls.Add(this.btnBeamDefl, 0, 5);
             this.tableLayoutPanel3.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.label2, 0, 2);
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(273, 29);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(272, 29);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 6;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
@@ -408,7 +408,7 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(256, 332);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(255, 332);
             this.tableLayoutPanel3.TabIndex = 6;
             // 
             // btnStaticEquilibrium
@@ -416,7 +416,7 @@
             this.btnStaticEquilibrium.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnStaticEquilibrium.Location = new System.Drawing.Point(3, 58);
             this.btnStaticEquilibrium.Name = "btnStaticEquilibrium";
-            this.btnStaticEquilibrium.Size = new System.Drawing.Size(250, 49);
+            this.btnStaticEquilibrium.Size = new System.Drawing.Size(249, 49);
             this.btnStaticEquilibrium.TabIndex = 0;
             this.btnStaticEquilibrium.Text = "Статическое равновесие";
             this.btnStaticEquilibrium.UseVisualStyleBackColor = true;
@@ -427,7 +427,7 @@
             this.btnNonlinearDeform.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnNonlinearDeform.Location = new System.Drawing.Point(3, 168);
             this.btnNonlinearDeform.Name = "btnNonlinearDeform";
-            this.btnNonlinearDeform.Size = new System.Drawing.Size(250, 49);
+            this.btnNonlinearDeform.Size = new System.Drawing.Size(249, 49);
             this.btnNonlinearDeform.TabIndex = 1;
             this.btnNonlinearDeform.Text = "Нелинейная деформационная модель";
             this.btnNonlinearDeform.UseVisualStyleBackColor = true;
@@ -438,7 +438,7 @@
             this.btnBeamCalc.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnBeamCalc.Location = new System.Drawing.Point(3, 223);
             this.btnBeamCalc.Name = "btnBeamCalc";
-            this.btnBeamCalc.Size = new System.Drawing.Size(250, 49);
+            this.btnBeamCalc.Size = new System.Drawing.Size(249, 49);
             this.btnBeamCalc.TabIndex = 2;
             this.btnBeamCalc.Text = "Экспертиза балки";
             this.btnBeamCalc.UseVisualStyleBackColor = true;
@@ -449,7 +449,7 @@
             this.btnBeamDefl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnBeamDefl.Location = new System.Drawing.Point(3, 278);
             this.btnBeamDefl.Name = "btnBeamDefl";
-            this.btnBeamDefl.Size = new System.Drawing.Size(250, 51);
+            this.btnBeamDefl.Size = new System.Drawing.Size(249, 51);
             this.btnBeamDefl.TabIndex = 3;
             this.btnBeamDefl.Text = "Прогиб балки";
             this.btnBeamDefl.UseVisualStyleBackColor = true;
@@ -478,7 +478,7 @@
             // btnClose
             // 
             this.btnClose.Dock = System.Windows.Forms.DockStyle.Left;
-            this.btnClose.Location = new System.Drawing.Point(536, 387);
+            this.btnClose.Location = new System.Drawing.Point(534, 387);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(120, 24);
             this.btnClose.TabIndex = 3;
@@ -511,11 +511,12 @@
             // 
             this.btnSectionDraw.ImageKey = "Icons.png";
             this.btnSectionDraw.ImageList = this.imageList;
-            this.btnSectionDraw.Location = new System.Drawing.Point(536, 418);
+            this.btnSectionDraw.Location = new System.Drawing.Point(534, 418);
             this.btnSectionDraw.Name = "btnSectionDraw";
             this.btnSectionDraw.Size = new System.Drawing.Size(25, 22);
             this.btnSectionDraw.TabIndex = 9;
             this.btnSectionDraw.UseVisualStyleBackColor = true;
+            this.btnSectionDraw.Visible = false;
             this.btnSectionDraw.Click += new System.EventHandler(this.btnSectionDraw_Click);
             // 
             // flowLayoutPanel1

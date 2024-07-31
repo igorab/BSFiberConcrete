@@ -10,7 +10,9 @@ namespace BSFiberConcrete.CalcGroup2
 {
     public partial class BSCalcNDM
     {
-
+        /// <summary>
+        /// Массивы координат продольной арматуры
+        /// </summary>        
         public int InitReinforcement(double _y0 = 0, double _z0 = 0 )
         {
             // количество элементов арматуры
@@ -31,7 +33,6 @@ namespace BSFiberConcrete.CalcGroup2
             m = As.Count;
 
             return m;
-
         }
 
         /// <summary>
@@ -84,24 +85,21 @@ namespace BSFiberConcrete.CalcGroup2
 
             return n1+n2+n3;
         }
-
+        
         // кольцевое сечение
         private int InitRingSection(double _r1, double _R2)
-        {
-            int n = 0;            
-            if (r1 >= R2) throw BSBeam_Ring.RadiiError();
-
+        {            
+            if (r1 >= R2) throw BSBeam_Ring.RadiiError();              
+            /*
             BSMesh.Center = new TriangleNet.Geometry.Point(0, 0);
             _ = BSMesh.GenerateRing(_R2, _r1, false);
-
             Tri.Mesh = BSMesh.Mesh;
+            */
             List<object> Tr = Tri.CalculationScheme();
-           
-            var triAreas = Tri.triAreas; // площади треугольников
-            var triCGs = Tri.triCGs; // ц.т. треугольников
-
-            n = triAreas.Count;
-
+            // площади треугольников
+            var triAreas = Tri.triAreas;
+            // ц.т. треугольников
+            var triCGs = Tri.triCGs;             
             //заполнить массив площадей элементов            
             foreach (var _area in triAreas)
                 Ab.Add(_area);
@@ -113,8 +111,8 @@ namespace BSFiberConcrete.CalcGroup2
                 y0b.Add(triCG.X);
                 z0b.Add(triCG.Y);
             }
-                                           
-            return n;
+            
+            return triAreas.Count; 
         }
 
     }

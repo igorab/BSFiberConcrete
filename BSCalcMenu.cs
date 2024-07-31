@@ -207,12 +207,8 @@ namespace BSCalcMenu
 
             CBAnsDes.MDIMain mDIMain = new MDIMain();
 
-
-            //appl.DoCreateMainForm(mDIMain);
-
-            
+            //appl.DoCreateMainForm(mDIMain);            
             mDIMain.ShowDialog();
-
         }
 
 

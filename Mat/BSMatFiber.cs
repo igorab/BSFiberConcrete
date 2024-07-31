@@ -257,6 +257,12 @@ namespace BSFiberConcrete
             return sgm;
         }
 
+
+        public static decimal NumEps_fbt3(decimal _Rfbt2n, decimal _Rfbt3n)
+        {
+            return -0.02m + 0.0125m * (_Rfbt2n / _Rfbt3n - 0.5m);
+        }
+
         public BSMatFiber()
         {
         }
