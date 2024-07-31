@@ -405,7 +405,7 @@ namespace BSFiberConcrete
             Es = MatRebar.Es;
             ///
             Efb = MatFiber.Efb;
-            R_fbt_ser = MatFiber.Rfbt;
+            R_fbt_ser = MatFiber.Rfb_ser;
 
             
             ///
@@ -493,7 +493,7 @@ namespace BSFiberConcrete
 
 
 
-            double epsilon_fb1_red = 0.00015;
+            double epsilon_fb1_red = 0.0015;
             double epslion_fbt2 = 0.004;
 
             double d_s = 12;
@@ -509,8 +509,7 @@ namespace BSFiberConcrete
             double Mu_fv = 0.0174;
 
 
-            //R_fb_n = MatFiber.Rfbn;
-            double R_fb_n = 300;
+            double R_fb_n = MatFiber.Rfbn;
 
 
             // Приведенный модуль деформации сжатого стальфибробетона, учитьывающий неупругие деформации сжатого стальффиброрбетона
@@ -526,13 +525,15 @@ namespace BSFiberConcrete
 
 
             double b;
+            double h;
             double h_0;
 
             if (typeOfBeamSection == BeamSection.Rect)
             {
                 BSBeam_Rect tmpBeam = (BSBeam_Rect)Beam;
                 b = tmpBeam.b;
-                h_0 = tmpBeam.h;
+                h = tmpBeam.h;
+                h_0 = h - a_1;
 
 
 
@@ -540,6 +541,7 @@ namespace BSFiberConcrete
             else
             {
                 b = 0;
+                h = 0;
                 h_0 = 0;
             }
             double Mu_s = A_s / (b * h_0);
@@ -548,22 +550,21 @@ namespace BSFiberConcrete
 
             // для каждого типа сечени своя формаула
             // Высота сжатой зоны
-            double Xm = (h_0 / (1 - alpha_fbt)) * (Math.Sqrt(Math.Pow(Mu_s * alpha_s2 + Mu_1s * alpha_s1 + alpha_fbt, 2) +
+            double Xm = (h_0 / (1 - alpha_fbt)) * ((Math.Sqrt(Math.Pow(Mu_s * alpha_s2 + Mu_1s * alpha_s1 + alpha_fbt, 2) +
                 (1 - alpha_fbt) * (2 * Mu_s * alpha_s2 + 2 * Mu_1s * alpha_s1 * (a_1 / h_0) + alpha_fbt))) -
-                (Mu_s * alpha_s2 + Mu_1s * alpha_s1 + alpha_fbt);
+                (Mu_s * alpha_s2 + Mu_1s * alpha_s1 + alpha_fbt));
             // формула 6.140
 
             double y_c = Xm; 
 
             
-            // В ДВУХ ФОРМУЛАХ НИЖЕ ДОЛЖНО БЫТЬ h  вместо h_0 !!!!
             // момент инерции сжатой зоны
-            double I_fb = b * Math.Pow(y_c, 3) / 12 + b * y_c * Math.Pow(h_0 / 2 + y_c / 2,2);
+            double I_fb = b * Math.Pow(y_c, 3) / 12 + b * y_c * Math.Pow(h / 2 - y_c / 2,2);
             // момент инерции растянутой зоны
-            double I_fbt = b * Math.Pow(h_0 - y_c, 3) / 12 + b * (h_0 - y_c)  * Math.Pow(h_0 / 2 + ( h_0 - y_c) / 2, 2);
+            double I_fbt = b * Math.Pow(h - y_c, 3) / 12 + b * (h - y_c)  * Math.Pow(h / 2 - ( h - y_c) / 2, 2);
 
             double I_1s = A_1s * Math.Pow(y_c - a_1, 2);
-            double I_s = A_s * Math.Pow(h_0 - y_c - a, 2); //  В ФОРМУЛЕ НУЖНО ИСПОЛЬЗОВАТЬ h, а не h_0 !!!!
+            double I_s = A_s * Math.Pow(h - y_c - a, 2);
             // момент инерции
             I_red = I_fb + I_fbt * alpha_fbt + I_s * alpha_s2 + I_1s * alpha_s1;
 
@@ -624,6 +625,8 @@ namespace BSFiberConcrete
             resultTable.Columns.Add("Параметр");
             resultTable.Columns.Add("Значение");
             resultTable.Columns.Add("Ед. Измерения");
+
+
         }
 
 

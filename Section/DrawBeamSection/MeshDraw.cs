@@ -1,4 +1,5 @@
 ﻿using BSFiberConcrete.Section.DrawBeamSection;
+using ScottPlot;
 using ScottPlot.WinForms;
 using System;
 using System.Collections.Generic;
@@ -72,6 +73,7 @@ namespace BSFiberConcrete
         public FormsPlot CreatePLot()
         {
             FormsPlot formsPlt = new FormsPlot() { Dock = DockStyle.Fill };
+            formsPlt.Plot.Axes.SquareUnits(); // 
             Random r = new Random();
             foreach (Triangle tr in TriangleMesh.Triangles)
             {
@@ -103,7 +105,7 @@ namespace BSFiberConcrete
         /// <param name="maxTension">Предельное значение напряжения</param>
         /// <param name="minTension">Предельное значение напряжения</param>
         /// <returns></returns>
-        public FormsPlot PaintSectionMash(List<double> tension, double maxTension, double minTension)
+        public FormsPlot PaintSectionMesh(List<double> tension, double maxTension, double minTension)
         {
             FormsPlot formsPlt = new FormsPlot() { Dock = DockStyle.Fill };
             for ( int i = 0; i < TriangleMesh.Triangles.Count; i++)
@@ -127,6 +129,8 @@ namespace BSFiberConcrete
                 else
                     tmpPolygon.FillColor = ScottPlot.Colors.Green;
             }
+
+            formsPlt.Plot.Axes.SquareUnits(); // 
             _formsPlot = formsPlt;
             return formsPlt;
         }

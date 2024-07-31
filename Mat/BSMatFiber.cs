@@ -257,10 +257,48 @@ namespace BSFiberConcrete
             return sgm;
         }
 
-
-        public static decimal NumEps_fbt3(decimal _Rfbt2n, decimal _Rfbt3n)
+        /// <summary>
+        /// формула из 5.6 СП360
+        /// </summary>
+        /// <param name="_Rfbt2"></param>
+        /// <param name="_Rfbt3"></param>
+        /// <returns></returns>
+        public static decimal NumEps_fbt3(decimal _Rfbt2, decimal _Rfbt3)
         {
-            return -0.02m + 0.0125m * (_Rfbt2n / _Rfbt3n - 0.5m);
+            if (_Rfbt2 == 0 || _Rfbt3 == 0)
+                return 0;
+            // важно, чтобы _Rfbt3 / _Rfbt2 < 2
+            return 0.02m - 0.0125m * (_Rfbt3 / _Rfbt2 - 0.5m);
+        }
+
+        /// <summary>
+        /// из пункта 6.1.20 СП63
+        /// </summary>
+        /// <param name="_Rfb"></param>
+        /// <param name="_Efb"></param>
+        /// <returns></returns>
+        public static decimal NumEps_fb1(decimal _Rfb, decimal _Efb)
+        {
+            if (_Rfb == 0 || _Efb == 0)
+                return 0;
+
+            decimal R1 = _Rfb * 0.6m;
+            return R1 / _Efb;
+        }
+
+
+        /// <summary>
+        /// Формула 5.6 СП360
+        /// </summary>
+        /// <param name="_Rfbt"></param>
+        /// <param name="_Efb"></param>
+        /// <returns></returns>
+        public static decimal NumEps_fbt0(decimal _Rfbt, decimal _Efb)
+        {
+            if (_Rfbt == 0 || _Efb == 0)
+                return 0;
+
+            return _Rfbt / _Efb;
         }
 
         public BSMatFiber()
