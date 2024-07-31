@@ -141,7 +141,7 @@ namespace BSFiberConcrete
         protected double Ab;
         //поперечная сила
         protected double Q;
-              
+        protected double Qy;
         // параметры продольной арматуры
         protected double[] l_rebar;
         // параметры поперечной арматуры
@@ -208,7 +208,9 @@ namespace BSFiberConcrete
             {
                 fiberCalc = new BSFiberCalc_MNQ_Ring();
             }
-            else if (BeamSection.IBeam == _BeamSection)
+            else if (BeamSection.IBeam == _BeamSection ||
+                     BeamSection.TBeam == _BeamSection ||
+                     BeamSection.LBeam == _BeamSection)                     
             {
                 fiberCalc = new BSFiberCalc_MNQ_IT();
             }
@@ -242,7 +244,7 @@ namespace BSFiberConcrete
             t_rebar = _t_rebar;
             
             // Шаг поперечной арматуры
-            Rebar.s_w = _t_rebar[1];
+            //Rebar.s_w = _t_rebar[1];
         }
 
         /// <summary>
@@ -705,8 +707,9 @@ namespace BSFiberConcrete
             N = m_Efforts["N"];
 
             // Поперечная сила
-            Q = m_Efforts["Q"];        
-            
+            Q = m_Efforts["Q"];
+            Qy = m_Efforts["Qy"];
+
             //Момент от действия постянных и длительных нагрузок нагрузок
             Ml1toM1 = m_Efforts["Ml"];
 

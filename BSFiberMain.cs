@@ -833,11 +833,11 @@ namespace BSFiberConcrete
         /// <summary>
         ///  Получить данные по усилиям с формы
         /// </summary>
-        /// <param name="MNQ"></param>
+        /// <param name="_MNQ"></param>
         /// <exception cref="Exception"></exception>
-        private void GetEffortsFromForm(out Dictionary<string, double> MNQ)
+        private void GetEffortsFromForm(out Dictionary<string, double> _MNQ)
         {
-            MNQ = new Dictionary<string, double>();
+            _MNQ = new Dictionary<string, double>();
 
             string[] F = new string[] { "Mx", "My", "N", "Q", "Ml", "eN" };
             DataGridViewRowCollection rows = gridEfforts.Rows;
@@ -846,16 +846,16 @@ namespace BSFiberConcrete
             for (int i = 0; i < F.Length; i++)
             {
                 var x = Convert.ToDouble(row.Cells[i].Value);
-                MNQ.Add(F[i], x);
+                _MNQ.Add(F[i], x);
             }
 
-            if (MNQ.Count == 0)
+            if (_MNQ.Count == 0)
                 throw new Exception("Не заданы усилия");
 
-            MNQ["Ml"] = (double)num_Ml1_M1.Value;
-            MNQ["eN"] = (double)num_eN.Value;
-            MNQ["e0"] = (double)numRandomEccentricity.Value;
-
+            _MNQ["Qy"] = 0;
+            _MNQ["Ml"] = (double)num_Ml1_M1.Value;
+            _MNQ["eN"] = (double)num_eN.Value;
+            _MNQ["e0"] = (double)numRandomEccentricity.Value;
         }
 
         /// <summary>
