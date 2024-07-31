@@ -16,6 +16,7 @@ using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using BSFiberConcrete.Control;
 using BSBeamCalculator;
 using BSFiberConcrete.CalcGroup2;
+using MathNet.Numerics;
 
 namespace BSFiberConcrete
 {
@@ -187,7 +188,6 @@ namespace BSFiberConcrete
                 num_a1.Value = (decimal)m_Iniv["_a_1"];
 
                 numEps_fb2.Value = 0.0042M;
-                numEps_fbt3.Value = 0.006M;
 
                 CalcTypeShow();
             }
@@ -419,7 +419,9 @@ namespace BSFiberConcrete
         }
 
         /// <summary>
-        /// Расчет прочности сечения на действие момента
+        /// Расчеты стельфибробетона по предельным состояниям второй группы
+        /// 1) Расчет предельного момента образования трещин
+        /// 2) Расчет ширины раскрытия трещины
         /// </summary>        
         private void FiberCalculate_Cracking()
         {
@@ -427,13 +429,8 @@ namespace BSFiberConcrete
             bool calcOk = false;
             try
             {
-                // центр тяжести сечения
-                TriangleNet.Geometry.Point CG = new TriangleNet.Geometry.Point(0.0, 0.0);
-
-                DeformDiagramType deformDiagramType = (DeformDiagramType)cmbDeformDiagram.SelectedIndex;
-                DeformMaterialType deformMaterialType = (DeformMaterialType)cmbTypeMaterial.SelectedIndex;
-
                 BSMatFiber beamMaterial;
+
 
                 // класс фибробетона (бетона) на сжатие
                 string cBt_class = cmbBfn.Text;
@@ -481,34 +478,11 @@ namespace BSFiberConcrete
                 double c_h = bsBeam.Height;
                 m_GeomParams = new Dictionary<string, double> { { "b, см", c_b }, { "h, см", c_h } };
 
-                //смещение начала координат            
-                double dX0, dY0;
-
-                // координаты ц.т. сечения, если т. 0 - левый нижний угол
-                (CG.X, CG.Y) = bsBeam.CG();
-
-
-
-
-
-
-
                 BSFiberCalc_Cracking calc_Cracking = new BSFiberCalc_Cracking(_Mx: c_Mx, _My: c_My, _N: c_N);
                 //calc_Cracking.DeformDiagram = deformDiagramType;
                 //calc_Cracking.DeformMaterialType = deformMaterialType;
                 calc_Cracking.Beam = bsBeam;
                 calc_Cracking.typeOfBeamSection = m_BeamSection;
-
-
-                //GenerateMesh(ref CG); // покрыть сечение сеткой
-                //
-                //calc_Cracking.CG = CG;
-                //calc_Cracking.triAreas = triAreas;
-                //calc_Cracking.triCGs = triCGs;
-
-                // Начало координат:
-                //dX0 = CG.X;
-                //dY0 = CG.Y;
 
                 // задать тип арматуры
                 calc_Cracking.MatRebar = new BSMatRod(cEs)
@@ -562,60 +536,6 @@ namespace BSFiberConcrete
                 calc_Cracking.ShowResult();
 
 
-
-                // old
-
-                //// определяется расчетный класс в соответсвии с задаными сечеением
-                //// Также определяется арматуры
-
-                //bsCalc = BSFiberCalculation.construct(m_BeamSection, useReinforcement);
-
-                //var beamSection = BSBeam.construct(m_BeamSection);
-
-                //BSFiberCalc_Cracking bsCracing = new BSFiberCalc_Cracking();
-
-                ////bsCracing.MatFiber = m_MatFiber;
-                ////bsCracing.m_BeamSectionType = m_BeamSection;
-                ////bsCracing.m_beamSection = beamSection; // может потребоваться приведение
-
-                //// Переопределение переменной bsCalc с учетом продольной арматуры, при неаличии арматуры
-                //// не точно ?
-                ////InitRebar(bsCalc);
-
-
-
-
-                //// Почему 0?
-                //double[] prms = m_BSLoadData.Params;
-                //// ну ладно
-                //// Некоторые Rfb и Y
-                //InitUserParams(prms);
-
-                //// определяются атрибуты расчетного класса, заданные пользователем на форме 
-                //bsCracing.GetParams(prms);
-                //// Определяются размеры сечения и длина балки.
-                //double[] testBeamSize = BeamSizes();
-                ////bsCalc.GetSize()
-
-                ////bsCalc.Efforts = new Dictionary<string, double> { { "My", _M } };
-                ////InitBeamLength();
-                ////calcOk = bsCalc.Calculate();
-
-                //var bsBeam2 = BSBeam.construct(m_BeamSection);
-                //double[] beam_sizes2 = BeamSizes(10);
-                //bsBeam.GetSizes(beam_sizes2);
-
-                ////calcOk = bsCracing.Calculate();
-
-                //m_PhysParams = bsCalc.PhysParams;
-                //m_Coeffs = bsCalc.Coeffs;
-                //m_Efforts = bsCalc.Efforts;
-                //m_GeomParams = bsCalc.GeomParams();
-                //m_CalcResults = bsCalc.Results();
-                //m_Message = bsCalc.Msg;
-                //TODO need refactoring - параметры с описанием
-                //m_PhysParams = bsCalc.PhysicalParameters();
-
             }
             catch (Exception _e)
             {
@@ -648,6 +568,7 @@ namespace BSFiberConcrete
             //}
 
         }
+
 
         /// <summary>
         ///  Сформировать отчет
@@ -805,9 +726,7 @@ namespace BSFiberConcrete
                 {
                     Elements fib = getQuery?.First();
 
-                    double rfbt3n = BSHelper.MPA2kgsm2(fib.Rfbt3n);
-
-                    numRfbt3n.Value = (decimal)rfbt3n;
+                    numRfbt3n.Value = Convert.ToDecimal(BSHelper.MPA2kgsm2(fib.Rfbt3n));
                     numRfbt2n.Value = Convert.ToDecimal(BSHelper.MPA2kgsm2(fib.Rfbt2n));
 
                     numYft.Value = Convert.ToDecimal(fib?.Yft);
@@ -1649,28 +1568,30 @@ namespace BSFiberConcrete
         {
             labelRfbtnMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numRfbt_n.Value));
 
-            numEps_fbt0.Value = numRfbt_n.Value / numE_fiber.Value;
+            numEps_fbt0.Value = BSMatFiber.NumEps_fbt0(numRfbt_n.Value, numE_fiber.Value);
             numEps_fbt1.Value = numEps_fbt0.Value + 0.0001m;
         }
 
         private void numRfb_n_ValueChanged(object sender, EventArgs e)
         {
             labelRfbnMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numRfb_n.Value));
-            numEps_fb1.Value = numRfb_n.Value * 0.6m / numE_fiber.Value;
+
+            numEps_fb1.Value = BSMatFiber.NumEps_fb1(numRfb_n.Value, numE_fiber.Value);
         }
 
         private void numRfbt2n_ValueChanged(object sender, EventArgs e)
         {
             labelRfbt2nMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numRfbt2n.Value));
-            // выражение домножено на -1
-            numEps_fbt3.Value = -0.02m + 0.0125m * (numRfbt2n.Value / numRfbt3n.Value - 0.5m);
+
+            // расчетные значения отличаются от нормативных коэфициентом numYft, поэтому можно передать нормативные значения
+            numEps_fbt3.Value = BSMatFiber.NumEps_fbt3(numRfbt2n.Value, numRfbt3n.Value);
         }
 
         private void numRfbt3n_ValueChanged(object sender, EventArgs e)
         {
             labelRfbt3nMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numRfbt3n.Value));
-            // выражение домножено на -1
-            numEps_fbt3.Value = -0.02m + 0.0125m * (numRfbt2n.Value / numRfbt3n.Value - 0.5m);             
+
+            numEps_fbt3.Value = BSMatFiber.NumEps_fbt3(numRfbt2n.Value, numRfbt3n.Value);
         }
 
         private void numRs_ValueChanged(object sender, EventArgs e)
@@ -2028,9 +1949,9 @@ namespace BSFiberConcrete
         
         private void numE_fiber_ValueChanged(object sender, EventArgs e)
         {
-            numEps_fbt0.Value = numRfbt_n.Value / numE_fiber.Value;
+            numEps_fbt0.Value = BSMatFiber.NumEps_fbt0(numRfbt_n.Value, numE_fiber.Value);
             numEps_fbt1.Value = numEps_fbt0.Value + 0.0001m;
-            numEps_fb1.Value = numRfb_n.Value * 0.6m / numE_fiber.Value;
+            numEps_fb1.Value = BSMatFiber.NumEps_fb1(numRfb_n.Value, numE_fiber.Value);
 
         }
 
@@ -2039,7 +1960,7 @@ namespace BSFiberConcrete
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void button1_Click(object sender, EventArgs e)
+        private void btnCalcCrack_Click(object sender, EventArgs e)
         {
             try
             {
