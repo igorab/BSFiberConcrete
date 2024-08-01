@@ -100,6 +100,9 @@ namespace BSFiberConcrete
         public string DN(Type _T, string _property) => _T.GetProperty(_property).GetCustomAttribute<DisplayNameAttribute>().DisplayName;
         #endregion
         public BetonType BetonType { get; set; }
+        /// <summary>
+        /// Свойства арматуры: продольная/поперечная
+        /// </summary>
         public Rebar Rebar {get; set;}
         public bool UseRebar { get; set; }
 
@@ -238,7 +241,7 @@ namespace BSFiberConcrete
         } 
         
         // параметры арматуры
-        public void GetRebarParams(double[] _l_rebar, double[] _t_rebar)
+        public void SetRebarParams(double[] _l_rebar, double[] _t_rebar)
         {
             l_rebar = _l_rebar;
             t_rebar = _t_rebar;
@@ -376,6 +379,10 @@ namespace BSFiberConcrete
         protected double Eta(double _N, double _Ncr) => 1 / (1 - _N / _Ncr);
 
 
+        /// <summary>
+        /// Расчет внецентренно сжатых сталефибробетонных
+        /// элементов прямоугольного сечения с рабочей арматурой
+        /// </summary>
         protected void Calculate_N_Rods()
         {                        
             string info;
@@ -466,6 +473,9 @@ namespace BSFiberConcrete
             }
         }
 
+        /// <summary>
+        /// Расчет элементов по полосе между наклонными сечениями
+        /// </summary>
         protected void CalculateQ()
         {
             m_ImgCalc = "Incline_Q.PNG";

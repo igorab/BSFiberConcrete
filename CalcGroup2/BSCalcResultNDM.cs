@@ -80,8 +80,17 @@ namespace BSFiberConcrete
         [DisplayName("Модуль упругости фибробетона Eb, [кгс/см2]")]
         public double Eb { get; set; }
 
-        [DisplayName("Нормативное сопротивление бетона на сжатие R,fbn, [кгс/см2]")]
+        [DisplayName("Нормативное сопротивление фибробетона на сжатие R,fbn, [кгс/см2]")]
         public double Rfbn { get; set; }
+
+        [DisplayName("Нормативное сопротивление фибробетона на растяжение R,fbtn, [кгс/см2]")]
+        public double Rfbtn { get; set; }
+
+        [DisplayName("Расчетное сопротивление фибробетона на сжатие R,fbn, [кгс/см2]")]
+        public double Rfb { get; set; }
+
+        [DisplayName("Расчетное сопротивление фибробетона на растяжение R,fbtn, [кгс/см2]")]
+        public double Rfbt { get; set; }
 
         [DisplayName("Модуль упругости арматуры Es, [кгс/см2]")]
         public double Es { get; set; }
@@ -128,7 +137,13 @@ namespace BSFiberConcrete
             {
                 return new Dictionary<string, double> {
                     { DN("Eb"),  Eb },
-                    { DN("Rfbn"), Rfbn },                    
+                    // норм
+                    { DN("Rfbn"), Rfbn },
+                    { DN("Rfbtn"), Rfbtn },
+                    // расч
+                    { DN("Rfb"), Rfb },
+                    { DN("Rfbt"), Rfbt },
+
                     { DN("Eps_fb_ult"), Eps_fb_ult},
 
                     { DN("Es"),    Es },
@@ -166,7 +181,12 @@ namespace BSFiberConcrete
             N = _D["N"];
 
             Eb = _D["Eb0"];
+            // норм
             Rfbn = _D["Rbcn"];
+            Rfbtn = _D["Rbtn"];
+            // расч
+            Rfb = _D["Rbc"];
+            Rfbt = _D["Rbt"];
 
             Es = _D["Es0"];
             Rs = _D["Rscn"];

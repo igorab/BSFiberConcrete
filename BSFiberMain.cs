@@ -17,6 +17,7 @@ using BSFiberConcrete.Control;
 using BSBeamCalculator;
 using BSFiberConcrete.CalcGroup2;
 using MathNet.Numerics;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace BSFiberConcrete
 {
@@ -791,6 +792,12 @@ namespace BSFiberConcrete
             _Rebar.A1s = (double)numAs1.Value;
             _Rebar.a = (double)num_a.Value;
             _Rebar.a1 = (double)num_a1.Value;
+
+            _Rebar.Es = (double)numEs.Value;
+            _Rebar.Esw = (double)numEsw.Value;
+
+            _Rebar.s_w = _Rebar.s_w;
+
         }
 
         /// <summary>
@@ -818,15 +825,14 @@ namespace BSFiberConcrete
                 Rebar rebar = (Rebar)m_BSLoadData.Rebar.Clone(); // из глобальных параметров                
                 //  введено пользователем
                 InitRebarValues(ref rebar);
-                rebar.Es = (double)numEs.Value;  //BSHelper.MPA2kgsm2(dbRebar.Es);
-
+                
                 // Армирование
                 fiberCalc.Rebar = rebar;
 
                 InitTRebar(out double[] t_r);
 
                 double[] l_rebar = new double[1]; // TODO rebar 
-                fiberCalc.GetRebarParams(l_rebar, t_r);
+                fiberCalc.SetRebarParams(l_rebar, t_r);
             }
 
             double[] prms = m_BSLoadData.Params;
@@ -921,8 +927,11 @@ namespace BSFiberConcrete
             t_rebar[2] = (double)numEs.Value;
         }
 
-        // Расчет элементов по полосе между наклонными сечениями
-        // Расчет на действие момента и поперечной силы
+        /// <summary>
+        ///  Расчет по методу статического равновесия           
+        ///  Расчет элементов по полосе между наклонными сечениями
+        ///  Расчет на действие момента и поперечной силы
+        /// </summary>        
         private void btnStaticEqCalc_Click(object sender, EventArgs e)
         {
             // Данные, введенные пользователем
@@ -2003,6 +2012,11 @@ namespace BSFiberConcrete
         private void cmbBetonClass_SelectedIndexChanged(object sender, EventArgs e)
         {
             SelectedFiberBetonValues();
+        }
+
+        private void tableLayoutPanelRebar_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

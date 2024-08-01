@@ -531,9 +531,6 @@
     </Content>
     <None Include="Resources\СК.jpg" />
     <None Include="Resources\СК1.jpg" />
-    <Content Include="Templates\FiberConcrete.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <None Include="Templates\BSBeton.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
