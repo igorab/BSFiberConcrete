@@ -24,7 +24,7 @@ namespace BSFiberConcrete
     {
         private DataTable m_Table { get; set; }
         public CalcType CalcType { get; set; }
-        
+
         private Dictionary<string, double> m_Iniv;
         private BSFiberCalculation bsCalc;
         private BSFiberLoadData m_BSLoadData { get; set; }
@@ -32,9 +32,9 @@ namespace BSFiberConcrete
         private BSMatFiber m_MatFiber;
         private List<Elements> FiberConcrete;
         private List<Beton> m_Beton;
-        private List<RebarDiameters> m_RebarDiameters;       
+        private List<RebarDiameters> m_RebarDiameters;
         //TODO должна быть удалена/переработана после объединения кода. Перменная для хранения нагрузок        
-        private Dictionary<string,double> test_Efforts;        
+        private Dictionary<string, double> test_Efforts;
         // Список, в котором хранится актуальные данные геометрии сечений
         private List<InitBeamSectionGeometry> m_InitBeamSectionsGeometry;
         public Dictionary<string, double> m_Beam { get; private set; }
@@ -46,7 +46,7 @@ namespace BSFiberConcrete
         private Dictionary<string, double> m_CalcResults;
         private Dictionary<string, double> m_CalcResults2Group;
         private List<string> m_Message;
-        
+
         private BeamSection m_BeamSection { get; set; }
 
         // Mesh generation
@@ -55,7 +55,7 @@ namespace BSFiberConcrete
 
         // координаты центра тяжести элементов (треугольников)
         private List<TriangleNet.Geometry.Point> triCGs;
-        
+
         public BSFiberMain()
         {
             InitializeComponent();
@@ -67,7 +67,7 @@ namespace BSFiberConcrete
             {
                 btnStaticEqCalc.Visible = true;
                 btnCalc_Deform.Visible = false;
-                btnCalcCrack.Visible = false;                
+                btnCalcCrack.Visible = false;
                 gridEfforts.Columns["Mx"].Visible = false;
                 tabNDM.TabPages.Remove(tabPBeam);
             }
@@ -75,7 +75,7 @@ namespace BSFiberConcrete
             {
                 btnStaticEqCalc.Visible = false;
                 btnCalc_Deform.Visible = true;
-                btnCalcCrack.Visible = true;                
+                btnCalcCrack.Visible = true;
                 gridEfforts.Columns["Mx"].Visible = true;
                 tabNDM.TabPages.Remove(tabPBeam);
             }
@@ -86,12 +86,12 @@ namespace BSFiberConcrete
                 btnStaticEqCalc.Visible = false;
                 btnCalc_Deform.Visible = true;
                 btnCalcCrack.Visible = true;
-                
+
                 BeamCalculatorControl beamCalculatorControl = new BeamCalculatorControl(test_Efforts);
                 tabPBeam.Controls.Add(beamCalculatorControl);
             }
         }
-        
+
         // глобальные настройки
         private void BSFiberMain_Load(object sender, EventArgs e)
         {
@@ -121,8 +121,8 @@ namespace BSFiberConcrete
                 cmbFib_i.SelectedIndex = 0;
                 comboBetonType.SelectedIndex = 0;
                 cmbRebarClass.SelectedIndex = 1;
-                cmbDeformDiagram.SelectedIndex = (int)DeformDiagramType.D2Linear;
-                
+                cmbDeformDiagram.SelectedIndex = (int)DeformDiagramType.D3Linear;
+
                 m_Iniv = m_BSLoadData.ReadInitFromJson();
                 List<Efforts> eff = Lib.BSData.LoadEfforts();
                 if (eff.Count > 0)
@@ -139,7 +139,7 @@ namespace BSFiberConcrete
                 m_BSLoadData.ReadParamsFromJson();
                 m_MatFiber.e_b2 = m_BSLoadData.Beton2.eps_b2;
                 m_MatFiber.Efb = m_BSLoadData.Fiber.Efb; // TODO источником должно быть значение с формы.
-                
+
                 m_InitBeamSectionsGeometry = Lib.BSData.LoadBeamSectionGeometry(m_BeamSection);
                 numRandomEccentricity.Value = (decimal)m_BSLoadData.Fiber.e_tot;
 
@@ -177,11 +177,15 @@ namespace BSFiberConcrete
                     gridEfforts.Rows[0].Cells[i].Value = mnq[i];
                 }
 
+                //
+                // настройки из БД
+                Rebar dbRebar = m_Rebar.Where(x => x.ID == Convert.ToString(cmbRebarClass.SelectedItem))?.First();
+                numEs.Value = (decimal)BSHelper.MPA2kgsm2(dbRebar.Es);
+
                 double[] t_rebar = { m_Iniv["D_t"], m_Iniv["Qty_t"], m_Iniv["a_t"], m_Iniv["Cls_t"], m_Iniv["Coef_t"] }; // поперечная арматура               
-                
+
                 double[] long_rebar = { m_Iniv["D_l"], m_Iniv["Qty_l"], m_Iniv["a_l"], m_Iniv["Cls_l"], m_Iniv["Coef_l"] }; // продольная арматура
-                
-                                                               
+
                 numAs.Value = (decimal)m_Iniv["As"];
                 numAs1.Value = (decimal)m_Iniv["As1"];
                 num_a.Value = (decimal)m_Iniv["_a"];
@@ -217,18 +221,18 @@ namespace BSFiberConcrete
                 sz[idx] = _length;
             }
 
-            double bf=0, hf=0, bw, hw, b1f=0, h1f=0;
+            double bf = 0, hf = 0, bw, hw, b1f = 0, h1f = 0;
             if (m_BeamSection == BeamSection.TBeam)
             {
                 bw = sz[0]; hw = sz[1]; b1f = sz[2]; h1f = sz[3];
                 sz = new double[] { bf, hf, bw, hw, b1f, h1f, _length };
-            }            
+            }
             else if (m_BeamSection == BeamSection.LBeam)
             {
                 bf = sz[0]; hf = sz[1]; bw = sz[2]; hw = sz[3];
                 sz = new double[] { bf, hf, bw, hw, b1f, h1f, _length };
             }
-            
+
             return sz;
         }
 
@@ -251,16 +255,16 @@ namespace BSFiberConcrete
             }
             else if (m_BeamSection == BeamSection.Ring)
             {
-                _w = Math.Max( sz[0], sz[1]);
+                _w = Math.Max(sz[0], sz[1]);
                 _h = Math.Max(sz[0], sz[1]);
-                _area = Math.PI * Math.Pow(Math.Abs(sz[1] - sz[0]), 2)/4.0;
-            }            
-            else if (m_BeamSection == BeamSection.TBeam || m_BeamSection == BeamSection.IBeam || m_BeamSection == BeamSection.LBeam)            
+                _area = Math.PI * Math.Pow(Math.Abs(sz[1] - sz[0]), 2) / 4.0;
+            }
+            else if (m_BeamSection == BeamSection.TBeam || m_BeamSection == BeamSection.IBeam || m_BeamSection == BeamSection.LBeam)
             {
                 _w = Math.Max(sz[0], sz[4]);
                 _h = sz[1] + sz[3] + sz[5];
                 _area = sz[0] * sz[1] + sz[2] * sz[3] + sz[4] * sz[5];
-            }            
+            }
             else
             {
                 throw new Exception("Неопределен тип сечения");
@@ -303,25 +307,25 @@ namespace BSFiberConcrete
         /// <param name="_bsCalc"></param>
         private void InitRebar(BSFiberCalculation _bsCalc)
         {
-            double[] matRod = new double[] 
-            { 
+            double[] matRod = new double[]
+            {
                 (double) numRs.Value,
                 (double) numRsc.Value,
-                (double) numAs.Value, 
+                (double) numAs.Value,
                 (double) numAs1.Value,
-                (double) numEs.Value,                                                
-                (double) num_a.Value, 
-                (double) num_a1.Value 
+                (double) numEs.Value,
+                (double) num_a.Value,
+                (double) num_a1.Value
             };
 
             if (_bsCalc is BSFiberCalc_RectRods)
             {
                 BSFiberCalc_RectRods _bsCalcRods = (BSFiberCalc_RectRods)_bsCalc;
-                
+
                 InitTRebar(out double[] _t_rebar);
 
                 //TODO refactoring
-                _bsCalcRods.GetLTRebar( matRod);
+                _bsCalcRods.SetLTRebar(matRod);
             }
             else if (_bsCalc is BSFiberCalc_IBeamRods)
             {
@@ -330,19 +334,19 @@ namespace BSFiberConcrete
                 InitTRebar(out double[] _t_rebar);
 
                 //TODO refactoring
-                _bsCalcRods.GetLTRebar( matRod);
+                _bsCalcRods.GetLTRebar(matRod);
             }
         }
-        
+
         // Определение классов фибробетона по данным, введенным пользователем
         private void InitMatFiber()
-        {            
+        {
             // Сжатие Rfb
             Beton fb = Lib.BSQuery.BetonTableFind(cmbBfn.Text);
             // Растяжение Rfbt
             FiberBft fbt = (FiberBft)cmbBftn.SelectedItem;
 
-            m_BSLoadData.Fiber.Efib = (double) numE_fiber.Value;
+            m_BSLoadData.Fiber.Efib = (double)numE_fiber.Value;
 
             // сжатие:
             m_MatFiber.B = fb.B;
@@ -374,10 +378,10 @@ namespace BSFiberConcrete
                 bsCalc.GetParams(prms);
                 bsCalc.GetSize(BeamSizes());
                 bsCalc.Efforts = new Dictionary<string, double> { { "My", _M } };
-                
+
                 calcOk = bsCalc.Calculate();
 
-                m_PhysParams = bsCalc.PhysParams; 
+                m_PhysParams = bsCalc.PhysParams;
                 m_Coeffs = bsCalc.Coeffs;
                 m_Efforts = bsCalc.Efforts;
                 m_GeomParams = bsCalc.GeomParams();
@@ -612,8 +616,8 @@ namespace BSFiberConcrete
 
         // Прямоугольное сечение
         private void LoadRectangle()
-        {            
-            m_BeamSection = BeamSection.Rect ;
+        {
+            m_BeamSection = BeamSection.Rect;
             dataGridSection.DataSource = null;
 
             m_Table = FiberMainFormHelper.GetTableFromBeamSections(m_InitBeamSectionsGeometry, m_BeamSection);
@@ -640,7 +644,7 @@ namespace BSFiberConcrete
         {
             // TODO доработать использование переменных m_BeamSection и m_BeamSectionReport
             if (_T_L == 'T')
-            {                
+            {
                 m_BeamSection = BeamSection.TBeam;
                 dataGridSection.DataSource = null;
 
@@ -649,7 +653,7 @@ namespace BSFiberConcrete
                 picBeton.Image = global::BSFiberConcrete.Properties.Resources.TBeam;
             }
             else if (_T_L == 'L')
-            {             
+            {
                 m_BeamSection = BeamSection.LBeam;
                 dataGridSection.DataSource = null;
 
@@ -658,8 +662,8 @@ namespace BSFiberConcrete
                 picBeton.Image = global::BSFiberConcrete.Properties.Resources.LBeam;
             }
 
-            foreach (DataGridViewColumn column in dataGridSection.Columns) 
-                column.SortMode = DataGridViewColumnSortMode.NotSortable;             
+            foreach (DataGridViewColumn column in dataGridSection.Columns)
+                column.SortMode = DataGridViewColumnSortMode.NotSortable;
 
             picBeton.SizeMode = PictureBoxSizeMode.StretchImage;
         }
@@ -678,8 +682,8 @@ namespace BSFiberConcrete
 
         // кольцевое сечение
         private void btnRing_Click(object sender, EventArgs e)
-        {            
-            m_BeamSection = BeamSection.Ring; 
+        {
+            m_BeamSection = BeamSection.Ring;
             dataGridSection.DataSource = null;
 
             m_Table = FiberMainFormHelper.GetTableFromBeamSections(m_InitBeamSectionsGeometry, m_BeamSection);
@@ -692,14 +696,14 @@ namespace BSFiberConcrete
 
         // двутавровое сечение
         private void btnIBeam_Click(object sender, EventArgs e)
-        {            
+        {
             m_BeamSection = BeamSection.IBeam;
             dataGridSection.DataSource = null;
 
             m_Table = FiberMainFormHelper.GetTableFromBeamSections(m_InitBeamSectionsGeometry, m_BeamSection);
             dataGridSection.DataSource = m_Table;
 
-            foreach (DataGridViewColumn column in dataGridSection.Columns) {             
+            foreach (DataGridViewColumn column in dataGridSection.Columns) {
                 column.SortMode = DataGridViewColumnSortMode.NotSortable;
             }
 
@@ -752,11 +756,11 @@ namespace BSFiberConcrete
         /// <summary>
         ///  Получить данные по усилиям с формы
         /// </summary>
-        /// <param name="MNQ"></param>
+        /// <param name="_MNQ"></param>
         /// <exception cref="Exception"></exception>
-        private void GetEffortsFromForm(out Dictionary<string, double> MNQ)
+        private void GetEffortsFromForm(out Dictionary<string, double> _MNQ)
         {
-            MNQ = new Dictionary<string, double>();
+            _MNQ = new Dictionary<string, double>();
 
             string[] F = new string[] { "Mx", "My", "N", "Q", "Ml", "eN" };
             DataGridViewRowCollection rows = gridEfforts.Rows;
@@ -765,16 +769,16 @@ namespace BSFiberConcrete
             for (int i = 0; i < F.Length; i++)
             {
                 var x = Convert.ToDouble(row.Cells[i].Value);
-                MNQ.Add(F[i], x);
+                _MNQ.Add(F[i], x);
             }
 
-            if (MNQ.Count == 0)
+            if (_MNQ.Count == 0)
                 throw new Exception("Не заданы усилия");
 
-            MNQ["Ml"] = (double)num_Ml1_M1.Value;
-            MNQ["eN"] = (double)num_eN.Value;
-            MNQ["e0"] = (double)numRandomEccentricity.Value;
-
+            _MNQ["Qy"] = 0;
+            _MNQ["Ml"] = (double)num_Ml1_M1.Value;
+            _MNQ["eN"] = (double)num_eN.Value;
+            _MNQ["e0"] = (double)numRandomEccentricity.Value;
         }
 
         /// <summary>
@@ -811,16 +815,14 @@ namespace BSFiberConcrete
 
             if (_shear || _useRebar)
             {
-                Rebar rebar = (Rebar)m_BSLoadData.Rebar.Clone(); // из глобальных параметров
-                // настройки из БД
-                Rebar dbRebar = m_Rebar.Where(x => x.ID == Convert.ToString(cmbRebarClass.SelectedItem))?.First();
+                Rebar rebar = (Rebar)m_BSLoadData.Rebar.Clone(); // из глобальных параметров                
                 //  введено пользователем
                 InitRebarValues(ref rebar);
-                rebar.Es = BSHelper.MPA2kgsm2(dbRebar.Es);
+                rebar.Es = (double)numEs.Value;  //BSHelper.MPA2kgsm2(dbRebar.Es);
 
                 // Армирование
                 fiberCalc.Rebar = rebar;
-                
+
                 InitTRebar(out double[] t_r);
 
                 double[] l_rebar = new double[1]; // TODO rebar 
@@ -912,9 +914,13 @@ namespace BSFiberConcrete
         // поперечная арматура
         private void InitTRebar(out double[] t_rebar)
         {
-            t_rebar = new double[2] ;
+            t_rebar = new double[3];
+
+            t_rebar[0] = (double)numRsw.Value;
+            t_rebar[1] = (double)numRsc.Value;
+            t_rebar[2] = (double)numEs.Value;
         }
-        
+
         // Расчет элементов по полосе между наклонными сечениями
         // Расчет на действие момента и поперечной силы
         private void btnStaticEqCalc_Click(object sender, EventArgs e)
@@ -1221,9 +1227,9 @@ namespace BSFiberConcrete
                 fiberCalc_Deform.MatRebar = new BSMatRod(cEs)
                 {
                     RCls = cR_class,
-                    Rsn = (double) numRsn.Value,
+                    Rsn = (double)numRsn.Value,
                     Rs = cRs,
-                    Rsc = (double) numRsc.Value,
+                    Rsc = (double)numRsc.Value,
                     e_s0 = c_eps_s0,
                     e_s2 = c_eps_s2
                 };
@@ -1306,7 +1312,7 @@ namespace BSFiberConcrete
                 //
                 m_Efforts = fiberCalc_Deform.Efforts;
 
-                m_PhysParams = fiberCalc_Deform.PhysParams;                
+                m_PhysParams = fiberCalc_Deform.PhysParams;
                 // получить результат
                 m_CalcResults = fiberCalc_Deform.Results();
 
@@ -1335,7 +1341,7 @@ namespace BSFiberConcrete
                     DisplayNameAttribute attr = (DisplayNameAttribute)method.GetCustomAttributes(typeof(DisplayNameAttribute), true)[0];
                     value = attr.DisplayName;
                 }
-                catch 
+                catch
                 {
                     MessageBox.Show("Не задан атрибут DisplayName метода");
                 }
@@ -1477,7 +1483,7 @@ namespace BSFiberConcrete
                 MessageBox.Show(_e.Message);
             }
         }
-               
+
         private void btnCalcResults_Click(object sender, EventArgs e)
         {
             BSCalcResults bSCalcResults = new BSCalcResults();
@@ -1516,6 +1522,7 @@ namespace BSFiberConcrete
                     numRsc.Value = (decimal)BSHelper.MPA2kgsm2(rebar.Rsc);
                     numRsn.Value = (decimal)BSHelper.MPA2kgsm2(rebar.Rsn);
                     numRscn.Value = (decimal)BSHelper.MPA2kgsm2(rebar.Rsn);
+                    numEs.Value = (decimal)BSHelper.MPA2kgsm2(rebar.Es);
 
                     labelTypeDDRebar.Text = rebar.TypeDiagramm;
                     numEps_s_ult.Value = (decimal)rebar.Epsilon_s_ult;
@@ -1553,7 +1560,7 @@ namespace BSFiberConcrete
             cmbRebarDiameters.SelectedIndex = newSelectedIndex;
             #endregion          
         }
-                
+
         private void cmbTRebarClass_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
@@ -1597,7 +1604,9 @@ namespace BSFiberConcrete
         private void numRs_ValueChanged(object sender, EventArgs e)
         {
             labelRsMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numRs.Value));
-            numEpsilonS1.Value = numRs.Value / numEs.Value;
+
+            numEpsilonS1.Value = BSMatRod.NumEps_s1(numRs.Value, numEs.Value);
+            numEpsilonS0.Value = BSMatRod.NumEps_s0(numRs.Value, numEs.Value);
         }
 
         private void numRsw_ValueChanged(object sender, EventArgs e)
@@ -1639,7 +1648,7 @@ namespace BSFiberConcrete
         /// Покрыть сечение сеткой
         /// </summary>
         private string GenerateMesh(ref TriangleNet.Geometry.Point _CG)
-        {            
+        {
             string pathToSvgFile = "";
             double[] sz = BeamWidtHeight(out double b, out double h, out double area);
 
@@ -1668,13 +1677,13 @@ namespace BSFiberConcrete
                 pathToSvgFile = BSCalcLib.BSMesh.GenerateRectangle(rect);
                 Tri.Mesh = BSMesh.Mesh;
                 // сместить начало координат из левого нижнего угла в центр тяжести
-                Tri.Oxy = _CG; 
+                Tri.Oxy = _CG;
                 var xxTr = Tri.CalculationScheme();
             }
             else if (m_BeamSection == BeamSection.Ring)
             {
                 _CG = new TriangleNet.Geometry.Point(0, 0);
-                
+
                 double R = sz[1];
                 double r = sz[0];
                 if (r > R)
@@ -1684,17 +1693,17 @@ namespace BSFiberConcrete
                 pathToSvgFile = BSMesh.GenerateRing(R, r, true);
 
                 Tri.Mesh = BSMesh.Mesh;
-                var xxTr =  Tri.CalculationScheme();
+                var xxTr = Tri.CalculationScheme();
             }
             else if (T.HasFlag(m_BeamSection))
             {
                 List<PointF> pts;
                 BSSection.IBeam(sz, out pts, out PointF _center);
                 _CG = new TriangleNet.Geometry.Point(_center.X, _center.Y);
-                
+
                 pathToSvgFile = BSCalcLib.Tri.CreateIBeamContour(pts);
-                var xxTr = Tri.CalculationScheme();                
-            }            
+                var xxTr = Tri.CalculationScheme();
+            }
             else
             {
                 throw new Exception("Не задано сечение");
@@ -1726,7 +1735,7 @@ namespace BSFiberConcrete
 
                 TriangleNet.Geometry.Point cg = new TriangleNet.Geometry.Point();
                 pathToSvgFile = GenerateMesh(ref cg);
-               
+
                 Process.Start(new ProcessStartInfo { FileName = pathToSvgFile, UseShellExecute = true });
 
             }
@@ -1765,7 +1774,7 @@ namespace BSFiberConcrete
         private void btnCalcDeformDiagram_Click(object sender, EventArgs e)
         {
             string typeDiagram = cmbDeformDiagram.Text;
-            
+
             string typeMaterial = cmbTypeMaterial.Text;
 
             // сжатие
@@ -1776,7 +1785,7 @@ namespace BSFiberConcrete
             // растяжение
             double Rt_n = 0;
             double Rt2_n = 0;
-            double Rt3_n = 0; 
+            double Rt3_n = 0;
             double Et = 0;
             double et0 = 0;
             double et2 = 0;
@@ -1810,7 +1819,7 @@ namespace BSFiberConcrete
             }
             else if (typeMaterial == BSHelper.Rebar)
             {
-          
+
                 // Характеристики по растяжению
                 Rt_n = (double)numRs.Value;         // 
                 Et = (double)numEs.Value;           //
@@ -1818,7 +1827,7 @@ namespace BSFiberConcrete
                 et2 = (double)numEpsilonS2.Value;   //
 
                 // Характеристики по сжатию
-                R_n = (double)numRsc.Value;         
+                R_n = (double)numRsc.Value;
                 e0 = et0;
                 e2 = et2;
                 E = Et;
@@ -1834,7 +1843,7 @@ namespace BSFiberConcrete
             DataForDeformDiagram.E = new double[] { E, Et };
 
             DeformDiagram deformDiagram = new DeformDiagram();
-            deformDiagram.Show();           
+            deformDiagram.Show();
         }
 
         private void cmbWetAir_SelectedIndexChanged(object sender, EventArgs e)
@@ -1873,7 +1882,7 @@ namespace BSFiberConcrete
             InitBeamSectionGeometry beamSectionGeometry = FiberMainFormHelper.CreateBeamSectionsGeometry((DataTable)dataGridSection.DataSource, m_BeamSection);
             int index = FiberMainFormHelper.IndexOfSectionGeometry(m_InitBeamSectionsGeometry, m_BeamSection);
             m_InitBeamSectionsGeometry[index] = beamSectionGeometry;
-            
+
         }
 
         //
@@ -1886,21 +1895,23 @@ namespace BSFiberConcrete
                 GetEffortsFromForm(out Dictionary<string, double> MNQ);
                 Lib.BSData.SaveEfforts(new Efforts() { Id = 1, Mx = MNQ["Mx"], My = MNQ["My"], N = MNQ["N"], Q = MNQ["Q"], Ml = MNQ["Ml"], eN = MNQ["eN"] });
             }
-            catch (Exception _e) 
+            catch (Exception _e)
             {
                 MessageBox.Show(_e.Message);
             }
+        }
+
+        private void NumEsInit()
+        {
         }
         
         private void numEs_ValueChanged(object sender, EventArgs e)
         {
             labelEsMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numEs.Value));
-            numEpsilonS1.Value = numRs.Value/numEs.Value;
-        }
+            numEpsilonS1.Value = BSMatRod.NumEps_s1(numRs.Value, numEs.Value);
+            numEpsilonS0.Value = BSMatRod.NumEps_s0(numRs.Value, numEs.Value);
 
-        private void numEpsilonS1_ValueChanged(object sender, EventArgs e)
-        {
-            numEpsilonS0.Value = numEpsilonS1.Value + 0.002m;
+
         }
 
         private void BSFiberMain_Leave(object sender, EventArgs e)
@@ -1914,10 +1925,6 @@ namespace BSFiberConcrete
             
         }
 
-        private void numEpsilonS1_ValueChanged_1(object sender, EventArgs e)
-        {
-            numEpsilonS0.Value = numEpsilonS1.Value + 0.002m;
-        }
 
         /// <summary>
         /// СП360 6.1.25

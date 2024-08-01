@@ -162,5 +162,38 @@ namespace BSFiberConcrete
 
             return sgm;
         }
+
+
+
+        /// <summary>
+        /// формула по 6.2.15 из  СП63
+        /// </summary>
+        /// <param name="_Rs"></param>
+        /// <param name="_Es"></param>
+        /// <returns></returns>
+        public static decimal NumEps_s1(decimal _Rs, decimal _Es)
+        {
+            // Для трехлинейной диаграммы деформирования
+            if (_Rs == 0 || _Es == 0)
+                return 0;
+            
+            return _Rs * 0.9m  / _Es;
+        }
+
+
+        /// <summary>
+        /// формула 6.12 из  СП63
+        /// </summary>
+        /// <param name="_Rs"></param>
+        /// <param name="_Es"></param>
+        /// <returns></returns>
+        public static decimal NumEps_s0(decimal _Rs, decimal _Es)
+        {
+            // Для трехлинейной диаграммы деформирования
+            if (_Rs == 0 || _Es == 0)
+                return 0;
+
+            return NumEps_s1(_Rs, _Es) + 0.002m;
+        }
     }
 }

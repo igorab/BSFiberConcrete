@@ -50,7 +50,11 @@ namespace BSFiberConcrete
             { "Yft", Yft }, { "Yb", Yb }, { "Yb1", Yb1 }, { "Yb2", Yb2 }, { "Yb3", Yb3 }, { "Yb5", Yb5 }
         };
 
-        public void GetLTRebar( double[] _MatRod)
+        /// <summary>
+        /// получить параметы арматурных стержней
+        /// </summary>
+        /// <param name="_MatRod"></param>
+        public void SetLTRebar( double[] _MatRod)
         {                        
             int idx = -1;
             MatRod = new BSMatRod();
