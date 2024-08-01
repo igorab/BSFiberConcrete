@@ -62,6 +62,9 @@ namespace BSFiberConcrete
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Дизайн формы в зависимости от вида расчета
+        /// </summary>
         private void CalcTypeShow()
         {
             if (CalcType == CalcType.Static)
@@ -70,7 +73,8 @@ namespace BSFiberConcrete
                 btnCalc_Deform.Visible = false;
                 btnCalcCrack.Visible = false;
                 gridEfforts.Columns["Mx"].Visible = false;
-                tabNDM.TabPages.Remove(tabPBeam);
+                tabFiber.TabPages.Remove(tabPageNDM);
+                tabFiber.TabPages.Remove(tabPBeam);
             }
             else if (CalcType == CalcType.Nonlinear)
             {
@@ -78,11 +82,11 @@ namespace BSFiberConcrete
                 btnCalc_Deform.Visible = true;
                 btnCalcCrack.Visible = true;
                 gridEfforts.Columns["Mx"].Visible = true;
-                tabNDM.TabPages.Remove(tabPBeam);
+                tabFiber.TabPages.Remove(tabPBeam);
             }
             else if (CalcType == CalcType.BeamCalc)
             {
-                tabNDM.TabPages.Remove(tabStrength);
+                tabFiber.TabPages.Remove(tabStrength);
 
                 btnStaticEqCalc.Visible = false;
                 btnCalc_Deform.Visible = true;

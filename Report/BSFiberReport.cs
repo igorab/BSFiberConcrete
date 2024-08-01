@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using BSFiberConcrete.Properties;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Runtime.Remoting.Messaging;
 
 namespace BSFiberConcrete
 {
@@ -112,6 +113,24 @@ namespace BSFiberConcrete
             }            
         }
 
+        private double Rnd(double _v) => Math.Round( _v, 2);
+
+        // Конвертор единиц измерения
+        private string UConv(string _s, double _v)
+        {            
+            if (string.IsNullOrEmpty(_s))
+                return "";
+            else if (_s.Contains("кгс/см2") || _s.Contains("кг/см2"))
+                return $"{Rnd( BSHelper.Kgsm2MPa(_v))} МПа";
+            else if (_s.Contains("кгс*см") || _s.Contains("кг*см"))
+                return $"{Rnd(BSHelper.kgssm2kNsm(_v))} Кн*см";
+            else if (_s.Contains("[кгс]") || _s.Contains("[кг]"))
+                return $"{Rnd(BSHelper.Kgs2kN(_v))} Кн";
+
+            return "";
+        }
+
+
         /// <summary>
         /// Основная часть отчета
         /// </summary>        
@@ -126,6 +145,7 @@ namespace BSFiberConcrete
                     w.WriteLine("<tr>");
                     w.WriteLine($"<td width={bk}>{_pair.Key}</td>");
                     w.WriteLine($"<td width={bv} align=center>{Math.Round(_pair.Value, 4)} </td>");
+                    w.WriteLine($"<td width={bv} align=center>{UConv(_pair.Key, _pair.Value)} </td>");
                     w.WriteLine("</tr>");
                 }
                
@@ -173,6 +193,7 @@ namespace BSFiberConcrete
                     w.WriteLine("<tr>");
                     w.WriteLine($"<td width={bk}>{_pair.Key}</td>");
                     w.WriteLine($"<td width={bv} align=center>{_pair.Value} </td>");
+                    w.WriteLine($"<td width={bv} align=center>{UConv(_pair.Key, _pair.Value)} </td>");
                     w.WriteLine("</tr>");
                 }
                 w.WriteLine("</Table>");
@@ -197,9 +218,13 @@ namespace BSFiberConcrete
                     w.WriteLine($"<td width={bk}><b>{_pair.Key}</b></td>");
 
                     if (_pair.Value < 0.001)
-                        w.WriteLine($"<td width={bv} align=center colspan=2>{_pair.Value.ToString("E") } </td>");
+                        w.WriteLine($"<td width={bv} align=center colspan=2>{_pair.Value.ToString("E")} </td>");
                     else
+                    {
                         w.WriteLine($"<td width={bv} align=center colspan=2>{Math.Round(_pair.Value, 4)} </td>");
+                        w.WriteLine($"<td width={bv} align=center colspan=2>{UConv(_pair.Key, _pair.Value)} </td>");
+                    }
+
                     w.WriteLine("</tr>");
                 }
                 
