@@ -121,7 +121,7 @@ namespace BSFiberConcrete
                 cmbFib_i.SelectedIndex = 0;
                 comboBetonType.SelectedIndex = 0;
                 cmbRebarClass.SelectedIndex = 1;
-                cmbDeformDiagram.SelectedIndex = (int)DeformDiagramType.D2Linear;
+                cmbDeformDiagram.SelectedIndex = (int)DeformDiagramType.D3Linear;
 
                 m_Iniv = m_BSLoadData.ReadInitFromJson();
                 List<Efforts> eff = Lib.BSData.LoadEfforts();
@@ -1604,7 +1604,9 @@ namespace BSFiberConcrete
         private void numRs_ValueChanged(object sender, EventArgs e)
         {
             labelRsMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numRs.Value));
-            numEpsilonS1.Value = numRs.Value / numEs.Value;
+
+            numEpsilonS1.Value = BSMatRod.NumEps_s1(numRs.Value, numEs.Value);
+            numEpsilonS0.Value = BSMatRod.NumEps_s0(numRs.Value, numEs.Value);
         }
 
         private void numRsw_ValueChanged(object sender, EventArgs e)
@@ -1906,12 +1908,10 @@ namespace BSFiberConcrete
         private void numEs_ValueChanged(object sender, EventArgs e)
         {
             labelEsMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numEs.Value));
-            numEpsilonS1.Value = numRs.Value/numEs.Value;
-        }
+            numEpsilonS1.Value = BSMatRod.NumEps_s1(numRs.Value, numEs.Value);
+            numEpsilonS0.Value = BSMatRod.NumEps_s0(numRs.Value, numEs.Value);
 
-        private void numEpsilonS1_ValueChanged(object sender, EventArgs e)
-        {
-            numEpsilonS0.Value = numEpsilonS1.Value + 0.002m;
+
         }
 
         private void BSFiberMain_Leave(object sender, EventArgs e)
@@ -1925,10 +1925,6 @@ namespace BSFiberConcrete
             
         }
 
-        private void numEpsilonS1_ValueChanged_1(object sender, EventArgs e)
-        {
-            numEpsilonS0.Value = numEpsilonS1.Value + 0.002m;
-        }
 
         /// <summary>
         /// СП360 6.1.25

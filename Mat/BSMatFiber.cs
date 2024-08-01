@@ -258,7 +258,7 @@ namespace BSFiberConcrete
         }
 
         /// <summary>
-        /// формула из 5.6 СП360
+        /// формула 5.6 из СП360
         /// </summary>
         /// <param name="_Rfbt2"></param>
         /// <param name="_Rfbt3"></param>
