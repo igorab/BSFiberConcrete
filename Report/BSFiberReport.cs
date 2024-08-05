@@ -29,6 +29,7 @@ namespace BSFiberConcrete
         public Dictionary<string, double> CalcResults2Group { set { m_CalcResults2Group = value; } }
         public Dictionary<string, double> Reinforcement { set { m_Reinforcement = value; } }
         public List<string> Messages { set { m_Messages = value; }}
+        public List<string> Path2BeamDiagrams { set { m_Path2BeamDiagrams = value; } }
         public BeamSection BeamSection { set { m_BeamSection = value; } }
         public bool UseReinforcement { get; set; }
 
@@ -41,6 +42,7 @@ namespace BSFiberConcrete
         protected Dictionary<string, double> m_CalcResults2Group;
         protected Dictionary<string, double> m_Reinforcement;
         protected List<string> m_Messages;
+        protected List<string> m_Path2BeamDiagrams;
 
         protected BeamSection m_BeamSection { get; set; }
 
@@ -116,7 +118,7 @@ namespace BSFiberConcrete
         /// Основная часть отчета
         /// </summary>        
         protected virtual void ReportBody(StreamWriter w)
-        {            
+        {
             if (m_PhysParams != null)
             {
                 w.WriteLine("<Table border=1 bordercolor = darkblue>");
@@ -128,7 +130,7 @@ namespace BSFiberConcrete
                     w.WriteLine($"<td width={bv} align=center>{Math.Round(_pair.Value, 4)} </td>");
                     w.WriteLine("</tr>");
                 }
-               
+
                 w.WriteLine("</Table>");
                 w.WriteLine("<br>");
             }
@@ -159,7 +161,7 @@ namespace BSFiberConcrete
                     w.WriteLine($"<td width={bk}>{_pair.Key}</td>");
                     w.WriteLine($"<td width={bv} align=center>{Math.Round(_pair.Value, 4)} </td>");
                     w.WriteLine("</tr>");
-                }                                
+                }
                 w.WriteLine("</Table>");
                 w.WriteLine("<br>");
             }
@@ -177,6 +179,24 @@ namespace BSFiberConcrete
                 }
                 w.WriteLine("</Table>");
                 w.WriteLine("<br>");
+            }
+
+            if (m_Path2BeamDiagrams != null && m_Path2BeamDiagrams.Count > 0)
+            {
+                // добавленеи картинок с эпюрами в отчет
+                
+                w.WriteLine("<Table border=1 bordercolor = darkblue>");
+                foreach (string pathToBeamDiagram in m_Path2BeamDiagrams)
+                {
+                    w.WriteLine("<tr>");
+                    w.WriteLine("<td>");
+                    w.WriteLine($"<img src =\"{pathToBeamDiagram}\">");
+                    w.WriteLine("</td>");
+                    w.WriteLine("</tr>");
+                }
+                w.WriteLine("</Table>");
+                w.WriteLine("<br>");
+
             }
 
         }

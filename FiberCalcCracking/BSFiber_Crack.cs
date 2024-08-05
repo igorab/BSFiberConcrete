@@ -21,44 +21,6 @@ namespace BSFiberConcrete
     {
         public List<string> Msg { get; private set; }
 
-        // заданные нагрузки
-        public double Mx { get; set; }
-        public double My { get; set; }
-        // продольная сила от внешней нагрузки
-        public double N { get; set; }
-
-        // балка
-        public BSBeam Beam
-        {
-            get { return m_Beam; }
-            set
-            {
-                m_Beam = value;
-                m_Rods = value.Rods;
-            }
-        }
-
-        // Результаты расчета
-        public DataTable resultTable;
-
-        /// <summary>
-        /// Расстановка стержней арматуры
-        /// </summary>
-        public List<BSRod> Rods
-        {
-            get { return m_Rods; }
-            set { m_Rods = value; }
-        }
-
-        private List<BSElement> m_BElem;
-        private List<BSRod> m_Rods;
-
-
-        // свойства бетона
-        public BSMatFiber MatFiber { get { return m_Fiber; } set { m_Fiber = value; } }
-        // свойства арматуры
-        public BSMatRod MatRebar { get { return m_Rod; } set { m_Rod = value; } }
-
         private BSBeam m_Beam { get; set; }
 
         private BSMatFiber m_Fiber;
@@ -67,91 +29,80 @@ namespace BSFiberConcrete
         public BeamSection typeOfBeamSection;
 
 
+        // балка
+        public BSBeam Beam
+        {
+            get { return m_Beam; }
+            set { m_Beam = value; }
+        }
+        // свойства бетона
+        public BSMatFiber MatFiber { get { return m_Fiber; } set { m_Fiber = value; } }
+        // свойства арматуры
+        public BSMatRod MatRebar { get { return m_Rod; } set { m_Rod = value; } }
 
-        [DisplayName("Нормативное сопротивления осевому растяжению, Rfbt,n, кг/см2")]
-        public double Rfbtn { get => MatFiber.Rfbtn; }
-
-        [DisplayName("Сопротивление сталефибробетона осевому растяжению, Rfbt, кг/см2")]
-        public double Rfbt { get => R_fbt(); }
-
-        [DisplayName("Нормативное остаточное сопротивления осевому растяжению Rfbt3,n , кг/см2")]
-        public double Rfbt3n { get => MatFiber.Rfbt3n; }
-
-        [DisplayName("Остаточное сопротивление сталефибробетона осевому растяжению, Rfbt3, кг/см2")]
-        public double Rfbt3 { get => R_fbt3(); }
-
-        [DisplayName("Числовая характеристика класса фибробетона по прочности на осевое сжатие, B")]
-        public double B { get => MatFiber.B; }
-
-        [DisplayName("Нормативное значение сопротивления сталефибробетона на осевое сжатие Rfb,n , кг/см2")]
-        public double Rfbn { get => MatFiber.Rfbn; }
-
-        [DisplayName("Расчетные значения сопротивления  на сжатиие по B30 СП63, кг/см2")]
-        public double Rfb { get => R_fb(); }
-
-        // ??
-        public double Gamma(double _B) => 1.73 - 0.005 * (_B - 15);
-
-        //protected double omega = BSMatFiber.omega;
-
-        [BSFiberCalculation(Name = "Коэффициент надежности для расчета по предельным состояниям первой группы при назначении класса сталефибробетона по прочности на растяжение")]
-        protected double Yft;
-        [BSFiberCalculation(Name = "Коэффициенты условия работы")]
-        protected double Yb;
-        protected double Yb1;
-        protected double Yb2;
-        protected double Yb3;
-        protected double Yb5;
-
-        [BSFiberCalculation(Name = "Площадь сжатой зоны бетона")]
-        private double Ab;
-        [BSFiberCalculation(Name = "случайный эксцентриситет, принимаемый по СП 63.13330")]
-        private double e0;
 
         public virtual Dictionary<string, double> Coeffs
         {
             get
             {
-                return new Dictionary<string, double>() { { "Yft", Yft }, { "Yb", Yb }, { "Yb1", Yb1 }, { "Yb2", Yb2 }, { "Yb3", Yb3 }, { "Yb5", Yb5 } };
+                return new Dictionary<string, double>() { { "Yft", MatFiber.Yft }, { "Yb", MatFiber.Yb }, { "Yb1", MatFiber.Yb1 }, { "Yb2", MatFiber.Yb2 }, { "Yb3", MatFiber.Yb3 }, { "Yb5", MatFiber.Yb5 } };
             }
         }
-
 
         public virtual Dictionary<string, double> PhysParams
         {
             get
             {
-                return new Dictionary<string, double> { { "Rfbt3n", Rfbt3n }, { "B", B }, { "Rfbn", Rfbn } };
+                return new Dictionary<string, double> { { "Rfbt3n", MatFiber.Rfbt3n }, { "B", MatFiber.B }, { "Rfbn", MatFiber.Rfbn } };
             }
         }
 
-        public Dictionary<string, double> Efforts
-        {
-            get { return m_Efforts; }
-            set { m_Efforts = new Dictionary<string, double>(value); }
-        }
+        public Dictionary<string, double> Efforts;
 
-        protected Dictionary<string, double> m_Efforts;
 
-        // Расчетные значения сопротивления на сжатиие по B30 СП63
-        public double R_fb() => (Yb != 0) ? Rfbn / Yb * Yb1 * Yb2 * Yb3 * Yb5 : 0;
+        // заданные нагрузки
+        //[DisplayName("Mx [кгс*см]")]
+        public double Mx;
+        public double My;
+        // продольная сила от внешней нагрузки
+        public double N;
 
-        //Расчетное остаточное сопротивление осевому растяжению R_fbt
-        public double R_fbt() => (Yft != 0) ? Rfbtn / Yft * Yb1 * Yb5 : 0;
 
-        //Расчетное остаточное сопротивление осевому растяжению R_fbt3
-        public double R_fbt3() => (Yft != 0) ? Rfbt3n / Yft * Yb1 * Yb5 : 0;
+        private double _M_crc;
+        private double _a_crc;
+
+        // Результаты расчета
+        public DataTable resultTable;
+
 
         public string DN(Type _T, string _property) => _T.GetProperty(_property).GetCustomAttribute<DisplayNameAttribute>().DisplayName;
 
         public static string DsplN(Type _T, string _property) => new BSFiberCalculation().DN(_T, _property);
 
-        // ??
         public BSFiberCalc_Cracking(double _Mx = 0, double _My = 0, double _N = 0)
         {
             Mx = _Mx;
             My = _My;
             N = _N;
+
+            m_Fiber = new BSMatFiber();
+            m_Rod = new BSMatRod();
+
+            Msg = new List<string>();
+
+
+            CreateResTable();
+            AddRowInResTable("", "Mx", Mx, "кг∙см2");
+            AddRowInResTable("", "N", N, "кг");
+        }
+
+        public BSFiberCalc_Cracking(Dictionary<string, double> MNQ)
+        {
+            this.Efforts = MNQ;
+
+            MNQ.TryGetValue("Mx",out Mx);
+            MNQ.TryGetValue("My", out My);
+            MNQ.TryGetValue("N", out N);
 
             m_Fiber = new BSMatFiber();
             m_Rod = new BSMatRod();
@@ -180,13 +131,16 @@ namespace BSFiberConcrete
         {
             Dictionary<string, double> phys = new Dictionary<string, double>
             {
-                { DN(typeof(BSFiberCalculation), "Rfbt3n"), Rfbt3n },
-                { DN(typeof(BSFiberCalculation), "B"), B },
-                { DN(typeof(BSFiberCalculation), "Rfbn"), Rfbn }
+                { DN(typeof(BSFiberCalculation), "Rfbt3n"), MatFiber.Rfbt3n },
+                { DN(typeof(BSFiberCalculation), "B"), MatFiber.B },
+                { DN(typeof(BSFiberCalculation), "Rfbn"), MatFiber.Rfbn }
             };
             return phys;
         }
 
+
+
+        # region наследие интерфейса IBSFiberCalculation
         /// <summary>
         /// Принимает характерные размеры сечения
         /// </summary>
@@ -208,6 +162,18 @@ namespace BSFiberConcrete
         {
             return true;
         }
+
+        public virtual Dictionary<string, double> Results()
+        {
+
+            return new Dictionary<string, double>()
+            {
+                { "Момент образования трещин растянутого стальфибробетона, M_crc [кг/см2]", _M_crc},
+                { "Ширина раскрытия трещин от действия внешней нагрузки, a_crc [мм]", _a_crc}
+            };
+        }
+
+        # endregion 
 
 
 
@@ -324,6 +290,9 @@ namespace BSFiberConcrete
             double M_crc = R_fbt_ser * W_pl + N * e_x;                                                              // (6.107)
             #endregion
 
+
+
+            _M_crc = M_crc;
 
             AddRowInResTable("Момент образования трещин с учетом неупругих деформаций растянутого стальфибробетона", "Mcrc", M_crc, "кг∙см2");
 
@@ -589,9 +558,9 @@ namespace BSFiberConcrete
             double l_s = k_f * (50 + 0.5 * fi_2 * fi_13 * d_s / Mu_fv);
 
             // Ширина раскрытия трещин
-            double a_crc_1 = fi_1 * fi_3 * psi_s * sigma_s / Es * l_s;
+            double a_crc = fi_1 * fi_3 * psi_s * sigma_s / Es * l_s;
 
-
+            _a_crc = a_crc;
             #endregion
 
 
@@ -599,7 +568,7 @@ namespace BSFiberConcrete
 
             AddRowInResTable("Предельно допустимая ширина раскрытия трещин", "acrc_ult", a_crc_ult, "мм");
 
-            AddRowInResTable("Ширина раскрытия трещин от действия внешней нагрузки", "acrc", a_crc_1, "мм");
+            AddRowInResTable("Ширина раскрытия трещин от действия внешней нагрузки", "acrc", a_crc, "мм");
 
             return true;
         }
@@ -625,8 +594,6 @@ namespace BSFiberConcrete
             resultTable.Columns.Add("Параметр");
             resultTable.Columns.Add("Значение");
             resultTable.Columns.Add("Ед. Измерения");
-
-
         }
 
 
@@ -648,57 +615,6 @@ namespace BSFiberConcrete
             resultTable.Rows.Add(row);
         }
 
-
-
-        public virtual Dictionary<string, double> Results()
-        {
-            return new Dictionary<string, double>() { };
-        }
-
-        /// <summary>
-        /// Информация о результате проверки сечения на действие изгибающего момента
-        /// </summary>                
-        public void InfoCheckM(double _M_ult)
-        {
-            string info;
-
-            if (m_Efforts["My"] <= _M_ult)
-                info = "Сечение прошло проверку на действие изгибающего момента.";
-            else
-                info = "Сечение не прошло проверку. Рассчитанный предельный момент сечения превышает предельно допустимый.";
-            Msg.Add(info);
-
-            info = "Расчет успешно выполнен!";
-            Msg.Add(info);
-        }
-
-        /// <summary>
-        /// Расчет прочности сечения
-        /// </summary>
-        /// <param name="_profile">Профиль сечения</param>
-        /// <param name="_reinforcement">Используется ли арматура</param>
-        /// <returns>Экземпляр класса расчета</returns>
-        public static BSFiberCalculation construct(BeamSection _profile, bool _reinforcement = false)
-        {
-            switch (_profile)
-            {
-                case BeamSection.TBeam:
-                case BeamSection.IBeam:
-                    if (_reinforcement)
-                        return new BSFiberCalc_IBeamRods();
-                    else
-                        return new BSFibCalc_IBeam();
-                case BeamSection.Ring:
-                    return new BSFibCalc_Ring();
-                case BeamSection.Rect:
-                    if (_reinforcement)
-                        return new BSFiberCalc_RectRods();
-                    else
-                        return new BSFibCalc_Rect();
-            }
-
-            return new BSFiberCalculation();
-        }
         //public bool Calculate()
         //{
         //    throw new NotImplementedException();
