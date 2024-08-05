@@ -21,7 +21,11 @@ namespace BSFiberConcrete
         {
             base.InitFromFiberCalc(_fiberCalc);
 
-            m_Efforts = new Dictionary<string, double>(){ {"N, кг", m_Efforts["N"]}};
+            m_Efforts = new Dictionary<string, double>()
+            {
+                {"My,[кг*см]", m_Efforts["My"]},
+                {"N, [кг]", m_Efforts["N"]}
+            };
             m_CalcResults = _fiberCalc.Results();
         }
     }

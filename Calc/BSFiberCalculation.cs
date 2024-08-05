@@ -11,25 +11,25 @@ namespace BSFiberConcrete
         public List<string> Msg = new List<string>();
         public BSMatFiber MatFiber { get; set; }
 
-        [DisplayName("Нормативное сопротивления осевому растяжению, Rfbt,n, кг/см2")]
+        [DisplayName("Нормативное сопротивления осевому растяжению, Rfbt,n, [кг/см2]")]
         public double Rfbtn { get => MatFiber.Rfbtn; }
 
-        [DisplayName("Сопротивление сталефибробетона осевому растяжению, Rfbt, кг/см2")]
+        [DisplayName("Сопротивление сталефибробетона осевому растяжению, Rfbt, [кг/см2]")]
         public double Rfbt { get => R_fbt(); }
 
-        [DisplayName("Нормативное остаточное сопротивления осевому растяжению Rfbt3,n , кг/см2")]
+        [DisplayName("Нормативное остаточное сопротивления осевому растяжению Rfbt3,n, [кг/см2]")]
         public double Rfbt3n { get => MatFiber.Rfbt3n; }
 
-        [DisplayName("Остаточное сопротивление сталефибробетона осевому растяжению, Rfbt3, кг/см2")]
+        [DisplayName("Остаточное сопротивление сталефибробетона осевому растяжению, Rfbt3, [кг/см2]")]
         public double Rfbt3 { get => R_fbt3(); }
 
         [DisplayName("Числовая характеристика класса фибробетона по прочности на осевое сжатие, B")]
         public double B { get => MatFiber.B; }
 
-        [DisplayName("Нормативное значение сопротивления сталефибробетона на осевое сжатие Rfb,n , кг/см2")]
+        [DisplayName("Нормативное значение сопротивления сталефибробетона на осевое сжатие Rfb,n, [кг/см2]")]
         public double Rfbn { get => MatFiber.Rfbn; }
 
-        [DisplayName("Расчетные значения сопротивления  на сжатиие по B30 СП63, кг/см2")]
+        [DisplayName("Расчетные значения сопротивления  на сжатиие по B30 СП63, [кг/см2]")]
         public double Rfb { get => R_fb(); }
        
                        
@@ -63,7 +63,20 @@ namespace BSFiberConcrete
         }
 
         public Dictionary<string, double> Efforts {
-            get { return m_Efforts; }
+            get 
+            {
+                Dictionary<string, double> efforts = new Dictionary<string, double>();
+                if (m_Efforts.ContainsKey("My"))
+                    efforts.Add("My, [кг*см] ", m_Efforts["My"]);
+                if (m_Efforts.ContainsKey("Mx"))
+                    efforts.Add("Mx, [кг*см]", m_Efforts["Mx"]);
+                if (m_Efforts.ContainsKey("N"))
+                    efforts.Add("N, [кг]", m_Efforts["N"]);
+                if (m_Efforts.ContainsKey("Q"))
+                    efforts.Add("Q, [кг]", m_Efforts["Q"]);
+
+                return efforts; 
+            }
             set { m_Efforts = new Dictionary<string, double>(value); }  
         } 
 

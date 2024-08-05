@@ -9,17 +9,17 @@ namespace BSFiberConcrete
     public class BSFibCalc_IBeam : BSFiberCalculation
     {
         // размеры:
-        [DisplayName("Ширина нижней полки")]
+        [DisplayName("Ширина нижней полки, bf, [см]")]
         public double bf { get; protected set; }
-        [DisplayName("Высота нижней полки")]
+        [DisplayName("Высота нижней полки, hf, [см]")]
         public double hf { get; protected set; }
-        [DisplayName("Высота стенки")]
+        [DisplayName("Высота стенки, hw, [см]")]
         public double hw { get; protected set; }
-        [DisplayName("Ширина стенки")]
+        [DisplayName("Ширина стенки, bw, [см]")]
         public double bw { get; protected set; }
-        [DisplayName("Ширина верхней полки")]
+        [DisplayName("Ширина верхней полки, b1f, [см]")]
         public double b1f { get; protected set; }
-        [DisplayName("Высота верхней полки")]
+        [DisplayName("Высота верхней полки, h1f, [см]")]
         public double h1f { get; protected set; }
 
         // физ. характеристики бетона
@@ -27,10 +27,10 @@ namespace BSFiberConcrete
         public new double Rfbn { get; protected set; }
                 
         // Результаты
-        [DisplayName("Высота сжатой зоны, см")]
+        [DisplayName("Высота сжатой зоны, [см]")]
         public double x { get; protected set; }
 
-        [DisplayName("Предельный момент сечения, кг*см")]
+        [DisplayName("Предельный момент сечения, [кг*см]")]
         public double Mult { get; protected set; }
 
         [DisplayName("Коэффициент использования по усилию")]

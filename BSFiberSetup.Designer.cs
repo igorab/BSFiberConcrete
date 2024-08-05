@@ -130,7 +130,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 46F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 152F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 156F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 157F));
             this.tableLayoutPanel1.Controls.Add(this.comboBetonType, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.label_i, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.comboBox_i, 2, 0);
@@ -159,7 +159,7 @@
             // 
             this.label_i.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label_i.AutoSize = true;
-            this.label_i.Location = new System.Drawing.Point(173, 7);
+            this.label_i.Location = new System.Drawing.Point(172, 7);
             this.label_i.Name = "label_i";
             this.label_i.Size = new System.Drawing.Size(15, 13);
             this.label_i.TabIndex = 3;
@@ -176,7 +176,7 @@
             "c",
             "d",
             "e"});
-            this.comboBox_i.Location = new System.Drawing.Point(227, 3);
+            this.comboBox_i.Location = new System.Drawing.Point(226, 3);
             this.comboBox_i.Name = "comboBox_i";
             this.comboBox_i.Size = new System.Drawing.Size(121, 21);
             this.comboBox_i.TabIndex = 4;
@@ -185,7 +185,7 @@
             // num_omega
             // 
             this.num_omega.DecimalPlaces = 4;
-            this.num_omega.Location = new System.Drawing.Point(442, 3);
+            this.num_omega.Location = new System.Drawing.Point(441, 3);
             this.num_omega.Name = "num_omega";
             this.num_omega.Size = new System.Drawing.Size(120, 20);
             this.num_omega.TabIndex = 5;
@@ -193,7 +193,7 @@
             // num_eps_fb2
             // 
             this.num_eps_fb2.DecimalPlaces = 4;
-            this.num_eps_fb2.Location = new System.Drawing.Point(654, 3);
+            this.num_eps_fb2.Location = new System.Drawing.Point(653, 3);
             this.num_eps_fb2.Name = "num_eps_fb2";
             this.num_eps_fb2.Size = new System.Drawing.Size(120, 20);
             this.num_eps_fb2.TabIndex = 6;
@@ -202,7 +202,7 @@
             // 
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(396, 7);
+            this.label2.Location = new System.Drawing.Point(395, 7);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(21, 13);
             this.label2.TabIndex = 7;
@@ -212,7 +212,7 @@
             // 
             this.label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(594, 7);
+            this.label3.Location = new System.Drawing.Point(593, 7);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(40, 13);
             this.label3.TabIndex = 8;
@@ -274,8 +274,7 @@
             "A600",
             "A800",
             "A1000",
-            "B500",
-            "K1400"});
+            "B500"});
             this.cmbRebarClass.Location = new System.Drawing.Point(104, 7);
             this.cmbRebarClass.Name = "cmbRebarClass";
             this.cmbRebarClass.Size = new System.Drawing.Size(93, 21);

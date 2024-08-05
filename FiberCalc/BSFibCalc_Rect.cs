@@ -9,13 +9,13 @@ namespace BSFiberConcrete
     public class BSFibCalc_Rect : BSFiberCalculation
     {
         //размеры, см
-        [DisplayName("Высота сечения, см")]
+        [DisplayName("Высота сечения, [см]")]
         public double h { get; private set; }
-        [DisplayName("Ширина сечения, см")]
+        [DisplayName("Ширина сечения, [см]")]
         public double b { get; private set; }
         [DisplayName("Упругопластический момент сопротивления")]
         public double Wpl { get; private set; }
-        [DisplayName("Предельный момент сечения для изгибаемых сталефибробетонных элементов, кг*см")]
+        [DisplayName("Предельный момент сечения для изгибаемых сталефибробетонных элементов, [кг*см]")]
         public double Mult { get; protected set; }
 
         [DisplayName("Коэффициент, учитывающий неупругие свойства фибробетона растянутой зоны")]

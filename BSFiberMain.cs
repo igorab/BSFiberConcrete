@@ -175,7 +175,11 @@ namespace BSFiberConcrete
                 numYb3.Value = (decimal)fiberConcrete.Yb3;
                 numYb5.Value = (decimal)fiberConcrete.Yb5;
 
-                double[] mnq = { m_Iniv["Mx"], m_Iniv["My"], m_Iniv["N"], m_Iniv["Q"], m_Iniv["Ml"], m_Iniv["eN"] }; //Mx My N Q Ml
+                //Mx My N Q Ml
+                double[] mnq = { 
+                    m_Iniv["Mx"], m_Iniv["My"], m_Iniv["N"], m_Iniv["Q"], m_Iniv["Ml"], m_Iniv["eN"] 
+                }; 
+
                 gridEfforts.Rows.Add(mnq);
                 for (int i = 0; i < mnq.Length; i++)
                 {
@@ -185,16 +189,11 @@ namespace BSFiberConcrete
                 //
                 // настройки из БД
                 Rebar dbRebar = m_Rebar.Where(x => x.ID == Convert.ToString(cmbRebarClass.SelectedItem))?.First();
-                numEs.Value = (decimal)BSHelper.MPA2kgsm2(dbRebar.Es);
-
-                double[] t_rebar = { m_Iniv["D_t"], m_Iniv["Qty_t"], m_Iniv["a_t"], m_Iniv["Cls_t"], m_Iniv["Coef_t"] }; // поперечная арматура               
-
-                double[] long_rebar = { m_Iniv["D_l"], m_Iniv["Qty_l"], m_Iniv["a_l"], m_Iniv["Cls_l"], m_Iniv["Coef_l"] }; // продольная арматура
-
-                numAs.Value = (decimal)m_Iniv["As"];
-                numAs1.Value = (decimal)m_Iniv["As1"];
-                num_a.Value = (decimal)m_Iniv["_a"];
-                num_a1.Value = (decimal)m_Iniv["_a_1"];
+                numEs.Value = (decimal)BSHelper.MPA2kgsm2(dbRebar.Es);                
+                numAs.Value = (decimal)dbRebar.As;
+                numAs1.Value = (decimal)dbRebar.As1;
+                num_a.Value = (decimal)dbRebar.a;
+                num_a1.Value = (decimal)dbRebar.a1;
 
                 numEps_fb2.Value = 0.0042M;
 
@@ -763,7 +762,7 @@ namespace BSFiberConcrete
         /// </summary>
         /// <param name="_MNQ"></param>
         /// <exception cref="Exception"></exception>
-        private void GetEffortsFromForm(out Dictionary<string, double> _MNQ)
+        private void GetEffortsFromForm(out Dictionary<string, double> _MNQ, bool _convert = false)
         {
             _MNQ = new Dictionary<string, double>();
 
@@ -774,6 +773,12 @@ namespace BSFiberConcrete
             for (int i = 0; i < F.Length; i++)
             {
                 var x = Convert.ToDouble(row.Cells[i].Value);
+
+                if (_convert)
+                {
+                    if (i<4) x = BSHelper.Kgs2kN(x, 4);
+                }
+
                 _MNQ.Add(F[i], x);
             }
 
@@ -793,7 +798,7 @@ namespace BSFiberConcrete
         private void InitRebarValues(ref Rebar _Rebar)
         {
             _Rebar.As = (double)numAs.Value;
-            _Rebar.A1s = (double)numAs1.Value;
+            _Rebar.As1 = (double)numAs1.Value;
             _Rebar.a = (double)num_a.Value;
             _Rebar.a1 = (double)num_a1.Value;
 
@@ -1578,8 +1583,12 @@ namespace BSFiberConcrete
         {
             try
             {
-                var trb = Lib.BSQuery.RebarFind(cmbTRebarClass.Text);
-                numRsw.Value = (decimal)BSHelper.MPA2kgsm2(trb.Rsw);
+                Rebar trb = m_Rebar.Find(match => match.ID == cmbTRebarClass.Text);      //Lib.BSQuery.RebarFind(cmbTRebarClass.Text);
+                if (trb != null)
+                {
+                    numRsw.Value = (decimal)BSHelper.MPA2kgsm2(trb.Rsw);
+                    numEsw.Value = (decimal)BSHelper.MPA2kgsm2(trb.Esw);
+                }
             }
             catch { }
         }
@@ -1757,19 +1766,7 @@ namespace BSFiberConcrete
                 MessageBox.Show(_e.Message);
             }
         }
-
-        private void toolBSFiberParams_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                string path = Path.Combine(Environment.CurrentDirectory, "Templates\\BSFiberParams.json");
-                Process.Start(@"notepad.exe", path);
-            }
-            catch (Exception _e)
-            {
-                MessageBox.Show(_e.Message);
-            }
-        }
+        
 
         private void toolsBSInit_Click(object sender, EventArgs e)
         {
@@ -2021,6 +2018,12 @@ namespace BSFiberConcrete
         private void tableLayoutPanelRebar_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void labelMNQ_Click(object sender, EventArgs e)
+        {
+            GetEffortsFromForm(out Dictionary<string, double> _MNQ, true);
+            MessageBox.Show($"My = {_MNQ["My"]} Кн*см\n Mx = {_MNQ["Mx"]} Кн*см\n N = {_MNQ["N"]} Кн\n Q = {_MNQ["Q"]} Кн", "Усилия"); 
         }
     }
 }

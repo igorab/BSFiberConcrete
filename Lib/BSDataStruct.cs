@@ -138,7 +138,7 @@ namespace BSFiberConcrete
         // Площадь растянутой арматуры
         public double As { get; set; }
         // Площадь сжатой арматуры
-        public double A1s { get; set; }
+        public double As1 { get; set; }
         public double Rsw { get; set; }
         public double Asw { get; set; }
         public double s_w { get; set; }
