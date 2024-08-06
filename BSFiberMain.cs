@@ -1734,7 +1734,8 @@ namespace BSFiberConcrete
                 if (trb != null)
                 {
                     numRsw.Value = (decimal)BSHelper.MPA2kgsm2(trb.Rsw);
-                    numEsw.Value = (decimal)BSHelper.MPA2kgsm2(trb.Esw);
+                    numEsw.Value = (decimal)BSHelper.MPA2kgsm2(trb.Es);
+                    num_s_w.Value = (decimal)trb.s_w;
                 }
             }
             catch { }
@@ -2172,6 +2173,58 @@ namespace BSFiberConcrete
         {
             GetEffortsFromForm(out Dictionary<string, double> _MNQ, true);
             MessageBox.Show($"My = {_MNQ["My"]} Кн*см\n Mx = {_MNQ["Mx"]} Кн*см\n N = {_MNQ["N"]} Кн\n Q = {_MNQ["Q"]} Кн", "Усилия"); 
+        }
+
+        private void label35_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Yb1 - коэффициент условий работы к значениям Rfb, Rfbt, Rfbt3 учитывающий влияние длительности действия статической нагрузки", "Информация");
+        }
+
+        private void label36_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Yb2 - коэффициент для элементов без стержневой арматуры к значениям Rfb и учитывающий характер разрушения таких конструкций", "Информация");
+        }
+
+        private void label37_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Yb3 - коэффициент вводимиый при бетонировании в вертикальном положении при высоте слоя более 1.5 м", "Информация");
+        }
+
+        private void label38_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Yb5 - коэффициент условий работы, учитывающий влияние попереременного замораживания и оттаивания, а также отрицательных температур", "Информация");
+        }
+
+       
+        private void label38_MouseMove(object sender, MouseEventArgs e)
+        {
+            Cursor.Current = Cursors.Hand;            
+        }
+
+       
+        private void label37_MouseMove(object sender, MouseEventArgs e)
+        {
+            Cursor.Current = Cursors.Hand;
+        }
+                
+        private void label36_MouseMove(object sender, MouseEventArgs e)
+        {
+            Cursor.Current = Cursors.Hand;
+        }
+    
+        private void label35_MouseMove(object sender, MouseEventArgs e)
+        {
+            Cursor.Current = Cursors.Hand;
+        }
+    
+        private void label13_MouseMove(object sender, MouseEventArgs e)
+        {
+            Cursor.Current = Cursors.Hand;
+        }
+
+        private void label12_MouseMove(object sender, MouseEventArgs e)
+        {
+            Cursor.Current = Cursors.Hand;
         }
     }
 }
