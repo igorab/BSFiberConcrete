@@ -31,10 +31,10 @@ namespace BSBeamCalculator
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BeamCalculatorControl));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Title title5 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Title title6 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label16 = new System.Windows.Forms.Label();
@@ -154,7 +154,7 @@ namespace BSBeamCalculator
             this.numericUpDown1.DecimalPlaces = 1;
             this.numericUpDown1.Location = new System.Drawing.Point(108, 90);
             this.numericUpDown1.Maximum = new decimal(new int[] {
-            1000,
+            10000,
             0,
             0,
             0});
@@ -171,6 +171,7 @@ namespace BSBeamCalculator
             0,
             0,
             0});
+            this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             // 
             // radioButton5
             // 
@@ -287,7 +288,7 @@ namespace BSBeamCalculator
             this.numericUpDown3.Size = new System.Drawing.Size(65, 20);
             this.numericUpDown3.TabIndex = 4;
             this.numericUpDown3.Value = new decimal(new int[] {
-            2,
+            1,
             0,
             0,
             0});
@@ -322,7 +323,7 @@ namespace BSBeamCalculator
             this.numericUpDown2.DecimalPlaces = 1;
             this.numericUpDown2.Location = new System.Drawing.Point(86, 77);
             this.numericUpDown2.Maximum = new decimal(new int[] {
-            1000,
+            10000,
             0,
             0,
             0});
@@ -335,7 +336,7 @@ namespace BSBeamCalculator
             this.numericUpDown2.Size = new System.Drawing.Size(65, 20);
             this.numericUpDown2.TabIndex = 3;
             this.numericUpDown2.Value = new decimal(new int[] {
-            2,
+            500,
             0,
             0,
             0});
@@ -382,31 +383,31 @@ namespace BSBeamCalculator
             // 
             // chart2
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chart2.ChartAreas.Add(chartArea1);
+            chartArea5.Name = "ChartArea1";
+            this.chart2.ChartAreas.Add(chartArea5);
             this.chart2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chart2.Location = new System.Drawing.Point(3, 163);
             this.chart2.Name = "chart2";
             this.chart2.Size = new System.Drawing.Size(593, 155);
             this.chart2.TabIndex = 1;
             this.chart2.Text = "chart2";
-            title1.Name = "Title1";
-            title1.Text = "Момент";
-            this.chart2.Titles.Add(title1);
+            title5.Name = "Title1";
+            title5.Text = "Момент";
+            this.chart2.Titles.Add(title5);
             // 
             // chart1
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea2);
+            chartArea6.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea6);
             this.chart1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chart1.Location = new System.Drawing.Point(3, 3);
             this.chart1.Name = "chart1";
             this.chart1.Size = new System.Drawing.Size(593, 154);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
-            title2.Name = "Title1";
-            title2.Text = "Сила";
-            this.chart1.Titles.Add(title2);
+            title6.Name = "Title1";
+            title6.Text = "Сила";
+            this.chart1.Titles.Add(title6);
             // 
             // tableLayoutPanel4
             // 
@@ -532,7 +533,7 @@ namespace BSBeamCalculator
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(57, 21);
             this.label19.TabIndex = 10;
-            this.label19.Text = "к";
+            this.label19.Text = "кг";
             this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label6

@@ -34,8 +34,6 @@ namespace BSFiberConcrete
         private List<Elements> FiberConcrete;
         private List<Beton> m_Beton;
         private List<RebarDiameters> m_RebarDiameters;
-        //TODO должна быть удалена/переработана после объединения кода. Перменная для хранения нагрузок        
-        private Dictionary<string, double> test_Efforts;
         // Список, в котором хранится актуальные данные геометрии сечений
         private List<InitBeamSectionGeometry> m_InitBeamSectionsGeometry;
         public Dictionary<string, double> m_Beam { get; private set; }
@@ -46,6 +44,7 @@ namespace BSFiberConcrete
         private Dictionary<string, double> m_GeomParams;
         private Dictionary<string, double> m_CalcResults;
         private Dictionary<string, double> m_CalcResults2Group;
+        private List<string> m_Path2BeamDiagrams;
         private List<string> m_Message;
 
         private BeamSection m_BeamSection { get; set; }
@@ -92,7 +91,20 @@ namespace BSFiberConcrete
                 btnCalc_Deform.Visible = true;
                 btnCalcCrack.Visible = true;
 
-                BeamCalculatorControl beamCalculatorControl = new BeamCalculatorControl(test_Efforts);
+                //gridEfforts
+                //BeamCalculatorControl beamCalculatorControl = new BeamCalculatorControl(test_Efforts);
+
+                tbLength.Enabled = false;
+                for (int i = 0; i < gridEfforts.ColumnCount; i++)
+                {
+                    gridEfforts[i, 0].Value = "0";
+                }
+
+                BeamCalculatorControl beamCalculatorControl = new BeamCalculatorControl(tbLength, gridEfforts, m_Path2BeamDiagrams);
+                
+
+
+
                 tabPBeam.Controls.Add(beamCalculatorControl);
             }
         }
@@ -102,15 +114,11 @@ namespace BSFiberConcrete
         {
             try
             {
-                test_Efforts = new Dictionary<string, double>()
-                {
-                    { "Mmin",0},
-                    { "Mmax",0},
-                    { "Q", 0 }
-                };
+                m_Path2BeamDiagrams = new List<string>() { };
+
 
                 m_RebarDiameters = BSData.LoadRebarDiameters();
-
+                
                 m_Beam = new Dictionary<string, double>();
                 m_Table = new DataTable();
                 m_Rebar = BSData.LoadRebar();
@@ -431,7 +439,142 @@ namespace BSFiberConcrete
         /// 1) Расчет предельного момента образования трещин
         /// 2) Расчет ширины раскрытия трещины
         /// </summary>        
-        private void FiberCalculate_Cracking()
+        private void FiberCalculate_Cracking_M_new()
+        {
+            bool calcOk = false;
+            try
+            {
+
+                // диаграмма:
+                // арматура
+                string cR_class = cmbRebarClass.Text;
+                double cRs = (double)numRs.Value; // кгс/см2            
+                double cEs = (double)numEs.Value; // кгс/см2
+                double c_eps_s0 = (double)numEpsilonS0.Value;// 0.00175; 
+                double c_eps_s2 = (double)numEpsilonS2.Value; ; // 0.025; 
+
+                double c_As = (double)numAs.Value;
+                double c_As1 = (double)numAs1.Value;
+                double c_a_s = (double)num_a.Value;
+                double c_a_s1 = (double)num_a1.Value;
+
+
+
+                // длина балки, см 
+                double c_Length = Convert.ToDouble(tbLength.Text);
+                // сечение балки балки, см 
+                double[] beam_sizes = BeamSizes(c_Length);
+
+                var bsBeam = BSBeam.construct(m_BeamSection);
+                bsBeam.GetSizes(beam_sizes);
+                bsBeam.Length = c_Length;
+
+                double c_b = bsBeam.Width;
+                double c_h = bsBeam.Height;
+
+
+                //m_GeomParams = new Dictionary<string, double> { { "b, см", c_b }, { "h, см", c_h } };
+                //m_Reinforcement = new Dictionary<string, double>();
+
+
+
+                // Усилия Mx, My - моменты, кгс*см , N - сила, кгс              
+                GetEffortsFromForm(out Dictionary<string, double> MNQ);
+
+                BSFiberCalc_Cracking calc_Cracking = new BSFiberCalc_Cracking(MNQ);
+                //calc_Cracking.Efforts = MNQ;
+                calc_Cracking.Beam = bsBeam;
+
+
+
+                //calc_Cracking.DeformDiagram = deformDiagramType;
+                //calc_Cracking.DeformMaterialType = deformMaterialType;
+                //calc_Cracking.Beam = bsBeam;
+
+                calc_Cracking.typeOfBeamSection = m_BeamSection;
+
+                // задать тип арматуры
+                calc_Cracking.MatRebar = new BSMatRod(cEs)
+                {
+                    RCls = cR_class,
+                    Rs = cRs,
+                    e_s0 = c_eps_s0,
+                    e_s2 = c_eps_s2,
+                    As = c_As,
+                    As1 = c_As1,
+                    a_s = c_a_s,
+                    a_s1 = c_a_s1
+                };
+
+
+                InitMatFiber();
+                InitBeamLength();
+                calc_Cracking.MatFiber = m_MatFiber;
+                calc_Cracking.GetParams(new double[] { 10, 1 });
+
+                // рассчитать 
+                calcOk = calc_Cracking.CalculateUltM();
+                calcOk = calc_Cracking.CalculateWidthCrack();
+
+
+                calc_Cracking.ShowResult();
+
+
+
+                m_PhysParams = calc_Cracking.PhysParams; // хардкодом прописанные параметры фибробетона
+                m_Coeffs = calc_Cracking.Coeffs; // коэффициенты надежности 
+                m_Efforts = calc_Cracking.Efforts; // нагрузки, не участвуют в отчете
+                m_GeomParams = calc_Cracking.GeomParams();  // не совсем понимаю, зачем эта переменная
+                //m_CalcResults = calc_Cracking.Results();
+                //m_Message = calc_Cracking.Msg;
+                m_CalcResults2Group = calc_Cracking.Results();
+                
+
+
+            }
+            catch (Exception _e)
+            {
+                MessageBox.Show("Ошибка в расчете: " + _e.Message);
+            }
+
+            try
+            {
+            //    //if (bsCalc is null)
+            //    //    throw new Exception("Не выполнен расчет");
+
+            if (calcOk)
+            {
+                    string reportName = "Расчет по обрзованию и раскрытию трещин";
+                    string pathToHtmlFile = CreateReport(3, m_BeamSection, reportName);
+
+                System.Diagnostics.Process.Start(pathToHtmlFile);
+            }
+
+            //    else
+            //    {
+            //        string errMsg = "";
+            //        foreach (string ms in m_Message) errMsg += ms + ";\t\n";
+
+            //        MessageBox.Show(errMsg);
+            //    }
+
+            }
+            catch (Exception _e)
+            {
+                MessageBox.Show("Ошибка в отчете " + _e.Message);
+            }
+
+        }
+
+
+
+
+        /// <summary>
+        /// Расчеты стельфибробетона по предельным состояниям второй группы
+        /// 1) Расчет предельного момента образования трещин
+        /// 2) Расчет ширины раскрытия трещины
+        /// </summary>        
+        private void FiberCalculate_Cracking_M_old()
         {
             bool useReinforcement = checkBoxRebar.Checked;
             bool calcOk = false;
@@ -578,6 +721,9 @@ namespace BSFiberConcrete
         }
 
 
+
+
+
         /// <summary>
         ///  Сформировать отчет
         /// </summary>
@@ -608,6 +754,7 @@ namespace BSFiberConcrete
                 report.CalcResults2Group = m_CalcResults2Group;
                 report.Messages = m_Message;
                 report.UseReinforcement = _useReinforcement;
+                report.Path2BeamDiagrams = m_Path2BeamDiagrams; 
 
                 path = report.CreateReport(_fileId);
                 return path;
@@ -1982,7 +2129,8 @@ namespace BSFiberConcrete
         {
             try
             {
-                FiberCalculate_Cracking();
+                //FiberCalculate_Cracking_M_old();
+                FiberCalculate_Cracking_M_new();
             }
             catch (Exception _ex)
             {
