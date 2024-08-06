@@ -232,8 +232,9 @@ namespace BSFiberConcrete
             try
             {
                 lvRebar.Items[0].Text = cmbRebarClass.Text;
-                var rb = Lib.BSQuery.RebarFind(cmbRebarClass.Text);
+                Rebar rb = BSQuery.RebarFind(cmbRebarClass.Text);
                 lvRebar.Items[1].SubItems[1].Text = Convert.ToString(rb.Rs);
+                lvRebar.Items[3].SubItems[1].Text = Convert.ToString(rb.Rsw);
             }
             catch 
             { 

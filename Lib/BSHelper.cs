@@ -21,14 +21,15 @@ namespace BSFiberConcrete
 
         // конвертор сил
         public static double Kg2T(double _kg) => _kg * 0.001d;
-
         public static double kN2Kgs(double? _kN) => _kN * 101.97162129779284d ?? 0;
-        public static double Kgs2kN(double? _kgs) => _kgs * 0.00980664999999998d ?? 0;        
+        public static double Kgs2kN(double _kgs, int _rnd = 0) => (_rnd >0) ? Math.Round(_kgs * 0.00980664999999998d, _rnd) : _kgs * 0.00980664999999998d;        
 
         // конвертор моментов
         public static double Kgsm2Tm(double _kgsm) => _kgsm * 0.00001d;
         public static double kgssm2kNsm(double? _kgssm) => _kgssm * 0.00980664999999998d ?? 0;
         public static double kNsm2kgssm(double? _kNsm) => _kNsm * 101.97162129779284d ?? 0;
+        public static double kNm2kgssm(double? _kNm) => _kNm * 10197.16212978d ?? 0;
+        
 
         // конвертор напряжений 
         public static double MPA2kgsm2(double? _mpa) => 10.197162d * _mpa ?? 0;

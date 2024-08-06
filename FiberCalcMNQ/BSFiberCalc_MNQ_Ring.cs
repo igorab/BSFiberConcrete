@@ -147,7 +147,12 @@ namespace BSFiberConcrete
             Calculate_N_Rods_Comb();
         }
 
-
+        /// <summary>
+        /// Расчет на действие продольной силы внутри и вне сечения
+        /// Расчет на действие поперечной силы
+        /// Расчет на действие моментов
+        /// </summary>
+        /// <returns></returns>
         public override bool Calculate()
         {
             if (N_Out)

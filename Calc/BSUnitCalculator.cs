@@ -27,5 +27,15 @@ namespace BSFiberConcrete.Calc
         {
             numToF.Value = (decimal)BSHelper.kN2Kgs((double?)numFromF.Value);
         }
+        
+        private decimal UConv(decimal _value, Func<double?, double> _tounit) 
+        {
+            return (decimal)_tounit((double) _value);
+        }
+
+        private void numFromM_ValueChanged(object sender, EventArgs e)
+        {
+            numToM.Value = UConv(numFromM.Value, BSHelper.kNm2kgssm);    
+        }
     }
 }

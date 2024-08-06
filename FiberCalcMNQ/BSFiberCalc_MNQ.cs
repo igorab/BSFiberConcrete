@@ -15,40 +15,40 @@ namespace BSFiberConcrete
 
         #region attributes
 
-        [DisplayName("Высота сечения, см"), Description("Geom")]
+        [DisplayName("Высота сечения, [см]"), Description("Geom")]
         public double h { get; protected set; }
 
-        [DisplayName("Ширина сечения, см"), Description("Geom")]
+        [DisplayName("Ширина сечения, [см]"), Description("Geom")]
         public double b { get; protected set; }
 
-        [DisplayName("Радиус внешний, см"), Description("Geom")]
+        [DisplayName("Радиус внешний, [см]"), Description("Geom")]
         public double r2 { get; protected set; }
 
-        [DisplayName("Радиус внутренний, см"), Description("Geom")]
+        [DisplayName("Радиус внутренний, [см]"), Description("Geom")]
         public double r1 { get; protected set; }
 
-        [DisplayName("Расчетная длинна элемента сп63 см"), Description("Geom")]
+        [DisplayName("Расчетная длинна элемента, [см]"), Description("Geom")]
         public double l0 { get; protected set; }
 
-        [DisplayName("Площадь сечения, см2"), Description("Geom")]
+        [DisplayName("Площадь сечения, [см2]"), Description("Geom")]
         public double A { get; protected set; }
 
-        [DisplayName("Момент инерции сечения"), Description("Geom")]
+        [DisplayName("Момент инерции сечения, [см4]"), Description("Geom")]
         public double I { get; protected set; }
         
-        [DisplayName("Модуль упругости сталефибробетона, кг/см2"), Description("Phys")]
+        [DisplayName("Модуль упругости сталефибробетона, [кг/см2]"), Description("Phys")]
         public double Efb { get; protected set; }
         
-        [DisplayName("Нормативное сопротивление осевому сжатию, кг/см2"), Description("Phys")]
+        [DisplayName("Нормативное сопротивление осевому сжатию, [кг/см2]"), Description("Phys")]
         public double Rfbn { get => MatFiber.Rfbn; }
         
-        [DisplayName("Нормативное сопротивление осевому растяжению, кг/см2"), Description("Phys")]
+        [DisplayName("Нормативное сопротивление осевому растяжению, [кг/см2]"), Description("Phys")]
         public double Rfbtn { get => MatFiber.Rfbtn; }
         
-        [DisplayName("Нормативное остаточное сопротивления осевому растяжению, кг/см2"), Description("Phys")]
+        [DisplayName("Нормативное остаточное сопротивления осевому растяжению, [кг/см2]"), Description("Phys")]
         public double Rfbt3n { get => MatFiber.Rfbt3n; }
 
-        [DisplayName("Продольное усилие, кг"), Description("Phys")]
+        [DisplayName("Продольное усилие, [кг]"), Description("Phys")]
         public double N { get; protected set; }
 
         [DisplayName("Cлучайный эксцентриситет, принимаемый по СП 63, e0"), Description("Phys")]
@@ -85,13 +85,13 @@ namespace BSFiberConcrete
         [DisplayName("Коэффициент условия работы Yb5"), Description("Coef")]
         public double Yb5 { get; protected set; }
 
-        [DisplayName("Предельный момент, кг*см"), Description("Res")]
+        [DisplayName("Предельный момент, [кг*см]"), Description("Res")]
         public double M_ult { get; protected set; }
 
-        [DisplayName("Предельная поперечная сила"), Description("Res")]
+        [DisplayName("Предельная поперечная сила, [кг]"), Description("Res")]
         public double Q_ult { get; protected set; }
 
-        [DisplayName("Предельная продольная сила, кг"), Description("Res")]
+        [DisplayName("Предельная продольная сила, [кг]"), Description("Res")]
         public double N_ult { get; protected set; }
 
         [DisplayName("Коэффициент использования по усилию")]
@@ -100,6 +100,9 @@ namespace BSFiberConcrete
         public string DN(Type _T, string _property) => _T.GetProperty(_property).GetCustomAttribute<DisplayNameAttribute>().DisplayName;
         #endregion
         public BetonType BetonType { get; set; }
+        /// <summary>
+        /// Свойства арматуры: продольная/поперечная
+        /// </summary>
         public Rebar Rebar {get; set;}
         public bool UseRebar { get; set; }
 
@@ -238,7 +241,7 @@ namespace BSFiberConcrete
         } 
         
         // параметры арматуры
-        public void GetRebarParams(double[] _l_rebar, double[] _t_rebar)
+        public void SetRebarParams(double[] _l_rebar, double[] _t_rebar)
         {
             l_rebar = _l_rebar;
             t_rebar = _t_rebar;
@@ -376,6 +379,10 @@ namespace BSFiberConcrete
         protected double Eta(double _N, double _Ncr) => 1 / (1 - _N / _Ncr);
 
 
+        /// <summary>
+        /// Расчет внецентренно сжатых сталефибробетонных
+        /// элементов прямоугольного сечения с рабочей арматурой
+        /// </summary>
         protected void Calculate_N_Rods()
         {                        
             string info;
@@ -390,7 +397,7 @@ namespace BSFiberConcrete
             double h0 = h - Rebar.a;
 
             // Высота сжатой зоны
-            double x = (N + Rebar.Rs * Rebar.As - Rebar.Rsc * Rebar.A1s + Rfbt3 * b * h) / ((Rfb + Rfbt3) * b);
+            double x = (N + Rebar.Rs * Rebar.As - Rebar.Rsc * Rebar.As1 + Rfbt3 * b * h) / ((Rfb + Rfbt3) * b);
 
             // относительной высоты сжатой зоны сталефибробетона
             double dzeta = x / h0;
@@ -413,23 +420,23 @@ namespace BSFiberConcrete
 
             if (dzeta > dz_R)
             {
-                x = (x_denom > 0) ? (N + Rebar.Rs * Rebar.As * ((1 + dz_R) / (1 - dz_R)) - Rebar.Rsc * Rebar.A1s + Rfbt3 * b * h) / x_denom : 0;
+                x = (x_denom > 0) ? (N + Rebar.Rs * Rebar.As * ((1 + dz_R) / (1 - dz_R)) - Rebar.Rsc * Rebar.As1 + Rfbt3 * b * h) / x_denom : 0;
             }
 
             double alfa = Rebar.Es / Efb;
 
-            double A_red = A + alfa * Rebar.As + alfa * Rebar.A1s;
+            double A_red = A + alfa * Rebar.As + alfa * Rebar.As1;
 
             // Статический момент сечения фибробетона относительно растянутой грани
             double S = A * h / 2;
             // расстояние от центра тяжести приведенного сечения до растянутой в стадии эксплуатации грани Пособие к СП 52-102-2004 ф.2.12 (см)
-            double y = (A_red > 0) ? (S + alfa * Rebar.As * Rebar.a + alfa * Rebar.A1s * (h - Rebar.a1)) / A_red : 0;
+            double y = (A_red > 0) ? (S + alfa * Rebar.As * Rebar.a + alfa * Rebar.As1 * (h - Rebar.a1)) / A_red : 0;
             // расстояние от центра тяжести приведенного сечения до сжатой
             double ys = y - Rebar.a;
             // расстояние от центра тяжести приведенного сечения до растянутой арматуры
             double y1s = h - Rebar.a1 - y;
             // момент инерции
-            double Is = Rebar.As * ys * ys + Rebar.A1s * y1s * y1s;
+            double Is = Rebar.As * ys * ys + Rebar.As1 * y1s * y1s;
             // жесткость элемента в предельной по прочности стадии, определяемая по формуле (6.31)
             D = DStiff(I, Is);
             // условная критическая сила, определяемая по формуле (6.24)
@@ -440,7 +447,7 @@ namespace BSFiberConcrete
             // расстояние отточки приложения продольной силы N до центра тяжести сечения растянутой арматуры ф.6.33 см
             double e = e0 * eta + (h0 - Rebar.a) / 2 + e_N;
 
-            M_ult = Rfb * b * x * (h0 - 0.5 * x) - Rfbt3 * b * (h - x) * ((h - x) / 2 - Rebar.a) + Rebar.Rsc * Rebar.A1s * (h0 - Rebar.a1);
+            M_ult = Rfb * b * x * (h0 - 0.5 * x) - Rfbt3 * b * (h - x) * ((h - x) / 2 - Rebar.a) + Rebar.Rsc * Rebar.As1 * (h0 - Rebar.a1);
 
             N_ult = M_ult / e;
 
@@ -466,6 +473,9 @@ namespace BSFiberConcrete
             }
         }
 
+        /// <summary>
+        /// Расчет элементов по полосе между наклонными сечениями
+        /// </summary>
         protected void CalculateQ()
         {
             m_ImgCalc = "Incline_Q.PNG";

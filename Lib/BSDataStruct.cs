@@ -131,10 +131,14 @@ namespace BSFiberConcrete
         public double Rsc { get; set; }
         //Значения модуля упругости арматуры
         public double Es { get; set; }
+
+        //Значения модуля упругости поперечной арматуры
+        public double Esw { get; internal set; }
+
         // Площадь растянутой арматуры
         public double As { get; set; }
         // Площадь сжатой арматуры
-        public double A1s { get; set; }
+        public double As1 { get; set; }
         public double Rsw { get; set; }
         public double Asw { get; set; }
         public double s_w { get; set; }
@@ -173,7 +177,7 @@ namespace BSFiberConcrete
                 return res;
             }
         }
-
+        
         public double Dzeta_R(double omega, double eps_fb2) => omega / (1 + Epsilon_s / eps_fb2);
 
         public object Clone()

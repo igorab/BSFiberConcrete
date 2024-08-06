@@ -14,8 +14,6 @@ namespace BSFiberConcrete
     /// </summary>
     public class BSFiberLoadData
     {
-        public static string FiberConcretePath { get => Path.Combine(Environment.CurrentDirectory, "Templates\\FiberConcrete.csv"); }
-
         private List<double> m_Prms = new List<double>() {0,0,0,0,0,0,0,0,0};
         public double[] Params { get => m_Prms.ToArray(); }
 

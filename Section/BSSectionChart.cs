@@ -146,10 +146,14 @@ namespace BSFiberConcrete.Section
                 points.Add(new PointF(bsp.X, bsp.Y));
             }
 
+            // арматура
             List<PointF> rod_points = new List<PointF>();
+            double rods_area = 0;
             foreach (BSRod _rod in RodBS)
             {
                 rod_points.Add(new PointF((float)_rod.CG_X, (float)_rod.CG_Y) );
+
+                rods_area += _rod.As;
             }
 
             Series serieSection = chart.Series[0];
@@ -165,12 +169,17 @@ namespace BSFiberConcrete.Section
                 serieInnerSection.Points.Add(new DataPoint(p.X, p.Y));
             }
 
-            Series serieRods = chart.Series[1];
+            // арматурные стержни
+            Series serieRods = chart.Series[1];          
             for (int j = 0; j < rod_points.Count; j++)
             {
                 var rod_pt = rod_points[j];
                 serieRods.Points.Add(new DataPoint(rod_pt.X, rod_pt.Y));
-            }         
+
+                //rod_pt.
+            }
+            
+            numAreaRebar.Value = (decimal) rods_area;
         }
 
         private void btnDraw_Click(object sender, EventArgs e)
