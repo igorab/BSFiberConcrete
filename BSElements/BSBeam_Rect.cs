@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace BSFiberConcrete
@@ -10,18 +11,18 @@ namespace BSFiberConcrete
     public class BSBeam_Rect : BSBeam
     {
         //размеры, см
-        [DisplayName("Высота сечения, см")]
+        [DisplayName("Высота сечения, [см]")]
         public override double h { get; set; }
-        [DisplayName("Ширина сечения, см")]
+        [DisplayName("Ширина сечения, [см]")]
         public override double b { get; set; }
 
-        [DisplayName("Площадь сечения элемента, см2")]
+        [DisplayName("Площадь сечения элемента, [см2]")]
         public override double Area() => b * h;
 
         [DisplayName("Момент инерции прямоугольного сечения")]
         public override double I_s() => b * Math.Pow(h, 3) / 12;
 
-        [DisplayName("Расстояние от центра тяжести сечения сталефибробетонного элемента до наиболее растянутого волокна, см")]
+        [DisplayName("Расстояние от центра тяжести сечения сталефибробетонного элемента до наиболее растянутого волокна, [см]")]
         public double y_t() => h / 2.0;
 
         public override double Width => b;
@@ -33,6 +34,20 @@ namespace BSFiberConcrete
             h = _h;
             Zfb_X = _b / 2.0;
             Z_fb_Y = _h / 2.0;
+        }
+
+        /// <summary>
+        /// Возращает габаритные размеры сечения
+        /// </summary>
+        /// <returns></returns>
+        public override Dictionary<string, double> GetDimension()
+        {
+            Dictionary<string, double> dimensionOfSection = new Dictionary<string, double>()
+            {
+                { DN(typeof(BSBeam_Rect), "h"), h },
+                { DN(typeof(BSBeam_Rect), "b"), b }
+            };
+            return dimensionOfSection; 
         }
 
         // Моменты инерции сечения
@@ -48,7 +63,7 @@ namespace BSFiberConcrete
         public override double Sy() => Area() * h / 2;
         public override double Sx() => Area() * b / 2;
 
-        public override void GetSizes(double[] _t)
+        public override void SetSizes(double[] _t)
         {
             (b, h, Length) = (_t[0], _t[1], _t[2]);
         }
