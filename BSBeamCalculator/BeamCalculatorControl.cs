@@ -74,6 +74,7 @@ namespace BSBeamCalculator
                 label9.Text = "0";
                 label12.Text = "0";
                 label18.Text = "0";
+                _pathToBeamDiagrams.Clear();
 
                 // собираем данные с формы
                 double lengthBeam = (double)numericUpDown1.Value;
@@ -112,6 +113,19 @@ namespace BSBeamCalculator
                 chart2.Series["Series1"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
                 for (int i = 0; i < result.pointM[0].Length; i++)
                 { chart2.Series["Series1"].Points.AddXY(result.pointM[0][i], result.pointM[1][i]); }
+
+                Font axisFont = new System.Drawing.Font("Microsoft Sans Serif", 8F,
+        ((System.Drawing.FontStyle)(System.Drawing.FontStyle.Bold)), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+                chart1.ChartAreas[0].AxisX.Title = "см";
+                chart1.ChartAreas[0].AxisX.TitleFont = axisFont;
+                chart1.ChartAreas[0].AxisY.Title = "кг";
+                chart1.ChartAreas[0].AxisY.TitleFont = axisFont;
+
+                chart2.ChartAreas[0].AxisX.Title = "см";
+                chart2.ChartAreas[0].AxisX.TitleFont = axisFont;
+                chart2.ChartAreas[0].AxisY.Title = "кг*см";
+                chart2.ChartAreas[0].AxisY.TitleFont = axisFont;
+
 
                 int n = 2;
                 label9.Text = Math.Round(result.maxM,n).ToString();
