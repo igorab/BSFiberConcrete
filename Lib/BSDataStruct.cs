@@ -523,6 +523,16 @@ namespace BSFiberConcrete
     }
 
 
+    /// <summary>
+    /// Класс фибры
+    /// </summary>
+    public class FiberClass
+    {
+        public int ID { get; set; }
+
+        public string Name { get; set; }
+    }
+
 
 }
 

@@ -33,9 +33,10 @@
             // 
             // pnlForPlot
             // 
-            this.pnlForPlot.Location = new System.Drawing.Point(12, 12);
+            this.pnlForPlot.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlForPlot.Location = new System.Drawing.Point(0, 0);
             this.pnlForPlot.Name = "pnlForPlot";
-            this.pnlForPlot.Size = new System.Drawing.Size(400, 400);
+            this.pnlForPlot.Size = new System.Drawing.Size(427, 420);
             this.pnlForPlot.TabIndex = 0;
             // 
             // DrawBeamSection
@@ -45,7 +46,8 @@
             this.ClientSize = new System.Drawing.Size(427, 420);
             this.Controls.Add(this.pnlForPlot);
             this.Name = "DrawBeamSection";
-            this.Text = "DrawBeamSection";
+            this.Text = "Мозаика сечения";
+            this.Load += new System.EventHandler(this.DrawBeamSection_Load);
             this.ResumeLayout(false);
 
         }

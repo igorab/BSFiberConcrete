@@ -70,7 +70,7 @@ namespace BSFiberConcrete
         /// <summary>
         /// Формирование объекта FormsPlot с сеткой из TriangleMesh
         /// </summary>
-        public FormsPlot CreatePLot()
+        public FormsPlot CreatePlot()
         {
             FormsPlot formsPlt = new FormsPlot() { Dock = DockStyle.Fill };
             formsPlt.Plot.Axes.SquareUnits(); // 
@@ -79,12 +79,12 @@ namespace BSFiberConcrete
             {
                 int randValue = r.Next(0, 10);
 
-                ScottPlot.Coordinates[] pointss = new ScottPlot.Coordinates[3];
-                for (int i = 0; i < 3; i++)
+                ScottPlot.Coordinates[] points = new ScottPlot.Coordinates[3];
+                for (int i = 0; i < points.Length; i++)
                 {
-                    pointss[i] = new ScottPlot.Coordinates(tr.GetVertex(i).X, tr.GetVertex(i).Y);
+                    points[i] = new ScottPlot.Coordinates(tr.GetVertex(i).X, tr.GetVertex(i).Y);
                 }
-                ScottPlot.Plottables.Polygon tmpPolygon = formsPlt.Plot.Add.Polygon(pointss);
+                ScottPlot.Plottables.Polygon tmpPolygon = formsPlt.Plot.Add.Polygon(points);
 
                 //tmpPolygon.LineColor = ScottPlot.Colors.White;
                 //if (randValue > 7)
@@ -101,37 +101,43 @@ namespace BSFiberConcrete
         /// <summary>
         /// Треугольные полигоны закрвашиваются цветом в соответсии с maxTension и minTension
         /// </summary>
-        /// <param name="tension"> Значения напряжений для треугольников в соответсвии с TriangleMesh.Triangles</param>
-        /// <param name="maxTension">Предельное значение напряжения</param>
-        /// <param name="minTension">Предельное значение напряжения</param>
+        /// <param name="_tension"> Значения напряжений для треугольников в соответсвии с TriangleMesh.Triangles</param>
+        /// <param name="_maxTension">Предельное значение напряжения</param>
+        /// <param name="_minTension">Предельное значение напряжения</param>
         /// <returns></returns>
-        public FormsPlot PaintSectionMesh(List<double> tension, double maxTension, double minTension)
+        public FormsPlot PaintSectionMesh(List<double> _tension, double _minTension, double _maxTension)
         {
             FormsPlot formsPlt = new FormsPlot() { Dock = DockStyle.Fill };
+
             for ( int i = 0; i < TriangleMesh.Triangles.Count; i++)
             {
                 // отрисовка гемеотри треугольника
                 Triangle tr = TriangleMesh.Triangles.ToArray()[i];
-                ScottPlot.Coordinates[] pointss = new ScottPlot.Coordinates[3];
-                for (int j = 0; j < 3; j++)
-                {
-                    pointss[j] = new ScottPlot.Coordinates(tr.GetVertex(j).X, tr.GetVertex(j).Y);
-                }
-                ScottPlot.Plottables.Polygon tmpPolygon = formsPlt.Plot.Add.Polygon(pointss);
 
-                // определение цвета треугольник
-                double tmpTension = tension[i]; 
+                ScottPlot.Coordinates[] points = new ScottPlot.Coordinates[3];
+
+                for (int j = 0; j < points.Length; j++)
+                {
+                    points[j] = new ScottPlot.Coordinates(tr.GetVertex(j).X, tr.GetVertex(j).Y);
+                }
+                ScottPlot.Plottables.Polygon tmpPolygon = formsPlt.Plot.Add.Polygon(points);
+
+                // определение цвета треугольника
+                double tmpTension = _tension[i]; 
+
                 tmpPolygon.LineColor = ScottPlot.Colors.White;
-                if (maxTension >= tmpTension)
+                if (_maxTension >= tmpTension)
                     tmpPolygon.FillColor = ScottPlot.Colors.Red;
-                else if ( minTension <= tmpTension)
+                else if ( _minTension <= tmpTension)
                     tmpPolygon.FillColor = ScottPlot.Colors.Blue;
                 else
                     tmpPolygon.FillColor = ScottPlot.Colors.Green;
             }
 
-            formsPlt.Plot.Axes.SquareUnits(); // 
+            formsPlt.Plot.Axes.SquareUnits();  
+
             _formsPlot = formsPlt;
+
             return formsPlt;
         }
     }

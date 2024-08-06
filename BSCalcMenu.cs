@@ -5,6 +5,7 @@ using BSFiberConcrete.BSRFib;
 using BSFiberConcrete.Calc;
 using BSFiberConcrete.LocalStrength;
 using BSFiberConcrete.Section;
+using BSFiberConcrete.Setup;
 using CBAnsDes;
 using CBAnsDes.My;
 using System;
@@ -218,6 +219,18 @@ namespace BSCalcMenu
             //CreateBeamAnalysis();
 
             Process.Start("CBAnsDes.exe");
+        }
+
+        private void btnDeflectionsUlt_Click(object sender, EventArgs e)
+        {
+            BSDeflectionsUlt deflectionsUlt = new BSDeflectionsUlt();
+            deflectionsUlt.Show();
+        }
+
+        private void btnFiberClassSetup_Click(object sender, EventArgs e)
+        {        
+            BSFiberClassSetup fiberClassSetup = new BSFiberClassSetup();
+            fiberClassSetup.Show();
         }
     }
 }

@@ -37,5 +37,10 @@ namespace BSFiberConcrete.Section.DrawBeamSection
             // Add the FormsPlot to the panel
             pnlForPlot.Controls.Add(_plotForForms);
         }
+
+        private void DrawBeamSection_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -1283,7 +1283,7 @@ namespace BSFiberConcrete
             bsCalc1.DictParams(D);
             bsCalc1.GetRods(listD, listX, listY);
             bsCalc1.Run();
-
+           
             BSCalcResultNDM calcRes = new BSCalcResultNDM(bsCalc1.Results);
             calcRes.InitCalcParams(D);
             calcRes.ErrorIdx.Add(bsCalc1.Err); // вывести описание ошибки
@@ -1575,6 +1575,8 @@ namespace BSFiberConcrete
                     GenerateMesh(ref CG); // покрыть сечение сеткой
                     //
                     CalcNDM(BeamSection.Ring);
+
+                    ShowMosaic();
                 }
                 else
                 {
@@ -1814,10 +1816,33 @@ namespace BSFiberConcrete
             sectionChart.Show();
         }
 
+        private void ShowMosaic()
+        {
+            MeshDraw md = new MeshDraw(Tri.Mesh);
+            //md.CreatePlot();
+
+            List<double> tns = new List<double>();
+            int i = 0;
+            foreach (var t in Tri.Mesh.Triangles)
+            {
+                if (i % 2 == 0)
+                    tns.Add(5);
+                else
+                    tns.Add(9);
+                i++;
+            }
+
+            md.PaintSectionMesh(tns, 3, 7);
+
+            md.ShowMesh();
+            //md.SaveToPNG();
+        }
+
+
         // <summary>
         /// Покрыть сечение сеткой
         /// </summary>
-        private string GenerateMesh(ref TriangleNet.Geometry.Point _CG)
+        private string GenerateMesh(ref TriangleNet.Geometry.Point _CG, bool _mosaic = false)
         {
             string pathToSvgFile = "";
             double[] sz = BeamWidtHeight(out double b, out double h, out double area);
@@ -1879,11 +1904,10 @@ namespace BSFiberConcrete
                 throw new Exception("Не задано сечение");
             }
 
-            MeshDraw md = new MeshDraw(Tri.Mesh);
-            md.CreatePLot();
-            md.ShowMesh();
-            //md.SaveToPNG();
-
+            if (_mosaic)
+            {
+                ShowMosaic();                
+            }
 
             triAreas = Tri.triAreas; // площади треугольников
             triCGs = Tri.triCGs; // ц.т. треугольников
@@ -1904,7 +1928,7 @@ namespace BSFiberConcrete
                 string pathToSvgFile = "";
 
                 TriangleNet.Geometry.Point cg = new TriangleNet.Geometry.Point();
-                pathToSvgFile = GenerateMesh(ref cg);
+                pathToSvgFile = GenerateMesh(ref cg, true);
 
                 Process.Start(new ProcessStartInfo { FileName = pathToSvgFile, UseShellExecute = true });
 
