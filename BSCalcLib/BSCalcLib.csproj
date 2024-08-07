@@ -54,6 +54,7 @@
     <Compile Include="LinearEquationsSystem.cs" />
     <Compile Include="BSMesh.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="MeshRect.cs" />
     <Compile Include="Tri.cs" />
   </ItemGroup>
   <ItemGroup>

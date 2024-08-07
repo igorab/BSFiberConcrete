@@ -78,10 +78,10 @@ namespace BSFiberConcrete.CalcGroup2
             if (_bf>0 && _hf>0)
                 n1 = InitRectangleSection(_bf, _hf, -_bf/2.0, 0);
 
-            n2 = InitRectangleSection(_bw, _hw, -_bw / 2.0, hf);
+            n2 = InitRectangleSection(_bw, _hw, -_bw / 2.0, _hf);
 
             if (_b1f > 0 && _h1f > 0)
-                n3 = InitRectangleSection(_b1f, _h1f, -_b1f / 2.0, hf + hw);
+                n3 = InitRectangleSection(_b1f, _h1f, -_b1f / 2.0, _hf + _hw);
 
             return n1+n2+n3;
         }

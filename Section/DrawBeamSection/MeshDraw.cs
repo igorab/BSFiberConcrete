@@ -4,6 +4,8 @@ using ScottPlot.WinForms;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Core.Metadata.Edm;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +27,9 @@ namespace BSFiberConcrete
         /// </summary>
         private FormsPlot _formsPlot;
 
+        private int Ny; 
+        private int Nz;
+
         /// <summary>
         /// Сетки из треугольников
         /// </summary>
@@ -39,8 +44,6 @@ namespace BSFiberConcrete
             TriangleMesh = triangleMesh;
         }
 
-
-
         /// <summary>
         /// Отрисовка объекта FormsPlot на WinForm'е
         /// </summary>
@@ -50,8 +53,7 @@ namespace BSFiberConcrete
                 return;
             DrawBeamSection drawBS = new DrawBeamSection();
             drawBS.PlotForForms = _formsPlot;
-            drawBS.Show();
-                
+            drawBS.Show();                
         }
 
         /// <summary>
@@ -63,7 +65,8 @@ namespace BSFiberConcrete
                 return;
             if (fullPath == null)
                 _formsPlot.Plot.SavePng("beamSectionMesh.png",600,600);
-            else _formsPlot.Plot.SavePng(fullPath, 600, 600);
+            else 
+                _formsPlot.Plot.SavePng(fullPath, 600, 600);
         }
 
 
@@ -139,6 +142,50 @@ namespace BSFiberConcrete
             _formsPlot = formsPlt;
 
             return formsPlt;
+        }
+
+        
+        public MeshDraw(int _Ny, int _Nz)
+        {
+            Ny = _Ny;
+            Nz = _Nz;
+        }
+
+        public FormsPlot CreateRectanglePlot(double _b, double _h)
+        {            
+            var msh = new BSCalcLib.MeshRect(Ny, Nz);
+            msh.Rectangle(_b, _h);
+        
+            FormsPlot formsPlot = new FormsPlot() { Dock = DockStyle.Fill };
+            formsPlot.Plot.Axes.SquareUnits();  
+            
+            foreach (RectangleF tr in msh.rectangleFs)
+            {                
+                ScottPlot.Coordinates[] points = new ScottPlot.Coordinates[4];
+
+                for (int i = 0; i < points.Length; i++)
+                {
+                    points[i] = new ScottPlot.Coordinates(tr.X, tr.Y);
+                }
+
+                ScottPlot.Plottables.Polygon tmpPolygon = formsPlot.Plot.Add.Polygon(points);
+
+                // определение цвета
+                //double tmpTension = _tension[i];
+
+                //tmpPolygon.LineColor = ScottPlot.Colors.White;
+                //if (_maxTension >= tmpTension)
+                //    tmpPolygon.FillColor = ScottPlot.Colors.Red;
+                //else if (_minTension <= tmpTension)
+                //    tmpPolygon.FillColor = ScottPlot.Colors.Blue;
+                //else
+                //    tmpPolygon.FillColor = ScottPlot.Colors.Green;
+
+            }
+
+            _formsPlot = formsPlot;
+
+            return formsPlot;
         }
     }
 }

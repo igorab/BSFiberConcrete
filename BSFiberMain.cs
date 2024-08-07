@@ -1304,6 +1304,8 @@ namespace BSFiberConcrete
             m_Efforts = calcRes.Efforts;
             m_PhysParams = calcRes.PhysParams;
             m_Reinforcement = calcRes.Reinforcement;
+
+            ShowMosaic();
         }
 
 
@@ -1574,9 +1576,7 @@ namespace BSFiberConcrete
                     var CG = new TriangleNet.Geometry.Point(0, 0);
                     GenerateMesh(ref CG); // покрыть сечение сеткой
                     //
-                    CalcNDM(BeamSection.Ring);
-
-                    ShowMosaic();
+                    CalcNDM(BeamSection.Ring);                    
                 }
                 else
                 {
@@ -1818,24 +1818,38 @@ namespace BSFiberConcrete
 
         private void ShowMosaic()
         {
-            MeshDraw md = new MeshDraw(Tri.Mesh);
-            //md.CreatePlot();
+            MeshDraw mDraw;
 
-            List<double> tns = new List<double>();
-            int i = 0;
-            foreach (var t in Tri.Mesh.Triangles)
+            double[] sz = BeamSizes();
+
+            if (m_BeamSection == BeamSection.Rect)
             {
-                if (i % 2 == 0)
-                    tns.Add(5);
-                else
-                    tns.Add(9);
-                i++;
+                mDraw = new MeshDraw((int)numMeshN.Value, (int)numMeshN.Value);
+                                
+                mDraw.CreateRectanglePlot(sz[0], sz[1]);
+
+                mDraw.ShowMesh();
             }
+            else if (m_BeamSection == BeamSection.Ring)
+            {
+                mDraw = new MeshDraw(Tri.Mesh);
 
-            md.PaintSectionMesh(tns, 3, 7);
+                List<double> tns = new List<double>();
+                int i = 0;
+                foreach (TriangleNet.Topology.Triangle t in Tri.Mesh.Triangles)
+                {
+                    if (i % 2 == 0)
+                        tns.Add(5);
+                    else
+                        tns.Add(9);
+                    i++;
+                }
 
-            md.ShowMesh();
-            //md.SaveToPNG();
+                mDraw.PaintSectionMesh(tns, 3, 7);
+
+                mDraw.ShowMesh();
+                //md.SaveToPNG();
+            }
         }
 
 
@@ -2249,6 +2263,11 @@ namespace BSFiberConcrete
         private void label12_MouseMove(object sender, MouseEventArgs e)
         {
             Cursor.Current = Cursors.Hand;
+        }
+
+        private void btnMosaic_Click(object sender, EventArgs e)
+        {
+            ShowMosaic();
         }
     }
 }
