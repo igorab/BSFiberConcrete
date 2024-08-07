@@ -157,30 +157,19 @@ namespace BSFiberConcrete
             msh.Rectangle(_b, _h);
         
             FormsPlot formsPlot = new FormsPlot() { Dock = DockStyle.Fill };
-            formsPlot.Plot.Axes.SquareUnits();  
-            
+            formsPlot.Plot.Axes.SquareUnits();
+
             foreach (RectangleF tr in msh.rectangleFs)
-            {                
-                ScottPlot.Coordinates[] points = new ScottPlot.Coordinates[4];
-
-                for (int i = 0; i < points.Length; i++)
-                {
-                    points[i] = new ScottPlot.Coordinates(tr.X, tr.Y);
-                }
-
+            {
+                ScottPlot.Coordinates[] points = new ScottPlot.Coordinates[] 
+                { 
+                    new ScottPlot.Coordinates(tr.Left, tr.Bottom),
+                    new ScottPlot.Coordinates(tr.Right, tr.Bottom),
+                    new ScottPlot.Coordinates(tr.Right, tr.Top),
+                    new ScottPlot.Coordinates(tr.Left, tr.Top)
+                };
+                                                        
                 ScottPlot.Plottables.Polygon tmpPolygon = formsPlot.Plot.Add.Polygon(points);
-
-                // определение цвета
-                //double tmpTension = _tension[i];
-
-                //tmpPolygon.LineColor = ScottPlot.Colors.White;
-                //if (_maxTension >= tmpTension)
-                //    tmpPolygon.FillColor = ScottPlot.Colors.Red;
-                //else if (_minTension <= tmpTension)
-                //    tmpPolygon.FillColor = ScottPlot.Colors.Blue;
-                //else
-                //    tmpPolygon.FillColor = ScottPlot.Colors.Green;
-
             }
 
             _formsPlot = formsPlot;

@@ -61,7 +61,7 @@ namespace BSCalcLib
                     float z_right = (float)(iz * sz + sz + _z0);
                     float y_right = (float)(iy * sy + sy + _y0);
 
-                    RectangleF rectangleF = new RectangleF(z_left, y_left, z_right, y_right);
+                    RectangleF rectangleF = RectangleF.FromLTRB(z_left, y_left, z_right, y_right);
 
                     rectangleFs.Add(rectangleF);
                 }
