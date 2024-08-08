@@ -1831,7 +1831,7 @@ namespace BSFiberConcrete
             {
                 mDraw = new MeshDraw((int)numMeshN.Value, (int)numMeshN.Value);                                                
                 mDraw.MaxVal = (double)numEps_fbt_ult.Value;
-                mDraw.MinVal = (double)numEps_fb_ult.Value;
+                mDraw.MinVal = -(double)numEps_fb_ult.Value;
                 mDraw.Values = _values;
                 mDraw.CreateRectanglePlot(sz, m_BeamSection);
                 mDraw.ShowMesh();
@@ -1843,7 +1843,7 @@ namespace BSFiberConcrete
 
                 mDraw = new MeshDraw(Tri.Mesh);
                 mDraw.MaxVal = (double)numEps_fbt_ult.Value;
-                mDraw.MinVal = (double)numEps_fb_ult.Value;
+                mDraw.MinVal = -(double)numEps_fb_ult.Value;
                 mDraw.Values = _values;                
                 mDraw.PaintSectionMesh();
 

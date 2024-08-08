@@ -131,16 +131,20 @@ namespace BSFiberConcrete
                     points[j] = new ScottPlot.Coordinates(tr.GetVertex(j).X, tr.GetVertex(j).Y);
                 }
                 ScottPlot.Plottables.Polygon poly = formsPlt.Plot.Add.Polygon(points);
-                
-                double measured_value = Values[i]; 
 
-                poly.LineColor = ScottPlot.Colors.White;
-                if (MaxVal >= measured_value)
-                    poly.FillColor = ScottPlot.Colors.Red;
-                else if ( MinVal <= measured_value)
-                    poly.FillColor = ScottPlot.Colors.Violet;
-                else
-                    poly.FillColor = ScottPlot.Colors.Green;
+                if (Values != null )
+                {
+                    double measured_value = Values[i];
+
+                    if (measured_value > MinVal && measured_value < MaxVal)
+                        poly.FillColor = ScottPlot.Colors.Green;
+                    else if (measured_value >= MaxVal)
+                        poly.FillColor = ScottPlot.Colors.Red;
+                    else if (measured_value <= MinVal)
+                        poly.FillColor = ScottPlot.Colors.Violet;
+                    else
+                        poly.FillColor = ScottPlot.Colors.Green;
+                }
             }
 
             formsPlt.Plot.Axes.SquareUnits();  
@@ -184,11 +188,14 @@ namespace BSFiberConcrete
                 ScottPlot.Plottables.Polygon poly = formsPlot.Plot.Add.Polygon(points);
 
                 if (Values != null && Values.Count == cnt)
-                {                    
-                    double val = Values[idx];
-                    if (val >= MaxVal)                    
+                {                                        
+                    double measured_value = Values[idx];
+
+                    if (measured_value > MinVal && measured_value < MaxVal)
+                        poly.FillColor = ScottPlot.Colors.Green;
+                    else if (measured_value >= MaxVal)
                         poly.FillColor = ScottPlot.Colors.Red;
-                    else if (val <= MinVal)
+                    else if (measured_value <= MinVal)
                         poly.FillColor = ScottPlot.Colors.Violet;
                     else
                         poly.FillColor = ScottPlot.Colors.Green;
