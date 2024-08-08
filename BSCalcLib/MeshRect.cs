@@ -56,12 +56,13 @@ namespace BSCalcLib
             {
                 for (int iy = 0; iy < ny; iy++)
                 {
-                    float z_left = (float)( iz * sz + _z0);
-                    float y_left = (float)(iy * sy + _y0);
-                    float z_right = (float)(iz * sz + sz + _z0);
-                    float y_right = (float)(iy * sy + sy + _y0);
+                    float bottom = (float)( iz * sz + _z0);
+                    float left = (float)(iy * sy + _y0);
 
-                    RectangleF rectangleF = RectangleF.FromLTRB(z_left, y_left, z_right, y_right);
+                    float top = (float)(iz * sz + sz + _z0);
+                    float right = (float)(iy * sy + sy + _y0);
+
+                    RectangleF rectangleF = RectangleF.FromLTRB(left, top, right, bottom);
 
                     rectangleFs.Add(rectangleF);
                 }
@@ -70,7 +71,7 @@ namespace BSCalcLib
             return n;
         }
 
-        public int InitIBeamSection(double _bf, double _hf, double _bw, double _hw, double _b1f, double _h1f)
+        public int IBeamSection(double _bf, double _hf, double _bw, double _hw, double _b1f, double _h1f)
         {
             int n1 = 0, n2 = 0, n3 = 0;
 

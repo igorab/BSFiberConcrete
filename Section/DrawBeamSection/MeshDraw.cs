@@ -30,6 +30,11 @@ namespace BSFiberConcrete
         private int Ny; 
         private int Nz;
 
+        public double MaxVal { get; set; }
+        public double MinVal { get; set; }
+        public List<double> Values { get; set; }
+
+
         /// <summary>
         /// Сетки из треугольников
         /// </summary>
@@ -53,6 +58,8 @@ namespace BSFiberConcrete
                 return;
             DrawBeamSection drawBS = new DrawBeamSection();
             drawBS.PlotForForms = _formsPlot;
+            drawBS.MinValue = MinVal;
+            drawBS.MaxValue = MaxVal;
             drawBS.Show();                
         }
 
@@ -108,7 +115,7 @@ namespace BSFiberConcrete
         /// <param name="_maxTension">Предельное значение напряжения</param>
         /// <param name="_minTension">Предельное значение напряжения</param>
         /// <returns></returns>
-        public FormsPlot PaintSectionMesh(List<double> _tension, double _minTension, double _maxTension)
+        public FormsPlot PaintSectionMesh()
         {
             FormsPlot formsPlt = new FormsPlot() { Dock = DockStyle.Fill };
 
@@ -123,18 +130,17 @@ namespace BSFiberConcrete
                 {
                     points[j] = new ScottPlot.Coordinates(tr.GetVertex(j).X, tr.GetVertex(j).Y);
                 }
-                ScottPlot.Plottables.Polygon tmpPolygon = formsPlt.Plot.Add.Polygon(points);
+                ScottPlot.Plottables.Polygon poly = formsPlt.Plot.Add.Polygon(points);
+                
+                double measured_value = Values[i]; 
 
-                // определение цвета треугольника
-                double tmpTension = _tension[i]; 
-
-                tmpPolygon.LineColor = ScottPlot.Colors.White;
-                if (_maxTension >= tmpTension)
-                    tmpPolygon.FillColor = ScottPlot.Colors.Red;
-                else if ( _minTension <= tmpTension)
-                    tmpPolygon.FillColor = ScottPlot.Colors.Blue;
+                poly.LineColor = ScottPlot.Colors.White;
+                if (MaxVal >= measured_value)
+                    poly.FillColor = ScottPlot.Colors.Red;
+                else if ( MinVal <= measured_value)
+                    poly.FillColor = ScottPlot.Colors.Violet;
                 else
-                    tmpPolygon.FillColor = ScottPlot.Colors.Green;
+                    poly.FillColor = ScottPlot.Colors.Green;
             }
 
             formsPlt.Plot.Axes.SquareUnits();  
@@ -151,14 +157,20 @@ namespace BSFiberConcrete
             Nz = _Nz;
         }
 
-        public FormsPlot CreateRectanglePlot(double _b, double _h)
+        public FormsPlot CreateRectanglePlot(double[] sz, BeamSection _bs)
         {            
             var msh = new BSCalcLib.MeshRect(Ny, Nz);
-            msh.Rectangle(_b, _h);
-        
+
+            if (_bs == BeamSection.Rect)
+                msh.Rectangle(sz[0], sz[1]);
+            else if (_bs == BeamSection.IBeam || _bs == BeamSection.TBeam || _bs == BeamSection.LBeam)
+                msh.IBeamSection(sz[0], sz[1], sz[2], sz[3], sz[4], sz[5]);
+
             FormsPlot formsPlot = new FormsPlot() { Dock = DockStyle.Fill };
             formsPlot.Plot.Axes.SquareUnits();
 
+            int idx = 0;
+            int cnt = msh.rectangleFs.Count;
             foreach (RectangleF tr in msh.rectangleFs)
             {
                 ScottPlot.Coordinates[] points = new ScottPlot.Coordinates[] 
@@ -169,7 +181,20 @@ namespace BSFiberConcrete
                     new ScottPlot.Coordinates(tr.Left, tr.Top)
                 };
                                                         
-                ScottPlot.Plottables.Polygon tmpPolygon = formsPlot.Plot.Add.Polygon(points);
+                ScottPlot.Plottables.Polygon poly = formsPlot.Plot.Add.Polygon(points);
+
+                if (Values != null && Values.Count == cnt)
+                {                    
+                    double val = Values[idx];
+                    if (val >= MaxVal)                    
+                        poly.FillColor = ScottPlot.Colors.Red;
+                    else if (val <= MinVal)
+                        poly.FillColor = ScottPlot.Colors.Violet;
+                    else
+                        poly.FillColor = ScottPlot.Colors.Green;
+                }
+
+                idx++;
             }
 
             _formsPlot = formsPlot;
