@@ -74,7 +74,8 @@ namespace BSBeamCalculator
                 label9.Text = "0";
                 label12.Text = "0";
                 label18.Text = "0";
-                _pathToBeamDiagrams.Clear();
+                if (_pathToBeamDiagrams != null)
+                { _pathToBeamDiagrams.Clear(); }
 
                 // собираем данные с формы
                 double lengthBeam = (double)numericUpDown1.Value;
@@ -144,16 +145,19 @@ namespace BSBeamCalculator
                     _pathToBeamDiagrams.Add(pathToPictureM);
                 }
 
-                double maxValueM;
-                if (Math.Abs(result.maxM) >= Math.Abs(result.minM))
-                { maxValueM = result.maxM; }
-                else { maxValueM = result.minM; }
-                for (int i = 0; i < _beamEfforts.ColumnCount; i++)
+                if (_beamEfforts != null)
                 {
-                    if (_beamEfforts.Columns[i].Name == "My")
-                    { _beamEfforts[i, 0].Value = Math.Round(maxValueM,n).ToString(); }
-                    else if (_beamEfforts.Columns[i].Name == "Q")
-                    { _beamEfforts[i, 0].Value = Math.Round(result.maxAbsQ, n).ToString(); }
+                    double maxValueM;
+                    if (Math.Abs(result.maxM) >= Math.Abs(result.minM))
+                    { maxValueM = result.maxM; }
+                    else { maxValueM = result.minM; }
+                    for (int i = 0; i < _beamEfforts.ColumnCount; i++)
+                    {
+                        if (_beamEfforts.Columns[i].Name == "My")
+                        { _beamEfforts[i, 0].Value = Math.Round(maxValueM, n).ToString(); }
+                        else if (_beamEfforts.Columns[i].Name == "Q")
+                        { _beamEfforts[i, 0].Value = Math.Round(result.maxAbsQ, n).ToString(); }
+                    }
                 }
             }
             catch (Exception ex)
@@ -213,7 +217,6 @@ namespace BSBeamCalculator
         {
             ControllerBeamDiagram.support = "Fixed-No";
         }
-
         private void radioButton3_CheckedChanged(object sender, EventArgs e)
         {
             ControllerBeamDiagram.support = "Pinned-Movable";
@@ -237,6 +240,29 @@ namespace BSBeamCalculator
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
             _beamLength.Text = numericUpDown1.Value.ToString();
+        }
+
+        private void BeamCalculatorControl_Load(object sender, EventArgs e)
+        {
+
+
+            // Create the ToolTip and associate with the Form container.
+            ToolTip toolTip1 = new ToolTip();
+
+            // Set up the delays for the ToolTip.
+            toolTip1.AutoPopDelay = 5000;
+            toolTip1.InitialDelay = 1000;
+            toolTip1.ReshowDelay = 50;
+            // Force the ToolTip text to be displayed whether or not the form is active.
+            toolTip1.ShowAlways = true;
+
+            // Set up the ToolTip text for the Button and Checkbox.
+            toolTip1.SetToolTip(this.radioButton1, "Жестко защемленная балка");
+            toolTip1.SetToolTip(this.radioButton2, "Консольная балка");
+            toolTip1.SetToolTip(this.radioButton3, "Простая балка");
+            toolTip1.SetToolTip(this.radioButton4, "Балка с защемленным и шарнирно опертым концами");
+            toolTip1.SetToolTip(this.radioButton5, "Консольная балка");
+            toolTip1.SetToolTip(this.radioButton6, "Балка с защемленным и шарнирно опертым концами");
         }
     }
 }
