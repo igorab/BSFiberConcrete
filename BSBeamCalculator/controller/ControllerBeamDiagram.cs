@@ -52,12 +52,12 @@ namespace BSBeamCalculator
             result = BD.CalculateBeamDiagram();
 
 
-            if (resultEfforts.ContainsKey("Mmax"))
-                resultEfforts["Mmax"] = result.maxM;
-            if (resultEfforts.ContainsKey("Mmin"))
-                resultEfforts["Mmin"] = result.minM;
-            if (resultEfforts.ContainsKey("Q"))
-                resultEfforts["Q"] = result.maxAbsQ;
+            //if (resultEfforts.ContainsKey("Mmax"))
+            //    resultEfforts["Mmax"] = result.maxM;
+            //if (resultEfforts.ContainsKey("Mmin"))
+            //    resultEfforts["Mmin"] = result.minM;
+            //if (resultEfforts.ContainsKey("Q"))
+            //    resultEfforts["Q"] = result.maxAbsQ;
         }
 
     }

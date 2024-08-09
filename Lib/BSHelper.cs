@@ -63,6 +63,26 @@ namespace BSFiberConcrete
         /// </summary>
         public const string OffsetYieldStress = "offset";
 
+        /// <summary>
+        /// Является ли сеченние составленным из прямоугольников
+        /// </summary>
+        /// <param name="_BeamSection">Тип сечения</param>
+        /// <returns></returns>
+        public static bool IsRectangled(BeamSection _BeamSection)
+        {
+            return _BeamSection == BeamSection.Rect || 
+                   _BeamSection == BeamSection.TBeam || 
+                   _BeamSection == BeamSection.LBeam || 
+                   _BeamSection == BeamSection.IBeam;
+        }
+
+        // тавровое сечение
+        public static bool IsITL(BeamSection _BeamSection)
+        {
+            return _BeamSection == BeamSection.TBeam ||
+                   _BeamSection == BeamSection.LBeam ||
+                   _BeamSection == BeamSection.IBeam;
+        }
 
 
         public static string ImgResource(BeamSection _bs, bool _useReinforcement = false)

@@ -40,7 +40,7 @@ namespace BSFiberConcrete
         /// </summary>
         public double Eps_fbt_ult { get; set; }
 
-        private double Yft, Yb, Yb1, Yb2, Yb3, Yb5;
+        public  double Yft, Yb, Yb1, Yb2, Yb3, Yb5;
 
         public double Eps_fb0 { get; set; }
         public double Eps_fb2 { get; set; }

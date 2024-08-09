@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BSLocalStrength));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGridLocalStrength = new System.Windows.Forms.DataGridView();
             this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tableLayoutPanelMain = new System.Windows.Forms.TableLayoutPanel();
@@ -44,13 +44,13 @@
             this.cmbScheme = new System.Windows.Forms.ComboBox();
             this.chboxReinforcement = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.varDescrDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.varNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.valueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.localStressBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridLocalStrength)).BeginInit();
             this.tableLayoutPanelMain.SuspendLayout();
             this.tableLayoutPanelBottom.SuspendLayout();
@@ -187,7 +187,7 @@
             this.tableLayoutPanel3.ColumnCount = 3;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35.13514F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 64.86487F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 217F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 225F));
             this.tableLayoutPanel3.Controls.Add(this.labelScheme, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.cmbScheme, 1, 0);
             this.tableLayoutPanel3.Controls.Add(this.chboxReinforcement, 2, 0);
@@ -202,7 +202,7 @@
             // 
             this.labelScheme.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelScheme.AutoSize = true;
-            this.labelScheme.Location = new System.Drawing.Point(22, 10);
+            this.labelScheme.Location = new System.Drawing.Point(19, 10);
             this.labelScheme.Name = "labelScheme";
             this.labelScheme.Size = new System.Drawing.Size(39, 13);
             this.labelScheme.TabIndex = 0;
@@ -219,7 +219,7 @@
             "г",
             "д",
             "е"});
-            this.cmbScheme.Location = new System.Drawing.Point(67, 6);
+            this.cmbScheme.Location = new System.Drawing.Point(64, 6);
             this.cmbScheme.Name = "cmbScheme";
             this.cmbScheme.Size = new System.Drawing.Size(34, 21);
             this.cmbScheme.TabIndex = 1;
@@ -229,7 +229,7 @@
             // 
             this.chboxReinforcement.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.chboxReinforcement.AutoSize = true;
-            this.chboxReinforcement.Location = new System.Drawing.Point(185, 8);
+            this.chboxReinforcement.Location = new System.Drawing.Point(177, 8);
             this.chboxReinforcement.Name = "chboxReinforcement";
             this.chboxReinforcement.Size = new System.Drawing.Size(75, 17);
             this.chboxReinforcement.TabIndex = 2;
@@ -254,6 +254,19 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(68, 126);
             this.tableLayoutPanel1.TabIndex = 5;
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.White;
+            this.label2.Location = new System.Drawing.Point(3, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(62, 31);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Ввести значения";
             // 
             // label1
             // 
@@ -300,9 +313,9 @@
             // 
             this.valueDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             this.valueDataGridViewTextBoxColumn.DataPropertyName = "Value";
-            dataGridViewCellStyle2.Format = "N4";
-            dataGridViewCellStyle2.NullValue = null;
-            this.valueDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Format = "N4";
+            dataGridViewCellStyle1.NullValue = null;
+            this.valueDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
             this.valueDataGridViewTextBoxColumn.HeaderText = "Значение";
             this.valueDataGridViewTextBoxColumn.Name = "valueDataGridViewTextBoxColumn";
             this.valueDataGridViewTextBoxColumn.Width = 80;
@@ -310,19 +323,6 @@
             // localStressBindingSource
             // 
             this.localStressBindingSource.DataSource = typeof(BSFiberConcrete.LocalStress);
-            // 
-            // label2
-            // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.AutoSize = true;
-            this.label2.BackColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(3, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(62, 31);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Ввести значения";
             // 
             // BSLocalStrength
             // 

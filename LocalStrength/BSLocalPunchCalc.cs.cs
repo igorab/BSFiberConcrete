@@ -138,6 +138,32 @@ namespace BSFiberConcrete.LocalStrength
             };
         }
 
+        private void RunBetonCalc()
+        {
+            // Приведенная рабочая высота сечения
+            h0 = 0.5 * (h0x + h0y);
+
+            // длина расчетного контура №1
+            double _a = a1 + h0;
+            // ширина расчетного контура №1
+            double _b = a2 + h0;
+
+            // Периметр контура расчетного поперечного сечения
+            u = 2 * _a + 2 * _b;
+
+            // Площадь расчетного поперечного сечения (см2) по ф.(6.92)
+            Afb = u * h0;
+
+            // Предельное усилие, воспринимаемое сталефибробетоном. (кг)
+            Ffb_ult = Rfbt * Afb;
+
+            if (F != 0 || Mx != 0 || My != 0)
+            {
+                RunCalcFM();
+            }
+        }
+
+
 
         public override bool RunCalc()
         {
@@ -153,32 +179,18 @@ namespace BSFiberConcrete.LocalStrength
             try
             {
                 InitValuesFromDataSource();
-
-                // Приведенная рабочая высота сечения
-                h0 = 0.5 * (h0x + h0y);
-
-                // длина расчетного контура №1
-                double _a = a1 + h0;
-                // ширина расчетного контура №1
-                double _b = a2 + h0;
-
-                // Периметр контура расчетного поперечного сечения
-                u = 2 * _a + 2 * _b;
-
-                // Площадь расчетного поперечного сечения (см2) по ф.(6.92)
-                Afb = u * h0;
-
-                // Предельное усилие, воспринимаемое сталефибробетоном. (кг)
-                Ffb_ult = Rfbt * Afb;
-
-                if (F != 0 || Mx != 0 || My != 0)
-                {
-                    RunCalcFM();   
-                }
-                
+                                
                 if (UseReinforcement)
                 {
-                    this.ReinforcementCalc();
+                    // расчет с поперечной арматурой
+                    // проводится по контуру 1 и 2
+                    ReinforcementCalc();
+                }
+                else
+                {
+                    // расчет без арматуры
+                    // проводится по конутуру 1
+                    RunBetonCalc();
                 }
 
                 DCalcResult();
@@ -224,18 +236,17 @@ namespace BSFiberConcrete.LocalStrength
             return true;
         }
 
-       
+
         // расчет элементов на продавливание при действии сосредоточенной силы с арматурой
         public override bool ReinforcementCalc()
-        {            
+        {
             // Длина расчетного контура №2
-            a = a1 + 4 * h0;
-
+            double ca2 = a1 + 4 * h0;
             // Ширина расчетного контура №2
-            b = a2 + 4 * h0;
+            double cb2 = a2 + 4 * h0;
 
             // Периметр контура расчетного поперечного сечения(см)
-            u = 2 * a + 2 * b;
+            u = 2 * ca2 + 2 * cb2;
 
             // Площадь расчетного поперечного сечения(см)
             Afb = u * h0;
@@ -248,8 +259,46 @@ namespace BSFiberConcrete.LocalStrength
             // Коэфициент использования
             util_coeff = F / Ffb_ult;
 
+            //TODO на продавливание с мотементами и с арматурой
+            //if (Mx != 0  || My != 0)
+            //{
+            //    RunReinforcementCalcFM();
+            //}
+
             return true;
         }
+
+
+        // расчет элементов на продавливание при действии сосредоточенных сил и моментов c арматурой
+        public bool RunReinforcementCalcFM()
+        {
+            double Lx = a2 + h0;
+            double Ly = a1 + h0;
+
+            double Ifbx = 2 * (Lx * Math.Pow(1, 3) / 12 + Math.Pow(Ly / 2, 2) * Lx * 1 + 1 * Math.Pow(Ly, 3) / 12);
+            double Ifby = 2 * (Ly * Math.Pow(1, 3) / 12 + Math.Pow(Lx / 2, 2) * Ly * 1 + 1 * Math.Pow(Lx, 3) / 12);
+
+            double x_max = Lx / 2;
+            double y_max = Ly / 2;
+
+            // Момент сопротивления расчетного контура сталефибробетона при продавливании вокруг X
+            Wfbx = Ifbx / y_max;
+
+            // Момент сопротивления расчетного контура сталефибробетона при продавливании вокруг Y
+            Wfby = Ifby / x_max;
+
+            //Предельный изгибающий момент
+            Mfb_x_ult = Rfbt * Wfbx * h0;
+
+            //Предельный изгибающий момент
+            Mfb_y_ult = Rfbt * Wfby * h0;
+
+            FMxMy_uc = F / Ffb_ult + Mx / Mfb_x_ult + My / Mfb_y_ult;
+
+            return true;
+        }
+
+
 
         public override string SampleDescr()
         {
