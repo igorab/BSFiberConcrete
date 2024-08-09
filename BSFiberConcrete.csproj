@@ -373,6 +373,18 @@
       <DependentUpon>DrawBeamSection.cs</DependentUpon>
     </Compile>
     <Compile Include="Section\DrawBeamSection\MeshDraw.cs" />
+    <Compile Include="Setup\BSDeflectionsUlt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Setup\BSDeflectionsUlt.Designer.cs">
+      <DependentUpon>BSDeflectionsUlt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Setup\BSFiberClassSetup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Setup\BSFiberClassSetup.Designer.cs">
+      <DependentUpon>BSFiberClassSetup.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Beam\BSBeamCalcView.resx">
       <DependentUpon>BSBeamCalcView.cs</DependentUpon>
     </EmbeddedResource>
@@ -451,6 +463,12 @@
     <EmbeddedResource Include="Section\DrawBeamSection\DrawBeamSection.resx">
       <DependentUpon>DrawBeamSection.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Setup\BSDeflectionsUlt.resx">
+      <DependentUpon>BSDeflectionsUlt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Setup\BSFiberClassSetup.resx">
+      <DependentUpon>BSFiberClassSetup.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="BSClassDiagram.cd" />
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
@@ -458,6 +476,7 @@
     <None Include="Properties\DataSources\BSRod.datasource" />
     <None Include="Properties\DataSources\Deflection_f_aF.datasource" />
     <None Include="Properties\DataSources\FaF.datasource" />
+    <None Include="Properties\DataSources\FiberClass.datasource" />
     <None Include="Properties\DataSources\FibLab.datasource" />
     <None Include="Properties\DataSources\LocalStress.datasource" />
     <None Include="Properties\DataSources\System.Drawing.Point.datasource" />

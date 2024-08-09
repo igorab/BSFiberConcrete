@@ -86,6 +86,12 @@ namespace BSFiberConcrete.LocalStrength
             // Аматура
             (a, Rs_xy, nx, ny, Asx, Asy, lx, ly, s) =
                 (D["a"], D["Rs_xy"], D["nx"], D["ny"], D["Asx"], D["Asy"], D["lx"], D["ly"], D["s"]);
+
+            if (!UseReinforcement)
+            {
+                a = 0;
+            }
+
         }
 
         public override string ReportName()

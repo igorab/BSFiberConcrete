@@ -553,5 +553,26 @@ namespace BSFiberConcrete.Lib
                 throw;
             }
         }
+
+        /// <summary>
+        /// Класс фибры
+        /// </summary>
+        /// <returns></returns>
+        public static List<FiberClass> LoadFiberClass()
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    var output = cnn.Query<FiberClass>("select * from FiberClass", new DynamicParameters());
+                    return output.ToList();
+                }
+            }
+            catch
+            {
+                return new List<FiberClass>();
+            }
+        }
+
     }
 }

@@ -1146,6 +1146,7 @@ namespace BSFiberConcrete
             bsCalc1.DictParams(D);
             bsCalc1.GetRods(listD, listX, listY);
             bsCalc1.Run();
+            var values = bsCalc1.SigmaBResult;
 
             BSCalcResultNDM calcRes = new BSCalcResultNDM(bsCalc1.Results);
             calcRes.InitCalcParams(D);
@@ -1167,6 +1168,8 @@ namespace BSFiberConcrete
             m_Efforts = calcRes.Efforts;
             m_PhysParams = calcRes.PhysParams;
             m_Reinforcement = calcRes.Reinforcement;
+
+            ShowMosaic(values);
         }
 
 
@@ -1437,7 +1440,7 @@ namespace BSFiberConcrete
                     var CG = new TriangleNet.Geometry.Point(0, 0);
                     GenerateMesh(ref CG); // покрыть сечение сеткой
                     //
-                    CalcNDM(BeamSection.Ring);
+                    CalcNDM(BeamSection.Ring);                    
                 }
                 else
                 {
@@ -1677,14 +1680,50 @@ namespace BSFiberConcrete
             sectionChart.Show();
         }
 
+        /// <summary>
+        ///  Разбиение сечения на конечные элементы
+        /// </summary>
+        /// <param name="_values"></param>
+        private void ShowMosaic(List<double> _values = null)
+        {
+            MeshDraw mDraw;
+
+            double[] sz = BeamSizes();
+
+            if (BSHelper.IsRectangled(m_BeamSection))
+            {
+                mDraw = new MeshDraw((int)numMeshN.Value, (int)numMeshN.Value);                                                
+                mDraw.MaxVal = (double)numEps_fbt_ult.Value;
+                mDraw.MinVal = -(double)numEps_fb_ult.Value;
+                mDraw.Values = _values;
+                mDraw.CreateRectanglePlot(sz, m_BeamSection);
+                mDraw.ShowMesh();
+            }
+            else if (m_BeamSection == BeamSection.Ring)
+            {
+                TriangleNet.Geometry.Point cg = new TriangleNet.Geometry.Point();
+                _= GenerateMesh(ref cg);
+
+                mDraw = new MeshDraw(Tri.Mesh);
+                mDraw.MaxVal = (double)numEps_fbt_ult.Value;
+                mDraw.MinVal = -(double)numEps_fb_ult.Value;
+                mDraw.Values = _values;                
+                mDraw.PaintSectionMesh();
+
+                mDraw.ShowMesh();
+                //md.SaveToPNG();
+            }
+        }
+
+
         // <summary>
         /// Покрыть сечение сеткой
         /// </summary>
         private string GenerateMesh(ref TriangleNet.Geometry.Point _CG)
         {
-            string pathToSvgFile = "";
-            double[] sz = BeamWidtHeight(out double b, out double h, out double area);
+            string pathToSvgFile;
 
+            double[] sz = BeamWidtHeight(out double b, out double h, out double area);
             double meshSize = (double)numMeshN.Value;
 
             BSMesh.Nx = (int)meshSize;
@@ -1701,8 +1740,7 @@ namespace BSFiberConcrete
 
             BSMesh.FilePath = Path.Combine(Environment.CurrentDirectory, "Templates");
             Tri.FilePath = BSMesh.FilePath;
-            BeamSection T = BeamSection.TBeam | BeamSection.IBeam | BeamSection.LBeam;
-
+            
             if (m_BeamSection == BeamSection.Rect)
             {
                 List<double> rect = new List<double> { 0, 0, b, h };
@@ -1711,14 +1749,16 @@ namespace BSFiberConcrete
                 Tri.Mesh = BSMesh.Mesh;
                 // сместить начало координат из левого нижнего угла в центр тяжести
                 Tri.Oxy = _CG;
-                var xxTr = Tri.CalculationScheme();
+
+                _ = Tri.CalculationScheme();
             }
             else if (m_BeamSection == BeamSection.Ring)
             {
                 _CG = new TriangleNet.Geometry.Point(0, 0);
 
-                double R = sz[1];
                 double r = sz[0];
+                double R = sz[1];
+                
                 if (r > R)
                     throw BSBeam_Ring.RadiiError();
 
@@ -1726,30 +1766,26 @@ namespace BSFiberConcrete
                 pathToSvgFile = BSMesh.GenerateRing(R, r, true);
 
                 Tri.Mesh = BSMesh.Mesh;
-                var xxTr = Tri.CalculationScheme();
+                _ = Tri.CalculationScheme();
             }
-            else if (T.HasFlag(m_BeamSection))
+            else if (BSHelper.IsITL(m_BeamSection))
             {
                 List<PointF> pts;
                 BSSection.IBeam(sz, out pts, out PointF _center);
                 _CG = new TriangleNet.Geometry.Point(_center.X, _center.Y);
 
                 pathToSvgFile = BSCalcLib.Tri.CreateIBeamContour(pts);
-                var xxTr = Tri.CalculationScheme();
+                _ = Tri.CalculationScheme();
             }
             else
             {
                 throw new Exception("Не задано сечение");
             }
 
-            MeshDraw md = new MeshDraw(Tri.Mesh);
-            md.CreatePLot();
-            md.ShowMesh();
-            //md.SaveToPNG();
-
-
-            triAreas = Tri.triAreas; // площади треугольников
-            triCGs = Tri.triCGs; // ц.т. треугольников
+            // площади треугольников
+            triAreas = Tri.triAreas;
+            // центры тяжести треугольников
+            triCGs = Tri.triCGs; 
 
             return pathToSvgFile;
         }
@@ -2088,6 +2124,18 @@ namespace BSFiberConcrete
         private void label12_MouseMove(object sender, MouseEventArgs e)
         {
             Cursor.Current = Cursors.Hand;
+        }
+
+        private void btnMosaic_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ShowMosaic();
+            }
+            catch (Exception _e)
+            {
+                MessageBox.Show(_e.Message);
+            }
         }
     }
 }

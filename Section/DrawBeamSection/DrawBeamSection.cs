@@ -19,6 +19,9 @@ namespace BSFiberConcrete.Section.DrawBeamSection
         /// </summary>
         protected FormsPlot _plotForForms = new FormsPlot() { Dock = DockStyle.Fill };
 
+        public double MaxValue { get; set; }
+        public double MinValue { get; set; }
+
         public FormsPlot PlotForForms
         {
             get { return _plotForForms; }
@@ -36,6 +39,12 @@ namespace BSFiberConcrete.Section.DrawBeamSection
 
             // Add the FormsPlot to the panel
             pnlForPlot.Controls.Add(_plotForForms);
+        }
+
+        private void DrawBeamSection_Load(object sender, EventArgs e)
+        {
+            numMaxValue.Value = (decimal)MaxValue;
+            numMinValue.Value = (decimal)MinValue;
         }
     }
 }
