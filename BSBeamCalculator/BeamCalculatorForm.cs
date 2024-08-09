@@ -17,6 +17,7 @@ namespace BSBeamCalculator
             InitializeComponent();
             BeamCalculatorControl beamCalculatorControl = new BeamCalculatorControl();
             this.Controls.Add(beamCalculatorControl);
+            beamCalculatorControl.Dock = System.Windows.Forms.DockStyle.Fill;
         }
     }
 }
