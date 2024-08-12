@@ -48,6 +48,13 @@ namespace BSFiberConcrete
         /// </summary>
         public double a_s1 { get; set; }
 
+        /// <summary>
+        /// Флаг, характеризующий нажатую на форме галочку "Армирование"
+        /// true - галочка нажата
+        /// </summary>
+        public bool Reinforcement { get; set; }
+
+
     /// <summary>
     /// коэффициент упругости
     /// </summary>

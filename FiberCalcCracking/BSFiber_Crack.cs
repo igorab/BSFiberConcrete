@@ -41,21 +41,21 @@ namespace BSFiberConcrete
         public BSMatRod MatRebar { get { return m_Rod; } set { m_Rod = value; } }
 
 
-        public virtual Dictionary<string, double> Coeffs
-        {
-            get
-            {
-                return new Dictionary<string, double>() { { "Yft", MatFiber.Yft }, { "Yb", MatFiber.Yb }, { "Yb1", MatFiber.Yb1 }, { "Yb2", MatFiber.Yb2 }, { "Yb3", MatFiber.Yb3 }, { "Yb5", MatFiber.Yb5 } };
-            }
-        }
+        //public virtual Dictionary<string, double> Coeffs
+        //{
+        //    get
+        //    {
+        //        return new Dictionary<string, double>() { { "Yft", MatFiber.Yft }, { "Yb", MatFiber.Yb }, { "Yb1", MatFiber.Yb1 }, { "Yb2", MatFiber.Yb2 }, { "Yb3", MatFiber.Yb3 }, { "Yb5", MatFiber.Yb5 } };
+        //    }
+        //}
 
-        public virtual Dictionary<string, double> PhysParams
-        {
-            get
-            {
-                return new Dictionary<string, double> { { "Rfbt3n", MatFiber.Rfbt3n }, { "B", MatFiber.B }, { "Rfbn", MatFiber.Rfbn } };
-            }
-        }
+        //public virtual Dictionary<string, double> PhysParams
+        //{
+        //    get
+        //    {
+        //        return new Dictionary<string, double> { { "Rfbt3n", MatFiber.Rfbt3n }, { "B", MatFiber.B }, { "Rfbn", MatFiber.Rfbn } };
+        //    }
+        //}
 
         public Dictionary<string, double> Efforts;
 
@@ -67,6 +67,10 @@ namespace BSFiberConcrete
         // продольная сила от внешней нагрузки
         public double N;
 
+        /// случайный эксцентриситет
+        double e0;
+        /// эксцентриситет от продольной силы
+        double eN;
 
         private double _M_crc;
         private double _a_crc;
@@ -74,27 +78,12 @@ namespace BSFiberConcrete
         // Результаты расчета
         public DataTable resultTable;
 
+        public Dictionary<string, double> resultDictionary;
+
 
         public string DN(Type _T, string _property) => _T.GetProperty(_property).GetCustomAttribute<DisplayNameAttribute>().DisplayName;
 
         public static string DsplN(Type _T, string _property) => new BSFiberCalculation().DN(_T, _property);
-
-        public BSFiberCalc_Cracking(double _Mx = 0, double _My = 0, double _N = 0)
-        {
-            Mx = _Mx;
-            My = _My;
-            N = _N;
-
-            m_Fiber = new BSMatFiber();
-            m_Rod = new BSMatRod();
-
-            Msg = new List<string>();
-
-
-            CreateResTable();
-            AddRowInResTable("", "Mx", Mx, "кг∙см2");
-            AddRowInResTable("", "N", N, "кг");
-        }
 
         public BSFiberCalc_Cracking(Dictionary<string, double> MNQ)
         {
@@ -103,16 +92,18 @@ namespace BSFiberConcrete
             MNQ.TryGetValue("Mx",out Mx);
             MNQ.TryGetValue("My", out My);
             MNQ.TryGetValue("N", out N);
+            MNQ.TryGetValue("e0", out e0);
+            MNQ.TryGetValue("eN", out eN);
 
             m_Fiber = new BSMatFiber();
             m_Rod = new BSMatRod();
 
             Msg = new List<string>();
+            resultDictionary = new Dictionary<string, double>();
 
-
-            CreateResTable();
-            AddRowInResTable("", "Mx", Mx, "кг∙см2");
-            AddRowInResTable("", "N", N, "кг");
+            //CreateResTable();
+            //AddRowInResTable("", "Mx", Mx, "кг∙см2");
+            //AddRowInResTable("", "N", N, "кг");
         }
 
         /// <summary>
@@ -160,18 +151,35 @@ namespace BSFiberConcrete
 
         public virtual bool Calculate()
         {
+            if (MatRebar.Reinforcement == false)
+            {
+                Msg.Add("Расчет по предельным состояниям второй группы выполняется только для армированных элементов. Для получения результатов необходимо нажать галочку 'Армирование'.");
+                return false;
+            }
+
+            if (MatRebar.As <= 0 && MatRebar.As1 <= 0)
+            {
+                Msg.Add("Для получения результатов по предельынм состояниям второй группы необходимо указать площадь арматуры.");
+                return false;
+            }
+
+            CalculateUltM();
+
+            if (typeOfBeamSection != BeamSection.Rect)
+            {
+                Msg.Add("Расчет ширины раскрытия трещены выполняется только для прямогульного сечения");
+                return false;
+            }
+
+            CalculateWidthCrack();
             return true;
         }
 
         public virtual Dictionary<string, double> Results()
         {
-
-            return new Dictionary<string, double>()
-            {
-                { "Момент образования трещин растянутого стальфибробетона, M_crc [кг/см2]", _M_crc},
-                { "Ширина раскрытия трещин от действия внешней нагрузки, a_crc [мм]", _a_crc}
-            };
+            return resultDictionary;
         }
+
 
         # endregion 
 
@@ -253,7 +261,7 @@ namespace BSFiberConcrete
                 Y_t = tmpBeam.r2;
                 double r_m = tmpBeam.r_m;
 
-                double SS = (A_s + A_1s) / Math.PI * 2 * r_m;
+                double SS = (A_s + A_1s) / (Math.PI * 2 * r_m);
                 double Is = Math.PI / 64 * (Math.Pow(2 * (r_m + SS / 2), 4) - Math.Pow(2 * (r_m - SS / 2), 4));
                 I_red = I + alpha * Is;
             }
@@ -285,6 +293,9 @@ namespace BSFiberConcrete
 
             double e_x = W_red / A_red;                                                                              // (6.110)
 
+            double e_x_sum = e_x + e0 + eN;
+
+
             double W_pl = Y * W_red;                                                                                // (6.108)
 
             double M_crc = R_fbt_ser * W_pl + N * e_x;                                                              // (6.107)
@@ -294,24 +305,21 @@ namespace BSFiberConcrete
 
             _M_crc = M_crc;
 
-            AddRowInResTable("Момент образования трещин с учетом неупругих деформаций растянутого стальфибробетона", "Mcrc", M_crc, "кг∙см2");
+            //AddRowInResTable("Момент образования трещин с учетом неупругих деформаций растянутого стальфибробетона", "Mcrc", M_crc, "кг∙см2");
+
+            resultDictionary.Add("Момент образования трещин с учетом неупругих деформаций растянутого стальфибробетона, Mcrc [кг∙см2]", M_crc);
+            resultDictionary.Add("Коэффициент использования по второй группе предельных состояний", My/M_crc);
+            resultDictionary.Add("(Значение для отладки) Площадь приведенного поперечного сечения элемента, A_red [см3]", A_red);
+            resultDictionary.Add("(Значение для отладки) Расстояние от центра тяжести приведенного сечения до расстянутой в стадии эксплуатауции грани, Y_t [см]", Y_t);
+            resultDictionary.Add("(Значение для отладки) Момент инерции приведенного поперечного сечения, I_red [см4]", I_red);
+
+            resultDictionary.Add("(Значение для отладки) Момент сопротивления,  W_red [см3]", W_red);
+            resultDictionary.Add("(Значение для отладки) Расчетное расстояние e_x, [см]", e_x);
+            resultDictionary.Add("(Значение для отладки) Cуммарное расстояние Σe_x, [см]", e_x_sum);
+            resultDictionary.Add("(Значение для отладки) Упругопластический момент сопротивления сечения для крайнего растянутого волокна, W_pl [см4]", W_pl);
 
             return true;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         /// <summary>
@@ -324,17 +332,11 @@ namespace BSFiberConcrete
                 return false;
 
 
-
-
-
-
-
-
-
             // Продольная сила расположенная в центре тяжести приведенного элемента
             // Сжатие       - "+"
             // Растяжение   - "-"
             // N
+
             #region Характеристики материала
             // Площадь растянутой арматуры
             double A_s;
@@ -376,7 +378,7 @@ namespace BSFiberConcrete
             Efb = MatFiber.Efb;
             R_fbt_ser = MatFiber.Rfb_ser;
 
-            
+
             ///
             A = Beam.Area();
             I = Beam.Jy();
@@ -453,19 +455,14 @@ namespace BSFiberConcrete
 
             // предельно-допустимая ширина раскрытия трещин
             // Принимается в зависимости класса арматуры
-            double a_crc_ult = 0.3;
-
-
-
-
-
+            double a_crc_ult = 0.03;
 
 
 
             double epsilon_fb1_red = 0.0015;
             double epslion_fbt2 = 0.004;
 
-            double d_s = 12;
+            double d_s = 12 / 100;
             // диаметр арматуры достать бы
             // MatRebar.
 
@@ -503,9 +500,6 @@ namespace BSFiberConcrete
                 b = tmpBeam.b;
                 h = tmpBeam.h;
                 h_0 = h - a_1;
-
-
-
             }
             else
             {
@@ -524,13 +518,13 @@ namespace BSFiberConcrete
                 (Mu_s * alpha_s2 + Mu_1s * alpha_s1 + alpha_fbt));
             // формула 6.140
 
-            double y_c = Xm; 
+            double y_c = Xm;
 
-            
+
             // момент инерции сжатой зоны
-            double I_fb = b * Math.Pow(y_c, 3) / 12 + b * y_c * Math.Pow(h / 2 - y_c / 2,2);
+            double I_fb = b * Math.Pow(y_c, 3) / 12 + b * y_c * Math.Pow(h / 2 - y_c / 2, 2);
             // момент инерции растянутой зоны
-            double I_fbt = b * Math.Pow(h - y_c, 3) / 12 + b * (h - y_c)  * Math.Pow(h / 2 - ( h - y_c) / 2, 2);
+            double I_fbt = b * Math.Pow(h - y_c, 3) / 12 + b * (h - y_c) * Math.Pow(h / 2 - (h - y_c) / 2, 2);
 
             double I_1s = A_1s * Math.Pow(y_c - a_1, 2);
             double I_s = A_s * Math.Pow(h - y_c - a, 2);
@@ -538,8 +532,7 @@ namespace BSFiberConcrete
             I_red = I_fb + I_fbt * alpha_fbt + I_s * alpha_s2 + I_1s * alpha_s1;
 
             // Напряжение в растянутой арматуре изгибаемых элементов
-            double sigma_s = Mx * (h_0 - y_c) / I_red * alpha_s1;
-
+            double sigma_s = (My * (h_0 - y_c) / I_red + N/ A_red) * alpha_s1;
 
 
             double k_f;
@@ -566,10 +559,21 @@ namespace BSFiberConcrete
 
             // f (класс арматуры и продолжительности нагрузки)acrc_ult
 
-            AddRowInResTable("Предельно допустимая ширина раскрытия трещин", "acrc_ult", a_crc_ult, "мм");
+            //AddRowInResTable("Предельно допустимая ширина раскрытия трещин", "acrc_ult", a_crc_ult, "мм");
+            //AddRowInResTable("Ширина раскрытия трещин от действия внешней нагрузки", "acrc", a_crc, "мм");
 
-            AddRowInResTable("Ширина раскрытия трещин от действия внешней нагрузки", "acrc", a_crc, "мм");
 
+            resultDictionary.Add("Ширина раскрытия трещин от действия внешней нагрузки, a_crc [см]", a_crc);
+            resultDictionary.Add("Предельно допустимая ширина раскрытия трещин, acrc_ult [см]", a_crc_ult);
+
+            //resultDictionary.Add("(Значение для отладки) Площадь приведенного поперечного сечения элемента (2), A_red [см3]", A_red);
+            //resultDictionary.Add("(Значение для отладки) Расстояние от центра тяжести приведенного сечения до расстянутой в стадии эксплуатауции грани (2), Y_t [см]", Y_t);
+            //resultDictionary.Add("(Значение для отладки) Момент инерции приведенного поперечного сечения (2), I_red [см4]", I_red);
+            resultDictionary.Add("(Значение для отладки) Высота сжатой зоны, x_m [см]", Xm);
+            resultDictionary.Add("(Значение для отладки) Момент инерции сжатой зоны, I_fb [см4]", I_fb);
+            resultDictionary.Add("(Значение для отладки) Момент инерции растянутой зоны, I_fbt [см4]", I_fbt);
+            resultDictionary.Add("(Значение для отладки) Напряжение в растянутой арматуре, σ_s [кг/см2]", sigma_s);
+            resultDictionary.Add("(Значение для отладки) базовое расстояние между смежными нормальными трещинами, l_s [см]", l_s);
             return true;
         }
 
@@ -615,118 +619,38 @@ namespace BSFiberConcrete
             resultTable.Rows.Add(row);
         }
 
-        //public bool Calculate()
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public Dictionary<string, double> GeomParams()
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public void GetParams(double[] _t = null)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public void GetSize(double[] _t = null)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public Dictionary<string, double> Results()
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 
 
 
-
-
-
-    //public class Efforts
+    //[Description("Тип нагрузки")]
+    //public enum LoadBeamType
     //{
-    //    public double My;
-    //    public double Mx;
-    //    public double N;
-    //    public double Q;
-    //    /// <summary>
-    //    /// значение полученное с формы
-    //    /// BeamAndEfforts.lengthBeam имеет больший приоритет
-    //    /// </summary>
-    //    public double lengthBeam;
-
-    //    public BeamAndEfforts beamAndEfforts;
-
-
+    //    [Description("Нагрузка не определена")]
+    //    None = 0,
+    //    [Description("Сосредоточенная сила")]
+    //    Concentrated = 1,
+    //    [Description("Распределенная нагрузка")]
+    //    Distributed = 2,
     //}
 
 
-    //public class BeamAndEfforts
+    //[Description("Тип закрепления балки")]
+    //public enum SupportBeamType
     //{
-    //    /// <summary>
-    //    /// тип нагрузки на балку
-    //    /// </summary>
-    //    public LoadBeamType typeOfLoad;
-    //    /// <summary>
-    //    /// тип закрепления бакли
-    //    /// </summary>
-    //    public SupportBeamType typeOfSupport;
-    //    /// <summary>
-    //    /// Данные для построения эпюры
-    //    /// </summary>
-    //    public DiagramResult result;
-
-    //    /// <summary>
-    //    /// длина балки
-    //    /// </summary>
-    //    public double lengthBeam;
-    //    /// <summary>
-    //    /// Величина приложенный силы
-    //    /// </summary>
-    //    public double forceValue;
-    //    /// <summary>
-    //    /// удаленность от левого края балки до первой точки приложения силы
-    //    /// </summary>
-    //    public double x1;
-    //    /// <summary>
-    //    /// удаленность от левого края второй точки приложения силы на балку
-    //    /// </summary>
-    //    public double x2;
-
+    //    [Description("Не определено")]
+    //    None = 0,
+    //    [Description("Жестко защемленная - Свободная")]
+    //    Fixed_No = 1,
+    //    [Description("Свободная - Жестко защемленная")]
+    //    No_Fixed = 2,
+    //    [Description("Жестко защемленная - Жестко защемленная")]
+    //    Fixed_Fixed = 3,
+    //    [Description("Жестко защемленная - Шарнирно подвижная")]
+    //    Fixed_Movable = 4,
+    //    [Description("Шарнирно подвижная - Жестко защемленная")]
+    //    Movable_Fixed = 5,
+    //    [Description("Шарнирно неподвижная - Шарнирно подвижная")]
+    //    Pinned_Movable = 6,
     //}
-
-
-    [Description("Тип нагрузки")]
-    public enum LoadBeamType
-    {
-        [Description("Нагрузка не определена")]
-        None = 0,
-        [Description("Сосредоточенная сила")]
-        Concentrated = 1,
-        [Description("Распределенная нагрузка")]
-        Distributed = 2,
-    }
-
-
-    [Description("Тип закрепления балки")]
-    public enum SupportBeamType
-    {
-        [Description("Не определено")]
-        None = 0,
-        [Description("Жестко защемленная - Свободная")]
-        Fixed_No = 1,
-        [Description("Свободная - Жестко защемленная")]
-        No_Fixed = 2,
-        [Description("Жестко защемленная - Жестко защемленная")]
-        Fixed_Fixed = 3,
-        [Description("Жестко защемленная - Шарнирно подвижная")]
-        Fixed_Movable = 4,
-        [Description("Шарнирно подвижная - Жестко защемленная")]
-        Movable_Fixed = 5,
-        [Description("Шарнирно неподвижная - Шарнирно подвижная")]
-        Pinned_Movable = 6,
-    }
 }

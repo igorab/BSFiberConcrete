@@ -18,6 +18,7 @@ using BSBeamCalculator;
 using BSFiberConcrete.CalcGroup2;
 using MathNet.Numerics;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Runtime.Remoting.Messaging;
 
 namespace BSFiberConcrete
 {
@@ -88,7 +89,6 @@ namespace BSFiberConcrete
             {
                 btnStaticEqCalc.Visible = true;
                 btnCalc_Deform.Visible = false;
-                btnCalcCrack.Visible = false;
                 gridEfforts.Columns["Mx"].Visible = false;
                 tabFiber.TabPages.Remove(tabPageNDM);
                 tabFiber.TabPages.Remove(tabPBeam);
@@ -97,7 +97,6 @@ namespace BSFiberConcrete
             {
                 btnStaticEqCalc.Visible = false;
                 btnCalc_Deform.Visible = true;
-                btnCalcCrack.Visible = true;
                 gridEfforts.Columns["Mx"].Visible = true;
                 tabFiber.TabPages.Remove(tabPBeam);
             }
@@ -107,7 +106,6 @@ namespace BSFiberConcrete
 
                 btnStaticEqCalc.Visible = false;
                 btnCalc_Deform.Visible = true;
-                btnCalcCrack.Visible = true;
 
                 //gridEfforts
                 //BeamCalculatorControl beamCalculatorControl = new BeamCalculatorControl(test_Efforts);
@@ -416,6 +414,8 @@ namespace BSFiberConcrete
                 //TODO need refactoring - параметры с описанием
                 m_PhysParams = bsCalc.PhysicalParameters();
 
+                // запуск расчет по второй группе предельных состояний
+                FiberCalculate_Cracking();
             }
             catch (Exception _e)
             {
@@ -453,7 +453,7 @@ namespace BSFiberConcrete
         /// 1) Расчет предельного момента образования трещин
         /// 2) Расчет ширины раскрытия трещины
         /// </summary>        
-        private void FiberCalculate_Cracking_M_new()
+        private void FiberCalculate_Cracking()
         {
             bool calcOk = false;
             try
@@ -471,6 +471,8 @@ namespace BSFiberConcrete
                 double c_As1 = (double)numAs1.Value;
                 double c_a_s = (double)num_a.Value;
                 double c_a_s1 = (double)num_a1.Value;
+
+                bool reinforcement = checkBoxRebar.Checked;
 
 
 
@@ -517,7 +519,8 @@ namespace BSFiberConcrete
                     As = c_As,
                     As1 = c_As1,
                     a_s = c_a_s,
-                    a_s1 = c_a_s1
+                    a_s1 = c_a_s1,
+                    Reinforcement = reinforcement
                 };
 
 
@@ -527,18 +530,19 @@ namespace BSFiberConcrete
                 calc_Cracking.GetParams(new double[] { 10, 1 });
 
                 // рассчитать 
-                calcOk = calc_Cracking.CalculateUltM();
-                calcOk = calc_Cracking.CalculateWidthCrack();
+                calcOk = calc_Cracking.Calculate();
+                //calcOk = calc_Cracking.CalculateUltM();
+                //calcOk = calc_Cracking.CalculateWidthCrack();
 
 
-                calc_Cracking.ShowResult();
+                //calc_Cracking.ShowResult();
 
 
 
-                m_PhysParams = calc_Cracking.PhysParams;    // хардкодом прописанные параметры фибробетона
+                //m_PhysParams = calc_Cracking.PhysParams;    // хардкодом прописанные параметры фибробетона
                 //m_Coeffs = calc_Cracking.Coeffs;          // коэффициенты надежности 
-                m_Efforts = calc_Cracking.Efforts;          // нагрузки 
-                m_GeomParams = bsBeam.GetDimension();       // Геометрия сечения
+                //m_Efforts = calc_Cracking.Efforts;          // нагрузки 
+                //m_GeomParams = bsBeam.GetDimension();       // Геометрия сечения
                 //m_CalcResults = calc_Cracking.Results();
                 //m_Message = calc_Cracking.Msg;
 
@@ -546,7 +550,9 @@ namespace BSFiberConcrete
                 //m_Coeffs = bsCalc.Coeffs;
                 //m_Efforts = bsCalc.Efforts;
                 //m_GeomParams = bsCalc.GeomParams();
-
+                if (m_Message == null)
+                { m_Message = new List<string>(); }
+                m_Message.AddRange(calc_Cracking.Msg);
 
                 m_CalcResults2Group = calc_Cracking.Results();
                 
@@ -558,34 +564,29 @@ namespace BSFiberConcrete
                 MessageBox.Show("Ошибка в расчете: " + _e.Message);
             }
 
-            try
-            {
+            //try
+            //{
             //    //if (bsCalc is null)
             //    //    throw new Exception("Не выполнен расчет");
+            //if (calcOk)
+            //{
+            //    string reportName = "Расчет по обрзованию и раскрытию трещин";
+            //    string pathToHtmlFile = CreateReport(3, m_BeamSection, reportName);
+            //    System.Diagnostics.Process.Start(pathToHtmlFile);
+            //}
+            //else
+            //{
+            //    string errMsg = "";
+            //    foreach (string ms in m_Message) errMsg += ms + ";\t\n";
 
-            if (calcOk)
-            {
-                    string reportName = "Расчет по обрзованию и раскрытию трещин";
-                    string pathToHtmlFile = CreateReport(3, m_BeamSection, reportName);
-
-                System.Diagnostics.Process.Start(pathToHtmlFile);
-            }
-
-            //    else
-            //    {
-            //        string errMsg = "";
-            //        foreach (string ms in m_Message) errMsg += ms + ";\t\n";
-
-            //        MessageBox.Show(errMsg);
-            //    }
-
-            }
-            catch (Exception _e)
-            {
-                MessageBox.Show("Ошибка в отчете " + _e.Message);
-            }
+            //    MessageBox.Show(errMsg);
+            //}
+            //}
+            //catch (Exception _e)
+            //{ MessageBox.Show("Ошибка в отчете " + _e.Message); }
 
         }
+
 
         /// <summary>
         ///  Сформировать отчет
@@ -888,7 +889,10 @@ namespace BSFiberConcrete
             BSFiberCalc_MNQ fiberCalc = new BSFiberCalc_MNQ();
             try
             {
+                m_Message = new List<string>();
                 FiberCalc_MNQ(out fiberCalc, checkBoxRebar.Checked);
+                // расчет по второй группе предельных состояний
+                FiberCalculate_Cracking();
             }
             catch (Exception _ex)
             {
@@ -899,6 +903,9 @@ namespace BSFiberConcrete
                 BSFiberReport_N report = new BSFiberReport_N();
                 report.ImageCalc = fiberCalc.ImageCalc();
                 report.BeamSection = m_BeamSection;
+                // для расчета по второй грппе пред состояний
+                report.CalcResults2Group = m_CalcResults2Group;
+                report.Messages = m_Message;
                 report.InitFromFiberCalc(fiberCalc);
 
                 string pathToHtmlFile = report.CreateReport(2);
@@ -917,7 +924,11 @@ namespace BSFiberConcrete
 
             try
             {
+                m_Message = new List<string>();
+
                 FiberCalc_MNQ(out fiberCalc, true, _shear: true);
+                // Расчет по второй группе предельных состояний
+                FiberCalculate_Cracking();
             }
             catch (Exception _ex)
             {
@@ -929,6 +940,9 @@ namespace BSFiberConcrete
                 report.BeamSection = m_BeamSection;
                 report.ImageCalc = fiberCalc.ImageCalc();
                 report.InitFromFiberCalc(fiberCalc);
+                // для расчета по второй грппе пред состояний
+                report.CalcResults2Group = m_CalcResults2Group;
+                report.Messages = m_Message;
 
                 string pathToHtmlFile = report.CreateReport(3);
 
@@ -959,7 +973,6 @@ namespace BSFiberConcrete
             GetEffortsFromForm(out Dictionary<string, double> MNQ);
 
             (double _M, double _N, double _Q) = (MNQ["My"], MNQ["N"], MNQ["Q"]);
-
             if (_M < 0 || _N < 0)
             {
                 MessageBox.Show("Расчет по методу статического равновесия не реализован для отрицательных значений M и N.\n Воспользуйтесь расчетом по методу НДМ");
@@ -980,6 +993,7 @@ namespace BSFiberConcrete
             {
                 FiberCalculate_Shear();
             }
+            
         }
 
         private void btnFactors_Click(object sender, EventArgs e)
@@ -2028,20 +2042,14 @@ namespace BSFiberConcrete
         {
             try
             {
-                //FiberCalculate_Cracking_M_old();
-                FiberCalculate_Cracking_M_new();
+                FiberCalculate_Cracking();
             }
             catch (Exception _ex)
             {
                 MessageBox.Show(_ex.Message);
             }
-
         }
 
-        private void tabConcrete_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void label12_Click(object sender, EventArgs e)
         {
