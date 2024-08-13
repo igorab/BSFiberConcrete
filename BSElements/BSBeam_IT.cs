@@ -15,18 +15,18 @@ namespace BSFiberConcrete
     public class BSBeam_IT : BSBeam
     {
         // размеры:
-        [DisplayName("Ширина нижней полки двутавра")]
-        public double bf { get; set; }
-        [DisplayName("Высота нижней полки двутавра")]
-        public double hf { get; set; }
-        [DisplayName("Высота стенки двутавра")]
-        public double hw { get; set; }
-        [DisplayName("Ширина стенки двутавра")]
-        public double bw { get; set; }
-        [DisplayName("Ширина верхней полки двутавра")]
-        public double b1f { get; set; }
-        [DisplayName("Высота верхней полки двутавра")]
-        public double h1f { get; set; }
+        [DisplayName("Ширина нижней полки, bf, [см]")]
+        public double bf { get; protected set; }
+        [DisplayName("Высота нижней полки, hf, [см]")]
+        public double hf { get; protected set; }
+        [DisplayName("Высота стенки, hw, [см]")]
+        public double hw { get; protected set; }
+        [DisplayName("Ширина стенки, bw, [см]")]
+        public double bw { get; protected set; }
+        [DisplayName("Ширина верхней полки, b1f, [см]")]
+        public double b1f { get; protected set; }
+        [DisplayName("Высота верхней полки, h1f, [см]")]
+        public double h1f { get; protected set; }
 
         public override double Width => Math.Max(bf, bw);
         public override double Height => hf + hw + h1f;
@@ -89,6 +89,24 @@ namespace BSFiberConcrete
         }
 
 
+        /// <summary>
+        /// Возращает габаритные размеры сечения
+        /// </summary>
+        /// <returns></returns>
+        public override Dictionary<string, double> GetDimension()
+        {
+            Dictionary<string, double> dimensionOfSection = new Dictionary<string, double>()
+            {
+                { DN(typeof(BSBeam_IT), "bf"), bf },
+                { DN(typeof(BSBeam_IT), "hf"), hf },
+                { DN(typeof(BSBeam_IT), "hw"), hw },
+                { DN(typeof(BSBeam_IT), "bw"), bw },
+                { DN(typeof(BSBeam_IT), "b1f"), b1f },
+                { DN(typeof(BSBeam_IT), "h1f"), h1f }
+            };
+            return dimensionOfSection;
+        }
+
         // статические моменты относительно осей 
         public override double Sy() => hf * bf * hf / 2 + hw * bw * (hf + hw / 2) + h1f * b1f * (Height - h1f / 2);
         public override double Sx() => (hf * bf + hw * bw + h1f * b1f) * Width / 2; // не на 100% уверен в формуле
@@ -99,7 +117,7 @@ namespace BSFiberConcrete
             return new Exception("Некорректные размеры сечения: " + _txt);
         }
 
-        public override void GetSizes(double[] _t) 
+        public override void SetSizes(double[] _t) 
         {
             (bf, hf, bw, hw, b1f, h1f, Length) = (_t[0], _t[1], _t[2], _t[3], _t[4], _t[5], _t[6]);
             

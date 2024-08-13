@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 
 namespace BSFiberConcrete
-{       
+{
     /// <summary>
     /// Балка
     /// </summary>
     public class BSBeam : IBeamGeometry
-    {        
+    {
         // количество стержней арматуры
         public int RodsQty { get { return (Rods != null) ? Rods.Count : 0; } set { RodsQty = value; } }
         public List<BSRod> Rods { get; set; }
@@ -40,9 +41,9 @@ namespace BSFiberConcrete
 
         [DisplayName("Площадь армирования, см2")]
         public double AreaS()
-        {            
+        {
             double? _As = Rods?.Sum(x => x.As);
-            return Convert.ToDouble(_As); 
+            return Convert.ToDouble(_As);
         }
 
         public virtual double Area()
@@ -51,7 +52,7 @@ namespace BSFiberConcrete
         }
 
         public virtual double W_s()
-        {            
+        {
             return 0;
         }
 
@@ -71,6 +72,21 @@ namespace BSFiberConcrete
         }
 
         /// <summary>
+        /// Метода возращает Высоту и Ширину для всех сечений 
+        /// </summary>
+        /// <returns></returns>
+        public virtual Dictionary<string, double> GetDimension()
+        {
+            Dictionary<string, double> dimensionOfSection = new Dictionary<string, double>()
+            {
+                { "Высота сечения, h, [см]", h },
+                { "Ширина сечения, b, [см]", b }
+            };
+            return dimensionOfSection;
+        }
+
+
+        /// <summary>
         /// Статический момент относительно оси oY
         /// </summary>
         /// <returns></returns>
@@ -87,13 +103,15 @@ namespace BSFiberConcrete
             return 0;
         }
 
+        
+
         public virtual double y_t => h / 2; 
         
         public BSBeam()
         {            
         }
 
-        public virtual void GetSizes(double[] _t) { }
+        public virtual void SetSizes(double[] _t) { }
 
         /// <summary>
         /// Нормальные напряжения в сечении
@@ -138,6 +156,8 @@ namespace BSFiberConcrete
             return new BSBeam();
         }
 
+
+        public string DN(Type _T, string _property) => _T.GetProperty(_property).GetCustomAttribute<DisplayNameAttribute>().DisplayName;
 
 
 

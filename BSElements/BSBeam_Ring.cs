@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace BSFiberConcrete
@@ -9,10 +10,10 @@ namespace BSFiberConcrete
     [Description("size")]
     public class BSBeam_Ring : BSBeam
     {
-        [DisplayName("Радиус внутренней грани, см")]
+        [DisplayName("Радиус внутренней грани, [см]")]
         public double r1 { get; set; }
 
-        [DisplayName("Радиус наружней грани, см")]
+        [DisplayName("Радиус наружней грани, [см]")]
         public double r2 { get; set; }
 
         [DisplayName("Радиус срединной поверхности стенки кольцевого элемента")]
@@ -85,6 +86,21 @@ namespace BSFiberConcrete
         public override double Sx() => Sy();
 
 
+        /// <summary>
+        /// Возращает габаритные размеры сечения
+        /// </summary>
+        /// <returns></returns>
+        public override Dictionary<string, double> GetDimension()
+        {
+            Dictionary<string, double> dimensionOfSection = new Dictionary<string, double>()
+            {
+                { DN(typeof(BSBeam_Ring), "r1"), r1 },
+                { DN(typeof(BSBeam_Ring), "r2"), r2 }
+            };
+            return dimensionOfSection;
+        }
+
+
         public double A_red(double _Es, double _Efb) => A_r + (_Es / _Efb) * A_s;
 
         public double Is_red(double _Es, double _Efb) => (_Es / _Efb) * I_s();
@@ -93,7 +109,7 @@ namespace BSFiberConcrete
         {
             return new Exception("Внутренний радиус больше внешнего");
         }
-        public override void GetSizes(double[] _t)
+        public override void SetSizes(double[] _t)
         {
             (r1, r2, Length) = (_t[0], _t[1], _t[2]);
         }

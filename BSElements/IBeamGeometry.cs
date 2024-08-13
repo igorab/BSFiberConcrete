@@ -19,5 +19,11 @@ namespace BSFiberConcrete
         double b { get; set; }
 
         double h { get; set; }
+
+        /// <summary>
+        /// Получить Габаритные размеры
+        /// </summary>
+        /// <returns></returns>
+        Dictionary<string, double> GetDimension();
     }
 }
