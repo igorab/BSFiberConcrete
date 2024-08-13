@@ -15,6 +15,7 @@ namespace BSFiberConcrete.LocalStrength
     public partial class BSLocalStrength : Form
     {
         public BSLocalStrengthCalc StrengthCalc {  get; set; }
+        public bool IsShowScheme { get; set; }
 
         private BindingList<LocalStress> Ds;
 
@@ -22,6 +23,8 @@ namespace BSFiberConcrete.LocalStrength
         public BSLocalStrength()
         {
             InitializeComponent();
+
+            IsShowScheme = true;
         }
        
         private void btnCalc_Click(object sender, EventArgs e)
@@ -34,6 +37,7 @@ namespace BSFiberConcrete.LocalStrength
             localStressBindingSource.DataSource = new BindingList<LocalStress>(StrengthCalc.GetDS);
 
             chboxReinforcement_CheckedChanged(null, null);
+
         }
 
         private void BSLocalStrength_Load(object sender, EventArgs e)
@@ -45,6 +49,9 @@ namespace BSFiberConcrete.LocalStrength
             localStressBindingSource.DataSource = Ds;
 
             chboxReinforcement_CheckedChanged(null, null);
+            
+            labelScheme.Visible = IsShowScheme;
+            cmbScheme.Visible = IsShowScheme;            
         }
 
         private void btnPrintReport_Click(object sender, EventArgs e)
