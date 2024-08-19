@@ -263,12 +263,13 @@ namespace BSFiberConcrete
         /// <param name="_Rfbt2"></param>
         /// <param name="_Rfbt3"></param>
         /// <returns></returns>
-        public static decimal NumEps_fbt3(decimal _Rfbt2, decimal _Rfbt3)
+        public static double NumEps_fbt3(double _Rfbt2, double _Rfbt3)
         {
             if (_Rfbt2 == 0 || _Rfbt3 == 0)
                 return 0;
             // важно, чтобы _Rfbt3 / _Rfbt2 < 2
-            return 0.02m - 0.0125m * (_Rfbt3 / _Rfbt2 - 0.5m);
+            double res =  0.02 - 0.0125 * (_Rfbt3 / _Rfbt2 - 0.5);
+            return res;
         }
 
         /// <summary>

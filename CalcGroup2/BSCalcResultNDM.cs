@@ -32,6 +32,8 @@ namespace BSFiberConcrete
         [DisplayName("Кривизна 1/Ry, [1/см]")]
         public double Ky { get; private set; }
 
+        // Растяжение >>
+
         [DisplayName("Напряжение в бетоне, [кгс/см2]")]
         public double sigmaB { get; private set; }
 
@@ -49,6 +51,19 @@ namespace BSFiberConcrete
 
         [DisplayName("Коэффициент использования по деформации в арматуре, [.]")]
         public double UtilRate_e_s => (Eps_s_ult != 0) ? e_s_max / Eps_s_ult : 1;
+
+        // Cжатие >>
+        [DisplayName("Напряжение в бетоне (сжатие), [кгс/см2]")]
+        public double sigmaB_p { get; private set; }
+
+        [DisplayName("Напряжение в арматуре (сжатие), [кгс/см2]")]
+        public double sigmaS_p { get; private set; }
+
+        [DisplayName("Максимальная относительная деформация в фибробетоне (сжатие) , [.]")]
+        public double e_fb_max_p { get; private set; }
+
+        [DisplayName("Максимальная относительная деформация в арматуре (сжатие), [.]")]
+        public double e_s_max_p { get; private set; }
 
 
         #endregion
@@ -213,10 +228,18 @@ namespace BSFiberConcrete
             ry = _D1gr["ry"];
             Kx = _D1gr["Kz"];
             rx = _D1gr["rz"];
+
+            // растяжение
             sigmaB = _D1gr["sigB"];
             sigmaS = _D1gr["sigS"];
             e_fb_max = _D1gr["epsB"];
             e_s_max = _D1gr["epsS"];
+
+            // сжатие
+            sigmaB_p = _D1gr["sigB_p"];
+            sigmaS_p = _D1gr["sigS_p"];
+            e_fb_max_p = _D1gr["epsB_p"];
+            e_s_max_p = _D1gr["epsS_p"];
 
             Msg = new List<string>();
             Res1Group = new Dictionary<string, double>();
@@ -266,6 +289,8 @@ namespace BSFiberConcrete
             AddToResult("ry", ry);
             AddToResult("Ky", Ky);
 
+            // растяжение
+
             AddToResult("sigmaB", BSHelper.KNsm2ToKgssm2(sigmaB));            
             AddToResult("e_fb_max", e_fb_max);
             AddToResult("UtilRate_e_fb", UtilRate_e_fb);
@@ -273,6 +298,15 @@ namespace BSFiberConcrete
             AddToResult("sigmaS", BSHelper.KNsm2ToKgssm2(sigmaS));
             AddToResult("e_s_max", e_s_max);
             AddToResult("UtilRate_e_s", UtilRate_e_s);
+
+            // сжатие
+            AddToResult("sigmaB_p", BSHelper.KNsm2ToKgssm2(sigmaB_p));
+            AddToResult("e_fb_max_p", e_fb_max_p);
+            //AddToResult("UtilRate_e_fb", UtilRate_e_fb);
+
+            AddToResult("sigmaS_p", BSHelper.KNsm2ToKgssm2(sigmaS_p));
+            AddToResult("e_s_max_p", e_s_max_p);
+            //AddToResult("UtilRate_e_s", UtilRate_e_s);
 
             _CalcResults = Res1Group;                                                
         }

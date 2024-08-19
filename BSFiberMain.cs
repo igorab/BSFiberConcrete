@@ -1651,14 +1651,14 @@ namespace BSFiberConcrete
             labelRfbt2nMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numRfbt2n.Value));
 
             // расчетные значения отличаются от нормативных коэфициентом numYft, поэтому можно передать нормативные значения
-            numEps_fbt3.Value = BSMatFiber.NumEps_fbt3(numRfbt2n.Value, numRfbt3n.Value);
+            numEps_fbt3.Value = (decimal) BSMatFiber.NumEps_fbt3((double)numRfbt2n.Value, (double) numRfbt3n.Value);
         }
 
         private void numRfbt3n_ValueChanged(object sender, EventArgs e)
         {
             labelRfbt3nMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numRfbt3n.Value));
 
-            numEps_fbt3.Value = BSMatFiber.NumEps_fbt3(numRfbt2n.Value, numRfbt3n.Value);
+            numEps_fbt3.Value = (decimal) BSMatFiber.NumEps_fbt3((double) numRfbt2n.Value, (double) numRfbt3n.Value);
         }
 
         private void numRs_ValueChanged(object sender, EventArgs e)

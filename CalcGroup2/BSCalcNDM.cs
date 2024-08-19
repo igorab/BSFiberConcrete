@@ -529,6 +529,19 @@ namespace BSFiberConcrete.CalcGroup2
                     sigS[jend].ZipThree(As, ys[0], (s, A, y) => s * A * y).Sum() -
                     sigBS[jend].ZipThree(As, ys[0], (s, A, y) => s * A * y).Sum();
 
+            // растяжение 
+            double sigB_t = sigB[jend].Maximum();
+            double sigS_t = sigS[jend].Maximum();
+            double epsB_t = epB[jend].Maximum();
+            double epsS_t = epS[jend].Maximum();
+
+            // сжатие 
+            double sigB_p = sigB[jend].Minimum(); 
+            double sigS_p = sigS[jend].Minimum(); 
+            double epsB_p = epB[jend].Minimum(); 
+            double epsS_p = epS[jend].Minimum(); 
+
+
             m_Results = new Dictionary<string, double>
             {
                 ["ep0"] = ep0[jend],
@@ -536,10 +549,17 @@ namespace BSFiberConcrete.CalcGroup2
                 ["ry"] = 1/Ky[jend],
                 ["Kz"] = Kz[jend],
                 ["rz"] = 1/Kz[jend],
-                ["sigB"] = sigB[jend].MaximumAbsolute(),
-                ["sigS"] = sigS[jend].MaximumAbsolute(),
-                ["epsB"] = epB[jend].MaximumAbsolute(),
-                ["epsS"] = epS[jend].MaximumAbsolute(),
+                // растяжение
+                ["sigB"] = sigB_t,
+                ["sigS"] = sigS_t,
+                ["epsB"] = epsB_t,
+                ["epsS"] = epsB_t,
+                // сжатие
+                ["sigB_p"] = sigB_p,
+                ["sigS_p"] = sigS_p,
+                ["epsB_p"] = epsB_p,
+                ["epsS_p"] = epsB_p,
+
                 ["My_crc"] = Myint,
                 ["Mx_crc"] = Mzint
             };

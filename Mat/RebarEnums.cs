@@ -13,7 +13,7 @@ namespace BSFiberConcrete
     {
         [Description("Не определено")]
         None = 0,
-        [Description("Физичесикй")]
+        [Description("Физический")]
         Physical = 1,
         [Description("Условный")]
         Offset = 2,

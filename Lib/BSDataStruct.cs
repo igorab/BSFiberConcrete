@@ -171,9 +171,9 @@ namespace BSFiberConcrete
             {
                 double res = 0;
                 if (typeYieldStress == TypeYieldStress.Physical)
-                { res = 0.015; }
-                if (typeYieldStress == TypeYieldStress.Offset)
                 { res = 0.025; }
+                if (typeYieldStress == TypeYieldStress.Offset)
+                { res = 0.015; }
                 return res;
             }
         }
