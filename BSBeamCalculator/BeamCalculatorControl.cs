@@ -239,7 +239,8 @@ namespace BSBeamCalculator
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
-            _beamLength.Text = numericUpDown1.Value.ToString();
+            if (_beamLength != null)
+                _beamLength.Text = numericUpDown1.Value.ToString();
         }
 
         private void BeamCalculatorControl_Load(object sender, EventArgs e)

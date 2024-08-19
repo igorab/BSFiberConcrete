@@ -468,7 +468,6 @@ namespace BSFiberConcrete
             bool calcOk = false;
             try
             {
-
                 // диаграмма:
                 // арматура
                 string cR_class = cmbRebarClass.Text;
@@ -484,39 +483,19 @@ namespace BSFiberConcrete
 
                 bool reinforcement = checkBoxRebar.Checked;
 
-
-
-                // длина балки, см 
-                double c_Length = Convert.ToDouble(tbLength.Text);
                 // сечение балки балки, см 
-                double[] beam_sizes = BeamSizes(c_Length);
-
+                double[] beam_sizes = BeamSizes();
                 var bsBeam = BSBeam.construct(m_BeamSection);
                 bsBeam.SetSizes(beam_sizes);
-                bsBeam.Length = c_Length;
 
                 double c_b = bsBeam.Width;
                 double c_h = bsBeam.Height;
 
-
-                //m_GeomParams = new Dictionary<string, double> { { "b, см", c_b }, { "h, см", c_h } };
-                //m_Reinforcement = new Dictionary<string, double>();
-
-
-
                 // Усилия Mx, My - моменты, кгс*см , N - сила, кгс              
                 GetEffortsFromForm(out Dictionary<string, double> MNQ);
-
                 BSFiberCalc_Cracking calc_Cracking = new BSFiberCalc_Cracking(MNQ);
                 //calc_Cracking.Efforts = MNQ;
                 calc_Cracking.Beam = bsBeam;
-
-
-
-                //calc_Cracking.DeformDiagram = deformDiagramType;
-                //calc_Cracking.DeformMaterialType = deformMaterialType;
-                //calc_Cracking.Beam = bsBeam;
-
                 calc_Cracking.typeOfBeamSection = m_BeamSection;
 
                 // задать тип арматуры
@@ -533,22 +512,13 @@ namespace BSFiberConcrete
                     Reinforcement = reinforcement
                 };
 
-
                 InitMatFiber();
-                InitBeamLength();
+                //InitBeamLength();
                 calc_Cracking.MatFiber = m_MatFiber;
                 calc_Cracking.SetParams(new double[] { 10, 1 });
 
                 // рассчитать 
                 calcOk = calc_Cracking.Calculate();
-                //calcOk = calc_Cracking.CalculateUltM();
-                //calcOk = calc_Cracking.CalculateWidthCrack();
-
-
-                //calc_Cracking.ShowResult();
-
-
-
                 //m_PhysParams = calc_Cracking.PhysParams;    // хардкодом прописанные параметры фибробетона
                 //m_Coeffs = calc_Cracking.Coeffs;          // коэффициенты надежности 
                 //m_Efforts = calc_Cracking.Efforts;          // нагрузки 
@@ -565,36 +535,11 @@ namespace BSFiberConcrete
                 m_Message.AddRange(calc_Cracking.Msg);
 
                 m_CalcResults2Group = calc_Cracking.Results();
-                
-
-
             }
             catch (Exception _e)
             {
                 MessageBox.Show("Ошибка в расчете: " + _e.Message);
             }
-
-            //try
-            //{
-            //    //if (bsCalc is null)
-            //    //    throw new Exception("Не выполнен расчет");
-            //if (calcOk)
-            //{
-            //    string reportName = "Расчет по обрзованию и раскрытию трещин";
-            //    string pathToHtmlFile = CreateReport(3, m_BeamSection, reportName);
-            //    System.Diagnostics.Process.Start(pathToHtmlFile);
-            //}
-            //else
-            //{
-            //    string errMsg = "";
-            //    foreach (string ms in m_Message) errMsg += ms + ";\t\n";
-
-            //    MessageBox.Show(errMsg);
-            //}
-            //}
-            //catch (Exception _e)
-            //{ MessageBox.Show("Ошибка в отчете " + _e.Message); }
-
         }
 
 

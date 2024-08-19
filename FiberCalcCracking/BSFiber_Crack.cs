@@ -102,7 +102,7 @@ namespace BSFiberConcrete
             resultDictionary = new Dictionary<string, double>();
 
             //CreateResTable();
-            //AddRowInResTable("", "Mx", Mx, "кг∙см2");
+            //AddRowInResTable("", "Mx", Mx, "кг*см2");
             //AddRowInResTable("", "N", N, "кг");
         }
 
@@ -305,9 +305,9 @@ namespace BSFiberConcrete
 
             _M_crc = M_crc;
 
-            //AddRowInResTable("Момент образования трещин с учетом неупругих деформаций растянутого стальфибробетона", "Mcrc", M_crc, "кг∙см2");
+            //AddRowInResTable("Момент образования трещин с учетом неупругих деформаций растянутого стальфибробетона", "Mcrc", M_crc, "кг*см2");
 
-            resultDictionary.Add("Момент образования трещин с учетом неупругих деформаций растянутого стальфибробетона, Mcrc [кг∙см2]", M_crc);
+            resultDictionary.Add("Момент образования трещин с учетом неупругих деформаций растянутого стальфибробетона, Mcrc [кг*см2]", M_crc);
             resultDictionary.Add("Коэффициент использования по второй группе предельных состояний", My/M_crc);
             resultDictionary.Add("(Значение для отладки) Площадь приведенного поперечного сечения элемента, A_red [см3]", A_red);
             resultDictionary.Add("(Значение для отладки) Расстояние от центра тяжести приведенного сечения до расстянутой в стадии эксплуатауции грани, Y_t [см]", Y_t);
