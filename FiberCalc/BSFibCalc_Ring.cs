@@ -19,9 +19,9 @@ namespace BSFiberConcrete
         [DisplayName("Коэффициент использования по усилию")]
         public double UtilRate { get; protected set; }
 
-        public override void GetParams(double[] _t)
+        public override void SetParams(double[] _t)
         {
-            base.GetParams(_t);
+            base.SetParams(_t);
 
             // need refactoring
             (Yft, Yb, Yb1, Yb2, Yb3, Yb5) = ( _t[2], _t[3], _t[4], _t[5], _t[6], _t[7]);

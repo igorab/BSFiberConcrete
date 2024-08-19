@@ -47,7 +47,7 @@ namespace BSFiberConcrete
         {
             beam.SetSizes(_t);
             base.m_Beam = this.beam;
-            l0 = beam.Length;
+            LngthCalc0 = beam.Length;
             b = beam.b;
             h = beam.h;
             I = beam.Jx();

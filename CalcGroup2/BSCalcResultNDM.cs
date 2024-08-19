@@ -18,31 +18,39 @@ namespace BSFiberConcrete
     {
         #region 1 группа предельных состояний
         [DisplayName("Радиус кривизны продольной оси в плоскости действия моментов, Rx, [см]")]
-        public double rx { get; set; }
+        public double rx { get; private set; }
 
         [DisplayName("Радиус кривизны продольной оси в плоскости действия моментов, Ry, [см]")]
-        public double ry { get; set; }
+        public double ry { get; private set; }
 
         [DisplayName("Относительная деформация волокна в Ц.Т. сечения, e0, [.]")]
-        public double eps_0 { get; set; }
+        public double eps_0 { get; private set; }
 
         [DisplayName("Кривизна 1/Rx, [1/см]")]
-        public double Kx { get; set; }
+        public double Kx { get; private set; }
 
         [DisplayName("Кривизна 1/Ry, [1/см]")]
-        public double Ky { get; set; }
+        public double Ky { get; private set; }
 
         [DisplayName("Напряжение в бетоне, [кгс/см2]")]
-        public double sigmaB { get; set; }
+        public double sigmaB { get; private set; }
 
         [DisplayName("Напряжение в арматуре, [кгс/см2]")]
-        public double sigmaS { get; set; }
+        public double sigmaS { get; private set; }
 
-        [DisplayName("Максимальная относительная деформация в бетоне, [.]")]
-        public double e_fb_max { get; set; }
+        [DisplayName("Максимальная относительная деформация в фибробетоне, [.]")]
+        public double e_fb_max { get; private set; }
+
+        [DisplayName("Коэффициент использования по деформации в фибробетоне, [.]")]
+        public double UtilRate_e_fb => (Eps_fb_ult !=0) ? e_fb_max / Eps_fb_ult : 1;
 
         [DisplayName("Максимальная относительная деформация в арматуре, [.]")]
-        public double e_s_max { get; set; }
+        public double e_s_max { get; private set; }
+
+        [DisplayName("Коэффициент использования по деформации в арматуре, [.]")]
+        public double UtilRate_e_s => (Eps_s_ult != 0) ? e_s_max / Eps_s_ult : 1;
+
+
         #endregion
 
         #region 2 группа предельных состояний
@@ -258,14 +266,15 @@ namespace BSFiberConcrete
             AddToResult("ry", ry);
             AddToResult("Ky", Ky);
 
-            AddToResult("sigmaB", BSHelper.KNsm2ToKgssm2(sigmaB));
-            AddToResult("sigmaS", BSHelper.KNsm2ToKgssm2(sigmaS));
-
+            AddToResult("sigmaB", BSHelper.KNsm2ToKgssm2(sigmaB));            
             AddToResult("e_fb_max", e_fb_max);
+            AddToResult("UtilRate_e_fb", UtilRate_e_fb);
+            
+            AddToResult("sigmaS", BSHelper.KNsm2ToKgssm2(sigmaS));
             AddToResult("e_s_max", e_s_max);
+            AddToResult("UtilRate_e_s", UtilRate_e_s);
 
-            _CalcResults = Res1Group;
-                                                
+            _CalcResults = Res1Group;                                                
         }
 
         /// <summary>

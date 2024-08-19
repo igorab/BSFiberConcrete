@@ -9,7 +9,7 @@ namespace BSFiberConcrete
 {
     public interface IBSFiberCalculation
     {
-        void GetParams(double[] _t = null);
+        void SetParams(double[] _t = null);
 
         void GetSize(double[] _t = null);
 

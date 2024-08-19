@@ -27,8 +27,8 @@ namespace BSFiberConcrete
         [DisplayName("Радиус внутренний, [см]"), Description("Geom")]
         public double r1 { get; protected set; }
 
-        [DisplayName("Расчетная длинна элемента, [см]"), Description("Geom")]
-        public double l0 { get; protected set; }
+        [DisplayName("Расчетная длина элемента, [см]"), Description("Geom")]
+        public double LngthCalc0 { get; protected set; }
 
         [DisplayName("Площадь сечения, [см2]"), Description("Geom")]
         public double A { get; protected set; }
@@ -282,7 +282,7 @@ namespace BSFiberConcrete
             D = k_b * Efb * I;
 
             // условная критическая сила, определяемая по формуле (6.24)
-            Ncr = Math.PI * Math.PI * D / Math.Pow(l0, 2);
+            Ncr = Math.PI * Math.PI * D / Math.Pow(LngthCalc0, 2);
 
             eta = (Ncr!=0) ? 1 / (1 - N / Ncr) : 0;
 
@@ -292,7 +292,7 @@ namespace BSFiberConcrete
 
             N_ult = fi * Rfb * A;
 
-            double flex = l0 / h;
+            double flex = LngthCalc0 / h;
 
             if (m_Fiber.e_tot <= h / 30d && flex <= 20)
             {
@@ -372,7 +372,7 @@ namespace BSFiberConcrete
         protected double DStiff(double _I, double _Is) => k_b * Efb * _I + Rebar.k_s * Rebar.Es * _Is;
 
         // условная критическая сила, определяемая по формуле (6.24)
-        protected  double N_cr(double _D) => (Math.PI* Math.PI) * _D / Math.Pow(l0, 2);
+        protected  double N_cr(double _D) => (Math.PI* Math.PI) * _D / Math.Pow(LngthCalc0, 2);
 
         // коэффициент, учитывающий влияние продольного изгиба (прогиба) элемента
         // на его несущую способность и определяемый по формуле(6.23)6.1.13
@@ -691,10 +691,10 @@ namespace BSFiberConcrete
             throw new NotImplementedException();
         }
 
-        public virtual void GetParams(double[] _t)
+        public virtual void SetParams(double[] _t)
         {
             // TODO Refactoring
-            (_, _, Yb, Yft, Yb1, Yb2, Yb3, Yb5, B) = (_t[0], _t[1], _t[2], _t[3], _t[4], _t[5], _t[6], _t[7], _t[8]);            
+            (_, _, Yft, Yb, Yb1, Yb2, Yb3, Yb5, B) = (_t[0], _t[1], _t[2], _t[3], _t[4], _t[5], _t[6], _t[7], _t[8]);            
         }
 
         public virtual void GetSize(double[] _t) {}
