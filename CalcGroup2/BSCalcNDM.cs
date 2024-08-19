@@ -199,13 +199,17 @@ namespace BSFiberConcrete.CalcGroup2
 
         public int Err => err;
         public Dictionary<string, double> Results => m_Results;
-
-
+        
+        /// <summary>
+        /// напряжения в элементах сечения 
+        /// </summary>
         public List<double> SigmaBResult { get; private set; }
+        /// <summary>
+        /// напряжения в сечении арматуры 
+        /// </summary>
         public List<double> SigmaSResult { get; private set; }
-        public List<double> epsilonBResult { get; private set; }
-        public List<double> epsilonSResult { get; private set; }
-
+        public List<double> EpsilonBResult { get; private set; }
+        public List<double> EpsilonSResult { get; private set; }
 
         #region разбивка сечения на элементы
         // массив привязок бетонных эл-в к вспомогательной оси y0
@@ -542,8 +546,8 @@ namespace BSFiberConcrete.CalcGroup2
 
             SigmaBResult = new List<double>(sigB[jend]);
             SigmaSResult = new List<double>(sigS[jend]);
-            epsilonBResult = new List<double>(epB[jend]);
-            epsilonSResult = new List<double>(epS[jend]);
+            EpsilonBResult = new List<double>(epB[jend]);
+            EpsilonSResult = new List<double>(epS[jend]);
         }
       
         public void Run()

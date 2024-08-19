@@ -29,23 +29,23 @@ namespace BSFiberConcrete
         public override void GetSize(double[] _t)
         {
             beam.SetSizes(_t);
-            (r1, r2, l0) = (_t[0], _t[1], _t[2]);
+            (r1, r2, LngthCalc0) = (_t[0], _t[1], _t[2]);
             A = beam.Area();
             
             h = beam.h;
             b = beam.b;
 
             base.m_Beam = this.beam;
-            l0 = beam.Length;
+            LngthCalc0 = beam.Length;
             
             I = beam.Jx();
             
             y_t = beam.y_t;
         }
 
-        public override void GetParams(double[] _t)
+        public override void SetParams(double[] _t)
         {
-            base.GetParams(_t);            
+            base.SetParams(_t);            
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace BSFiberConcrete
         /// </summary>
         private void Calculate_N_Rods_Comb()
         {
-            var _prms = (r1, r2, beam.r_s, N, e_N, l0);
+            var _prms = (r1, r2, beam.r_s, N, e_N, LngthCalc0);
             // Расчетное остаточное остаточного сопротивления осевому растяжению
             Rfbt3 = R_fbt3();
             // Расчетные значения сопротивления  на сжатиие по B30 СП63

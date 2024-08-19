@@ -131,7 +131,7 @@ namespace BSFiberConcrete
         {
         }
 
-        public virtual void GetParams(double[] _t)
+        public virtual void SetParams(double[] _t)
         {            
         }
 

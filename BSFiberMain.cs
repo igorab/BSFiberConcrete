@@ -315,14 +315,24 @@ namespace BSFiberConcrete
             }
         }
 
-        private void InitBeamLength()
-        {
-            m_Beam.Clear();
-
+        /// <summary>
+        /// Расчетная длина балки 
+        /// </summary>
+        /// <param name="_init"></param>
+        /// <returns></returns>
+        private double InitBeamLength(bool _beaminit = false)
+        {            
             double.TryParse(tbLength.Text, out double lgth);
-            m_Beam.Add("Длина элемента, см", lgth);
             double.TryParse(cmbEffectiveLengthFactor.Text, out double coeflgth);
-            m_Beam.Add("Коэффициет расчетной длины", coeflgth);
+
+            if (_beaminit)
+            {
+                m_Beam.Clear();
+                m_Beam.Add("Длина элемента, см", lgth);
+                m_Beam.Add("Коэффициет расчетной длины", coeflgth);
+            }
+
+            return (coeflgth != 0) ? lgth * coeflgth : lgth;
         }
 
         /// <summary>
@@ -399,7 +409,7 @@ namespace BSFiberConcrete
                 double[] prms = m_BSLoadData.Params;
                 InitUserParams(prms);
 
-                bsCalc.GetParams(prms);
+                bsCalc.SetParams(prms);
                 bsCalc.GetSize(BeamSizes());
                 bsCalc.Efforts = new Dictionary<string, double> { { "My", _M } };
 
@@ -505,7 +515,7 @@ namespace BSFiberConcrete
                 InitMatFiber();
                 //InitBeamLength();
                 calc_Cracking.MatFiber = m_MatFiber;
-                calc_Cracking.GetParams(new double[] { 10, 1 });
+                calc_Cracking.SetParams(new double[] { 10, 1 });
 
                 // рассчитать 
                 calcOk = calc_Cracking.Calculate();
@@ -803,9 +813,10 @@ namespace BSFiberConcrete
             double[] prms = m_BSLoadData.Params;
             InitUserParams(prms);
 
-            fiberCalc.GetParams(prms); // передаем коэффициенты Yb, Yft, Yb1, Yb2, Yb3, Yb5, B
+            // передаем коэффициенты Yft, Yb, Yb1, Yb2, Yb3, Yb5, B
+            fiberCalc.SetParams(prms); 
 
-            double beamLngth = BSHelper.ToDouble(tbLength.Text);
+            double beamLngth = InitBeamLength(true); // BSHelper.ToDouble(tbLength.Text);
 
             double[] sz = BeamSizes(beamLngth);
 
@@ -937,8 +948,7 @@ namespace BSFiberConcrete
             if (_Q != 0)
             {
                 FiberCalculate_Shear();
-            }
-            
+            }            
         }
 
         private void btnFactors_Click(object sender, EventArgs e)
@@ -1093,7 +1103,7 @@ namespace BSFiberConcrete
             //привязка арматуры (по X - высота, по Y ширина балки)
             double leftX = 0;
             // для прямоугольных и тавровых сечений привязка к центу нижней грани 
-            if (_beamSection == BeamSection.Rect || _beamSection == BeamSection.IBeam) leftX = -D["b"] / 2.0;
+            if (BSHelper.IsRectangled(_beamSection)) leftX = -D["b"] / 2.0;
             (List<double> listD, List<double> listX, List<double> listY, double _qty, double _area) = ReinforcementBinding(_beamSection, leftX, 0);
 
             D.Add("rods_qty", _qty);
@@ -1105,7 +1115,9 @@ namespace BSFiberConcrete
             bsCalc1.DictParams(D);
             bsCalc1.GetRods(listD, listX, listY);
             bsCalc1.Run();
-            var values = bsCalc1.SigmaBResult;
+            
+            List<double> sigmasB = bsCalc1.SigmaBResult;            
+            List<double> sigmasS = bsCalc1.SigmaSResult;
 
             BSCalcResultNDM calcRes = new BSCalcResultNDM(bsCalc1.Results);
             calcRes.InitCalcParams(D);
@@ -1128,7 +1140,7 @@ namespace BSFiberConcrete
             m_PhysParams = calcRes.PhysParams;
             m_Reinforcement = calcRes.Reinforcement;
 
-            ShowMosaic(values);
+            ShowMosaic(sigmasB);
         }
 
 
@@ -1292,7 +1304,7 @@ namespace BSFiberConcrete
                 // материал
                 fiberCalc_Deform.Beam.Mat = beamMaterial;
                 // параметры расчета:  (кол-во точек разбиения )
-                fiberCalc_Deform.GetParams(new double[] { (int)numMeshN.Value, (int)numMeshN.Value });
+                fiberCalc_Deform.SetParams(new double[] { (int)numMeshN.Value, (int)numMeshN.Value });
                 //
                 // рассчитать                
 
@@ -1322,7 +1334,7 @@ namespace BSFiberConcrete
 
             try
             {
-                InitBeamLength();
+                InitBeamLength(true);
 
                 string value = "";
                 try
@@ -1351,7 +1363,7 @@ namespace BSFiberConcrete
         {
             try
             {
-                InitBeamLength();
+                InitBeamLength(true);
 
                 string value = "";
                 try
@@ -1387,9 +1399,7 @@ namespace BSFiberConcrete
                 {
                     CalcNDM(BeamSection.Rect);
                 }
-                else if (m_BeamSection == BeamSection.IBeam ||
-                         m_BeamSection == BeamSection.TBeam ||
-                         m_BeamSection == BeamSection.LBeam)
+                else if (BSHelper.IsITL(m_BeamSection))
                 {
                     CalcNDM(BeamSection.IBeam);
                 }
