@@ -122,10 +122,26 @@ namespace BSFiberConcrete
         }
 
         // глобальные настройки
-        private void BSFiberMain_Load(object sender, EventArgs e)
+        public void BSFiberMain_Load(object sender, EventArgs e)
         {
             try
             {
+                // Установка высплывающего текста
+                System.Windows.Forms.ToolTip toolTip1 = new System.Windows.Forms.ToolTip();
+                // Set up the delays for the ToolTip.
+                toolTip1.AutoPopDelay = 5000;
+                toolTip1.InitialDelay = 1000;
+                toolTip1.ReshowDelay = 50;
+                // Force the ToolTip text to be displayed whether or not the form is active.
+                toolTip1.ShowAlways = true;
+                // Set up the ToolTip text for the Button and Checkbox.
+                toolTip1.SetToolTip(this.btnRectang, "Прямоугольное сечение");
+                toolTip1.SetToolTip(this.btnTSection, "Тавровое сечение \"Верхняя полка\"");
+                toolTip1.SetToolTip(this.btnLSection, "Тавровое сечение \"Нижняя полка\"");
+                toolTip1.SetToolTip(this.btnIBeam, "Двутавровое сечение");
+                toolTip1.SetToolTip(this.btnRing, "Кольцевое сечение");
+
+
                 m_Path2BeamDiagrams = new List<string>() { };
 
 
@@ -1851,8 +1867,8 @@ namespace BSFiberConcrete
                 E = (double)numEfb.Value;           //Eb
                 // Характеристики по растяжению
                 Rt_n = (double)numRfbt_n.Value;     // Rfbt_n
-                Rt2_n = (double)numRfbt3n.Value;    // Rfbt2_n
-                Rt3_n = (double)numRfbt2n.Value;    // Rfbt3_n
+                Rt2_n = (double)numRfbt2n.Value;    // Rfbt2_n
+                Rt3_n = (double)numRfbt3n.Value;    // Rfbt3_n
                 Et = E;                    // !!!   // Efbt
                 et2 = (double)numEps_fbt2.Value;    // efbt2
                 et3 = (double)numEps_fbt3.Value;    // efbt3
