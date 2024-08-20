@@ -33,7 +33,8 @@ namespace BSFiberConcrete.CalcGroup2
             GroupLSD = _groupLSD;
         }
 
-        public void DictParams(Dictionary<string, double> _D)
+        // параметры для расчета
+        public void SetDictParams(Dictionary<string, double> _D)
         {
             // enforce
             N = BSHelper.Kgs2kN(_D["N"]);
@@ -58,20 +59,32 @@ namespace BSFiberConcrete.CalcGroup2
             nz = (int)_D["nz"];
             // beton
             Eb0 = BSHelper.Kgssm2ToKNsm2(_D["Eb0"]);
-            if (GroupLSD == 2)
+
+            if (GroupLSD == 2) 
             {
+                // сжатие
                 Rbc = BSHelper.Kgssm2ToKNsm2(_D["Rbcn"]);
-                Rbt = BSHelper.Kgssm2ToKNsm2(_D["Rbtn"]);
+                // растяжение
+                Rfbt = BSHelper.Kgssm2ToKNsm2(_D["Rbtn"]);
+                Rfbt2 = BSHelper.Kgssm2ToKNsm2(_D["Rbt2n"]);
+                Rfbt3 = BSHelper.Kgssm2ToKNsm2(_D["Rbt3n"]);
             }
             else
             {
+                // сжатие
                 Rbc = BSHelper.Kgssm2ToKNsm2(_D["Rbc"]);
-                Rbt = BSHelper.Kgssm2ToKNsm2(_D["Rbt"]);
+                // растяжение
+                Rfbt = BSHelper.Kgssm2ToKNsm2(_D["Rbt"]);
+                Rfbt2 = BSHelper.Kgssm2ToKNsm2(_D["Rbt2"]);
+                Rfbt3 = BSHelper.Kgssm2ToKNsm2(_D["Rbt3"]);
             }
+
             ebc0 = _D["ebc0"];
             ebc2 = _D["ebc2"];
-            ebt0 = _D["ebt0"];
-            ebt2 = _D["ebt2"];
+            efbt0 = _D["ebt0"];
+            efbt2 = _D["ebt2"];
+            efbt3 = _D["ebt3"];
+
             // steel / rebar
             Es0 = BSHelper.Kgssm2ToKNsm2(_D["Es0"]);
             if (GroupLSD == 2)
@@ -167,11 +180,18 @@ namespace BSFiberConcrete.CalcGroup2
         // Бетон B25 кН/см2
         private static double Eb0 = 30.0 * Math.Pow(10, 3) / 10.0; //Начальный модуль бетона, кН/см2
         private static double Rbc = 14.5 / 10d; // Расчетное сопротивление бетона на сжатие, кН/см2
-        private static double Rbt = 1.05 / 10d; // Расчетное сопротивление бетона на сжатие, кН/см2
+
+        private static double Rfbt = 1.05 / 10d; // Расчетное сопротивление фибробетона на растяжение, кН/см2
+        private static double Rfbt2 = 1.05 / 10d; // Расчетное сопротивление фибробетона на сжатие, кН/см2
+        private static double Rfbt3 = 1.05 / 10d; // Расчетное сопротивление фибробетона на сжатие, кН/см2
+
         private static double ebc0 = 0.002; // Деформация бетона на сжатие
-        private static double ebc2 = 0.0035; // Предельная деформация бетона на сжатие                
-        private static double ebt0 = 0.0001; // Деформация бетона на растяжение
-        private static double ebt2 = 0.00015; // Предельная деформация бетона на растяжение
+        private static double ebc2 = 0.0035; // Предельная деформация бетона на сжатие
+                                             // 
+        private static double efbt0 = 0.0001; // Деформация бетона на растяжение
+        private static double efbt1 = 0.0001;
+        private static double efbt2 = 0.00015; // Предельная деформация бетона на растяжение
+        private static double efbt3 = 0.02; // Предельная деформация бетона на растяжение
 
         // Арматура кН/см2
         private static double Es0 = 2.0 * Math.Pow(10, 5) / 10.0; //Начальный модуль арматуры, кН/см2       
@@ -383,13 +403,13 @@ namespace BSFiberConcrete.CalcGroup2
 
             // Заполняем напряжения на нулевой итерации
             for (int k = 0; k < n; k++)
-                sigB[0].Add( Diagr_B( epB[0][k] ));
+                sigB[0].Add( Diagr_FB( epB[0][k] ));
 
             for (int l = 0; l < m; l++)
             {
                 sigS[0].Add(Diagr_S(epS[0][l]));
 
-                sigBS[0].Add(Diagr_B(epS[0][l]));
+                sigBS[0].Add(Diagr_FB(epS[0][l]));
             }
             #endregion
                       
@@ -491,14 +511,14 @@ namespace BSFiberConcrete.CalcGroup2
                 // Пересчитываем напряжения
                 sigB.Add(new List<double>());
                 for (int k = 0; k < n; k++)
-                    sigB[j].Add(Diagr_B(epB[j][k]));
+                    sigB[j].Add(Diagr_FB(epB[j][k]));
 
                 sigS.Add(new List<double>());
                 sigBS.Add(new List<double>());
                 for (int l = 0; l < m; l++)
                 {
                     sigS[j].Add(Diagr_S(epS[j][l]));
-                    sigBS[j].Add(Diagr_B(epS[j][l]));
+                    sigBS[j].Add(Diagr_FB(epS[j][l]));
                 }
 
                 // Вычисление погрешностей

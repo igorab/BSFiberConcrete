@@ -290,7 +290,7 @@ namespace BSFiberConcrete
             AddToResult("Ky", Ky);
 
             // растяжение
-
+            Res1Group.Add("--------Растяжение:--------", 1);
             AddToResult("sigmaB", BSHelper.KNsm2ToKgssm2(sigmaB));            
             AddToResult("e_fb_max", e_fb_max);
             AddToResult("UtilRate_e_fb", UtilRate_e_fb);
@@ -300,6 +300,7 @@ namespace BSFiberConcrete
             AddToResult("UtilRate_e_s", UtilRate_e_s);
 
             // сжатие
+            Res1Group.Add("--------Сжатие:-------", 1);
             AddToResult("sigmaB_p", BSHelper.KNsm2ToKgssm2(sigmaB_p));
             AddToResult("e_fb_max_p", e_fb_max_p);
             //AddToResult("UtilRate_e_fb", UtilRate_e_fb);
@@ -308,7 +309,7 @@ namespace BSFiberConcrete
             AddToResult("e_s_max_p", e_s_max_p);
             //AddToResult("UtilRate_e_s", UtilRate_e_s);
 
-            _CalcResults = Res1Group;                                                
+            _CalcResults = Res1Group;
         }
 
         /// <summary>

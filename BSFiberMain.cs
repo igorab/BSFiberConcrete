@@ -1000,6 +1000,12 @@ namespace BSFiberConcrete
             // Усилия Mx, My - моменты, кгс*см , N - сила, кгс              
             GetEffortsFromForm(out Dictionary<string, double> MNQ);
 
+            BSMatFiber mf = new BSMatFiber((double)numEfb.Value, numYft.Value, numYb.Value, numYb1.Value, numYb2.Value, numYb3.Value, numYb5.Value);
+            mf.Rfbn = (double) numRfb_n.Value;
+            mf.Rfbtn = (double)numRfbt_n.Value;
+            mf.Rfbt2n = (double)numRfbt2n.Value;
+            mf.Rfbt3n = (double)numRfbt3n.Value;
+
             Dictionary<string, double> D = new Dictionary<string, double>()
             {
                 // enforces
@@ -1031,15 +1037,20 @@ namespace BSFiberConcrete
                 // - нормативные
                 ["Rbcn"] = (double)(numRfb_n.Value),
                 ["Rbtn"] = (double)(numRfbt_n.Value),
-                // - расчетные
-                ["Rbc"] = (double)(numRfb_n.Value / numYb.Value),
-                ["Rbt"] = (double)(numRfbt_n.Value / numYft.Value),
+                ["Rbt2n"] = (double)(numRfbt2n.Value),
+                ["Rbt3n"] = (double)(numRfbt3n.Value),
+                // - расчетные 
+                ["Rbc"] = mf.Rfb,
+                ["Rbt"] = mf.Rfbt,
+                ["Rbt2"] = mf.Rfbt2,
+                ["Rbt3"] = mf.Rfbt3,
                 // - деформации
                 ["ebc0"] = (double)numEps_fb0.Value, // ? 
                 ["ebc2"] = (double)numEps_fb2.Value, // ?
                 ["ebt0"] = (double)numEps_fbt0.Value, // ? 
                 ["ebt1"] = (double)numEps_fbt1.Value, // ? 
                 ["ebt2"] = (double)numEps_fbt2.Value, // ?
+                ["ebt3"] = (double)numEps_fbt3.Value, // ?
                 ["ebt_ult"] = (double)numEps_fbt_ult.Value,
                 // steel
                 ["Es0"] = (double)numEs.Value,
@@ -1098,7 +1109,7 @@ namespace BSFiberConcrete
         private void CalcNDM(BeamSection _beamSection)
         {
             // данные с формы
-            var D = DictCalcParams(_beamSection);
+            Dictionary<string, double> D = DictCalcParams(_beamSection);
 
             //привязка арматуры (по X - высота, по Y ширина балки)
             double leftX = 0;
@@ -1112,7 +1123,7 @@ namespace BSFiberConcrete
             // выполнить расчет по 1 группе п.с.
             BSCalcNDM bsCalc1 = new BSCalcNDM(1);
             bsCalc1.BeamSection = _beamSection;
-            bsCalc1.DictParams(D);
+            bsCalc1.SetDictParams(D);
             bsCalc1.GetRods(listD, listX, listY);
             bsCalc1.Run();
             
@@ -1126,6 +1137,8 @@ namespace BSFiberConcrete
             calcRes.ResultsMsg1Group(ref m_Message);
 
             // выполнить расчет по 2 группе п.с.
+
+            /*
             BSCalcNDM bsCalc2 = new BSCalcNDM(2);
             bsCalc2.BeamSection = _beamSection;
             bsCalc2.DictParams(D);
@@ -1134,6 +1147,7 @@ namespace BSFiberConcrete
             calcRes.ErrorIdx.Add(bsCalc2.Err);
             calcRes.GetRes2Group(bsCalc2.Results);
             calcRes.Results2Group(ref m_CalcResults2Group);
+            */
 
             m_GeomParams = calcRes.GeomParams;
             m_Efforts = calcRes.Efforts;
