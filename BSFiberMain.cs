@@ -126,6 +126,22 @@ namespace BSFiberConcrete
         {
             try
             {
+                // Установка высплывающего текста
+                System.Windows.Forms.ToolTip toolTip1 = new System.Windows.Forms.ToolTip();
+                // Set up the delays for the ToolTip.
+                toolTip1.AutoPopDelay = 5000;
+                toolTip1.InitialDelay = 1000;
+                toolTip1.ReshowDelay = 50;
+                // Force the ToolTip text to be displayed whether or not the form is active.
+                toolTip1.ShowAlways = true;
+                // Set up the ToolTip text for the Button and Checkbox.
+                toolTip1.SetToolTip(this.btnRectang, "Прямоугольное сечение");
+                toolTip1.SetToolTip(this.btnTSection, "Тавровое сечение \"Верхняя полка\"");
+                toolTip1.SetToolTip(this.btnLSection, "Тавровое сечение \"Нижняя полка\"");
+                toolTip1.SetToolTip(this.btnIBeam, "Двутавровое сечение");
+                toolTip1.SetToolTip(this.btnRing, "Кольцевое сечение");
+
+
                 m_Path2BeamDiagrams = new List<string>() { };
 
 
