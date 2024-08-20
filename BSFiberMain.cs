@@ -122,7 +122,7 @@ namespace BSFiberConcrete
         }
 
         // глобальные настройки
-        private void BSFiberMain_Load(object sender, EventArgs e)
+        public void BSFiberMain_Load(object sender, EventArgs e)
         {
             try
             {
@@ -1853,8 +1853,8 @@ namespace BSFiberConcrete
                 E = (double)numEfb.Value;           //Eb
                 // Характеристики по растяжению
                 Rt_n = (double)numRfbt_n.Value;     // Rfbt_n
-                Rt2_n = (double)numRfbt3n.Value;    // Rfbt2_n
-                Rt3_n = (double)numRfbt2n.Value;    // Rfbt3_n
+                Rt2_n = (double)numRfbt2n.Value;    // Rfbt2_n
+                Rt3_n = (double)numRfbt3n.Value;    // Rfbt3_n
                 Et = E;                    // !!!   // Efbt
                 et2 = (double)numEps_fbt2.Value;    // efbt2
                 et3 = (double)numEps_fbt3.Value;    // efbt3
