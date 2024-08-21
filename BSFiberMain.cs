@@ -1170,6 +1170,8 @@ namespace BSFiberConcrete
             m_PhysParams = calcRes.PhysParams;
             m_Reinforcement = calcRes.Reinforcement;
 
+            
+
             ShowMosaic(sigmasB);
         }
 
@@ -1983,11 +1985,12 @@ namespace BSFiberConcrete
 
 
         /// <summary>
-        /// СП360 6.1.25
+        /// СП360 6.1.24
+        /// пересекается с пунктом  6.1.25
         /// </summary>        
         private void numEps_fbt3_ValueChanged(object sender, EventArgs e)
         {
-            numEps_fbt_ult.Value = numEps_fbt3.Value;
+            // numEps_fbt_ult.Value = numEps_fbt3.Value; // требует уточнения
         }
 
         /// <summary>
@@ -2129,6 +2132,12 @@ namespace BSFiberConcrete
             {
                 MessageBox.Show(_e.Message);
             }
+        }
+
+        // СП63 П 6.1.25 
+        private void numEps_fbt1_ValueChanged(object sender, EventArgs e)
+        {
+            numEps_fbt_ult.Value = numEps_fbt1.Value;
         }
     }
 }

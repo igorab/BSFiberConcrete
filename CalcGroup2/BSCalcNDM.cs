@@ -36,11 +36,12 @@ namespace BSFiberConcrete.CalcGroup2
         // параметры для расчета
         public void SetDictParams(Dictionary<string, double> _D)
         {
-            // enforce
+            // Enforces
             N = BSHelper.Kgs2kN(_D["N"]);
             My0 = BSHelper.Kgs2kN(_D["My"]);
             Mz0 = BSHelper.Kgs2kN(_D["Mz"]);
-            //size
+
+            // size
             b = _D["b"];
             h = _D["h"];
 
@@ -79,8 +80,11 @@ namespace BSFiberConcrete.CalcGroup2
                 Rfbt3 = BSHelper.Kgssm2ToKNsm2(_D["Rbt3"]);
             }
 
+            // предельные деформации, сжатие
             ebc0 = _D["ebc0"];
             ebc2 = _D["ebc2"];
+
+            // растяжение
             efbt0 = _D["ebt0"];
             efbt2 = _D["ebt2"];
             efbt3 = _D["ebt3"];
@@ -185,22 +189,26 @@ namespace BSFiberConcrete.CalcGroup2
         private static double Rfbt2 = 1.05 / 10d; // Расчетное сопротивление фибробетона на сжатие, кН/см2
         private static double Rfbt3 = 1.05 / 10d; // Расчетное сопротивление фибробетона на сжатие, кН/см2
 
+        // сжатие
         private static double ebc0 = 0.002; // Деформация бетона на сжатие
         private static double ebc2 = 0.0035; // Предельная деформация бетона на сжатие
-                                             // 
-        private static double efbt0 = 0.0001; // Деформация бетона на растяжение
+                 
+        // растяжение 
+        private static double efbt0 = 0.0001; // Деформация фибробетона на растяжение
         private static double efbt1 = 0.0001;
-        private static double efbt2 = 0.00015; // Предельная деформация бетона на растяжение
-        private static double efbt3 = 0.02; // Предельная деформация бетона на растяжение
+        private static double efbt2 = 0.00015; // Предельная деформация фибробетона на растяжение
+        private static double efbt3 = 0.02; // Предельная деформация фибробетона на растяжение
 
         // Арматура кН/см2
         private static double Es0 = 2.0 * Math.Pow(10, 5) / 10.0; //Начальный модуль арматуры, кН/см2       
         private static double Rst = 435 / 10d; // Прочность арматуры на растяжение        
         private static double Rsc = 400 / 10d;  // Прочность арматуры на сжатие
-        private static double est2 = 0.025;
-        private static double esc2 = 0.025;
+        // сжатие        
         private static double esc0 = Rsc / Es0;
+        private static double esc2 = 0.025;
+        // растяжение
         private static double est0 = Rst / Es0;
+        private static double est2 = 0.025;
 
         private List<double> My, Mz;
 
@@ -211,9 +219,9 @@ namespace BSFiberConcrete.CalcGroup2
         #endregion
 
         // максимальное число итераций
-        private static int jmax = 1000;
+        private static int jmax = 20000;
         // Максимальная абсолютная погрешность
-        private static double tolmax = Math.Pow(10, -10);
+        private static double tolmax = Math.Pow(10, -8);
         private static int err = 0;
         private Dictionary<string, double> m_Results = new Dictionary<string, double>();
 
@@ -529,10 +537,22 @@ namespace BSFiberConcrete.CalcGroup2
                 double tol = new double[] { tol_ep0, tol_Ky, tol_Kz }.Max();
 
                 if (tol < tolmax)
+                {
+                    err = -1;
                     break;
+                }
 
-                if (j == jmax-1) 
-                    err = 2;  // Достигнуто максимальное число итераций              
+                if (j == jmax - 1)
+                {
+                    err = 2;  // Достигнуто максимальное число итераций
+                    break;
+                }
+
+                if (epB[j].Max() > 1)
+                {
+                    err = 3; // Деформации превысили разумный предел
+                    break;
+                }
             }
 
             // Проверка - выполняются ли условия в равновестия?
@@ -552,15 +572,19 @@ namespace BSFiberConcrete.CalcGroup2
             // растяжение 
             double sigB_t = sigB[jend].Maximum();
             double sigS_t = sigS[jend].Maximum();
+
             double epsB_t = epB[jend].Maximum();
             double epsS_t = epS[jend].Maximum();
-
+            
             // сжатие 
             double sigB_p = sigB[jend].Minimum(); 
             double sigS_p = sigS[jend].Minimum(); 
             double epsB_p = epB[jend].Minimum(); 
-            double epsS_p = epS[jend].Minimum(); 
+            double epsS_p = epS[jend].Minimum();
 
+            // СП 6.1.25 для эпюры с одним знаком
+            //double e_fb_ult = ebc2 - (ebc2 - ebc0) * epsB_t / epsB_p;
+            //double e_fbt_ult = efbt3 - (efbt3 - efbt2) * epsB_t / epsB_p;
 
             m_Results = new Dictionary<string, double>
             {
@@ -569,11 +593,13 @@ namespace BSFiberConcrete.CalcGroup2
                 ["ry"] = 1/Ky[jend],
                 ["Kz"] = Kz[jend],
                 ["rz"] = 1/Kz[jend],
+
                 // растяжение
                 ["sigB"] = sigB_t,
                 ["sigS"] = sigS_t,
                 ["epsB"] = epsB_t,
                 ["epsS"] = epsB_t,
+
                 // сжатие
                 ["sigB_p"] = sigB_p,
                 ["sigS_p"] = sigS_p,
@@ -581,7 +607,8 @@ namespace BSFiberConcrete.CalcGroup2
                 ["epsS_p"] = epsB_p,
 
                 ["My_crc"] = Myint,
-                ["Mx_crc"] = Mzint
+                ["Mx_crc"] = Mzint,
+                ["ItersCnt"] = jend
             };
 
             SigmaBResult = new List<double>(sigB[jend]);

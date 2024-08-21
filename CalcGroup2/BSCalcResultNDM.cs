@@ -16,6 +16,9 @@ namespace BSFiberConcrete
     /// </summary>
     public class BSCalcResultNDM
     {
+        [DisplayName("Количество итераций, [.]")]
+        public double ItersCnt { get; private set; }
+
         #region 1 группа предельных состояний
         [DisplayName("Радиус кривизны продольной оси в плоскости действия моментов, Rx, [см]")]
         public double rx { get; private set; }
@@ -44,7 +47,7 @@ namespace BSFiberConcrete
         public double e_fb_max { get; private set; }
 
         [DisplayName("Коэффициент использования по деформации в фибробетоне, [.]")]
-        public double UtilRate_e_fb => (Eps_fb_ult !=0) ? e_fb_max / Eps_fb_ult : 1;
+        public double UtilRate_e_fb => (Eps_fb_ult !=0) ? e_fb_max_p / Eps_fb_ult : 1;
 
         [DisplayName("Максимальная относительная деформация в арматуре, [.]")]
         public double e_s_max { get; private set; }
@@ -136,6 +139,16 @@ namespace BSFiberConcrete
 
         private string DN(string _attr) => BSFiberCalculation.DsplN(typeof(BSCalcResultNDM), _attr);
 
+        private Dictionary<int, string> DictErrors = new Dictionary<int, string>()
+        {
+            [-1] = "Достигнута заданная сходимость метода [+]",
+            [0] = "",
+            [1] = "Превышен максимально допустимый предел деформации [-]",
+            [2] = "Достигнуто максимальное число итераций [-]",
+            [3] = "Деформации превысили разумный предел [-]"
+        };
+
+
         /// <summary>
         /// внешние усилия
         /// </summary>
@@ -189,7 +202,7 @@ namespace BSFiberConcrete
             { DN("b"), b },
             { DN("h"), h }
         };
-
+       
         /// <summary>
         /// Параметры расчета
         /// </summary>
@@ -218,11 +231,15 @@ namespace BSFiberConcrete
             Eps_s_ult = _D["es_ult"];
 
             rods_qty = _D["rods_qty"];
-            rods_area = _D["rods_area"];
+            rods_area = _D["rods_area"];            
         }
 
         public BSCalcResultNDM(Dictionary<string, double> _D1gr)
         {
+            // итерации
+            ItersCnt = _D1gr["ItersCnt"];
+
+            // деформации
             eps_0 = _D1gr["ep0"];
             Ky = _D1gr["Ky"];
             ry = _D1gr["ry"];
@@ -282,7 +299,11 @@ namespace BSFiberConcrete
         ///  Результаты расчета по 1 группе предельных состояний
         /// </summary>
         public void Results1Group(ref Dictionary<string, double> _CalcResults)
-        {           
+        {
+            // 
+            AddToResult("ItersCnt", ItersCnt);
+
+            Res1Group.Add("--------Изгиб:--------", 1);
             AddToResult("eps_0", eps_0);
             AddToResult("rx", rx);
             AddToResult("Kx", Kx);
@@ -293,7 +314,7 @@ namespace BSFiberConcrete
             Res1Group.Add("--------Растяжение:--------", 1);
             AddToResult("sigmaB", BSHelper.KNsm2ToKgssm2(sigmaB));            
             AddToResult("e_fb_max", e_fb_max);
-            AddToResult("UtilRate_e_fb", UtilRate_e_fb);
+            //AddToResult("UtilRate_e_fb", UtilRate_e_fb);
             
             AddToResult("sigmaS", BSHelper.KNsm2ToKgssm2(sigmaS));
             AddToResult("e_s_max", e_s_max);
@@ -303,7 +324,7 @@ namespace BSFiberConcrete
             Res1Group.Add("--------Сжатие:-------", 1);
             AddToResult("sigmaB_p", BSHelper.KNsm2ToKgssm2(sigmaB_p));
             AddToResult("e_fb_max_p", e_fb_max_p);
-            //AddToResult("UtilRate_e_fb", UtilRate_e_fb);
+            AddToResult("UtilRate_e_fb", UtilRate_e_fb);
 
             AddToResult("sigmaS_p", BSHelper.KNsm2ToKgssm2(sigmaS_p));
             AddToResult("e_s_max_p", e_s_max_p);
@@ -329,6 +350,13 @@ namespace BSFiberConcrete
                 Msg.Add(string.Format("Проверка сечения по арматуре пройдена. e_s_max={0} <= e_s_ult={1} ", Math.Round(e_s_max, 6), Eps_s_ult));
             else
                 Msg.Add(string.Format("Не пройдена проверка сечения по арматуре. e_s_max={0} <= e_s_ult={1}", Math.Round(e_s_max, 6), Eps_s_ult));
+
+            Msg.Add("---Предупреждения:------");
+            foreach (int errid in ErrorIdx) 
+            {
+                if (DictErrors.TryGetValue(errid, out string _errval))
+                    Msg.Add($"{_errval}");
+            }
 
             _Message = Msg;
         }
