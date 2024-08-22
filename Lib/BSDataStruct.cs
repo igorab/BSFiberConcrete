@@ -165,15 +165,25 @@ namespace BSFiberConcrete
             }
         }
 
+        /// <summary>
+        /// П 6.2.13 СП 63
+        /// </summary>
         public double Epsilon_s_ult
         {
             get
             {
                 double res = 0;
+
+                // А240–А500
                 if (typeYieldStress == TypeYieldStress.Physical)
-                { res = 0.025; }
-                if (typeYieldStress == TypeYieldStress.Offset)
-                { res = 0.015; }
+                {
+                    res = 0.025; //СП63  П 6.2.14 , СП 360 П 6.1.25
+                }
+                else if (typeYieldStress == TypeYieldStress.Offset) //А600–А1000
+                {
+                    res = 0.015;
+                }
+
                 return res;
             }
         }

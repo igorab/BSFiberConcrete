@@ -21,6 +21,8 @@ namespace BSFiberConcrete.Section.DrawBeamSection
 
         public double MaxValue { get; set; }
         public double MinValue { get; set; }
+        public double e_fb_max { get; set; }
+        public double e_fbt_max { get; set; }
 
         public FormsPlot PlotForForms
         {
@@ -45,6 +47,10 @@ namespace BSFiberConcrete.Section.DrawBeamSection
         {
             numMaxValue.Value = (decimal)MaxValue;
             numMinValue.Value = (decimal)MinValue;
+
+            num_e_fbt_max.Value = (decimal)e_fbt_max;
+            num_e_fb_max.Value = (decimal)e_fb_max;
+
         }
     }
 }

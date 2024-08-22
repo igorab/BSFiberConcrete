@@ -1,5 +1,6 @@
 ﻿using BSFiberConcrete.DeformationDiagram;
 using MathNet.Numerics.Integration;
+using OpenTK.Graphics.OpenGL;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -132,6 +133,10 @@ namespace BSFiberConcrete
 
         [DisplayName("Максимально допустимая относительная деформация в бетоне, [.]")]
         public double Eps_fb_ult { get; set; }
+
+        [DisplayName("Максимально допустимая относительная деформация в бетоне, [.]")]
+        public double Eps_fbt_ult { get; set; }
+
         [DisplayName("Максимально допустимая относительная деформация в арматуре, [.]")]
         public double Eps_s_ult { get; set; }
 
@@ -171,7 +176,8 @@ namespace BSFiberConcrete
         {
             get
             {
-                return new Dictionary<string, double> {
+                return new Dictionary<string, double> 
+                {
                     { DN("Eb"),  Eb },
                     // норм
                     { DN("Rfbn"), Rfbn },
@@ -227,7 +233,8 @@ namespace BSFiberConcrete
             Es = _D["Es0"];
             Rs = _D["Rscn"];
 
-            Eps_fb_ult = _D["ebt_ult"];
+            Eps_fbt_ult = _D["ebt_ult"];
+            Eps_fb_ult = _D["eb_ult"];
             Eps_s_ult = _D["es_ult"];
 
             rods_qty = _D["rods_qty"];

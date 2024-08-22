@@ -231,7 +231,8 @@ namespace BSFiberConcrete
                 num_a.Value = (decimal)dbRebar.a;
                 num_a1.Value = (decimal)dbRebar.a1;
 
-                numEps_fb2.Value = 0.0042M;
+                //СП63 6.1.20 
+                numEps_fb2.Value = 0.0035M;
 
                 CalcTypeShow();
             }
@@ -1048,8 +1049,11 @@ namespace BSFiberConcrete
                 //Mesh
                 ["ny"] = (int)numMeshN.Value,
                 ["nz"] = (int)numMeshN.Value,
+
                 // beton
-                ["Eb0"] = (double)numEfb.Value,
+                ["Eb0"] = (double)numE_beton.Value, // сжатие
+                ["Ebt"] = (double)numE_fiber.Value, // растяжение
+
                 // - нормативные
                 ["Rbcn"] = (double)(numRfb_n.Value),
                 ["Rbtn"] = (double)(numRfbt_n.Value),
@@ -1061,14 +1065,19 @@ namespace BSFiberConcrete
                 ["Rbt2"] = mf.Rfbt2,
                 ["Rbt3"] = mf.Rfbt3,
                 // - деформации
-                ["ebc0"] = (double)numEps_fb0.Value, // ? 
-                ["ebc2"] = (double)numEps_fb2.Value, // ?
-                ["ebt0"] = (double)numEps_fbt0.Value, // ? 
-                ["ebt1"] = (double)numEps_fbt1.Value, // ? 
-                ["ebt2"] = (double)numEps_fbt2.Value, // ?
-                ["ebt3"] = (double)numEps_fbt3.Value, // ?
+                // сжатие
+                ["ebc0"] = (double)numEps_fb0.Value, 
+                ["ebc2"] = (double)numEps_fb2.Value, 
+                ["eb_ult"] = (double)numEps_fb_ult.Value,
+
+                // растяжение
+                ["ebt0"] = (double)numEps_fbt0.Value, 
+                ["ebt1"] = (double)numEps_fbt1.Value, 
+                ["ebt2"] = (double)numEps_fbt2.Value, 
+                ["ebt3"] = (double)numEps_fbt3.Value, 
                 ["ebt_ult"] = (double)numEps_fbt_ult.Value,
-                // steel
+
+                // арматура steel
                 ["Es0"] = (double)numEs.Value,
                 // нормативные 
                 ["Rscn"] = (double)(numRscn.Value),
@@ -1077,8 +1086,8 @@ namespace BSFiberConcrete
                 ["Rsc"] = (double)numRsc.Value,
                 ["Rst"] = (double)numRs.Value,
                 // деформации
-                ["esc2"] = (double)numEpsilonS2.Value, // уточнить
-                ["est2"] = (double)numEpsilonS2.Value, // уточнить
+                ["esc2"] = (double)numEpsilonS2.Value, // сжатие уточнить
+                ["est2"] = (double)numEpsilonS2.Value, // растяжение уточнить
                 ["es_ult"] = (double)numEps_s_ult.Value,
             };
 
@@ -1142,9 +1151,9 @@ namespace BSFiberConcrete
             bsCalc1.SetDictParams(D);
             bsCalc1.GetRods(listD, listX, listY);
             bsCalc1.Run();
-            
-            List<double> sigmasB = bsCalc1.SigmaBResult;            
-            List<double> sigmasS = bsCalc1.SigmaSResult;
+
+            List<double> epsilons_B = bsCalc1.EpsilonBResult;   // bsCalc1.SigmaBResult;            
+            List<double> epsilons_S = bsCalc1.EpsilonSResult;   // bsCalc1.SigmaBResult;            
 
             BSCalcResultNDM calcRes = new BSCalcResultNDM(bsCalc1.Results);
             calcRes.InitCalcParams(D);
@@ -1169,10 +1178,8 @@ namespace BSFiberConcrete
             m_Efforts = calcRes.Efforts;
             m_PhysParams = calcRes.PhysParams;
             m_Reinforcement = calcRes.Reinforcement;
-
             
-
-            ShowMosaic(sigmasB);
+            ShowMosaic(epsilons_B, epsilons_S);
         }
 
 
@@ -1684,8 +1691,10 @@ namespace BSFiberConcrete
         /// <summary>
         ///  Разбиение сечения на конечные элементы
         /// </summary>
-        /// <param name="_values"></param>
-        private void ShowMosaic(List<double> _values = null)
+        /// <param name="_valuesB">значения для бетона</param>
+        /// <param name="_valuesB">значения для арматуры</param>
+        private void ShowMosaic(List<double> _valuesB = null, 
+                                List<double> _valuesS = null)
         {
             MeshDraw mDraw;
 
@@ -1696,7 +1705,8 @@ namespace BSFiberConcrete
                 mDraw = new MeshDraw((int)numMeshN.Value, (int)numMeshN.Value);                                                
                 mDraw.MaxVal = (double)numEps_fbt_ult.Value;
                 mDraw.MinVal = -(double)numEps_fb_ult.Value;
-                mDraw.Values = _values;
+                mDraw.Values = _valuesB;
+                mDraw.ValuesS = _valuesS;
                 mDraw.CreateRectanglePlot(sz, m_BeamSection);
                 mDraw.ShowMesh();
             }
@@ -1708,7 +1718,8 @@ namespace BSFiberConcrete
                 mDraw = new MeshDraw(Tri.Mesh);
                 mDraw.MaxVal = (double)numEps_fbt_ult.Value;
                 mDraw.MinVal = -(double)numEps_fb_ult.Value;
-                mDraw.Values = _values;                
+                mDraw.Values = _valuesB;
+                mDraw.ValuesS = _valuesS;
                 mDraw.PaintSectionMesh();
 
                 mDraw.ShowMesh();
@@ -1990,7 +2001,7 @@ namespace BSFiberConcrete
         /// </summary>        
         private void numEps_fbt3_ValueChanged(object sender, EventArgs e)
         {
-            // numEps_fbt_ult.Value = numEps_fbt3.Value; // требует уточнения
+            numEps_fbt_ult.Value = numEps_fbt3.Value; // требует уточнения
         }
 
         /// <summary>
@@ -2012,13 +2023,14 @@ namespace BSFiberConcrete
             cmbRebarSquare.SelectedIndex = previosIndexRebarDiameter;
         }
         
-        
+        // модуль упругости для фибробетона на растяжение
         private void numE_fiber_ValueChanged(object sender, EventArgs e)
         {
             numEps_fbt0.Value = BSMatFiber.NumEps_fbt0(numRfbt_n.Value, numE_fiber.Value);
             numEps_fbt1.Value = numEps_fbt0.Value + 0.0001m;
             numEps_fb1.Value = BSMatFiber.NumEps_fb1(numRfb_n.Value, numE_fiber.Value);
 
+            numEfb.Value = numE_fiber.Value;
         }
 
         /// <summary>
@@ -2137,7 +2149,12 @@ namespace BSFiberConcrete
         // СП63 П 6.1.25 
         private void numEps_fbt1_ValueChanged(object sender, EventArgs e)
         {
-            numEps_fbt_ult.Value = numEps_fbt1.Value;
+            //numEps_fbt_ult.Value = numEps_fbt1.Value;
+        }
+
+        private void numEfb_ValueChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

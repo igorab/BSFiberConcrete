@@ -15,25 +15,28 @@ using TriangleNet.Topology;
 
 namespace BSFiberConcrete
 {
-
     /// <summary>
     /// Класс для отрисовки элементов связанных с сеткой сечения балки.
     /// Для отрисовки используется NuGet ScottPlot
     /// </summary>
     public class MeshDraw
-    {
-        /// <summary>
-        /// 
-        /// </summary>
+    {        
         private FormsPlot _formsPlot;
 
-        private int Ny; 
-        private int Nz;
+        // шаг сетки
+        private int Ny; // горизонтальная ось
+        private int Nz; // вертикальная ось
 
-        public double MaxVal { get; set; }
-        public double MinVal { get; set; }
-        public List<double> Values { get; set; }
+        /// верхняя граница
+        public double MaxVal {private get; set; }
+        /// нижняя граница
+        public double MinVal {private get; set; }
 
+        public List<double> Values { private get; set; }
+        /// <summary>
+        /// Значения для стержней арматуры
+        /// </summary>
+        public List<double> ValuesS { private get; set; }
 
         /// <summary>
         /// Сетки из треугольников
@@ -60,6 +63,9 @@ namespace BSFiberConcrete
             drawBS.PlotForForms = _formsPlot;
             drawBS.MinValue = MinVal;
             drawBS.MaxValue = MaxVal;
+            drawBS.e_fbt_max = Values.Max();
+            drawBS.e_fb_max = Values.Min();
+
             drawBS.Show();                
         }
 
@@ -161,13 +167,19 @@ namespace BSFiberConcrete
             Nz = _Nz;
         }
 
+        /// <summary>
+        ///  Покрытие прямоугольниками
+        /// </summary>
+        /// <param name="sz"></param>
+        /// <param name="_bs"></param>
+        /// <returns></returns>
         public FormsPlot CreateRectanglePlot(double[] sz, BeamSection _bs)
         {            
             var msh = new BSCalcLib.MeshRect(Ny, Nz);
 
             if (_bs == BeamSection.Rect)
                 msh.Rectangle(sz[0], sz[1]);
-            else if (_bs == BeamSection.IBeam || _bs == BeamSection.TBeam || _bs == BeamSection.LBeam)
+            else if (BSHelper.IsITL(_bs))
                 msh.IBeamSection(sz[0], sz[1], sz[2], sz[3], sz[4], sz[5]);
 
             FormsPlot formsPlot = new FormsPlot() { Dock = DockStyle.Fill };

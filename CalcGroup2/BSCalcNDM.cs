@@ -58,8 +58,11 @@ namespace BSFiberConcrete.CalcGroup2
             //Mesh
             ny = (int)_D["ny"];
             nz = (int)_D["nz"];
+
             // beton
             Eb0 = BSHelper.Kgssm2ToKNsm2(_D["Eb0"]);
+            // fiber
+            Ebt = BSHelper.Kgssm2ToKNsm2(_D["Ebt"]);
 
             if (GroupLSD == 2) 
             {
@@ -182,7 +185,8 @@ namespace BSFiberConcrete.CalcGroup2
 
         // Параметры материалов
         // Бетон B25 кН/см2
-        private static double Eb0 = 30.0 * Math.Pow(10, 3) / 10.0; //Начальный модуль бетона, кН/см2
+        private static double Eb0 = 0; // 30.0 * Math.Pow(10, 3) / 10.0; //Начальный модуль бетона, кН/см2
+        private static double Ebt = 0; //Начальный модуль упругости фибробетона, кН/см2
         private static double Rbc = 14.5 / 10d; // Расчетное сопротивление бетона на сжатие, кН/см2
 
         private static double Rfbt = 1.05 / 10d; // Расчетное сопротивление фибробетона на растяжение, кН/см2
@@ -221,7 +225,7 @@ namespace BSFiberConcrete.CalcGroup2
         // максимальное число итераций
         private static int jmax = 20000;
         // Максимальная абсолютная погрешность
-        private static double tolmax = Math.Pow(10, -8);
+        private static double tolmax = Math.Pow(10, -12);
         private static int err = 0;
         private Dictionary<string, double> m_Results = new Dictionary<string, double>();
 
@@ -236,7 +240,13 @@ namespace BSFiberConcrete.CalcGroup2
         /// напряжения в сечении арматуры 
         /// </summary>
         public List<double> SigmaSResult { get; private set; }
+        /// <summary>
+        /// деформации в элементах сечения 
+        /// </summary>
         public List<double> EpsilonBResult { get; private set; }
+        /// <summary>
+        /// деформации в арматуре 
+        /// </summary>
         public List<double> EpsilonSResult { get; private set; }
 
         #region разбивка сечения на элементы
@@ -617,6 +627,9 @@ namespace BSFiberConcrete.CalcGroup2
             EpsilonSResult = new List<double>(epS[jend]);
         }
       
+        /// <summary>
+        ///  Запустить расчет
+        /// </summary>
         public void Run()
         {
             try

@@ -21,6 +21,9 @@ namespace BSFiberConcrete.CalcGroup2
         {
             double s = 0;
 
+            esc0 = Rsc / Es0;
+            est0 = Rst / Es0;            
+
             if (_e > est2)
             {
                 //s = 0;
@@ -115,10 +118,15 @@ namespace BSFiberConcrete.CalcGroup2
                 return Diagr_Beton(_e);
             }
 
+            // сжатие по СП 63 6.1.20
+            ebc0 = 0.002;
+            ebc2 = 0.0035;
+            
             double sc1 = 0.6 * Rbc;            
             double ebc1 = sc1 / Eb0;
-
-            efbt0 = Rfbt / Eb0;
+           
+            // Растяжение - по СП 360
+            efbt0 = Rfbt / Ebt;
             efbt1 = efbt0 + 0.0001;
             //TODO refactoring
             efbt2 = 0.004;
@@ -145,7 +153,7 @@ namespace BSFiberConcrete.CalcGroup2
             // растяжение
             else if (0 <= _e && _e <= efbt0)
             {
-                s = _e * Eb0;
+                s = _e * Ebt;
             }
             else if (efbt0 < _e && _e <= efbt1)
             {
@@ -162,7 +170,7 @@ namespace BSFiberConcrete.CalcGroup2
             else if (_e > efbt3)
             {
                 //s = 0;
-                s = Rfbt3 + Eb0 * (_e - efbt3);
+                s = Rfbt3 + Ebt * (_e - efbt3);
             }
 
             return s;
