@@ -1151,11 +1151,14 @@ namespace BSFiberConcrete
             bsCalc1.SetDictParams(D);
             bsCalc1.GetRods(listD, listX, listY);
             bsCalc1.Run();
-
-            List<double> epsilons_B = bsCalc1.EpsilonBResult;   // bsCalc1.SigmaBResult;            
-            List<double> epsilons_S = bsCalc1.EpsilonSResult;   // bsCalc1.SigmaBResult;            
-
+            
             BSCalcResultNDM calcRes = new BSCalcResultNDM(bsCalc1.Results);
+
+            calcRes.Sig_B = bsCalc1.SigmaBResult;
+            calcRes.Sig_S = bsCalc1.SigmaSResult;
+            calcRes.Eps_B = bsCalc1.EpsilonBResult;
+            calcRes.Eps_S = bsCalc1.EpsilonSResult;
+
             calcRes.InitCalcParams(D);
             calcRes.ErrorIdx.Add(bsCalc1.Err); // вывести описание ошибки
             calcRes.Results1Group(ref m_CalcResults);
@@ -1179,7 +1182,7 @@ namespace BSFiberConcrete
             m_PhysParams = calcRes.PhysParams;
             m_Reinforcement = calcRes.Reinforcement;
             
-            ShowMosaic(epsilons_B, epsilons_S);
+            ShowMosaic(calcRes);
         }
 
 
@@ -1688,13 +1691,40 @@ namespace BSFiberConcrete
             sectionChart.Show();
         }
 
+
+        private void ShowMosaic(BSCalcResultNDM _CalcResNDM)
+        {
+            int mode = comboMosaic.SelectedIndex;
+
+            if (mode == 1)
+            {
+                ShowMosaic(mode, _CalcResNDM.Eps_B, _CalcResNDM.Eps_S, (double)numEps_fbt_ult.Value, -(double)numEps_fb_ult.Value);
+            }
+            else if (mode == 2)
+            {
+                ShowMosaic(mode, _CalcResNDM.Sig_B, _CalcResNDM.Sig_S,  _CalcResNDM.Rfbt, _CalcResNDM.Rs);
+            }
+            else if (mode == 3)
+            {
+                ShowMosaic(mode, _CalcResNDM.Eps_B, _CalcResNDM.Eps_S);
+            }
+            else if (mode == 4)
+            {
+                ShowMosaic(mode, _CalcResNDM.Sig_B, _CalcResNDM.Sig_S);
+            }
+        }
+
+
         /// <summary>
         ///  Разбиение сечения на конечные элементы
         /// </summary>
         /// <param name="_valuesB">значения для бетона</param>
         /// <param name="_valuesB">значения для арматуры</param>
-        private void ShowMosaic(List<double> _valuesB = null, 
-                                List<double> _valuesS = null)
+        private void ShowMosaic(int _Mode = 0,
+                                List<double> _valuesB = null, 
+                                List<double> _valuesS = null,
+                                double _ultMax = 0,
+                                double _ultMin = 0                                )
         {
             MeshDraw mDraw;
 
@@ -1702,11 +1732,12 @@ namespace BSFiberConcrete
 
             if (BSHelper.IsRectangled(m_BeamSection))
             {
-                mDraw = new MeshDraw((int)numMeshN.Value, (int)numMeshN.Value);                                                
-                mDraw.MaxVal = (double)numEps_fbt_ult.Value;
-                mDraw.MinVal = -(double)numEps_fb_ult.Value;
-                mDraw.Values = _valuesB;
-                mDraw.ValuesS = _valuesS;
+                mDraw = new MeshDraw((int)numMeshN.Value, (int)numMeshN.Value);
+                mDraw.MosaicMode = _Mode;
+                mDraw.UltMax = _ultMax;
+                mDraw.UltMin = _ultMin;
+                mDraw.Values_B = _valuesB;
+                mDraw.Values_S = _valuesS;
                 mDraw.CreateRectanglePlot(sz, m_BeamSection);
                 mDraw.ShowMesh();
             }
@@ -1716,17 +1747,15 @@ namespace BSFiberConcrete
                 _= GenerateMesh(ref cg);
 
                 mDraw = new MeshDraw(Tri.Mesh);
-                mDraw.MaxVal = (double)numEps_fbt_ult.Value;
-                mDraw.MinVal = -(double)numEps_fb_ult.Value;
-                mDraw.Values = _valuesB;
-                mDraw.ValuesS = _valuesS;
+                mDraw.MosaicMode = _Mode;
+                mDraw.UltMax = _ultMax;
+                mDraw.UltMin = _ultMin;
+                mDraw.Values_B = _valuesB;
+                mDraw.Values_S = _valuesS;
                 mDraw.PaintSectionMesh();
-
-                mDraw.ShowMesh();
-                //md.SaveToPNG();
+                mDraw.ShowMesh();                
             }
         }
-
 
         // <summary>
         /// Покрыть сечение сеткой
@@ -2138,7 +2167,7 @@ namespace BSFiberConcrete
         {
             try
             {
-                ShowMosaic();
+                ShowMosaic(comboMosaic.SelectedIndex);
             }
             catch (Exception _e)
             {

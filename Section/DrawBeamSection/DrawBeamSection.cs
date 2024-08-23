@@ -1,4 +1,5 @@
-﻿using ScottPlot.WinForms;
+﻿using MathNet.Numerics;
+using ScottPlot.WinForms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,10 +20,16 @@ namespace BSFiberConcrete.Section.DrawBeamSection
         /// </summary>
         protected FormsPlot _plotForForms = new FormsPlot() { Dock = DockStyle.Fill };
 
+        // предельные значения
         public double MaxValue { get; set; }
         public double MinValue { get; set; }
+        // бетон:
         public double e_fb_max { get; set; }
         public double e_fbt_max { get; set; }
+        // арматура:
+        public double e_s_max { get; set; }
+        public double e_st_max { get; set; }
+
 
         public FormsPlot PlotForForms
         {
@@ -35,6 +42,8 @@ namespace BSFiberConcrete.Section.DrawBeamSection
             }
         }
 
+        public int Mode { get; internal set; }
+
         public DrawBeamSection()
         {
             InitializeComponent();
@@ -45,12 +54,35 @@ namespace BSFiberConcrete.Section.DrawBeamSection
 
         private void DrawBeamSection_Load(object sender, EventArgs e)
         {
+            comboMode.SelectedIndex = Mode;
+
             numMaxValue.Value = (decimal)MaxValue;
             numMinValue.Value = (decimal)MinValue;
 
             num_e_fbt_max.Value = (decimal)e_fbt_max;
             num_e_fb_max.Value = (decimal)e_fb_max;
 
+            num_e_st_max.Value = (decimal)e_st_max;
+            num_e_s_max.Value = (decimal)e_s_max;
+
+            //σ, fbt max
+            //σ, b max
+            if (Mode == 2)
+            {
+                labelMax.Text = "R fbt3";
+                labelMin.Text = "R s";
+
+                label_fbt_max.Text = "σ, fbt max";
+                label_b_max.Text = "σ, b max";
+
+                label_st_max.Text = "σ, st max";
+                label_s_max.Text = "σ, s max";
+            }
+        }
+
+        private void comboMode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var _x = comboMode.SelectedItem;
         }
     }
 }

@@ -69,6 +69,13 @@ namespace BSFiberConcrete
         [DisplayName("Максимальная относительная деформация в арматуре (сжатие), [.]")]
         public double e_s_max_p { get; private set; }
 
+        // напряжение
+        public List<double> Sig_B { get; set; } // бетон
+        public List<double> Sig_S { get; set; } // арматура
+
+        // деформации
+        public List<double> Eps_B { get; set; } // бетон
+        public List<double> Eps_S { get; set; } // арматура
 
         #endregion
 

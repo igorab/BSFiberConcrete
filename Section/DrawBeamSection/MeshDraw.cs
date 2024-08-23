@@ -1,5 +1,6 @@
 ﻿using BSFiberConcrete.Section.DrawBeamSection;
 using ScottPlot;
+using ScottPlot.Colormaps;
 using ScottPlot.WinForms;
 using System;
 using System.Collections.Generic;
@@ -22,34 +23,41 @@ namespace BSFiberConcrete
     public class MeshDraw
     {        
         private FormsPlot _formsPlot;
-
+                
         // шаг сетки
         private int Ny; // горизонтальная ось
         private int Nz; // вертикальная ось
 
-        /// верхняя граница
-        public double MaxVal {private get; set; }
-        /// нижняя граница
-        public double MinVal {private get; set; }
+        public int MosaicMode { private get; set; }
 
-        public List<double> Values { private get; set; }
+        /// верхняя граница
+        public double UltMax {private get; set; }
+        /// нижняя граница
+        public double UltMin {private get; set; }
+
+        /// <summary>
+        /// Сечение
+        /// </summary>
+        public List<double> Values_B { private get; set; }
         /// <summary>
         /// Значения для стержней арматуры
         /// </summary>
-        public List<double> ValuesS { private get; set; }
+        public List<double> Values_S { private get; set; }
 
         /// <summary>
         /// Сетки из треугольников
         /// </summary>
-        public Mesh TriangleMesh 
-        { 
-            get;
-            private set;
+        public Mesh TriangleMesh  {  get; private set; }
+
+        public MeshDraw(Mesh _triangleMesh)
+        {
+            TriangleMesh = _triangleMesh;
         }
 
-        public MeshDraw(Mesh triangleMesh)
+        public MeshDraw(int _Ny, int _Nz)
         {
-            TriangleMesh = triangleMesh;
+            Ny = _Ny;
+            Nz = _Nz;
         }
 
         /// <summary>
@@ -60,11 +68,15 @@ namespace BSFiberConcrete
             if (_formsPlot == null)
                 return;
             DrawBeamSection drawBS = new DrawBeamSection();
+
+            drawBS.Mode = MosaicMode;
             drawBS.PlotForForms = _formsPlot;
-            drawBS.MinValue = MinVal;
-            drawBS.MaxValue = MaxVal;
-            drawBS.e_fbt_max = Values.Max();
-            drawBS.e_fb_max = Values.Min();
+            drawBS.MinValue = UltMin;
+            drawBS.MaxValue = UltMax;
+            drawBS.e_fbt_max = (Values_B!=null)? Values_B.Max() : 0;
+            drawBS.e_fb_max = (Values_B != null) ? Values_B.Min() :0;
+            drawBS.e_st_max = (Values_S != null)? Values_S.Max() : 0;
+            drawBS.e_s_max = (Values_S != null) ? Values_S.Min() :0;
 
             drawBS.Show();                
         }
@@ -138,15 +150,15 @@ namespace BSFiberConcrete
                 }
                 ScottPlot.Plottables.Polygon poly = formsPlt.Plot.Add.Polygon(points);
 
-                if (Values != null )
+                if (Values_B != null )
                 {
-                    double measured_value = Values[i];
+                    double measured_value = Values_B[i];
 
-                    if (measured_value > MinVal && measured_value < MaxVal)
+                    if (measured_value > UltMin && measured_value < UltMax)
                         poly.FillColor = ScottPlot.Colors.Green;
-                    else if (measured_value >= MaxVal)
+                    else if (measured_value >= UltMax)
                         poly.FillColor = ScottPlot.Colors.Red;
-                    else if (measured_value <= MinVal)
+                    else if (measured_value <= UltMin)
                         poly.FillColor = ScottPlot.Colors.Violet;
                     else
                         poly.FillColor = ScottPlot.Colors.Green;
@@ -159,14 +171,7 @@ namespace BSFiberConcrete
 
             return formsPlt;
         }
-
-        
-        public MeshDraw(int _Ny, int _Nz)
-        {
-            Ny = _Ny;
-            Nz = _Nz;
-        }
-
+                
         /// <summary>
         ///  Покрытие прямоугольниками
         /// </summary>
@@ -199,15 +204,15 @@ namespace BSFiberConcrete
                                                         
                 ScottPlot.Plottables.Polygon poly = formsPlot.Plot.Add.Polygon(points);
 
-                if (Values != null && Values.Count == cnt)
+                if (Values_B != null && Values_B.Count == cnt)
                 {                                        
-                    double measured_value = Values[idx];
+                    double measured_value = Values_B[idx];
 
-                    if (measured_value > MinVal && measured_value < MaxVal)
+                    if (measured_value > UltMin && measured_value < UltMax)
                         poly.FillColor = ScottPlot.Colors.Green;
-                    else if (measured_value >= MaxVal)
+                    else if (measured_value >= UltMax)
                         poly.FillColor = ScottPlot.Colors.Red;
-                    else if (measured_value <= MinVal)
+                    else if (measured_value <= UltMin)
                         poly.FillColor = ScottPlot.Colors.Violet;
                     else
                         poly.FillColor = ScottPlot.Colors.Green;
