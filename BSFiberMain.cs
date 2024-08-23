@@ -1698,11 +1698,11 @@ namespace BSFiberConcrete
 
             if (mode == 1)
             {
-                ShowMosaic(mode, _CalcResNDM.Eps_B, _CalcResNDM.Eps_S, (double)numEps_fbt_ult.Value, -(double)numEps_fb_ult.Value);
+                ShowMosaic(mode, _CalcResNDM.Eps_B, _CalcResNDM.Eps_S, (double)numEps_fbt_ult.Value, -(double)numEps_fb_ult.Value, _CalcResNDM.Rs);
             }
             else if (mode == 2)
             {
-                ShowMosaic(mode, _CalcResNDM.Sig_B, _CalcResNDM.Sig_S,  _CalcResNDM.Rfbt, _CalcResNDM.Rs);
+                ShowMosaic(mode, _CalcResNDM.Sig_B, _CalcResNDM.Sig_S,  _CalcResNDM.Rfbt, BSHelper.kgssm2kNsm(_CalcResNDM.Rfb), BSHelper.kgssm2kNsm(_CalcResNDM.Rs));
             }
             else if (mode == 3)
             {
@@ -1724,7 +1724,8 @@ namespace BSFiberConcrete
                                 List<double> _valuesB = null, 
                                 List<double> _valuesS = null,
                                 double _ultMax = 0,
-                                double _ultMin = 0                                )
+                                double _ultMin = 0,
+                                double _ultRs = 0)
         {
             MeshDraw mDraw;
 
@@ -1736,6 +1737,7 @@ namespace BSFiberConcrete
                 mDraw.MosaicMode = _Mode;
                 mDraw.UltMax = _ultMax;
                 mDraw.UltMin = _ultMin;
+                mDraw.Rs_Ult = _ultRs;
                 mDraw.Values_B = _valuesB;
                 mDraw.Values_S = _valuesS;
                 mDraw.CreateRectanglePlot(sz, m_BeamSection);
@@ -1750,6 +1752,7 @@ namespace BSFiberConcrete
                 mDraw.MosaicMode = _Mode;
                 mDraw.UltMax = _ultMax;
                 mDraw.UltMin = _ultMin;
+                mDraw.Rs_Ult = _ultRs;
                 mDraw.Values_B = _valuesB;
                 mDraw.Values_S = _valuesS;
                 mDraw.PaintSectionMesh();

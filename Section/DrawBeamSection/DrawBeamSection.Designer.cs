@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.pnlForPlot = new System.Windows.Forms.Panel();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.PanelInfo = new System.Windows.Forms.TableLayoutPanel();
             this.num_e_st_max = new System.Windows.Forms.NumericUpDown();
             this.num_e_fbt_max = new System.Windows.Forms.NumericUpDown();
             this.label_fbt_max = new System.Windows.Forms.Label();
@@ -45,7 +45,8 @@
             this.label_s_max = new System.Windows.Forms.Label();
             this.num_e_s_max = new System.Windows.Forms.NumericUpDown();
             this.comboMode = new System.Windows.Forms.ComboBox();
-            this.tableLayoutPanel1.SuspendLayout();
+            this.btnInfo = new System.Windows.Forms.Button();
+            this.PanelInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.num_e_st_max)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_e_fbt_max)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numMaxValue)).BeginInit();
@@ -64,48 +65,49 @@
             this.pnlForPlot.Size = new System.Drawing.Size(822, 542);
             this.pnlForPlot.TabIndex = 0;
             // 
-            // tableLayoutPanel1
+            // PanelInfo
             // 
-            this.tableLayoutPanel1.ColumnCount = 8;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 127F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 41.13475F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 58.86525F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 77F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 99F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 87F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 95F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 214F));
-            this.tableLayoutPanel1.Controls.Add(this.num_e_st_max, 6, 0);
-            this.tableLayoutPanel1.Controls.Add(this.num_e_fbt_max, 4, 0);
-            this.tableLayoutPanel1.Controls.Add(this.label_fbt_max, 3, 0);
-            this.tableLayoutPanel1.Controls.Add(this.labelMax, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.labelMin, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.numMaxValue, 2, 0);
-            this.tableLayoutPanel1.Controls.Add(this.numMinValue, 2, 1);
-            this.tableLayoutPanel1.Controls.Add(this.labelTension, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.labelPress, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.label_b_max, 3, 1);
-            this.tableLayoutPanel1.Controls.Add(this.num_e_fb_max, 4, 1);
-            this.tableLayoutPanel1.Controls.Add(this.label_st_max, 5, 0);
-            this.tableLayoutPanel1.Controls.Add(this.label_s_max, 5, 1);
-            this.tableLayoutPanel1.Controls.Add(this.num_e_s_max, 6, 1);
-            this.tableLayoutPanel1.Controls.Add(this.comboMode, 0, 2);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(834, 90);
-            this.tableLayoutPanel1.TabIndex = 1;
+            this.PanelInfo.ColumnCount = 8;
+            this.PanelInfo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 127F));
+            this.PanelInfo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 41.13475F));
+            this.PanelInfo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 58.86525F));
+            this.PanelInfo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 77F));
+            this.PanelInfo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 99F));
+            this.PanelInfo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 87F));
+            this.PanelInfo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 95F));
+            this.PanelInfo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 216F));
+            this.PanelInfo.Controls.Add(this.num_e_st_max, 6, 0);
+            this.PanelInfo.Controls.Add(this.num_e_fbt_max, 4, 0);
+            this.PanelInfo.Controls.Add(this.label_fbt_max, 3, 0);
+            this.PanelInfo.Controls.Add(this.labelMax, 1, 0);
+            this.PanelInfo.Controls.Add(this.labelMin, 1, 1);
+            this.PanelInfo.Controls.Add(this.numMaxValue, 2, 0);
+            this.PanelInfo.Controls.Add(this.numMinValue, 2, 1);
+            this.PanelInfo.Controls.Add(this.labelTension, 0, 0);
+            this.PanelInfo.Controls.Add(this.labelPress, 0, 1);
+            this.PanelInfo.Controls.Add(this.label_b_max, 3, 1);
+            this.PanelInfo.Controls.Add(this.num_e_fb_max, 4, 1);
+            this.PanelInfo.Controls.Add(this.label_st_max, 5, 0);
+            this.PanelInfo.Controls.Add(this.label_s_max, 5, 1);
+            this.PanelInfo.Controls.Add(this.num_e_s_max, 6, 1);
+            this.PanelInfo.Controls.Add(this.comboMode, 0, 2);
+            this.PanelInfo.Controls.Add(this.btnInfo, 6, 2);
+            this.PanelInfo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.PanelInfo.Location = new System.Drawing.Point(0, 0);
+            this.PanelInfo.Name = "PanelInfo";
+            this.PanelInfo.RowCount = 3;
+            this.PanelInfo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.PanelInfo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.PanelInfo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
+            this.PanelInfo.Size = new System.Drawing.Size(834, 90);
+            this.PanelInfo.TabIndex = 1;
             // 
             // num_e_st_max
             // 
             this.num_e_st_max.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.num_e_st_max.DecimalPlaces = 6;
             this.num_e_st_max.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.num_e_st_max.Location = new System.Drawing.Point(527, 4);
+            this.num_e_st_max.Location = new System.Drawing.Point(525, 4);
             this.num_e_st_max.Maximum = new decimal(new int[] {
             -1530494976,
             232830,
@@ -125,7 +127,7 @@
             this.num_e_fbt_max.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.num_e_fbt_max.DecimalPlaces = 6;
             this.num_e_fbt_max.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.num_e_fbt_max.Location = new System.Drawing.Point(341, 4);
+            this.num_e_fbt_max.Location = new System.Drawing.Point(339, 4);
             this.num_e_fbt_max.Maximum = new decimal(new int[] {
             -1530494976,
             232830,
@@ -144,7 +146,7 @@
             // 
             this.label_fbt_max.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label_fbt_max.AutoSize = true;
-            this.label_fbt_max.Location = new System.Drawing.Point(273, 8);
+            this.label_fbt_max.Location = new System.Drawing.Point(271, 8);
             this.label_fbt_max.Name = "label_fbt_max";
             this.label_fbt_max.Size = new System.Drawing.Size(62, 13);
             this.label_fbt_max.TabIndex = 6;
@@ -154,7 +156,7 @@
             // 
             this.labelMax.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelMax.AutoSize = true;
-            this.labelMax.Location = new System.Drawing.Point(131, 8);
+            this.labelMax.Location = new System.Drawing.Point(130, 8);
             this.labelMax.Name = "labelMax";
             this.labelMax.Size = new System.Drawing.Size(48, 13);
             this.labelMax.TabIndex = 0;
@@ -164,7 +166,7 @@
             // 
             this.labelMin.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelMin.AutoSize = true;
-            this.labelMin.Location = new System.Drawing.Point(137, 37);
+            this.labelMin.Location = new System.Drawing.Point(136, 37);
             this.labelMin.Name = "labelMin";
             this.labelMin.Size = new System.Drawing.Size(42, 13);
             this.labelMin.TabIndex = 1;
@@ -175,7 +177,7 @@
             this.numMaxValue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.numMaxValue.DecimalPlaces = 6;
             this.numMaxValue.ForeColor = System.Drawing.Color.Red;
-            this.numMaxValue.Location = new System.Drawing.Point(185, 4);
+            this.numMaxValue.Location = new System.Drawing.Point(184, 4);
             this.numMaxValue.Maximum = new decimal(new int[] {
             -1530494976,
             232830,
@@ -187,7 +189,7 @@
             0,
             -2147483648});
             this.numMaxValue.Name = "numMaxValue";
-            this.numMaxValue.Size = new System.Drawing.Size(73, 20);
+            this.numMaxValue.Size = new System.Drawing.Size(72, 20);
             this.numMaxValue.TabIndex = 2;
             // 
             // numMinValue
@@ -195,7 +197,7 @@
             this.numMinValue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.numMinValue.DecimalPlaces = 6;
             this.numMinValue.ForeColor = System.Drawing.Color.Purple;
-            this.numMinValue.Location = new System.Drawing.Point(185, 33);
+            this.numMinValue.Location = new System.Drawing.Point(184, 33);
             this.numMinValue.Maximum = new decimal(new int[] {
             -1530494976,
             232830,
@@ -207,7 +209,7 @@
             0,
             -2147483648});
             this.numMinValue.Name = "numMinValue";
-            this.numMinValue.Size = new System.Drawing.Size(73, 20);
+            this.numMinValue.Size = new System.Drawing.Size(72, 20);
             this.numMinValue.TabIndex = 3;
             // 
             // labelTension
@@ -234,7 +236,7 @@
             // 
             this.label_b_max.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label_b_max.AutoSize = true;
-            this.label_b_max.Location = new System.Drawing.Point(279, 37);
+            this.label_b_max.Location = new System.Drawing.Point(277, 37);
             this.label_b_max.Name = "label_b_max";
             this.label_b_max.Size = new System.Drawing.Size(56, 13);
             this.label_b_max.TabIndex = 7;
@@ -245,7 +247,7 @@
             this.num_e_fb_max.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.num_e_fb_max.DecimalPlaces = 6;
             this.num_e_fb_max.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.num_e_fb_max.Location = new System.Drawing.Point(341, 33);
+            this.num_e_fb_max.Location = new System.Drawing.Point(339, 33);
             this.num_e_fb_max.Maximum = new decimal(new int[] {
             -1530494976,
             232830,
@@ -264,7 +266,7 @@
             // 
             this.label_st_max.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label_st_max.AutoSize = true;
-            this.label_st_max.Location = new System.Drawing.Point(469, 8);
+            this.label_st_max.Location = new System.Drawing.Point(467, 8);
             this.label_st_max.Name = "label_st_max";
             this.label_st_max.Size = new System.Drawing.Size(52, 13);
             this.label_st_max.TabIndex = 10;
@@ -274,7 +276,7 @@
             // 
             this.label_s_max.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label_s_max.AutoSize = true;
-            this.label_s_max.Location = new System.Drawing.Point(472, 37);
+            this.label_s_max.Location = new System.Drawing.Point(470, 37);
             this.label_s_max.Name = "label_s_max";
             this.label_s_max.Size = new System.Drawing.Size(49, 13);
             this.label_s_max.TabIndex = 11;
@@ -285,7 +287,7 @@
             this.num_e_s_max.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.num_e_s_max.DecimalPlaces = 6;
             this.num_e_s_max.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.num_e_s_max.Location = new System.Drawing.Point(527, 33);
+            this.num_e_s_max.Location = new System.Drawing.Point(525, 33);
             this.num_e_s_max.Maximum = new decimal(new int[] {
             -1530494976,
             232830,
@@ -306,7 +308,9 @@
             this.comboMode.Items.AddRange(new object[] {
             "Мозаика",
             "Деформации",
-            "Напряжения"});
+            "Напряжения",
+            "Деформации 0",
+            "Напряжения 0"});
             this.comboMode.Location = new System.Drawing.Point(3, 61);
             this.comboMode.Name = "comboMode";
             this.comboMode.Size = new System.Drawing.Size(121, 21);
@@ -314,18 +318,28 @@
             this.comboMode.Text = "Деформации";
             this.comboMode.SelectedIndexChanged += new System.EventHandler(this.comboMode_SelectedIndexChanged);
             // 
+            // btnInfo
+            // 
+            this.btnInfo.Location = new System.Drawing.Point(525, 61);
+            this.btnInfo.Name = "btnInfo";
+            this.btnInfo.Size = new System.Drawing.Size(33, 23);
+            this.btnInfo.TabIndex = 15;
+            this.btnInfo.Text = "?";
+            this.btnInfo.UseVisualStyleBackColor = true;
+            this.btnInfo.Click += new System.EventHandler(this.btnInfo_Click);
+            // 
             // DrawBeamSection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(834, 638);
-            this.Controls.Add(this.tableLayoutPanel1);
+            this.Controls.Add(this.PanelInfo);
             this.Controls.Add(this.pnlForPlot);
             this.Name = "DrawBeamSection";
             this.Text = "Мозаика сечения";
             this.Load += new System.EventHandler(this.DrawBeamSection_Load);
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
+            this.PanelInfo.ResumeLayout(false);
+            this.PanelInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.num_e_st_max)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_e_fbt_max)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numMaxValue)).EndInit();
@@ -339,7 +353,7 @@
         #endregion
 
         private System.Windows.Forms.Panel pnlForPlot;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.TableLayoutPanel PanelInfo;
         private System.Windows.Forms.Label labelMax;
         private System.Windows.Forms.Label labelMin;
         private System.Windows.Forms.NumericUpDown numMaxValue;
@@ -355,5 +369,6 @@
         private System.Windows.Forms.Label label_s_max;
         private System.Windows.Forms.ComboBox comboMode;
         private System.Windows.Forms.NumericUpDown num_e_s_max;
+        private System.Windows.Forms.Button btnInfo;
     }
 }

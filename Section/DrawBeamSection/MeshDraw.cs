@@ -34,6 +34,10 @@ namespace BSFiberConcrete
         public double UltMax {private get; set; }
         /// нижняя граница
         public double UltMin {private get; set; }
+        /// <summary>
+        /// предел по арматуре
+        /// </summary>
+        public double Rs_Ult { private get; set; }
 
         /// <summary>
         /// Сечение
@@ -73,6 +77,7 @@ namespace BSFiberConcrete
             drawBS.PlotForForms = _formsPlot;
             drawBS.MinValue = UltMin;
             drawBS.MaxValue = UltMax;
+            drawBS.Rs_Value = Rs_Ult;
             drawBS.e_fbt_max = (Values_B!=null)? Values_B.Max() : 0;
             drawBS.e_fb_max = (Values_B != null) ? Values_B.Min() :0;
             drawBS.e_st_max = (Values_S != null)? Values_S.Max() : 0;

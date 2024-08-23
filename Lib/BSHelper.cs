@@ -36,6 +36,8 @@ namespace BSFiberConcrete
         public static double MPA2kgsm2(double _mpa) => 10.197162d * _mpa ;
         public static double MPA2kgsm2(double? _mpa) => 10.197162d * _mpa ?? 0;
         public static double MPA2kNsm2(double? _mpa) => 0.1d * _mpa ?? 0;
+        public static double kNsm2toMPa(double _KNsm2) => 10d * _KNsm2 ;
+
         public static double Kgssm2ToKNsm2(double? _kgssm2) => _kgssm2 * 0.00980664999999998d ?? 0;
 
         public static double KNsm2ToKgssm2(double? _KNsm2) => _KNsm2 * 101.97162129779d ?? 0;

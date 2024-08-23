@@ -14,7 +14,6 @@ namespace BSFiberConcrete.Section.DrawBeamSection
 {
     public partial class DrawBeamSection : Form
     {
-
         /// <summary>
         ///  Форма для отрисовки FormsPlot (ScottPanel)
         /// </summary>
@@ -23,13 +22,13 @@ namespace BSFiberConcrete.Section.DrawBeamSection
         // предельные значения
         public double MaxValue { get; set; }
         public double MinValue { get; set; }
+        public double Rs_Value { get; set; }
         // бетон:
         public double e_fb_max { get; set; }
         public double e_fbt_max { get; set; }
         // арматура:
         public double e_s_max { get; set; }
         public double e_st_max { get; set; }
-
 
         public FormsPlot PlotForForms
         {
@@ -67,7 +66,7 @@ namespace BSFiberConcrete.Section.DrawBeamSection
 
             //σ, fbt max
             //σ, b max
-            if (Mode == 2)
+            if (Mode == 2 || Mode == 4)
             {
                 labelMax.Text = "R fbt3";
                 labelMin.Text = "R s";
@@ -83,6 +82,23 @@ namespace BSFiberConcrete.Section.DrawBeamSection
         private void comboMode_SelectedIndexChanged(object sender, EventArgs e)
         {
             var _x = comboMode.SelectedItem;
+        }
+
+        private double Coef(decimal _x, decimal _y)
+        {
+            decimal z = (_y!=0)? _x / _y : 0;
+            return (double)z;
+        }
+
+        private void btnInfo_Click(object sender, EventArgs e)
+        {
+            
+            MessageBox.Show($"Коэфф использования фибробетона на растяжение {Coef(num_e_fbt_max.Value , numMaxValue.Value)} \n " +
+                            $"Коэфф использования бетона на сжатие {Coef(num_e_fb_max.Value , numMinValue.Value)} \n " +
+                            $"Коэфф использования арматуры на растяжение {Coef(num_e_st_max.Value , (decimal)Rs_Value)} \n " +
+                            $"Коэфф использования арматуры на сжатие {Coef(num_e_s_max.Value, (decimal)Rs_Value )} \n", 
+                            "Информация", 
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
