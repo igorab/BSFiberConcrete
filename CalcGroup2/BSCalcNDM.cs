@@ -225,7 +225,7 @@ namespace BSFiberConcrete.CalcGroup2
         // максимальное число итераций
         private static int jmax = 20000;
         // Максимальная абсолютная погрешность
-        private static double tolmax = Math.Pow(10, -12);
+        private static double tolmax = Math.Pow(10, -8);
         private static int err = 0;
         private Dictionary<string, double> m_Results = new Dictionary<string, double>();
 
@@ -608,13 +608,15 @@ namespace BSFiberConcrete.CalcGroup2
                 ["sigB"] = sigB_t,
                 ["sigS"] = sigS_t,
                 ["epsB"] = epsB_t,
-                ["epsS"] = epsB_t,
+                ["epsS"] = epsS_t,
 
                 // сжатие
                 ["sigB_p"] = sigB_p,
                 ["sigS_p"] = sigS_p,
                 ["epsB_p"] = epsB_p,
-                ["epsS_p"] = epsB_p,
+                ["epsS_p"] = epsS_p,
+                // предел
+                ["esc0"] = esc0,
 
                 ["My_crc"] = Myint,
                 ["Mx_crc"] = Mzint,

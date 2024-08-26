@@ -242,7 +242,7 @@ namespace BSFiberConcrete
 
             Eps_fbt_ult = _D["ebt_ult"];
             Eps_fb_ult = _D["eb_ult"];
-            Eps_s_ult = _D["es_ult"];
+            //Eps_s_ult = _D["es_ult"];
 
             rods_qty = _D["rods_qty"];
             rods_area = _D["rods_area"];            
@@ -271,6 +271,9 @@ namespace BSFiberConcrete
             sigmaS_p = _D1gr["sigS_p"];
             e_fb_max_p = _D1gr["epsB_p"];
             e_s_max_p = _D1gr["epsS_p"];
+
+            // предел
+            Eps_s_ult = _D1gr["esc0"];
 
             Msg = new List<string>();
             Res1Group = new Dictionary<string, double>();

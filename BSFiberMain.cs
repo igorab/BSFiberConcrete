@@ -1148,6 +1148,7 @@ namespace BSFiberConcrete
             // выполнить расчет по 1 группе п.с.
             BSCalcNDM bsCalc1 = new BSCalcNDM(1);
             bsCalc1.BeamSection = _beamSection;
+            bsCalc1.BetonTypeId =  (cmbTypeMaterial.SelectedIndex == 1) ? 1 : 0;
             bsCalc1.SetDictParams(D);
             bsCalc1.GetRods(listD, listX, listY);
             bsCalc1.Run();
@@ -1169,6 +1170,7 @@ namespace BSFiberConcrete
             /*
             BSCalcNDM bsCalc2 = new BSCalcNDM(2);
             bsCalc2.BeamSection = _beamSection;
+            bsCalc2.BetonTypeId =  (cmbTypeMaterial.SelectedIndex == 1) ? 1 : 0;
             bsCalc2.DictParams(D);
             bsCalc2.GetRods(listD, listX, listY);
             bsCalc2.Run();
@@ -1550,6 +1552,8 @@ namespace BSFiberConcrete
             {
                 Beton bt = Lib.BSQuery.BetonTableFind(cmbBfn.Text);
                 numRfb_n.Value = (decimal)BSHelper.MPA2kgsm2(bt.Rbn);
+                numE_beton.Value = (decimal)BSHelper.MPA2kgsm2(bt.Eb * 1000);
+
             }
             catch { }
         }
@@ -2185,6 +2189,38 @@ namespace BSFiberConcrete
         }
 
         private void numEfb_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lbE_beton_info_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show($"Модуль упругости на сжатие: \n " +
+                $"{BSHelper.Kgsm2MPa((double) numE_beton.Value ) } МПа \n" +
+                $"{BSHelper.Kgssm2ToKNsm2((double)numE_beton.Value, 2)} КН/см2 \n" +
+                $"СП 63. Таблица 6.11", 
+                "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+    
+        private void lbE_fb_info_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show($"Модуль упругости на растяжение \n" +
+                $"{BSHelper.Kgsm2MPa((double)numE_fiber.Value)} МПа \n" +
+                $"{BSHelper.Kgssm2ToKNsm2((double)numE_fiber.Value, 2)} КН/см2 \n", 
+                "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void lbE_beton_info_MouseMove(object sender, MouseEventArgs e)
+        {
+            Cursor.Current = Cursors.Hand;
+        }
+
+        private void lbE_fb_info_MouseMove(object sender, MouseEventArgs e)
+        {
+            Cursor.Current = Cursors.Hand;
+        }
+
+        private void numE_beton_ValueChanged(object sender, EventArgs e)
         {
 
         }

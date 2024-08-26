@@ -298,6 +298,9 @@
             // cmbFromM
             // 
             this.cmbFromM.FormattingEnabled = true;
+            this.cmbFromM.Items.AddRange(new object[] {
+            "кНм",
+            "Нмм"});
             this.cmbFromM.Location = new System.Drawing.Point(30, 33);
             this.cmbFromM.Name = "cmbFromM";
             this.cmbFromM.Size = new System.Drawing.Size(63, 21);

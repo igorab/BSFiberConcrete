@@ -12,6 +12,8 @@ namespace BSFiberConcrete.CalcGroup2
     /// </summary>
     public partial class BSCalcNDM
     {
+        public int BetonTypeId { private get;  set; }
+
         /// <summary>
         /// Диаграмма деформирования арматуры (двухлинейная) 
         /// </summary>
@@ -109,11 +111,11 @@ namespace BSFiberConcrete.CalcGroup2
         /// <param name="_e">деформация</param>
         /// <param name="_beton">использовать диаграмму обычного бетона</param>
         /// <returns>напряжение</returns>
-        private double Diagr_FB(double _e, bool _beton = false)
+        private double Diagr_FB(double _e)
         {
             double s = 0;
 
-            if (_beton == true)
+            if (BetonTypeId == 1)
             {
                 return Diagr_Beton(_e);
             }
