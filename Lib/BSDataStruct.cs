@@ -4,6 +4,14 @@ using System.Windows.Forms;
 
 namespace BSFiberConcrete
 {
+    public class FormParams
+    {
+        public int ID { get; set; }
+        public double Length { get; set; }
+        public double LengthCoef { get; set; }
+    }
+
+
     /// <summary>
     /// Единицы измерения
     /// </summary>

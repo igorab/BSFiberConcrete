@@ -158,24 +158,24 @@ namespace BSFiberConcrete.CalcGroup2
 
         #region Поля, свойства  - данные для расчета
         // Продольная сила, кН, - сжатие
-        private double N = -400.0;
+        private double N = 0; //-400.0;
         // Момент отн. оси Y, кН*см
-        private double My0 = 9000;
+        private double My0 = 0; // 9000;
         // Момент отн. оси Z, кН*см
-        private double Mz0 = 1000;
+        private double Mz0 = 0;// 1000;
         // Ширина сечения, см
-        private double b = 20.0;
+        private double b = 0; // 20.0;
         // высота сечения, см
-        private double h = 40.0;
+        private double h = 0; //40.0;
         // тавр-двутавр
         private double bf, hf, bw, hw, b1f, h1f;
         // кольцо
         private double r1, R2;
 
         // число элементов вдоль y, шт
-        private int ny = 4;
+        private int ny = 0; // 4;
         // число элементов вдоль z шт.
-        private int nz = 4;
+        private int nz = 0; //4;
 
         // диаметры арматурных стержней
         private List<double> ds = new List<double>() { 1.6, 1.6, 1.6, 1.6 };
@@ -187,11 +187,11 @@ namespace BSFiberConcrete.CalcGroup2
         // Бетон B25 кН/см2
         private static double Eb0 = 0; // 30.0 * Math.Pow(10, 3) / 10.0; //Начальный модуль бетона, кН/см2
         private static double Ebt = 0; //Начальный модуль упругости фибробетона, кН/см2
-        private static double Rbc = 14.5 / 10d; // Расчетное сопротивление бетона на сжатие, кН/см2
+        private static double Rbc = 0; // 14.5 / 10d; // Расчетное сопротивление бетона на сжатие, кН/см2
 
-        private static double Rfbt = 1.05 / 10d; // Расчетное сопротивление фибробетона на растяжение, кН/см2
-        private static double Rfbt2 = 1.05 / 10d; // Расчетное сопротивление фибробетона на сжатие, кН/см2
-        private static double Rfbt3 = 1.05 / 10d; // Расчетное сопротивление фибробетона на сжатие, кН/см2
+        private static double Rfbt = 0;// 1.05 / 10d; // Расчетное сопротивление фибробетона на растяжение, кН/см2
+        private static double Rfbt2 = 0;// 1.05 / 10d; // Расчетное сопротивление фибробетона на сжатие, кН/см2
+        private static double Rfbt3 = 0;// 1.05 / 10d; // Расчетное сопротивление фибробетона на сжатие, кН/см2
 
         // сжатие
         private static double ebc0 = 0.002; // Деформация бетона на сжатие
@@ -318,13 +318,15 @@ namespace BSFiberConcrete.CalcGroup2
             // Заполняем секущие модули для нулевой итерации
             for (int i = 0; i < n; i++)
             {
-                Eb[0].Add(Eb0);
+                //Eb[0].Add(Eb0);
+                Eb[0].Add(Ebt);
             }
 
             for (int i = 0; i < As.Count; i++)
             {
                 Es[0].Add(Es0);
-                Ebs[0].Add(Eb0);
+                //Ebs[0].Add(Eb0);
+                Ebs[0].Add(Ebt);
             }
 
             // Массив привязок центра тяжести
@@ -421,7 +423,9 @@ namespace BSFiberConcrete.CalcGroup2
 
             // Заполняем напряжения на нулевой итерации
             for (int k = 0; k < n; k++)
-                sigB[0].Add( Diagr_FB( epB[0][k] ));
+            {
+                sigB[0].Add(Diagr_FB(epB[0][k]));
+            }
 
             for (int l = 0; l < m; l++)
             {
@@ -436,14 +440,16 @@ namespace BSFiberConcrete.CalcGroup2
                 // пересчитываем секущие модули
                 Eb.Add(new List<double>());
                 for (int k = 0; k < n; k++)
-                    Eb[j].Add(E_sec(sigB[j-1][k], epB[j-1][k], Eb0));
+                {
+                    Eb[j].Add(EV_Sec(sigB[j - 1][k], epB[j - 1][k], Eb0));
+                }
 
                 Es.Add(new List<double>());
                 Ebs.Add(new List<double>());
                 for (int l = 0; l < m; l++)
                 {
-                    Es[j].Add(E_sec(sigS[j-1][l], epS[j-1][l], Es0));
-                    Ebs[j].Add(E_sec(sigBS[j-1][l], epS[j-1][l], Eb0));
+                    Es[j].Add(EV_Sec(sigS[j-1][l], epS[j-1][l], Es0));
+                    Ebs[j].Add(EV_Sec(sigBS[j-1][l], epS[j-1][l], Eb0));
                 }
 
                 // пересчитываем упруго-геометрические характеристики
@@ -457,7 +463,7 @@ namespace BSFiberConcrete.CalcGroup2
                     break;
                 }
 
-                // пересчитываем положение упруго-геометрического положения ц.т.
+                // пересчитываем положение упруго-геометрического ц.т.
                 numcy = Eb[j].ZipThree(Ab, y0b, (E, A, y0) => E * A * y0).Sum() + 
                         Es[j].ZipThree(As, y0s, (E, A, y0) => E * A * y0).Sum() - 
                         Ebs[j].ZipThree(As, y0s, (E, A, y0) => E * A * y0).Sum() ;

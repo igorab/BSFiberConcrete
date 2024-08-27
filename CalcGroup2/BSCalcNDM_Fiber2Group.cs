@@ -70,6 +70,7 @@ namespace BSFiberConcrete.CalcGroup2
             double ebc1 = sc1 / Eb0;
             double ebt1 = st1 / Eb0;
 
+            //DODO ?
             if (_e > efbt2)
             {
                 //s = 0;
@@ -179,12 +180,12 @@ namespace BSFiberConcrete.CalcGroup2
         }
 
         // секущий модуль
-        private double E_sec(double _s, double _e, double _E0)
+        private double EV_Sec(double _sigma, double _e, double _E0)
         {
             if (_e == 0)
                 return _E0;
             else
-                return _s / _e;
+                return _sigma / _e;
         }
 
     }
