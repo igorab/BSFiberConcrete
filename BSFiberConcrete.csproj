@@ -235,6 +235,13 @@
     <Compile Include="BSRFib\BSRFibLabTensile.cs" />
     <Compile Include="BSRFib\BSRFibLabTensileStats.cs" />
     <Compile Include="BSRFib\BSRFibReport.cs" />
+    <Compile Include="BSRFib\FiberCalculator\FiberConcrateCalculator.cs" />
+    <Compile Include="BSRFib\FiberCalculator\ViewFiberConcrateCalc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BSRFib\FiberCalculator\ViewFiberConcrateCalc.Designer.cs">
+      <DependentUpon>ViewFiberConcrateCalc.cs</DependentUpon>
+    </Compile>
     <Compile Include="BSRFib\RFiberTensileStrength.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -421,6 +428,9 @@
     <EmbeddedResource Include="BSRFib\BSRFiber.resx">
       <DependentUpon>BSRFiber.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="BSRFib\FiberCalculator\ViewFiberConcrateCalc.resx">
+      <DependentUpon>ViewFiberConcrateCalc.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="BSRFib\RFiberTensileStrength.resx">
       <DependentUpon>RFiberTensileStrength.cs</DependentUpon>
     </EmbeddedResource>
@@ -472,6 +482,8 @@
     <None Include="BSClassDiagram.cd" />
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\BSFiberCalculation.datasource" />
+    <None Include="Properties\DataSources\BSFiberConcrete.BSRFib.FiberCalculator.FiberConcrateCalculator.datasource" />
     <None Include="Properties\DataSources\BSFiberConcrete.Section.BSPoint.datasource" />
     <None Include="Properties\DataSources\BSRod.datasource" />
     <None Include="Properties\DataSources\Deflection_f_aF.datasource" />

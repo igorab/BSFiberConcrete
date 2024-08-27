@@ -2,6 +2,7 @@
 using BSFiberConcrete;
 using BSFiberConcrete.Beam;
 using BSFiberConcrete.BSRFib;
+using BSFiberConcrete.BSRFib.FiberCalculator;
 using BSFiberConcrete.Calc;
 using BSFiberConcrete.LocalStrength;
 using BSFiberConcrete.Section;
@@ -144,6 +145,9 @@ namespace BSCalcMenu
         {
             BSRFiber bSRFiber = new BSRFiber();
             bSRFiber.Show();
+
+            ViewFiberConcrateCalc viewFiberConcrateCalc = new ViewFiberConcrateCalc();
+            viewFiberConcrateCalc.Show();
         }
 
         private void btnBeamDeflection_Click(object sender, EventArgs e)

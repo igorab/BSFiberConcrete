@@ -48,7 +48,7 @@ namespace BSFiberConcrete
         public double Rbtn { get; set; }
 
         /// <summary>
-        /// Модуль упругости
+        /// Модуль упругости 
         /// </summary>
         public  double Eb { get; set; }
         /// <summary>
@@ -310,10 +310,60 @@ namespace BSFiberConcrete
     public class RFiber
     {
         public int ID { get; set; }
+        public string Name { get; set; }
         public double Rfser { get; set; }
         public double Rf { get; set; }
         public double G1 { get; set; }
         public double G2 { get; set; }
+        public double Ef { get; set; }
+        /// <summary>
+        /// Коэф. Анкеровки фибры
+        /// </summary>
+        public double Hita_f { get; set; }
+        /// <summary>
+        /// Коэф. условной работы в зависимсоти от материала фибры
+        /// </summary>
+        public double Gamma_fb1 { get; set; }
+        /// <summary>
+        /// номер из таблицы FiberGeometry, которому соответсвует список стандартных значений диаметров для данного типа фибры
+        /// </summary>
+        public int IndexForGeometry { get; set; }
+    }
+
+
+
+    public class FiberGeometry
+    {
+        public int ID { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int GeometryIndex { get; set; }
+        public double Geometry { get; set; }
+        /// <summary>
+        /// Буква, описывающая геометрию
+        /// </summary>
+        public string NameGeometry{ get; set; }
+        /// <summary>
+        /// Описание величины, описывающей геометрию
+        /// </summary>
+        public string DescriptionGeometry { get; set; }
+        /// <summary>
+        /// номер из таблицы FiberLength, которому соответсвует список стандартных значений длины для данного диаметра
+        /// </summary>
+        public int IndexForLength { get; set; }
+    }
+
+
+
+    public class FiberLength2
+    {
+        public int ID { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int LenghtIndex { get; set; }
+        public double Length { get; set; }
     }
 
 

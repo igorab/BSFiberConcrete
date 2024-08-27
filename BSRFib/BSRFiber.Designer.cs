@@ -65,7 +65,7 @@
             this.label_h.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label_h.AutoSize = true;
             this.label_h.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label_h.Location = new System.Drawing.Point(204, 102);
+            this.label_h.Location = new System.Drawing.Point(203, 102);
             this.label_h.Name = "label_h";
             this.label_h.Size = new System.Drawing.Size(17, 16);
             this.label_h.TabIndex = 5;
@@ -76,7 +76,7 @@
             this.label_b.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label_b.AutoSize = true;
             this.label_b.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label_b.Location = new System.Drawing.Point(203, 136);
+            this.label_b.Location = new System.Drawing.Point(202, 136);
             this.label_b.Name = "label_b";
             this.label_b.Size = new System.Drawing.Size(18, 16);
             this.label_b.TabIndex = 7;
@@ -90,9 +90,9 @@
             "Фибра фрезерованная из слябов",
             "Фибра резанная из стального листа",
             "Фибра рубленная из стальной проволоки"});
-            this.cmbEtaf.Location = new System.Drawing.Point(228, 166);
+            this.cmbEtaf.Location = new System.Drawing.Point(227, 166);
             this.cmbEtaf.Name = "cmbEtaf";
-            this.cmbEtaf.Size = new System.Drawing.Size(473, 21);
+            this.cmbEtaf.Size = new System.Drawing.Size(469, 21);
             this.cmbEtaf.TabIndex = 9;
             // 
             // tableLayoutPanel1
@@ -102,7 +102,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 103F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 46F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 51F));
             this.tableLayoutPanel1.Controls.Add(this.cmb_B, 2, 7);
             this.tableLayoutPanel1.Controls.Add(this.labelB, 1, 7);
             this.tableLayoutPanel1.Controls.Add(this.cmb_RFiber, 2, 6);
@@ -167,7 +167,7 @@
             "B80",
             "B90",
             "B100"});
-            this.cmb_B.Location = new System.Drawing.Point(228, 276);
+            this.cmb_B.Location = new System.Drawing.Point(227, 276);
             this.cmb_B.Name = "cmb_B";
             this.cmb_B.Size = new System.Drawing.Size(121, 21);
             this.cmb_B.TabIndex = 17;
@@ -177,7 +177,7 @@
             this.labelB.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelB.AutoSize = true;
             this.labelB.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelB.Location = new System.Drawing.Point(202, 278);
+            this.labelB.Location = new System.Drawing.Point(201, 278);
             this.labelB.Name = "labelB";
             this.labelB.Size = new System.Drawing.Size(19, 16);
             this.labelB.TabIndex = 16;
@@ -222,9 +222,9 @@
             "Фибра, рубленная из проволки  от 0,85 мм  1,2 мм отвечающая ТУ 1276-001-56707303",
             "Фибра, рубленная из проволки  от 1,25 мм  1,6 мм\r отвечающая ТУ 1276-001-56707303" +
                 ""});
-            this.cmb_RFiber.Location = new System.Drawing.Point(228, 241);
+            this.cmb_RFiber.Location = new System.Drawing.Point(227, 241);
             this.cmb_RFiber.Name = "cmb_RFiber";
-            this.cmb_RFiber.Size = new System.Drawing.Size(473, 21);
+            this.cmb_RFiber.Size = new System.Drawing.Size(469, 21);
             this.cmb_RFiber.TabIndex = 15;
             // 
             // labelR_f_ser
@@ -232,7 +232,7 @@
             this.labelR_f_ser.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelR_f_ser.AutoSize = true;
             this.labelR_f_ser.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelR_f_ser.Location = new System.Drawing.Point(170, 244);
+            this.labelR_f_ser.Location = new System.Drawing.Point(169, 244);
             this.labelR_f_ser.Name = "labelR_f_ser";
             this.labelR_f_ser.Size = new System.Drawing.Size(51, 16);
             this.labelR_f_ser.TabIndex = 14;
@@ -243,7 +243,7 @@
             this.labelEtaf.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelEtaf.AutoSize = true;
             this.labelEtaf.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelEtaf.Location = new System.Drawing.Point(127, 171);
+            this.labelEtaf.Location = new System.Drawing.Point(126, 171);
             this.labelEtaf.Name = "labelEtaf";
             this.labelEtaf.Size = new System.Drawing.Size(94, 16);
             this.labelEtaf.TabIndex = 11;
@@ -254,7 +254,7 @@
             this.label_l_f.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label_l_f.AutoSize = true;
             this.label_l_f.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label_l_f.Location = new System.Drawing.Point(202, 205);
+            this.label_l_f.Location = new System.Drawing.Point(201, 205);
             this.label_l_f.Name = "label_l_f";
             this.label_l_f.Size = new System.Drawing.Size(19, 16);
             this.label_l_f.TabIndex = 13;
@@ -265,7 +265,7 @@
             this.label_d_f_red.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label_d_f_red.AutoSize = true;
             this.label_d_f_red.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label_d_f_red.Location = new System.Drawing.Point(171, 309);
+            this.label_d_f_red.Location = new System.Drawing.Point(170, 309);
             this.label_d_f_red.Name = "label_d_f_red";
             this.label_d_f_red.Size = new System.Drawing.Size(50, 16);
             this.label_d_f_red.TabIndex = 18;
@@ -276,7 +276,7 @@
             this.btnCalc.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.btnCalc.Image = ((System.Drawing.Image)(resources.GetObject("btnCalc.Image")));
             this.btnCalc.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCalc.Location = new System.Drawing.Point(114, 412);
+            this.btnCalc.Location = new System.Drawing.Point(113, 412);
             this.btnCalc.Name = "btnCalc";
             this.btnCalc.Size = new System.Drawing.Size(101, 28);
             this.btnCalc.TabIndex = 12;
@@ -290,9 +290,9 @@
             this.labelDescr.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.labelDescr.Dock = System.Windows.Forms.DockStyle.Fill;
             this.labelDescr.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelDescr.Location = new System.Drawing.Point(228, 20);
+            this.labelDescr.Location = new System.Drawing.Point(227, 20);
             this.labelDescr.Name = "labelDescr";
-            this.labelDescr.Size = new System.Drawing.Size(473, 74);
+            this.labelDescr.Size = new System.Drawing.Size(469, 74);
             this.labelDescr.TabIndex = 29;
             this.labelDescr.Text = "Определение сопротивлений сталефибробетона растяжению и сжатию с учетом влияния ф" +
     "ибрового армирования.";
@@ -301,7 +301,7 @@
             // 
             this.num_h.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.num_h.DecimalPlaces = 2;
-            this.num_h.Location = new System.Drawing.Point(228, 100);
+            this.num_h.Location = new System.Drawing.Point(227, 100);
             this.num_h.Maximum = new decimal(new int[] {
             1410065408,
             2,
@@ -316,7 +316,7 @@
             // 
             this.num_b.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.num_b.DecimalPlaces = 2;
-            this.num_b.Location = new System.Drawing.Point(228, 134);
+            this.num_b.Location = new System.Drawing.Point(227, 134);
             this.num_b.Maximum = new decimal(new int[] {
             1410065408,
             2,
@@ -333,7 +333,7 @@
             this.picFib.Image = global::BSFiberConcrete.Properties.Resources.balka_rect;
             this.picFib.Location = new System.Drawing.Point(108, 23);
             this.picFib.Name = "picFib";
-            this.picFib.Size = new System.Drawing.Size(113, 68);
+            this.picFib.Size = new System.Drawing.Size(112, 68);
             this.picFib.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picFib.TabIndex = 32;
             this.picFib.TabStop = false;
@@ -342,7 +342,7 @@
             // 
             this.num_l_f.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.num_l_f.DecimalPlaces = 3;
-            this.num_l_f.Location = new System.Drawing.Point(228, 203);
+            this.num_l_f.Location = new System.Drawing.Point(227, 203);
             this.num_l_f.Maximum = new decimal(new int[] {
             1410065408,
             2,
@@ -356,7 +356,7 @@
             // 
             this.num_d_f_red.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.num_d_f_red.DecimalPlaces = 3;
-            this.num_d_f_red.Location = new System.Drawing.Point(228, 307);
+            this.num_d_f_red.Location = new System.Drawing.Point(227, 307);
             this.num_d_f_red.Maximum = new decimal(new int[] {
             1410065408,
             2,
@@ -371,9 +371,9 @@
             this.lblRes.AutoSize = true;
             this.lblRes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblRes.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblRes.Location = new System.Drawing.Point(228, 409);
+            this.lblRes.Location = new System.Drawing.Point(227, 409);
             this.lblRes.Name = "lblRes";
-            this.lblRes.Size = new System.Drawing.Size(473, 62);
+            this.lblRes.Size = new System.Drawing.Size(469, 62);
             this.lblRes.TabIndex = 35;
             this.lblRes.Text = "---   ";
             // 
@@ -382,7 +382,7 @@
             this.label_mu_fv.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label_mu_fv.AutoSize = true;
             this.label_mu_fv.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label_mu_fv.Location = new System.Drawing.Point(191, 343);
+            this.label_mu_fv.Location = new System.Drawing.Point(190, 343);
             this.label_mu_fv.Name = "label_mu_fv";
             this.label_mu_fv.Size = new System.Drawing.Size(30, 16);
             this.label_mu_fv.TabIndex = 25;
@@ -397,7 +397,7 @@
             0,
             0,
             196608});
-            this.num_mu_fv.Location = new System.Drawing.Point(228, 341);
+            this.num_mu_fv.Location = new System.Drawing.Point(227, 341);
             this.num_mu_fv.Maximum = new decimal(new int[] {
             18,
             0,
@@ -422,7 +422,7 @@
             this.btnReport.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.btnReport.Image = ((System.Drawing.Image)(resources.GetObject("btnReport.Image")));
             this.btnReport.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnReport.Location = new System.Drawing.Point(114, 371);
+            this.btnReport.Location = new System.Drawing.Point(113, 371);
             this.btnReport.Name = "btnReport";
             this.btnReport.Size = new System.Drawing.Size(101, 28);
             this.btnReport.TabIndex = 37;
