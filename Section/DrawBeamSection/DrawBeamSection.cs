@@ -20,9 +20,14 @@ namespace BSFiberConcrete.Section.DrawBeamSection
         protected FormsPlot _plotForForms = new FormsPlot() { Dock = DockStyle.Fill };
 
         // предельные значения
+        // - бетон
         public double MaxValue { get; set; }
         public double MinValue { get; set; }
+        // - арматуры
+        public double e_s_ult { get; set; }
+        public double e_st_ult { get; set; }
         public double Rs_Value { get; set; }
+
         // бетон:
         public double e_fb_max { get; set; }
         public double e_fbt_max { get; set; }
@@ -63,6 +68,9 @@ namespace BSFiberConcrete.Section.DrawBeamSection
 
             num_e_st_max.Value = (decimal)e_st_max;
             num_e_s_max.Value = (decimal)e_s_max;
+            
+            num_e_st_ult.Value = (decimal)e_st_ult;
+            num_e_s_ult.Value = (decimal)e_s_ult;
 
             //σ, fbt max
             //σ, b max
@@ -95,8 +103,8 @@ namespace BSFiberConcrete.Section.DrawBeamSection
             
             MessageBox.Show($"Коэфф использования фибробетона на растяжение {Coef(num_e_fbt_max.Value , numMaxValue.Value)} \n " +
                             $"Коэфф использования бетона на сжатие {Coef(num_e_fb_max.Value , numMinValue.Value)} \n " +
-                            $"Коэфф использования арматуры на растяжение {Coef(num_e_st_max.Value , (decimal)Rs_Value)} \n " +
-                            $"Коэфф использования арматуры на сжатие {Coef(num_e_s_max.Value, (decimal)Rs_Value )} \n", 
+                            $"Коэфф использования арматуры на растяжение {Coef(num_e_st_max.Value , num_e_st_ult.Value)} \n " +
+                            $"Коэфф использования арматуры на сжатие {Coef(num_e_s_max.Value, num_e_s_ult.Value)} \n", 
                             "Информация", 
                             MessageBoxButtons.OK, MessageBoxIcon.Information);
         }

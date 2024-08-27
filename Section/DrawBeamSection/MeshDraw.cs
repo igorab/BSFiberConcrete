@@ -27,6 +27,8 @@ namespace BSFiberConcrete
         // шаг сетки
         private int Ny; // горизонтальная ось
         private int Nz; // вертикальная ось
+        internal double e_st_ult;
+        internal double e_s_ult;
 
         public int MosaicMode { private get; set; }
 
@@ -78,6 +80,8 @@ namespace BSFiberConcrete
             drawBS.MinValue = UltMin;
             drawBS.MaxValue = UltMax;
             drawBS.Rs_Value = Rs_Ult;
+            drawBS.e_st_ult = e_st_ult;
+            drawBS.e_s_ult = e_s_ult;
             drawBS.e_fbt_max = (Values_B!=null)? Values_B.Max() : 0;
             drawBS.e_fb_max = (Values_B != null) ? Values_B.Min() :0;
             drawBS.e_st_max = (Values_S != null)? Values_S.Max() : 0;

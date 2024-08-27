@@ -624,6 +624,12 @@ namespace BSFiberConcrete.CalcGroup2
                 // предел
                 ["esc0"] = esc0,
 
+                // проверка усилий
+                ["My"] = Myint,
+                ["Mx"] = Mzint,
+                ["N"] = Nint,
+
+                // трещиностойкость
                 ["My_crc"] = Myint,
                 ["Mx_crc"] = Mzint,
                 ["ItersCnt"] = jend

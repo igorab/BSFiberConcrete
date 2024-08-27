@@ -1729,7 +1729,9 @@ namespace BSFiberConcrete
                                 List<double> _valuesS = null,
                                 double _ultMax = 0,
                                 double _ultMin = 0,
-                                double _ultRs = 0)
+                                double _ultRs = 0,
+                                double _e_st_ult = 0,
+                                double _e_s_ult = 0)
         {
             MeshDraw mDraw;
 
@@ -1742,6 +1744,8 @@ namespace BSFiberConcrete
                 mDraw.UltMax = _ultMax;
                 mDraw.UltMin = _ultMin;
                 mDraw.Rs_Ult = _ultRs;
+                mDraw.e_st_ult = _e_st_ult;
+                mDraw.e_s_ult  = _e_s_ult;
                 mDraw.Values_B = _valuesB;
                 mDraw.Values_S = _valuesS;
                 mDraw.CreateRectanglePlot(sz, m_BeamSection);
@@ -1757,6 +1761,8 @@ namespace BSFiberConcrete
                 mDraw.UltMax = _ultMax;
                 mDraw.UltMin = _ultMin;
                 mDraw.Rs_Ult = _ultRs;
+                mDraw.e_st_ult = _e_st_ult;
+                mDraw.e_s_ult = _e_s_ult;
                 mDraw.Values_B = _valuesB;
                 mDraw.Values_S = _valuesS;
                 mDraw.PaintSectionMesh();

@@ -69,6 +69,18 @@ namespace BSFiberConcrete
         [DisplayName("Максимальная относительная деформация в арматуре (сжатие), [.]")]
         public double e_s_max_p { get; private set; }
 
+        [DisplayName("Коэффициент использования по деформации в арматуре (сжатие), [.]")]
+        public double UtilRate_e_s_p => (Eps_s_ult != 0) ? e_s_max_p / Eps_s_ult : 1;
+
+        // проверка по усилиям
+
+        [DisplayName("Момент Мx, [кгс*см]")]
+        public double Mx_calc { get; private set; }
+        [DisplayName("Момент Мy, [кгс*см]")]
+        public double My_calc { get; private set; }
+        [DisplayName("Сила N, [кгс]")]
+        public double N_calc { get; private set; }
+
         // напряжение
         public List<double> Sig_B { get; set; } // бетон
         public List<double> Sig_S { get; set; } // арматура
@@ -261,19 +273,24 @@ namespace BSFiberConcrete
             rx = _D1gr["rz"];
 
             // растяжение
-            sigmaB = _D1gr["sigB"];
-            sigmaS = _D1gr["sigS"];
+            sigmaB = BSHelper.KNsm2ToKgssm2(_D1gr["sigB"]);
+            sigmaS = BSHelper.KNsm2ToKgssm2(_D1gr["sigS"]);
             e_fb_max = _D1gr["epsB"];
             e_s_max = _D1gr["epsS"];
 
             // сжатие
-            sigmaB_p = _D1gr["sigB_p"];
-            sigmaS_p = _D1gr["sigS_p"];
+            sigmaB_p = BSHelper.KNsm2ToKgssm2(_D1gr["sigB_p"]);
+            sigmaS_p = BSHelper.KNsm2ToKgssm2(_D1gr["sigS_p"]);
             e_fb_max_p = _D1gr["epsB_p"];
             e_s_max_p = _D1gr["epsS_p"];
 
             // предел
             Eps_s_ult = _D1gr["esc0"];
+
+            // проверка усилий
+            Mx_calc = BSHelper.KNsm2ToKgssm2(_D1gr["Mx"]);
+            My_calc = BSHelper.KNsm2ToKgssm2(_D1gr["My"]);            
+            N_calc = BSHelper.kN2Kgs(_D1gr["N"]);
 
             Msg = new List<string>();
             Res1Group = new Dictionary<string, double>();
@@ -329,23 +346,30 @@ namespace BSFiberConcrete
 
             // растяжение
             Res1Group.Add("--------Растяжение:--------", 1);
-            AddToResult("sigmaB", BSHelper.KNsm2ToKgssm2(sigmaB));            
+            AddToResult("sigmaB", sigmaB);            
             AddToResult("e_fb_max", e_fb_max);
             //AddToResult("UtilRate_e_fb", UtilRate_e_fb);
             
-            AddToResult("sigmaS", BSHelper.KNsm2ToKgssm2(sigmaS));
+            AddToResult("sigmaS", sigmaS);
             AddToResult("e_s_max", e_s_max);
             AddToResult("UtilRate_e_s", UtilRate_e_s);
 
             // сжатие
             Res1Group.Add("--------Сжатие:-------", 1);
-            AddToResult("sigmaB_p", BSHelper.KNsm2ToKgssm2(sigmaB_p));
+            // - бетон
+            AddToResult("sigmaB_p", sigmaB_p);
             AddToResult("e_fb_max_p", e_fb_max_p);
             AddToResult("UtilRate_e_fb", UtilRate_e_fb);
-
-            AddToResult("sigmaS_p", BSHelper.KNsm2ToKgssm2(sigmaS_p));
+            // - арматура
+            AddToResult("sigmaS_p", sigmaS_p);
             AddToResult("e_s_max_p", e_s_max_p);
-            //AddToResult("UtilRate_e_s", UtilRate_e_s);
+            AddToResult("UtilRate_e_s_p", UtilRate_e_s_p);
+
+            // усилия
+            Res1Group.Add("--------Проверка по усилиям:-------", 1);
+            AddToResult("Mx_calc", Mx_calc);
+            AddToResult("My_calc", My_calc);
+            AddToResult("N_calc", N_calc);
 
             _CalcResults = Res1Group;
         }
