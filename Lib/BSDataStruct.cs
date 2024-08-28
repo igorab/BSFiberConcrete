@@ -4,11 +4,27 @@ using System.Windows.Forms;
 
 namespace BSFiberConcrete
 {
+    /// <summary>
+    /// доступ к таблице Params
+    /// </summary>
     public class FormParams
     {
         public int ID { get; set; }
         public double Length { get; set; }
         public double LengthCoef { get; set; }
+        public string BetonType { get; set; }
+        public string Fib_i { get; set; }
+        public string Bft3n { get; set; }
+        public string Bfn { get; set; }
+        public string Bftn { get; set; }
+        public string Eb { get; set; }
+        public string Efbt { get; set; }
+        public string Rs { get; set; }
+        public string Rsw { get; set; }
+        public double Area_s { get; set; }
+        public double Area1_s { get; set; }
+        public double a_s { get; set; }
+        public double a1_s { get; set; }
     }
 
 

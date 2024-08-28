@@ -12,9 +12,13 @@ using System.Windows.Forms.DataVisualization.Charting;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TreeView;
 using System.Xml.Linq;
 using BSFiberConcrete.Lib;
+using OpenTK;
 
 namespace BSFiberConcrete.Section
 {
+    /// <summary>
+    /// Отрисовать сечение, назначить арматуру
+    /// </summary>
     public partial class BSSectionChart : Form
     {
         public List<PointF> RodPoints 
@@ -212,6 +216,9 @@ namespace BSFiberConcrete.Section
             BSData.SaveRods(bSRods, m_BeamSection);            
         }
 
+        /// <summary>
+        ///  Сохранить координаты в БД
+        /// </summary>        
         private void btnSave_Click(object sender, EventArgs e)
         {
             try
@@ -324,6 +331,16 @@ namespace BSFiberConcrete.Section
             {
                 MessageBox.Show(_e.Message);
             }
+        }
+
+        private void labelRods_MouseMove(object sender, MouseEventArgs e)
+        {
+            System.Windows.Forms.Cursor.Current = Cursors.Hand;
+        }
+
+        private void labelRods_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Задайте привязку арматуры - укажите координаты стержней");
         }
     }
 }

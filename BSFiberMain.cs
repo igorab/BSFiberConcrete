@@ -99,6 +99,7 @@ namespace BSFiberConcrete
                 btnCalc_Deform.Visible = true;
                 gridEfforts.Columns["Mx"].Visible = true;
                 tabFiber.TabPages.Remove(tabPBeam);
+                tableLayoutAreaRebar.Visible = false;
             }
             else if (CalcType == CalcType.BeamCalc)
             {
@@ -121,6 +122,15 @@ namespace BSFiberConcrete
             }
         }
 
+        private void InitFormControls()
+        {
+            FormParams prms = BSData.LoadFormParams();
+
+            tbLength.Text = Convert.ToString(prms.Length);
+            cmbEffectiveLengthFactor.Text = Convert.ToString(prms.LengthCoef);
+        }
+
+
         // глобальные настройки
         public void BSFiberMain_Load(object sender, EventArgs e)
         {
@@ -141,11 +151,11 @@ namespace BSFiberConcrete
                 toolTip1.SetToolTip(this.btnIBeam, "Двутавровое сечение");
                 toolTip1.SetToolTip(this.btnRing, "Кольцевое сечение");
 
-
                 m_Path2BeamDiagrams = new List<string>() { };
 
-
                 m_RebarDiameters = BSData.LoadRebarDiameters();
+
+                InitFormControls();
                 
                 m_Beam = new Dictionary<string, double>();
                 m_Table = new DataTable();
@@ -1047,8 +1057,8 @@ namespace BSFiberConcrete
                 //
 
                 //Mesh
-                ["ny"] = (int)numMeshN.Value,
-                ["nz"] = (int)numMeshN.Value,
+                ["ny"] = (int)numMeshNY.Value,
+                ["nz"] = (int)numMeshNX.Value, // в алгоритме плосткость сечения YOZ
 
                 // beton
                 ["Eb0"] = (double)numE_beton.Value, // сжатие
@@ -1348,7 +1358,7 @@ namespace BSFiberConcrete
                 // материал
                 fiberCalc_Deform.Beam.Mat = beamMaterial;
                 // параметры расчета:  (кол-во точек разбиения )
-                fiberCalc_Deform.SetParams(new double[] { (int)numMeshN.Value, (int)numMeshN.Value });
+                fiberCalc_Deform.SetParams(new double[] { (int)numMeshNX.Value, (int)numMeshNX.Value });
                 //
                 // рассчитать                
 
@@ -1739,7 +1749,7 @@ namespace BSFiberConcrete
 
             if (BSHelper.IsRectangled(m_BeamSection))
             {
-                mDraw = new MeshDraw((int)numMeshN.Value, (int)numMeshN.Value);
+                mDraw = new MeshDraw((int)numMeshNX.Value, (int)numMeshNX.Value);
                 mDraw.MosaicMode = _Mode;
                 mDraw.UltMax = _ultMax;
                 mDraw.UltMin = _ultMin;
@@ -1778,7 +1788,7 @@ namespace BSFiberConcrete
             string pathToSvgFile;
 
             double[] sz = BeamWidtHeight(out double b, out double h, out double area);
-            double meshSize = (double)numMeshN.Value;
+            double meshSize = (double)numMeshNX.Value;
 
             BSMesh.Nx = (int)meshSize;
             BSMesh.Ny = (int)meshSize;

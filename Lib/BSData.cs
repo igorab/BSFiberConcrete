@@ -55,19 +55,22 @@ namespace BSFiberConcrete.Lib
         /// Данные формы
         /// </summary>
         /// <returns>Список</returns>
-        public static List<string> LoadFormParams()
+        public static FormParams LoadFormParams()
         {
             try
             {
                 using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
                 {
-                    var output = cnn.Query<string>("select * from Params", new DynamicParameters());
-                    return output.ToList();
+                    var output = cnn.Query<FormParams>("select * from Params", new DynamicParameters());
+                    if (output != null && output.Count() > 0)                    
+                        return output.ToList()[0];                    
+                    else
+                        return new FormParams();
                 }
             }
             catch
             {
-                return new List<string>();
+                return new FormParams();
             }
         }
 
