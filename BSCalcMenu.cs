@@ -146,8 +146,8 @@ namespace BSCalcMenu
             BSRFiber bSRFiber = new BSRFiber();
             bSRFiber.Show();
 
-            ViewFiberConcrateCalc viewFiberConcrateCalc = new ViewFiberConcrateCalc();
-            viewFiberConcrateCalc.Show();
+            ViewFiberConcreteCalc viewFiberConcreteCalc = new ViewFiberConcreteCalc();
+            viewFiberConcreteCalc.Show();
         }
 
         private void btnBeamDeflection_Click(object sender, EventArgs e)

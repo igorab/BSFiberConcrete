@@ -10,24 +10,21 @@ using System.Windows.Forms;
 
 namespace BSFiberConcrete.BSRFib.FiberCalculator
 {
-    public partial class ViewFiberConcrateCalc : Form
+    public partial class ViewFiberConcreteCalc : Form
     {
 
-        private FiberConcrateCalculator _model;
+        private FiberConcreteCalculator _model;
 
 
-        public ViewFiberConcrateCalc(FiberConcrateCalculator model = null)
+        public ViewFiberConcreteCalc(FiberConcreteCalculator model = null)
         {
             if (model == null)
-            { model = new FiberConcrateCalculator(); }
+            { model = new FiberConcreteCalculator(); }
             _model = model;
 
             InitializeComponent();
 
-
-
             // устанавливаем привязку полей
-            lab_Fiber_d.DataBindings.Add(new Binding("Text", _model.Fiber, "DescriptionGeometry", true, DataSourceUpdateMode.OnPropertyChanged));
 
             lab_Hf.DataBindings.Add(new Binding("Text", _model.Fiber, "Hita_f", true, DataSourceUpdateMode.OnPropertyChanged));
             lab_Rf_ser.DataBindings.Add(new Binding("Text", _model.Fiber, "Rf_ser", true, DataSourceUpdateMode.OnPropertyChanged));
@@ -40,33 +37,45 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
             lab_Rbt.DataBindings.Add(new Binding("Text", _model.Beton, "Rbt", true, DataSourceUpdateMode.OnPropertyChanged));
             lab_Rbt_ser.DataBindings.Add(new Binding("Text", _model.Beton, "Rbt_ser", true, DataSourceUpdateMode.OnPropertyChanged));
             lab_Eb.DataBindings.Add(new Binding("Text", _model.Beton, "Eb", true, DataSourceUpdateMode.OnPropertyChanged));
+
+            lab_Kor.DataBindings.Add(new Binding("Text", _model.FiberCoef, "Kor", true, DataSourceUpdateMode.OnPropertyChanged));
+            lab_Kn.DataBindings.Add(new Binding("Text", _model.FiberCoef, "Kn", true, DataSourceUpdateMode.OnPropertyChanged));   
         }
 
 
-        private void ViewFiberConcrateCalc_Load(object sender, EventArgs e)
+        private void ViewFiberConcreteCalc_Load(object sender, EventArgs e)
         {
 
             
-            num_b.Value = 150m;
-            num_h.Value = 125m;
+            num_b.Value = 100m;
+            num_h.Value = 200m;
+            
+            //_model.SetSectionB((double)num_b.Value);
+            //_model.SetSectionH((double)num_h.Value);
+            //lab_Kor.Text = "0.5";
+            //lab_Kn.Text = "0.5";
+
+
             numMu_fv.Value = 0.015m;
-            _model.SetSectionB((double)num_b.Value);
-            _model.SetSectionH((double)num_h.Value);
             _model.SetMu_fv((double)numMu_fv.Value);
             cBox_MuMin.Checked = false;
 
-
-
-            // Определяем данные для выпадающего списка типов фибры
+            // Определяем данные для выпадающих списков зависящий от типа фибры
             cmbFiberMaterial.DataSource = _model.Fiber.GetFiberTypes();
-            int indexFiber = 0;
-            cmbFiberMaterial.SelectedIndex = indexFiber;
-            cmbFiber_d.SelectedIndex = 0;
-            cmbFiber_l.SelectedIndex = 0;
-            ChangeFiberType(0);
+            // (После обновления dataSource вызывается событие SelectedIndexChanged, SelectedIndex = 0 )
+            // Поэтому после обновления dataSource срабатывает такая последовательность вызовов
+            // Обновление       cmbFiberMaterial.DataSource  -> вызов cmbFiberMaterial_SelectedIndexChanged ->  вызов ChangeFiberType ->
+            // -> Обновление    cmbFiber_Geometry.DataSource -> вызов cmbFiber_Geometry_SelectedIndexChanged -> вызов ChangeFiberGeometry ->
+            // -> обновление    cmbFiber_l.DataSource        -> вызов  cmbFiber_l_SelectedIndexChanged       -> вызов ChangeFiberLength   
+
+            //int indexFiber = 0;
+            //cmbFiberMaterial.SelectedIndex = indexFiber;
+            //cmbFiber_Geometry.SelectedIndex = 0;
+            //cmbFiber_l.SelectedIndex = 0;
+            //ChangeFiberType(0);
 
             cmbConcrete.DataSource = _model.Beton.GetFiberTypes();
-            _model.Beton.SetIndexConcreteType(0);
+            //_model.Beton.SetIndexConcreteType(0);
 
             rbElement_C_1.Checked = true;
             _model.Fiber.SetCoef_C(0);
@@ -81,8 +90,8 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         private void ChangeFiberType(int indexFiber)
         {
             _model.Fiber.SetIndexFiberType(indexFiber); // обновили модель
-            cmbFiber_d.DataSource = _model.Fiber.GetFiberGeometries();  // обновили view
-            ChangeFiberGeometry(0);
+            cmbFiber_Geometry.DataSource = _model.Fiber.GetFiberGeometries();  // обновили view
+            //ChangeFiberGeometry(0);
         }
 
 
@@ -95,7 +104,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
             _model.Fiber.SetIndexFiberGeometry(indexGeometry);          // обновили модель
             //lab_Fiber_d.Text = _model.Fiber.DescriptionGeometry;
             cmbFiber_l.DataSource = _model.Fiber.GetFiberLengths();     // обновили view
-            ChangeFiberLength(0);
+            //ChangeFiberLength(0);
 
         }
 
@@ -107,6 +116,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         private void ChangeFiberLength(int indexLength)
         {
             _model.Fiber.SetIndexFiberLength(indexLength);
+            _model.FiberCoef.SetLen_f(_model.Fiber.Length);
         }
 
 
@@ -117,9 +127,9 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         }
 
 
-        private void cmbFiber_d_SelectedIndexChanged(object sender, EventArgs e)
+        private void cmbFiber_Geometry_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int indexGeometry = cmbFiber_d.SelectedIndex;
+            int indexGeometry = cmbFiber_Geometry.SelectedIndex;
             ChangeFiberGeometry(indexGeometry);
         }
 
@@ -168,6 +178,11 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         private void rbElement_C_2_CheckedChanged(object sender, EventArgs e)
         {
             _model.Fiber.SetCoef_C(1);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            _model.Calculate();
         }
     }
 }

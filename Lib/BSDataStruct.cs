@@ -336,18 +336,17 @@ namespace BSFiberConcrete
     {
         public int ID { get; set; }
         /// <summary>
-        /// 
+        /// номер группы строк, соответсвующий значению из таблицы RFiber
         /// </summary>
         public int GeometryIndex { get; set; }
-        public double Geometry { get; set; }
         /// <summary>
-        /// Буква, описывающая геометрию
+        /// Площадь сечеия фибры
         /// </summary>
-        public string NameGeometry{ get; set; }
+        public double Square { get; set; }
         /// <summary>
-        /// Описание величины, описывающей геометрию
+        /// Диаметр фибры
         /// </summary>
-        public string DescriptionGeometry { get; set; }
+        public double Diameter{ get; set; }
         /// <summary>
         /// номер из таблицы FiberLength, которому соответсвует список стандартных значений длины для данного диаметра
         /// </summary>
@@ -381,7 +380,25 @@ namespace BSFiberConcrete
         public double I { get; set; }
     }
 
-    
+
+    /// <summary>
+    /// структура описывает коэффициенты Kor и Kn для фибры
+    /// </summary>
+    public class Fiber_K
+    {
+        public int ID { get; set; }
+        public double HL { get; set; }
+        public double BL_05 { get; set; }
+        public double BL_1 { get; set; }
+        public double BL_2 { get; set; }
+        public double BL_3 { get; set; }
+        public double BL_5 { get; set; }
+        public double BL_10 { get; set; }
+        public double BL_20 { get; set; }
+        public double BL_21 { get; set; }
+    }
+
+
     /// <summary>
     /// Приложение Б. График aF(F)
     /// </summary>
