@@ -39,7 +39,21 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
             lab_Eb.DataBindings.Add(new Binding("Text", _model.Beton, "Eb", true, DataSourceUpdateMode.OnPropertyChanged));
 
             lab_Kor.DataBindings.Add(new Binding("Text", _model.FiberCoef, "Kor", true, DataSourceUpdateMode.OnPropertyChanged));
-            lab_Kn.DataBindings.Add(new Binding("Text", _model.FiberCoef, "Kn", true, DataSourceUpdateMode.OnPropertyChanged));   
+            lab_Kn.DataBindings.Add(new Binding("Text", _model.FiberCoef, "Kn", true, DataSourceUpdateMode.OnPropertyChanged));
+
+
+            lab_l_f_an.DataBindings.Add(new Binding("Text", _model, "l_f_an", true, DataSourceUpdateMode.OnPropertyChanged));
+            lab_mu_fv_min.DataBindings.Add(new Binding("Text", _model, "mu_fv_min", true, DataSourceUpdateMode.OnPropertyChanged));
+            lab_C_max.DataBindings.Add(new Binding("Text", _model, "C_max", true, DataSourceUpdateMode.OnPropertyChanged));
+            lab_l_f_min.DataBindings.Add(new Binding("Text", _model, "l_f_min", true, DataSourceUpdateMode.OnPropertyChanged));
+            lab_Rfbt3.DataBindings.Add(new Binding("Text", _model, "R_fbt3", true, DataSourceUpdateMode.OnPropertyChanged));
+            lab_Rfb.DataBindings.Add(new Binding("Text", _model, "R_fb", true, DataSourceUpdateMode.OnPropertyChanged));
+            lab_mu_fa.DataBindings.Add(new Binding("Text", _model, "mu_fa", true, DataSourceUpdateMode.OnPropertyChanged));
+            lab_mu_1_fa.DataBindings.Add(new Binding("Text", _model, "mu_1_fa", true, DataSourceUpdateMode.OnPropertyChanged));
+            lab_Efb.DataBindings.Add(new Binding("Text", _model, "E_fb", true, DataSourceUpdateMode.OnPropertyChanged));
+            lab_Gfb.DataBindings.Add(new Binding("Text", _model, "G_fb", true, DataSourceUpdateMode.OnPropertyChanged));
+            txtb4Message.DataBindings.Add(new Binding("Text", _model, "message", true, DataSourceUpdateMode.OnPropertyChanged));
+
         }
 
 
@@ -183,6 +197,11 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         private void button1_Click(object sender, EventArgs e)
         {
             _model.Calculate();
+        }
+
+        private void btnGenerateReport_Click(object sender, EventArgs e)
+        {
+            _model.GenerateReport();
         }
     }
 }
