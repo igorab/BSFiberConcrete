@@ -1,5 +1,6 @@
 ﻿using BSFiberConcrete.DeformationDiagram;
 using MathNet.Numerics.Integration;
+using OpenTK.Graphics.OpenGL;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,6 +17,9 @@ namespace BSFiberConcrete
     /// </summary>
     public class BSCalcResultNDM
     {
+        [DisplayName("Количество итераций, [.]")]
+        public double ItersCnt { get; private set; }
+
         #region 1 группа предельных состояний
         [DisplayName("Радиус кривизны продольной оси в плоскости действия моментов, Rx, [см]")]
         public double rx { get; private set; }
@@ -44,7 +48,7 @@ namespace BSFiberConcrete
         public double e_fb_max { get; private set; }
 
         [DisplayName("Коэффициент использования по деформации в фибробетоне, [.]")]
-        public double UtilRate_e_fb => (Eps_fb_ult !=0) ? e_fb_max / Eps_fb_ult : 1;
+        public double UtilRate_e_fb => (Eps_fb_ult !=0) ? e_fb_max_p / Eps_fb_ult : 1;
 
         [DisplayName("Максимальная относительная деформация в арматуре, [.]")]
         public double e_s_max { get; private set; }
@@ -65,6 +69,25 @@ namespace BSFiberConcrete
         [DisplayName("Максимальная относительная деформация в арматуре (сжатие), [.]")]
         public double e_s_max_p { get; private set; }
 
+        [DisplayName("Коэффициент использования по деформации в арматуре (сжатие), [.]")]
+        public double UtilRate_e_s_p => (Eps_s_ult != 0) ? e_s_max_p / Eps_s_ult : 1;
+
+        // проверка по усилиям
+
+        [DisplayName("Момент Мx, [кгс*см]")]
+        public double Mx_calc { get; private set; }
+        [DisplayName("Момент Мy, [кгс*см]")]
+        public double My_calc { get; private set; }
+        [DisplayName("Сила N, [кгс]")]
+        public double N_calc { get; private set; }
+
+        // напряжение
+        public List<double> Sig_B { get; set; } // бетон
+        public List<double> Sig_S { get; set; } // арматура
+
+        // деформации
+        public List<double> Eps_B { get; set; } // бетон
+        public List<double> Eps_S { get; set; } // арматура
 
         #endregion
 
@@ -129,12 +152,26 @@ namespace BSFiberConcrete
 
         [DisplayName("Максимально допустимая относительная деформация в бетоне, [.]")]
         public double Eps_fb_ult { get; set; }
+
+        [DisplayName("Максимально допустимая относительная деформация в бетоне, [.]")]
+        public double Eps_fbt_ult { get; set; }
+
         [DisplayName("Максимально допустимая относительная деформация в арматуре, [.]")]
         public double Eps_s_ult { get; set; }
 
         #endregion
 
         private string DN(string _attr) => BSFiberCalculation.DsplN(typeof(BSCalcResultNDM), _attr);
+
+        private Dictionary<int, string> DictErrors = new Dictionary<int, string>()
+        {
+            [-1] = "Достигнута заданная сходимость метода [+]",
+            [0] = "",
+            [1] = "Превышен максимально допустимый предел деформации [-]",
+            [2] = "Достигнуто максимальное число итераций [-]",
+            [3] = "Деформации превысили разумный предел [-]"
+        };
+
 
         /// <summary>
         /// внешние усилия
@@ -158,7 +195,8 @@ namespace BSFiberConcrete
         {
             get
             {
-                return new Dictionary<string, double> {
+                return new Dictionary<string, double> 
+                {
                     { DN("Eb"),  Eb },
                     // норм
                     { DN("Rfbn"), Rfbn },
@@ -189,7 +227,7 @@ namespace BSFiberConcrete
             { DN("b"), b },
             { DN("h"), h }
         };
-
+       
         /// <summary>
         /// Параметры расчета
         /// </summary>
@@ -214,15 +252,20 @@ namespace BSFiberConcrete
             Es = _D["Es0"];
             Rs = _D["Rscn"];
 
-            Eps_fb_ult = _D["ebt_ult"];
-            Eps_s_ult = _D["es_ult"];
+            Eps_fbt_ult = _D["ebt_ult"];
+            Eps_fb_ult = _D["eb_ult"];
+            //Eps_s_ult = _D["es_ult"];
 
             rods_qty = _D["rods_qty"];
-            rods_area = _D["rods_area"];
+            rods_area = _D["rods_area"];            
         }
 
         public BSCalcResultNDM(Dictionary<string, double> _D1gr)
         {
+            // итерации
+            ItersCnt = _D1gr["ItersCnt"];
+
+            // деформации
             eps_0 = _D1gr["ep0"];
             Ky = _D1gr["Ky"];
             ry = _D1gr["ry"];
@@ -230,16 +273,24 @@ namespace BSFiberConcrete
             rx = _D1gr["rz"];
 
             // растяжение
-            sigmaB = _D1gr["sigB"];
-            sigmaS = _D1gr["sigS"];
+            sigmaB = BSHelper.KNsm2ToKgssm2(_D1gr["sigB"]);
+            sigmaS = BSHelper.KNsm2ToKgssm2(_D1gr["sigS"]);
             e_fb_max = _D1gr["epsB"];
             e_s_max = _D1gr["epsS"];
 
             // сжатие
-            sigmaB_p = _D1gr["sigB_p"];
-            sigmaS_p = _D1gr["sigS_p"];
+            sigmaB_p = BSHelper.KNsm2ToKgssm2(_D1gr["sigB_p"]);
+            sigmaS_p = BSHelper.KNsm2ToKgssm2(_D1gr["sigS_p"]);
             e_fb_max_p = _D1gr["epsB_p"];
             e_s_max_p = _D1gr["epsS_p"];
+
+            // предел
+            Eps_s_ult = _D1gr["esc0"];
+
+            // проверка усилий
+            Mx_calc = BSHelper.KNsm2ToKgssm2(_D1gr["Mx"]);
+            My_calc = BSHelper.KNsm2ToKgssm2(_D1gr["My"]);            
+            N_calc = BSHelper.kN2Kgs(_D1gr["N"]);
 
             Msg = new List<string>();
             Res1Group = new Dictionary<string, double>();
@@ -282,7 +333,11 @@ namespace BSFiberConcrete
         ///  Результаты расчета по 1 группе предельных состояний
         /// </summary>
         public void Results1Group(ref Dictionary<string, double> _CalcResults)
-        {           
+        {
+            // 
+            AddToResult("ItersCnt", ItersCnt);
+
+            Res1Group.Add("--------Изгиб:--------", 1);
             AddToResult("eps_0", eps_0);
             AddToResult("rx", rx);
             AddToResult("Kx", Kx);
@@ -291,23 +346,30 @@ namespace BSFiberConcrete
 
             // растяжение
             Res1Group.Add("--------Растяжение:--------", 1);
-            AddToResult("sigmaB", BSHelper.KNsm2ToKgssm2(sigmaB));            
+            AddToResult("sigmaB", sigmaB);            
             AddToResult("e_fb_max", e_fb_max);
-            AddToResult("UtilRate_e_fb", UtilRate_e_fb);
+            //AddToResult("UtilRate_e_fb", UtilRate_e_fb);
             
-            AddToResult("sigmaS", BSHelper.KNsm2ToKgssm2(sigmaS));
+            AddToResult("sigmaS", sigmaS);
             AddToResult("e_s_max", e_s_max);
             AddToResult("UtilRate_e_s", UtilRate_e_s);
 
             // сжатие
             Res1Group.Add("--------Сжатие:-------", 1);
-            AddToResult("sigmaB_p", BSHelper.KNsm2ToKgssm2(sigmaB_p));
+            // - бетон
+            AddToResult("sigmaB_p", sigmaB_p);
             AddToResult("e_fb_max_p", e_fb_max_p);
-            //AddToResult("UtilRate_e_fb", UtilRate_e_fb);
-
-            AddToResult("sigmaS_p", BSHelper.KNsm2ToKgssm2(sigmaS_p));
+            AddToResult("UtilRate_e_fb", UtilRate_e_fb);
+            // - арматура
+            AddToResult("sigmaS_p", sigmaS_p);
             AddToResult("e_s_max_p", e_s_max_p);
-            //AddToResult("UtilRate_e_s", UtilRate_e_s);
+            AddToResult("UtilRate_e_s_p", UtilRate_e_s_p);
+
+            // усилия
+            Res1Group.Add("--------Проверка по усилиям:-------", 1);
+            AddToResult("Mx_calc", Mx_calc);
+            AddToResult("My_calc", My_calc);
+            AddToResult("N_calc", N_calc);
 
             _CalcResults = Res1Group;
         }
@@ -329,6 +391,13 @@ namespace BSFiberConcrete
                 Msg.Add(string.Format("Проверка сечения по арматуре пройдена. e_s_max={0} <= e_s_ult={1} ", Math.Round(e_s_max, 6), Eps_s_ult));
             else
                 Msg.Add(string.Format("Не пройдена проверка сечения по арматуре. e_s_max={0} <= e_s_ult={1}", Math.Round(e_s_max, 6), Eps_s_ult));
+
+            Msg.Add("---Предупреждения:------");
+            foreach (int errid in ErrorIdx) 
+            {
+                if (DictErrors.TryGetValue(errid, out string _errval))
+                    Msg.Add($"{_errval}");
+            }
 
             _Message = Msg;
         }

@@ -52,6 +52,30 @@ namespace BSFiberConcrete.Lib
         }
 
         /// <summary>
+        /// Данные формы
+        /// </summary>
+        /// <returns>Список</returns>
+        public static FormParams LoadFormParams()
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    var output = cnn.Query<FormParams>("select * from Params", new DynamicParameters());
+                    if (output != null && output.Count() > 0)                    
+                        return output.ToList()[0];                    
+                    else
+                        return new FormParams();
+                }
+            }
+            catch
+            {
+                return new FormParams();
+            }
+        }
+
+
+        /// <summary>
         /// Наименования типов бетона
         /// </summary>
         /// <returns>Список</returns>

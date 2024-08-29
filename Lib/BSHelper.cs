@@ -29,12 +29,17 @@ namespace BSFiberConcrete
         public static double kgssm2kNsm(double? _kgssm) => _kgssm * 0.00980664999999998d ?? 0;
         public static double kNsm2kgssm(double? _kNsm) => _kNsm * 101.97162129779284d ?? 0;
         public static double kNm2kgssm(double? _kNm) => _kNm * 10197.16212978d ?? 0;
-        
+        public static double Nmm2kgssm(double? _Nmm) => _Nmm * 0.010197162d ?? 0;
 
         // конвертор напряжений 
+
+        public static double MPA2kgsm2(double _mpa) => 10.197162d * _mpa ;
         public static double MPA2kgsm2(double? _mpa) => 10.197162d * _mpa ?? 0;
         public static double MPA2kNsm2(double? _mpa) => 0.1d * _mpa ?? 0;
-        public static double Kgssm2ToKNsm2(double? _kgssm2) => _kgssm2 * 0.00980664999999998d ?? 0;
+        public static double kNsm2toMPa(double _KNsm2) => 10d * _KNsm2 ;
+
+        public static double Kgssm2ToKNsm2(double _kgssm2) => _kgssm2 * 0.00980664999999998d;
+        public static double Kgssm2ToKNsm2(double _kgssm2, int _dec) => Math.Round(_kgssm2 * 0.00980664999999998d ,_dec) ;
 
         public static double KNsm2ToKgssm2(double? _KNsm2) => _KNsm2 * 101.97162129779d ?? 0;
 
@@ -76,7 +81,11 @@ namespace BSFiberConcrete
                    _BeamSection == BeamSection.IBeam;
         }
 
-        // тавровое сечение
+        /// <summary>
+        /// Является ли сечение тавровым
+        /// </summary>
+        /// <param name="_BeamSection">Тип сечения</param>
+        /// <returns></returns>
         public static bool IsITL(BeamSection _BeamSection)
         {
             return _BeamSection == BeamSection.TBeam ||

@@ -237,11 +237,14 @@ namespace BSFiberConcrete
                     w.WriteLine("<tr>");
                     w.WriteLine($"<td width={bk}><b>{_pair.Key}</b></td>");
 
-                    if (_pair.Value < 0.001)
+                    if (Math.Abs(_pair.Value) < 0.00001)
+                    {
                         w.WriteLine($"<td width={bv} align=center colspan=2>{_pair.Value.ToString("E")} </td>");
+                        w.WriteLine($"<td width={bv} align=center colspan=2>{UConv(_pair.Key, _pair.Value)} </td>");
+                    }
                     else
                     {
-                        w.WriteLine($"<td width={bv} align=center colspan=2>{Math.Round(_pair.Value, 4)} </td>");
+                        w.WriteLine($"<td width={bv} align=center colspan=2>{Math.Round(_pair.Value, 6)} </td>");
                         w.WriteLine($"<td width={bv} align=center colspan=2>{UConv(_pair.Key, _pair.Value)} </td>");
                     }
 
@@ -333,6 +336,11 @@ namespace BSFiberConcrete
             w.WriteLine("</html>");            
         }
 
+        /// <summary>
+        /// Сформировать отчет
+        /// </summary>
+        /// <param name="_fileIdx">Присвоить номер</param>
+        /// <returns>Путь к файлу</returns>
         public string CreateReport(int _fileIdx = 0)
         {
             string pathToHtmlFile = "";

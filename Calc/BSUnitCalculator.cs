@@ -35,7 +35,10 @@ namespace BSFiberConcrete.Calc
 
         private void numFromM_ValueChanged(object sender, EventArgs e)
         {
-            numToM.Value = UConv(numFromM.Value, BSHelper.kNm2kgssm);    
+            if ((string)cmbFromM.SelectedItem == "кНм")
+                numToM.Value = UConv(numFromM.Value, BSHelper.kNm2kgssm);    
+            else if ((string)cmbFromM.SelectedItem == "Нмм")
+                numToM.Value = UConv(numFromM.Value, BSHelper.Nmm2kgssm);
         }
     }
 }

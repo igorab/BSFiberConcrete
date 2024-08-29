@@ -344,12 +344,6 @@
     <Compile Include="BSFiberSetup.Designer.cs">
       <DependentUpon>BSFiberSetup.cs</DependentUpon>
     </Compile>
-    <Compile Include="BSFormPanel.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="BSFormPanel.Designer.cs">
-      <DependentUpon>BSFormPanel.cs</DependentUpon>
-    </Compile>
     <Compile Include="Mat\BSMaterial.cs" />
     <Compile Include="BSElements\BSRod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -415,9 +409,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BSFiberSetup.resx">
       <DependentUpon>BSFiberSetup.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="BSFormPanel.resx">
-      <DependentUpon>BSFormPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="BSRFib\BSEFib.resx">
       <DependentUpon>BSEFib.cs</DependentUpon>
