@@ -143,8 +143,8 @@ namespace BSCalcMenu
 
         private void btnRFbtFiber_Click(object sender, EventArgs e)
         {
-            BSRFiber bSRFiber = new BSRFiber();
-            bSRFiber.Show();
+            //BSRFiber bSRFiber = new BSRFiber();
+            //bSRFiber.Show();
 
             ViewFiberConcreteCalc viewFiberConcreteCalc = new ViewFiberConcreteCalc();
             viewFiberConcreteCalc.Show();

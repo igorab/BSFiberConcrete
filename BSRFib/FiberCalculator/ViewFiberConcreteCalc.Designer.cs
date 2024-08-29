@@ -81,11 +81,11 @@
             this.label_Gamma_fb1 = new System.Windows.Forms.Label();
             this.lab_Ef = new System.Windows.Forms.Label();
             this.lab_Rf = new System.Windows.Forms.Label();
-            this.label_Rf_ser = new System.Windows.Forms.Label();
             this.label_Rf = new System.Windows.Forms.Label();
             this.label_Ef = new System.Windows.Forms.Label();
             this.lab_Hf = new System.Windows.Forms.Label();
             this.lab_Rf_ser = new System.Windows.Forms.Label();
+            this.label_Rf_ser = new System.Windows.Forms.Label();
             this.lab_Fiber_Geometry = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tableSection = new System.Windows.Forms.TableLayoutPanel();
@@ -96,6 +96,7 @@
             this.label_Kn = new System.Windows.Forms.Label();
             this.lab_Kn = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.btnGenerateReport = new System.Windows.Forms.Button();
             this.txtb4Message = new System.Windows.Forms.TextBox();
             this.tableResult = new System.Windows.Forms.TableLayoutPanel();
             this.label52 = new System.Windows.Forms.Label();
@@ -137,7 +138,6 @@
             this.label32 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.fiberConcrateCalculatorBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.btnGenerateReport = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.num_h)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_b)).BeginInit();
             this.tableLayoutPanel2.SuspendLayout();
@@ -277,8 +277,8 @@
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 68F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(717, 68);
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 65F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(717, 65);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // labelDescr
@@ -289,9 +289,10 @@
             this.labelDescr.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelDescr.Location = new System.Drawing.Point(121, 0);
             this.labelDescr.Name = "labelDescr";
-            this.labelDescr.Size = new System.Drawing.Size(593, 68);
+            this.labelDescr.Size = new System.Drawing.Size(593, 65);
             this.labelDescr.TabIndex = 34;
             this.labelDescr.Text = "Определение характеристик фибробетона";
+            this.labelDescr.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // picFib
             // 
@@ -299,7 +300,7 @@
             this.picFib.Image = global::BSFiberConcrete.Properties.Resources.balka_rect;
             this.picFib.Location = new System.Drawing.Point(3, 3);
             this.picFib.Name = "picFib";
-            this.picFib.Size = new System.Drawing.Size(111, 62);
+            this.picFib.Size = new System.Drawing.Size(111, 59);
             this.picFib.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picFib.TabIndex = 33;
             this.picFib.TabStop = false;
@@ -318,7 +319,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.803922F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 90.19608F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(759, 760);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(759, 733);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // tableLayoutPanel5
@@ -330,12 +331,12 @@
             this.tableLayoutPanel5.Controls.Add(this.panel2, 0, 1);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel5.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(17, 77);
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(17, 74);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 2;
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 62.8294F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 37.1706F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(717, 680);
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 64.75903F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 35.24096F));
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(717, 656);
             this.tableLayoutPanel5.TabIndex = 3;
             // 
             // panel1
@@ -345,9 +346,10 @@
             this.panel1.Controls.Add(this.groupBox3);
             this.panel1.Controls.Add(this.groupBox2);
             this.panel1.Controls.Add(this.groupBox1);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(711, 419);
+            this.panel1.Size = new System.Drawing.Size(711, 418);
             this.panel1.TabIndex = 2;
             // 
             // groupBox5
@@ -789,16 +791,6 @@
             this.lab_Rf.TabIndex = 18;
             this.lab_Rf.Text = "label10";
             // 
-            // label_Rf_ser
-            // 
-            this.label_Rf_ser.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label_Rf_ser.AutoSize = true;
-            this.label_Rf_ser.Location = new System.Drawing.Point(3, 23);
-            this.label_Rf_ser.Name = "label_Rf_ser";
-            this.label_Rf_ser.Size = new System.Drawing.Size(293, 13);
-            this.label_Rf_ser.TabIndex = 13;
-            this.label_Rf_ser.Text = "Нормативное сопротивление растяжению фибры Rf_ser";
-            // 
             // label_Rf
             // 
             this.label_Rf.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -838,6 +830,16 @@
             this.lab_Rf_ser.Size = new System.Drawing.Size(35, 13);
             this.lab_Rf_ser.TabIndex = 17;
             this.lab_Rf_ser.Text = "label9";
+            // 
+            // label_Rf_ser
+            // 
+            this.label_Rf_ser.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label_Rf_ser.AutoSize = true;
+            this.label_Rf_ser.Location = new System.Drawing.Point(3, 23);
+            this.label_Rf_ser.Name = "label_Rf_ser";
+            this.label_Rf_ser.Size = new System.Drawing.Size(293, 13);
+            this.label_Rf_ser.TabIndex = 13;
+            this.label_Rf_ser.Text = "Нормативное сопротивление растяжению фибры Rf_ser";
             // 
             // lab_Fiber_Geometry
             // 
@@ -950,10 +952,21 @@
             this.panel2.Controls.Add(this.txtb4Message);
             this.panel2.Controls.Add(this.tableResult);
             this.panel2.Controls.Add(this.button1);
-            this.panel2.Location = new System.Drawing.Point(3, 430);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(3, 427);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(711, 241);
+            this.panel2.Size = new System.Drawing.Size(711, 226);
             this.panel2.TabIndex = 3;
+            // 
+            // btnGenerateReport
+            // 
+            this.btnGenerateReport.Location = new System.Drawing.Point(6, 41);
+            this.btnGenerateReport.Name = "btnGenerateReport";
+            this.btnGenerateReport.Size = new System.Drawing.Size(75, 23);
+            this.btnGenerateReport.TabIndex = 3;
+            this.btnGenerateReport.Text = "Отчет";
+            this.btnGenerateReport.UseVisualStyleBackColor = true;
+            this.btnGenerateReport.Click += new System.EventHandler(this.btnGenerateReport_Click);
             // 
             // txtb4Message
             // 
@@ -1406,22 +1419,13 @@
             // 
             this.fiberConcrateCalculatorBindingSource.DataSource = typeof(BSFiberConcrete.BSRFib.FiberCalculator.FiberConcreteCalculator);
             // 
-            // btnGenerateReport
-            // 
-            this.btnGenerateReport.Location = new System.Drawing.Point(6, 41);
-            this.btnGenerateReport.Name = "btnGenerateReport";
-            this.btnGenerateReport.Size = new System.Drawing.Size(75, 23);
-            this.btnGenerateReport.TabIndex = 3;
-            this.btnGenerateReport.Text = "Отчет";
-            this.btnGenerateReport.UseVisualStyleBackColor = true;
-            this.btnGenerateReport.Click += new System.EventHandler(this.btnGenerateReport_Click);
-            // 
             // ViewFiberConcreteCalc
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(759, 760);
+            this.ClientSize = new System.Drawing.Size(759, 733);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.MinimumSize = new System.Drawing.Size(775, 772);
             this.Name = "ViewFiberConcreteCalc";
             this.Text = "ViewFiberConcreteCalc";
             this.Load += new System.EventHandler(this.ViewFiberConcreteCalc_Load);
