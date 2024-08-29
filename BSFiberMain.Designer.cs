@@ -30,12 +30,12 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BSFiberMain));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabFiber = new System.Windows.Forms.TabControl();
             this.tabParams = new System.Windows.Forms.TabPage();
             this.groupVar = new System.Windows.Forms.GroupBox();
@@ -224,15 +224,17 @@
             this.numEps_fbt2 = new System.Windows.Forms.NumericUpDown();
             this.tableLayoutMesh = new System.Windows.Forms.TableLayoutPanel();
             this.btnMesh = new System.Windows.Forms.Button();
-            this.numMeshNX = new System.Windows.Forms.NumericUpDown();
             this.btnSection = new System.Windows.Forms.Button();
-            this.labelMeshNumX = new System.Windows.Forms.Label();
             this.numTriAngle = new System.Windows.Forms.NumericUpDown();
             this.labelTriAngle = new System.Windows.Forms.Label();
             this.labelSection = new System.Windows.Forms.Label();
             this.labelMesh = new System.Windows.Forms.Label();
             this.btnMosaic = new System.Windows.Forms.Button();
             this.comboMosaic = new System.Windows.Forms.ComboBox();
+            this.labelMeshNumX = new System.Windows.Forms.Label();
+            this.numMeshNX = new System.Windows.Forms.NumericUpDown();
+            this.labelMeshNumY = new System.Windows.Forms.Label();
+            this.numMeshNY = new System.Windows.Forms.NumericUpDown();
             this.tabPBeam = new System.Windows.Forms.TabPage();
             this.dataGridSection = new System.Windows.Forms.DataGridView();
             this.btnRectang = new System.Windows.Forms.Button();
@@ -247,8 +249,6 @@
             this.btnSaveParams = new System.Windows.Forms.Button();
             this.flowLayoutBtns = new System.Windows.Forms.FlowLayoutPanel();
             this.btnLSection = new System.Windows.Forms.Button();
-            this.labelMeshNumY = new System.Windows.Forms.Label();
-            this.numMeshNY = new System.Windows.Forms.NumericUpDown();
             this.tabFiber.SuspendLayout();
             this.tabParams.SuspendLayout();
             this.groupVar.SuspendLayout();
@@ -317,13 +317,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.numEps_fb0)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numEps_fbt2)).BeginInit();
             this.tableLayoutMesh.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numMeshNX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numTriAngle)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numMeshNX)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numMeshNY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridSection)).BeginInit();
             this.panelCalc.SuspendLayout();
             this.flowLayoutPanelArea.SuspendLayout();
             this.flowLayoutBtns.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numMeshNY)).BeginInit();
             this.SuspendLayout();
             // 
             // tabFiber
@@ -578,7 +578,7 @@
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 38.94231F));
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 76F));
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 147F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 27F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanel6.Controls.Add(this.labelBftn, 0, 2);
             this.tableLayoutPanel6.Controls.Add(this.lblBetonClass, 0, 0);
             this.tableLayoutPanel6.Controls.Add(this.cmbBftn, 1, 2);
@@ -625,7 +625,7 @@
             // 
             this.cmbBftn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbBftn.FormattingEnabled = true;
-            this.cmbBftn.Location = new System.Drawing.Point(208, 105);
+            this.cmbBftn.Location = new System.Drawing.Point(207, 105);
             this.cmbBftn.Name = "cmbBftn";
             this.cmbBftn.Size = new System.Drawing.Size(124, 21);
             this.cmbBftn.TabIndex = 9;
@@ -635,7 +635,7 @@
             // 
             this.cmbBetonClass.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbBetonClass.FormattingEnabled = true;
-            this.cmbBetonClass.Location = new System.Drawing.Point(208, 12);
+            this.cmbBetonClass.Location = new System.Drawing.Point(207, 12);
             this.cmbBetonClass.Name = "cmbBetonClass";
             this.cmbBetonClass.Size = new System.Drawing.Size(124, 21);
             this.cmbBetonClass.TabIndex = 4;
@@ -655,7 +655,7 @@
             // 
             this.cmbBfn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbBfn.FormattingEnabled = true;
-            this.cmbBfn.Location = new System.Drawing.Point(208, 58);
+            this.cmbBfn.Location = new System.Drawing.Point(207, 58);
             this.cmbBfn.Name = "cmbBfn";
             this.cmbBfn.Size = new System.Drawing.Size(124, 21);
             this.cmbBfn.TabIndex = 8;
@@ -665,7 +665,7 @@
             // 
             this.lbE_fb.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.lbE_fb.AutoSize = true;
-            this.lbE_fb.Location = new System.Drawing.Point(365, 103);
+            this.lbE_fb.Location = new System.Drawing.Point(364, 103);
             this.lbE_fb.Name = "lbE_fb";
             this.lbE_fb.Size = new System.Drawing.Size(43, 26);
             this.lbE_fb.TabIndex = 10;
@@ -675,7 +675,7 @@
             // 
             this.numE_fiber.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.numE_fiber.DecimalPlaces = 4;
-            this.numE_fiber.Location = new System.Drawing.Point(414, 106);
+            this.numE_fiber.Location = new System.Drawing.Point(413, 106);
             this.numE_fiber.Maximum = new decimal(new int[] {
             1316134912,
             2328,
@@ -695,7 +695,7 @@
             // 
             this.lbE_beton.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.lbE_beton.AutoSize = true;
-            this.lbE_beton.Location = new System.Drawing.Point(343, 62);
+            this.lbE_beton.Location = new System.Drawing.Point(342, 62);
             this.lbE_beton.Name = "lbE_beton";
             this.lbE_beton.Size = new System.Drawing.Size(65, 13);
             this.lbE_beton.TabIndex = 12;
@@ -705,7 +705,7 @@
             // 
             this.numE_beton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.numE_beton.DecimalPlaces = 4;
-            this.numE_beton.Location = new System.Drawing.Point(414, 59);
+            this.numE_beton.Location = new System.Drawing.Point(413, 59);
             this.numE_beton.Maximum = new decimal(new int[] {
             1316134912,
             2328,
@@ -727,7 +727,7 @@
             this.lbE_beton_info.AutoSize = true;
             this.lbE_beton_info.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lbE_beton_info.ForeColor = System.Drawing.SystemColors.MenuHighlight;
-            this.lbE_beton_info.Location = new System.Drawing.Point(561, 62);
+            this.lbE_beton_info.Location = new System.Drawing.Point(560, 62);
             this.lbE_beton_info.Name = "lbE_beton_info";
             this.lbE_beton_info.Size = new System.Drawing.Size(13, 13);
             this.lbE_beton_info.TabIndex = 14;
@@ -741,7 +741,7 @@
             this.lbE_fb_info.AutoSize = true;
             this.lbE_fb_info.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lbE_fb_info.ForeColor = System.Drawing.SystemColors.MenuHighlight;
-            this.lbE_fb_info.Location = new System.Drawing.Point(561, 109);
+            this.lbE_fb_info.Location = new System.Drawing.Point(560, 109);
             this.lbE_fb_info.Name = "lbE_fb_info";
             this.lbE_fb_info.Size = new System.Drawing.Size(13, 13);
             this.lbE_fb_info.TabIndex = 15;
@@ -756,7 +756,7 @@
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 17.67956F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 133F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 71F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 33F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 34F));
             this.tableLayoutPanel4.Controls.Add(this.numRfbt3n, 2, 0);
             this.tableLayoutPanel4.Controls.Add(this.labelRfbt3n, 1, 0);
             this.tableLayoutPanel4.Controls.Add(this.labelRfbtn, 1, 3);
@@ -787,7 +787,7 @@
             // 
             this.numRfbt3n.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.numRfbt3n.DecimalPlaces = 2;
-            this.numRfbt3n.Location = new System.Drawing.Point(402, 10);
+            this.numRfbt3n.Location = new System.Drawing.Point(401, 10);
             this.numRfbt3n.Maximum = new decimal(new int[] {
             1000000000,
             0,
@@ -807,7 +807,7 @@
             // 
             this.labelRfbt3n.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelRfbt3n.AutoSize = true;
-            this.labelRfbt3n.Location = new System.Drawing.Point(332, 13);
+            this.labelRfbt3n.Location = new System.Drawing.Point(331, 13);
             this.labelRfbt3n.Name = "labelRfbt3n";
             this.labelRfbt3n.Size = new System.Drawing.Size(45, 13);
             this.labelRfbt3n.TabIndex = 3;
@@ -817,7 +817,7 @@
             // 
             this.labelRfbtn.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelRfbtn.AutoSize = true;
-            this.labelRfbtn.Location = new System.Drawing.Point(332, 134);
+            this.labelRfbtn.Location = new System.Drawing.Point(331, 134);
             this.labelRfbtn.Name = "labelRfbtn";
             this.labelRfbtn.Size = new System.Drawing.Size(39, 13);
             this.labelRfbtn.TabIndex = 11;
@@ -828,7 +828,7 @@
             this.numRfbt_n.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.numRfbt_n.DecimalPlaces = 2;
             this.numRfbt_n.Enabled = false;
-            this.numRfbt_n.Location = new System.Drawing.Point(402, 131);
+            this.numRfbt_n.Location = new System.Drawing.Point(401, 131);
             this.numRfbt_n.Maximum = new decimal(new int[] {
             1000000000,
             0,
@@ -848,7 +848,7 @@
             // 
             this.labelRfbn.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelRfbn.AutoSize = true;
-            this.labelRfbn.Location = new System.Drawing.Point(332, 93);
+            this.labelRfbn.Location = new System.Drawing.Point(331, 93);
             this.labelRfbn.Name = "labelRfbn";
             this.labelRfbn.Size = new System.Drawing.Size(36, 13);
             this.labelRfbn.TabIndex = 2;
@@ -858,7 +858,7 @@
             // 
             this.numRfb_n.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.numRfb_n.DecimalPlaces = 2;
-            this.numRfb_n.Location = new System.Drawing.Point(402, 90);
+            this.numRfb_n.Location = new System.Drawing.Point(401, 90);
             this.numRfb_n.Maximum = new decimal(new int[] {
             1000000000,
             0,
@@ -878,7 +878,7 @@
             // 
             this.labelRfbt2n.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelRfbt2n.AutoSize = true;
-            this.labelRfbt2n.Location = new System.Drawing.Point(332, 53);
+            this.labelRfbt2n.Location = new System.Drawing.Point(331, 53);
             this.labelRfbt2n.Name = "labelRfbt2n";
             this.labelRfbt2n.Size = new System.Drawing.Size(45, 13);
             this.labelRfbt2n.TabIndex = 15;
@@ -888,7 +888,7 @@
             // 
             this.numRfbt2n.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.numRfbt2n.DecimalPlaces = 2;
-            this.numRfbt2n.Location = new System.Drawing.Point(402, 50);
+            this.numRfbt2n.Location = new System.Drawing.Point(401, 50);
             this.numRfbt2n.Maximum = new decimal(new int[] {
             1000000000,
             0,
@@ -908,7 +908,7 @@
             // 
             this.labelRfbt3nMPa.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelRfbt3nMPa.AutoSize = true;
-            this.labelRfbt3nMPa.Location = new System.Drawing.Point(570, 13);
+            this.labelRfbt3nMPa.Location = new System.Drawing.Point(569, 13);
             this.labelRfbt3nMPa.Name = "labelRfbt3nMPa";
             this.labelRfbt3nMPa.Size = new System.Drawing.Size(30, 13);
             this.labelRfbt3nMPa.TabIndex = 17;
@@ -918,7 +918,7 @@
             // 
             this.labelRfbt2nMPa.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelRfbt2nMPa.AutoSize = true;
-            this.labelRfbt2nMPa.Location = new System.Drawing.Point(570, 53);
+            this.labelRfbt2nMPa.Location = new System.Drawing.Point(569, 53);
             this.labelRfbt2nMPa.Name = "labelRfbt2nMPa";
             this.labelRfbt2nMPa.Size = new System.Drawing.Size(30, 13);
             this.labelRfbt2nMPa.TabIndex = 18;
@@ -928,7 +928,7 @@
             // 
             this.labelRfbnMPa.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelRfbnMPa.AutoSize = true;
-            this.labelRfbnMPa.Location = new System.Drawing.Point(570, 93);
+            this.labelRfbnMPa.Location = new System.Drawing.Point(569, 93);
             this.labelRfbnMPa.Name = "labelRfbnMPa";
             this.labelRfbnMPa.Size = new System.Drawing.Size(30, 13);
             this.labelRfbnMPa.TabIndex = 19;
@@ -938,7 +938,7 @@
             // 
             this.labelRfbtnMPa.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelRfbtnMPa.AutoSize = true;
-            this.labelRfbtnMPa.Location = new System.Drawing.Point(570, 134);
+            this.labelRfbtnMPa.Location = new System.Drawing.Point(569, 134);
             this.labelRfbtnMPa.Name = "labelRfbtnMPa";
             this.labelRfbtnMPa.Size = new System.Drawing.Size(30, 13);
             this.labelRfbtnMPa.TabIndex = 20;
@@ -948,7 +948,7 @@
             // 
             this.label10.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(20, 93);
+            this.label10.Location = new System.Drawing.Point(19, 93);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(306, 13);
             this.label10.TabIndex = 4;
@@ -958,7 +958,7 @@
             // 
             this.label23.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(12, 134);
+            this.label23.Location = new System.Drawing.Point(11, 134);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(314, 13);
             this.label23.TabIndex = 13;
@@ -968,7 +968,7 @@
             // 
             this.labelRfbt2nDescr.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelRfbt2nDescr.AutoSize = true;
-            this.labelRfbt2nDescr.Location = new System.Drawing.Point(61, 47);
+            this.labelRfbt2nDescr.Location = new System.Drawing.Point(60, 47);
             this.labelRfbt2nDescr.Name = "labelRfbt2nDescr";
             this.labelRfbt2nDescr.Size = new System.Drawing.Size(265, 26);
             this.labelRfbt2nDescr.TabIndex = 14;
@@ -978,7 +978,7 @@
             // 
             this.labelRfbt3nDescr.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelRfbt3nDescr.AutoSize = true;
-            this.labelRfbt3nDescr.Location = new System.Drawing.Point(61, 7);
+            this.labelRfbt3nDescr.Location = new System.Drawing.Point(60, 7);
             this.labelRfbt3nDescr.Name = "labelRfbt3nDescr";
             this.labelRfbt3nDescr.Size = new System.Drawing.Size(265, 26);
             this.labelRfbt3nDescr.TabIndex = 5;
@@ -990,7 +990,7 @@
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 43.07692F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 56.92308F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 38F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 380F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 381F));
             this.tableLayoutPanel5.Controls.Add(this.comboBetonType, 1, 0);
             this.tableLayoutPanel5.Controls.Add(this.label21, 2, 0);
             this.tableLayoutPanel5.Controls.Add(this.cmbFib_i, 3, 0);
@@ -1023,7 +1023,7 @@
             // 
             this.label21.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(252, 10);
+            this.label21.Location = new System.Drawing.Point(251, 10);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(18, 13);
             this.label21.TabIndex = 5;
@@ -1040,7 +1040,7 @@
             "c",
             "d",
             "e"});
-            this.cmbFib_i.Location = new System.Drawing.Point(276, 6);
+            this.cmbFib_i.Location = new System.Drawing.Point(275, 6);
             this.cmbFib_i.Name = "cmbFib_i";
             this.cmbFib_i.Size = new System.Drawing.Size(112, 21);
             this.cmbFib_i.TabIndex = 6;
@@ -1381,7 +1381,7 @@
             this.tableLayoutPanel7.ColumnCount = 3;
             this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30.45455F));
             this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 69.54546F));
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 323F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 325F));
             this.tableLayoutPanel7.Controls.Add(this.btnFactors, 0, 2);
             this.tableLayoutPanel7.Controls.Add(this.labelEffortSigns, 0, 0);
             this.tableLayoutPanel7.Controls.Add(this.picEffortsSign, 0, 1);
@@ -1442,50 +1442,50 @@
             this.gridEfforts.GridColor = System.Drawing.SystemColors.ControlDarkDark;
             this.gridEfforts.Location = new System.Drawing.Point(200, 31);
             this.gridEfforts.Name = "gridEfforts";
-            this.gridEfforts.Size = new System.Drawing.Size(441, 187);
+            this.gridEfforts.Size = new System.Drawing.Size(439, 187);
             this.gridEfforts.TabIndex = 2;
             // 
             // Mx
             // 
-            dataGridViewCellStyle7.Format = "N2";
-            dataGridViewCellStyle7.NullValue = "0";
-            this.Mx.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle1.Format = "N2";
+            dataGridViewCellStyle1.NullValue = "0";
+            this.Mx.DefaultCellStyle = dataGridViewCellStyle1;
             this.Mx.HeaderText = "Mx, кг*см";
             this.Mx.Name = "Mx";
             this.Mx.ToolTipText = "Момент относительно оси X";
             // 
             // My
             // 
-            dataGridViewCellStyle8.Format = "N2";
-            dataGridViewCellStyle8.NullValue = "0";
-            this.My.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle2.Format = "N2";
+            dataGridViewCellStyle2.NullValue = "0";
+            this.My.DefaultCellStyle = dataGridViewCellStyle2;
             this.My.HeaderText = "My, кг*см";
             this.My.Name = "My";
             this.My.ToolTipText = "Момент отн оси Y";
             // 
             // N
             // 
-            dataGridViewCellStyle9.Format = "N2";
-            dataGridViewCellStyle9.NullValue = "0";
-            this.N.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle3.Format = "N2";
+            dataGridViewCellStyle3.NullValue = "0";
+            this.N.DefaultCellStyle = dataGridViewCellStyle3;
             this.N.HeaderText = "N, кг";
             this.N.Name = "N";
             this.N.ToolTipText = "Продольная сила";
             // 
             // Q
             // 
-            dataGridViewCellStyle10.Format = "N2";
-            dataGridViewCellStyle10.NullValue = "0";
-            this.Q.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle4.Format = "N2";
+            dataGridViewCellStyle4.NullValue = "0";
+            this.Q.DefaultCellStyle = dataGridViewCellStyle4;
             this.Q.HeaderText = "Qx, кг";
             this.Q.Name = "Q";
             this.Q.ToolTipText = "Поперечная сила";
             // 
             // Ml
             // 
-            dataGridViewCellStyle11.Format = "N2";
-            dataGridViewCellStyle11.NullValue = "0";
-            this.Ml.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle5.Format = "N2";
+            dataGridViewCellStyle5.NullValue = "0";
+            this.Ml.DefaultCellStyle = dataGridViewCellStyle5;
             this.Ml.HeaderText = "Ml";
             this.Ml.Name = "Ml";
             this.Ml.ToolTipText = "Момент от действия постянных и длительных нагрузок нагрузок";
@@ -1493,9 +1493,9 @@
             // 
             // eN
             // 
-            dataGridViewCellStyle12.Format = "N2";
-            dataGridViewCellStyle12.NullValue = "0";
-            this.eN.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle6.Format = "N2";
+            dataGridViewCellStyle6.NullValue = "0";
+            this.eN.DefaultCellStyle = dataGridViewCellStyle6;
             this.eN.HeaderText = "eN";
             this.eN.Name = "eN";
             this.eN.ToolTipText = "Эксцентриситет приложения силы";
@@ -1534,14 +1534,14 @@
             this.tableLayoutPanel10.Controls.Add(this.num_eN, 1, 1);
             this.tableLayoutPanel10.Controls.Add(this.num_Ml1_M1, 1, 2);
             this.tableLayoutPanel10.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel10.Location = new System.Drawing.Point(648, 31);
+            this.tableLayoutPanel10.Location = new System.Drawing.Point(646, 31);
             this.tableLayoutPanel10.Name = "tableLayoutPanel10";
             this.tableLayoutPanel10.RowCount = 4;
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel10.Size = new System.Drawing.Size(318, 187);
+            this.tableLayoutPanel10.Size = new System.Drawing.Size(320, 187);
             this.tableLayoutPanel10.TabIndex = 6;
             // 
             // labelRandomEccentricity
@@ -1647,7 +1647,7 @@
             this.tableLayoutPanelRebar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 58.98618F));
             this.tableLayoutPanelRebar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 59F));
             this.tableLayoutPanelRebar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 111F));
-            this.tableLayoutPanelRebar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 154F));
+            this.tableLayoutPanelRebar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 156F));
             this.tableLayoutPanelRebar.Controls.Add(this.labelRebarClass, 0, 0);
             this.tableLayoutPanelRebar.Controls.Add(this.cmbRebarClass, 1, 0);
             this.tableLayoutPanelRebar.Controls.Add(this.labelRs, 0, 1);
@@ -1713,9 +1713,9 @@
             "A800",
             "A1000",
             "B500"});
-            this.cmbRebarClass.Location = new System.Drawing.Point(84, 10);
+            this.cmbRebarClass.Location = new System.Drawing.Point(83, 10);
             this.cmbRebarClass.Name = "cmbRebarClass";
-            this.cmbRebarClass.Size = new System.Drawing.Size(107, 21);
+            this.cmbRebarClass.Size = new System.Drawing.Size(106, 21);
             this.cmbRebarClass.TabIndex = 1;
             this.cmbRebarClass.SelectedIndexChanged += new System.EventHandler(this.cmbRebarClass_SelectedIndexChanged);
             // 
@@ -1733,14 +1733,14 @@
             // 
             this.numRs.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.numRs.DecimalPlaces = 2;
-            this.numRs.Location = new System.Drawing.Point(84, 50);
+            this.numRs.Location = new System.Drawing.Point(83, 50);
             this.numRs.Maximum = new decimal(new int[] {
             -727379968,
             232,
             0,
             0});
             this.numRs.Name = "numRs";
-            this.numRs.Size = new System.Drawing.Size(107, 20);
+            this.numRs.Size = new System.Drawing.Size(106, 20);
             this.numRs.TabIndex = 3;
             this.numRs.ValueChanged += new System.EventHandler(this.numRs_ValueChanged);
             // 
@@ -1749,7 +1749,7 @@
             this.labelRsMPa.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelRsMPa.AutoSize = true;
             this.labelRsMPa.BackColor = System.Drawing.Color.Transparent;
-            this.labelRsMPa.Location = new System.Drawing.Point(221, 54);
+            this.labelRsMPa.Location = new System.Drawing.Point(219, 54);
             this.labelRsMPa.Name = "labelRsMPa";
             this.labelRsMPa.Size = new System.Drawing.Size(30, 13);
             this.labelRsMPa.TabIndex = 8;
@@ -1769,23 +1769,23 @@
             // 
             this.numEsw.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.numEsw.DecimalPlaces = 2;
-            this.numEsw.Location = new System.Drawing.Point(84, 250);
+            this.numEsw.Location = new System.Drawing.Point(83, 250);
             this.numEsw.Maximum = new decimal(new int[] {
             -727379968,
             232,
             0,
             0});
             this.numEsw.Name = "numEsw";
-            this.numEsw.Size = new System.Drawing.Size(107, 20);
+            this.numEsw.Size = new System.Drawing.Size(106, 20);
             this.numEsw.TabIndex = 13;
             // 
             // labelRsw
             // 
             this.labelRsw.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelRsw.AutoSize = true;
-            this.labelRsw.Location = new System.Drawing.Point(4, 214);
+            this.labelRsw.Location = new System.Drawing.Point(4, 207);
             this.labelRsw.Name = "labelRsw";
-            this.labelRsw.Size = new System.Drawing.Size(73, 13);
+            this.labelRsw.Size = new System.Drawing.Size(43, 26);
             this.labelRsw.TabIndex = 7;
             this.labelRsw.Text = "R sw, кг/см2";
             // 
@@ -1793,14 +1793,14 @@
             // 
             this.numRsw.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.numRsw.DecimalPlaces = 2;
-            this.numRsw.Location = new System.Drawing.Point(84, 210);
+            this.numRsw.Location = new System.Drawing.Point(83, 210);
             this.numRsw.Maximum = new decimal(new int[] {
             1215752192,
             23,
             0,
             0});
             this.numRsw.Name = "numRsw";
-            this.numRsw.Size = new System.Drawing.Size(107, 20);
+            this.numRsw.Size = new System.Drawing.Size(106, 20);
             this.numRsw.TabIndex = 6;
             this.numRsw.ValueChanged += new System.EventHandler(this.numRsw_ValueChanged);
             // 
@@ -1809,7 +1809,7 @@
             this.labelEswMPa.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelEswMPa.AutoSize = true;
             this.labelEswMPa.BackColor = System.Drawing.Color.Transparent;
-            this.labelEswMPa.Location = new System.Drawing.Point(221, 254);
+            this.labelEswMPa.Location = new System.Drawing.Point(219, 254);
             this.labelEswMPa.Name = "labelEswMPa";
             this.labelEswMPa.Size = new System.Drawing.Size(30, 13);
             this.labelEswMPa.TabIndex = 15;
@@ -1820,7 +1820,7 @@
             this.labelRswMPa.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelRswMPa.AutoSize = true;
             this.labelRswMPa.BackColor = System.Drawing.Color.White;
-            this.labelRswMPa.Location = new System.Drawing.Point(221, 214);
+            this.labelRswMPa.Location = new System.Drawing.Point(219, 214);
             this.labelRswMPa.Name = "labelRswMPa";
             this.labelRswMPa.Size = new System.Drawing.Size(30, 13);
             this.labelRswMPa.TabIndex = 9;
@@ -1849,9 +1849,9 @@
             "A800",
             "A1000",
             "B500"});
-            this.cmbTRebarClass.Location = new System.Drawing.Point(84, 170);
+            this.cmbTRebarClass.Location = new System.Drawing.Point(83, 170);
             this.cmbTRebarClass.Name = "cmbTRebarClass";
-            this.cmbTRebarClass.Size = new System.Drawing.Size(107, 21);
+            this.cmbTRebarClass.Size = new System.Drawing.Size(106, 21);
             this.cmbTRebarClass.TabIndex = 5;
             this.cmbTRebarClass.SelectedIndexChanged += new System.EventHandler(this.cmbTRebarClass_SelectedIndexChanged);
             // 
@@ -1861,7 +1861,7 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(4, 134);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(73, 13);
+            this.label5.Size = new System.Drawing.Size(72, 13);
             this.label5.TabIndex = 10;
             this.label5.Text = "E s, кг/см2";
             // 
@@ -1869,14 +1869,14 @@
             // 
             this.numEs.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.numEs.DecimalPlaces = 2;
-            this.numEs.Location = new System.Drawing.Point(84, 130);
+            this.numEs.Location = new System.Drawing.Point(83, 130);
             this.numEs.Maximum = new decimal(new int[] {
             1000000000,
             0,
             0,
             0});
             this.numEs.Name = "numEs";
-            this.numEs.Size = new System.Drawing.Size(107, 20);
+            this.numEs.Size = new System.Drawing.Size(106, 20);
             this.numEs.TabIndex = 12;
             this.numEs.Value = new decimal(new int[] {
             2039431,
@@ -1890,7 +1890,7 @@
             this.labelEsMPa.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelEsMPa.AutoSize = true;
             this.labelEsMPa.BackColor = System.Drawing.Color.Transparent;
-            this.labelEsMPa.Location = new System.Drawing.Point(221, 134);
+            this.labelEsMPa.Location = new System.Drawing.Point(219, 134);
             this.labelEsMPa.Name = "labelEsMPa";
             this.labelEsMPa.Size = new System.Drawing.Size(30, 13);
             this.labelEsMPa.TabIndex = 14;
@@ -1900,14 +1900,14 @@
             // 
             this.numRsc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.numRsc.DecimalPlaces = 2;
-            this.numRsc.Location = new System.Drawing.Point(84, 90);
+            this.numRsc.Location = new System.Drawing.Point(83, 90);
             this.numRsc.Maximum = new decimal(new int[] {
             1215752192,
             23,
             0,
             0});
             this.numRsc.Name = "numRsc";
-            this.numRsc.Size = new System.Drawing.Size(107, 20);
+            this.numRsc.Size = new System.Drawing.Size(106, 20);
             this.numRsc.TabIndex = 17;
             this.numRsc.ValueChanged += new System.EventHandler(this.numRsc_ValueChanged);
             // 
@@ -1925,7 +1925,7 @@
             // 
             this.labelRsсMPa.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelRsсMPa.AutoSize = true;
-            this.labelRsсMPa.Location = new System.Drawing.Point(221, 94);
+            this.labelRsсMPa.Location = new System.Drawing.Point(219, 94);
             this.labelRsсMPa.Name = "labelRsсMPa";
             this.labelRsсMPa.Size = new System.Drawing.Size(30, 13);
             this.labelRsсMPa.TabIndex = 18;
@@ -1935,7 +1935,7 @@
             // 
             this.labelRsn.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelRsn.AutoSize = true;
-            this.labelRsn.Location = new System.Drawing.Point(258, 54);
+            this.labelRsn.Location = new System.Drawing.Point(256, 54);
             this.labelRsn.Name = "labelRsn";
             this.labelRsn.Size = new System.Drawing.Size(74, 13);
             this.labelRsn.TabIndex = 19;
@@ -1945,7 +1945,7 @@
             // 
             this.labelRsсn.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelRsсn.AutoSize = true;
-            this.labelRsсn.Location = new System.Drawing.Point(258, 94);
+            this.labelRsсn.Location = new System.Drawing.Point(256, 94);
             this.labelRsсn.Name = "labelRsсn";
             this.labelRsсn.Size = new System.Drawing.Size(83, 13);
             this.labelRsсn.TabIndex = 20;
@@ -1955,7 +1955,7 @@
             // 
             this.numRsn.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numRsn.DecimalPlaces = 2;
-            this.numRsn.Location = new System.Drawing.Point(370, 50);
+            this.numRsn.Location = new System.Drawing.Point(368, 50);
             this.numRsn.Maximum = new decimal(new int[] {
             -727379968,
             232,
@@ -1969,7 +1969,7 @@
             // 
             this.numRscn.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numRscn.DecimalPlaces = 2;
-            this.numRscn.Location = new System.Drawing.Point(370, 90);
+            this.numRscn.Location = new System.Drawing.Point(368, 90);
             this.numRscn.Maximum = new decimal(new int[] {
             1215752192,
             23,
@@ -1983,7 +1983,7 @@
             // 
             this.label26.AutoSize = true;
             this.label26.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label26.Location = new System.Drawing.Point(258, 1);
+            this.label26.Location = new System.Drawing.Point(256, 1);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(105, 39);
             this.label26.TabIndex = 23;
@@ -2003,14 +2003,14 @@
             // 
             this.num_s_w.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.num_s_w.DecimalPlaces = 2;
-            this.num_s_w.Location = new System.Drawing.Point(84, 288);
+            this.num_s_w.Location = new System.Drawing.Point(83, 288);
             this.num_s_w.Maximum = new decimal(new int[] {
             100000,
             0,
             0,
             0});
             this.num_s_w.Name = "num_s_w";
-            this.num_s_w.Size = new System.Drawing.Size(107, 20);
+            this.num_s_w.Size = new System.Drawing.Size(106, 20);
             this.num_s_w.TabIndex = 25;
             // 
             // label20
@@ -2992,19 +2992,6 @@
             this.btnMesh.UseVisualStyleBackColor = true;
             this.btnMesh.Click += new System.EventHandler(this.btnMesh_Click);
             // 
-            // numMeshNX
-            // 
-            this.numMeshNX.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.numMeshNX.Location = new System.Drawing.Point(120, 5);
-            this.numMeshNX.Name = "numMeshNX";
-            this.numMeshNX.Size = new System.Drawing.Size(92, 20);
-            this.numMeshNX.TabIndex = 0;
-            this.numMeshNX.Value = new decimal(new int[] {
-            20,
-            0,
-            0,
-            0});
-            // 
             // btnSection
             // 
             this.btnSection.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -3016,16 +3003,6 @@
             this.btnSection.TabIndex = 11;
             this.btnSection.UseVisualStyleBackColor = true;
             this.btnSection.Click += new System.EventHandler(this.btnSection_Click);
-            // 
-            // labelMeshNumX
-            // 
-            this.labelMeshNumX.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.labelMeshNumX.AutoSize = true;
-            this.labelMeshNumX.Location = new System.Drawing.Point(10, 9);
-            this.labelMeshNumX.Name = "labelMeshNumX";
-            this.labelMeshNumX.Size = new System.Drawing.Size(103, 13);
-            this.labelMeshNumX.TabIndex = 1;
-            this.labelMeshNumX.Text = "Размер сетки по X";
             // 
             // numTriAngle
             // 
@@ -3097,6 +3074,52 @@
             this.comboMosaic.Size = new System.Drawing.Size(109, 21);
             this.comboMosaic.TabIndex = 16;
             this.comboMosaic.Text = "Мозаика";
+            // 
+            // labelMeshNumX
+            // 
+            this.labelMeshNumX.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.labelMeshNumX.AutoSize = true;
+            this.labelMeshNumX.Location = new System.Drawing.Point(10, 9);
+            this.labelMeshNumX.Name = "labelMeshNumX";
+            this.labelMeshNumX.Size = new System.Drawing.Size(103, 13);
+            this.labelMeshNumX.TabIndex = 1;
+            this.labelMeshNumX.Text = "Размер сетки по X";
+            // 
+            // numMeshNX
+            // 
+            this.numMeshNX.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.numMeshNX.Location = new System.Drawing.Point(120, 5);
+            this.numMeshNX.Name = "numMeshNX";
+            this.numMeshNX.Size = new System.Drawing.Size(92, 20);
+            this.numMeshNX.TabIndex = 0;
+            this.numMeshNX.Value = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
+            // 
+            // labelMeshNumY
+            // 
+            this.labelMeshNumY.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.labelMeshNumY.AutoSize = true;
+            this.labelMeshNumY.Location = new System.Drawing.Point(10, 47);
+            this.labelMeshNumY.Name = "labelMeshNumY";
+            this.labelMeshNumY.Size = new System.Drawing.Size(103, 13);
+            this.labelMeshNumY.TabIndex = 17;
+            this.labelMeshNumY.Text = "Размер сетки по Y";
+            // 
+            // numMeshNY
+            // 
+            this.numMeshNY.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.numMeshNY.Location = new System.Drawing.Point(120, 43);
+            this.numMeshNY.Name = "numMeshNY";
+            this.numMeshNY.Size = new System.Drawing.Size(92, 20);
+            this.numMeshNY.TabIndex = 18;
+            this.numMeshNY.Value = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
             // 
             // tabPBeam
             // 
@@ -3216,12 +3239,11 @@
             // 
             // btnSaveParams
             // 
-            this.btnSaveParams.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSaveParams.ImageKey = "Transmute.png";
             this.btnSaveParams.ImageList = this.imageList;
             this.btnSaveParams.Location = new System.Drawing.Point(283, 3);
             this.btnSaveParams.Name = "btnSaveParams";
-            this.btnSaveParams.Size = new System.Drawing.Size(26, 32);
+            this.btnSaveParams.Size = new System.Drawing.Size(50, 50);
             this.btnSaveParams.TabIndex = 5;
             this.btnSaveParams.UseCompatibleTextRendering = true;
             this.btnSaveParams.UseVisualStyleBackColor = true;
@@ -3250,29 +3272,6 @@
             this.btnLSection.TabIndex = 9;
             this.btnLSection.UseVisualStyleBackColor = true;
             this.btnLSection.Click += new System.EventHandler(this.btn_LSection_Click);
-            // 
-            // labelMeshNumY
-            // 
-            this.labelMeshNumY.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.labelMeshNumY.AutoSize = true;
-            this.labelMeshNumY.Location = new System.Drawing.Point(10, 47);
-            this.labelMeshNumY.Name = "labelMeshNumY";
-            this.labelMeshNumY.Size = new System.Drawing.Size(103, 13);
-            this.labelMeshNumY.TabIndex = 17;
-            this.labelMeshNumY.Text = "Размер сетки по Y";
-            // 
-            // numMeshNY
-            // 
-            this.numMeshNY.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.numMeshNY.Location = new System.Drawing.Point(120, 43);
-            this.numMeshNY.Name = "numMeshNY";
-            this.numMeshNY.Size = new System.Drawing.Size(92, 20);
-            this.numMeshNY.TabIndex = 18;
-            this.numMeshNY.Value = new decimal(new int[] {
-            20,
-            0,
-            0,
-            0});
             // 
             // BSFiberMain
             // 
@@ -3371,14 +3370,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.numEps_fbt2)).EndInit();
             this.tableLayoutMesh.ResumeLayout(false);
             this.tableLayoutMesh.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numMeshNX)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numTriAngle)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numMeshNX)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numMeshNY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridSection)).EndInit();
             this.panelCalc.ResumeLayout(false);
             this.panelCalc.PerformLayout();
             this.flowLayoutPanelArea.ResumeLayout(false);
             this.flowLayoutBtns.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.numMeshNY)).EndInit();
             this.ResumeLayout(false);
 
         }

@@ -74,6 +74,34 @@ namespace BSFiberConcrete.Lib
             }
         }
 
+        /// <summary>
+        ///  Сохранить введенные пользователем значения с формы
+        /// </summary>
+        /// <param name="_prms"></param>
+        public void UpdateFormParams(FormParams _prms)
+        {
+
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    cnn.Open();
+                    using (var tr = cnn.BeginTransaction())
+                    {                        
+                        int cnt = cnn.Execute("update LocalPunch set Length=@Length where ID=@ID ", _prms , tr);
+                        
+                        tr.Commit();
+                    }
+                }
+            }
+            catch (Exception _e)
+            {
+                MessageBox.Show(_e.Message);
+            }
+        }
+
+
+
 
         /// <summary>
         /// Наименования типов бетона

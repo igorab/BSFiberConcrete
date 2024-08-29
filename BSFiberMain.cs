@@ -128,6 +128,20 @@ namespace BSFiberConcrete
 
             tbLength.Text = Convert.ToString(prms.Length);
             cmbEffectiveLengthFactor.Text = Convert.ToString(prms.LengthCoef);
+
+            comboBetonType.Text =  prms.BetonType;
+            cmbBetonClass.Text = prms.Bft3n;
+            cmbBfn.Text = prms.Bfn;
+            cmbBftn.Text = prms.Bftn;
+            numE_beton.Text = prms.Eb;
+            numE_fiber.Text = prms.Efbt;
+            cmbRebarClass.Text = prms.Rs;
+            cmbTRebarClass.Text = prms.Rsw;
+
+            numAs.Value = (decimal)prms.Area_s;
+            numAs1.Value = (decimal)prms.Area1_s;
+            num_a.Value = (decimal)prms.a_s;
+            num_a1.Value = (decimal)prms.a1_s;       
         }
 
 

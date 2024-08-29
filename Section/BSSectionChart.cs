@@ -240,12 +240,7 @@ namespace BSFiberConcrete.Section
                 InitDataSource();
 
                 DrawFromDatasource();
-                /*
-                chart.ChartAreas[0].Axes[0].Minimum = -100;
-                chart.ChartAreas[0].Axes[0].Maximum = 100;
-                chart.ChartAreas[0].Axes[1].Minimum = -100;
-                chart.ChartAreas[0].Axes[1].Maximum = 100;
-                */
+               
             }
             catch (Exception _e)
             {
@@ -341,6 +336,11 @@ namespace BSFiberConcrete.Section
         private void labelRods_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Задайте привязку арматуры - укажите координаты стержней");
+        }
+
+        private void bSRodDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }
