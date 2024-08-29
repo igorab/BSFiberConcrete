@@ -72,7 +72,7 @@ namespace BSFiberConcrete
         public double Rbtn { get; set; }
 
         /// <summary>
-        /// Модуль упругости
+        /// Модуль упругости 
         /// </summary>
         public  double Eb { get; set; }
         /// <summary>
@@ -344,10 +344,59 @@ namespace BSFiberConcrete
     public class RFiber
     {
         public int ID { get; set; }
+        public string Name { get; set; }
         public double Rfser { get; set; }
         public double Rf { get; set; }
         public double G1 { get; set; }
         public double G2 { get; set; }
+        public double Ef { get; set; }
+        /// <summary>
+        /// Коэф. Анкеровки фибры
+        /// </summary>
+        public double Hita_f { get; set; }
+        /// <summary>
+        /// Коэф. условной работы в зависимсоти от материала фибры
+        /// </summary>
+        public double Gamma_fb1 { get; set; }
+        /// <summary>
+        /// номер из таблицы FiberGeometry, которому соответсвует список стандартных значений диаметров для данного типа фибры
+        /// </summary>
+        public int IndexForGeometry { get; set; }
+    }
+
+
+
+    public class FiberGeometry
+    {
+        public int ID { get; set; }
+        /// <summary>
+        /// номер группы строк, соответсвующий значению из таблицы RFiber
+        /// </summary>
+        public int GeometryIndex { get; set; }
+        /// <summary>
+        /// Площадь сечеия фибры
+        /// </summary>
+        public double Square { get; set; }
+        /// <summary>
+        /// Диаметр фибры
+        /// </summary>
+        public double Diameter{ get; set; }
+        /// <summary>
+        /// номер из таблицы FiberLength, которому соответсвует список стандартных значений длины для данного диаметра
+        /// </summary>
+        public int IndexForLength { get; set; }
+    }
+
+
+
+    public class FiberLength2
+    {
+        public int ID { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int LenghtIndex { get; set; }
+        public double Length { get; set; }
     }
 
 
@@ -365,7 +414,25 @@ namespace BSFiberConcrete
         public double I { get; set; }
     }
 
-    
+
+    /// <summary>
+    /// структура описывает коэффициенты Kor и Kn для фибры
+    /// </summary>
+    public class Fiber_K
+    {
+        public int ID { get; set; }
+        public double HL { get; set; }
+        public double BL_05 { get; set; }
+        public double BL_1 { get; set; }
+        public double BL_2 { get; set; }
+        public double BL_3 { get; set; }
+        public double BL_5 { get; set; }
+        public double BL_10 { get; set; }
+        public double BL_20 { get; set; }
+        public double BL_21 { get; set; }
+    }
+
+
     /// <summary>
     /// Приложение Б. График aF(F)
     /// </summary>

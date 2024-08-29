@@ -35,6 +35,7 @@ namespace BSFiberConcrete.BSRFib
         public List<Deflection_f_aF> D_f_aF { get; internal set; }
         public List<FibLab> FibLab { get; internal set; }
 
+
         public string CreateReport(int _fileIdx = 0)
         {
             string pathToHtmlFile = "";
@@ -80,14 +81,19 @@ namespace BSFiberConcrete.BSRFib
             w.WriteLine($"<H2>{SampleDescr}</H2>");
             w.WriteLine($"<H3>{SampleName}</H3>");
 
-            w.WriteLine( @"<style>
+            w.WriteLine(@"<style>
                td{
-                    width: 80px;
-                    height: 60px;
                     border: solid 1px silver;
-                    text-align: center;
+                    text-align: left;
                 }
                 </style>");
+
+            //w.WriteLine(@"<style>
+            //   td{
+            //        border: solid 1px silver;
+            //        text-align: center;
+            //    }
+            //    </style>");
 
             w.WriteLine("</head>");
             w.WriteLine("<body>");
