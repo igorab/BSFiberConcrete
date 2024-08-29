@@ -305,6 +305,39 @@ namespace BSFiberConcrete.Lib
         }
 
 
+        public static List<Fiber_K> LoadFiber_Kor()
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    var output = cnn.Query<Fiber_K>("select * from Fiber_Kor", new DynamicParameters());
+                    return output.ToList();
+                }
+            }
+            catch
+            {
+                return new List<Fiber_K>();
+            }
+        }
+
+
+        public static List<Fiber_K> LoadFiber_Kn()
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    var output = cnn.Query<Fiber_K>("select * from Fiber_Kn", new DynamicParameters());
+                    return output.ToList();
+                }
+            }
+            catch
+            {
+                return new List<Fiber_K>();
+            }
+        }
+
         public static List<RFibKor> LoadRFibKor()
         {
             try

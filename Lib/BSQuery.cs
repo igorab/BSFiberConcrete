@@ -97,6 +97,61 @@ namespace BSFiberConcrete.Lib
             return rb;
         }
 
+
+        public static List<RFiber> RFiberLoad()
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    string query = $"select * from RFiber";
+                    var output = cnn.Query<RFiber>(query, new DynamicParameters());
+                    return output.ToList();
+                }
+            }
+            catch
+            {
+                return new List<RFiber>();
+            }
+        }
+
+
+        public static List<FiberGeometry> FiberGeometryLoad()
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    string query = $"select * from FiberGeometry";
+                    var output = cnn.Query<FiberGeometry>(query, new DynamicParameters());
+                    return output.ToList();
+                }
+            }
+            catch
+            {
+                return new List<FiberGeometry>();
+            }
+        }
+
+
+        public static List<FiberLength2> FiberLengthLoad()
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    string query = $"select * from FiberLength2";
+                    var output = cnn.Query<FiberLength2>(query, new DynamicParameters());
+                    return output.ToList();
+                }
+            }
+            catch
+            {
+                return new List<FiberLength2>();
+            }
+        }
+
+
         public static FaF RFaF_Find(int _Num)
         {
             FaF rb = new FaF();

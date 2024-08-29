@@ -200,6 +200,11 @@ namespace BSFiberConcrete
             // Растяжение   - "-"
             // N
 
+
+            double B = m_Fiber.B;
+
+
+
             #region Характеристики материала
             // Площадь растянутой арматуры
             double A_s;
@@ -218,8 +223,8 @@ namespace BSFiberConcrete
             double Efb;
             // Класс бетона
             //double B = 30;
-            //double Y = 1.73 - 0.005 * (B - 15);
-            double Y = 1.67;
+            double Y = 1.73 - 0.005 * (B - 15);
+            //double Y = 1.67;
             #endregion
 
             #region Геометрические характеристики сечения 
