@@ -389,7 +389,7 @@ namespace BSFiberConcrete
 
 
 
-    public class FiberLength2
+    public class FiberLength
     {
         public int ID { get; set; }
         /// <summary>

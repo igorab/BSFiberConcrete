@@ -134,20 +134,20 @@ namespace BSFiberConcrete.Lib
         }
 
 
-        public static List<FiberLength2> FiberLengthLoad()
+        public static List<FiberLength> FiberLengthLoad()
         {
             try
             {
                 using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
                 {
-                    string query = $"select * from FiberLength2";
-                    var output = cnn.Query<FiberLength2>(query, new DynamicParameters());
+                    string query = $"select * from FiberLength";
+                    var output = cnn.Query<FiberLength>(query, new DynamicParameters());
                     return output.ToList();
                 }
             }
             catch
             {
-                return new List<FiberLength2>();
+                return new List<FiberLength>();
             }
         }
 

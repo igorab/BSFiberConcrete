@@ -23,7 +23,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
             _model = model;
 
             InitializeComponent();
-
+            
             // устанавливаем привязку полей
 
             lab_Hf.DataBindings.Add(new Binding("Text", _model.Fiber, "Hita_f", true, DataSourceUpdateMode.OnPropertyChanged));
@@ -47,13 +47,13 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
             lab_C_max.DataBindings.Add(new Binding("Text", _model, "C_max", true, DataSourceUpdateMode.OnPropertyChanged));
             lab_l_f_min.DataBindings.Add(new Binding("Text", _model, "l_f_min", true, DataSourceUpdateMode.OnPropertyChanged));
             lab_Rfbt3.DataBindings.Add(new Binding("Text", _model, "R_fbt3", true, DataSourceUpdateMode.OnPropertyChanged));
+            lab_Rfbt3_n.DataBindings.Add(new Binding("Text", _model, "R_fbt3_n", true, DataSourceUpdateMode.OnPropertyChanged));
             lab_Rfb.DataBindings.Add(new Binding("Text", _model, "R_fb", true, DataSourceUpdateMode.OnPropertyChanged));
             lab_mu_fa.DataBindings.Add(new Binding("Text", _model, "mu_fa", true, DataSourceUpdateMode.OnPropertyChanged));
             lab_mu_1_fa.DataBindings.Add(new Binding("Text", _model, "mu_1_fa", true, DataSourceUpdateMode.OnPropertyChanged));
             lab_Efb.DataBindings.Add(new Binding("Text", _model, "E_fb", true, DataSourceUpdateMode.OnPropertyChanged));
             lab_Gfb.DataBindings.Add(new Binding("Text", _model, "G_fb", true, DataSourceUpdateMode.OnPropertyChanged));
             txtb4Message.DataBindings.Add(new Binding("Text", _model, "message", true, DataSourceUpdateMode.OnPropertyChanged));
-
         }
 
 

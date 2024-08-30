@@ -20,7 +20,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         /// </summary>
         private List<RFiber> _DataTypeFiberMaterial;
         private List<FiberGeometry> _DataFiberGeometry;
-        private List<FiberLength2> _DataFiberLength;
+        private List<FiberLength> _DataFiberLength;
 
         /// <summary>
         /// Список геометрий, соответсвующий указанному материалу фубиы
@@ -29,7 +29,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         /// <summary>
         /// Список длин, соответсвующий материалу и диаметру
         /// </summary>
-        private List<FiberLength2> _selectedFiberLength;
+        private List<FiberLength> _selectedFiberLength;
 
         /// <summary>
         /// Номер Фибры из таблицы _DataTypeFiberMaterial
@@ -279,7 +279,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
             _selectedFiberLength = _DataFiberLength.Where(p => p.LenghtIndex == lengthIndex).ToList();
             if (_selectedFiberLength == null)
             {
-                _selectedFiberLength = new List<FiberLength2> { };
+                _selectedFiberLength = new List<FiberLength> { };
             }
         }
 
@@ -331,7 +331,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         public List<string> GetFiberLengths()
         {
             List<string> fiberLengths = new List<string>();
-            foreach (FiberLength2 fiberL in _selectedFiberLength)
+            foreach (FiberLength fiberL in _selectedFiberLength)
             {
                 fiberLengths.Add(fiberL.Length.ToString());
             }

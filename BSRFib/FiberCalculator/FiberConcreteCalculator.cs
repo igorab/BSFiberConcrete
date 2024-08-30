@@ -12,6 +12,7 @@ using System.Windows.Forms.VisualStyles;
 using System.Xml.Linq;
 using BSFiberConcrete.Lib;
 using MathNet.Numerics;
+using ScottPlot.Hatches;
 
 namespace BSFiberConcrete.BSRFib.FiberCalculator
 {
@@ -41,13 +42,18 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         private double _mu_fv;
 
 
+        #region Private Fields Fiber
 
-        #region Private Fields for Bindings
+        #endregion
+
+
+        #region Private Fields Calculation 
         private double _l_f_an;
         private double _mu_fv_min;
         private double _C_max;
         private double _l_f_min;
         private double _R_fbt3;
+        private double _R_fbt3_n;
         private double _R_fb;
         private double _mu_fa;
         private double _mu_1_fa;
@@ -57,7 +63,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
 
         #endregion
 
-        #region Properties
+        #region Properties Calculation
 
         public double l_f_an
         {
@@ -92,6 +98,15 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
             private set
             {
                 _l_f_min = value;
+                OnPropertyChanged();
+            }
+        }
+        public double R_fbt3_n
+        {
+            get => _R_fbt3_n;
+            private set
+            {
+                _R_fbt3_n = value;
                 OnPropertyChanged();
             }
         }
@@ -160,6 +175,9 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
             }
         }
 
+        #endregion
+
+        #region Properties Fiber
         #endregion
 
 
@@ -257,13 +275,12 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         /// </summary>
         public void Calculate()
         {
-            
-            double S;
+
+            double d_f_red;
             if (Fiber.Diameter != 0)
-                S = Math.PI * Math.Pow(Fiber.Diameter,2) / 4;
+                d_f_red = Fiber.Diameter;
             else
-                S = Fiber.Square;
-            double d_f_red = 1.13 * Math.Sqrt(S);
+                d_f_red = 1.13 * Math.Sqrt(Fiber.Square);
 
             double mu_fv;
             // Коэф для расчета R_fbt3
@@ -364,6 +381,10 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
                     * mu_fv * Fiber.Length / (8 * Fiber.Hita_f * d_f_red) + 0.08 - 0.5 * mu_fv);
             }
 
+            R_fbt3_n = R_fbt3 * 1.3;
+
+
+
             double L = Math.Pow(FiberCoef.Kn, 2) * mu_fv * Fiber.Rf / Beton.Rb;
             fi_f = (5 + L) / (1 + 4.5 * L);
             R_fb = Beton.Rb + (Math.Pow(FiberCoef.Kn, 2) * fi_f * mu_fv * Fiber.Rf);
@@ -399,8 +420,9 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
                     ["Минимальное значение коэф. фибрового армирования μfv_min "] = Convert.ToString(Math.Round(mu_fv_min,4)),
                     ["Максимальный размер зерен крупного заполнителя C_max [мм]"] = Convert.ToString(Math.Round(C_max,3)),
                     ["Минимальное значение длины фибры l_f_min [мм]"] = Convert.ToString(Math.Round(l_f_min,3)),
-                    ["Остаточное сопротивление растяжение Rfbt3 [МПа]"] = Convert.ToString(Math.Round(R_fbt3,6)),
-                    ["Сопротивление сжатия Rfb [МПа]"] = Convert.ToString(Math.Round(R_fb,6)),
+                    ["Расчетное остаточное сопротивление растяжение Rfbt3 [МПа]"] = Convert.ToString(Math.Round(R_fbt3,6)),
+                    ["Нормативное остаточное сопротивление растяжение Rfbt3_n [МПа]"] = Convert.ToString(Math.Round(R_fbt3_n, 6)),
+                    ["Расчетное сопротивление сжатия Rfb [МПа]"] = Convert.ToString(Math.Round(R_fb,6)),
                     ["Коэф. фибрового армирования по площади (растянутой зоны) μ_fa"] = Convert.ToString(Math.Round(mu_fa,4)),
                     ["Коэф. фибрового армирования по площади (сжатой зоны) μ'_fa"] = Convert.ToString(Math.Round(mu_1_fa, 4)),
                     ["Модуль упругости Efb [МПа]"] = Convert.ToString(Math.Round(E_fb,6)),
