@@ -114,7 +114,7 @@ namespace BSFiberConcrete.CalcGroup2
         /// <param name="_bD"></param>
         /// <param name="_bX"></param>
         /// <param name="_bY"></param>
-        public void GetRods(List<double> _bD, List<double> _bX, List<double> _bY )
+        public void SetRods(List<double> _bD, List<double> _bX, List<double> _bY )
         {
             ds.Clear();
             y0s.Clear();
@@ -178,10 +178,10 @@ namespace BSFiberConcrete.CalcGroup2
         private int nz = 0; //4;
 
         // диаметры арматурных стержней
-        private List<double> ds = new List<double>() { 1.6, 1.6, 1.6, 1.6 };
+        private List<double> ds = new List<double>() { 0, 0, 0, 0 };
         // привязки арматуры
-        private List<double> y0s = new List<double>() { 5.0, 15.0, 5.0, 15.0 };
-        private List<double> z0s = new List<double>() { 5.0, 5.0, 35.0, 35.0 };
+        private List<double> y0s = new List<double>() { 0, 0, 0, 0 };
+        private List<double> z0s = new List<double>() { 0, 0, 0, 0 };
 
         // Параметры материалов
         // Бетон B25 кН/см2
@@ -216,10 +216,17 @@ namespace BSFiberConcrete.CalcGroup2
 
         private List<double> My, Mz;
 
+        // проверка сечения на усилия
         public static double Nint { get; private set; }
         public static double Myint { get; private set; }
         public static double Mzint { get; private set; }
 
+        // моменты образования трещины
+        public static double My_crc { get; private set; } 
+        public static double Mz_crc { get; private set; }
+
+        // деформация в момент образования трещины
+        public static double es_crc { get; private set; }
         #endregion
 
         // максимальное число итераций
@@ -545,6 +552,31 @@ namespace BSFiberConcrete.CalcGroup2
                     sigBS[j].Add(Diagr_FB(epS[j][l]));
                 }
 
+                // Проверка - выполняются ли условия в равновестия?
+                Nint = sigB[j].Zip(Ab, (s, A) => s * A).Sum() + sigS[j].Zip(As, (s, A) => s * A).Sum() -
+                       sigBS[j].Zip(As, (s, A) => s * A).Sum();
+
+                Myint = -(sigB[j].ZipThree(Ab, zb[j], (s, A, z) => s * A * z).Sum() + sigS[j].ZipThree(As, zs[j], (s, A, z) => s * A * z).Sum() -
+                          sigBS[j].ZipThree(As, zs[j], (s, A, z) => s * A * z).Sum());
+
+                Mzint = sigB[j].ZipThree(Ab, yb[j], (s, A, y) => s * A * y).Sum() + sigS[j].ZipThree(As, ys[j], (s, A, y) => s * A * y).Sum() -
+                        sigBS[j].ZipThree(As, ys[j], (s, A, y) => s * A * y).Sum();
+
+                // проверка на трещины
+                double epsBt = epB[j].Maximum();
+
+                if (epsBt > 0 && efbt1 >= epsBt) 
+                {
+                    if (My_crc == 0 && Mz_crc == 0)
+                    {
+                        // Трещина возникла
+                        My_crc = Myint;
+                        Mz_crc = Mzint;
+
+                        es_crc = epS[j].Maximum();
+                    }
+                }
+
                 // Вычисление погрешностей
                 double tol_ep0 = Math.Abs(ep0[j] - ep0[j-1]) ; // вычисление в серединной линии
                 double tol_Ky = Math.Abs(Ky[j] - Ky[j-1]);  
@@ -570,21 +602,9 @@ namespace BSFiberConcrete.CalcGroup2
                     break;
                 }
             }
-
-            // Проверка - выполняются ли условия в равновестия?
+            
             int jend = sigB.Count-1;
-            Nint = sigB[jend].Zip(Ab, (s, A) => s * A).Sum() +
-                   sigS[jend].Zip(As, (s, A) => s * A).Sum() -
-                   sigBS[jend].Zip(As, (s, A) => s * A).Sum();
-
-            Myint = -(sigB[jend].ZipThree(Ab, zb[0], (s, A, z) => s * A * z).Sum() +
-                      sigS[jend].ZipThree(As, zs[0], (s, A, z) => s * A * z).Sum() -
-                      sigBS[jend].ZipThree(As, zs[0], (s, A, z) => s * A * z).Sum());
-
-            Mzint = sigB[jend].ZipThree(Ab, yb[0], (s, A, y) => s * A * y).Sum() +
-                    sigS[jend].ZipThree(As, ys[0], (s, A, y) => s * A * y).Sum() -
-                    sigBS[jend].ZipThree(As, ys[0], (s, A, y) => s * A * y).Sum();
-
+            
             // растяжение 
             double sigB_t = sigB[jend].Maximum();
             double sigS_t = sigS[jend].Maximum();
@@ -598,6 +618,7 @@ namespace BSFiberConcrete.CalcGroup2
             double epsB_p = epB[jend].Minimum(); 
             double epsS_p = epS[jend].Minimum();
 
+            
             // СП 6.1.25 для эпюры с одним знаком
             //double e_fb_ult = ebc2 - (ebc2 - ebc0) * epsB_t / epsB_p;
             //double e_fbt_ult = efbt3 - (efbt3 - efbt2) * epsB_t / epsB_p;
@@ -630,8 +651,9 @@ namespace BSFiberConcrete.CalcGroup2
                 ["N"] = Nint,
 
                 // трещиностойкость
-                ["My_crc"] = Myint,
-                ["Mx_crc"] = Mzint,
+                ["My_crc"] = My_crc,
+                ["Mx_crc"] = Mz_crc,
+                ["es_crc"] = es_crc,
                 ["ItersCnt"] = jend
             };
 

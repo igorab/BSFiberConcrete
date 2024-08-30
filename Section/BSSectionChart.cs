@@ -66,6 +66,9 @@ namespace BSFiberConcrete.Section
 
         private void InitRods()
         {
+            if (m_RodPoints == null)
+                return;
+
             List<BSRod> bsRods =  BSData.LoadBSRod(m_BeamSection);
 
             if (bsRods.Count == 0)
@@ -118,6 +121,10 @@ namespace BSFiberConcrete.Section
                     m_RodPoints = new List<PointF>() { new PointF(0, -(h - 4)) };
                 }
             }
+            else if (m_BeamSection == BeamSection.None)
+            {
+
+            }
         }
 
         private void InitDataSource()
@@ -126,12 +133,16 @@ namespace BSFiberConcrete.Section
            
             InitRods();
 
-            int idx = 0;    
-            foreach(PointF p in PointsSection) 
+            int idx = 0;
+
+            if (PointsSection != null)
             {
-                idx++;
-                BSPoint bsPt = new BSPoint(p) { Num = idx };
-                pointBS.Add(bsPt);
+                foreach (PointF p in PointsSection)
+                {
+                    idx++;
+                    BSPoint bsPt = new BSPoint(p) { Num = idx };
+                    pointBS.Add(bsPt);
+                }
             }
         }
 
@@ -211,6 +222,9 @@ namespace BSFiberConcrete.Section
 
         private void SaveRods2DB()
         {
+            if (RodBS == null || RodBS.List == null || RodBS.List.Count == 0)
+                return;
+
             List<BSRod> bSRods = (List<BSRod>) RodBS.List; 
             
             BSData.SaveRods(bSRods, m_BeamSection);            
@@ -236,7 +250,9 @@ namespace BSFiberConcrete.Section
         private void BSSectionChart_Load(object sender, EventArgs e)
         {
             try
-            {                
+            {
+                InitControls();
+
                 InitDataSource();
 
                 DrawFromDatasource();
@@ -245,6 +261,20 @@ namespace BSFiberConcrete.Section
             catch (Exception _e)
             {
                 MessageBox.Show(_e.Message);
+            }
+        }
+
+        private void InitControls()
+        {
+            if (m_BeamSection == BeamSection.None)
+            {
+                btnAdd.Visible = true;
+                btnDel.Visible = true;
+            }
+            else
+            {                
+                foreach (DataGridViewColumn cl in dataGrid.Columns)
+                    cl.ReadOnly = true;
             }
         }
 

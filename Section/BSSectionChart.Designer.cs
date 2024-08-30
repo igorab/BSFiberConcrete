@@ -48,6 +48,7 @@
             this.labelSection = new System.Windows.Forms.Label();
             this.labelRods = new System.Windows.Forms.Label();
             this.bSRodDataGridView = new System.Windows.Forms.DataGridView();
+            this.Dnom = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.labelArea = new System.Windows.Forms.Label();
             this.numArea = new System.Windows.Forms.NumericUpDown();
@@ -59,7 +60,6 @@
             this.btnDelRod = new System.Windows.Forms.Button();
             this.btnAddRod = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
-            this.Dnom = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.numDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.xDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.yDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -157,7 +157,7 @@
             this.chart.ChartAreas.Add(chartArea1);
             this.chart.Dock = System.Windows.Forms.DockStyle.Fill;
             legend1.Name = "Legend1";
-            legend1.Title = "Легенда";
+            legend1.Title = "Контуры";
             this.chart.Legends.Add(legend1);
             this.chart.Location = new System.Drawing.Point(333, 32);
             this.chart.Name = "chart";
@@ -262,6 +262,31 @@
             this.bSRodDataGridView.TabIndex = 7;
             this.bSRodDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.bSRodDataGridView_CellValueChanged);
             // 
+            // Dnom
+            // 
+            this.Dnom.DataPropertyName = "Dnom";
+            this.Dnom.HeaderText = "D, ном, мм";
+            this.Dnom.Items.AddRange(new object[] {
+            "6",
+            "8",
+            "10",
+            "12",
+            "14",
+            "16",
+            "18",
+            "20",
+            "22",
+            "25",
+            "28",
+            "32",
+            "36",
+            "40"});
+            this.Dnom.Name = "Dnom";
+            this.Dnom.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Dnom.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Dnom.ToolTipText = "Номинальный диаметр";
+            this.Dnom.Width = 50;
+            // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 6;
@@ -359,7 +384,7 @@
             this.tableLayoutButtonRods.ColumnCount = 3;
             this.tableLayoutButtonRods.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.04167F));
             this.tableLayoutButtonRods.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.95833F));
-            this.tableLayoutButtonRods.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 83F));
+            this.tableLayoutButtonRods.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 86F));
             this.tableLayoutButtonRods.Controls.Add(this.btnDelRod, 2, 0);
             this.tableLayoutButtonRods.Controls.Add(this.btnAddRod, 1, 0);
             this.tableLayoutButtonRods.Controls.Add(this.btnSave, 0, 0);
@@ -375,7 +400,7 @@
             // btnDelRod
             // 
             this.btnDelRod.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnDelRod.Location = new System.Drawing.Point(133, 3);
+            this.btnDelRod.Location = new System.Drawing.Point(130, 3);
             this.btnDelRod.Name = "btnDelRod";
             this.btnDelRod.Size = new System.Drawing.Size(35, 35);
             this.btnDelRod.TabIndex = 6;
@@ -386,7 +411,7 @@
             // btnAddRod
             // 
             this.btnAddRod.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnAddRod.Location = new System.Drawing.Point(69, 3);
+            this.btnAddRod.Location = new System.Drawing.Point(68, 3);
             this.btnAddRod.Name = "btnAddRod";
             this.btnAddRod.Size = new System.Drawing.Size(35, 35);
             this.btnAddRod.TabIndex = 5;
@@ -404,31 +429,6 @@
             this.btnSave.Text = "s";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            // 
-            // Dnom
-            // 
-            this.Dnom.DataPropertyName = "Dnom";
-            this.Dnom.HeaderText = "D, ном, мм";
-            this.Dnom.Items.AddRange(new object[] {
-            "6",
-            "8",
-            "10",
-            "12",
-            "14",
-            "16",
-            "18",
-            "20",
-            "22",
-            "25",
-            "28",
-            "32",
-            "36",
-            "40"});
-            this.Dnom.Name = "Dnom";
-            this.Dnom.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Dnom.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.Dnom.ToolTipText = "Номинальный диаметр";
-            this.Dnom.Width = 50;
             // 
             // numDataGridViewTextBoxColumn
             // 

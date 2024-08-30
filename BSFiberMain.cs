@@ -133,8 +133,8 @@ namespace BSFiberConcrete
             cmbBetonClass.Text = prms.Bft3n;
             cmbBfn.Text = prms.Bfn;
             cmbBftn.Text = prms.Bftn;
-            numE_beton.Text = prms.Eb;
-            numE_fiber.Text = prms.Efbt;
+            //numE_beton.Text = prms.Eb;
+            //numE_fiber.Text = prms.Efbt;
             cmbRebarClass.Text = prms.Rs;
             cmbTRebarClass.Text = prms.Rsw;
 
@@ -1174,7 +1174,7 @@ namespace BSFiberConcrete
             bsCalc1.BeamSection = _beamSection;
             bsCalc1.BetonTypeId =  (cmbTypeMaterial.SelectedIndex == 1) ? 1 : 0;
             bsCalc1.SetDictParams(D);
-            bsCalc1.GetRods(listD, listX, listY);
+            bsCalc1.SetRods(listD, listX, listY);
             bsCalc1.Run();
             
             BSCalcResultNDM calcRes = new BSCalcResultNDM(bsCalc1.Results);
@@ -1189,20 +1189,18 @@ namespace BSFiberConcrete
             calcRes.Results1Group(ref m_CalcResults);
             calcRes.ResultsMsg1Group(ref m_Message);
 
-            // выполнить расчет по 2 группе п.с.
-
-            /*
+            // выполнить расчет по 2 группе п.с.            
             BSCalcNDM bsCalc2 = new BSCalcNDM(2);
             bsCalc2.BeamSection = _beamSection;
-            bsCalc2.BetonTypeId =  (cmbTypeMaterial.SelectedIndex == 1) ? 1 : 0;
-            bsCalc2.DictParams(D);
-            bsCalc2.GetRods(listD, listX, listY);
+            bsCalc2.BetonTypeId = (cmbTypeMaterial.SelectedIndex == 1) ? 1 : 0;
+            bsCalc2.SetDictParams(D);
+            bsCalc2.SetRods(listD, listX, listY);
             bsCalc2.Run();
+
             calcRes.ErrorIdx.Add(bsCalc2.Err);
             calcRes.GetRes2Group(bsCalc2.Results);
             calcRes.Results2Group(ref m_CalcResults2Group);
-            */
-
+            
             m_GeomParams = calcRes.GeomParams;
             m_Efforts = calcRes.Efforts;
             m_PhysParams = calcRes.PhysParams;
@@ -2253,6 +2251,20 @@ namespace BSFiberConcrete
         private void numE_beton_ValueChanged(object sender, EventArgs e)
         {
 
+        }
+
+        // создать сечение произвольной формы
+        private void btnSectionAdd_Click(object sender, EventArgs e)
+        {
+            BSSectionChart sectionChart = new BSSectionChart
+            {
+                m_BeamSection = BeamSection.None,
+                Wdth = 0,
+                Hght = 0,
+                NumArea = 0
+            };
+
+            sectionChart.Show();
         }
     }
 }
