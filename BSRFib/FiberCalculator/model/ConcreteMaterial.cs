@@ -11,8 +11,24 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
     {
 
         #region Privat fields 
-        private List<Beton> _DateConcreteType;
-        private int _indexConcrete;
+        /// <summary>
+        /// Данные по бетону из бд
+        /// </summary>
+        private List<Beton> _DateConcreteDB;
+
+
+        /// <summary>
+        /// Характеристика бетона для указанного вида
+        /// </summary>
+        private List<Beton> _DataConcreteOfKind;
+        /// <summary>
+        /// Индекс Типа бетона (тяжелый, мелкозернистый A)
+        /// </summary>
+        private int _indexConcreteClass;
+        /// <summary>
+        /// 
+        /// </summary>
+        private int _indexConcreteKind;
 
         private string _BT;
 
@@ -111,32 +127,44 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         public ConcreteMaterial()
         {
 
-            _DateConcreteType = BSData.LoadBetonData();
-            SetIndexConcreteType(0);
+            _DateConcreteDB = BSData.LoadBetonData();
+            SetIndexConcretKind(0);
+            SetIndexConcreteClass(0);
         }
 
 
 
         /// <summary>
-        /// Установить индекс бетона из списка _DateConcreteType
+        /// установить вид бетона
+        /// </summary>
+        /// <param name="index"> значения 1 - 4 </param>
+        public void SetIndexConcretKind(int index)
+        {
+            _indexConcreteKind = index;
+            _DataConcreteOfKind = _DateConcreteDB.Where(p => p.BetonType == index).ToList();
+        }
+
+
+        /// <summary>
+        /// Установить индекс бетона из списка _DateConcreteDB
         /// </summary>
         /// <param name="index"></param>
-        public void SetIndexConcreteType(int index)
+        public void SetIndexConcreteClass(int index)
         {
-            if ((index < 0) || index > _DateConcreteType.Count - 1)
+            if ((index < 0) || index > _DataConcreteOfKind.Count - 1)
             {
                 return;
             }
 
-            _indexConcrete = index;
-            BT = _DateConcreteType[_indexConcrete].BT;
-            Rbn = _DateConcreteType[_indexConcrete].Rbn;
-            Rbtn = _DateConcreteType[_indexConcrete].Rbtn;
-            Rb = _DateConcreteType[_indexConcrete].Rb;
-            Rbt = _DateConcreteType[_indexConcrete].Rbt;
-            Rb_ser = _DateConcreteType[_indexConcrete].Rbn;
-            Rbt_ser = _DateConcreteType[_indexConcrete].Rbtn;
-            Eb = _DateConcreteType[_indexConcrete].Eb * 1000;
+            _indexConcreteClass = index;
+            BT = _DataConcreteOfKind[_indexConcreteClass].BT;
+            Rbn = _DataConcreteOfKind[_indexConcreteClass].Rbn;
+            Rbtn = _DataConcreteOfKind[_indexConcreteClass].Rbtn;
+            Rb = _DataConcreteOfKind[_indexConcreteClass].Rb;
+            Rbt = _DataConcreteOfKind[_indexConcreteClass].Rbt;
+            Rb_ser = _DataConcreteOfKind[_indexConcreteClass].Rbn;
+            Rbt_ser = _DataConcreteOfKind[_indexConcreteClass].Rbtn;
+            Eb = _DataConcreteOfKind[_indexConcreteClass].Eb * 1000;
         }
 
 
@@ -148,12 +176,45 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         {
             List<string> ConcreteType = new List<string>();
 
-            foreach (Beton ConcreteMat in _DateConcreteType)
+            foreach (Beton ConcreteMat in _DataConcreteOfKind)
             {
                 ConcreteType.Add(ConcreteMat.BT);
             }
 
             return ConcreteType;
+        }
+
+
+        /// <summary>
+        /// Оценить C_max, и вернуть предупреждение при необходимости
+        /// </summary>
+        /// <returns></returns>
+        public string Evaluate_Cmax(double C_max)
+        { 
+            string result = null;
+
+            switch (_indexConcreteKind)
+            {
+                case 1 :
+                    {
+                        if (C_max < 10)
+                        {
+                            result = "Т.к. C_max<10, рекомендуется выбрать мелкозернистый бетон";
+                        }
+                        break;
+                    }
+                case 2 :
+                case 3 :
+                    {
+                        if (C_max >= 10)
+                        {
+                            result = "Т.к. C_max≥10, рекомендуется выбрать тяжелый бетон";
+                        }
+                        break;
+                    }
+            }
+            return result;
+
         }
 
     }

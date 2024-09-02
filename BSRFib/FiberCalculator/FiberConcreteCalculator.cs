@@ -252,9 +252,9 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         //    return _fiber.GetListFiberLengths();
         //}
 
-        //public void SetIndexFiberType(int index)
+        //public void SetIndexFiberKind(int index)
         //{
-        //    _fiber.SetIndexFiberType(index);
+        //    _fiber.SetIndexFiberKind(index);
         //}
 
         //public void SetIndexFiberGeometry(int index)
@@ -299,6 +299,8 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
             l_f_min = 0;
             // Сопротивление растяжения стальфибробетона  
             R_fbt3 = 0;
+            // Сопротилвение сжатия стальфибробетона
+            R_fbt3_n = 0;
             // Сопротивление сжатия стальфибробетона
             R_fb = 0;
             // Коэф фибрового рамирования по площади
@@ -331,6 +333,13 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
 
             // мм
             C_max = 5.3 * Math.Pow(d_f_red * d_f_red * Fiber.Length / (100 * mu_fv_min), 1.0 / 3);
+            string msg = Beton.Evaluate_Cmax(C_max);
+            if (msg != null)
+            {
+                message = msg;
+                return;
+            }
+
 
             // мм
             l_f_min = 2.5 * C_max;

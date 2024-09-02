@@ -18,9 +18,10 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         /// <summary>
         /// Таблица из БД с типами фибры и характеристиками, зависящими от фибры
         /// </summary>
-        private List<RFiber> _DataTypeFiberMaterial;
+        private List<FiberKind> _DataFiberKind;
         private List<FiberGeometry> _DataFiberGeometry;
         private List<FiberLength> _DataFiberLength;
+        private List<FiberType> _DataFiberType;
 
         /// <summary>
         /// Список геометрий, соответсвующий указанному материалу фубиы
@@ -32,9 +33,13 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         private List<FiberLength> _selectedFiberLength;
 
         /// <summary>
-        /// Номер Фибры из таблицы _DataTypeFiberMaterial
+        /// Номер Фибры из таблицы _DataFiberKind
         /// </summary>
-        private int _indexTypeFiberMaterial;
+        private int _indexFiberKind;
+        /// <summary>
+        /// Номер Фибры из таблицы _DataFiberType
+        /// </summary>
+        private int _indexFiberType;
         /// <summary>
         /// индекс геометрии из _selectedFiberGeometry
         /// </summary>
@@ -43,6 +48,11 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         /// Ниндекс длины из _selectedFiberLength
         /// </summary>
         private int _indexLength;
+        /// <summary>
+        /// Определяет возможен ли пользовательский ввод данных
+        /// (диаметр и длина фибры)
+        /// </summary>
+        private bool _customUserData;
 
         /// <summary>
         /// Безразмерный коэффициент. Нужен для формулы 8.4, сп 360
@@ -163,42 +173,87 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
 
         public FiberMaterial()
         {
-            _DataTypeFiberMaterial = BSQuery.RFiberLoad();
+            _customUserData = false;
+            _DataFiberKind = BSQuery.FiberKindLoad();
+            _DataFiberType = BSQuery.FiberTypeLoad();
             _DataFiberGeometry = BSQuery.FiberGeometryLoad();
             _DataFiberLength = BSQuery.FiberLengthLoad();
 
+
             // Определяется состояние экземпляра
-            SetIndexFiberType(0);
+            SetIndexFiberKind(0);
             SetIndexFiberGeometry(0);
             SetIndexFiberLength(0);
             SetCoef_C(0);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="customUserData">Возможность пользовательского ввода диаметра фибры</param>
+        public FiberMaterial(bool customUserData)
+        {
+            _customUserData = customUserData;
+            _DataFiberKind = BSQuery.FiberKindLoad();
+            _DataFiberType = BSQuery.FiberTypeLoad();
+            _DataFiberGeometry = BSQuery.FiberGeometryLoad();
+            _DataFiberLength = BSQuery.FiberLengthLoad();
+
+            // Определяется состояние экземпляра
+            SetIndexFiberType(0);
+            // рандомные заначения, 
+            Rf = 440;
+            Rf_ser = 460;
+            Ef = 210000;
+            Diameter = 0.3;
+            Length = 20;
+
+            SetCoef_C(0);
+        }
+
 
         /// <summary>
-        /// Установить индекс материала фибры
+        /// Установить индекс вид фибры
         /// </summary>
-        /// <param name="index"> номер строки из _DataTypeFiberMaterial </param>
-        public void SetIndexFiberType(int index)
+        /// <param name="index"> номер строки из _DataFiberKind </param>
+        public void SetIndexFiberKind(int index)
         {
 
-            if ((index < 0) || (index > _DataTypeFiberMaterial.Count - 1))
+            if ((index < 0) || (index > _DataFiberKind.Count - 1))
             {
                 return;
             }
 
-            _indexTypeFiberMaterial = index;
+            _indexFiberKind = index;
 
-            FiberName = _DataTypeFiberMaterial[_indexTypeFiberMaterial].Name;
-            Rf_ser = _DataTypeFiberMaterial[_indexTypeFiberMaterial].Rfser;
-            Rf = _DataTypeFiberMaterial[_indexTypeFiberMaterial].Rf;
-            Ef = _DataTypeFiberMaterial[_indexTypeFiberMaterial].Ef;
-            Hita_f = _DataTypeFiberMaterial[_indexTypeFiberMaterial].Hita_f;
-            Gamma_fb1 = _DataTypeFiberMaterial[_indexTypeFiberMaterial].Gamma_fb1;
+            FiberName = _DataFiberKind[_indexFiberKind].Name;
+            Rf_ser = _DataFiberKind[_indexFiberKind].Rfser;
+            Rf = _DataFiberKind[_indexFiberKind].Rf;
+            Ef = _DataFiberKind[_indexFiberKind].Ef;
+            
+            SetIndexFiberType(_DataFiberKind[index].TypeID);
+
             DefineListFiberGeometry();
         }
 
 
+        /// <summary>
+        /// установить индекс типа фибры
+        /// </summary>
+        /// <param name="index">номер из таблицы _DataFiberType </param>
+        protected void SetIndexFiberType(int index)
+        {
+            _customUserData = false;
+
+            if ((index < 0) || (index > _DataFiberType.Count - 1))
+            {
+                return;
+            }
+
+            _indexFiberType = index;
+            Hita_f = _DataFiberType[_indexFiberType].Hita_f;
+            Gamma_fb1 = _DataFiberType[_indexFiberType].Gamma_fb1;
+        }
 
         /// <summary>
         /// установить индекс геометрии (диаметра)
@@ -252,6 +307,34 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
             { _coef_C = 0.6; }
         }
 
+
+
+        public void Set_Rf_ser(double r_f_ser)
+        {
+            Rf_ser = r_f_ser;
+        }
+        public void Set_Rf(double r_f)
+        {
+            Rf = r_f;
+        }
+        public void Set_Ef(double e_f)
+        {
+            Ef = e_f;
+        }
+        public void Set_Diameter(double diameter)
+        {
+            Diameter = diameter;
+        }
+        public void Set_Length(double len)
+        {
+            Length = len;
+        }
+
+        //public void SetUserData(double? Resist_f_ser = null, double? Resist_f = null, double? Epsilon_f = null, double? Diameter = null,  )
+        //{ 
+
+        //}
+
         /// <summary>
         /// Определяется Список доступных диамтеров в зависимости от выбраного материала
         /// (Заполняется свойство _selectedFiberGeometry)
@@ -259,7 +342,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         private void DefineListFiberGeometry()
         {
             // Индекс для Подобра геометрии (диаметра)
-            int gomertyIndex = _DataTypeFiberMaterial[_indexTypeFiberMaterial].IndexForGeometry;
+            int gomertyIndex = _DataFiberKind[_indexFiberKind].IndexForGeometry;
             _selectedFiberGeometry = _DataFiberGeometry.Where(p => p.GeometryIndex == gomertyIndex).ToList();
 
             if (_selectedFiberGeometry == null)
@@ -292,7 +375,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         {
             List<string> fiberType = new List<string>();
 
-            foreach (RFiber fiberMat in _DataTypeFiberMaterial)
+            foreach (FiberKind fiberMat in _DataFiberKind)
             {
                 fiberType.Add(fiberMat.Name);
             }

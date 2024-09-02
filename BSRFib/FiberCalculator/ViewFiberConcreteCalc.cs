@@ -88,8 +88,10 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
             //cmbFiber_l.SelectedIndex = 0;
             //ChangeFiberType(0);
 
-            cmbConcrete.DataSource = _model.Beton.GetFiberTypes();
-            //_model.Beton.SetIndexConcreteType(0);
+            cmbConcreteKind.SelectedIndex = 0;
+
+            //cmbConcrete.DataSource = _model.Beton.GetFiberTypes();
+            //_model.Beton.SetIndexConcreteClass(0);
 
             rbElement_C_1.Checked = true;
             _model.Fiber.SetCoef_C(0);
@@ -103,7 +105,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         /// <param name="indexFiber">номер типа фибры из выпадающего списка</param>
         private void ChangeFiberType(int indexFiber)
         {
-            _model.Fiber.SetIndexFiberType(indexFiber); // обновили модель
+            _model.Fiber.SetIndexFiberKind(indexFiber); // обновили модель
             cmbFiber_Geometry.DataSource = _model.Fiber.GetFiberGeometries();  // обновили view
             //ChangeFiberGeometry(0);
         }
@@ -181,7 +183,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         private void cmbConcrete_SelectedIndexChanged(object sender, EventArgs e)
         {
             int indexConcrete = cmbConcrete.SelectedIndex;
-            _model.Beton.SetIndexConcreteType(indexConcrete);
+            _model.Beton.SetIndexConcreteClass(indexConcrete);
         }
 
         private void rbElement_C_1_CheckedChanged(object sender, EventArgs e)
@@ -202,6 +204,14 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         private void btnGenerateReport_Click(object sender, EventArgs e)
         {
             _model.GenerateReport();
+        }
+
+        private void cmbConcreteKind_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int indexConcrete = cmbConcreteKind.SelectedIndex;
+            // из-за смещения индекса первого элемента таблицы (индексация не с нуля а с единицы)
+            _model.Beton.SetIndexConcretKind(indexConcrete + 1);
+            cmbConcrete.DataSource = _model.Beton.GetFiberTypes();
         }
     }
 }

@@ -201,7 +201,7 @@ namespace BSFiberConcrete
                 cmbBetonClass.ValueMember = "Name";
                 cmbBetonClass.SelectedValue = BSFiberLib.BetonList[5].Name;
 
-                m_Beton = BSData.LoadBetonData();
+                m_Beton = BSData.LoadHeavyBetonData();
                 cmbBfn.DataSource = m_Beton;
                 cmbBfn.DisplayMember = "BT";
                 cmbBfn.ValueMember = "BT";
@@ -403,7 +403,7 @@ namespace BSFiberConcrete
         private void InitMatFiber()
         {
             // Сжатие Rfb
-            Beton fb = Lib.BSQuery.BetonTableFind(cmbBfn.Text);
+            Beton fb = Lib.BSQuery.HeavyBetonTableFind(cmbBfn.Text);
             // Растяжение Rfbt
             FiberBft fbt = (FiberBft)cmbBftn.SelectedItem;
 
@@ -1560,7 +1560,7 @@ namespace BSFiberConcrete
         {
             try
             {
-                Beton bt = Lib.BSQuery.BetonTableFind(cmbBfn.Text);
+                Beton bt = Lib.BSQuery.HeavyBetonTableFind(cmbBfn.Text);
                 numRfb_n.Value = (decimal)BSHelper.MPA2kgsm2(bt.Rbn);
                 numE_beton.Value = (decimal)BSHelper.MPA2kgsm2(bt.Eb * 1000);
 
