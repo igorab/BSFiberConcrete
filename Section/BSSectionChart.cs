@@ -13,6 +13,8 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.TreeView;
 using System.Xml.Linq;
 using BSFiberConcrete.Lib;
 using OpenTK;
+using ScottPlot.Colormaps;
+using System.Reflection;
 
 namespace BSFiberConcrete.Section
 {
@@ -27,7 +29,14 @@ namespace BSFiberConcrete.Section
             set { m_RodPoints = value;}
         }
 
-        public BeamSection m_BeamSection { get; set; }
+        public BeamSection BSBeamSection { private get; set; }
+
+        /// <summary>
+        /// Класс используемой арматуры
+        /// </summary>
+        public string RebarClass { private get; set; }
+
+        private List<RebarDiameters> m_Diameters;
 
         // Точки на диаграмме для отрисовки стержней арматуры  
         private List<PointF> m_RodPoints;
@@ -58,7 +67,7 @@ namespace BSFiberConcrete.Section
 
             InnerPoints = new List<PointF>();
 
-            m_BeamSection = BeamSection.Rect;
+            BSBeamSection = BeamSection.Rect;
             w = 0;
             h = 0;
             Sz = new double[]  { 0, 0, 0, 0, 0, 0 };
@@ -69,7 +78,7 @@ namespace BSFiberConcrete.Section
             if (m_RodPoints == null)
                 return;
 
-            List<BSRod> bsRods =  BSData.LoadBSRod(m_BeamSection);
+            List<BSRod> bsRods =  BSData.LoadBSRod(BSBeamSection);
 
             if (bsRods.Count == 0)
             {
@@ -82,24 +91,24 @@ namespace BSFiberConcrete.Section
 
         private void InitPoints()
         {
-            if (m_BeamSection == BeamSection.Rect)                 
+            if (BSBeamSection == BeamSection.Rect)                 
             {
                 BSSection.RectangleBeam(Sz);
                 PointsSection = BSSection.SectionPoints;
                 m_RodPoints = BSSection.RodPoints;               
             }
-            else if (m_BeamSection == BeamSection.IBeam ||                      
-                     m_BeamSection == BeamSection.LBeam)
+            else if (BSBeamSection == BeamSection.IBeam ||                      
+                     BSBeamSection == BeamSection.LBeam)
             {                
                 BSSection.IBeam(Sz, out PointsSection, out PointF _center);
                 m_RodPoints = BSSection.RodPoints;
             }
-            else if (m_BeamSection == BeamSection.TBeam)
+            else if (BSBeamSection == BeamSection.TBeam)
             {
                 BSSection.IBeam(Sz, out PointsSection, out PointF _center);
                 m_RodPoints = BSSection.RodPoints;
             }
-            else if (m_BeamSection == BeamSection.Ring)
+            else if (BSBeamSection == BeamSection.Ring)
             {
                 PointsSection = new List<PointF>();
                 int amountOfEdges = 40;
@@ -121,7 +130,7 @@ namespace BSFiberConcrete.Section
                     m_RodPoints = new List<PointF>() { new PointF(0, -(h - 4)) };
                 }
             }
-            else if (m_BeamSection == BeamSection.None)
+            else if (BSBeamSection == BeamSection.None)
             {
 
             }
@@ -129,6 +138,9 @@ namespace BSFiberConcrete.Section
 
         private void InitDataSource()
         {
+            if (!string.IsNullOrEmpty(RebarClass))
+                m_Diameters =  BSData.DiametersOfTypeRebar(RebarClass);
+
             InitPoints();
            
             InitRods();
@@ -227,7 +239,7 @@ namespace BSFiberConcrete.Section
 
             List<BSRod> bSRods = (List<BSRod>) RodBS.List; 
             
-            BSData.SaveRods(bSRods, m_BeamSection);            
+            BSData.SaveRods(bSRods, BSBeamSection);            
         }
 
         /// <summary>
@@ -266,7 +278,7 @@ namespace BSFiberConcrete.Section
 
         private void InitControls()
         {
-            if (m_BeamSection == BeamSection.None)
+            if (BSBeamSection == BeamSection.None)
             {
                 btnAdd.Visible = true;
                 btnDel.Visible = true;
@@ -369,6 +381,30 @@ namespace BSFiberConcrete.Section
         }
 
         private void bSRodDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                if (e.RowIndex >= 0)
+                {
+                    var d_nom = int.Parse(bSRodDataGridView.Rows[e.RowIndex].Cells["Dnom"].Value.ToString());
+
+                    if (d_nom > 0)
+                    {
+                        double ar = m_Diameters.Find(_D => _D.Diameter == d_nom).Square;
+
+                        double d_fact = BSHelper.DCircle(ar);
+
+                        bSRodDataGridView.Rows[e.RowIndex].Cells["D"].Value = Math.Round(d_fact, 2);
+                    }
+                }
+            }
+            catch
+            {
+
+            }           
+        }
+
+        private void bSRodDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }

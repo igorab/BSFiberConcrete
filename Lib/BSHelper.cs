@@ -17,6 +17,8 @@ namespace BSFiberConcrete
 
         public static double AreaCircle(double _D) => Math.PI * _D * _D / 4d;
 
+        public static double DCircle(double _area) => Math.Sqrt(4 * _area / Math.PI);
+
         public static double mm2sm(double _mm) => _mm * 0.1d;
 
         // конвертор сил

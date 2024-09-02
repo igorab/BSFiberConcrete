@@ -78,7 +78,7 @@ namespace BSFiberConcrete.Lib
         ///  Сохранить введенные пользователем значения с формы
         /// </summary>
         /// <param name="_prms"></param>
-        public void UpdateFormParams(FormParams _prms)
+        public static void UpdateFormParams(FormParams _prms)
         {
 
             try
@@ -88,7 +88,9 @@ namespace BSFiberConcrete.Lib
                     cnn.Open();
                     using (var tr = cnn.BeginTransaction())
                     {                        
-                        int cnt = cnn.Execute("update LocalPunch set Length=@Length where ID=@ID ", _prms , tr);
+                        int cnt = cnn.Execute(@"update Params set Length=@Length,
+                                                        LengthCoef=@LengthCoef 
+                                                    where ID=@ID ", _prms , tr);
                         
                         tr.Commit();
                     }
@@ -536,7 +538,7 @@ namespace BSFiberConcrete.Lib
                         foreach (BSRod rod in _ds)
                         {
                             rod.SectionType = _BeamSection;
-                            int cnt = cnn.Execute("insert into BSRod (CG_X, CG_Y, D, SectionType) values (@CG_X, @CG_Y, @D, @SectionType)", rod, tr);
+                            int cnt = cnn.Execute("insert into BSRod (CG_X, CG_Y, D, SectionType, Dnom) values (@CG_X, @CG_Y, @D, @SectionType, @Dnom)", rod, tr);
                             
                         }
                         tr.Commit();
@@ -619,15 +621,19 @@ namespace BSFiberConcrete.Lib
             }
         }
 
-
-        public static List<RebarDiameters> DiametersOfTypeRebar(string typeRebar)
+        /// <summary>
+        /// Выборка арматуры
+        /// </summary>
+        /// <param name="_ClassRebar">Класс арматуры</param>
+        /// <returns>Список - номинальные диаметры и площади сечения арматуры</returns>
+        public static List<RebarDiameters> DiametersOfTypeRebar(string _ClassRebar)
         {
             List<RebarDiameters> rD = new List<RebarDiameters>();
             try
             {
                 using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
                 {
-                    string query = $"select * from RebarDiameters where TypeRebar = '{typeRebar}'";
+                    string query = $"select * from RebarDiameters where TypeRebar = '{_ClassRebar}'";
                     var output = cnn.Query<RebarDiameters>(query, new RebarDiameters());
                     rD = output.ToList();
                     return rD;
@@ -635,7 +641,7 @@ namespace BSFiberConcrete.Lib
             }
             catch
             {
-                throw;
+                return new List<RebarDiameters>();
             }
         }
 
