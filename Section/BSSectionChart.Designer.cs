@@ -59,14 +59,15 @@
             this.btnDelRod = new System.Windows.Forms.Button();
             this.btnAddRod = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
+            this.Dnom = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.numDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.xDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.yDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pointBS = new System.Windows.Forms.BindingSource(this.components);
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.X = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Y = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.D = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.RodBS = new System.Windows.Forms.BindingSource(this.components);
             this.tableLayoutPanel.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -156,7 +157,7 @@
             this.chart.ChartAreas.Add(chartArea1);
             this.chart.Dock = System.Windows.Forms.DockStyle.Fill;
             legend1.Name = "Legend1";
-            legend1.Title = "Легенда";
+            legend1.Title = "Контуры";
             this.chart.Legends.Add(legend1);
             this.chart.Location = new System.Drawing.Point(333, 32);
             this.chart.Name = "chart";
@@ -240,22 +241,27 @@
             // 
             // bSRodDataGridView
             // 
+            this.bSRodDataGridView.AllowUserToAddRows = false;
+            this.bSRodDataGridView.AllowUserToDeleteRows = false;
             this.bSRodDataGridView.AllowUserToResizeRows = false;
             this.bSRodDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.bSRodDataGridView.AutoGenerateColumns = false;
             this.bSRodDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.bSRodDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn1,
-            this.dataGridViewTextBoxColumn2,
-            this.dataGridViewTextBoxColumn3,
-            this.dataGridViewTextBoxColumn4});
+            this.Id,
+            this.X,
+            this.Y,
+            this.Dnom,
+            this.D});
             this.bSRodDataGridView.DataSource = this.RodBS;
             this.bSRodDataGridView.Location = new System.Drawing.Point(113, 32);
             this.bSRodDataGridView.Name = "bSRodDataGridView";
             this.bSRodDataGridView.RowHeadersVisible = false;
             this.bSRodDataGridView.Size = new System.Drawing.Size(214, 577);
             this.bSRodDataGridView.TabIndex = 7;
+            this.bSRodDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.bSRodDataGridView_CellContentClick);
+            this.bSRodDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.bSRodDataGridView_CellValueChanged);
             // 
             // tableLayoutPanel1
             // 
@@ -265,7 +271,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 42F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 119F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 118F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 81F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 87F));
             this.tableLayoutPanel1.Controls.Add(this.labelArea, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.numArea, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.labelAreaUnits, 2, 0);
@@ -283,7 +289,7 @@
             // 
             this.labelArea.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelArea.AutoSize = true;
-            this.labelArea.Location = new System.Drawing.Point(17, 5);
+            this.labelArea.Location = new System.Drawing.Point(15, 5);
             this.labelArea.Name = "labelArea";
             this.labelArea.Size = new System.Drawing.Size(54, 13);
             this.labelArea.TabIndex = 0;
@@ -294,21 +300,21 @@
             this.numArea.AccessibleName = "NumArea";
             this.numArea.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numArea.DecimalPlaces = 4;
-            this.numArea.Location = new System.Drawing.Point(77, 3);
+            this.numArea.Location = new System.Drawing.Point(75, 3);
             this.numArea.Maximum = new decimal(new int[] {
             -1486618624,
             232830643,
             0,
             0});
             this.numArea.Name = "numArea";
-            this.numArea.Size = new System.Drawing.Size(103, 20);
+            this.numArea.Size = new System.Drawing.Size(100, 20);
             this.numArea.TabIndex = 1;
             // 
             // labelAreaUnits
             // 
             this.labelAreaUnits.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelAreaUnits.AutoSize = true;
-            this.labelAreaUnits.Location = new System.Drawing.Point(186, 5);
+            this.labelAreaUnits.Location = new System.Drawing.Point(181, 5);
             this.labelAreaUnits.Name = "labelAreaUnits";
             this.labelAreaUnits.Size = new System.Drawing.Size(27, 13);
             this.labelAreaUnits.TabIndex = 2;
@@ -318,7 +324,7 @@
             // 
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(234, 5);
+            this.label1.Location = new System.Drawing.Point(229, 5);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(107, 13);
             this.label1.TabIndex = 3;
@@ -328,7 +334,7 @@
             // 
             this.labelAreaRebarUnits.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelAreaRebarUnits.AutoSize = true;
-            this.labelAreaRebarUnits.Location = new System.Drawing.Point(465, 5);
+            this.labelAreaRebarUnits.Location = new System.Drawing.Point(460, 5);
             this.labelAreaRebarUnits.Name = "labelAreaRebarUnits";
             this.labelAreaRebarUnits.Size = new System.Drawing.Size(27, 13);
             this.labelAreaRebarUnits.TabIndex = 4;
@@ -339,7 +345,7 @@
             this.numAreaRebar.AccessibleName = "NumArea";
             this.numAreaRebar.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numAreaRebar.DecimalPlaces = 4;
-            this.numAreaRebar.Location = new System.Drawing.Point(347, 3);
+            this.numAreaRebar.Location = new System.Drawing.Point(342, 3);
             this.numAreaRebar.Maximum = new decimal(new int[] {
             -1530494976,
             232830,
@@ -354,7 +360,7 @@
             this.tableLayoutButtonRods.ColumnCount = 3;
             this.tableLayoutButtonRods.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.04167F));
             this.tableLayoutButtonRods.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.95833F));
-            this.tableLayoutButtonRods.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 73F));
+            this.tableLayoutButtonRods.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 97F));
             this.tableLayoutButtonRods.Controls.Add(this.btnDelRod, 2, 0);
             this.tableLayoutButtonRods.Controls.Add(this.btnAddRod, 1, 0);
             this.tableLayoutButtonRods.Controls.Add(this.btnSave, 0, 0);
@@ -370,7 +376,7 @@
             // btnDelRod
             // 
             this.btnDelRod.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnDelRod.Location = new System.Drawing.Point(143, 3);
+            this.btnDelRod.Location = new System.Drawing.Point(119, 3);
             this.btnDelRod.Name = "btnDelRod";
             this.btnDelRod.Size = new System.Drawing.Size(35, 35);
             this.btnDelRod.TabIndex = 6;
@@ -381,7 +387,7 @@
             // btnAddRod
             // 
             this.btnAddRod.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnAddRod.Location = new System.Drawing.Point(74, 3);
+            this.btnAddRod.Location = new System.Drawing.Point(62, 3);
             this.btnAddRod.Name = "btnAddRod";
             this.btnAddRod.Size = new System.Drawing.Size(35, 35);
             this.btnAddRod.TabIndex = 5;
@@ -399,6 +405,32 @@
             this.btnSave.Text = "s";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // Dnom
+            // 
+            this.Dnom.DataPropertyName = "Dnom";
+            this.Dnom.HeaderText = "D, ном, мм";
+            this.Dnom.Items.AddRange(new object[] {
+            "0",
+            "6",
+            "8",
+            "10",
+            "12",
+            "14",
+            "16",
+            "18",
+            "20",
+            "22",
+            "25",
+            "28",
+            "32",
+            "36",
+            "40"});
+            this.Dnom.Name = "Dnom";
+            this.Dnom.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Dnom.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Dnom.ToolTipText = "Номинальный диаметр";
+            this.Dnom.Width = 50;
             // 
             // numDataGridViewTextBoxColumn
             // 
@@ -428,47 +460,47 @@
             // 
             this.pointBS.DataSource = typeof(BSFiberConcrete.Section.BSPoint);
             // 
-            // dataGridViewTextBoxColumn1
+            // Id
             // 
-            this.dataGridViewTextBoxColumn1.DataPropertyName = "Id";
-            this.dataGridViewTextBoxColumn1.HeaderText = "Id";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.ToolTipText = "Номер стержня";
-            this.dataGridViewTextBoxColumn1.Visible = false;
-            this.dataGridViewTextBoxColumn1.Width = 20;
+            this.Id.DataPropertyName = "Id";
+            this.Id.HeaderText = "Id";
+            this.Id.Name = "Id";
+            this.Id.ToolTipText = "Номер стержня";
+            this.Id.Visible = false;
+            this.Id.Width = 20;
             // 
-            // dataGridViewTextBoxColumn2
+            // X
             // 
-            this.dataGridViewTextBoxColumn2.DataPropertyName = "CG_X";
+            this.X.DataPropertyName = "CG_X";
             dataGridViewCellStyle1.Format = "N2";
             dataGridViewCellStyle1.NullValue = "0";
-            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle1;
-            this.dataGridViewTextBoxColumn2.HeaderText = "X (h)";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.ToolTipText = "X, по ширине сечения, см";
-            this.dataGridViewTextBoxColumn2.Width = 70;
+            this.X.DefaultCellStyle = dataGridViewCellStyle1;
+            this.X.HeaderText = "X (h)";
+            this.X.Name = "X";
+            this.X.ToolTipText = "X, по ширине сечения, см";
+            this.X.Width = 50;
             // 
-            // dataGridViewTextBoxColumn3
+            // Y
             // 
-            this.dataGridViewTextBoxColumn3.DataPropertyName = "CG_Y";
+            this.Y.DataPropertyName = "CG_Y";
             dataGridViewCellStyle2.Format = "N2";
             dataGridViewCellStyle2.NullValue = "0";
-            this.dataGridViewTextBoxColumn3.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dataGridViewTextBoxColumn3.HeaderText = "Y (b)";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.ToolTipText = "Y, по высоте сечения, см";
-            this.dataGridViewTextBoxColumn3.Width = 70;
+            this.Y.DefaultCellStyle = dataGridViewCellStyle2;
+            this.Y.HeaderText = "Y (b)";
+            this.Y.Name = "Y";
+            this.Y.ToolTipText = "Y, по высоте сечения, см";
+            this.Y.Width = 50;
             // 
-            // dataGridViewTextBoxColumn4
+            // D
             // 
-            this.dataGridViewTextBoxColumn4.DataPropertyName = "D";
+            this.D.DataPropertyName = "D";
             dataGridViewCellStyle3.Format = "N2";
             dataGridViewCellStyle3.NullValue = "0";
-            this.dataGridViewTextBoxColumn4.DefaultCellStyle = dataGridViewCellStyle3;
-            this.dataGridViewTextBoxColumn4.HeaderText = "D";
-            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            this.dataGridViewTextBoxColumn4.ToolTipText = "Диаметр, см";
-            this.dataGridViewTextBoxColumn4.Width = 50;
+            this.D.DefaultCellStyle = dataGridViewCellStyle3;
+            this.D.HeaderText = "D";
+            this.D.Name = "D";
+            this.D.ToolTipText = "Диаметр, см";
+            this.D.Width = 30;
             // 
             // RodBS
             // 
@@ -529,9 +561,10 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label labelAreaRebarUnits;
         private System.Windows.Forms.NumericUpDown numAreaRebar;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn X;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Y;
+        private System.Windows.Forms.DataGridViewComboBoxColumn Dnom;
+        private System.Windows.Forms.DataGridViewTextBoxColumn D;
     }
 }

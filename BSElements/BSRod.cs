@@ -32,9 +32,14 @@ namespace BSFiberConcrete
         /// Координата Y Ц.Т.
         /// </summary>
         public double CG_Y { get; set; }
-       
+
         /// <summary>
-        /// Диаметр стержня, мм
+        /// Номинальный диаметр стержня, см
+        /// </summary>
+        public string Dnom { get; set; }
+
+        /// <summary>
+        /// Диаметр стержня, см
         /// </summary>
         public double D { get; set; }
 

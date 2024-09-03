@@ -182,10 +182,14 @@ namespace BSFiberConcrete.CalcGroup2
         // секущий модуль
         private double EV_Sec(double _sigma, double _e, double _E0)
         {
+            double E_Sec;
+
             if (_e == 0)
-                return _E0;
+                E_Sec = _E0;
             else
-                return _sigma / _e;
+                E_Sec =  _sigma / _e;
+
+            return E_Sec;
         }
 
     }

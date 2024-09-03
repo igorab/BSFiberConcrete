@@ -260,6 +260,10 @@ namespace BSFiberConcrete
             rods_area = _D["rods_area"];            
         }
 
+        /// <summary>
+        /// Результаты расчета по 1 группе предельных состояний
+        /// </summary>
+        /// <param name="_D1gr"></param>
         public BSCalcResultNDM(Dictionary<string, double> _D1gr)
         {
             // итерации
@@ -298,6 +302,10 @@ namespace BSFiberConcrete
             ErrorIdx = new List<int>();
         }
 
+        /// <summary>
+        /// Результаты расчета по 2 группе предельных состояний
+        /// </summary>
+        /// <param name="_D2gr">Словарь с результатами</param>
         public void GetRes2Group(Dictionary<string, double> _D2gr)
         {
             M_crc = _D2gr["My_crc"];
