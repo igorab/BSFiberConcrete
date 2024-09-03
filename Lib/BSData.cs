@@ -148,7 +148,30 @@ namespace BSFiberConcrete.Lib
         }
 
         /// <summary>
-        /// Типы бетона
+        /// Загрузка ТЯЖЕЛОГО типа бетона
+        /// </summary>
+        /// <returns>Список</returns>
+        public static List<Beton> LoadHeavyBetonData()
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    var output = cnn.Query<Beton>("select * from Beton where BetonType = 1", new DynamicParameters());
+                    return output.ToList();
+                }
+            }
+            catch
+            {
+                return new List<Beton>();
+            }
+        }
+
+
+
+
+        /// <summary>
+        /// Загрузка бетона
         /// </summary>
         /// <returns>Список</returns>
         public static List<Beton> LoadBetonData()
@@ -166,6 +189,7 @@ namespace BSFiberConcrete.Lib
                 return new List<Beton>();
             }
         }
+
 
         /// <summary>
         /// Коэффициенты
@@ -296,26 +320,6 @@ namespace BSFiberConcrete.Lib
             {
                 MessageBox.Show(_e.Message);
                 return new List<Elements>();
-            }
-        }
-
-        /// <summary>
-        /// Коэффициенты
-        /// </summary>
-        /// <returns>Список</returns>
-        public static List<Beton> LoadBetonTable()
-        {
-            try
-            {
-                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
-                {
-                    var output = cnn.Query<Beton>("select * from Beton", new DynamicParameters());
-                    return output.ToList();
-                }
-            }
-            catch
-            {
-                return new List<Beton>();
             }
         }
 

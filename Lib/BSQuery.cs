@@ -37,18 +37,18 @@ namespace BSFiberConcrete.Lib
 
 
         /// <summary>
-        /// Найти строку из таблицы обычного бетона
+        /// Найти строку из таблицы ТЯЖЕЛОГО бетона
         /// </summary>
         /// <param name="_BT">Класс бетона</param>
         /// <returns></returns>
-        public static Beton BetonTableFind(string _BT)
+        public static Beton HeavyBetonTableFind(string _BT)
         {
             Beton bt = new Beton();
             try
             {
                 using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
                 {
-                    string query = $"select * from Beton where BT = '{_BT}'";
+                    string query = $"select * from Beton where BetonType = 1 AND BT = '{_BT}'";
                     var output = cnn.Query<Beton>(query, new DynamicParameters());
                     if (output.Count() > 0)
                         bt = output.ToList()[0];
@@ -115,6 +115,40 @@ namespace BSFiberConcrete.Lib
             }
         }
 
+        public static List<FiberType> FiberTypeLoad()
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    string query = $"select * from FiberType";
+                    var output = cnn.Query<FiberType>(query, new DynamicParameters());
+                    return output.ToList();
+                }
+            }
+            catch
+            {
+                return new List<FiberType>();
+            }
+        }
+
+        public static List<FiberKind> FiberKindLoad()
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    string query = $"select * from FiberKind";
+                    var output = cnn.Query<FiberKind>(query, new DynamicParameters());
+                    return output.ToList();
+                }
+            }
+            catch
+            {
+                return new List<FiberKind>();
+            }
+        }
+
 
         public static List<FiberGeometry> FiberGeometryLoad()
         {
@@ -134,20 +168,20 @@ namespace BSFiberConcrete.Lib
         }
 
 
-        public static List<FiberLength2> FiberLengthLoad()
+        public static List<FiberLength> FiberLengthLoad()
         {
             try
             {
                 using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
                 {
-                    string query = $"select * from FiberLength2";
-                    var output = cnn.Query<FiberLength2>(query, new DynamicParameters());
+                    string query = $"select * from FiberLength";
+                    var output = cnn.Query<FiberLength>(query, new DynamicParameters());
                     return output.ToList();
                 }
             }
             catch
             {
-                return new List<FiberLength2>();
+                return new List<FiberLength>();
             }
         }
 

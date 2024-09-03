@@ -79,6 +79,7 @@ namespace BSFiberConcrete
         /// Номер в классе бетона (используется в расчетах) 
         /// </summary>
         public double B { get; set; }
+        public double BetonType { get; set; }
     }
 
 
@@ -341,6 +342,7 @@ namespace BSFiberConcrete
         public string Descr { get; set; }
     }
 
+
     public class RFiber
     {
         public int ID { get; set; }
@@ -358,6 +360,44 @@ namespace BSFiberConcrete
         /// Коэф. условной работы в зависимсоти от материала фибры
         /// </summary>
         public double Gamma_fb1 { get; set; }
+        /// <summary>
+        /// номер из таблицы FiberGeometry, которому соответсвует список стандартных значений диаметров для данного типа фибры
+        /// </summary>
+        public int IndexForGeometry { get; set; }
+    }
+
+
+
+    public class FiberType
+    {
+        public int ID { get; set; }
+        /// <summary>
+        /// Коэф. Анкеровки фибры
+        /// </summary>
+        public double Hita_f { get; set; }
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Коэф. условной работы в зависимсоти от материала фибры
+        /// </summary>
+        public double Gamma_fb1 { get; set; }
+
+    }
+
+    public class FiberKind
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public double Rfser { get; set; }
+        public double Rf { get; set; }
+        public double G1 { get; set; }
+        public double G2 { get; set; }
+        public double Ef { get; set; }
+
+        /// <summary>
+        /// Идентификатор из таблицы FiberType
+        /// </summary>
+        public int TypeID { get; set; }
         /// <summary>
         /// номер из таблицы FiberGeometry, которому соответсвует список стандартных значений диаметров для данного типа фибры
         /// </summary>
@@ -389,7 +429,7 @@ namespace BSFiberConcrete
 
 
 
-    public class FiberLength2
+    public class FiberLength
     {
         public int ID { get; set; }
         /// <summary>

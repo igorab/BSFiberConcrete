@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BSFiberConcrete.BSRFib.FiberCalculator.model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,11 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
 
         private FiberConcreteCalculator _model;
 
+        /// <summary>
+        /// ячейка таблицы tableForFiberMaterial для добавления ViewFiberMaterial
+        /// </summary>
+        private TableLayoutPanelCellPosition _cellPositionForFiberMaterila;
+
 
         public ViewFiberConcreteCalc(FiberConcreteCalculator model = null)
         {
@@ -22,15 +28,11 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
             { model = new FiberConcreteCalculator(); }
             _model = model;
 
+            _cellPositionForFiberMaterila = new TableLayoutPanelCellPosition(0,1);
+
             InitializeComponent();
-
+            
             // устанавливаем привязку полей
-
-            lab_Hf.DataBindings.Add(new Binding("Text", _model.Fiber, "Hita_f", true, DataSourceUpdateMode.OnPropertyChanged));
-            lab_Rf_ser.DataBindings.Add(new Binding("Text", _model.Fiber, "Rf_ser", true, DataSourceUpdateMode.OnPropertyChanged));
-            lab_Rf.DataBindings.Add(new Binding("Text", _model.Fiber, "Rf", true, DataSourceUpdateMode.OnPropertyChanged));
-            lab_Ef.DataBindings.Add(new Binding("Text", _model.Fiber, "Ef", true, DataSourceUpdateMode.OnPropertyChanged));
-            lab_Gamma_fb1.DataBindings.Add(new Binding("Text", _model.Fiber, "Gamma_fb1", true, DataSourceUpdateMode.OnPropertyChanged));
 
             lab_Rb.DataBindings.Add(new Binding("Text", _model.Beton, "Rb", true, DataSourceUpdateMode.OnPropertyChanged));
             lab_Rb_ser.DataBindings.Add(new Binding("Text", _model.Beton, "Rb_ser", true, DataSourceUpdateMode.OnPropertyChanged));
@@ -47,112 +49,37 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
             lab_C_max.DataBindings.Add(new Binding("Text", _model, "C_max", true, DataSourceUpdateMode.OnPropertyChanged));
             lab_l_f_min.DataBindings.Add(new Binding("Text", _model, "l_f_min", true, DataSourceUpdateMode.OnPropertyChanged));
             lab_Rfbt3.DataBindings.Add(new Binding("Text", _model, "R_fbt3", true, DataSourceUpdateMode.OnPropertyChanged));
+            lab_Rfbt3_n.DataBindings.Add(new Binding("Text", _model, "R_fbt3_n", true, DataSourceUpdateMode.OnPropertyChanged));
             lab_Rfb.DataBindings.Add(new Binding("Text", _model, "R_fb", true, DataSourceUpdateMode.OnPropertyChanged));
             lab_mu_fa.DataBindings.Add(new Binding("Text", _model, "mu_fa", true, DataSourceUpdateMode.OnPropertyChanged));
             lab_mu_1_fa.DataBindings.Add(new Binding("Text", _model, "mu_1_fa", true, DataSourceUpdateMode.OnPropertyChanged));
             lab_Efb.DataBindings.Add(new Binding("Text", _model, "E_fb", true, DataSourceUpdateMode.OnPropertyChanged));
             lab_Gfb.DataBindings.Add(new Binding("Text", _model, "G_fb", true, DataSourceUpdateMode.OnPropertyChanged));
             txtb4Message.DataBindings.Add(new Binding("Text", _model, "message", true, DataSourceUpdateMode.OnPropertyChanged));
-
         }
 
 
         private void ViewFiberConcreteCalc_Load(object sender, EventArgs e)
         {
-
-            
+            // сечение
             num_b.Value = 100m;
             num_h.Value = 200m;
-            
-            //_model.SetSectionB((double)num_b.Value);
-            //_model.SetSectionH((double)num_h.Value);
-            //lab_Kor.Text = "0.5";
-            //lab_Kn.Text = "0.5";
 
-
+            // коэф фибрового армирования
             numMu_fv.Value = 0.015m;
             _model.SetMu_fv((double)numMu_fv.Value);
             cBox_MuMin.Checked = false;
 
-            // Определяем данные для выпадающих списков зависящий от типа фибры
-            cmbFiberMaterial.DataSource = _model.Fiber.GetFiberTypes();
-            // (После обновления dataSource вызывается событие SelectedIndexChanged, SelectedIndex = 0 )
-            // Поэтому после обновления dataSource срабатывает такая последовательность вызовов
-            // Обновление       cmbFiberMaterial.DataSource  -> вызов cmbFiberMaterial_SelectedIndexChanged ->  вызов ChangeFiberType ->
-            // -> Обновление    cmbFiber_Geometry.DataSource -> вызов cmbFiber_Geometry_SelectedIndexChanged -> вызов ChangeFiberGeometry ->
-            // -> обновление    cmbFiber_l.DataSource        -> вызов  cmbFiber_l_SelectedIndexChanged       -> вызов ChangeFiberLength   
-
-            //int indexFiber = 0;
-            //cmbFiberMaterial.SelectedIndex = indexFiber;
-            //cmbFiber_Geometry.SelectedIndex = 0;
-            //cmbFiber_l.SelectedIndex = 0;
-            //ChangeFiberType(0);
-
-            cmbConcrete.DataSource = _model.Beton.GetFiberTypes();
-            //_model.Beton.SetIndexConcreteType(0);
-
+            // характеристики бетона
+            cmbConcreteKind.SelectedIndex = 0;
+            
+            // установка значения коэф
             rbElement_C_1.Checked = true;
-            _model.Fiber.SetCoef_C(0);
 
+            // выбор формы для управления параметрами фибры
+            rbFiberMaterila_1.Checked = true;
         }
 
-
-        /// <summary>
-        /// Изменить тип фбиры. Обнавляется выпадающие списки диаметров и длин. Обновляется содержание модели
-        /// </summary>
-        /// <param name="indexFiber">номер типа фибры из выпадающего списка</param>
-        private void ChangeFiberType(int indexFiber)
-        {
-            _model.Fiber.SetIndexFiberType(indexFiber); // обновили модель
-            cmbFiber_Geometry.DataSource = _model.Fiber.GetFiberGeometries();  // обновили view
-            //ChangeFiberGeometry(0);
-        }
-
-
-        /// <summary>
-        /// Изменить диметр фибры. Обновить выпадающий список длин. Обновить содержимое моедли
-        /// /// </summary>
-        /// <param name="indexGeometry">номер диаметра из выпадающего списка</param>
-        private void ChangeFiberGeometry(int indexGeometry)
-        {
-            _model.Fiber.SetIndexFiberGeometry(indexGeometry);          // обновили модель
-            //lab_Fiber_d.Text = _model.Fiber.DescriptionGeometry;
-            cmbFiber_l.DataSource = _model.Fiber.GetFiberLengths();     // обновили view
-            //ChangeFiberLength(0);
-
-        }
-
-
-        /// <summary>
-        /// Изменить длину фибры. Обнавляется содержание модели
-        /// /// </summary>
-        /// <param name="indexLength">номер длины из выпадающего списка</param>
-        private void ChangeFiberLength(int indexLength)
-        {
-            _model.Fiber.SetIndexFiberLength(indexLength);
-            _model.FiberCoef.SetLen_f(_model.Fiber.Length);
-        }
-
-
-        private void cmbFiberMaterial_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int indexFiber = cmbFiberMaterial.SelectedIndex;
-            ChangeFiberType(indexFiber);
-        }
-
-
-        private void cmbFiber_Geometry_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int indexGeometry = cmbFiber_Geometry.SelectedIndex;
-            ChangeFiberGeometry(indexGeometry);
-        }
-
-
-        private void cmbFiber_l_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int indexLength = cmbFiber_l.SelectedIndex;
-            ChangeFiberLength(indexLength);
-        }
 
         private void cBox_MuMin_CheckedChanged(object sender, EventArgs e)
         {
@@ -181,7 +108,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         private void cmbConcrete_SelectedIndexChanged(object sender, EventArgs e)
         {
             int indexConcrete = cmbConcrete.SelectedIndex;
-            _model.Beton.SetIndexConcreteType(indexConcrete);
+            _model.Beton.SetIndexConcreteClass(indexConcrete);
         }
 
         private void rbElement_C_1_CheckedChanged(object sender, EventArgs e)
@@ -202,6 +129,34 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         private void btnGenerateReport_Click(object sender, EventArgs e)
         {
             _model.GenerateReport();
+        }
+
+        private void cmbConcreteKind_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int indexConcrete = cmbConcreteKind.SelectedIndex;
+            // из-за смещения индекса первого элемента таблицы (индексация не с нуля а с единицы)
+            _model.Beton.SetIndexConcretKind(indexConcrete + 1);
+            cmbConcrete.DataSource = _model.Beton.GetFiberTypes();
+        }
+
+        private void rbFiberMaterila_1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (tableForFiberMaterial.Controls.Count == 2)
+            { tableForFiberMaterial.Controls.RemoveAt(1); }
+
+            ViewFiberMaterial_1 viewFM = new ViewFiberMaterial_1(_model);
+            tableForFiberMaterial.Controls.Add(viewFM, _cellPositionForFiberMaterila.Column, _cellPositionForFiberMaterila.Row);
+            viewFM.Dock = System.Windows.Forms.DockStyle.Fill;
+        }
+
+        private void rbFiberMaterila_2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (tableForFiberMaterial.Controls.Count == 2)
+            { tableForFiberMaterial.Controls.RemoveAt(1); }
+            ViewFiberMaterial_2 viewFM = new ViewFiberMaterial_2(_model);
+            tableForFiberMaterial.Controls.Add(viewFM, _cellPositionForFiberMaterila.Column, _cellPositionForFiberMaterila.Row);
+            viewFM.Dock = System.Windows.Forms.DockStyle.Fill;
+
         }
     }
 }
