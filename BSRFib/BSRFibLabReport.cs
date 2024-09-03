@@ -21,6 +21,8 @@ namespace BSFiberConcrete.BSRFib
 
         public Dictionary<string, string> LabItems { get; set; }
 
+        public Dictionary<string, string> InputData { get; set; }
+
         public string FileChart { get; }
 
         public object ReportName { get; set; }
@@ -97,6 +99,23 @@ namespace BSFiberConcrete.BSRFib
 
             w.WriteLine("</head>");
             w.WriteLine("<body>");
+
+            if (InputData != null)
+            {
+                w.WriteLine("<Table border=1 bordercolor = darkblue>");
+                w.WriteLine("<caption>Исходные данные: </caption>");
+
+                foreach (var _pair in InputData)
+                {
+                    w.WriteLine("<tr>");
+                    w.WriteLine($"<td><b>{_pair.Key}</b></td>");
+                    w.WriteLine($"<td> {_pair.Value}</td>");
+                    w.WriteLine("</tr>");
+                }
+                w.WriteLine("</tr>");
+                w.WriteLine("</Table>");
+                w.WriteLine("<br>");
+            }
 
             if (LabResults != null)
             {

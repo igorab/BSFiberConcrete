@@ -33,7 +33,7 @@ namespace BSFiberConcrete
 
                 dataGridCoeffs.DataSource = BSData.LoadCoeffs();
 
-                dataGridBeton.DataSource = BSData.LoadBetonData();
+                dataGridBeton.DataSource = BSData.LoadHeavyBetonData();
 
                 //using (var streamreader = new StreamReader(BSFiberLoadData.FiberConcretePath))
                 //{
