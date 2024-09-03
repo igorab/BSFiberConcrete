@@ -73,14 +73,13 @@ namespace BSFiberConcrete
             w.WriteLine($"<H2>{beamDescr}: {beamSection}</H2>");
             
             string _filename = string.IsNullOrWhiteSpace(ImageCalc) ? BSHelper.ImgResource(m_BeamSection, UseReinforcement) : ImageCalc;
-            if (!string.IsNullOrEmpty(_filename))
+            if (ImageStream == null && !string.IsNullOrEmpty(_filename))
             {                
                 string path = Lib.BSData.ResourcePath(_filename);
                 string img = MakeImageSrcData(path);
                 w.WriteLine($"<table><tr><td> <img src={img}/ width=\"500\" height=\"300\"> </td></tr> </table>");
-            }
-            
-            if (ImageStream != null)
+            }            
+            else if (ImageStream != null)
             {                
                 string img = MakeImageSrcData(ImageStream);
                 w.WriteLine($"<table><tr><td> <img src={img}/ width=\"500\" height=\"300\"> </td></tr> </table>");

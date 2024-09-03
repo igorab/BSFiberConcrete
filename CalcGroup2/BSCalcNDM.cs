@@ -565,7 +565,7 @@ namespace BSFiberConcrete.CalcGroup2
                 // проверка на трещины
                 double epsBt = epB[j].Maximum();
 
-                if (epsBt > 0 && efbt1 >= epsBt) 
+                if (epsBt > 0 && efbt1 <= epsBt) 
                 {
                     if (My_crc == 0 && Mz_crc == 0)
                     {

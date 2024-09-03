@@ -31,7 +31,7 @@ namespace BSFiberConcrete.Section
             set { m_RodPoints = value; }
         }
 
-        public BeamSection BSBeamSection { private get; set; }
+        public BeamSection BSBeamSection { get; set; }
 
         /// <summary>
         /// Класс используемой арматуры

@@ -63,6 +63,7 @@ namespace BSFiberConcrete
         /// </summary>
         private List<string> m_Message;
 
+        // Текущий тип сечения
         private BeamSection m_BeamSection { get; set; }
 
         // Mesh generation
@@ -72,6 +73,8 @@ namespace BSFiberConcrete
         // координаты центра тяжести элементов (треугольников)
         private List<TriangleNet.Geometry.Point> triCGs;
 
+        //Изображение рассчитываемого сечения
+        private BSSectionChart m_SectionChart;
         private MemoryStream m_ImageStream;
 
         public BSFiberMain()
@@ -166,7 +169,7 @@ namespace BSFiberConcrete
                 toolTip1.SetToolTip(this.btnLSection, "Тавровое сечение \"Нижняя полка\"");
                 toolTip1.SetToolTip(this.btnIBeam, "Двутавровое сечение");
                 toolTip1.SetToolTip(this.btnRing, "Кольцевое сечение");
-
+                toolTip1.SetToolTip(btnCalcResults, "Результаты расчета");
                 m_Path2BeamDiagrams = new List<string>() { };
 
                 m_RebarDiameters = BSData.LoadRebarDiameters();
@@ -966,7 +969,7 @@ namespace BSFiberConcrete
         ///  Расчет на действие момента и поперечной силы
         /// </summary>        
         private void btnStaticEqCalc_Click(object sender, EventArgs e)
-        {
+        {            
             // Данные, введенные пользователем
             InitMatFiber();
 
@@ -1456,15 +1459,28 @@ namespace BSFiberConcrete
             }
         }
 
+        private bool ValidateNDMCalc()
+        {
+            if (m_SectionChart == null || m_SectionChart.BSBeamSection != m_BeamSection)
+            {
+                MessageBox.Show("Нажмите кнопку Сечение и задайте диаметры и расстановку стержней арматуры.", 
+                    "Расчет по НДМ", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return false;
+            }
+
+            return true;
+        }
 
         /// <summary>
         /// Расчет по НДМ            
         /// </summary>        
         private void btnCalc_Deform_Click(object sender, EventArgs e)
         {
+            if (!ValidateNDMCalc()) return;
+
             try
-            {
-              
+            {              
                 if (m_BeamSection == BeamSection.Rect)
                 {
                     CalcNDM(BeamSection.Rect);
@@ -1735,22 +1751,20 @@ namespace BSFiberConcrete
         /// <param name="e"></param>
         private void btnSection_Click(object sender, EventArgs e)
         {
-            BSSectionChart sectionChart = new BSSectionChart();
-            sectionChart.BSBeamSection = m_BeamSection;
+            m_SectionChart = new BSSectionChart();
+            m_SectionChart.BSBeamSection = m_BeamSection;
 
             var sz = BeamWidtHeight(out double b, out double h, out double _area);
 
-            sectionChart.RebarClass = cmbRebarClass.SelectedItem.ToString();
-            sectionChart.Wdth = (float)b;
-            sectionChart.Hght = (float)h;
-            sectionChart.Sz = sz;
-            sectionChart.NumArea = _area;           
-            sectionChart.ShowDialog();// .Show();
+            m_SectionChart.RebarClass = cmbRebarClass.SelectedItem.ToString();
+            m_SectionChart.Wdth = (float)b;
+            m_SectionChart.Hght = (float)h;
+            m_SectionChart.Sz = sz;
+            m_SectionChart.NumArea = _area;           
+            m_SectionChart.ShowDialog();// .Show();
 
-            m_ImageStream = sectionChart.GetImageStream;
-
+            m_ImageStream = m_SectionChart.GetImageStream;
         }
-
 
         private void ShowMosaic(BSCalcResultNDM _CalcResNDM)
         {
