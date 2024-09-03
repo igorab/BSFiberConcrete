@@ -238,7 +238,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         # region Обертки над методами из класса FiberMatrial
         //public List<string> GetListFiberType()
         //{
-        //    return _fiber.GetFiberTypes();
+        //    return _fiber.GetFiberKind();
         //}
 
 
@@ -321,6 +321,16 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
                 return; 
             }
 
+            if ((30 / Fiber.Rf + l_f_an / Fiber.Length) >= 1)
+            {
+                message = "Невозможно расcчитать характеристики сталефибробетона с указанными параметрами";
+                return;
+                //    if 
+                //}
+                //{
+                //    message = "Значене длины заделки фибры в бетоне ";
+                //    return;
+            }
 
             mu_fv_min = 1.5 * Fiber.coef_C * Beton.Rbt / (Fiber.Rf * Math.Pow(FiberCoef.Kor, 2) *
                 (1 - 30 / Fiber.Rf - l_f_an / Fiber.Length));
@@ -423,6 +433,39 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
                 labReport.SampleDescr = "";
                 labReport.SampleName = "";
 
+                Dictionary<string, string> InputData = new Dictionary<string, string>()
+                {
+                    ["Высота прямоугольного сечения h [мм]"] = Convert.ToString(Math.Round(_h, 3)),
+                    ["Ширина прямоугольного сечения b [мм]"] = Convert.ToString(Math.Round(_b, 3)),
+                    ["Коэф. ориентации фибры Kor"] = Convert.ToString(Math.Round(FiberCoef.Kor, 3)),
+                    ["Коэф. работы фибры Kn"] = Convert.ToString(Math.Round(FiberCoef.Kn, 3)),
+                    ["Расчетное сопротивление бетона (сжатия) Rb [МПа]"] = Convert.ToString(Math.Round(Beton.Rb, 6)),
+                    ["Расчетное сопротивление бетона (сжатия) Rb_ser [МПа]"] = Convert.ToString(Math.Round(Beton.Rb_ser, 6)),
+                    ["Расчетное сопротивление бетона (растяжение) Rbt [МПа]"] = Convert.ToString(Math.Round(Beton.Rbt, 6)),
+                    ["Расчетное сопротивление бетона (растяжение) Rbt_ser [МПа]"] = Convert.ToString(Math.Round(Beton.Rbt_ser, 6)),
+                    ["Модуль упругости бетона Eb [МПа]"] = Convert.ToString(Math.Round(Beton.Eb, 6)),
+                    ["Модуль упругости бетона Eb [МПа]"] = Convert.ToString(Math.Round(Beton.Eb, 6)),
+                    ["Модуль упругости бетона Eb [МПа]"] = Convert.ToString(Math.Round(Beton.Eb, 6)),
+                    ["Коэф. анкеровки фибры ηf "] = Convert.ToString(Math.Round(Fiber.Hita_f, 2)),
+                    ["Коэф. условий работы γfb1"] = Convert.ToString(Math.Round(Fiber.Gamma_fb1, 2)),
+                    ["Нормативное сопротивление растяжению фибры Rf_ser [МПа]"] = Convert.ToString(Math.Round(Fiber.Rf_ser, 6)),
+                    ["Расчетное сопротивление фибровой арматуры Rf [МПа]"] = Convert.ToString(Math.Round(Fiber.Rf, 6)),
+                    ["Модуль упругости фибры Ef [МПа]"] = Convert.ToString(Math.Round(Fiber.Ef, 6)),
+                    ["Длина фибры lf [мм]"] = Convert.ToString(Math.Round(Fiber.Length, 3)),
+
+                };
+                if (Fiber.Diameter != 0)
+                { InputData.Add("Диаметр фибры df [мм]", Convert.ToString(Math.Round(Fiber.Diameter, 3))); }
+                else
+                { InputData.Add("Площадь фибры Sf [мм2]", Convert.ToString(Math.Round(Fiber.Square, 3))); }
+
+                if (_mu_fv != 0)
+                { InputData.Add("Коэф. фибрового армирования μ_fv ", Convert.ToString(Math.Round(_mu_fv, 4))); }
+                else
+                { InputData.Add("Коэф. фибрового армирования μ_fv = μfv_min", Convert.ToString(Math.Round(mu_fv_min, 4))); }
+                InputData.Add("Безразмерный коэф. C (формула  8.4) ", Convert.ToString(Math.Round(Fiber.coef_C, 4)));
+
+
                 Dictionary<string, string> LabItems = new Dictionary<string, string>()
                 {
                     ["Длина заделки фибры в бетоне l_f,an [мм]"] = Convert.ToString(Math.Round(l_f_an,3)),
@@ -437,7 +480,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
                     ["Модуль упругости Efb [МПа]"] = Convert.ToString(Math.Round(E_fb,6)),
                     ["Модуль сдвига Gfb [МПа]"] = Convert.ToString(Math.Round(G_fb,6))
                 };
-
+                labReport.InputData = InputData;
                 labReport.LabItems = LabItems;
                 labReport.RunReport();
             }

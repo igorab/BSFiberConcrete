@@ -24,7 +24,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         private List<FiberType> _DataFiberType;
 
         /// <summary>
-        /// Список геометрий, соответсвующий указанному материалу фубиы
+        /// Список геометрий, соответсвующий указанному материалу фибиы
         /// </summary>
         private List<FiberGeometry> _selectedFiberGeometry;
         /// <summary>
@@ -45,7 +45,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         /// </summary>
         private int _indexGeomerty;
         /// <summary>
-        /// Ниндекс длины из _selectedFiberLength
+        /// Индекс длины из _selectedFiberLength
         /// </summary>
         private int _indexLength;
         /// <summary>
@@ -188,9 +188,9 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         }
 
         /// <summary>
-        /// 
+        /// создается объект с Возможность пользовательского ввода характеристик фибры
         /// </summary>
-        /// <param name="customUserData">Возможность пользовательского ввода диаметра фибры</param>
+        /// <param name="customUserData"></param>
         public FiberMaterial(bool customUserData)
         {
             _customUserData = customUserData;
@@ -241,9 +241,8 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         /// установить индекс типа фибры
         /// </summary>
         /// <param name="index">номер из таблицы _DataFiberType </param>
-        protected void SetIndexFiberType(int index)
+        public void SetIndexFiberType(int index)
         {
-            _customUserData = false;
 
             if ((index < 0) || (index > _DataFiberType.Count - 1))
             {
@@ -308,32 +307,55 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         }
 
 
-
+        /// <summary>
+        /// Установить Rf_ser, только для случая пользовательского ввода данных
+        /// </summary>
+        /// <param name="r_f_ser"></param>
         public void Set_Rf_ser(double r_f_ser)
         {
             Rf_ser = r_f_ser;
         }
+        /// <summary>
+        /// Установить Rf, только для случая пользовательского ввода данных
+        /// </summary>
+        /// <param name="r_f"></param>
         public void Set_Rf(double r_f)
         {
             Rf = r_f;
         }
+        /// <summary>
+        /// Установить Ef, только для случая пользовательского ввода данных
+        /// </summary>
+        /// <param name="e_f"></param>
         public void Set_Ef(double e_f)
         {
             Ef = e_f;
         }
+        /// <summary>
+        /// Установить Diameter, только для случая пользовательского ввода данных
+        /// </summary>
+        /// <param name="diameter"></param>
         public void Set_Diameter(double diameter)
         {
             Diameter = diameter;
         }
+        /// <summary>
+        /// Установить Square, только для случая пользовательского ввода данных
+        /// </summary>
+        /// <param name="s"></param>
+        public void Set_Square(double s)
+        {
+            Square = s;
+        }
+        /// <summary>
+        /// Установить Length, только для случая пользовательского ввода данных
+        /// </summary>
+        /// <param name="len"></param>
         public void Set_Length(double len)
         {
             Length = len;
         }
 
-        //public void SetUserData(double? Resist_f_ser = null, double? Resist_f = null, double? Epsilon_f = null, double? Diameter = null,  )
-        //{ 
-
-        //}
 
         /// <summary>
         /// Определяется Список доступных диамтеров в зависимости от выбраного материала
@@ -371,15 +393,25 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         /// Получить список Типов фибры
         /// </summary>
         /// <returns></returns>
-        public List<string> GetFiberTypes()
+        public List<string> GetFiberKind()
+        {
+            List<string> fiberKind = new List<string>();
+            foreach (FiberKind fiberMat in _DataFiberKind)
+            { fiberKind.Add(fiberMat.Name); }
+            return fiberKind;
+        }
+
+
+
+        /// <summary>
+        /// Получить список видов фибры
+        /// </summary>
+        /// <returns></returns>
+        public List<string> GetFiberType()
         {
             List<string> fiberType = new List<string>();
-
-            foreach (FiberKind fiberMat in _DataFiberKind)
-            {
-                fiberType.Add(fiberMat.Name);
-            }
-
+            foreach (FiberType fiberMat in _DataFiberType)
+            { fiberType.Add(fiberMat.Name); }
             return fiberType;
         }
 
