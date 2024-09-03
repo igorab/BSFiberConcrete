@@ -49,6 +49,7 @@ namespace BSFiberConcrete
 
         public string ImageCalc { get; set; }
         
+        public MemoryStream ImageStream { private get; set; }
 
         public BSFiberReport()
         {
@@ -76,6 +77,12 @@ namespace BSFiberConcrete
             {                
                 string path = Lib.BSData.ResourcePath(_filename);
                 string img = MakeImageSrcData(path);
+                w.WriteLine($"<table><tr><td> <img src={img}/ width=\"500\" height=\"300\"> </td></tr> </table>");
+            }
+            
+            if (ImageStream != null)
+            {                
+                string img = MakeImageSrcData(ImageStream);
                 w.WriteLine($"<table><tr><td> <img src={img}/ width=\"500\" height=\"300\"> </td></tr> </table>");
             }
 
@@ -316,6 +323,28 @@ namespace BSFiberConcrete
             
             return _img;
         }
+
+        private string MakeImageSrcData(MemoryStream  _ms, string _filename = "section.png")
+        {            
+            string _img = "";
+            try
+            {                
+                using (MemoryStream ms = _ms)
+                {                    
+                    byte[] imgBytes = ms.ToArray();
+                    string _extension = Path.GetExtension(_filename).Replace(".", "").ToLower();
+
+                    _img = String.Format("\"data:image/{0};base64, {1}\" alt = \"{2}\" ", _extension, Convert.ToBase64String(imgBytes), _filename);
+                }                
+            }
+            catch (Exception _e)
+            {
+                _img = _e.Message;
+            }
+
+            return _img;
+        }
+
 
         protected virtual void Footer(StreamWriter w)
         {

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -23,10 +25,10 @@ namespace BSFiberConcrete.Section
     /// </summary>
     public partial class BSSectionChart : Form
     {
-        public List<PointF> RodPoints 
+        public List<PointF> RodPoints
         {
             get { return m_RodPoints; }
-            set { m_RodPoints = value;}
+            set { m_RodPoints = value; }
         }
 
         public BeamSection BSBeamSection { private get; set; }
@@ -35,6 +37,10 @@ namespace BSFiberConcrete.Section
         /// Класс используемой арматуры
         /// </summary>
         public string RebarClass { private get; set; }
+
+        public MemoryStream GetImageStream => m_ImageStream;
+        
+        private MemoryStream m_ImageStream;
 
         private List<RebarDiameters> m_Diameters;
 
@@ -207,11 +213,15 @@ namespace BSFiberConcrete.Section
             }
             
             numAreaRebar.Value = (decimal) rods_area;
+
+            m_ImageStream = new MemoryStream();
+            chart.SaveImage(m_ImageStream, ChartImageFormat.Png);
+
         }
 
         private void btnDraw_Click(object sender, EventArgs e)
         {            
-            DrawFromDatasource(true);
+            DrawFromDatasource(true);            
         }
 
 
@@ -259,6 +269,7 @@ namespace BSFiberConcrete.Section
             }
         }
 
+        
         private void BSSectionChart_Load(object sender, EventArgs e)
         {
             try
