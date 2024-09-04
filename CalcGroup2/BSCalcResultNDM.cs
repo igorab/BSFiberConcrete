@@ -92,7 +92,7 @@ namespace BSFiberConcrete
         #endregion
 
         #region 2 группа предельных состояний
-        [DisplayName("П6.2.13. Максимальный момент возникновения трещины, [кгс*см]")]
+        [DisplayName("П6.2.13. Момент возникновения трещины, [кгс*см]")]
         public double M_crc { get; set; }
 
         [DisplayName("П6.2.31. Кривизна 1/Rx, [1/см]")]
@@ -100,6 +100,12 @@ namespace BSFiberConcrete
 
         [DisplayName("П6.2.31. Кривизна 1/Ry, [1/см]")]
         public double Ky_crc { get; set; }
+
+        [DisplayName("П6.2.31. Напряжение в арматуре, [кг/см2]")]
+        public double sig_s_crc { get; set; }
+
+        [DisplayName("П6.2.31. Ширина раскрытия трещины, [см]")]
+        public double a_crc { get; set; }
         #endregion
 
         public List<string> Msg { get; set; }
@@ -308,9 +314,18 @@ namespace BSFiberConcrete
         /// <param name="_D2gr">Словарь с результатами</param>
         public void GetRes2Group(Dictionary<string, double> _D2gr)
         {
-            M_crc = _D2gr["My_crc"];
+            // момент трещинообразования
+            M_crc = _D2gr["My_crc"]; 
+
+            // кривизна
             Ky_crc = _D2gr["Ky"];
             Kx_crc = _D2gr["Kz"];
+
+            // напряжение в арматуре (нужно реализовать для каждого стержня)
+            sig_s_crc = _D2gr["sig_s_crc"];
+
+            // ширина раскрытия трещины
+            a_crc = _D2gr["a_crc"];
         }
 
         private void AddToResult(string _attr, double _value, int _group = 1)
@@ -410,16 +425,20 @@ namespace BSFiberConcrete
             _Message = Msg;
         }
 
-
         /// <summary>
         ///  Результаты расчета по 2 группе предельных состояний
         /// </summary>
         public void Results2Group(ref Dictionary<string, double> _CalcResults)
         {            
             AddToResult("M_crc", BSHelper.kNsm2kgssm( M_crc), 2);                                  
-            AddToResult("Kx", Kx_crc, 2);            
-            AddToResult("Ky", Ky_crc, 2);
-            
+
+            AddToResult("Kx_crc", Kx_crc, 2);            
+            AddToResult("Ky_crc", Ky_crc, 2);
+
+            AddToResult("sig_s_crc", sig_s_crc, 2);
+
+            AddToResult("a_crc", a_crc, 2);
+
             _CalcResults = Res2Group;
         }
         

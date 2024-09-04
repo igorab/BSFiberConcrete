@@ -278,9 +278,16 @@ namespace BSFiberConcrete
                     w.WriteLine($"<td width={bk}><b>{_pair.Key}</b></td>");
 
                     if (_pair.Value < 0.001)
+                    {
                         w.WriteLine($"<td width={bv} align=center colspan=2> {_pair.Value.ToString("E")} </td>");
+                        w.WriteLine($"<td width={bv} align=center colspan=2>{UConv(_pair.Key, _pair.Value)} </td>");
+                    }
                     else
+                    {
                         w.WriteLine($"<td width={bv} align=center colspan=2> {Math.Round(_pair.Value, 4)} </td>");
+                        w.WriteLine($"<td width={bv} align=center colspan=2>{UConv(_pair.Key, _pair.Value)} </td>");
+                    }
+
                     w.WriteLine("</tr>");
                 }
 

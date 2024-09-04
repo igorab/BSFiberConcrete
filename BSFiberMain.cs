@@ -1199,7 +1199,7 @@ namespace BSFiberConcrete
             BSCalcNDM bsCalc2 = new BSCalcNDM(2);
             bsCalc2.BeamSection = _beamSection;
             bsCalc2.BetonTypeId = (cmbTypeMaterial.SelectedIndex == 1) ? 1 : 0;
-            bsCalc2.SetDictParams(D);
+            bsCalc2.SetDictParams(D, calcRes.UtilRate_e_s);            
             bsCalc2.SetRods(listD, listX, listY);
             bsCalc2.Run();
 

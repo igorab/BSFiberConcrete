@@ -34,12 +34,13 @@ namespace BSFiberConcrete.CalcGroup2
         }
 
         // параметры для расчета
-        public void SetDictParams(Dictionary<string, double> _D)
+        public void SetDictParams(Dictionary<string, double> _D, double _utilRate = 0)
         {
+            
             // Enforces
             N = BSHelper.Kgs2kN(_D["N"]);
-            My0 = BSHelper.Kgs2kN(_D["My"]);
-            Mz0 = BSHelper.Kgs2kN(_D["Mz"]);
+            My0 = BSHelper.Kgs2kN(_D["My"]) * (1 + _utilRate);
+            Mz0 = BSHelper.Kgs2kN(_D["Mz"]) * (1 + _utilRate);
 
             // size
             b = _D["b"];
@@ -227,6 +228,12 @@ namespace BSFiberConcrete.CalcGroup2
 
         // деформация в момент образования трещины
         public static double es_crc { get; private set; }
+
+        // напряжение в арматуре в сечении с трещиной
+        public static double sig_s_crc { get; private set; }
+
+        // ширина раскрытия трещины
+        public static double a_crc { get; private set; }
         #endregion
 
         // максимальное число итераций
@@ -565,15 +572,20 @@ namespace BSFiberConcrete.CalcGroup2
                 // проверка на трещины
                 double epsBt = epB[j].Maximum();
 
-                if (epsBt > 0 && efbt1 <= epsBt) 
+                if (GroupLSD == 2 && epsBt > 0 && epsBt >= efbt1) 
                 {
                     if (My_crc == 0 && Mz_crc == 0)
                     {
                         // Трещина возникла
-                        My_crc = Myint;
+                        My_crc = Myint; //момент трещинообразования
                         Mz_crc = Mzint;
+                                                
+                        es_crc = epS[j].Maximum(); // деформация арматуры
 
-                        es_crc = epS[j].Maximum();
+                        sig_s_crc = sigS[j].Maximum(); // напряжение в арматуре
+
+                        double ls = L_s(16);
+                        a_crc = A_crc(sig_s_crc, ls); // ширина раскрытия трещины
                     }
                 }
 
@@ -654,6 +666,8 @@ namespace BSFiberConcrete.CalcGroup2
                 ["My_crc"] = My_crc,
                 ["Mx_crc"] = Mz_crc,
                 ["es_crc"] = es_crc,
+                ["sig_s_crc"] = sig_s_crc,
+                ["a_crc"] = a_crc,
                 ["ItersCnt"] = jend
             };
 

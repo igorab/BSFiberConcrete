@@ -4,6 +4,7 @@ using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static OpenTK.Graphics.OpenGL.GL;
 
 namespace BSFiberConcrete.CalcGroup2
 {
@@ -213,6 +214,37 @@ namespace BSFiberConcrete.CalcGroup2
             }
 
             return E_Sec;
+        }
+
+        /// <summary>
+        /// 6.2.16 значение базового расстояния между трещинами
+        /// </summary>
+        /// <param name="_ds_nom">номинальный диаметр арматуры</param>
+        /// <returns></returns>
+        private double L_s (double _ds_nom)
+        {
+            double kf = 1;
+            double mu_fv = 0.015;
+            double res = kf * (50 + 0.5 * 0.5 * 0.5) * _ds_nom / mu_fv;
+
+            if (res > h)
+                res = h;
+
+            return res;
+        }
+
+        private double A_crc(double _sig_s, double _ls)
+        {
+            double fi1 = 1.4;
+            double fi2 = 0.5;
+            double fi3 = 1.0;
+
+            double psi_s = 1 - 0.8 * sig_s_crc / _sig_s;
+
+            double mu_fv = 0.015;
+            double res = fi1 * fi2 * fi3 * _sig_s / Es0 * _ls;
+
+            return res / 10;
         }
 
     }
