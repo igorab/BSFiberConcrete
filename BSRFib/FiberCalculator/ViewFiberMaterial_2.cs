@@ -74,7 +74,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator.model
         {
             int indexSelected = cmbFiberMaterialType.SelectedIndex;
             //изменить модель
-            _model.Fiber.SetIndexFiberType(indexSelected);
+            _model.Fiber.SetIndexFiberType(indexSelected,true);
         }
 
         private void num_Rf_ser_ValueChanged(object sender, EventArgs e)

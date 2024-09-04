@@ -16,12 +16,15 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         # region Privat fields 
 
         /// <summary>
-        /// Таблица из БД с типами фибры и характеристиками, зависящими от фибры
+        /// Таблица из БД с видами (конкретный гост или ту) фибры и характеристиками, зависящими от фибры
         /// </summary>
         private List<FiberKind> _DataFiberKind;
+        /// <summary>
+        /// аблица из БД с типами (более широкая классифиакция чем вид ) фибры и характеристиками, 
+        /// </summary>
+        private List<FiberType> _DataFiberType;
         private List<FiberGeometry> _DataFiberGeometry;
         private List<FiberLength> _DataFiberLength;
-        private List<FiberType> _DataFiberType;
 
         /// <summary>
         /// Список геометрий, соответсвующий указанному материалу фибиы
@@ -200,7 +203,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
             _DataFiberLength = BSQuery.FiberLengthLoad();
 
             // Определяется состояние экземпляра
-            SetIndexFiberType(0);
+            SetIndexFiberType(0, customUserData);
             // рандомные заначения, 
             Rf = 440;
             Rf_ser = 460;
@@ -234,6 +237,8 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
             SetIndexFiberType(_DataFiberKind[index].TypeID);
 
             DefineListFiberGeometry();
+
+
         }
 
 
@@ -241,9 +246,9 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         /// установить индекс типа фибры
         /// </summary>
         /// <param name="index">номер из таблицы _DataFiberType </param>
-        public void SetIndexFiberType(int index)
+        /// <param name="customUserData">необязательный аргумент, передается в случае пользовательского ввода</param>
+        public void SetIndexFiberType(int index, bool? customUserData = null)
         {
-
             if ((index < 0) || (index > _DataFiberType.Count - 1))
             {
                 return;
@@ -252,6 +257,14 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
             _indexFiberType = index;
             Hita_f = _DataFiberType[_indexFiberType].Hita_f;
             Gamma_fb1 = _DataFiberType[_indexFiberType].Gamma_fb1;
+
+            if (customUserData == null)
+            { _customUserData = false; }
+            else
+            { 
+                _customUserData = (bool)customUserData;
+                FiberName = _DataFiberType[_indexFiberType].Name;
+            }
         }
 
         /// <summary>
@@ -272,6 +285,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
 
             DefineListFiberLength();
         }
+
 
 
         /// <summary>
