@@ -179,15 +179,38 @@ namespace BSFiberConcrete.CalcGroup2
             return s;
         }
 
+        /// <summary>
+        /// коэффициент для напряжения арматуры для элементов с трещинами в растянутой зоне
+        /// </summary>
+        /// <returns></returns>
+        private double Psi_s(double  _e_s)
+        {
+            if (_e_s == 0 || GroupLSD == 1) return 1;
+
+            double res = 1 / (1 + 0.8 * es_crc / _e_s);
+            return res;
+        }
+
+
         // секущий модуль
         private double EV_Sec(double _sigma, double _e, double _E0)
         {
             double E_Sec;
 
             if (_e == 0)
+            {
                 E_Sec = _E0;
+            }
             else
-                E_Sec =  _sigma / _e;
+            {
+                double sigma = _sigma;
+                if (es_crc > 0)
+                {
+                    sigma = sigma * Psi_s(_e); 
+                }
+
+                E_Sec = sigma / _e;
+            }
 
             return E_Sec;
         }

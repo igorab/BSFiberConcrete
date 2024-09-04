@@ -63,6 +63,7 @@ namespace BSFiberConcrete
         /// </summary>
         private List<string> m_Message;
 
+        // Текущий тип сечения
         private BeamSection m_BeamSection { get; set; }
 
         // Mesh generation
@@ -71,6 +72,10 @@ namespace BSFiberConcrete
 
         // координаты центра тяжести элементов (треугольников)
         private List<TriangleNet.Geometry.Point> triCGs;
+
+        //Изображение рассчитываемого сечения
+        private BSSectionChart m_SectionChart;
+        private MemoryStream m_ImageStream;
 
         public BSFiberMain()
         {
@@ -164,7 +169,7 @@ namespace BSFiberConcrete
                 toolTip1.SetToolTip(this.btnLSection, "Тавровое сечение \"Нижняя полка\"");
                 toolTip1.SetToolTip(this.btnIBeam, "Двутавровое сечение");
                 toolTip1.SetToolTip(this.btnRing, "Кольцевое сечение");
-
+                toolTip1.SetToolTip(btnCalcResults, "Результаты расчета");
                 m_Path2BeamDiagrams = new List<string>() { };
 
                 m_RebarDiameters = BSData.LoadRebarDiameters();
@@ -611,7 +616,8 @@ namespace BSFiberConcrete
                 report.Reinforcement = m_Reinforcement;
                 report.BeamSection = _BeamSection;
                 report.CalcResults = m_CalcResults;
-                report.CalcResults2Group = m_CalcResults2Group;
+                report.CalcResults2Group = m_CalcResults2Group;                
+                report.ImageStream = m_ImageStream;
                 report.Messages = m_Message;
                 report.UseReinforcement = _useReinforcement;
                 report.Path2BeamDiagrams = m_Path2BeamDiagrams;
@@ -963,7 +969,7 @@ namespace BSFiberConcrete
         ///  Расчет на действие момента и поперечной силы
         /// </summary>        
         private void btnStaticEqCalc_Click(object sender, EventArgs e)
-        {
+        {            
             // Данные, введенные пользователем
             InitMatFiber();
 
@@ -1453,17 +1459,28 @@ namespace BSFiberConcrete
             }
         }
 
+        private bool ValidateNDMCalc()
+        {
+            if (m_SectionChart == null || m_SectionChart.BSBeamSection != m_BeamSection)
+            {
+                MessageBox.Show("Нажмите кнопку Сечение и задайте диаметры и расстановку стержней арматуры.", 
+                    "Расчет по НДМ", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return false;
+            }
+
+            return true;
+        }
 
         /// <summary>
         /// Расчет по НДМ            
         /// </summary>        
         private void btnCalc_Deform_Click(object sender, EventArgs e)
         {
-            try
-            {
-                //CalcDeformNDM();
-                //return;
+            if (!ValidateNDMCalc()) return;
 
+            try
+            {              
                 if (m_BeamSection == BeamSection.Rect)
                 {
                     CalcNDM(BeamSection.Rect);
@@ -1513,33 +1530,40 @@ namespace BSFiberConcrete
             }
         }
 
+        
+        // сохранить данные с формы
+        private void FormParamsSaveData()
+        {
+            FormParams formParams = new FormParams()
+            {
+                ID = 1,
+                Length = double.Parse(tbLength.Text),
+                LengthCoef = Convert.ToDouble(cmbEffectiveLengthFactor.SelectedItem),
+                BetonType = comboBetonType.SelectedItem.ToString(),
+                Fib_i = cmbFib_i.SelectedItem.ToString(),
+                Bft3n = cmbBetonClass.SelectedItem.ToString(),
+                Bfn = cmbBfn.SelectedItem.ToString(),
+                Bftn = cmbBftn.SelectedItem.ToString(),
+                Eb = numE_beton.Value.ToString(),
+                Efbt = numE_fiber.Value.ToString(),
+                Rs = Convert.ToString(cmbRebarClass.SelectedItem),
+                Rsw = Convert.ToString(cmbTRebarClass.SelectedItem),
+                Area_s = (double)numAs.Value,
+                Area1_s = (double)numAs1.Value,
+                a_s = (double)num_a.Value,
+                a1_s = (double)num_a1.Value
+            };
+
+            BSData.UpdateFormParams(formParams);
+        }
+
 
         // сохранить геометрические размеры
         private void btnSaveParams_Click(object sender, EventArgs e)
         {
             try
             {
-                FormParams formParams = new FormParams()
-                {
-                    ID = 1,
-                    Length = double.Parse(tbLength.Text),
-                    LengthCoef = Convert.ToDouble(cmbEffectiveLengthFactor.SelectedItem),
-                    BetonType = comboBetonType.SelectedItem.ToString(),
-                    Fib_i = cmbFib_i.SelectedItem.ToString(),
-                    Bft3n = cmbBetonClass.SelectedItem.ToString(),
-                    Bfn = cmbBfn.SelectedItem.ToString(),
-                    Bftn = cmbBftn.SelectedItem.ToString(),
-                    Eb = numE_beton.Value.ToString(),
-                    Efbt = numE_fiber.Value.ToString(),
-                    Rs = Convert.ToString(cmbRebarClass.SelectedItem),
-                    Rsw = Convert.ToString(cmbTRebarClass.SelectedItem),
-                    Area_s = (double)numAs.Value,
-                    Area1_s = (double)numAs1.Value,
-                    a_s = (double)num_a.Value,
-                    a1_s = (double) num_a1.Value
-                };
-
-                BSData.UpdateFormParams(formParams);
+                FormParamsSaveData();
 
                 Dictionary<string, double> SZ = new Dictionary<string, double>();
                 double[] sz = BeamSizes();
@@ -1727,20 +1751,20 @@ namespace BSFiberConcrete
         /// <param name="e"></param>
         private void btnSection_Click(object sender, EventArgs e)
         {
-            BSSectionChart sectionChart = new BSSectionChart();
-            sectionChart.BSBeamSection = m_BeamSection;
+            m_SectionChart = new BSSectionChart();
+            m_SectionChart.BSBeamSection = m_BeamSection;
 
             var sz = BeamWidtHeight(out double b, out double h, out double _area);
 
-            sectionChart.RebarClass = cmbRebarClass.SelectedItem.ToString();
-            sectionChart.Wdth = (float)b;
-            sectionChart.Hght = (float)h;
-            sectionChart.Sz = sz;
-            sectionChart.NumArea = _area;
+            m_SectionChart.RebarClass = cmbRebarClass.SelectedItem.ToString();
+            m_SectionChart.Wdth = (float)b;
+            m_SectionChart.Hght = (float)h;
+            m_SectionChart.Sz = sz;
+            m_SectionChart.NumArea = _area;           
+            m_SectionChart.ShowDialog();// .Show();
 
-            sectionChart.Show();
+            m_ImageStream = m_SectionChart.GetImageStream;
         }
-
 
         private void ShowMosaic(BSCalcResultNDM _CalcResNDM)
         {
@@ -2035,6 +2059,8 @@ namespace BSFiberConcrete
         {
             try
             {
+                FormParamsSaveData();
+
                 BSData.UpdateBeamSectionGeometry(m_InitBeamSectionsGeometry);
 
                 GetEffortsFromForm(out Dictionary<string, double> MNQ);

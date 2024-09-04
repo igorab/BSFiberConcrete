@@ -88,8 +88,10 @@ namespace BSFiberConcrete.Lib
                     cnn.Open();
                     using (var tr = cnn.BeginTransaction())
                     {                        
-                        int cnt = cnn.Execute(@"update Params set Length=@Length,
-                                                        LengthCoef=@LengthCoef 
+                        int cnt = cnn.Execute(@"update Params set Length = @Length,
+                                                        LengthCoef = @LengthCoef, BetonType = @BetonType, Fib_i = @Fib_i, Bft3n = @Bft3n,
+                                                        Bfn = @Bfn, Bftn = @Bftn, Eb = @Eb, Efbt = @Efbt, 
+                                                        Rs = @Rsw, Area_s = @Area_s, Area1_s = @Area1_s, a_s = @a_s, a1_s = @a1_s    
                                                     where ID=@ID ", _prms , tr);
                         
                         tr.Commit();
