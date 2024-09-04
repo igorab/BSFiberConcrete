@@ -15,20 +15,23 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         /// Данные по бетону из бд
         /// </summary>
         private List<Beton> _DateConcreteDB;
-
+        /// <summary>
+        /// Данные по Типу бетона
+        /// </summary>
+        private List<BetonType> _DateConcreteTypeDB;
 
         /// <summary>
-        /// Характеристика бетона для указанного вида
+        /// Характеристика бетона для указанного ТИПА 
         /// </summary>
         private List<Beton> _DataConcreteOfKind;
         /// <summary>
-        /// Индекс Типа бетона (тяжелый, мелкозернистый A)
+        /// Индек класса бетона из таблицы _DataConcreteOfKind
         /// </summary>
         private int _indexConcreteClass;
         /// <summary>
-        /// 
+        /// Индекс Типа бетона (тяжелый, мелкозернистый A)
         /// </summary>
-        private int _indexConcreteKind;
+        private int _indexConcreteType;
 
         private string _BT;
 
@@ -43,6 +46,9 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         private double _Rbt_ser;    // МПа
 
         private double _Eb;         // МПа
+
+        // название типа бетона (тяжелый мелкозернистый и тп)
+        private string _nameConcreteType;
         #endregion
 
 
@@ -120,14 +126,29 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
                 OnPropertyChanged();
             }
         }
+
+        public string NameConcreteType
+        {
+            get { return _nameConcreteType; }
+            private set
+            {
+                _nameConcreteType = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
 
 
         public ConcreteMaterial()
         {
-
             _DateConcreteDB = BSData.LoadBetonData();
+            _DateConcreteTypeDB = BSQuery.LoadBetonType();
+
+
+            _DateConcreteTypeDB = _DateConcreteTypeDB.GetRange(0, 3);
+
+
             SetIndexConcretKind(0);
             SetIndexConcreteClass(0);
         }
@@ -140,8 +161,15 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         /// <param name="index"> значения 1 - 4 </param>
         public void SetIndexConcretKind(int index)
         {
-            _indexConcreteKind = index;
+            if ((index < 0) || index > _DateConcreteTypeDB.Count - 1)
+            {
+                return;
+            }
+
+            _indexConcreteType = index;
+            NameConcreteType = _DateConcreteTypeDB[index].Name;
             _DataConcreteOfKind = _DateConcreteDB.Where(p => p.BetonType == index).ToList();
+
         }
 
 
@@ -172,15 +200,29 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         /// Получить список Классов бетона
         /// </summary>
         /// <returns></returns>
-        public List<string> GetFiberTypes()
+        public List<string> GetConcreteClass()
+        {
+            List<string> ConcreteClass = new List<string>();
+            foreach (Beton Concrete in _DataConcreteOfKind)
+            {
+                ConcreteClass.Add(Concrete.BT);
+            }
+
+            return ConcreteClass;
+        }
+
+        /// <summary>
+        /// Получить список Типов бетона
+        /// </summary>
+        /// <returns></returns>
+        public List<string> GetConcreteType()
         {
             List<string> ConcreteType = new List<string>();
 
-            foreach (Beton ConcreteMat in _DataConcreteOfKind)
+            foreach (BetonType typeB in _DateConcreteTypeDB)
             {
-                ConcreteType.Add(ConcreteMat.BT);
+                ConcreteType.Add(typeB.Name);
             }
-
             return ConcreteType;
         }
 
@@ -193,9 +235,9 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         { 
             string result = null;
 
-            switch (_indexConcreteKind)
+            switch (_indexConcreteType)
             {
-                case 1 :
+                case 0 :
                     {
                         if (C_max < 10)
                         {
@@ -203,8 +245,8 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
                         }
                         break;
                     }
+                case 1 :
                 case 2 :
-                case 3 :
                     {
                         if (C_max >= 10)
                         {

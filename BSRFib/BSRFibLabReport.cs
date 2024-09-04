@@ -36,6 +36,7 @@ namespace BSFiberConcrete.BSRFib
 
         public List<Deflection_f_aF> D_f_aF { get; internal set; }
         public List<FibLab> FibLab { get; internal set; }
+        public List<string> ReportMessage { get; set; }
 
 
         public string CreateReport(int _fileIdx = 0)
@@ -209,6 +210,23 @@ namespace BSFiberConcrete.BSRFib
                     w.WriteLine($"<td>{item.F25} </td>");
                     w.WriteLine("</tr>");
                 }
+                w.WriteLine("</Table>");
+                w.WriteLine("<br>");
+            }
+
+
+            if (ReportMessage != null)
+            {
+                w.WriteLine("<Table border=1 bordercolor = darkblue>");
+                w.WriteLine("<caption>Сообщения во время расчета: </caption>");
+
+                foreach (var msg in ReportMessage)
+                {
+                    w.WriteLine("<tr>");
+                    w.WriteLine($"<td><b>{msg}</b></td>");
+                    w.WriteLine("</tr>");
+                }
+                w.WriteLine("</tr>");
                 w.WriteLine("</Table>");
                 w.WriteLine("<br>");
             }

@@ -34,16 +34,15 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
             
             // устанавливаем привязку полей
 
+
             lab_Rb.DataBindings.Add(new Binding("Text", _model.Beton, "Rb", true, DataSourceUpdateMode.OnPropertyChanged));
             lab_Rb_ser.DataBindings.Add(new Binding("Text", _model.Beton, "Rb_ser", true, DataSourceUpdateMode.OnPropertyChanged));
             lab_Rbt.DataBindings.Add(new Binding("Text", _model.Beton, "Rbt", true, DataSourceUpdateMode.OnPropertyChanged));
             lab_Rbt_ser.DataBindings.Add(new Binding("Text", _model.Beton, "Rbt_ser", true, DataSourceUpdateMode.OnPropertyChanged));
             lab_Eb.DataBindings.Add(new Binding("Text", _model.Beton, "Eb", true, DataSourceUpdateMode.OnPropertyChanged));
 
-            lab_Kor.DataBindings.Add(new Binding("Text", _model.FiberCoef, "Kor", true, DataSourceUpdateMode.OnPropertyChanged));
-            lab_Kn.DataBindings.Add(new Binding("Text", _model.FiberCoef, "Kn", true, DataSourceUpdateMode.OnPropertyChanged));
-
-
+            lab_Kor.DataBindings.Add(new Binding("Text", _model, "Kor", true, DataSourceUpdateMode.OnPropertyChanged));
+            lab_Kn.DataBindings.Add(new Binding("Text", _model, "Kn", true, DataSourceUpdateMode.OnPropertyChanged));
             lab_l_f_an.DataBindings.Add(new Binding("Text", _model, "l_f_an", true, DataSourceUpdateMode.OnPropertyChanged));
             lab_mu_fv_min.DataBindings.Add(new Binding("Text", _model, "mu_fv_min", true, DataSourceUpdateMode.OnPropertyChanged));
             lab_C_max.DataBindings.Add(new Binding("Text", _model, "C_max", true, DataSourceUpdateMode.OnPropertyChanged));
@@ -71,8 +70,8 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
             cBox_MuMin.Checked = false;
 
             // характеристики бетона
-            cmbConcreteKind.SelectedIndex = 0;
-            
+            cmbConcreteType.DataSource = _model.Beton.GetConcreteType();
+
             // установка значения коэф
             rbElement_C_1.Checked = true;
 
@@ -131,12 +130,12 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
             _model.GenerateReport();
         }
 
-        private void cmbConcreteKind_SelectedIndexChanged(object sender, EventArgs e)
+        private void cmbConcreteType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int indexConcrete = cmbConcreteKind.SelectedIndex;
+            int indexConcrete = cmbConcreteType.SelectedIndex;
             // из-за смещения индекса первого элемента таблицы (индексация не с нуля а с единицы)
-            _model.Beton.SetIndexConcretKind(indexConcrete + 1);
-            cmbConcrete.DataSource = _model.Beton.GetFiberTypes();
+            _model.Beton.SetIndexConcretKind(indexConcrete);
+            cmbConcrete.DataSource = _model.Beton.GetConcreteClass();
         }
 
         private void rbFiberMaterila_1_CheckedChanged(object sender, EventArgs e)
