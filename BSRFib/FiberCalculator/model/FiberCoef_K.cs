@@ -12,7 +12,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
     /// Класс для определение коэф Кor и Kn 
     /// ()
     /// </summary>
-    public class FiberCoef_K : ViewModelBase
+    public class FiberCoef_K
     {
         # region Private Properties
 
@@ -69,7 +69,6 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
             private set
             {
                 _Kor = value;
-                OnPropertyChanged();
             }
         }
         public double Kn
@@ -78,7 +77,6 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
             private set
             {
                 _Kn = value;
-                OnPropertyChanged();
             }
         }
 

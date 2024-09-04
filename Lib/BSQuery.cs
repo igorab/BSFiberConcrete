@@ -35,6 +35,22 @@ namespace BSFiberConcrete.Lib
             return bt;
         }
 
+        public static List<BetonType> LoadBetonType()
+        {
+            List<BetonType> bt = new List<BetonType>();
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    string query = "select * from BetonType";
+                    var output = cnn.Query<BetonType>(query, new DynamicParameters());
+                    bt = output.ToList();
+                }
+            }
+            catch { }
+            return bt;
+        }
+
 
         /// <summary>
         /// Найти строку из таблицы ТЯЖЕЛОГО бетона

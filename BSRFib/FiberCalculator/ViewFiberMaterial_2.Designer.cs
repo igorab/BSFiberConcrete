@@ -79,7 +79,7 @@
             this.cmbFiberMaterialType.FormattingEnabled = true;
             this.cmbFiberMaterialType.Location = new System.Drawing.Point(135, 4);
             this.cmbFiberMaterialType.Name = "cmbFiberMaterialType";
-            this.cmbFiberMaterialType.Size = new System.Drawing.Size(173, 21);
+            this.cmbFiberMaterialType.Size = new System.Drawing.Size(232, 21);
             this.cmbFiberMaterialType.TabIndex = 1;
             this.cmbFiberMaterialType.SelectedIndexChanged += new System.EventHandler(this.cmbFiberMaterialType_SelectedIndexChanged);
             // 
