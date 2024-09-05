@@ -134,6 +134,7 @@ namespace BSFiberConcrete
             tbLength.Text = Convert.ToString(prms.Length);
             cmbEffectiveLengthFactor.Text = Convert.ToString(prms.LengthCoef);
 
+            cmbFib_i.Text = prms.Fib_i;
             comboBetonType.Text = prms.BetonType;
             cmbBetonClass.Text = prms.Bft3n;
             cmbBfn.Text = prms.Bfn;
@@ -173,9 +174,7 @@ namespace BSFiberConcrete
                 m_Path2BeamDiagrams = new List<string>() { };
 
                 m_RebarDiameters = BSData.LoadRebarDiameters();
-
-                InitFormControls();
-
+                
                 m_Beam = new Dictionary<string, double>();
                 m_Table = new DataTable();
                 m_Rebar = BSData.LoadRebar();
@@ -239,6 +238,8 @@ namespace BSFiberConcrete
                 numYb2.Value = (decimal)fiberConcrete.Yb2;
                 numYb3.Value = (decimal)fiberConcrete.Yb3;
                 numYb5.Value = (decimal)fiberConcrete.Yb5;
+
+                InitFormControls();
 
                 //Mx My N Q Ml
                 double[] mnq = {
@@ -1541,9 +1542,9 @@ namespace BSFiberConcrete
                 LengthCoef = Convert.ToDouble(cmbEffectiveLengthFactor.SelectedItem),
                 BetonType = comboBetonType.SelectedItem.ToString(),
                 Fib_i = cmbFib_i.SelectedItem.ToString(),
-                Bft3n = cmbBetonClass.SelectedItem.ToString(),
-                Bfn = cmbBfn.SelectedItem.ToString(),
-                Bftn = cmbBftn.SelectedItem.ToString(),
+                Bft3n = cmbBetonClass.Text,
+                Bfn = cmbBfn.Text,
+                Bftn = cmbBftn.Text,
                 Eb = numE_beton.Value.ToString(),
                 Efbt = numE_fiber.Value.ToString(),
                 Rs = Convert.ToString(cmbRebarClass.SelectedItem),

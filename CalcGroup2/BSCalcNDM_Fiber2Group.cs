@@ -25,18 +25,24 @@ namespace BSFiberConcrete.CalcGroup2
             double s = 0;
 
             esc0 = Rsc / Es0;
-            est0 = Rst / Es0;            
+            est0 = Rst / Es0;
+
+            bool rip = false;
 
             if (_e > est2)
             {
-                //s = 0;
-                s = Rst + Es0 * (_e - est2);
+                if (rip)
+                    s = 0;
+                else
+                    s = Rst + Es0 * (_e - est2);
 
             }
             else if (_e < -esc2)
             {
-                //s = 0;
-                s  = -Rsc + Es0 * (_e + esc2);
+                if (rip)
+                    s = 0;
+                else
+                    s  = -Rsc + Es0 * (_e + esc2);
             }
             else if (est0 <= _e && _e <= est2)
             {
@@ -71,16 +77,22 @@ namespace BSFiberConcrete.CalcGroup2
             double ebc1 = sc1 / Eb0;
             double ebt1 = st1 / Eb0;
 
+            bool rip = false;
+
             //DODO ?
             if (_e > efbt2)
             {
-                //s = 0;
-                s = Rfbt2 + Eb0 * (_e - efbt2);
+                if (rip)
+                    s = 0;
+                else
+                    s = Rfbt2 + Eb0 * (_e - efbt2);
             }
             else if (_e < -ebc2)
             {
-                //s = 0;
-                s = -Rbc + Eb0 * (_e + ebc2);
+                if (rip)
+                    s = 0;
+                else
+                    s = -Rbc + Eb0 * (_e + ebc2);
             }
             else if (-ebc2 <= _e && _e <= -ebc0)
             {
@@ -122,6 +134,8 @@ namespace BSFiberConcrete.CalcGroup2
                 return Diagr_Beton(_e);
             }
 
+            bool rip = false;
+
             // сжатие по СП 63 6.1.20
             ebc0 = 0.002;
             ebc2 = 0.0035;
@@ -139,8 +153,10 @@ namespace BSFiberConcrete.CalcGroup2
             // сжатие: ПО СП 63 6.1.20 (как для обычного бетона)           
             if (_e < -ebc2) 
             {
-                //s = 0;
-                s = -Rbc + Eb0 * (_e + ebc2);
+                if (rip)
+                    s = 0;
+                else
+                    s = -Rbc + Eb0 * (_e + ebc2);
             }
             else if (-ebc2 <= _e && _e <= -ebc0) 
             {
@@ -173,8 +189,10 @@ namespace BSFiberConcrete.CalcGroup2
             }
             else if (_e > efbt3)
             {
-                //s = 0;
-                s = Rfbt3 + Ebt * (_e - efbt3);
+                if (rip)
+                    s = 0;
+                else
+                    s = Rfbt3 + Ebt * (_e - efbt3);
             }
 
             return s;

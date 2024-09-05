@@ -39,8 +39,8 @@ namespace BSFiberConcrete.CalcGroup2
             
             // Enforces
             N = BSHelper.Kgs2kN(_D["N"]);
-            My0 = BSHelper.Kgs2kN(_D["My"]) * (1 + _utilRate);
-            Mz0 = BSHelper.Kgs2kN(_D["Mz"]) * (1 + _utilRate);
+            My0 = BSHelper.kgssm2kNsm(_D["My"]) * (1 + _utilRate);
+            Mz0 = BSHelper.kgssm2kNsm(_D["Mz"]) * (1 + _utilRate);
 
             // size
             b = _D["b"];
@@ -223,8 +223,8 @@ namespace BSFiberConcrete.CalcGroup2
         public static double Mzint { get; private set; }
 
         // моменты образования трещины
-        public static double My_crc { get; private set; } 
-        public static double Mz_crc { get; private set; }
+        public double My_crc { get; private set; }
+        public double Mz_crc { get; private set; }
 
         // деформация в момент образования трещины
         public static double es_crc { get; private set; }
@@ -577,8 +577,8 @@ namespace BSFiberConcrete.CalcGroup2
                     if (My_crc == 0 && Mz_crc == 0)
                     {
                         // Трещина возникла
-                        My_crc = Myint; //момент трещинообразования
-                        Mz_crc = Mzint;
+                        My_crc = My[j] - Myint; //момент трещинообразования
+                        Mz_crc = Mz[j] - Mzint;
                                                 
                         es_crc = epS[j].Maximum(); // деформация арматуры
 
