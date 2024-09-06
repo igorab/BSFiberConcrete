@@ -52,6 +52,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         private double _Kn;
         private double _l_f_an;
         private double _mu_fv_min;
+        private double _A_min;
         private double _C_max;
         private double _l_f_min;
         private double _R_fbt3;
@@ -100,6 +101,15 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
             private set
             {
                 _mu_fv_min = value;
+                OnPropertyChanged();
+            }
+        }
+        public double A_min
+        {
+            get => _A_min;
+            private set
+            {
+                _A_min = value;
                 OnPropertyChanged();
             }
         }
@@ -280,6 +290,8 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
             l_f_an = 0;
             // минимальное значение коэффициента фибрового армирования
             mu_fv_min = 0;
+            // минимальная площадь сечения элемента
+            A_min = 0;
             // Максимальный размер зерен крупного заполнителя
             C_max = 0;
             // минимальное значение длины фибры
@@ -334,6 +346,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
                 return;
             }
 
+
             // мм
             C_max = 5.3 * Math.Pow(d_f_red * d_f_red * Fiber.Length / (100 * mu_fv_min), 1.0 / 3);
             string msg = Beton.Evaluate_Cmax(C_max);
@@ -375,6 +388,15 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
             if (mu_fv < 0.005)
             {
                 message = "Значение Коэф. фибрового армирования должно быть больше 0.005.";
+                _msgToReport.Add(message);
+                return;
+            }
+
+            A_min = 4 * d_f_red / (mu_fv * Kor);
+
+            if (A_min > _h * _b)
+            {
+                message = "Не выполняется условие по минимальной площади поперечного сечения элемента. Пункт 8.8.";
                 _msgToReport.Add(message);
                 return;
             }
@@ -451,8 +473,6 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
                     ["Длина фибры lf [мм]"] = Convert.ToString(Math.Round(Fiber.Length, 3)),
 
                 };
-
-
                 if (Fiber.Diameter != 0)
                 { InputData.Add("Диаметр фибры df [мм]", Convert.ToString(Math.Round(Fiber.Diameter, 3))); }
                 else
@@ -472,6 +492,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
                     ["Длина заделки фибры в бетоне l_f,an [мм]"] = Convert.ToString(Math.Round(l_f_an,3)),
                     ["Минимальное значение коэф. фибрового армирования μfv_min "] = Convert.ToString(Math.Round(mu_fv_min,4)),
                     ["Максимальный размер зерен крупного заполнителя C_max [мм]"] = Convert.ToString(Math.Round(C_max,3)),
+                    ["Минимальная площадь поперечного сечения элемента [мм2]"] = Convert.ToString(Math.Round(A_min, 3)),
                     ["Минимальное значение длины фибры l_f_min [мм]"] = Convert.ToString(Math.Round(l_f_min,3)),
                     ["Расчетное остаточное сопротивление растяжение Rfbt3 [МПа]"] = Convert.ToString(Math.Round(R_fbt3,6)),
                     ["Нормативное остаточное сопротивление растяжение Rfbt3_n [МПа]"] = Convert.ToString(Math.Round(R_fbt3_n, 6)),

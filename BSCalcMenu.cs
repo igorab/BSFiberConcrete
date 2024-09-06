@@ -4,6 +4,7 @@ using BSFiberConcrete.Beam;
 using BSFiberConcrete.BSRFib;
 using BSFiberConcrete.BSRFib.FiberCalculator;
 using BSFiberConcrete.Calc;
+using BSFiberConcrete.Inform;
 using BSFiberConcrete.LocalStrength;
 using BSFiberConcrete.Section;
 using BSFiberConcrete.Setup;
@@ -75,6 +76,10 @@ namespace BSCalcMenu
             BSFiberSetup bsFiberSetup = new BSFiberSetup();
             bsFiberSetup.TabPageIdx = 0;
             bsFiberSetup.Show();
+                                                                                                        
+
+            FiberConcreteInform fcInforn = new FiberConcreteInform();
+            fcInforn.Show();
         }
 
         private void btnRebarClass_Click(object sender, EventArgs e)

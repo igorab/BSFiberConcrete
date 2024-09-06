@@ -302,6 +302,12 @@
       <DependentUpon>CalcCrackingForm.cs</DependentUpon>
     </Compile>
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Inform\FiberConcreteInform.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inform\FiberConcreteInform.Designer.cs">
+      <DependentUpon>FiberConcreteInform.cs</DependentUpon>
+    </Compile>
     <Compile Include="Lib\BSHelper.cs" />
     <Compile Include="Calc\BSFiberCalculation.cs" />
     <Compile Include="FiberCalcMNQ\BSFiberCalc_MNQ.cs" />
@@ -459,6 +465,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FiberCalcCracking\CalcCrackingForm.resx">
       <DependentUpon>CalcCrackingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inform\FiberConcreteInform.resx">
+      <DependentUpon>FiberConcreteInform.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LocalStrength\BSLocalStrength.resx">
       <DependentUpon>BSLocalStrength.cs</DependentUpon>

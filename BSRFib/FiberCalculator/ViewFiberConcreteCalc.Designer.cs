@@ -132,6 +132,10 @@
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.rbFiberMaterila_1 = new System.Windows.Forms.RadioButton();
             this.rbFiberMaterila_2 = new System.Windows.Forms.RadioButton();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label36 = new System.Windows.Forms.Label();
+            this.lab_A_min = new System.Windows.Forms.Label();
+            this.label41 = new System.Windows.Forms.Label();
             this.fiberConcrateCalculatorBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picFib)).BeginInit();
@@ -170,8 +174,8 @@
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(715, 38);
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 39F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(715, 39);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // labelDescr
@@ -182,7 +186,7 @@
             this.labelDescr.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelDescr.Location = new System.Drawing.Point(121, 0);
             this.labelDescr.Name = "labelDescr";
-            this.labelDescr.Size = new System.Drawing.Size(591, 38);
+            this.labelDescr.Size = new System.Drawing.Size(591, 39);
             this.labelDescr.TabIndex = 34;
             this.labelDescr.Text = "Определение характеристик фибробетона";
             this.labelDescr.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -212,7 +216,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.145967F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 93.85403F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(752, 729);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(752, 745);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // tableLayoutPanel5
@@ -225,14 +229,14 @@
             this.tableLayoutPanel5.Controls.Add(this.gpbFiberMaterial, 0, 1);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel5.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(17, 47);
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(17, 48);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 4;
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 23.56406F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 26.06775F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.06922F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 43.1517F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(715, 679);
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 23.05475F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25.21614F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.340058F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 45.67723F));
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(715, 694);
             this.tableLayoutPanel5.TabIndex = 3;
             // 
             // groupBox3
@@ -242,16 +246,16 @@
             this.groupBox3.Controls.Add(this.txtb4Message);
             this.groupBox3.Controls.Add(this.button1);
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox3.Location = new System.Drawing.Point(3, 388);
+            this.groupBox3.Location = new System.Drawing.Point(3, 379);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(709, 288);
+            this.groupBox3.Size = new System.Drawing.Size(709, 312);
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             // 
             // btnGenerateReport
             // 
             this.btnGenerateReport.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btnGenerateReport.Location = new System.Drawing.Point(5, 38);
+            this.btnGenerateReport.Location = new System.Drawing.Point(3, 40);
             this.btnGenerateReport.Name = "btnGenerateReport";
             this.btnGenerateReport.Size = new System.Drawing.Size(75, 23);
             this.btnGenerateReport.TabIndex = 3;
@@ -266,10 +270,10 @@
             this.tableResult.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 68.82999F));
             this.tableResult.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.73355F));
             this.tableResult.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.18487F));
-            this.tableResult.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 7.251581F));
+            this.tableResult.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 7.251583F));
             this.tableResult.Controls.Add(this.label10, 1, 0);
-            this.tableResult.Controls.Add(this.label42, 3, 6);
-            this.tableResult.Controls.Add(this.lab_Rfbt3, 2, 6);
+            this.tableResult.Controls.Add(this.label42, 3, 7);
+            this.tableResult.Controls.Add(this.lab_Rfbt3, 2, 7);
             this.tableResult.Controls.Add(this.label40, 3, 5);
             this.tableResult.Controls.Add(this.lab_l_f_min, 2, 5);
             this.tableResult.Controls.Add(this.label38, 3, 4);
@@ -285,52 +289,58 @@
             this.tableResult.Controls.Add(this.label7, 0, 3);
             this.tableResult.Controls.Add(this.label9, 0, 4);
             this.tableResult.Controls.Add(this.label18, 0, 5);
-            this.tableResult.Controls.Add(this.label19, 0, 6);
-            this.tableResult.Controls.Add(this.label6, 1, 6);
+            this.tableResult.Controls.Add(this.label19, 0, 7);
+            this.tableResult.Controls.Add(this.label6, 1, 7);
             this.tableResult.Controls.Add(this.label21, 1, 3);
             this.tableResult.Controls.Add(this.label22, 1, 4);
             this.tableResult.Controls.Add(this.label23, 1, 5);
-            this.tableResult.Controls.Add(this.label27, 0, 12);
-            this.tableResult.Controls.Add(this.label26, 0, 11);
-            this.tableResult.Controls.Add(this.label24, 0, 10);
-            this.tableResult.Controls.Add(this.label25, 0, 9);
-            this.tableResult.Controls.Add(this.label20, 0, 8);
-            this.tableResult.Controls.Add(this.label32, 1, 12);
-            this.tableResult.Controls.Add(this.label31, 1, 11);
-            this.tableResult.Controls.Add(this.label30, 1, 10);
-            this.tableResult.Controls.Add(this.label29, 1, 9);
-            this.tableResult.Controls.Add(this.label28, 1, 8);
-            this.tableResult.Controls.Add(this.lab_Gfb, 2, 12);
-            this.tableResult.Controls.Add(this.lab_Efb, 2, 11);
-            this.tableResult.Controls.Add(this.lab_mu_1_fa, 2, 10);
-            this.tableResult.Controls.Add(this.lab_mu_fa, 2, 9);
-            this.tableResult.Controls.Add(this.lab_Rfb, 2, 8);
-            this.tableResult.Controls.Add(this.label44, 3, 8);
-            this.tableResult.Controls.Add(this.label52, 3, 12);
-            this.tableResult.Controls.Add(this.label50, 3, 11);
-            this.tableResult.Controls.Add(this.label33, 0, 7);
-            this.tableResult.Controls.Add(this.label35, 1, 7);
-            this.tableResult.Controls.Add(this.lab_Rfbt3_n, 2, 7);
-            this.tableResult.Controls.Add(this.label37, 3, 7);
+            this.tableResult.Controls.Add(this.label27, 0, 13);
+            this.tableResult.Controls.Add(this.label26, 0, 12);
+            this.tableResult.Controls.Add(this.label24, 0, 11);
+            this.tableResult.Controls.Add(this.label25, 0, 10);
+            this.tableResult.Controls.Add(this.label20, 0, 9);
+            this.tableResult.Controls.Add(this.label32, 1, 13);
+            this.tableResult.Controls.Add(this.label31, 1, 12);
+            this.tableResult.Controls.Add(this.label30, 1, 11);
+            this.tableResult.Controls.Add(this.label29, 1, 10);
+            this.tableResult.Controls.Add(this.label28, 1, 9);
+            this.tableResult.Controls.Add(this.lab_Gfb, 2, 13);
+            this.tableResult.Controls.Add(this.lab_Efb, 2, 12);
+            this.tableResult.Controls.Add(this.lab_mu_1_fa, 2, 11);
+            this.tableResult.Controls.Add(this.lab_mu_fa, 2, 10);
+            this.tableResult.Controls.Add(this.lab_Rfb, 2, 9);
+            this.tableResult.Controls.Add(this.label44, 3, 9);
+            this.tableResult.Controls.Add(this.label52, 3, 13);
+            this.tableResult.Controls.Add(this.label50, 3, 12);
+            this.tableResult.Controls.Add(this.label33, 0, 8);
+            this.tableResult.Controls.Add(this.label35, 1, 8);
+            this.tableResult.Controls.Add(this.lab_Rfbt3_n, 2, 8);
+            this.tableResult.Controls.Add(this.label37, 3, 8);
             this.tableResult.Controls.Add(this.lab_Kor, 2, 0);
             this.tableResult.Controls.Add(this.label11, 1, 1);
-            this.tableResult.Location = new System.Drawing.Point(86, 9);
+            this.tableResult.Controls.Add(this.label12, 0, 6);
+            this.tableResult.Controls.Add(this.label36, 1, 6);
+            this.tableResult.Controls.Add(this.lab_A_min, 2, 6);
+            this.tableResult.Controls.Add(this.label41, 3, 6);
+            this.tableResult.Location = new System.Drawing.Point(86, 11);
             this.tableResult.Name = "tableResult";
-            this.tableResult.RowCount = 13;
-            this.tableResult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.689466F));
-            this.tableResult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.691838F));
-            this.tableResult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.692607F));
-            this.tableResult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.692607F));
-            this.tableResult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.692607F));
-            this.tableResult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.692607F));
-            this.tableResult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.692607F));
-            this.tableResult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.692607F));
-            this.tableResult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.692607F));
-            this.tableResult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.692607F));
-            this.tableResult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.692607F));
-            this.tableResult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.692607F));
-            this.tableResult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.692607F));
-            this.tableResult.Size = new System.Drawing.Size(582, 249);
+            this.tableResult.RowCount = 14;
+            this.tableResult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.140374F));
+            this.tableResult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.142576F));
+            this.tableResult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.143291F));
+            this.tableResult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.143291F));
+            this.tableResult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.143291F));
+            this.tableResult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.143291F));
+            this.tableResult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.14087F));
+            this.tableResult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.143291F));
+            this.tableResult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.143291F));
+            this.tableResult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.143291F));
+            this.tableResult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.143291F));
+            this.tableResult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.143291F));
+            this.tableResult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.143291F));
+            this.tableResult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.143291F));
+            this.tableResult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableResult.Size = new System.Drawing.Size(582, 272);
             this.tableResult.TabIndex = 1;
             // 
             // label10
@@ -347,7 +357,7 @@
             // 
             this.label42.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label42.AutoSize = true;
-            this.label42.Location = new System.Drawing.Point(542, 117);
+            this.label42.Location = new System.Drawing.Point(542, 136);
             this.label42.Name = "label42";
             this.label42.Size = new System.Drawing.Size(30, 13);
             this.label42.TabIndex = 46;
@@ -357,7 +367,7 @@
             // 
             this.lab_Rfbt3.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lab_Rfbt3.AutoSize = true;
-            this.lab_Rfbt3.Location = new System.Drawing.Point(477, 117);
+            this.lab_Rfbt3.Location = new System.Drawing.Point(477, 136);
             this.lab_Rfbt3.Name = "lab_Rfbt3";
             this.lab_Rfbt3.Size = new System.Drawing.Size(13, 13);
             this.lab_Rfbt3.TabIndex = 45;
@@ -517,7 +527,7 @@
             // 
             this.label19.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(3, 117);
+            this.label19.Location = new System.Drawing.Point(3, 136);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(363, 13);
             this.label19.TabIndex = 21;
@@ -527,7 +537,7 @@
             // 
             this.label6.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(403, 117);
+            this.label6.Location = new System.Drawing.Point(403, 136);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(33, 13);
             this.label6.TabIndex = 23;
@@ -567,7 +577,7 @@
             // 
             this.label27.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(3, 232);
+            this.label27.Location = new System.Drawing.Point(3, 253);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(83, 13);
             this.label27.TabIndex = 31;
@@ -577,7 +587,7 @@
             // 
             this.label26.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(3, 212);
+            this.label26.Location = new System.Drawing.Point(3, 231);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(197, 13);
             this.label26.TabIndex = 30;
@@ -587,7 +597,7 @@
             // 
             this.label24.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(3, 193);
+            this.label24.Location = new System.Drawing.Point(3, 212);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(304, 13);
             this.label24.TabIndex = 28;
@@ -597,7 +607,7 @@
             // 
             this.label25.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(3, 174);
+            this.label25.Location = new System.Drawing.Point(3, 193);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(330, 13);
             this.label25.TabIndex = 29;
@@ -607,7 +617,7 @@
             // 
             this.label20.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(3, 155);
+            this.label20.Location = new System.Drawing.Point(3, 174);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(279, 13);
             this.label20.TabIndex = 22;
@@ -617,7 +627,7 @@
             // 
             this.label32.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(403, 232);
+            this.label32.Location = new System.Drawing.Point(403, 253);
             this.label32.Name = "label32";
             this.label32.Size = new System.Drawing.Size(24, 13);
             this.label32.TabIndex = 36;
@@ -627,7 +637,7 @@
             // 
             this.label31.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(403, 212);
+            this.label31.Location = new System.Drawing.Point(403, 231);
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(23, 13);
             this.label31.TabIndex = 35;
@@ -637,7 +647,7 @@
             // 
             this.label30.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(403, 193);
+            this.label30.Location = new System.Drawing.Point(403, 212);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(30, 13);
             this.label30.TabIndex = 34;
@@ -647,7 +657,7 @@
             // 
             this.label29.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(403, 174);
+            this.label29.Location = new System.Drawing.Point(403, 193);
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(28, 13);
             this.label29.TabIndex = 33;
@@ -657,7 +667,7 @@
             // 
             this.label28.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(403, 155);
+            this.label28.Location = new System.Drawing.Point(403, 174);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(24, 13);
             this.label28.TabIndex = 32;
@@ -667,7 +677,7 @@
             // 
             this.lab_Gfb.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lab_Gfb.AutoSize = true;
-            this.lab_Gfb.Location = new System.Drawing.Point(477, 232);
+            this.lab_Gfb.Location = new System.Drawing.Point(477, 253);
             this.lab_Gfb.Name = "lab_Gfb";
             this.lab_Gfb.Size = new System.Drawing.Size(13, 13);
             this.lab_Gfb.TabIndex = 55;
@@ -677,7 +687,7 @@
             // 
             this.lab_Efb.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lab_Efb.AutoSize = true;
-            this.lab_Efb.Location = new System.Drawing.Point(477, 212);
+            this.lab_Efb.Location = new System.Drawing.Point(477, 231);
             this.lab_Efb.Name = "lab_Efb";
             this.lab_Efb.Size = new System.Drawing.Size(13, 13);
             this.lab_Efb.TabIndex = 53;
@@ -687,7 +697,7 @@
             // 
             this.lab_mu_1_fa.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lab_mu_1_fa.AutoSize = true;
-            this.lab_mu_1_fa.Location = new System.Drawing.Point(477, 193);
+            this.lab_mu_1_fa.Location = new System.Drawing.Point(477, 212);
             this.lab_mu_1_fa.Name = "lab_mu_1_fa";
             this.lab_mu_1_fa.Size = new System.Drawing.Size(13, 13);
             this.lab_mu_1_fa.TabIndex = 51;
@@ -697,7 +707,7 @@
             // 
             this.lab_mu_fa.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lab_mu_fa.AutoSize = true;
-            this.lab_mu_fa.Location = new System.Drawing.Point(477, 174);
+            this.lab_mu_fa.Location = new System.Drawing.Point(477, 193);
             this.lab_mu_fa.Name = "lab_mu_fa";
             this.lab_mu_fa.Size = new System.Drawing.Size(13, 13);
             this.lab_mu_fa.TabIndex = 49;
@@ -707,7 +717,7 @@
             // 
             this.lab_Rfb.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lab_Rfb.AutoSize = true;
-            this.lab_Rfb.Location = new System.Drawing.Point(477, 155);
+            this.lab_Rfb.Location = new System.Drawing.Point(477, 174);
             this.lab_Rfb.Name = "lab_Rfb";
             this.lab_Rfb.Size = new System.Drawing.Size(13, 13);
             this.lab_Rfb.TabIndex = 47;
@@ -717,7 +727,7 @@
             // 
             this.label44.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label44.AutoSize = true;
-            this.label44.Location = new System.Drawing.Point(542, 155);
+            this.label44.Location = new System.Drawing.Point(542, 174);
             this.label44.Name = "label44";
             this.label44.Size = new System.Drawing.Size(30, 13);
             this.label44.TabIndex = 48;
@@ -727,7 +737,7 @@
             // 
             this.label52.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label52.AutoSize = true;
-            this.label52.Location = new System.Drawing.Point(542, 232);
+            this.label52.Location = new System.Drawing.Point(542, 253);
             this.label52.Name = "label52";
             this.label52.Size = new System.Drawing.Size(30, 13);
             this.label52.TabIndex = 56;
@@ -737,7 +747,7 @@
             // 
             this.label50.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label50.AutoSize = true;
-            this.label50.Location = new System.Drawing.Point(542, 212);
+            this.label50.Location = new System.Drawing.Point(542, 231);
             this.label50.Name = "label50";
             this.label50.Size = new System.Drawing.Size(30, 13);
             this.label50.TabIndex = 54;
@@ -747,7 +757,7 @@
             // 
             this.label33.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(3, 136);
+            this.label33.Location = new System.Drawing.Point(3, 155);
             this.label33.Name = "label33";
             this.label33.Size = new System.Drawing.Size(387, 13);
             this.label33.TabIndex = 57;
@@ -757,7 +767,7 @@
             // 
             this.label35.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label35.AutoSize = true;
-            this.label35.Location = new System.Drawing.Point(403, 136);
+            this.label35.Location = new System.Drawing.Point(403, 155);
             this.label35.Name = "label35";
             this.label35.Size = new System.Drawing.Size(45, 13);
             this.label35.TabIndex = 58;
@@ -767,7 +777,7 @@
             // 
             this.lab_Rfbt3_n.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lab_Rfbt3_n.AutoSize = true;
-            this.lab_Rfbt3_n.Location = new System.Drawing.Point(477, 136);
+            this.lab_Rfbt3_n.Location = new System.Drawing.Point(477, 155);
             this.lab_Rfbt3_n.Name = "lab_Rfbt3_n";
             this.lab_Rfbt3_n.Size = new System.Drawing.Size(13, 13);
             this.lab_Rfbt3_n.TabIndex = 59;
@@ -777,7 +787,7 @@
             // 
             this.label37.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label37.AutoSize = true;
-            this.label37.Location = new System.Drawing.Point(542, 136);
+            this.label37.Location = new System.Drawing.Point(542, 155);
             this.label37.Name = "label37";
             this.label37.Size = new System.Drawing.Size(30, 13);
             this.label37.TabIndex = 60;
@@ -806,7 +816,7 @@
             // txtb4Message
             // 
             this.txtb4Message.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.txtb4Message.Location = new System.Drawing.Point(81, 264);
+            this.txtb4Message.Location = new System.Drawing.Point(86, 288);
             this.txtb4Message.Name = "txtb4Message";
             this.txtb4Message.Size = new System.Drawing.Size(565, 20);
             this.txtb4Message.TabIndex = 2;
@@ -814,7 +824,7 @@
             // button1
             // 
             this.button1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button1.Location = new System.Drawing.Point(5, 9);
+            this.button1.Location = new System.Drawing.Point(3, 11);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 0;
@@ -826,10 +836,11 @@
             // 
             this.groupBox5.Controls.Add(this.tableLayoutPanel4);
             this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox5.Location = new System.Drawing.Point(3, 340);
+            this.groupBox5.Location = new System.Drawing.Point(1, 334);
+            this.groupBox5.Margin = new System.Windows.Forms.Padding(1);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox5.Size = new System.Drawing.Size(709, 42);
+            this.groupBox5.Padding = new System.Windows.Forms.Padding(1);
+            this.groupBox5.Size = new System.Drawing.Size(713, 41);
             this.groupBox5.TabIndex = 6;
             this.groupBox5.TabStop = false;
             // 
@@ -843,11 +854,11 @@
             this.tableLayoutPanel4.Controls.Add(this.cBox_MuMin, 0, 0);
             this.tableLayoutPanel4.Controls.Add(this.label_Mu_fv, 1, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(2, 15);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(1, 14);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(705, 25);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(711, 26);
             this.tableLayoutPanel4.TabIndex = 1;
             // 
             // numMu_fv
@@ -859,7 +870,7 @@
             0,
             0,
             196608});
-            this.numMu_fv.Location = new System.Drawing.Point(591, 3);
+            this.numMu_fv.Location = new System.Drawing.Point(596, 3);
             this.numMu_fv.Maximum = new decimal(new int[] {
             2,
             0,
@@ -871,19 +882,20 @@
             0,
             196608});
             this.numMu_fv.Name = "numMu_fv";
-            this.numMu_fv.Size = new System.Drawing.Size(111, 20);
+            this.numMu_fv.Size = new System.Drawing.Size(112, 20);
             this.numMu_fv.TabIndex = 5;
             this.numMu_fv.Value = new decimal(new int[] {
             5,
             0,
             0,
             196608});
+            this.numMu_fv.ValueChanged += new System.EventHandler(this.numMu_fv_ValueChanged);
             // 
             // cBox_MuMin
             // 
             this.cBox_MuMin.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.cBox_MuMin.AutoSize = true;
-            this.cBox_MuMin.Location = new System.Drawing.Point(3, 4);
+            this.cBox_MuMin.Location = new System.Drawing.Point(4, 4);
             this.cBox_MuMin.Name = "cBox_MuMin";
             this.cBox_MuMin.Size = new System.Drawing.Size(386, 17);
             this.cBox_MuMin.TabIndex = 0;
@@ -895,7 +907,7 @@
             // 
             this.label_Mu_fv.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label_Mu_fv.AutoSize = true;
-            this.label_Mu_fv.Location = new System.Drawing.Point(395, 6);
+            this.label_Mu_fv.Location = new System.Drawing.Point(398, 6);
             this.label_Mu_fv.Name = "label_Mu_fv";
             this.label_Mu_fv.Size = new System.Drawing.Size(190, 13);
             this.label_Mu_fv.TabIndex = 4;
@@ -907,7 +919,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(3, 3);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(709, 154);
+            this.panel4.Size = new System.Drawing.Size(709, 153);
             this.panel4.TabIndex = 0;
             // 
             // tableLayoutPanel3
@@ -922,8 +934,8 @@
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 154F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(709, 154);
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 153F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(709, 153);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
             // groupBox4
@@ -935,7 +947,7 @@
             this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox4.Location = new System.Drawing.Point(300, 3);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(406, 148);
+            this.groupBox4.Size = new System.Drawing.Size(406, 147);
             this.groupBox4.TabIndex = 5;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Характеристики бетона";
@@ -1144,7 +1156,7 @@
             // 
             this.label4.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(175, 19);
+            this.label4.Location = new System.Drawing.Point(172, 24);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(77, 13);
             this.label4.TabIndex = 10;
@@ -1157,7 +1169,7 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(291, 148);
+            this.groupBox1.Size = new System.Drawing.Size(291, 147);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Прямоугольное сечение";
@@ -1321,11 +1333,11 @@
             // 
             this.gpbFiberMaterial.Controls.Add(this.tableForFiberMaterial);
             this.gpbFiberMaterial.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gpbFiberMaterial.Location = new System.Drawing.Point(0, 160);
+            this.gpbFiberMaterial.Location = new System.Drawing.Point(0, 159);
             this.gpbFiberMaterial.Margin = new System.Windows.Forms.Padding(0);
             this.gpbFiberMaterial.Name = "gpbFiberMaterial";
             this.gpbFiberMaterial.Padding = new System.Windows.Forms.Padding(2);
-            this.gpbFiberMaterial.Size = new System.Drawing.Size(715, 177);
+            this.gpbFiberMaterial.Size = new System.Drawing.Size(715, 174);
             this.gpbFiberMaterial.TabIndex = 3;
             this.gpbFiberMaterial.TabStop = false;
             this.gpbFiberMaterial.Text = "Характеристики фибры";
@@ -1343,7 +1355,7 @@
             this.tableForFiberMaterial.RowCount = 2;
             this.tableForFiberMaterial.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 17.71428F));
             this.tableForFiberMaterial.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 82.28571F));
-            this.tableForFiberMaterial.Size = new System.Drawing.Size(711, 160);
+            this.tableForFiberMaterial.Size = new System.Drawing.Size(711, 157);
             this.tableForFiberMaterial.TabIndex = 16;
             // 
             // tableLayoutPanel6
@@ -1358,8 +1370,8 @@
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 1;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(709, 26);
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(709, 25);
             this.tableLayoutPanel6.TabIndex = 0;
             // 
             // groupBox6
@@ -1370,7 +1382,7 @@
             this.groupBox6.Location = new System.Drawing.Point(0, 0);
             this.groupBox6.Margin = new System.Windows.Forms.Padding(0);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(268, 26);
+            this.groupBox6.Size = new System.Drawing.Size(268, 25);
             this.groupBox6.TabIndex = 15;
             this.groupBox6.TabStop = false;
             // 
@@ -1400,6 +1412,46 @@
             this.rbFiberMaterila_2.UseVisualStyleBackColor = true;
             this.rbFiberMaterila_2.CheckedChanged += new System.EventHandler(this.rbFiberMaterila_2_CheckedChanged);
             // 
+            // label12
+            // 
+            this.label12.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(3, 117);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(170, 13);
+            this.label12.TabIndex = 63;
+            this.label12.Text = "Минимальная площадь сечения";
+            // 
+            // label36
+            // 
+            this.label36.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label36.AutoSize = true;
+            this.label36.Location = new System.Drawing.Point(403, 117);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(36, 13);
+            this.label36.TabIndex = 64;
+            this.label36.Text = "A_min";
+            // 
+            // lab_A_min
+            // 
+            this.lab_A_min.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lab_A_min.AutoSize = true;
+            this.lab_A_min.Location = new System.Drawing.Point(477, 117);
+            this.lab_A_min.Name = "lab_A_min";
+            this.lab_A_min.Size = new System.Drawing.Size(13, 13);
+            this.lab_A_min.TabIndex = 65;
+            this.lab_A_min.Text = "0";
+            // 
+            // label41
+            // 
+            this.label41.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label41.AutoSize = true;
+            this.label41.Location = new System.Drawing.Point(542, 117);
+            this.label41.Name = "label41";
+            this.label41.Size = new System.Drawing.Size(29, 13);
+            this.label41.TabIndex = 66;
+            this.label41.Text = "мм2";
+            // 
             // fiberConcrateCalculatorBindingSource
             // 
             this.fiberConcrateCalculatorBindingSource.DataSource = typeof(BSFiberConcrete.BSRFib.FiberCalculator.FiberConcreteCalculator);
@@ -1408,7 +1460,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(752, 729);
+            this.ClientSize = new System.Drawing.Size(752, 745);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(768, 768);
@@ -1555,5 +1607,9 @@
         private System.Windows.Forms.RadioButton rbFiberMaterila_2;
         private System.Windows.Forms.TableLayoutPanel tableForFiberMaterial;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label36;
+        private System.Windows.Forms.Label lab_A_min;
+        private System.Windows.Forms.Label label41;
     }
 }
