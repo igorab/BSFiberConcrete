@@ -364,6 +364,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="RebarMaterial\RebarCalculation\CalcOfLenRebar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RebarMaterial\RebarCalculation\CalcOfLenRebar.Designer.cs">
+      <DependentUpon>CalcOfLenRebar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Report\BSFiberReport.cs" />
     <Compile Include="Report\BSFiberReport_MNQ.cs" />
     <Compile Include="BSFiberSetup.cs">
@@ -494,6 +500,9 @@
     <Content Include="Data\Fiber.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="RebarMaterial\RebarCalculation\CalcOfLenRebar.resx">
+      <DependentUpon>CalcOfLenRebar.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Section\BSSectionChart.resx">
       <DependentUpon>BSSectionChart.cs</DependentUpon>
     </EmbeddedResource>
