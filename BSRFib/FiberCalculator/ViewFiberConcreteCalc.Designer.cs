@@ -85,6 +85,10 @@
             this.label37 = new System.Windows.Forms.Label();
             this.lab_Kor = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label36 = new System.Windows.Forms.Label();
+            this.lab_A_min = new System.Windows.Forms.Label();
+            this.label41 = new System.Windows.Forms.Label();
             this.txtb4Message = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
@@ -132,10 +136,6 @@
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.rbFiberMaterila_1 = new System.Windows.Forms.RadioButton();
             this.rbFiberMaterila_2 = new System.Windows.Forms.RadioButton();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label36 = new System.Windows.Forms.Label();
-            this.lab_A_min = new System.Windows.Forms.Label();
-            this.label41 = new System.Windows.Forms.Label();
             this.fiberConcrateCalculatorBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picFib)).BeginInit();
@@ -813,6 +813,46 @@
             this.label11.TabIndex = 62;
             this.label11.Text = "Kon";
             // 
+            // label12
+            // 
+            this.label12.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(3, 117);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(170, 13);
+            this.label12.TabIndex = 63;
+            this.label12.Text = "Минимальная площадь сечения";
+            // 
+            // label36
+            // 
+            this.label36.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label36.AutoSize = true;
+            this.label36.Location = new System.Drawing.Point(403, 117);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(36, 13);
+            this.label36.TabIndex = 64;
+            this.label36.Text = "A_min";
+            // 
+            // lab_A_min
+            // 
+            this.lab_A_min.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lab_A_min.AutoSize = true;
+            this.lab_A_min.Location = new System.Drawing.Point(477, 117);
+            this.lab_A_min.Name = "lab_A_min";
+            this.lab_A_min.Size = new System.Drawing.Size(13, 13);
+            this.lab_A_min.TabIndex = 65;
+            this.lab_A_min.Text = "0";
+            // 
+            // label41
+            // 
+            this.label41.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label41.AutoSize = true;
+            this.label41.Location = new System.Drawing.Point(542, 117);
+            this.label41.Name = "label41";
+            this.label41.Size = new System.Drawing.Size(29, 13);
+            this.label41.TabIndex = 66;
+            this.label41.Text = "мм2";
+            // 
             // txtb4Message
             // 
             this.txtb4Message.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -1411,46 +1451,6 @@
             this.rbFiberMaterila_2.Text = "Нестандартная фибра";
             this.rbFiberMaterila_2.UseVisualStyleBackColor = true;
             this.rbFiberMaterila_2.CheckedChanged += new System.EventHandler(this.rbFiberMaterila_2_CheckedChanged);
-            // 
-            // label12
-            // 
-            this.label12.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(3, 117);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(170, 13);
-            this.label12.TabIndex = 63;
-            this.label12.Text = "Минимальная площадь сечения";
-            // 
-            // label36
-            // 
-            this.label36.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label36.AutoSize = true;
-            this.label36.Location = new System.Drawing.Point(403, 117);
-            this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(36, 13);
-            this.label36.TabIndex = 64;
-            this.label36.Text = "A_min";
-            // 
-            // lab_A_min
-            // 
-            this.lab_A_min.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.lab_A_min.AutoSize = true;
-            this.lab_A_min.Location = new System.Drawing.Point(477, 117);
-            this.lab_A_min.Name = "lab_A_min";
-            this.lab_A_min.Size = new System.Drawing.Size(13, 13);
-            this.lab_A_min.TabIndex = 65;
-            this.lab_A_min.Text = "0";
-            // 
-            // label41
-            // 
-            this.label41.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label41.AutoSize = true;
-            this.label41.Location = new System.Drawing.Point(542, 117);
-            this.label41.Name = "label41";
-            this.label41.Size = new System.Drawing.Size(29, 13);
-            this.label41.TabIndex = 66;
-            this.label41.Text = "мм2";
             // 
             // fiberConcrateCalculatorBindingSource
             // 

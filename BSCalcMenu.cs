@@ -4,7 +4,6 @@ using BSFiberConcrete.Beam;
 using BSFiberConcrete.BSRFib;
 using BSFiberConcrete.BSRFib.FiberCalculator;
 using BSFiberConcrete.Calc;
-using BSFiberConcrete.Inform;
 using BSFiberConcrete.LocalStrength;
 using BSFiberConcrete.Section;
 using BSFiberConcrete.Setup;
@@ -94,6 +93,9 @@ namespace BSCalcMenu
             BSFiberSetup bsFiberSetup = new BSFiberSetup();
             bsFiberSetup.TabPageIdx = 2;
             bsFiberSetup.Show();
+
+            CoefInform  coefInform = new CoefInform();
+            coefInform.Show();
         }
 
         private void btnBetonClass_Click(object sender, EventArgs e)

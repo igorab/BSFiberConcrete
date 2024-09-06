@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace BSFiberConcrete.Inform
+namespace BSFiberConcrete
 {
     public partial class FiberConcreteInform : Form
     {

@@ -302,10 +302,16 @@
       <DependentUpon>CalcCrackingForm.cs</DependentUpon>
     </Compile>
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="Inform\FiberConcreteInform.cs">
+    <Compile Include="Inform\Coef\CoefInform.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Inform\FiberConcreteInform.Designer.cs">
+    <Compile Include="Inform\Coef\CoefInform.Designer.cs">
+      <DependentUpon>CoefInform.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inform\FiberConcrete\FiberConcreteInform.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inform\FiberConcrete\FiberConcreteInform.Designer.cs">
       <DependentUpon>FiberConcreteInform.cs</DependentUpon>
     </Compile>
     <Compile Include="Lib\BSHelper.cs" />
@@ -466,8 +472,12 @@
     <EmbeddedResource Include="FiberCalcCracking\CalcCrackingForm.resx">
       <DependentUpon>CalcCrackingForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Inform\FiberConcreteInform.resx">
+    <EmbeddedResource Include="Inform\Coef\CoefInform.resx">
+      <DependentUpon>CoefInform.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inform\FiberConcrete\FiberConcreteInform.resx">
       <DependentUpon>FiberConcreteInform.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="LocalStrength\BSLocalStrength.resx">
       <DependentUpon>BSLocalStrength.cs</DependentUpon>
@@ -629,7 +639,11 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Inform\Concrete\" />
+    <Folder Include="Inform\Fiber\" />
+    <Folder Include="Inform\Rebar\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
