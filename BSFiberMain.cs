@@ -1196,13 +1196,24 @@ namespace BSFiberConcrete
             calcRes.Results1Group(ref m_CalcResults);
             calcRes.ResultsMsg1Group(ref m_Message);
 
-            // выполнить расчет по 2 группе п.с.            
+            // выполнить расчет по 2 группе п.с.
+            // 1 этап
+            // определяем моменты трещинообразования от кратковременных и длительных нагрузок (раздел X)
             BSCalcNDM bsCalc2 = new BSCalcNDM(2);
             bsCalc2.BeamSection = _beamSection;
             bsCalc2.BetonTypeId = (cmbTypeMaterial.SelectedIndex == 1) ? 1 : 0;
             bsCalc2.SetDictParams(D, calcRes.UtilRate_e_s);            
             bsCalc2.SetRods(listD, listX, listY);
             bsCalc2.Run();
+
+            // Если же хотя бы один из моментов трещинообразования оказывается меньше
+            // соответствующего действующего момента, выполняют второй этап расчета.
+            //BSCalcNDM bsCalc3 = new BSCalcNDM(3);
+            //bsCalc2.BeamSection = _beamSection;
+            //bsCalc2.BetonTypeId = (cmbTypeMaterial.SelectedIndex == 1) ? 1 : 0;
+            //bsCalc2.SetDictParams(D, calcRes.UtilRate_e_s);
+            //bsCalc2.SetRods(listD, listX, listY);
+            //bsCalc2.Run();
 
             calcRes.ErrorIdx.Add(bsCalc2.Err);
             calcRes.GetRes2Group(bsCalc2.Results);
@@ -2276,6 +2287,19 @@ namespace BSFiberConcrete
             };
 
             sectionChart.Show();
+        }
+
+        private void picEffortsSign_MouseMove(object sender, MouseEventArgs e)
+        {
+            Cursor.Current = Cursors.Hand; 
+        }
+
+        private void picEffortsSign_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show($"Центр координат находтится в приведенном центре тяжести сечения. X0Y - плоскость сечения, Z - вдоль оси сечения \n " +
+                            $"Задавать знаки усилий следует: \n" +
+                            $"N > 0 - сжатие \n; My > 0 - растягивает нижние волокна \n;" +
+                            $"Qx > 0 вращает правую отсеченную часть по часовой стрелке ", "Система координат", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
