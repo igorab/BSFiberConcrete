@@ -5,6 +5,7 @@ using MathNet.Numerics.Statistics;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.Entity.ModelConfiguration.Configuration;
 using System.Diagnostics.Contracts;
 using System.Linq;
@@ -33,14 +34,21 @@ namespace BSFiberConcrete.CalcGroup2
             GroupLSD = _groupLSD;
         }
 
-        // параметры для расчета
-        public void SetDictParams(Dictionary<string, double> _D, double _utilRate = 0)
+        public BSCalcNDM(int _groupLSD, BeamSection  _BeamSection, int _BetonTypeId)
         {
-            
+            GroupLSD = _groupLSD;
+            BeamSection = _BeamSection;
+            BetonTypeId = _BetonTypeId;
+        }
+
+
+        // параметры для расчета
+        public void SetDictParams(Dictionary<string, double> _D)
+        {            
             // Enforces
-            N = BSHelper.Kgs2kN(_D["N"]);
-            My0 = BSHelper.kgssm2kNsm(_D["My"]) * (1 + _utilRate);
-            Mz0 = BSHelper.kgssm2kNsm(_D["Mz"]) * (1 + _utilRate);
+            N0 = BSHelper.Kgs2kN(_D["N"]);
+            My0 = BSHelper.kgssm2kNsm(_D["My"]) ;
+            Mz0 = BSHelper.kgssm2kNsm(_D["Mz"]) ;
 
             // size
             b = _D["b"];
@@ -106,7 +114,19 @@ namespace BSFiberConcrete.CalcGroup2
                 Rst = BSHelper.Kgssm2ToKNsm2(_D["Rst"]);
             }
             esc2 = _D["esc2"];
-            est2 = _D["est2"];            
+            est2 = _D["est2"];
+
+            e_fbt_ult = _D["ebt_ult"]; 
+        }
+
+        public void MzMyNUp(double _utilRate)
+        {
+            if (_utilRate == 0)
+                return;
+
+            Mz0 /= _utilRate;
+            My0 /= _utilRate ;
+            N0 /=  _utilRate;
         }
 
         /// <summary>
@@ -159,7 +179,7 @@ namespace BSFiberConcrete.CalcGroup2
 
         #region Поля, свойства  - данные для расчета
         // Продольная сила, кН, - сжатие
-        private double N = 0; //-400.0;
+        private double N0 = 0; //-400.0;
         // Момент отн. оси Y, кН*см
         private double My0 = 0; // 9000;
         // Момент отн. оси Z, кН*см
@@ -186,60 +206,69 @@ namespace BSFiberConcrete.CalcGroup2
 
         // Параметры материалов
         // Бетон B25 кН/см2
-        private static double Eb0 = 0; // 30.0 * Math.Pow(10, 3) / 10.0; //Начальный модуль бетона, кН/см2
-        private static double Ebt = 0; //Начальный модуль упругости фибробетона, кН/см2
-        private static double Rbc = 0; // 14.5 / 10d; // Расчетное сопротивление бетона на сжатие, кН/см2
+        private double Eb0 = 0; // 30.0 * Math.Pow(10, 3) / 10.0; //Начальный модуль бетона, кН/см2
+        private double Ebt = 0; //Начальный модуль упругости фибробетона, кН/см2
+        private double Rbc = 0; // 14.5 / 10d; // Расчетное сопротивление бетона на сжатие, кН/см2
 
-        private static double Rfbt = 0;// 1.05 / 10d; // Расчетное сопротивление фибробетона на растяжение, кН/см2
-        private static double Rfbt2 = 0;// 1.05 / 10d; // Расчетное сопротивление фибробетона на сжатие, кН/см2
-        private static double Rfbt3 = 0;// 1.05 / 10d; // Расчетное сопротивление фибробетона на сжатие, кН/см2
+        private double Rfbt = 0;// 1.05 / 10d; // Расчетное сопротивление фибробетона на растяжение, кН/см2
+        private double Rfbt2 = 0;// 1.05 / 10d; // Расчетное сопротивление фибробетона на сжатие, кН/см2
+        private double Rfbt3 = 0;// 1.05 / 10d; // Расчетное сопротивление фибробетона на сжатие, кН/см2
 
         // сжатие
-        private static double ebc0 = 0.002; // Деформация бетона на сжатие
-        private static double ebc2 = 0.0035; // Предельная деформация бетона на сжатие
+        private double ebc0 = 0.002; // Деформация бетона на сжатие
+        private double ebc2 = 0.0035; // Предельная деформация бетона на сжатие
                  
         // растяжение 
-        private static double efbt0 = 0.0001; // Деформация фибробетона на растяжение
-        private static double efbt1 = 0.0001;
-        private static double efbt2 = 0.00015; // Предельная деформация фибробетона на растяжение
-        private static double efbt3 = 0.02; // Предельная деформация фибробетона на растяжение
+        private double efbt0 = 0.0; // Деформация фибробетона на растяжение
+        private double efbt1 = 0.0001;
+        private double efbt2 = 0.00015; // Предельная деформация фибробетона на растяжение
+        private double efbt3 = 0.02; // Предельная деформация фибробетона на растяжение
+        private double e_fbt_ult = 0;
 
         // Арматура кН/см2
-        private static double Es0 = 2.0 * Math.Pow(10, 5) / 10.0; //Начальный модуль арматуры, кН/см2       
-        private static double Rst = 435 / 10d; // Прочность арматуры на растяжение        
-        private static double Rsc = 400 / 10d;  // Прочность арматуры на сжатие
+        private double Es0 = 0; //Начальный модуль арматуры, кН/см2       
+        private double Rst = 0; // Прочность арматуры на растяжение        
+        private double Rsc = 0;  // Прочность арматуры на сжатие
         // сжатие        
-        private static double esc0 = Rsc / Es0;
-        private static double esc2 = 0.025;
+        private double esc0 = 0; // Rsc / Es0;
+        private double esc2 = 0.025;
         // растяжение
-        private static double est0 = Rst / Es0;
-        private static double est2 = 0.025;
+        private double est0 = 0; // Rst / Es0;
+        private double est2 = 0.025;
 
-        private List<double> My, Mz;
+        private List<double> My;
+        private List<double> Mz;
 
         // проверка сечения на усилия
-        public static double Nint { get; private set; }
-        public static double Myint { get; private set; }
-        public static double Mzint { get; private set; }
+        public  double Nint { get; private set; }
+        public  double Myint { get; private set; }
+        public  double Mzint { get; private set; }
 
         // моменты образования трещины
         public double My_crc { get; private set; }
         public double Mz_crc { get; private set; }
 
         // деформация в момент образования трещины
-        public static double es_crc { get; private set; }
+        public double es_crc { get; private set; }
 
         // напряжение в арматуре в сечении с трещиной
-        public static double sig_s_crc { get; private set; }
+        public double sig_s_crc { get; private set; }
 
         // ширина раскрытия трещины
-        public static double a_crc { get; private set; }
+        public double a_crc { get; private set; }
         #endregion
+
+        // коэффициенты использоввания
+        // по деформациям бетона
+        public double UtilRate_fb { get; private set; }
+        // по деформациям арматуры
+        public double UtilRate_s { get; private set; }
+
 
         // максимальное число итераций
         private static int jmax = 20000;
         // Максимальная абсолютная погрешность
-        private static double tolmax = Math.Pow(10, -8);
+        private static double tolmax = Math.Pow(10, -6);
         private static int err = 0;
         private Dictionary<string, double> m_Results = new Dictionary<string, double>();
 
@@ -413,7 +442,7 @@ namespace BSFiberConcrete.CalcGroup2
             List<double> Kz = new List<double>();
                                     
             //Вычисляем параметры деформаций на нулевой итерации
-            ep0.Add(N / Dxx[0]);
+            ep0.Add(N0 / Dxx[0]);
             double denomK = Dyy[0] * Dzz[0] - Math.Pow(Dyz[0], 2) ;
 
             Ky.Add(  (Mz[0] * Dyy[0] + My[0] * Dyz[0]) / denomK );
@@ -529,11 +558,11 @@ namespace BSFiberConcrete.CalcGroup2
                     break;
                 }
                 // Пересчитываем моменты
-                My.Add(My[0] + N * (zcm[j] - zcm[0]));
-                Mz.Add(Mz[0] - N * (ycm[j] - ycm[0]));
+                My.Add(My[0] + N0 * (zcm[j] - zcm[0]));
+                Mz.Add(Mz[0] - N0 * (ycm[j] - ycm[0]));
 
                 // Пересчитываем параметры деформаций
-                ep0.Add(N / Dxx[j]);
+                ep0.Add(N0 / Dxx[j]);
                 Ky.Add( (Mz[j]*Dyy[j] + My[j]*Dyz[j]) / denomK );
                 Kz.Add(-(My[j]*Dzz[j] + Mz[j]*Dyz[j]) / denomK);
 
@@ -616,7 +645,18 @@ namespace BSFiberConcrete.CalcGroup2
             }
             
             int jend = sigB.Count-1;
-            
+
+            // Проверка - выполняются ли условия в равновестия?
+            Nint = sigB[jend].Zip(Ab, (s, A) => s * A).Sum() + sigS[jend].Zip(As, (s, A) => s * A).Sum() -
+                   sigBS[jend].Zip(As, (s, A) => s * A).Sum();
+
+            Myint = -(sigB[jend].ZipThree(Ab, zb[jend], (s, A, z) => s * A * z).Sum() + sigS[jend].ZipThree(As, zs[jend], (s, A, z) => s * A * z).Sum() -
+                      sigBS[jend].ZipThree(As, zs[jend], (s, A, z) => s * A * z).Sum());
+
+            Mzint = sigB[jend].ZipThree(Ab, yb[jend], (s, A, y) => s * A * y).Sum() + sigS[jend].ZipThree(As, ys[jend], (s, A, y) => s * A * y).Sum() -
+                    sigBS[jend].ZipThree(As, ys[jend], (s, A, y) => s * A * y).Sum();
+
+
             // растяжение 
             double sigB_t = sigB[jend].Maximum();
             double sigS_t = sigS[jend].Maximum();
@@ -630,7 +670,13 @@ namespace BSFiberConcrete.CalcGroup2
             double epsB_p = epB[jend].Minimum(); 
             double epsS_p = epS[jend].Minimum();
 
-            
+            // коэффициенты использоввания
+            // по деформациям бетона
+            e_fbt_ult = efbt1;
+            UtilRate_fb  = (e_fbt_ult != 0) ? epsB_t / e_fbt_ult : 1.0;            
+            // по деформациям арматуры
+            UtilRate_s = (esc0 != 0) ? epsS_t / esc0 : 1.0;
+
             // СП 6.1.25 для эпюры с одним знаком
             //double e_fb_ult = ebc2 - (ebc2 - ebc0) * epsB_t / epsB_p;
             //double e_fbt_ult = efbt3 - (efbt3 - efbt2) * epsB_t / epsB_p;
@@ -655,12 +701,15 @@ namespace BSFiberConcrete.CalcGroup2
                 ["epsB_p"] = epsB_p,
                 ["epsS_p"] = epsS_p,
                 // предел
-                ["esc0"] = esc0,
+                ["esc0"] = esc0,                
 
                 // проверка усилий
                 ["My"] = Myint,
                 ["Mx"] = Mzint,
                 ["N"] = Nint,
+
+                ["UR_fb"] = UtilRate_fb,
+                ["UR_s"] = UtilRate_s,
 
                 // трещиностойкость
                 ["My_crc"] = My_crc,
@@ -691,8 +740,6 @@ namespace BSFiberConcrete.CalcGroup2
                 MessageBox.Show(ex.Message);
             }            
             //throw new NotImplementedException();
-        }
-
-        
+        }        
     }
 }

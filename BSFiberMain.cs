@@ -1176,16 +1176,15 @@ namespace BSFiberConcrete
             D.Add("rods_qty", _qty);
             D.Add("rods_area", _area);
 
+            int BetonTypeId = (cmbTypeMaterial.SelectedIndex == 1) ? 1 : 0;
+
             // выполнить расчет по 1 группе п.с.
-            BSCalcNDM bsCalc1 = new BSCalcNDM(1);
-            bsCalc1.BeamSection = _beamSection;
-            bsCalc1.BetonTypeId = (cmbTypeMaterial.SelectedIndex == 1) ? 1 : 0;
+            BSCalcNDM bsCalc1 = new BSCalcNDM(1, _beamSection, BetonTypeId);            
             bsCalc1.SetDictParams(D);
             bsCalc1.SetRods(listD, listX, listY);
             bsCalc1.Run();
 
             BSCalcResultNDM calcRes = new BSCalcResultNDM(bsCalc1.Results);
-
             calcRes.Sig_B = bsCalc1.SigmaBResult;
             calcRes.Sig_S = bsCalc1.SigmaSResult;
             calcRes.Eps_B = bsCalc1.EpsilonBResult;
@@ -1199,21 +1198,25 @@ namespace BSFiberConcrete
             // выполнить расчет по 2 группе п.с.
             // 1 этап
             // определяем моменты трещинообразования от кратковременных и длительных нагрузок (раздел X)
-            BSCalcNDM bsCalc2 = new BSCalcNDM(2);
-            bsCalc2.BeamSection = _beamSection;
-            bsCalc2.BetonTypeId = (cmbTypeMaterial.SelectedIndex == 1) ? 1 : 0;
-            bsCalc2.SetDictParams(D, calcRes.UtilRate_e_s);            
+            BSCalcNDM bsCalc2 = new BSCalcNDM(2, _beamSection, BetonTypeId);            
+            bsCalc2.SetDictParams(D);
+           
+            var res_fb = bsCalc1.UtilRate_fb;
+
+            bsCalc2.MzMyNUp(1);// bsCalc1.UtilRate_s);
             bsCalc2.SetRods(listD, listX, listY);
             bsCalc2.Run();
 
+            var res_s2 = bsCalc2.UtilRate_s;
+            var res_fb2 = bsCalc2.UtilRate_fb;
+
             // Если же хотя бы один из моментов трещинообразования оказывается меньше
             // соответствующего действующего момента, выполняют второй этап расчета.
-            //BSCalcNDM bsCalc3 = new BSCalcNDM(3);
-            //bsCalc2.BeamSection = _beamSection;
-            //bsCalc2.BetonTypeId = (cmbTypeMaterial.SelectedIndex == 1) ? 1 : 0;
-            //bsCalc2.SetDictParams(D, calcRes.UtilRate_e_s);
-            //bsCalc2.SetRods(listD, listX, listY);
-            //bsCalc2.Run();
+            BSCalcNDM bsCalc3 = new BSCalcNDM(2, _beamSection, BetonTypeId);
+            bsCalc3.SetDictParams(D);
+            bsCalc3.MzMyNUp(res_fb2);
+            bsCalc3.SetRods(listD, listX, listY);
+            bsCalc3.Run();
 
             calcRes.ErrorIdx.Add(bsCalc2.Err);
             calcRes.GetRes2Group(bsCalc2.Results);
