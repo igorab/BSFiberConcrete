@@ -1164,6 +1164,9 @@ namespace BSFiberConcrete
         /// </summary>        
         private void CalcNDM(BeamSection _beamSection)
         {
+            const int GR1 = 1;
+            const int GR2 = 2;
+
             // данные с формы
             Dictionary<string, double> D = DictCalcParams(_beamSection);
 
@@ -1179,7 +1182,7 @@ namespace BSFiberConcrete
             int BetonTypeId = (cmbTypeMaterial.SelectedIndex == 1) ? 1 : 0;
 
             // выполнить расчет по 1 группе п.с.
-            BSCalcNDM bsCalc1 = new BSCalcNDM(1, _beamSection, BetonTypeId);            
+            BSCalcNDM bsCalc1 = new BSCalcNDM(GR1, _beamSection, BetonTypeId);            
             bsCalc1.SetDictParams(D);
             bsCalc1.SetRods(listD, listX, listY);
             bsCalc1.Run();
@@ -1198,12 +1201,10 @@ namespace BSFiberConcrete
             // выполнить расчет по 2 группе п.с.
             // 1 этап
             // определяем моменты трещинообразования от кратковременных и длительных нагрузок (раздел X)
-            BSCalcNDM bsCalc2 = new BSCalcNDM(2, _beamSection, BetonTypeId);            
-            bsCalc2.SetDictParams(D);
-           
-            var res_fb = bsCalc1.UtilRate_fb;
-
-            bsCalc2.MzMyNUp(1);// bsCalc1.UtilRate_s);
+            BSCalcNDM bsCalc2 = new BSCalcNDM(GR2, _beamSection, BetonTypeId);            
+            bsCalc2.SetDictParams(D);           
+            var ur_fb = bsCalc1.UtilRate_fb;
+            bsCalc2.MzMyNUp(1);// (bsCalc1.UtilRate_s)
             bsCalc2.SetRods(listD, listX, listY);
             bsCalc2.Run();
 
@@ -1212,11 +1213,21 @@ namespace BSFiberConcrete
 
             // Если же хотя бы один из моментов трещинообразования оказывается меньше
             // соответствующего действующего момента, выполняют второй этап расчета.
-            BSCalcNDM bsCalc3 = new BSCalcNDM(2, _beamSection, BetonTypeId);
+            BSCalcNDM bsCalc3 = new BSCalcNDM(GR2, _beamSection, BetonTypeId);
             bsCalc3.SetDictParams(D);
             bsCalc3.MzMyNUp(res_fb2);
             bsCalc3.SetRods(listD, listX, listY);
             bsCalc3.Run();
+
+            var res_s3 = bsCalc3.UtilRate_s;
+            var res_fb3 = bsCalc3.UtilRate_fb;
+
+            BSCalcNDM bsCalc4 = new BSCalcNDM(GR2, _beamSection, BetonTypeId);
+            bsCalc4.CalcAcrc = true;
+            bsCalc4.SetDictParams(D);
+            bsCalc4.MzMyNUp(res_fb2);
+            bsCalc4.SetRods(listD, listX, listY);
+            bsCalc4.Run();
 
             calcRes.ErrorIdx.Add(bsCalc2.Err);
             calcRes.GetRes2Group(bsCalc2.Results);
@@ -2303,6 +2314,13 @@ namespace BSFiberConcrete
                             $"Задавать знаки усилий следует: \n" +
                             $"N > 0 - сжатие \n; My > 0 - растягивает нижние волокна \n;" +
                             $"Qx > 0 вращает правую отсеченную часть по часовой стрелке ", "Система координат", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        
+        // Трещиностойкость
+        private void btnNDMCrc_Click(object sender, EventArgs e)
+        {
+            BSCalcNDMCrc calcNDMCrc = new BSCalcNDMCrc();
+            calcNDMCrc.Show();
         }
     }
 }

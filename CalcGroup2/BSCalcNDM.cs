@@ -24,6 +24,11 @@ namespace BSFiberConcrete.CalcGroup2
         /// группа предельных состояний
         /// </summary>
         private readonly int GroupLSD;
+
+        /// <summary>   
+        /// рассчитывать ширину раскрыттия трещины
+        /// </summary>
+        public bool CalcAcrc { get; set; } = false;
         
         /// <summary>
         /// Конструктор
@@ -127,6 +132,8 @@ namespace BSFiberConcrete.CalcGroup2
             Mz0 /= _utilRate;
             My0 /= _utilRate ;
             N0 /=  _utilRate;
+
+            double iy = y_interpolate(My0);
         }
 
         /// <summary>
@@ -597,13 +604,13 @@ namespace BSFiberConcrete.CalcGroup2
 
                 Mzint = sigB[j].ZipThree(Ab, yb[j], (s, A, y) => s * A * y).Sum() + sigS[j].ZipThree(As, ys[j], (s, A, y) => s * A * y).Sum() -
                         sigBS[j].ZipThree(As, ys[j], (s, A, y) => s * A * y).Sum();
-
-                // проверка на трещины
-                double epsBt = epB[j].Maximum();
-
-                if (GroupLSD == 2 && epsBt > 0 && epsBt >= efbt1) 
+                
+                if (GroupLSD == 2 && CalcAcrc == true ) 
                 {
-                    if (My_crc == 0 && Mz_crc == 0)
+                    // проверка на трещины
+                    double epsBt = epB[j].Maximum();
+
+                    if (epsBt > 0 && epsBt >= efbt1 && My_crc == 0 && Mz_crc == 0)
                     {
                         // Трещина возникла
                         My_crc = My[j] - Myint; //момент трещинообразования
@@ -738,8 +745,7 @@ namespace BSFiberConcrete.CalcGroup2
             catch (Exception ex) 
             {
                 MessageBox.Show(ex.Message);
-            }            
-            //throw new NotImplementedException();
-        }        
+            }                   
+        }                 
     }
 }

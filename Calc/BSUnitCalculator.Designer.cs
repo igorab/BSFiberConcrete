@@ -300,7 +300,8 @@
             this.cmbFromM.FormattingEnabled = true;
             this.cmbFromM.Items.AddRange(new object[] {
             "кНм",
-            "Нмм"});
+            "Нмм",
+            "кгс*см"});
             this.cmbFromM.Location = new System.Drawing.Point(30, 33);
             this.cmbFromM.Name = "cmbFromM";
             this.cmbFromM.Size = new System.Drawing.Size(63, 21);
@@ -329,6 +330,9 @@
             // cmbToM
             // 
             this.cmbToM.FormattingEnabled = true;
+            this.cmbToM.Items.AddRange(new object[] {
+            "кгс*см",
+            "Нмм"});
             this.cmbToM.Location = new System.Drawing.Point(30, 75);
             this.cmbToM.Name = "cmbToM";
             this.cmbToM.Size = new System.Drawing.Size(63, 21);

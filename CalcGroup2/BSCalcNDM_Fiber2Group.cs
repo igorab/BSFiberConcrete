@@ -265,5 +265,14 @@ namespace BSFiberConcrete.CalcGroup2
             return res / 10;
         }
 
+        public double y_interpolate(double _x)
+        {
+            double y;
+
+            y = 4E-23 * Math.Pow(_x, 3) - 1E-15 * Math.Pow(_x, 2) + 3E-8 * _x + 0.0011;
+
+            return y;
+        }
+
     }
 }
