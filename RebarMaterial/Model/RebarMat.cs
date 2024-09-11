@@ -278,7 +278,7 @@ namespace BSFiberConcrete
             }
             _indexRebarDiameter = index;
             Diameter = _selectedDiameters[index].Diameter;
-            Square = _selectedDiameters[index].Square;
+            Square = _selectedDiameters[index].Square * 100;// перевод из см в мм 
             us = 2 * Math.PI * Diameter / 2;
             CalculateHita_2();
         }
