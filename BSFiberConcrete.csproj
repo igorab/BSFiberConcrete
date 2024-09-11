@@ -366,7 +366,6 @@
     </Compile>
     <Compile Include="RebarMaterial\Model\FiberConcreteMaterial.cs" />
     <Compile Include="RebarMaterial\Model\RebarMat.cs" />
-    <Compile Include="RebarMaterial\RebarCalculation\BaseCommand.cs" />
     <Compile Include="RebarMaterial\RebarCalculation\CalcOfLenRebar.cs" />
     <Compile Include="RebarMaterial\RebarCalculation\ViewCalcOfLenRebar.cs">
       <SubType>Form</SubType>
