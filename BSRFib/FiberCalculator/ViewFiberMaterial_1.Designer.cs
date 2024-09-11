@@ -53,6 +53,7 @@
             // 
             // tableLayoutPanel3
             // 
+            this.tableLayoutPanel3.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.tableLayoutPanel3.ColumnCount = 3;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 75.1861F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.90323F));
@@ -213,6 +214,7 @@
             // 
             // lab_Fiber_Geometry
             // 
+            this.lab_Fiber_Geometry.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lab_Fiber_Geometry.AutoSize = true;
             this.lab_Fiber_Geometry.Location = new System.Drawing.Point(467, 77);
             this.lab_Fiber_Geometry.Name = "lab_Fiber_Geometry";
@@ -222,6 +224,7 @@
             // 
             // cmbFiberMaterial
             // 
+            this.cmbFiberMaterial.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.cmbFiberMaterial.FormattingEnabled = true;
             this.cmbFiberMaterial.Location = new System.Drawing.Point(133, 3);
             this.cmbFiberMaterial.Name = "cmbFiberMaterial";
@@ -231,6 +234,7 @@
             // 
             // cmbFiber_l
             // 
+            this.cmbFiber_l.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.cmbFiber_l.FormattingEnabled = true;
             this.cmbFiber_l.Location = new System.Drawing.Point(578, 101);
             this.cmbFiber_l.Name = "cmbFiber_l";
@@ -240,6 +244,7 @@
             // 
             // cmbFiber_Geometry
             // 
+            this.cmbFiber_Geometry.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.cmbFiber_Geometry.FormattingEnabled = true;
             this.cmbFiber_Geometry.Location = new System.Drawing.Point(578, 74);
             this.cmbFiber_Geometry.Name = "cmbFiber_Geometry";
@@ -249,7 +254,7 @@
             // 
             // lab_FiberMat
             // 
-            this.lab_FiberMat.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lab_FiberMat.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lab_FiberMat.AutoSize = true;
             this.lab_FiberMat.Location = new System.Drawing.Point(0, 7);
             this.lab_FiberMat.Name = "lab_FiberMat";
@@ -259,7 +264,7 @@
             // 
             // lab_Fiber_l
             // 
-            this.lab_Fiber_l.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lab_Fiber_l.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lab_Fiber_l.AutoSize = true;
             this.lab_Fiber_l.Location = new System.Drawing.Point(467, 105);
             this.lab_Fiber_l.Name = "lab_Fiber_l";

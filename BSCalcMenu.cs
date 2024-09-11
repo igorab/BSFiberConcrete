@@ -75,6 +75,10 @@ namespace BSCalcMenu
             BSFiberSetup bsFiberSetup = new BSFiberSetup();
             bsFiberSetup.TabPageIdx = 0;
             bsFiberSetup.Show();
+                                                                                                        
+
+            FiberConcreteInform fcInforn = new FiberConcreteInform();
+            fcInforn.Show();
         }
 
         private void btnRebarClass_Click(object sender, EventArgs e)
@@ -89,6 +93,9 @@ namespace BSCalcMenu
             BSFiberSetup bsFiberSetup = new BSFiberSetup();
             bsFiberSetup.TabPageIdx = 2;
             bsFiberSetup.Show();
+
+            CoefInform  coefInform = new CoefInform();
+            coefInform.Show();
         }
 
         private void btnBetonClass_Click(object sender, EventArgs e)
@@ -235,6 +242,12 @@ namespace BSCalcMenu
         {        
             BSFiberClassSetup fiberClassSetup = new BSFiberClassSetup();
             fiberClassSetup.Show();
+        }
+
+        private void btnCalcOfLenRebar_Click(object sender, EventArgs e)
+        {
+            ViewCalcOfLenRebar calcOfLenRebar = new ViewCalcOfLenRebar();
+            calcOfLenRebar.Show();
         }
     }
 }
