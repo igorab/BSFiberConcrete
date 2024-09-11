@@ -243,5 +243,11 @@ namespace BSCalcMenu
             BSFiberClassSetup fiberClassSetup = new BSFiberClassSetup();
             fiberClassSetup.Show();
         }
+
+        private void btnCalcOfLenRebar_Click(object sender, EventArgs e)
+        {
+            ViewCalcOfLenRebar calcOfLenRebar = new ViewCalcOfLenRebar();
+            calcOfLenRebar.Show();
+        }
     }
 }

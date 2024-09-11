@@ -364,11 +364,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="RebarMaterial\RebarCalculation\CalcOfLenRebar.cs">
+    <Compile Include="RebarMaterial\Model\FiberConcreteMaterial.cs" />
+    <Compile Include="RebarMaterial\Model\RebarMat.cs" />
+    <Compile Include="RebarMaterial\RebarCalculation\BaseCommand.cs" />
+    <Compile Include="RebarMaterial\RebarCalculation\CalcOfLenRebar.cs" />
+    <Compile Include="RebarMaterial\RebarCalculation\ViewCalcOfLenRebar.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RebarMaterial\RebarCalculation\CalcOfLenRebar.Designer.cs">
-      <DependentUpon>CalcOfLenRebar.cs</DependentUpon>
+    <Compile Include="RebarMaterial\RebarCalculation\ViewCalcOfLenRebar.Designer.cs">
+      <DependentUpon>ViewCalcOfLenRebar.cs</DependentUpon>
     </Compile>
     <Compile Include="Report\BSFiberReport.cs" />
     <Compile Include="Report\BSFiberReport_MNQ.cs" />
@@ -500,8 +504,8 @@
     <Content Include="Data\Fiber.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EmbeddedResource Include="RebarMaterial\RebarCalculation\CalcOfLenRebar.resx">
-      <DependentUpon>CalcOfLenRebar.cs</DependentUpon>
+    <EmbeddedResource Include="RebarMaterial\RebarCalculation\ViewCalcOfLenRebar.resx">
+      <DependentUpon>ViewCalcOfLenRebar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Section\BSSectionChart.resx">
       <DependentUpon>BSSectionChart.cs</DependentUpon>
