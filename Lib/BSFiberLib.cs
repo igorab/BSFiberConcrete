@@ -10,8 +10,18 @@ using BSFiberConcrete;
 
 namespace BSFiberConcrete
 {
-    internal class BSFiberLib
-    {        
+    public class BSFiberLib
+    {
+        /// <summary>
+        /// 1 группа предельных состояний
+        /// </summary>
+        public const int CG1 = 1;
+
+        /// <summary>
+        /// 2 группа пределеных состояний
+        /// </summary>
+        public const int CG2 = 2;
+
         /// <summary>
         /// Прочности фибробетона на растяжение
         /// </summary>

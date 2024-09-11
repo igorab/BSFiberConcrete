@@ -267,7 +267,7 @@ namespace BSFiberConcrete
     /// <summary>
     /// Таблица 2 СП360
     /// </summary>
-    class BSFiberBeton
+    public class BSFiberBeton
     {
         public int Id { get; set; }
         public string Name { get; set; }

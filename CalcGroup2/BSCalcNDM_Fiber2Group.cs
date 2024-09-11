@@ -204,7 +204,7 @@ namespace BSFiberConcrete.CalcGroup2
         /// <returns></returns>
         private double Psi_s(double  _e_s)
         {
-            if (_e_s == 0 || GroupLSD == 1) return 1;
+            if (_e_s == 0 || GroupLSD == BSFiberLib.CG1) return 1;
 
             double res = 1 / (1 + 0.8 * es_crc / _e_s);
             return res;
@@ -223,7 +223,7 @@ namespace BSFiberConcrete.CalcGroup2
             else
             {
                 double sigma = _sigma;
-                if (es_crc > 0)
+                if (es_crc != 0)
                 {
                     sigma = sigma * Psi_s(_e); 
                 }
@@ -238,12 +238,14 @@ namespace BSFiberConcrete.CalcGroup2
         /// 6.2.16 значение базового расстояния между трещинами
         /// </summary>
         /// <param name="_ds_nom">номинальный диаметр арматуры</param>
-        /// <returns></returns>
+        /// <returns>Расстояние между трещинами</returns>
         private double L_s (double _ds_nom)
         {
             double kf = 1;
             double mu_fv = 0.015;
-            double res = kf * (50 + 0.5 * 0.5 * 0.5) * _ds_nom / mu_fv;
+            double fi2 = 0.8;
+            double fi3 = 1;
+            double res = kf * (50 + 0.5 * fi2 * fi3) * _ds_nom / mu_fv;
 
             if (res > h)
                 res = h;

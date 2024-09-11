@@ -1169,6 +1169,8 @@ namespace BSFiberConcrete
 
             // данные с формы
             Dictionary<string, double> D = DictCalcParams(_beamSection);
+            // Заданные усилия
+            (double Mx0, double My0, double N0) = (D["Mz"], D["My"], D["N"]);
 
             //привязка арматуры (по X - высота, по Y ширина балки)
             double leftX = 0;
@@ -1181,7 +1183,9 @@ namespace BSFiberConcrete
 
             int BetonTypeId = (cmbTypeMaterial.SelectedIndex == 1) ? 1 : 0;
 
-            // выполнить расчет по 1 группе п.с.
+            ///
+            /// выполнить расчет по 1 группе предельных состояний
+            ///
             BSCalcNDM bsCalc1 = new BSCalcNDM(GR1, _beamSection, BetonTypeId);            
             bsCalc1.SetDictParams(D);
             bsCalc1.SetRods(listD, listX, listY);
@@ -1198,17 +1202,25 @@ namespace BSFiberConcrete
             calcRes.Results1Group(ref m_CalcResults);
             calcRes.ResultsMsg1Group(ref m_Message);
 
-            // выполнить расчет по 2 группе п.с.
+            ///
+            /// выполнить расчет по 2 группе предельных состояний
+            /// 
             // 1 этап
             // определяем моменты трещинообразования от кратковременных и длительных нагрузок (раздел X)
+            double Mx_crc; double My_crc; double N_crc;
             BSCalcNDM bsCalc2 = new BSCalcNDM(GR2, _beamSection, BetonTypeId);            
             bsCalc2.SetDictParams(D);           
             var ur_fb = bsCalc1.UtilRate_fb;
             bsCalc2.MzMyNUp(1);// (bsCalc1.UtilRate_s)
             bsCalc2.SetRods(listD, listX, listY);
             bsCalc2.Run();
+            // момент трещинообразования
+            Mx_crc = bsCalc2.Mz_crc;
+            My_crc = bsCalc2.My_crc;
+            N_crc  = bsCalc2.N_crc;
+            
+            double eps_s_crc = bsCalc2.es_crc;
 
-            var res_s2 = bsCalc2.UtilRate_s;
             var res_fb2 = bsCalc2.UtilRate_fb;
 
             // Если же хотя бы один из моментов трещинообразования оказывается меньше
@@ -1216,16 +1228,21 @@ namespace BSFiberConcrete
             BSCalcNDM bsCalc3 = new BSCalcNDM(GR2, _beamSection, BetonTypeId);
             bsCalc3.SetDictParams(D);
             bsCalc3.MzMyNUp(res_fb2);
+            //bsCalc3.SetMN(Mx_crc, My_crc, N_crc);
             bsCalc3.SetRods(listD, listX, listY);
             bsCalc3.Run();
 
-            var res_s3 = bsCalc3.UtilRate_s;
-            var res_fb3 = bsCalc3.UtilRate_fb;
+            List<double> E_S_crc =  bsCalc3.EpsilonSResult;    
+            eps_s_crc = bsCalc3.es_crc;
+            double ur_s = bsCalc3.UtilRate_s;
+            double ur_fb3 = bsCalc3.UtilRate_fb;
 
-            BSCalcNDM bsCalc4 = new BSCalcNDM(GR2, _beamSection, BetonTypeId);
-            bsCalc4.CalcAcrc = true;
+            // определение ширины раскрытия трещины
+            BSCalcNDM bsCalc4 = new BSCalcNDM(GR2, _beamSection, BetonTypeId);            
             bsCalc4.SetDictParams(D);
-            bsCalc4.MzMyNUp(res_fb2);
+            bsCalc4.SetMN(Mx0, My0, N0);
+            bsCalc4.SetE_S_Crc(E_S_crc);
+            //bsCalc4.MzMyNUp(res_fb2);
             bsCalc4.SetRods(listD, listX, listY);
             bsCalc4.Run();
 
