@@ -4,6 +4,7 @@ using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static OpenTK.Graphics.OpenGL.GL;
 
 namespace BSFiberConcrete.CalcGroup2
 {
@@ -24,18 +25,24 @@ namespace BSFiberConcrete.CalcGroup2
             double s = 0;
 
             esc0 = Rsc / Es0;
-            est0 = Rst / Es0;            
+            est0 = Rst / Es0;
+
+            bool rip = false;
 
             if (_e > est2)
             {
-                //s = 0;
-                s = Rst + Es0 * (_e - est2);
+                if (rip)
+                    s = 0;
+                else
+                    s = Rst + Es0 * (_e - est2);
 
             }
             else if (_e < -esc2)
             {
-                //s = 0;
-                s  = -Rsc + Es0 * (_e + esc2);
+                if (rip)
+                    s = 0;
+                else
+                    s  = -Rsc + Es0 * (_e + esc2);
             }
             else if (est0 <= _e && _e <= est2)
             {
@@ -70,16 +77,22 @@ namespace BSFiberConcrete.CalcGroup2
             double ebc1 = sc1 / Eb0;
             double ebt1 = st1 / Eb0;
 
+            bool rip = false;
+
             //DODO ?
             if (_e > efbt2)
             {
-                //s = 0;
-                s = Rfbt2 + Eb0 * (_e - efbt2);
+                if (rip)
+                    s = 0;
+                else
+                    s = Rfbt2 + Eb0 * (_e - efbt2);
             }
             else if (_e < -ebc2)
             {
-                //s = 0;
-                s = -Rbc + Eb0 * (_e + ebc2);
+                if (rip)
+                    s = 0;
+                else
+                    s = -Rbc + Eb0 * (_e + ebc2);
             }
             else if (-ebc2 <= _e && _e <= -ebc0)
             {
@@ -121,6 +134,8 @@ namespace BSFiberConcrete.CalcGroup2
                 return Diagr_Beton(_e);
             }
 
+            bool rip = false;
+
             // сжатие по СП 63 6.1.20
             ebc0 = 0.002;
             ebc2 = 0.0035;
@@ -138,8 +153,10 @@ namespace BSFiberConcrete.CalcGroup2
             // сжатие: ПО СП 63 6.1.20 (как для обычного бетона)           
             if (_e < -ebc2) 
             {
-                //s = 0;
-                s = -Rbc + Eb0 * (_e + ebc2);
+                if (rip)
+                    s = 0;
+                else
+                    s = -Rbc + Eb0 * (_e + ebc2);
             }
             else if (-ebc2 <= _e && _e <= -ebc0) 
             {
@@ -172,8 +189,10 @@ namespace BSFiberConcrete.CalcGroup2
             }
             else if (_e > efbt3)
             {
-                //s = 0;
-                s = Rfbt3 + Ebt * (_e - efbt3);
+                if (rip)
+                    s = 0;
+                else
+                    s = Rfbt3 + Ebt * (_e - efbt3);
             }
 
             return s;
@@ -213,6 +232,46 @@ namespace BSFiberConcrete.CalcGroup2
             }
 
             return E_Sec;
+        }
+
+        /// <summary>
+        /// 6.2.16 значение базового расстояния между трещинами
+        /// </summary>
+        /// <param name="_ds_nom">номинальный диаметр арматуры</param>
+        /// <returns></returns>
+        private double L_s (double _ds_nom)
+        {
+            double kf = 1;
+            double mu_fv = 0.015;
+            double res = kf * (50 + 0.5 * 0.5 * 0.5) * _ds_nom / mu_fv;
+
+            if (res > h)
+                res = h;
+
+            return res;
+        }
+
+        private double A_crc(double _sig_s, double _ls)
+        {
+            double fi1 = 1.4;
+            double fi2 = 0.5;
+            double fi3 = 1.0;
+
+            double psi_s = 1 - 0.8 * sig_s_crc / _sig_s;
+
+            double mu_fv = 0.015;
+            double res = fi1 * fi2 * fi3 * _sig_s / Es0 * _ls;
+
+            return res / 10;
+        }
+
+        public double y_interpolate(double _x)
+        {
+            double y;
+
+            y = 4E-23 * Math.Pow(_x, 3) - 1E-15 * Math.Pow(_x, 2) + 3E-8 * _x + 0.0011;
+
+            return y;
         }
 
     }

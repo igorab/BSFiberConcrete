@@ -60,7 +60,7 @@ namespace BSCalcMenu
                 txt += string.Format("{0}: {1}\t\n", u.Key, u.Value);
             }
 
-            MessageBox.Show(txt);
+            MessageBox.Show(txt, "Система единиц измерений в программе", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnStaticEquilibrium_Click(object sender, EventArgs e)

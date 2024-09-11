@@ -61,7 +61,7 @@ namespace BSFiberConcrete.Lib
             {
                 using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
                 {
-                    var output = cnn.Query<FormParams>("select * from Params", new DynamicParameters());
+                    var output = cnn.Query<FormParams>("select * from Params where ID = 1", new DynamicParameters());
                     if (output != null && output.Count() > 0)                    
                         return output.ToList()[0];                    
                     else

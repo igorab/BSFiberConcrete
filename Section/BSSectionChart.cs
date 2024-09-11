@@ -397,7 +397,7 @@ namespace BSFiberConcrete.Section
             {
                 if (e.RowIndex >= 0)
                 {
-                    var d_nom = int.Parse(bSRodDataGridView.Rows[e.RowIndex].Cells["Dnom"].Value.ToString());
+                    var d_nom = int.Parse(bSRodDataGridView.Rows[e.RowIndex].Cells["Dnom"].Value?.ToString() ?? "0");
 
                     if (d_nom > 0)
                     {

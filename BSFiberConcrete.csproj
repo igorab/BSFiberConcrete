@@ -271,6 +271,12 @@
       <DependentUpon>RSRFibDeflection.cs</DependentUpon>
     </Compile>
     <Compile Include="CalcGroup2\BSCalcNDM.cs" />
+    <Compile Include="CalcGroup2\BSCalcNDMCrc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CalcGroup2\BSCalcNDMCrc.Designer.cs">
+      <DependentUpon>BSCalcNDMCrc.cs</DependentUpon>
+    </Compile>
     <Compile Include="CalcGroup2\BSCalcNDM_Fiber2Group.cs" />
     <Compile Include="CalcGroup2\BSCalcNDM_Sections.cs" />
     <Compile Include="CalcGroup2\BSCalcResultNDM.cs" />
@@ -471,6 +477,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BSRFib\RSRFibDeflection.resx">
       <DependentUpon>RSRFibDeflection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CalcGroup2\BSCalcNDMCrc.resx">
+      <DependentUpon>BSCalcNDMCrc.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Calc\BSUnitCalculator.resx">
       <DependentUpon>BSUnitCalculator.cs</DependentUpon>
