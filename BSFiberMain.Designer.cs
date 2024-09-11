@@ -1712,10 +1712,8 @@
             "A240",
             "A400",
             "A500",
-            "A600",
-            "A800",
-            "A1000",
-            "B500"});
+            "B500",
+            "Bp500"});
             this.cmbRebarClass.Location = new System.Drawing.Point(93, 10);
             this.cmbRebarClass.Name = "cmbRebarClass";
             this.cmbRebarClass.Size = new System.Drawing.Size(82, 21);
@@ -1848,10 +1846,8 @@
             "A240",
             "A400",
             "A500",
-            "A600",
-            "A800",
-            "A1000",
-            "B500"});
+            "B500",
+            "Bp500"});
             this.cmbTRebarClass.Location = new System.Drawing.Point(93, 170);
             this.cmbTRebarClass.Name = "cmbTRebarClass";
             this.cmbTRebarClass.Size = new System.Drawing.Size(82, 21);
