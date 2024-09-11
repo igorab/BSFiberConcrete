@@ -148,10 +148,11 @@ namespace BSFiberConcrete
     {
         public string ID { get; set; }
 
-        //Нормативное сопротивление арматуры
+        //Нормативное сопротивление арматуры растяжению
         public double Rsn { get; set; }
-        //Расчетное сопротивление арматуры
+        //Расчетное сопротивление арматуры растяжению
         public double Rs { get; set; }
+
         //Расчетное сопротивление арматуры сжатию
         public double Rsc { get; set; }
         //Значения модуля упругости арматуры
@@ -164,6 +165,7 @@ namespace BSFiberConcrete
         public double As { get; set; }
         // Площадь сжатой арматуры
         public double As1 { get; set; }
+        // Расчетное сопротивление поперечной арматуры растяжению;
         public double Rsw { get; set; }
         public double Asw { get; set; }
         public double s_w { get; set; }
@@ -314,6 +316,17 @@ namespace BSFiberConcrete
         public double Rfbt2 { get; set; }
     }
 
+
+
+    /// <summary>
+    /// Классы фибробетона по прочности на растяжение
+    /// </summary>
+    public class FiberConcreteClass
+    {
+        public int ID { get; set; }
+        public string Bft { get; set; }
+        public double Rfbt_n { get; set; }
+    }
 
     /// <summary>
     /// Усилия

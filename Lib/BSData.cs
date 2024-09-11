@@ -324,6 +324,25 @@ namespace BSFiberConcrete.Lib
         }
 
 
+
+        public static List<FiberConcreteClass> LoadFiberConcreteClass()
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    var output = cnn.Query<FiberConcreteClass>("select * from FiberConcreteClass", new DynamicParameters());
+                    return output.ToList();
+                }
+            }
+            catch
+            {
+                return new List<FiberConcreteClass>();
+            }
+        }
+
+
+
         public static List<RFibKor> LoadRFibKn()
         {
             try

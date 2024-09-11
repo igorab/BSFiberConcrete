@@ -46,6 +46,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
             lab_l_f_an.DataBindings.Add(new Binding("Text", _model, "l_f_an", true, DataSourceUpdateMode.OnPropertyChanged));
             lab_mu_fv_min.DataBindings.Add(new Binding("Text", _model, "mu_fv_min", true, DataSourceUpdateMode.OnPropertyChanged));
             lab_C_max.DataBindings.Add(new Binding("Text", _model, "C_max", true, DataSourceUpdateMode.OnPropertyChanged));
+            lab_A_min.DataBindings.Add(new Binding("Text", _model, "A_min", true, DataSourceUpdateMode.OnPropertyChanged));
             lab_l_f_min.DataBindings.Add(new Binding("Text", _model, "l_f_min", true, DataSourceUpdateMode.OnPropertyChanged));
             lab_Rfbt3.DataBindings.Add(new Binding("Text", _model, "R_fbt3", true, DataSourceUpdateMode.OnPropertyChanged));
             lab_Rfbt3_n.DataBindings.Add(new Binding("Text", _model, "R_fbt3_n", true, DataSourceUpdateMode.OnPropertyChanged));
@@ -156,6 +157,11 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
             tableForFiberMaterial.Controls.Add(viewFM, _cellPositionForFiberMaterila.Column, _cellPositionForFiberMaterila.Row);
             viewFM.Dock = System.Windows.Forms.DockStyle.Fill;
 
+        }
+
+        private void numMu_fv_ValueChanged(object sender, EventArgs e)
+        {
+            _model.SetMu_fv((double)numMu_fv.Value);
         }
     }
 }

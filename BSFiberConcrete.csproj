@@ -308,6 +308,18 @@
       <DependentUpon>CalcCrackingForm.cs</DependentUpon>
     </Compile>
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Inform\Coef\CoefInform.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inform\Coef\CoefInform.Designer.cs">
+      <DependentUpon>CoefInform.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inform\FiberConcrete\FiberConcreteInform.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inform\FiberConcrete\FiberConcreteInform.Designer.cs">
+      <DependentUpon>FiberConcreteInform.cs</DependentUpon>
+    </Compile>
     <Compile Include="Lib\BSHelper.cs" />
     <Compile Include="Calc\BSFiberCalculation.cs" />
     <Compile Include="FiberCalcMNQ\BSFiberCalc_MNQ.cs" />
@@ -357,6 +369,15 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="RebarMaterial\Model\FiberConcreteMaterial.cs" />
+    <Compile Include="RebarMaterial\Model\RebarMat.cs" />
+    <Compile Include="RebarMaterial\RebarCalculation\CalcOfLenRebar.cs" />
+    <Compile Include="RebarMaterial\RebarCalculation\ViewCalcOfLenRebar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RebarMaterial\RebarCalculation\ViewCalcOfLenRebar.Designer.cs">
+      <DependentUpon>ViewCalcOfLenRebar.cs</DependentUpon>
     </Compile>
     <Compile Include="Report\BSFiberReport.cs" />
     <Compile Include="Report\BSFiberReport_MNQ.cs" />
@@ -469,6 +490,13 @@
     <EmbeddedResource Include="FiberCalcCracking\CalcCrackingForm.resx">
       <DependentUpon>CalcCrackingForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Inform\Coef\CoefInform.resx">
+      <DependentUpon>CoefInform.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inform\FiberConcrete\FiberConcreteInform.resx">
+      <DependentUpon>FiberConcreteInform.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="LocalStrength\BSLocalStrength.resx">
       <DependentUpon>BSLocalStrength.cs</DependentUpon>
     </EmbeddedResource>
@@ -484,6 +512,9 @@
     <Content Include="Data\Fiber.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="RebarMaterial\RebarCalculation\ViewCalcOfLenRebar.resx">
+      <DependentUpon>ViewCalcOfLenRebar.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Section\BSSectionChart.resx">
       <DependentUpon>BSSectionChart.cs</DependentUpon>
     </EmbeddedResource>
@@ -629,7 +660,11 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Inform\Concrete\" />
+    <Folder Include="Inform\Fiber\" />
+    <Folder Include="Inform\Rebar\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
