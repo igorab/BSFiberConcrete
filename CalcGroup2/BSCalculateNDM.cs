@@ -170,6 +170,7 @@ namespace BSFiberConcrete.CalcGroup2
             }
             #endregion
 
+            // итерации 
             for (int j = 1; j <= jmax; j++)
             {
                 // пересчитываем секущие модули
@@ -295,21 +296,22 @@ namespace BSFiberConcrete.CalcGroup2
                     // проверка на трещины
                     double epsBt = epB[j].Maximum();
 
-                    if (epsBt > 0 && epsBt >= efbt1)
-                    {
-                        // Трещина возникла
-                        My_crc = My[j]; //момент трещинообразования
-                        Mz_crc = Mz[j];
-                        N_crc = 0;                        
-                    }
+                    // Трещина возникла
+                    My_crc = My.Max(); //момент трещинообразования
+                    Mz_crc = Mz.Max();
+                    N_crc = 0;
+
+                    // условие возн трещины
+                    // if (epsBt > 0 && epsBt >= efbt1) {}
 
                     if (Eps_s_crc != 0)
                     {
                         es_crc = epS[j].Maximum(); // деформация арматуры
 
                         sig_s_crc = sigS[j].Maximum(); // напряжение в арматуре
+                        
+                        double ls = L_s(d_nom[j]);
 
-                        double ls = L_s(16);
                         a_crc = A_crc(sig_s_crc, ls); // ширина раскрытия трещины
                     }
                 }
@@ -408,8 +410,8 @@ namespace BSFiberConcrete.CalcGroup2
                 ["UR_s"] = UtilRate_s,
 
                 // трещиностойкость
-                ["My_crc"] = My_crc,
-                ["Mx_crc"] = Mz_crc,
+                ["My_crc"] =  My_crc,
+                ["Mx_crc"] =  Mz_crc,
                 ["es_crc"] = es_crc,
                 ["sig_s_crc"] = sig_s_crc,
                 ["a_crc"] = a_crc,

@@ -1,21 +1,21 @@
-﻿using System;
+﻿using BSBeamCalculator;
+using BSCalcLib;
+using BSFiberConcrete.CalcGroup2;
+using BSFiberConcrete.Control;
+using BSFiberConcrete.DeformationDiagram;
+using BSFiberConcrete.Lib;
+using BSFiberConcrete.Section;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
+using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
-using BSFiberConcrete.Lib;
-using System.Diagnostics;
-using BSFiberConcrete.Section;
-using BSCalcLib;
-using System.Drawing;
-using BSFiberConcrete.DeformationDiagram;
-using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
-using BSFiberConcrete.Control;
-using BSBeamCalculator;
-using BSFiberConcrete.CalcGroup2;
 
 namespace BSFiberConcrete
 {
@@ -1208,46 +1208,51 @@ namespace BSFiberConcrete
             // 1 этап
             // определяем моменты трещинообразования от кратковременных и длительных нагрузок (раздел X)
             double Mx_crc; double My_crc; double N_crc;
-            BSCalcNDM bsCalc2 = new BSCalcNDM(GR2, _beamSection, BetonTypeId);            
-            bsCalc2.SetDictParams(D);           
-            var ur_fb = bsCalc1.UtilRate_fb;
-            bsCalc2.MzMyNUp(1);// (bsCalc1.UtilRate_s)
-            bsCalc2.SetRods(listD, listX, listY);
-            bsCalc2.Run();
-            // момент трещинообразования
-            Mx_crc = bsCalc2.Mz_crc;
-            My_crc = bsCalc2.My_crc;
-            N_crc  = bsCalc2.N_crc;
-            
-            double eps_s_crc = bsCalc2.es_crc;
+            double eps_s_crc; // параметр для определения ширины раскрытия трещины
 
-            var res_fb2 = bsCalc2.UtilRate_fb;
+            // используем заданные усилия и определяем коэфф использования по 2-гр пр сост
+            BSCalcNDM bsCalc2 = new BSCalcNDM(GR2, _beamSection, BetonTypeId);            
+            bsCalc2.SetDictParams(D);
+            bsCalc2.MzMyNUp(1);
+            bsCalc2.SetRods(listD, listX, listY);
+            bsCalc2.Run();            
+            double ur_fb2 = bsCalc2.UtilRate_fb;
+
+            BSCalcNDM bsCalc3 = new BSCalcNDM(GR2, _beamSection, BetonTypeId);
+            bsCalc3.SetDictParams(D);
+            bsCalc3.MzMyNUp(ur_fb2);
+            bsCalc3.SetRods(listD, listX, listY);
+            bsCalc3.Run();
+            ur_fb2 = bsCalc3.UtilRate_fb;
 
             // Если же хотя бы один из моментов трещинообразования оказывается меньше
             // соответствующего действующего момента, выполняют второй этап расчета.
-            BSCalcNDM bsCalc3 = new BSCalcNDM(GR2, _beamSection, BetonTypeId);
-            bsCalc3.SetDictParams(D);
-            bsCalc3.MzMyNUp(res_fb2);
-            //bsCalc3.SetMN(Mx_crc, My_crc, N_crc);
-            bsCalc3.SetRods(listD, listX, listY);
-            bsCalc3.Run();
-
-            List<double> E_S_crc =  bsCalc3.EpsilonSResult;    
-            eps_s_crc = bsCalc3.es_crc;
-            double ur_s = bsCalc3.UtilRate_s;
-            double ur_fb3 = bsCalc3.UtilRate_fb;
-
-            // определение ширины раскрытия трещины
-            BSCalcNDM bsCalc4 = new BSCalcNDM(GR2, _beamSection, BetonTypeId);            
+            BSCalcNDM bsCalc4 = new BSCalcNDM(GR2, _beamSection, BetonTypeId);
             bsCalc4.SetDictParams(D);
-            bsCalc4.SetMN(Mx0, My0, N0);
-            bsCalc4.SetE_S_Crc(E_S_crc);
-            //bsCalc4.MzMyNUp(res_fb2);
+            bsCalc4.MzMyNUp(ur_fb2);            
             bsCalc4.SetRods(listD, listX, listY);
             bsCalc4.Run();
+            calcRes.ErrorIdx.Add(bsCalc4.Err);
+            calcRes.GetRes2Group(bsCalc4.Results);
+            // момент трещинообразования
+            Mx_crc = bsCalc4.Mz_crc;
+            My_crc = bsCalc4.My_crc;
+            N_crc = bsCalc4.N_crc;
+            List<double> E_S_crc = bsCalc4.EpsilonSResult;
+            eps_s_crc = E_S_crc.Max();            
+            double ur_s = bsCalc4.UtilRate_s;
+            double ur_fb3 = bsCalc4.UtilRate_fb;
 
-            calcRes.ErrorIdx.Add(bsCalc2.Err);
-            calcRes.GetRes2Group(bsCalc2.Results);
+            // определение ширины раскрытия трещины
+            // расчитываем на заданные моменты и силы
+            BSCalcNDM bsCalc5 = new BSCalcNDM(GR2, _beamSection, BetonTypeId);            
+            bsCalc5.SetDictParams(D);            
+            bsCalc5.SetE_S_Crc(E_S_crc);            
+            bsCalc5.SetRods(listD, listX, listY);
+            bsCalc5.Run();
+            calcRes.ErrorIdx.Add(bsCalc5.Err);
+            calcRes.GetRes2Group(bsCalc5.Results);
+
             calcRes.Results2Group(ref m_CalcResults2Group);
 
             m_GeomParams = calcRes.GeomParams;
