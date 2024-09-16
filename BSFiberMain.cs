@@ -1164,8 +1164,8 @@ namespace BSFiberConcrete
         /// </summary>        
         private void CalcNDM(BeamSection _beamSection)
         {
-            const int GR1 = 1;
-            const int GR2 = 2;
+            const int GR1 = BSFiberLib.CG1;
+            const int GR2 = BSFiberLib.CG2; 
 
             // данные с формы
             Dictionary<string, double> D = DictCalcParams(_beamSection);
@@ -1223,13 +1223,13 @@ namespace BSFiberConcrete
             bsCalc3.MzMyNUp(ur_fb2);
             bsCalc3.SetRods(listD, listX, listY);
             bsCalc3.Run();
-            ur_fb2 = bsCalc3.UtilRate_fb;
+            double ur_fb3 = bsCalc3.UtilRate_fb;
 
             // Если же хотя бы один из моментов трещинообразования оказывается меньше
             // соответствующего действующего момента, выполняют второй этап расчета.
             BSCalcNDM bsCalc4 = new BSCalcNDM(GR2, _beamSection, BetonTypeId);
             bsCalc4.SetDictParams(D);
-            bsCalc4.MzMyNUp(ur_fb2);            
+            bsCalc4.MzMyNUp(ur_fb2 * 1.182);            
             bsCalc4.SetRods(listD, listX, listY);
             bsCalc4.Run();
             calcRes.ErrorIdx.Add(bsCalc4.Err);
@@ -1241,7 +1241,7 @@ namespace BSFiberConcrete
             List<double> E_S_crc = bsCalc4.EpsilonSResult;
             eps_s_crc = E_S_crc.Max();            
             double ur_s = bsCalc4.UtilRate_s;
-            double ur_fb3 = bsCalc4.UtilRate_fb;
+            double ur_fb4 = bsCalc4.UtilRate_fb;
 
             // определение ширины раскрытия трещины
             // расчитываем на заданные моменты и силы

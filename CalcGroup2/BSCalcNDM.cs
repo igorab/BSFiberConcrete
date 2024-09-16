@@ -1,4 +1,5 @@
 ﻿using BSFiberConcrete.BSRFib;
+using BSFiberConcrete.Lib;
 using CBAnsDes.My;
 using MathNet.Numerics;
 using MathNet.Numerics.Statistics;
@@ -44,6 +45,7 @@ namespace BSFiberConcrete.CalcGroup2
             GroupLSD = _groupLSD;
             BeamSection = _BeamSection;
             BetonTypeId = _BetonTypeId;
+            NdmCrc = BSData.LoadNdmCrc();
         }
 
         /// <summary>
@@ -266,7 +268,7 @@ namespace BSFiberConcrete.CalcGroup2
         private double ebc2 = 0.0035; 
         // растяжение 
         private double efbt0 = 0.0; // Деформация фибробетона на растяжение
-        private double efbt1 = 0.0001;
+        private double efbt1 = 0.0;
         private double efbt2 = 0.00015; // Предельная деформация фибробетона на растяжение
         private double efbt3 = 0.02; // Предельная деформация фибробетона на растяжение
         private double e_fbt_ult = 0;
@@ -300,7 +302,10 @@ namespace BSFiberConcrete.CalcGroup2
         public double N_crc { get; private set; }
 
         // деформация в момент образования трещины
+        // - в арматуре:
         public double es_crc { get; private set; }
+        // - в бетоне:
+        public double ebt_crc { get; private set; }
 
         // напряжение в арматуре в сечении с трещиной
         public double sig_s_crc { get; private set; }

@@ -1,18 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static OpenTK.Graphics.OpenGL.GL;
 
 namespace BSFiberConcrete.CalcGroup2
-{
+{   
     /// <summary>
     /// Расчет по 2 группе предельных состояний
     /// </summary>
     public partial class BSCalcNDM
     {
+        public NdmCrc NdmCrc;
+
         public int BetonTypeId { private get;  set; }
 
         /// <summary>
@@ -74,8 +70,11 @@ namespace BSFiberConcrete.CalcGroup2
             double s = 0;
             double sc1 = 0.6 * Rbc;
             double st1 = 0.6 * Rfbt;
+            
             double ebc1 = sc1 / Eb0;
             double ebt1 = st1 / Eb0;
+
+            efbt0 = Rfbt / Ebt;
 
             bool rip = false;
 

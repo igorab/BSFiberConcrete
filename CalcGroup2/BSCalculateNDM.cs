@@ -291,28 +291,37 @@ namespace BSFiberConcrete.CalcGroup2
                 Mzint = sigB[j].ZipThree(Ab, yb[j], (s, A, y) => s * A * y).Sum() + sigS[j].ZipThree(As, ys[j], (s, A, y) => s * A * y).Sum() -
                         sigBS[j].ZipThree(As, ys[j], (s, A, y) => s * A * y).Sum();
 
+                //  Расчеты по 2 группе предельных состояний
                 if (GroupLSD == BSFiberLib.CG2)
                 {
-                    // проверка на трещины
-                    double epsBt = epB[j].Maximum();
+                    //1. проверка на возникновение трещины
+                    //2. определение ширины раскрытия трещины, если трещина возникла
 
-                    // Трещина возникла
-                    My_crc = My.Max(); //момент трещинообразования
+                    // максимальная деформация в сечении
+                    double epsBt = epB[j].Maximum();
+                    // условие возникновения трещины
+                    if (ebt_crc == 0 && (epsBt > 0 && epsBt >= efbt1)) { ebt_crc = epsBt; }
+
+                    // Трещина возникла:
+                    //-- определяем моменты трещинообразования
+                    My_crc = My.Max(); 
                     Mz_crc = Mz.Max();
                     N_crc = 0;
-
-                    // условие возн трещины
-                    // if (epsBt > 0 && epsBt >= efbt1) {}
-
-                    if (Eps_s_crc != 0)
+                    
+                    //-- рассчитываем ширину раскрытия трещины
+                    if (ebt_crc != 0)
                     {
                         es_crc = epS[j].Maximum(); // деформация арматуры
 
                         sig_s_crc = sigS[j].Maximum(); // напряжение в арматуре
-                        
-                        double ls = L_s(d_nom[j]);
 
-                        a_crc = A_crc(sig_s_crc, ls); // ширина раскрытия трещины
+                        // цикл по стержням арматуры
+                        foreach (double _d in d_nom)
+                        {
+                            double ls = L_s(_d);
+
+                            a_crc = Math.Max(a_crc,  A_crc(sig_s_crc, ls)); // ширина раскрытия трещины
+                        }
                     }
                 }
 
@@ -354,30 +363,32 @@ namespace BSFiberConcrete.CalcGroup2
             Mzint = sigB[jend].ZipThree(Ab, yb[jend], (s, A, y) => s * A * y).Sum() + sigS[jend].ZipThree(As, ys[jend], (s, A, y) => s * A * y).Sum() -
                     sigBS[jend].ZipThree(As, ys[jend], (s, A, y) => s * A * y).Sum();
 
-
-            // растяжение 
+            // растяжение: 
+            // напряжения:
             double sigB_t = sigB[jend].Maximum();
             double sigS_t = sigS[jend].Maximum();
-
+            // деформации:
             double epsB_t = epB[jend].Maximum();
             double epsS_t = epS[jend].Maximum();
 
-            // сжатие 
+            // сжатие: 
+            // напряжения:
             double sigB_p = sigB[jend].Minimum();
             double sigS_p = sigS[jend].Minimum();
+            // деформации:
             double epsB_p = epB[jend].Minimum();
             double epsS_p = epS[jend].Minimum();
 
-            // коэффициенты использоввания
-            // по деформациям бетона
+            // определяем коэффициенты использоввания:
+            // -- по деформациям бетона
             e_fbt_ult = efbt1;
             UtilRate_fb = (e_fbt_ult != 0) ? epsB_t / e_fbt_ult : 1.0;
-            // по деформациям арматуры
+            // -- по деформациям арматуры
             UtilRate_s = (esc0 != 0) ? epsS_t / esc0 : 1.0;
 
             // СП 6.1.25 для эпюры с одним знаком
-            //double e_fb_ult = ebc2 - (ebc2 - ebc0) * epsB_t / epsB_p;
-            //double e_fbt_ult = efbt3 - (efbt3 - efbt2) * epsB_t / epsB_p;
+            // double e_fb_ult = ebc2 - (ebc2 - ebc0) * epsB_t / epsB_p;
+            // double e_fbt_ult = efbt3 - (efbt3 - efbt2) * epsB_t / epsB_p;
 
             m_Results = new Dictionary<string, double>
             {

@@ -27,6 +27,19 @@ namespace BSFiberConcrete
         public double a1_s { get; set; }
     }
 
+    /// <summary>
+    /// Параметры расчета ширины раскрытия трещины
+    /// </summary>
+    public class NdmCrc
+    {
+        public int Id { get; set; }
+        public int fi1 { get; set; }
+        public int fi2 { get; set; }
+        public int fi3 { get; set; }
+        public int mu_fv { get; set; }
+        public int psi_s { get; set; }
+    }
+
 
     /// <summary>
     /// Единицы измерения

@@ -690,5 +690,29 @@ namespace BSFiberConcrete.Lib
             }
         }
 
+
+        /// <summary>
+        /// Параметры расчета на раскрытие трещины
+        /// </summary>        
+        public static NdmCrc LoadNdmCrc()
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    var output = cnn.Query<NdmCrc>("select * from NDMCrc", new DynamicParameters());
+
+                    if (output != null && output.Count() > 0)
+                        return output.ToList()[0];
+                    else
+                        return new NdmCrc();                  
+                }
+            }
+            catch
+            {
+                return new NdmCrc();
+            }
+        }
+
     }
 }
