@@ -7,7 +7,7 @@ namespace BSFiberConcrete.CalcGroup2
     /// </summary>
     public partial class BSCalcNDM
     {
-        public NdmCrc NdmCrc;
+        private NdmCrc NdmCrc;
 
         public int BetonTypeId { private get;  set; }
 
@@ -241,9 +241,10 @@ namespace BSFiberConcrete.CalcGroup2
         private double L_s (double _ds_nom)
         {
             double kf = 1;
-            double mu_fv = 0.015;
-            double fi2 = 0.8;
-            double fi3 = 1;
+            double mu_fv = NdmCrc.mu_fv;
+            double fi2 = NdmCrc.fi2;
+            double fi3 = NdmCrc.fi3;
+
             double res = kf * (50 + 0.5 * fi2 * fi3) * _ds_nom / mu_fv;
 
             if (res > h)
@@ -254,13 +255,13 @@ namespace BSFiberConcrete.CalcGroup2
 
         private double A_crc(double _sig_s, double _ls)
         {
-            double fi1 = 1.4;
-            double fi2 = 0.5;
-            double fi3 = 1.0;
-
+            double fi1 = NdmCrc.fi1;
+            double fi2 = NdmCrc.fi2;
+            double fi3 = NdmCrc.fi3;
+            double mu_fv = NdmCrc.mu_fv;
             double psi_s = 1 - 0.8 * sig_s_crc / _sig_s;
 
-            double mu_fv = 0.015;
+            
             double res = fi1 * fi2 * fi3 * _sig_s / Es0 * _ls;
 
             return res / 10;
