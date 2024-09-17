@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using BSFiberConcrete.Lib;
 
 namespace BSFiberConcrete.CalcGroup2
 {
@@ -19,7 +20,7 @@ namespace BSFiberConcrete.CalcGroup2
 
         private void BSCalcNDMCrc_Load(object sender, EventArgs e)
         {
-
+            NdmCrc x = BSData.LoadNdmCrc();
         }
 
         private void buttonOk_Click(object sender, EventArgs e)

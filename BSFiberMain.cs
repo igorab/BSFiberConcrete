@@ -1,21 +1,21 @@
-﻿using System;
+﻿using BSBeamCalculator;
+using BSCalcLib;
+using BSFiberConcrete.CalcGroup2;
+using BSFiberConcrete.Control;
+using BSFiberConcrete.DeformationDiagram;
+using BSFiberConcrete.Lib;
+using BSFiberConcrete.Section;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
+using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
-using BSFiberConcrete.Lib;
-using System.Diagnostics;
-using BSFiberConcrete.Section;
-using BSCalcLib;
-using System.Drawing;
-using BSFiberConcrete.DeformationDiagram;
-using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
-using BSFiberConcrete.Control;
-using BSBeamCalculator;
-using BSFiberConcrete.CalcGroup2;
 
 namespace BSFiberConcrete
 {
@@ -192,16 +192,8 @@ namespace BSFiberConcrete
                 cmbRebarClass.SelectedIndex = 1;
                 cmbDeformDiagram.SelectedIndex = (int)DeformDiagramType.D3Linear;
 
-                m_Iniv = m_BSLoadData.ReadInitFromJson();
-                List<Efforts> eff = Lib.BSData.LoadEfforts();
-                if (eff.Count > 0)
-                {
-                    m_Iniv["Mx"] = eff[0].Mx;
-                    m_Iniv["My"] = eff[0].My;
-                    m_Iniv["N"] = eff[0].N;
-                    m_Iniv["Q"] = eff[0].Q;
-                }
-
+                m_BSLoadData.InitEfforts(ref m_Iniv);
+               
                 num_eN.Value = (decimal)m_Iniv["eN"];
                 num_Ml1_M1.Value = (decimal)m_Iniv["Ml"];
 
@@ -240,19 +232,14 @@ namespace BSFiberConcrete
                 numYb5.Value = (decimal)fiberConcrete.Yb5;
 
                 InitFormControls();
-
-                //Mx My N Q Ml
-                double[] mnq = {
-                    m_Iniv["Mx"], m_Iniv["My"], m_Iniv["N"], m_Iniv["Q"], m_Iniv["Ml"], m_Iniv["eN"]
-                };
-
+                //Mx My N Qx Qy
+                double[] mnq = { m_Iniv["Mx"], m_Iniv["My"], m_Iniv["N"], m_Iniv["Qx"], m_Iniv["Qy"] };
                 gridEfforts.Rows.Add(mnq);
                 for (int i = 0; i < mnq.Length; i++)
                 {
                     gridEfforts.Rows[0].Cells[i].Value = mnq[i];
                 }
-
-                //
+               
                 // настройки из БД
                 Rebar dbRebar = m_Rebar.Where(x => x.ID == Convert.ToString(cmbRebarClass.SelectedItem))?.First();
                 numEs.Value = (decimal)BSHelper.MPA2kgsm2(dbRebar.Es);
@@ -780,7 +767,8 @@ namespace BSFiberConcrete
         {
             _MNQ = new Dictionary<string, double>();
 
-            string[] F = new string[] { "Mx", "My", "N", "Q", "Ml", "eN" };
+            string[] F = new string[] { "Mx", "My", "N", "Qx", "Qy" };
+
             DataGridViewRowCollection rows = gridEfforts.Rows;
             var row = rows[0];
 
@@ -799,7 +787,6 @@ namespace BSFiberConcrete
             if (_MNQ.Count == 0)
                 throw new Exception("Не заданы усилия");
 
-            _MNQ["Qy"] = 0;
             _MNQ["Ml"] = (double)num_Ml1_M1.Value;
             _MNQ["eN"] = (double)num_eN.Value;
             _MNQ["e0"] = (double)numRandomEccentricity.Value;
@@ -976,7 +963,7 @@ namespace BSFiberConcrete
 
             GetEffortsFromForm(out Dictionary<string, double> MNQ);
 
-            (double _M, double _N, double _Q) = (MNQ["My"], MNQ["N"], MNQ["Q"]);
+            (double _M, double _N, double _Q) = (MNQ["My"], MNQ["N"], MNQ["Qy"]);
             if (_M < 0 || _N < 0)
             {
                 MessageBox.Show("Расчет по методу статического равновесия не реализован для отрицательных значений M и N.\n Воспользуйтесь расчетом по методу НДМ");
@@ -1164,11 +1151,13 @@ namespace BSFiberConcrete
         /// </summary>        
         private void CalcNDM(BeamSection _beamSection)
         {
-            const int GR1 = 1;
-            const int GR2 = 2;
+            const int GR1 = BSFiberLib.CG1;
+            const int GR2 = BSFiberLib.CG2; 
 
             // данные с формы
             Dictionary<string, double> D = DictCalcParams(_beamSection);
+            // Заданные усилия
+            (double Mx0, double My0, double N0) = (D["Mz"], D["My"], D["N"]);
 
             //привязка арматуры (по X - высота, по Y ширина балки)
             double leftX = 0;
@@ -1181,7 +1170,9 @@ namespace BSFiberConcrete
 
             int BetonTypeId = (cmbTypeMaterial.SelectedIndex == 1) ? 1 : 0;
 
-            // выполнить расчет по 1 группе п.с.
+            ///
+            /// выполнить расчет по 1 группе предельных состояний
+            ///
             BSCalcNDM bsCalc1 = new BSCalcNDM(GR1, _beamSection, BetonTypeId);            
             bsCalc1.SetDictParams(D);
             bsCalc1.SetRods(listD, listX, listY);
@@ -1198,39 +1189,57 @@ namespace BSFiberConcrete
             calcRes.Results1Group(ref m_CalcResults);
             calcRes.ResultsMsg1Group(ref m_Message);
 
-            // выполнить расчет по 2 группе п.с.
+            ///
+            /// выполнить расчет по 2 группе предельных состояний
+            /// 
             // 1 этап
             // определяем моменты трещинообразования от кратковременных и длительных нагрузок (раздел X)
-            BSCalcNDM bsCalc2 = new BSCalcNDM(GR2, _beamSection, BetonTypeId);            
-            bsCalc2.SetDictParams(D);           
-            var ur_fb = bsCalc1.UtilRate_fb;
-            bsCalc2.MzMyNUp(1);// (bsCalc1.UtilRate_s)
-            bsCalc2.SetRods(listD, listX, listY);
-            bsCalc2.Run();
+            double Mx_crc; double My_crc; double N_crc;
+            double eps_s_crc; // параметр для определения ширины раскрытия трещины
 
-            var res_s2 = bsCalc2.UtilRate_s;
-            var res_fb2 = bsCalc2.UtilRate_fb;
+            // используем заданные усилия и определяем коэфф использования по 2-гр пр сост
+            BSCalcNDM bsCalc2 = new BSCalcNDM(GR2, _beamSection, BetonTypeId);            
+            bsCalc2.SetDictParams(D);
+            bsCalc2.MzMyNUp(1);
+            bsCalc2.SetRods(listD, listX, listY);
+            bsCalc2.Run();            
+            double ur_fb2 = bsCalc2.UtilRate_fb;
+
+            BSCalcNDM bsCalc3 = new BSCalcNDM(GR2, _beamSection, BetonTypeId);
+            bsCalc3.SetDictParams(D);
+            bsCalc3.MzMyNUp(ur_fb2);
+            bsCalc3.SetRods(listD, listX, listY);
+            bsCalc3.Run();
+            double ur_fb3 = bsCalc3.UtilRate_fb;
 
             // Если же хотя бы один из моментов трещинообразования оказывается меньше
             // соответствующего действующего момента, выполняют второй этап расчета.
-            BSCalcNDM bsCalc3 = new BSCalcNDM(GR2, _beamSection, BetonTypeId);
-            bsCalc3.SetDictParams(D);
-            bsCalc3.MzMyNUp(res_fb2);
-            bsCalc3.SetRods(listD, listX, listY);
-            bsCalc3.Run();
-
-            var res_s3 = bsCalc3.UtilRate_s;
-            var res_fb3 = bsCalc3.UtilRate_fb;
-
             BSCalcNDM bsCalc4 = new BSCalcNDM(GR2, _beamSection, BetonTypeId);
-            bsCalc4.CalcAcrc = true;
             bsCalc4.SetDictParams(D);
-            bsCalc4.MzMyNUp(res_fb2);
+            bsCalc4.MzMyNUp(ur_fb2 * 1.182);            
             bsCalc4.SetRods(listD, listX, listY);
             bsCalc4.Run();
+            calcRes.ErrorIdx.Add(bsCalc4.Err);
+            calcRes.GetRes2Group(bsCalc4.Results);
+            // момент трещинообразования
+            Mx_crc = bsCalc4.Mz_crc;
+            My_crc = bsCalc4.My_crc;
+            N_crc = bsCalc4.N_crc;
+            List<double> E_S_crc = bsCalc4.EpsilonSResult;
+            eps_s_crc = E_S_crc.Max();            
+            double ur_s = bsCalc4.UtilRate_s;
+            double ur_fb4 = bsCalc4.UtilRate_fb;
 
-            calcRes.ErrorIdx.Add(bsCalc2.Err);
-            calcRes.GetRes2Group(bsCalc2.Results);
+            // определение ширины раскрытия трещины
+            // расчитываем на заданные моменты и силы
+            BSCalcNDM bsCalc5 = new BSCalcNDM(GR2, _beamSection, BetonTypeId);            
+            bsCalc5.SetDictParams(D);            
+            bsCalc5.SetE_S_Crc(E_S_crc);            
+            bsCalc5.SetRods(listD, listX, listY);
+            bsCalc5.Run();
+            calcRes.ErrorIdx.Add(bsCalc5.Err);
+            calcRes.GetRes2Group(bsCalc5.Results);
+
             calcRes.Results2Group(ref m_CalcResults2Group);
 
             m_GeomParams = calcRes.GeomParams;
@@ -1545,9 +1554,10 @@ namespace BSFiberConcrete
         {
             try
             {
-                GetEffortsFromForm(out Dictionary<string, double> MNQ);
+                GetEffortsFromForm(out Dictionary<string, double> _MNQ);
 
-                Efforts ef = new Efforts() { Id = 1, Mx = MNQ["Mx"], My = MNQ["My"], N = MNQ["N"], Q = MNQ["Q"], Ml = MNQ["Ml"], eN = MNQ["eN"] };
+                Efforts ef = new Efforts() { Id = 1, Mx = _MNQ["Mx"], My = _MNQ["My"], N = _MNQ["N"], Qx = _MNQ["Qx"], Qy = _MNQ["Qy"] };
+
                 Lib.BSData.SaveEfforts(ef);
             }
             catch (Exception _ex)
@@ -2089,9 +2099,9 @@ namespace BSFiberConcrete
 
                 BSData.UpdateBeamSectionGeometry(m_InitBeamSectionsGeometry);
 
-                GetEffortsFromForm(out Dictionary<string, double> MNQ);
+                GetEffortsFromForm(out Dictionary<string, double> _MNQ);
 
-                Lib.BSData.SaveEfforts(new Efforts() { Id = 1, Mx = MNQ["Mx"], My = MNQ["My"], N = MNQ["N"], Q = MNQ["Q"], Ml = MNQ["Ml"], eN = MNQ["eN"] });
+                Lib.BSData.SaveEfforts(new Efforts() { Id = 1, Mx = _MNQ["Mx"], My = _MNQ["My"], N = _MNQ["N"], Qx = _MNQ["Qx"], Qy = _MNQ["Qy"]});
             }
             catch (Exception _e)
             {
@@ -2189,8 +2199,7 @@ namespace BSFiberConcrete
         
         private void labelMNQ_Click(object sender, EventArgs e)
         {
-            GetEffortsFromForm(out Dictionary<string, double> _MNQ, true);
-            MessageBox.Show($"My = {_MNQ["My"]} Кн*см\n Mx = {_MNQ["Mx"]} Кн*см\n N = {_MNQ["N"]} Кн\n Q = {_MNQ["Q"]} Кн", "Усилия"); 
+            //MessageBox.Show($"My = {_MNQ["My"]} Кн*см\n Mx = {_MNQ["Mx"]} Кн*см\n N = {_MNQ["N"]} Кн\n Q = {_MNQ["Q"]} Кн", "Усилия"); 
         }
 
         private void label35_Click(object sender, EventArgs e)

@@ -1,18 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static OpenTK.Graphics.OpenGL.GL;
 
 namespace BSFiberConcrete.CalcGroup2
-{
+{   
     /// <summary>
     /// Расчет по 2 группе предельных состояний
     /// </summary>
     public partial class BSCalcNDM
     {
+        private NdmCrc NdmCrc;
+
         public int BetonTypeId { private get;  set; }
 
         /// <summary>
@@ -74,8 +70,11 @@ namespace BSFiberConcrete.CalcGroup2
             double s = 0;
             double sc1 = 0.6 * Rbc;
             double st1 = 0.6 * Rfbt;
+            
             double ebc1 = sc1 / Eb0;
             double ebt1 = st1 / Eb0;
+
+            efbt0 = Rfbt / Ebt;
 
             bool rip = false;
 
@@ -204,7 +203,7 @@ namespace BSFiberConcrete.CalcGroup2
         /// <returns></returns>
         private double Psi_s(double  _e_s)
         {
-            if (_e_s == 0 || GroupLSD == 1) return 1;
+            if (_e_s == 0 || GroupLSD == BSFiberLib.CG1) return 1;
 
             double res = 1 / (1 + 0.8 * es_crc / _e_s);
             return res;
@@ -223,7 +222,7 @@ namespace BSFiberConcrete.CalcGroup2
             else
             {
                 double sigma = _sigma;
-                if (es_crc > 0)
+                if (es_crc != 0)
                 {
                     sigma = sigma * Psi_s(_e); 
                 }
@@ -238,12 +237,15 @@ namespace BSFiberConcrete.CalcGroup2
         /// 6.2.16 значение базового расстояния между трещинами
         /// </summary>
         /// <param name="_ds_nom">номинальный диаметр арматуры</param>
-        /// <returns></returns>
+        /// <returns>Расстояние между трещинами</returns>
         private double L_s (double _ds_nom)
         {
             double kf = 1;
-            double mu_fv = 0.015;
-            double res = kf * (50 + 0.5 * 0.5 * 0.5) * _ds_nom / mu_fv;
+            double mu_fv = NdmCrc.mu_fv;
+            double fi2 = NdmCrc.fi2;
+            double fi3 = NdmCrc.fi3;
+
+            double res = kf * (50 + 0.5 * fi2 * fi3) * _ds_nom / mu_fv;
 
             if (res > h)
                 res = h;
@@ -253,13 +255,13 @@ namespace BSFiberConcrete.CalcGroup2
 
         private double A_crc(double _sig_s, double _ls)
         {
-            double fi1 = 1.4;
-            double fi2 = 0.5;
-            double fi3 = 1.0;
-
+            double fi1 = NdmCrc.fi1;
+            double fi2 = NdmCrc.fi2;
+            double fi3 = NdmCrc.fi3;
+            double mu_fv = NdmCrc.mu_fv;
             double psi_s = 1 - 0.8 * sig_s_crc / _sig_s;
 
-            double mu_fv = 0.015;
+            
             double res = fi1 * fi2 * fi3 * _sig_s / Es0 * _ls;
 
             return res / 10;

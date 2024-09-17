@@ -280,6 +280,7 @@
     <Compile Include="CalcGroup2\BSCalcNDM_Fiber2Group.cs" />
     <Compile Include="CalcGroup2\BSCalcNDM_Sections.cs" />
     <Compile Include="CalcGroup2\BSCalcResultNDM.cs" />
+    <Compile Include="CalcGroup2\BSCalculateNDM.cs" />
     <Compile Include="CalcGroup2\BSExtensions.cs" />
     <Compile Include="Calc\BSFiberCalc_Cracking.cs" />
     <Compile Include="Calc\BSFiberCalc_Deform.cs" />
