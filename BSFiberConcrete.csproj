@@ -315,11 +315,35 @@
     <Compile Include="Inform\Coef\CoefInform.Designer.cs">
       <DependentUpon>CoefInform.cs</DependentUpon>
     </Compile>
+    <Compile Include="Inform\Concrete\ConcreteInform.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inform\Concrete\ConcreteInform.Designer.cs">
+      <DependentUpon>ConcreteInform.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inform\DeflectionUlt\DeflectionUltimateInform.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inform\DeflectionUlt\DeflectionUltimateInform.Designer.cs">
+      <DependentUpon>DeflectionUltimateInform.cs</DependentUpon>
+    </Compile>
     <Compile Include="Inform\FiberConcrete\FiberConcreteInform.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Inform\FiberConcrete\FiberConcreteInform.Designer.cs">
       <DependentUpon>FiberConcreteInform.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inform\Fiber\FiberRebarInform.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inform\Fiber\FiberRebarInform.Designer.cs">
+      <DependentUpon>FiberRebarInform.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inform\Rebar\RebarInform.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inform\Rebar\RebarInform.Designer.cs">
+      <DependentUpon>RebarInform.cs</DependentUpon>
     </Compile>
     <Compile Include="Lib\BSHelper.cs" />
     <Compile Include="Calc\BSFiberCalculation.cs" />
@@ -494,9 +518,21 @@
     <EmbeddedResource Include="Inform\Coef\CoefInform.resx">
       <DependentUpon>CoefInform.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Inform\Concrete\ConcreteInform.resx">
+      <DependentUpon>ConcreteInform.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inform\DeflectionUlt\DeflectionUltimateInform.resx">
+      <DependentUpon>DeflectionUltimateInform.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Inform\FiberConcrete\FiberConcreteInform.resx">
       <DependentUpon>FiberConcreteInform.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inform\Fiber\FiberRebarInform.resx">
+      <DependentUpon>FiberRebarInform.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inform\Rebar\RebarInform.resx">
+      <DependentUpon>RebarInform.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LocalStrength\BSLocalStrength.resx">
       <DependentUpon>BSLocalStrength.cs</DependentUpon>
@@ -661,11 +697,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Inform\Concrete\" />
-    <Folder Include="Inform\Fiber\" />
-    <Folder Include="Inform\Rebar\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
