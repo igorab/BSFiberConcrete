@@ -28,6 +28,8 @@ namespace BSFiberConcrete.CalcGroup2
             Save2DB();
 
             MessageBox.Show($"{numFi1.Value * numFi3.Value * numPsiS.Value}");       
+
+            this.Close();
         }
 
         private void Save2DB()

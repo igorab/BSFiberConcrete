@@ -786,8 +786,7 @@ namespace BSFiberConcrete
 
             if (_MNQ.Count == 0)
                 throw new Exception("Не заданы усилия");
-
-            _MNQ["Qy"] = 0;
+            
             _MNQ["Ml"] = (double)num_Ml1_M1.Value;
             _MNQ["eN"] = (double)num_eN.Value;
             _MNQ["e0"] = (double)numRandomEccentricity.Value;

@@ -252,7 +252,26 @@ namespace BSFiberConcrete.Lib
             }
         }
 
-
+        /// <summary>
+        /// Армирование
+        /// </summary>
+        /// <returns></returns>
+        public static List<NdmSection> LoadNdmSection(string _SectionNum)
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    var output = cnn.Query<NdmSection>(string.Format("select * from NdmSection where Num = '{0}'", _SectionNum),
+                                                new DynamicParameters());
+                    return output.ToList();
+                }
+            }
+            catch
+            {
+                return new List<NdmSection>();
+            }
+        }
 
         /// <summary>
         /// Усилия 
@@ -549,6 +568,11 @@ namespace BSFiberConcrete.Lib
             }
         }
 
+        /// <summary>
+        ///  сохранить расстановку стержней
+        /// </summary>
+        /// <param name="_ds"></param>
+        /// <param name="_BeamSection"></param>
         public static void SaveRods(List<BSRod>  _ds, BeamSection  _BeamSection)
         {
             try
@@ -575,6 +599,38 @@ namespace BSFiberConcrete.Lib
                 throw ;
             }
         }
+
+        /// <summary>
+        ///  сохранить точки сечения
+        /// </summary>
+        /// <param name="_ds"></param>
+        /// <param name="_SectionNum"></param>
+        public static void SaveSection(List<NdmSection> _ds, string _SectionNum)
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    cnn.Open();
+                    using (var tr = cnn.BeginTransaction())
+                    {
+                        cnn.Execute(string.Format("delete from NdmSection where Num = {0}", _SectionNum), null, tr);
+
+                        foreach (var sec in _ds)
+                        {                            
+                            int cnt = cnn.Execute("insert into NdmSection (CG_X, CG_Y, D, SectionType) values (@X, @Y, @N, @Num)", sec, tr);
+
+                        }
+                        tr.Commit();
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
 
 
 

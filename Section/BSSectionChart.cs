@@ -17,6 +17,7 @@ using BSFiberConcrete.Lib;
 using OpenTK;
 using ScottPlot.Colormaps;
 using System.Reflection;
+using TriangleNet.Geometry;
 
 namespace BSFiberConcrete.Section
 {
@@ -138,7 +139,14 @@ namespace BSFiberConcrete.Section
             }
             else if (BSBeamSection == BeamSection.None)
             {
+                var pointsSection = BSData.LoadNdmSection("");
 
+                PointsSection = new List<PointF>();
+
+                foreach (var _point in pointsSection) 
+                {
+                    InnerPoints.Add(new PointF((float)_point.X, (float)_point.Y));                   
+                }
             }
         }
 
@@ -227,8 +235,9 @@ namespace BSFiberConcrete.Section
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            PointF pt = new PointF(0, 0);            
-            pointBS.Add(new BSPoint(pt));
+            PointF pt = new PointF(0, 0);
+            
+            pointBS.Add(new BSPoint(pt) { Num = pointBS.Count+1}) ;
         }
 
         private void btnDel_Click(object sender, EventArgs e)
@@ -399,7 +408,7 @@ namespace BSFiberConcrete.Section
                 {
                     var d_nom = int.Parse(bSRodDataGridView.Rows[e.RowIndex].Cells["Dnom"].Value?.ToString() ?? "0");
 
-                    if (d_nom > 0)
+                    if (m_Diameters != null && d_nom > 0)
                     {
                         double ar = m_Diameters.Find(_D => _D.Diameter == d_nom).Square;
 
@@ -415,9 +424,26 @@ namespace BSFiberConcrete.Section
             }           
         }
 
-        private void bSRodDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+       
+        private void btnSaveChart_Click(object sender, EventArgs e)
         {
+            try
+            {
+                if (RodBS == null || RodBS.List == null || RodBS.List.Count == 0)
+                {
+                    List<BSRod> bSRods = (List<BSRod>)RodBS.List;
 
+                    BSData.SaveRods(bSRods, BSBeamSection);
+                }
+
+                // TODO доделать
+                List<NdmSection> bsSec = new List<NdmSection>();
+                BSData.SaveSection(bsSec, "");
+            }
+            catch (Exception ex) 
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
