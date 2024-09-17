@@ -4,6 +4,7 @@ using BSFiberConcrete.Beam;
 using BSFiberConcrete.BSRFib;
 using BSFiberConcrete.BSRFib.FiberCalculator;
 using BSFiberConcrete.Calc;
+using BSFiberConcrete.Inform.Rebar;
 using BSFiberConcrete.LocalStrength;
 using BSFiberConcrete.Section;
 using BSFiberConcrete.Setup;
@@ -72,9 +73,9 @@ namespace BSCalcMenu
 
         private void btnFiberClass_Click(object sender, EventArgs e)
         {
-            BSFiberSetup bsFiberSetup = new BSFiberSetup();
-            bsFiberSetup.TabPageIdx = 0;
-            bsFiberSetup.Show();
+            //BSFiberSetup bsFiberSetup = new BSFiberSetup();
+            //bsFiberSetup.TabPageIdx = 0;
+            //bsFiberSetup.Show();
                                                                                                         
 
             FiberConcreteInform fcInforn = new FiberConcreteInform();
@@ -83,16 +84,19 @@ namespace BSCalcMenu
 
         private void btnRebarClass_Click(object sender, EventArgs e)
         {
-            BSFiberSetup bsFiberSetup = new BSFiberSetup();
-            bsFiberSetup.TabPageIdx = 1;
-            bsFiberSetup.Show();
+            //BSFiberSetup bsFiberSetup = new BSFiberSetup();
+            //bsFiberSetup.TabPageIdx = 1;
+            //bsFiberSetup.Show();
+
+            RebarInform rebarInform = new RebarInform();
+            rebarInform.Show();
         }
 
         private void btnCoefY_Click(object sender, EventArgs e)
         {
-            BSFiberSetup bsFiberSetup = new BSFiberSetup();
-            bsFiberSetup.TabPageIdx = 2;
-            bsFiberSetup.Show();
+            //BSFiberSetup bsFiberSetup = new BSFiberSetup();
+            //bsFiberSetup.TabPageIdx = 2;
+            //bsFiberSetup.Show();
 
             CoefInform  coefInform = new CoefInform();
             coefInform.Show();
@@ -100,9 +104,12 @@ namespace BSCalcMenu
 
         private void btnBetonClass_Click(object sender, EventArgs e)
         {
-            BSFiberSetup bsFiberSetup = new BSFiberSetup();
-            bsFiberSetup.TabPageIdx = 3;
-            bsFiberSetup.Show();
+            //BSFiberSetup bsFiberSetup = new BSFiberSetup();
+            //bsFiberSetup.TabPageIdx = 3;
+            //bsFiberSetup.Show();
+
+            ConcreteInform сoncreteInform = new ConcreteInform();
+            сoncreteInform.Show();
         }
 
         private void btnNonlinearDeform_Click(object sender, EventArgs e)
@@ -234,14 +241,22 @@ namespace BSCalcMenu
 
         private void btnDeflectionsUlt_Click(object sender, EventArgs e)
         {
-            BSDeflectionsUlt deflectionsUlt = new BSDeflectionsUlt();
-            deflectionsUlt.Show();
+            //BSDeflectionsUlt deflectionsUlt = new BSDeflectionsUlt();
+            //deflectionsUlt.Show();
+
+
+            DeflectionUltimateInform deflectionUltimateInform = new DeflectionUltimateInform();
+            deflectionUltimateInform.Show();
         }
 
         private void btnFiberClassSetup_Click(object sender, EventArgs e)
         {        
-            BSFiberClassSetup fiberClassSetup = new BSFiberClassSetup();
-            fiberClassSetup.Show();
+            //BSFiberClassSetup fiberClassSetup = new BSFiberClassSetup();
+            //fiberClassSetup.Show();
+
+            FiberRebarInform rebarInform = new FiberRebarInform();
+            rebarInform.Show();
+
         }
 
         private void btnCalcOfLenRebar_Click(object sender, EventArgs e)
