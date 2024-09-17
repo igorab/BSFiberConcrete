@@ -66,6 +66,20 @@ namespace BSFiberConcrete
             }
         }
 
+        public void InitEfforts(ref Dictionary<string, double> m_Iniv)
+        {
+            m_Iniv = ReadInitFromJson();
+            List<Efforts> eff = Lib.BSData.LoadEfforts();
+            if (eff.Count > 0)
+            {
+                m_Iniv["Mx"] = eff[0].Mx;
+                m_Iniv["My"] = eff[0].My;
+                m_Iniv["N"] = eff[0].N;
+                m_Iniv["Qx"] = eff[0].Qx;
+                m_Iniv["Qy"] = eff[0].Qy;
+            }
+        }
+
         /// <summary>
         /// Параметры по умолчанию
         /// string json = @"{""Mx"":""value1"",""key2"":1}";

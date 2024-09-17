@@ -33,11 +33,11 @@ namespace BSFiberConcrete
     public class NdmCrc
     {
         public int Id { get; set; }
-        public int fi1 { get; set; }
-        public int fi2 { get; set; }
-        public int fi3 { get; set; }
-        public int mu_fv { get; set; }
-        public int psi_s { get; set; }
+        public double  fi1 { get; set; }
+        public double fi2 { get; set; }
+        public double fi3 { get; set; }
+        public double mu_fv { get; set; }
+        public double psi_s { get; set; }
     }
 
 
@@ -351,9 +351,8 @@ namespace BSFiberConcrete
         public double My { get; set; }
         public double Mz { get; set; }
         public double N { get; set; }
-        public double Q { get; set; }
-        public double Ml { get; set; }
-        public double eN { get; set; }
+        public double Qx { get; set; }
+        public double Qy { get; set; }       
     }
 
     /// <summary>

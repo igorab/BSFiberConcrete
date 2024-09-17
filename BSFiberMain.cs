@@ -192,16 +192,8 @@ namespace BSFiberConcrete
                 cmbRebarClass.SelectedIndex = 1;
                 cmbDeformDiagram.SelectedIndex = (int)DeformDiagramType.D3Linear;
 
-                m_Iniv = m_BSLoadData.ReadInitFromJson();
-                List<Efforts> eff = Lib.BSData.LoadEfforts();
-                if (eff.Count > 0)
-                {
-                    m_Iniv["Mx"] = eff[0].Mx;
-                    m_Iniv["My"] = eff[0].My;
-                    m_Iniv["N"] = eff[0].N;
-                    m_Iniv["Q"] = eff[0].Q;
-                }
-
+                m_BSLoadData.InitEfforts(ref m_Iniv);
+               
                 num_eN.Value = (decimal)m_Iniv["eN"];
                 num_Ml1_M1.Value = (decimal)m_Iniv["Ml"];
 
@@ -240,19 +232,14 @@ namespace BSFiberConcrete
                 numYb5.Value = (decimal)fiberConcrete.Yb5;
 
                 InitFormControls();
-
-                //Mx My N Q Ml
-                double[] mnq = {
-                    m_Iniv["Mx"], m_Iniv["My"], m_Iniv["N"], m_Iniv["Q"], m_Iniv["Ml"], m_Iniv["eN"]
-                };
-
+                //Mx My N Qx Qy
+                double[] mnq = { m_Iniv["Mx"], m_Iniv["My"], m_Iniv["N"], m_Iniv["Qx"], m_Iniv["Qy"] };
                 gridEfforts.Rows.Add(mnq);
                 for (int i = 0; i < mnq.Length; i++)
                 {
                     gridEfforts.Rows[0].Cells[i].Value = mnq[i];
                 }
-
-                //
+               
                 // настройки из БД
                 Rebar dbRebar = m_Rebar.Where(x => x.ID == Convert.ToString(cmbRebarClass.SelectedItem))?.First();
                 numEs.Value = (decimal)BSHelper.MPA2kgsm2(dbRebar.Es);
@@ -780,7 +767,8 @@ namespace BSFiberConcrete
         {
             _MNQ = new Dictionary<string, double>();
 
-            string[] F = new string[] { "Mx", "My", "N", "Q", "Ml", "eN" };
+            string[] F = new string[] { "Mx", "My", "N", "Qx", "Qy" };
+
             DataGridViewRowCollection rows = gridEfforts.Rows;
             var row = rows[0];
 
@@ -1567,9 +1555,10 @@ namespace BSFiberConcrete
         {
             try
             {
-                GetEffortsFromForm(out Dictionary<string, double> MNQ);
+                GetEffortsFromForm(out Dictionary<string, double> _MNQ);
 
-                Efforts ef = new Efforts() { Id = 1, Mx = MNQ["Mx"], My = MNQ["My"], N = MNQ["N"], Q = MNQ["Q"], Ml = MNQ["Ml"], eN = MNQ["eN"] };
+                Efforts ef = new Efforts() { Id = 1, Mx = _MNQ["Mx"], My = _MNQ["My"], N = _MNQ["N"], Qx = _MNQ["Qx"], Qy = _MNQ["Qy"] };
+
                 Lib.BSData.SaveEfforts(ef);
             }
             catch (Exception _ex)
@@ -2111,9 +2100,9 @@ namespace BSFiberConcrete
 
                 BSData.UpdateBeamSectionGeometry(m_InitBeamSectionsGeometry);
 
-                GetEffortsFromForm(out Dictionary<string, double> MNQ);
+                GetEffortsFromForm(out Dictionary<string, double> _MNQ);
 
-                Lib.BSData.SaveEfforts(new Efforts() { Id = 1, Mx = MNQ["Mx"], My = MNQ["My"], N = MNQ["N"], Q = MNQ["Q"], Ml = MNQ["Ml"], eN = MNQ["eN"] });
+                Lib.BSData.SaveEfforts(new Efforts() { Id = 1, Mx = _MNQ["Mx"], My = _MNQ["My"], N = _MNQ["N"], Qx = _MNQ["Qx"], Qy = _MNQ["Qy"]});
             }
             catch (Exception _e)
             {

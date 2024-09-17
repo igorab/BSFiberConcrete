@@ -284,7 +284,7 @@ namespace BSFiberConcrete.Lib
                     cnn.Open();
                     using (var tr = cnn.BeginTransaction())
                     {                        
-                        int cnt = cnn.Execute("update Efforts set Mx = @Mx, My = @My, N = @N, Q = @Q, Ml = @Ml, eN = @eN where Id = @Id ", _efforts, tr);
+                        int cnt = cnn.Execute("update Efforts set Mx = @Mx, My = @My, N = @N, Qx = @Qx, Qy = @Qy where Id = @Id ", _efforts, tr);
                         tr.Commit();
                     }                    
                 }
@@ -700,7 +700,7 @@ namespace BSFiberConcrete.Lib
             {
                 using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
                 {
-                    var output = cnn.Query<NdmCrc>("select * from NDMCrc", new DynamicParameters());
+                    var output = cnn.Query<NdmCrc>("select * from NDMCrc where id = 1", new DynamicParameters());
 
                     if (output != null && output.Count() > 0)
                         return output.ToList()[0];
