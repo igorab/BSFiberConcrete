@@ -787,7 +787,6 @@ namespace BSFiberConcrete
             if (_MNQ.Count == 0)
                 throw new Exception("Не заданы усилия");
 
-            _MNQ["Qy"] = 0;
             _MNQ["Ml"] = (double)num_Ml1_M1.Value;
             _MNQ["eN"] = (double)num_eN.Value;
             _MNQ["e0"] = (double)numRandomEccentricity.Value;
@@ -964,7 +963,7 @@ namespace BSFiberConcrete
 
             GetEffortsFromForm(out Dictionary<string, double> MNQ);
 
-            (double _M, double _N, double _Q) = (MNQ["My"], MNQ["N"], MNQ["Q"]);
+            (double _M, double _N, double _Q) = (MNQ["My"], MNQ["N"], MNQ["Qy"]);
             if (_M < 0 || _N < 0)
             {
                 MessageBox.Show("Расчет по методу статического равновесия не реализован для отрицательных значений M и N.\n Воспользуйтесь расчетом по методу НДМ");
@@ -2200,8 +2199,7 @@ namespace BSFiberConcrete
         
         private void labelMNQ_Click(object sender, EventArgs e)
         {
-            GetEffortsFromForm(out Dictionary<string, double> _MNQ, true);
-            MessageBox.Show($"My = {_MNQ["My"]} Кн*см\n Mx = {_MNQ["Mx"]} Кн*см\n N = {_MNQ["N"]} Кн\n Q = {_MNQ["Q"]} Кн", "Усилия"); 
+            //MessageBox.Show($"My = {_MNQ["My"]} Кн*см\n Mx = {_MNQ["Mx"]} Кн*см\n N = {_MNQ["N"]} Кн\n Q = {_MNQ["Q"]} Кн", "Усилия"); 
         }
 
         private void label35_Click(object sender, EventArgs e)
