@@ -33,6 +33,7 @@ namespace BSFiberConcrete.Section
         }
 
         public BeamSection BSBeamSection { get; set; }
+        public bool UseRebar { private get; set; }
 
         /// <summary>
         /// Класс используемой арматуры
@@ -70,6 +71,8 @@ namespace BSFiberConcrete.Section
         {
             InitializeComponent();
 
+            UseRebar = true;
+
             Center = new PointF(0, 0);
 
             InnerPoints = new List<PointF>();
@@ -80,6 +83,9 @@ namespace BSFiberConcrete.Section
             Sz = new double[]  { 0, 0, 0, 0, 0, 0 };
         }
 
+        /// <summary>
+        /// Стержни арматуры
+        /// </summary>
         private void InitRods()
         {
             if (m_RodPoints == null)
@@ -156,8 +162,9 @@ namespace BSFiberConcrete.Section
                 m_Diameters =  BSData.DiametersOfTypeRebar(RebarClass);
 
             InitPoints();
-           
-            InitRods();
+
+            if (UseRebar)
+                InitRods();
 
             int idx = 0;
 
@@ -438,6 +445,7 @@ namespace BSFiberConcrete.Section
 
                 // TODO доделать
                 List<NdmSection> bsSec = new List<NdmSection>();
+
                 BSData.SaveSection(bsSec, "");
             }
             catch (Exception ex) 

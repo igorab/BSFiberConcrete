@@ -1,4 +1,5 @@
 ﻿using BSCalcLib;
+using BSFiberConcrete.Lib;
 using System;
 using System.Collections.Generic;
 
@@ -7,6 +8,46 @@ namespace BSFiberConcrete.CalcGroup2
 {
     public partial class BSCalcNDM
     {
+        /// <summary>
+        /// Привязка арматуры 
+        /// (экранные координаты ц.т. стержней привязываем к с.к. сечения балки)
+        /// </summary>
+        public static (List<double>, List<double>, List<double>, double, double) 
+            ReinforcementBinding(BeamSection _BeamSection, double _leftX, double _leftY, bool _useRebar = true)
+        {
+            // диаметры
+            List<double> rodD = new List<double>();
+            //привязка по ширине
+            List<double> bY = new List<double>();
+            //привязка по высоте
+            List<double> hX = new List<double>();
+            // количество стержней
+            int d_qty = 0;
+            // площадь арматуры
+            double area_total = 0;
+
+            if (_useRebar)
+            {
+                // значения из БД
+                List<BSRod> _rods = BSData.LoadBSRod(_BeamSection);
+                d_qty = _rods.Count;
+                foreach (BSRod lr in _rods)
+                {
+                    area_total += BSHelper.AreaCircle(lr.D);
+                }
+
+                foreach (BSRod lrod in _rods)
+                {
+                    rodD.Add(lrod.D);
+                    hX.Add(lrod.CG_Y - _leftY);
+                    bY.Add(lrod.CG_X - _leftX);
+                }
+            }
+
+            return (rodD, hX, bY, d_qty, area_total);
+        }
+
+
         /// <summary>
         /// Массивы координат продольной арматуры
         /// </summary>        

@@ -188,29 +188,7 @@ namespace BSFiberConcrete.CalcGroup2
                 idx++;
             }
         }
-
-
-        /// <summary>
-        /// стержни арматуры       
-        /// </summary>        
-        public void GetRods(List<BSRod> _Rods, double _dx = 0, double _dy = 0)
-        {
-            ds.Clear();
-            d_nom.Clear();
-            y0s.Clear();
-            z0s.Clear();
-
-            // вычисляем привязки арматуры ( 0 - левый нижний угол)
-            foreach (var rod in _Rods)
-            {
-                ds.Add(rod.D);
-
-
-                z0s.Add(rod.CG_X + _dx);
-                y0s.Add(rod.CG_Y + _dy);                
-            }
-        }
-
+        
         public BeamSection BeamSection  {
             set {
                 m_BeamSection = value;
@@ -221,15 +199,15 @@ namespace BSFiberConcrete.CalcGroup2
 
         #region Поля, свойства  - данные для расчета
         // Продольная сила, кН, - сжатие
-        private double N0 = 0; //-400.0;
+        private double N0 = 0;
         // Момент отн. оси Y, кН*см
-        private double My0 = 0; // 9000;
+        private double My0 = 0; 
         // Момент отн. оси Z, кН*см
-        private double Mz0 = 0;// 1000;
+        private double Mz0 = 0;
         // Ширина сечения, см
-        private double b = 0; // 20.0;
+        private double b = 0; 
         // высота сечения, см
-        private double h = 0; //40.0;
+        private double h = 0; 
         // тавр-двутавр
         private double bf, hf, bw, hw, b1f, h1f;
         // кольцо
@@ -261,11 +239,13 @@ namespace BSFiberConcrete.CalcGroup2
         private double Rfbt2 = 0;
         // Расчетное сопротивление фибробетона на сжатие, кН/см2
         private double Rfbt3 = 0;
+
         // сжатие
         // Деформация бетона на сжатие
         private double ebc0 = 0.002;
         // Предельная деформация бетона на сжатие                 
         private double ebc2 = 0.0035; 
+
         // растяжение 
         private double efbt0 = 0.0; // Деформация фибробетона на растяжение
         private double efbt1 = 0.0;
@@ -283,10 +263,10 @@ namespace BSFiberConcrete.CalcGroup2
 
         // сжатие        
         private double esc0 = 0; 
-        private double esc2 = 0.025;
+        private double esc2 = 0;
         // растяжение
         private double est0 = 0; 
-        private double est2 = 0.025;
+        private double est2 = 0;
 
         private List<double> My;
         private List<double> Mz;
@@ -315,12 +295,15 @@ namespace BSFiberConcrete.CalcGroup2
         public List<double> A_Crc { get; private set; }
         #endregion
 
-        // коэффициенты использоввания
-        // по деформациям бетона
-        public double UtilRate_fb { get; private set; }
-        // по деформациям арматуры
-        public double UtilRate_s { get; private set; }
-
+        // коэффициенты использоввания:
+        //-- по деформациям фибробетона на сжатие
+        public double UtilRate_fb_p { get; private set; }
+        //-- по деформациям фибробетона на растяжение
+        public double UtilRate_fb_t { get; private set; }
+        //-- по деформациям арматуры на растяжение
+        public double UtilRate_s_p { get; private set; }
+        //-- по деформациям арматуры на растяжение
+        public double UtilRate_s_t { get; private set; }
 
         // максимальное число итераций
         private static int jmax = 20000;

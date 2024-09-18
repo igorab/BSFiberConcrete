@@ -47,14 +47,14 @@ namespace BSFiberConcrete
         [DisplayName("Максимальная относительная деформация в фибробетоне, [.]")]
         public double e_fb_max { get; private set; }
 
-        [DisplayName("Коэффициент использования по деформации в фибробетоне, [.]")]
-        public double UtilRate_e_fb => (Eps_fb_ult !=0) ? e_fb_max_p / Eps_fb_ult : 1;
+        [DisplayName("Коэффициент использования по деформации в фибробетоне (растяжение), [.]")]
+        public double UtilRate_e_fbt => (Eps_fb_ult !=0) ? e_fb_max_p / Eps_fb_ult : 1;
 
         [DisplayName("Максимальная относительная деформация в арматуре, [.]")]
         public double e_s_max { get; private set; }
 
-        [DisplayName("Коэффициент использования по деформации в арматуре, [.]")]
-        public double UtilRate_e_s => (Eps_s_ult != 0) ? e_s_max / Eps_s_ult : 1;
+        [DisplayName("Коэффициент использования по деформации в арматуре (растяжение), [.]")]
+        public double UtilRate_e_st => (Eps_s_ult != 0) ? e_s_max / Eps_s_ult : 1;
 
         // Cжатие >>
         [DisplayName("Напряжение в бетоне (сжатие), [кгс/см2]")]
@@ -65,6 +65,9 @@ namespace BSFiberConcrete
 
         [DisplayName("Максимальная относительная деформация в фибробетоне (сжатие) , [.]")]
         public double e_fb_max_p { get; private set; }
+
+        [DisplayName("Коэффициент использования по деформации в фибробетоне (сжатие), [.]")]
+        public double UtilRate_e_fb_p { get; private set; }
 
         [DisplayName("Максимальная относительная деформация в арматуре (сжатие), [.]")]
         public double e_s_max_p { get; private set; }
@@ -151,10 +154,10 @@ namespace BSFiberConcrete
         public double Rs { get; set; }
 
         [DisplayName("Количество стержней арматуры, [шт]")]
-        public double rods_qty { get; set; }
+        public double Rods_qty { get; set; }
 
         [DisplayName("Общая площадь продольной арматуры, [см2]")]
-        public double rods_area { get; set; }
+        public double Rods_area { get; set; }
 
         [DisplayName("Максимально допустимая относительная деформация в бетоне, [.]")]
         public double Eps_fb_ult { get; set; }
@@ -222,11 +225,17 @@ namespace BSFiberConcrete
         /// <summary>
         ///  количество арматуры
         /// </summary>
-        public Dictionary<string, double> Reinforcement => new Dictionary<string, double>
-        {                            
-            { DN("rods_qty"), rods_qty },
-            { DN("rods_area"), rods_area }
-        };
+        public Dictionary<string, double> Reinforcement
+        {
+            get
+            {
+                return new Dictionary<string, double>
+                {
+                    { DN("Rods_qty"), Rods_qty },
+                    { DN("Rods_area"), Rods_area }
+                };
+            }
+        }         
 
         public Dictionary<string, double> GeomParams =>  new Dictionary<string, double>
         {
@@ -262,8 +271,8 @@ namespace BSFiberConcrete
             Eps_fb_ult = _D["eb_ult"];
             //Eps_s_ult = _D["es_ult"];
 
-            rods_qty = _D["rods_qty"];
-            rods_area = _D["rods_area"];            
+            Rods_qty = _D["rods_qty"];
+            Rods_area = _D["rods_area"];            
         }
 
         /// <summary>
@@ -302,6 +311,9 @@ namespace BSFiberConcrete
             My_calc = BSHelper.KNsm2ToKgssm2(_D1gr["My"]);            
             N_calc = BSHelper.kN2Kgs(_D1gr["N"]);
 
+            // использование
+            UtilRate_e_fb_p = _D1gr["UR_fb_p"];
+            //UtilRate_e_s_p = _D1gr["UR_s_p"];
             Msg = new List<string>();
             Res1Group = new Dictionary<string, double>();
             Res2Group = new Dictionary<string, double>();
@@ -313,19 +325,20 @@ namespace BSFiberConcrete
         /// </summary>
         /// <param name="_D2gr">Словарь с результатами</param>
         public void GetRes2Group(Dictionary<string, double> _D2gr)
-        {
-            // момент трещинообразования
-            M_crc = _D2gr["My_crc"]; 
-
+        {            
             // кривизна
             Ky_crc = _D2gr["Ky"];
             Kx_crc = _D2gr["Kz"];
 
-            // напряжение в арматуре (нужно реализовать для каждого стержня)
-            sig_s_crc = _D2gr["sig_s_crc"];
-
-            // ширина раскрытия трещины
-            a_crc = _D2gr["a_crc"];
+            if (Rods_qty > 0)
+            {
+                // момент трещинообразования
+                M_crc = _D2gr["My_crc"];
+                // напряжение в арматуре (нужно реализовать для каждого стержня)
+                sig_s_crc = _D2gr["sig_s_crc"];
+                // ширина раскрытия трещины
+                a_crc = _D2gr["a_crc"];
+            }
         }
 
         private void AddToResult(string _attr, double _value, int _group = 1)
@@ -371,18 +384,18 @@ namespace BSFiberConcrete
             Res1Group.Add("--------Растяжение:--------", 1);
             AddToResult("sigmaB", sigmaB);            
             AddToResult("e_fb_max", e_fb_max);
-            //AddToResult("UtilRate_e_fb", UtilRate_e_fb);
+            AddToResult("UtilRate_e_fbt", UtilRate_e_fbt);
             
             AddToResult("sigmaS", sigmaS);
             AddToResult("e_s_max", e_s_max);
-            AddToResult("UtilRate_e_s", UtilRate_e_s);
+            AddToResult("UtilRate_e_st", UtilRate_e_st);
 
             // сжатие
             Res1Group.Add("--------Сжатие:-------", 1);
             // - бетон
             AddToResult("sigmaB_p", sigmaB_p);
             AddToResult("e_fb_max_p", e_fb_max_p);
-            AddToResult("UtilRate_e_fb", UtilRate_e_fb);
+            AddToResult("UtilRate_e_fb_p", UtilRate_e_fb_p);
             // - арматура
             AddToResult("sigmaS_p", sigmaS_p);
             AddToResult("e_s_max_p", e_s_max_p);

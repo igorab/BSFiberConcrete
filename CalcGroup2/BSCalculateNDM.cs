@@ -365,26 +365,27 @@ namespace BSFiberConcrete.CalcGroup2
 
             // растяжение: 
             // напряжения:
-            double sigB_t = sigB[jend].Maximum();
-            double sigS_t = sigS[jend].Maximum();
+            double sigB_t = NuNTo0(sigB[jend].Maximum());
+            double sigS_t = NuNTo0(sigS[jend].Maximum());
             // деформации:
-            double epsB_t = epB[jend].Maximum();
-            double epsS_t = epS[jend].Maximum();
+            double epsB_t = NuNTo0(epB[jend].Maximum());
+            double epsS_t = NuNTo0(epS[jend].Maximum());
 
             // сжатие: 
             // напряжения:
-            double sigB_p = sigB[jend].Minimum();
-            double sigS_p = sigS[jend].Minimum();
+            double sigB_p = NuNTo0(sigB[jend].Minimum());
+            double sigS_p = NuNTo0(sigS[jend].Minimum());
             // деформации:
-            double epsB_p = epB[jend].Minimum();
-            double epsS_p = epS[jend].Minimum();
+            double epsB_p = NuNTo0(epB[jend].Minimum());
+            double epsS_p = NuNTo0(epS[jend].Minimum());
 
             // определяем коэффициенты использоввания:
-            // -- по деформациям бетона
-            e_fbt_ult = efbt1;
-            UtilRate_fb = (e_fbt_ult != 0) ? epsB_t / e_fbt_ult : 1.0;
-            // -- по деформациям арматуры
-            UtilRate_s = (esc0 != 0) ? epsS_t / esc0 : 1.0;
+            // -- по деформациям на растяжение            
+            UtilRate_fb_t = (efbt1 != 0) ? epsB_t / efbt1 : 0.0;
+            UtilRate_s_t = (esc0 != 0) ? epsS_t / esc0 : 0.0;
+            // -- по деформациям на cжатие
+            UtilRate_fb_p = (ebc0 != 0) ? epsB_p / ebc0 : 0.0;
+            UtilRate_s_p = (esc0 != 0) ? epsS_p / esc0 : 0.0;
 
             // СП 6.1.25 для эпюры с одним знаком
             // double e_fb_ult = ebc2 - (ebc2 - ebc0) * epsB_t / epsB_p;
@@ -416,9 +417,12 @@ namespace BSFiberConcrete.CalcGroup2
                 ["My"] = Myint,
                 ["Mx"] = Mzint,
                 ["N"] = Nint,
+                // использование:
+                ["UR_fb_t"] = UtilRate_fb_t,
+                ["UR_s_t"] = UtilRate_s_t,
 
-                ["UR_fb"] = UtilRate_fb,
-                ["UR_s"] = UtilRate_s,
+                ["UR_fb_p"] = UtilRate_fb_p,
+                ["UR_s_p"] = UtilRate_s_p,
 
                 // трещиностойкость
                 ["My_crc"] =  My_crc,
@@ -433,6 +437,15 @@ namespace BSFiberConcrete.CalcGroup2
             SigmaSResult = new List<double>(sigS[jend]);
             EpsilonBResult = new List<double>(epB[jend]);
             EpsilonSResult = new List<double>(epS[jend]);
-        }        
+        }
+
+        private double NuNTo0(double _value)
+        {
+            if (double.IsNaN(_value))
+                return 0;
+            else
+                return _value;
+        }
     }
+   
 }
