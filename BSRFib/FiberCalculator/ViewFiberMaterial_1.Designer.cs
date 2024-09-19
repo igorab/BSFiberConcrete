@@ -225,6 +225,7 @@
             // cmbFiberMaterial
             // 
             this.cmbFiberMaterial.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.cmbFiberMaterial.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbFiberMaterial.FormattingEnabled = true;
             this.cmbFiberMaterial.Location = new System.Drawing.Point(133, 3);
             this.cmbFiberMaterial.Name = "cmbFiberMaterial";
@@ -235,6 +236,7 @@
             // cmbFiber_l
             // 
             this.cmbFiber_l.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.cmbFiber_l.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbFiber_l.FormattingEnabled = true;
             this.cmbFiber_l.Location = new System.Drawing.Point(578, 101);
             this.cmbFiber_l.Name = "cmbFiber_l";
@@ -245,6 +247,7 @@
             // cmbFiber_Geometry
             // 
             this.cmbFiber_Geometry.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.cmbFiber_Geometry.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbFiber_Geometry.FormattingEnabled = true;
             this.cmbFiber_Geometry.Location = new System.Drawing.Point(578, 74);
             this.cmbFiber_Geometry.Name = "cmbFiber_Geometry";

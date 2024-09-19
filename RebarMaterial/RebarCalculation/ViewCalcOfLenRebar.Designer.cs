@@ -363,6 +363,7 @@
             // cmbFiberConcreteClass
             // 
             this.cmbFiberConcreteClass.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.cmbFiberConcreteClass.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbFiberConcreteClass.FormattingEnabled = true;
             this.cmbFiberConcreteClass.Location = new System.Drawing.Point(151, 7);
             this.cmbFiberConcreteClass.Name = "cmbFiberConcreteClass";
@@ -474,6 +475,7 @@
             // 
             // cmbRebarType
             // 
+            this.cmbRebarType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbRebarType.FormattingEnabled = true;
             this.cmbRebarType.Location = new System.Drawing.Point(299, 1);
             this.cmbRebarType.Margin = new System.Windows.Forms.Padding(1);
@@ -484,6 +486,7 @@
             // 
             // cmbRebarDiameters
             // 
+            this.cmbRebarDiameters.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbRebarDiameters.FormattingEnabled = true;
             this.cmbRebarDiameters.Location = new System.Drawing.Point(299, 23);
             this.cmbRebarDiameters.Margin = new System.Windows.Forms.Padding(1);

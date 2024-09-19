@@ -78,6 +78,7 @@
             // cmbFiberMaterialType
             // 
             this.cmbFiberMaterialType.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.cmbFiberMaterialType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbFiberMaterialType.FormattingEnabled = true;
             this.cmbFiberMaterialType.Location = new System.Drawing.Point(135, 4);
             this.cmbFiberMaterialType.Name = "cmbFiberMaterialType";
