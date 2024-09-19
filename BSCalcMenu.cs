@@ -20,6 +20,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 
 
 namespace BSCalcMenu
@@ -29,6 +30,10 @@ namespace BSCalcMenu
         public BSCalcMenu()
         {
             InitializeComponent();
+
+
+            BSFiberConcrete.UnitsOfMeasurement.FormForTest test = new BSFiberConcrete.UnitsOfMeasurement.FormForTest();
+            test.Show();
         }
 
         private void btnClose_Click(object sender, EventArgs e)

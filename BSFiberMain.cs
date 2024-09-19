@@ -5,6 +5,9 @@ using BSFiberConcrete.Control;
 using BSFiberConcrete.DeformationDiagram;
 using BSFiberConcrete.Lib;
 using BSFiberConcrete.Section;
+using BSFiberConcrete.UnitsOfMeasurement;
+using BSFiberConcrete.UnitsOfMeasurement.PhysicalQuantities;
+using ScottPlot.Statistics;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,6 +19,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
+
 
 namespace BSFiberConcrete
 {
@@ -77,15 +81,32 @@ namespace BSFiberConcrete
         private BSSectionChart m_SectionChart;
         private MemoryStream m_ImageStream;
 
+        private LameUnitConverter _UnitConverter;
+
+
         public BSFiberMain()
         {
             InitializeComponent();
-        }
 
-        /// <summary>
-        /// Дизайн формы в зависимости от вида расчета
-        /// </summary>
-        private void CalcTypeShow()
+
+
+            List<Enum> modelUnitsMeasurement = new List<Enum>()
+            {
+                LengthUnits.m,
+                ForceUnits.kg,
+                MomentOfForceUnits.kgBycm
+            };
+            _UnitConverter = new LameUnitConverter(modelUnitsMeasurement);
+            cmbForceUnit.DataSource = ForceMeasurement.ListOfName;
+            cmbMomentOfForceUnit.DataSource = MomentOfForceMeasurement.ListOfName;
+            cmbMomentOfForceUnit.SelectedIndex = 1;
+
+    }
+
+    /// <summary>
+    /// Дизайн формы в зависимости от вида расчета
+    /// </summary>
+    private void CalcTypeShow()
         {
             if (CalcType == CalcType.Static)
             {
@@ -763,26 +784,33 @@ namespace BSFiberConcrete
         /// </summary>
         /// <param name="_MNQ"></param>
         /// <exception cref="Exception"></exception>
-        private void GetEffortsFromForm(out Dictionary<string, double> _MNQ, bool _convert = false)
+        private void GetEffortsFromForm(out Dictionary<string, double> _MNQ)
         {
             _MNQ = new Dictionary<string, double>();
 
-            string[] F = new string[] { "Mx", "My", "N", "Qx", "Qy" };
+            DataGridViewColumnCollection columns = gridEfforts.Columns;
 
-            DataGridViewRowCollection rows = gridEfforts.Rows;
-            var row = rows[0];
-
-            for (int i = 0; i < F.Length; i++)
+            for (int i = 0; i < columns.Count; i++)
             {
-                var x = Convert.ToDouble(row.Cells[i].Value);
+                string tmpName = columns[i].Name;
+                double value = Convert.ToDouble(gridEfforts.Rows[0].Cells[i].Value);
 
-                if (_convert)
+                double newValue;
+                // что по говнокоду?
+                if (tmpName.Contains("M"))
                 {
-                    if (i < 4) x = BSHelper.Kgs2kN(x, 4);
+                    // перевод Момента силы из пользовательских ед в расчетные
+                    newValue = _UnitConverter.ConvertMomentOfForce(value);
+                }
+                else
+                {
+                    // перевод Силы из пользовательских ед в расчетные
+                    newValue = _UnitConverter.ConvertForce(value);
                 }
 
-                _MNQ.Add(F[i], x);
+                _MNQ.Add(tmpName, newValue);
             }
+
 
             if (_MNQ.Count == 0)
                 throw new Exception("Не заданы усилия");
@@ -2330,6 +2358,49 @@ namespace BSFiberConcrete
         {
             BSCalcNDMCrc calcNDMCrc = new BSCalcNDMCrc();
             calcNDMCrc.Show();
+        }
+
+        private void cmbForceUnit_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int index = cmbForceUnit.SelectedIndex;
+            _UnitConverter.ChangeCustomUnitForce(index);
+
+            // добавление ед изм в HeaderText колонки с силами 
+            string nameUnitMeasurement = _UnitConverter.GetCustomNameForceUnit();
+            DataGridViewColumnCollection columns = gridEfforts.Columns;
+            for (int i = 0; i < columns.Count; i++)
+            {
+                string columnName = columns[i].Name;
+                if (columnName.Contains("M")) { continue; }
+
+                // Только для сил
+                string headerText = columns[i].HeaderText;
+                var stringArray = headerText.Split(',');
+                columns[i].HeaderText = stringArray[0] + ", " + nameUnitMeasurement;
+
+            }
+
+
+        }
+        private void cmbMomentOfForceUnit_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int index = cmbMomentOfForceUnit.SelectedIndex;
+            _UnitConverter.ChangeCustomUnitMomentOfForce(index);
+
+            // добавление ед изм в HeaderText колонки с силами 
+            DataGridViewColumnCollection columns = gridEfforts.Columns;
+            string nameUnitMeasurement = _UnitConverter.GetCustomNameMomentOfForceUnit();
+            for (int i = 0; i < columns.Count; i++)
+            {
+                string columnName = columns[i].Name;
+                if (columnName.Contains("M"))
+                {  // Только для моментов сил
+                    string headerText = columns[i].HeaderText;
+                    var stringArray = headerText.Split(',');
+                    columns[i].HeaderText = stringArray[0] + ", " + nameUnitMeasurement;
+                }
+            }
+
         }
     }
 }
