@@ -30,10 +30,6 @@ namespace BSCalcMenu
         public BSCalcMenu()
         {
             InitializeComponent();
-
-
-            BSFiberConcrete.UnitsOfMeasurement.FormForTest test = new BSFiberConcrete.UnitsOfMeasurement.FormForTest();
-            test.Show();
         }
 
         private void btnClose_Click(object sender, EventArgs e)

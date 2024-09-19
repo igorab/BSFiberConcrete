@@ -12,6 +12,7 @@ using BSFiberConcrete.Properties;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.Remoting.Messaging;
+using BSFiberConcrete.UnitsOfMeasurement;
 
 namespace BSFiberConcrete
 {
@@ -46,6 +47,8 @@ namespace BSFiberConcrete
         protected List<string> m_Path2BeamDiagrams;
 
         protected BeamSection m_BeamSection { get; set; }
+
+        public LameUnitConverter _unitConverter;
 
         public string ImageCalc { get; set; }
         
@@ -201,7 +204,15 @@ namespace BSFiberConcrete
                     w.WriteLine("<tr>");
                     w.WriteLine($"<td width={bk}>{_pair.Key}</td>");
                     w.WriteLine($"<td width={bv} align=center>{_pair.Value} </td>");
-                    w.WriteLine($"<td width={bv} align=center>{UConv(_pair.Key, _pair.Value)} </td>");
+
+                    string nameCustomUnitMeasure;
+                    double newValue = _unitConverter.ConvertEffortsForReport(_pair.Key, _pair.Value, out nameCustomUnitMeasure);
+                    if (nameCustomUnitMeasure != "")
+                    {
+                        w.WriteLine($"<td width={bv} align=center>{newValue + " " +nameCustomUnitMeasure} </td>");
+                    }
+                    //else
+                    //w.WriteLine($"<td width={bv} align=center>{UConv(_pair.Key, _pair.Value)} </td>");
                     w.WriteLine("</tr>");
                 }
                 w.WriteLine("</Table>");

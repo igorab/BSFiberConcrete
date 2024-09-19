@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 using BSFiberConcrete.UnitsOfMeasurement.PhysicalQuantities;
 using ScottPlot.Control;
+using System.Data.Entity.Core.Mapping;
 
 namespace BSFiberConcrete.UnitsOfMeasurement
 {
@@ -82,7 +83,7 @@ namespace BSFiberConcrete.UnitsOfMeasurement
             return _lengthMeasurement.CustomToModelUnit(input);
         }
 
-        public double revertConvertLength(double input)
+        public double ConvertRevertLength(double input)
         {
             return _lengthMeasurement.ModelToCustomUnit(input);
         }
@@ -92,7 +93,7 @@ namespace BSFiberConcrete.UnitsOfMeasurement
             return _forceMeasurement.CustomToModelUnit(input);
         }
 
-        public double revertConvertForce(double input)
+        public double ConvertRevertForce(double input)
         {
             return _forceMeasurement.ModelToCustomUnit(input);
         }
@@ -103,7 +104,7 @@ namespace BSFiberConcrete.UnitsOfMeasurement
             return _momentOfForceMeasurement.CustomToModelUnit(input);
         }
 
-        public double revertConvertMomentOfForce(double input)
+        public double ConvertRevertMomentOfForce(double input)
         {
             return _momentOfForceMeasurement.ModelToCustomUnit(input);
         }
@@ -132,7 +133,148 @@ namespace BSFiberConcrete.UnitsOfMeasurement
         }
 
 
+
+        public string GetModelNameLengthUnit()
+        {
+            return Extensions.GetDescription(_lengthMeasurement.ModelUnit);
+        }
+
+        public string GetModelNameForceUnit()
+        {
+            return Extensions.GetDescription(_forceMeasurement.ModelUnit);
+        }
+
+        public string GetModelNameMomentOfForceUnit()
+        {
+            return Extensions.GetDescription(_momentOfForceMeasurement.ModelUnit);
+        }
+
+
         #endregion
+
+
+        #region методы в которых используются достаточно сомнительные механизмы ветвления
+        // такие способы решения задачи были выбраны исходя из простоты внедрения в существующий код 
+
+        /// <summary>
+        ///  конвертации нагрузок из пользовательских ед в расчетные
+        /// </summary>
+        /// <param name="effortsName"> Название нагрузки (название колонки)</param>
+        /// <param name="effortsValue">значение нагрузки</param>
+        public double ConvertEfforts(string effortsName, double effortsValue)
+        {
+            double newValue = 0; 
+            // что по говнокоду?
+            if (effortsName.Contains("M"))
+            {
+                // перевод Момента силы из пользовательских ед в расчетные
+                newValue = this.ConvertMomentOfForce(effortsValue);
+            }
+            else
+            {
+                // перевод Силы из пользовательских ед в расчетные
+                newValue = this.ConvertForce(effortsValue);
+            }
+            return newValue;
+
+        }
+
+
+        /// <summary>
+        ///  конвертации нагрузок расчетных единиц в пользовательские
+        /// </summary>
+        /// <param name="effortsName"> Название нагрузки (название колонки)</param>
+        /// <param name="effortsValue">значение нагрузки</param>
+        public double ConvertRevertEfforts(string effortsName, double effortsValue)
+        {
+            double newValue = 0;
+            if (effortsName.Contains("M")) // говнокод
+            {
+                // перевод Момента силы из пользовательских ед в расчетные
+                newValue = this.ConvertRevertMomentOfForce(effortsValue);
+            }
+            else
+            {
+                // перевод Силы из пользовательских ед в расчетные
+                newValue = this.ConvertRevertForce(effortsValue);
+            }
+            return newValue;
+
+        }
+
+
+        /// <summary>
+        /// Перевод из расчетных ед изм в ед установленные пользователем
+        /// </summary>
+        /// <param name="nameUnitMeasurment">расчетные ед изм</param>
+        /// <param name="value">значение</param>
+        /// <returns></returns>
+        public double ConvertEffortsForReport(string str, double value, out string nameCustomlMeaserment)
+        {
+            nameCustomlMeaserment = "";
+            string[] strArray = str.Split('[', ']');
+
+            if (strArray.Length >= 2)
+            {
+                string nameUnitMeasurment = strArray[1];
+                string nameModelMeaserment = this.GetModelNameForceUnit();
+                if (nameModelMeaserment == nameUnitMeasurment)
+                {
+                    nameCustomlMeaserment = this.GetCustomNameForceUnit();
+                    // перевод Силы из расчетных ед изм в пользовательские
+                    return this.ConvertRevertForce(value);
+                }
+
+
+                nameModelMeaserment = this.GetModelNameMomentOfForceUnit();
+                if (nameModelMeaserment == nameUnitMeasurment)
+                {
+                    nameCustomlMeaserment = this.GetCustomNameMomentOfForceUnit();
+                    // Перевод момента силы из расчетных ед изм в пользовательские
+                    return this.ConvertRevertMomentOfForce(value);
+                }
+            }
+
+            return value;
+        }
+
+        /// <summary>
+        /// Замена ед измерения в headerText для сил
+        /// </summary>
+        /// <param name="headerText"></param>
+        /// <returns></returns>
+        public string ChangeHT4ForForce(string headerText)
+        {
+            // Только для сил
+            string[] stringArray = headerText.Split(',');
+            if (stringArray[0].Contains("M"))  // говнокод
+            { return headerText; }
+            string nameUnitMeasurement = this.GetCustomNameForceUnit();
+            return stringArray[0] + ", " + nameUnitMeasurement;
+
+        }
+
+
+        /// <summary>
+        /// Замена ед измерения в headerText для момента сил
+        /// </summary>
+        /// <param name="headerText"></param>
+        /// <returns></returns>
+        public string ChangeHTForMomentOfForce(string headerText)
+        {
+            // Только для моментов сил
+            string[] stringArray = headerText.Split(',');
+            if (stringArray[0].Contains('M')) // говнокод
+            {
+                string nameUnitMeasurement = this.GetCustomNameMomentOfForceUnit();
+                return  stringArray[0] + ", " + nameUnitMeasurement;
+            }
+            return headerText;
+        }
+        #endregion
+
+
+
 
     }
 }

@@ -87,26 +87,12 @@ namespace BSFiberConcrete
         public BSFiberMain()
         {
             InitializeComponent();
+        }
 
-
-
-            List<Enum> modelUnitsMeasurement = new List<Enum>()
-            {
-                LengthUnits.m,
-                ForceUnits.kg,
-                MomentOfForceUnits.kgBycm
-            };
-            _UnitConverter = new LameUnitConverter(modelUnitsMeasurement);
-            cmbForceUnit.DataSource = ForceMeasurement.ListOfName;
-            cmbMomentOfForceUnit.DataSource = MomentOfForceMeasurement.ListOfName;
-            cmbMomentOfForceUnit.SelectedIndex = 1;
-
-    }
-
-    /// <summary>
-    /// Дизайн формы в зависимости от вида расчета
-    /// </summary>
-    private void CalcTypeShow()
+        /// <summary>
+        /// Дизайн формы в зависимости от вида расчета
+        /// </summary>
+        private void CalcTypeShow()
         {
             if (CalcType == CalcType.Static)
             {
@@ -260,7 +246,20 @@ namespace BSFiberConcrete
                 {
                     gridEfforts.Rows[0].Cells[i].Value = mnq[i];
                 }
-               
+
+                // пользовательское изменение ед измерения для нагрузок
+                List<Enum> modelUnitsMeasurement = new List<Enum>()
+                {
+                    LengthUnits.m,
+                    ForceUnits.kg,
+                    MomentOfForceUnits.kgBycm
+                };
+                _UnitConverter = new LameUnitConverter(modelUnitsMeasurement);
+                cmbForceUnit.DataSource = ForceMeasurement.ListOfName;
+                cmbMomentOfForceUnit.DataSource = MomentOfForceMeasurement.ListOfName;
+                cmbMomentOfForceUnit.SelectedIndex = 1;
+
+
                 // настройки из БД
                 Rebar dbRebar = m_Rebar.Where(x => x.ID == Convert.ToString(cmbRebarClass.SelectedItem))?.First();
                 numEs.Value = (decimal)BSHelper.MPA2kgsm2(dbRebar.Es);
@@ -630,6 +629,8 @@ namespace BSFiberConcrete
                 report.Messages = m_Message;
                 report.UseReinforcement = _useReinforcement;
                 report.Path2BeamDiagrams = m_Path2BeamDiagrams;
+                report._unitConverter = _UnitConverter;
+
 
                 path = report.CreateReport(_fileId);
                 return path;
@@ -795,19 +796,7 @@ namespace BSFiberConcrete
                 string tmpName = columns[i].Name;
                 double value = Convert.ToDouble(gridEfforts.Rows[0].Cells[i].Value);
 
-                double newValue;
-                // что по говнокоду?
-                if (tmpName.Contains("M"))
-                {
-                    // перевод Момента силы из пользовательских ед в расчетные
-                    newValue = _UnitConverter.ConvertMomentOfForce(value);
-                }
-                else
-                {
-                    // перевод Силы из пользовательских ед в расчетные
-                    newValue = _UnitConverter.ConvertForce(value);
-                }
-
+                double newValue = _UnitConverter.ConvertEfforts(tmpName, value);
                 _MNQ.Add(tmpName, newValue);
             }
 
@@ -926,6 +915,7 @@ namespace BSFiberConcrete
                 report.CalcResults2Group = m_CalcResults2Group;
                 report.Messages = m_Message;
                 report.InitFromFiberCalc(fiberCalc);
+                report._unitConverter = _UnitConverter;
 
                 string pathToHtmlFile = report.CreateReport(2);
 
@@ -959,9 +949,10 @@ namespace BSFiberConcrete
                 report.BeamSection = m_BeamSection;
                 report.ImageCalc = fiberCalc.ImageCalc();
                 report.InitFromFiberCalc(fiberCalc);
-                // для расчета по второй грппе пред состояний
+                // для расчета по второй группе пред состояний
                 report.CalcResults2Group = m_CalcResults2Group;
                 report.Messages = m_Message;
+                report._unitConverter = _UnitConverter;
 
                 string pathToHtmlFile = report.CreateReport(3);
 
@@ -2366,18 +2357,12 @@ namespace BSFiberConcrete
             _UnitConverter.ChangeCustomUnitForce(index);
 
             // добавление ед изм в HeaderText колонки с силами 
-            string nameUnitMeasurement = _UnitConverter.GetCustomNameForceUnit();
             DataGridViewColumnCollection columns = gridEfforts.Columns;
             for (int i = 0; i < columns.Count; i++)
             {
                 string columnName = columns[i].Name;
-                if (columnName.Contains("M")) { continue; }
-
-                // Только для сил
                 string headerText = columns[i].HeaderText;
-                var stringArray = headerText.Split(',');
-                columns[i].HeaderText = stringArray[0] + ", " + nameUnitMeasurement;
-
+                columns[i].HeaderText = _UnitConverter.ChangeHT4ForForce(headerText);
             }
 
 
@@ -2389,16 +2374,11 @@ namespace BSFiberConcrete
 
             // добавление ед изм в HeaderText колонки с силами 
             DataGridViewColumnCollection columns = gridEfforts.Columns;
-            string nameUnitMeasurement = _UnitConverter.GetCustomNameMomentOfForceUnit();
             for (int i = 0; i < columns.Count; i++)
             {
                 string columnName = columns[i].Name;
-                if (columnName.Contains("M"))
-                {  // Только для моментов сил
-                    string headerText = columns[i].HeaderText;
-                    var stringArray = headerText.Split(',');
-                    columns[i].HeaderText = stringArray[0] + ", " + nameUnitMeasurement;
-                }
+                string headerText = columns[i].HeaderText;
+                columns[i].HeaderText = _UnitConverter.ChangeHTForMomentOfForce(headerText);
             }
 
         }

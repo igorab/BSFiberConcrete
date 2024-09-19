@@ -30,11 +30,11 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BSFiberMain));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabFiber = new System.Windows.Forms.TabControl();
             this.tabParams = new System.Windows.Forms.TabPage();
             this.groupVar = new System.Windows.Forms.GroupBox();
@@ -1463,6 +1463,7 @@
             // cmbForceUnit
             // 
             this.cmbForceUnit.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cmbForceUnit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbForceUnit.FormattingEnabled = true;
             this.cmbForceUnit.Location = new System.Drawing.Point(411, 1);
             this.cmbForceUnit.Margin = new System.Windows.Forms.Padding(1);
@@ -1474,6 +1475,7 @@
             // cmbMomentOfForceUnit
             // 
             this.cmbMomentOfForceUnit.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cmbMomentOfForceUnit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbMomentOfForceUnit.FormattingEnabled = true;
             this.cmbMomentOfForceUnit.Location = new System.Drawing.Point(260, 1);
             this.cmbMomentOfForceUnit.Margin = new System.Windows.Forms.Padding(1);
@@ -1532,45 +1534,45 @@
             // 
             // Mx
             // 
-            dataGridViewCellStyle6.Format = "N2";
-            dataGridViewCellStyle6.NullValue = "0";
-            this.Mx.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle11.Format = "N2";
+            dataGridViewCellStyle11.NullValue = "0";
+            this.Mx.DefaultCellStyle = dataGridViewCellStyle11;
             this.Mx.HeaderText = "Mx, кг*мм";
             this.Mx.Name = "Mx";
             this.Mx.ToolTipText = "Момент относительно оси X";
             // 
             // My
             // 
-            dataGridViewCellStyle7.Format = "N2";
-            dataGridViewCellStyle7.NullValue = "0";
-            this.My.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle12.Format = "N2";
+            dataGridViewCellStyle12.NullValue = "0";
+            this.My.DefaultCellStyle = dataGridViewCellStyle12;
             this.My.HeaderText = "My, кг*мм";
             this.My.Name = "My";
             this.My.ToolTipText = "Момент отн оси Y";
             // 
             // N
             // 
-            dataGridViewCellStyle8.Format = "N2";
-            dataGridViewCellStyle8.NullValue = "0";
-            this.N.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle13.Format = "N2";
+            dataGridViewCellStyle13.NullValue = "0";
+            this.N.DefaultCellStyle = dataGridViewCellStyle13;
             this.N.HeaderText = "N, кг";
             this.N.Name = "N";
             this.N.ToolTipText = "Продольная сила";
             // 
             // Qx
             // 
-            dataGridViewCellStyle9.Format = "N2";
-            dataGridViewCellStyle9.NullValue = "0";
-            this.Qx.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle14.Format = "N2";
+            dataGridViewCellStyle14.NullValue = "0";
+            this.Qx.DefaultCellStyle = dataGridViewCellStyle14;
             this.Qx.HeaderText = "Qx, кг";
             this.Qx.Name = "Qx";
             this.Qx.ToolTipText = "Поперечная сила вдоль оси X";
             // 
             // Qy
             // 
-            dataGridViewCellStyle10.Format = "N2";
-            dataGridViewCellStyle10.NullValue = "0";
-            this.Qy.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle15.Format = "N2";
+            dataGridViewCellStyle15.NullValue = "0";
+            this.Qy.DefaultCellStyle = dataGridViewCellStyle15;
             this.Qy.HeaderText = "Qy, кг";
             this.Qy.Name = "Qy";
             this.Qy.ToolTipText = "Поперечная сила вдоль оси Y";
