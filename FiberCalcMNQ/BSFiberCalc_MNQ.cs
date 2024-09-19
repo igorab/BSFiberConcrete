@@ -717,7 +717,7 @@ namespace BSFiberConcrete
             N = m_Efforts["N"];
 
             // Поперечная сила
-            Q = m_Efforts["Q"];
+            Q = m_Efforts["Qx"];
             Qy = m_Efforts["Qy"];
 
             //Момент от действия постянных и длительных нагрузок нагрузок
