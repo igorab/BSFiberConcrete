@@ -135,7 +135,7 @@
             this.comboBoxTo.Name = "comboBoxTo";
             this.comboBoxTo.Size = new System.Drawing.Size(71, 21);
             this.comboBoxTo.TabIndex = 5;
-            this.comboBoxTo.Text = "кгс/см2";
+            this.comboBoxTo.Text = "кг/см2";
             // 
             // comboBoxTo2
             // 
@@ -217,7 +217,7 @@
             this.comboBoxToF.Name = "comboBoxToF";
             this.comboBoxToF.Size = new System.Drawing.Size(63, 21);
             this.comboBoxToF.TabIndex = 14;
-            this.comboBoxToF.Text = "кгс";
+            this.comboBoxToF.Text = "кг";
             // 
             // labelToF
             // 
@@ -301,7 +301,7 @@
             this.cmbFromM.Items.AddRange(new object[] {
             "кНм",
             "Нмм",
-            "кгс*см"});
+            "кг*см"});
             this.cmbFromM.Location = new System.Drawing.Point(30, 33);
             this.cmbFromM.Name = "cmbFromM";
             this.cmbFromM.Size = new System.Drawing.Size(63, 21);
@@ -331,13 +331,13 @@
             // 
             this.cmbToM.FormattingEnabled = true;
             this.cmbToM.Items.AddRange(new object[] {
-            "кгс*см",
+            "кг*см",
             "Нмм"});
             this.cmbToM.Location = new System.Drawing.Point(30, 75);
             this.cmbToM.Name = "cmbToM";
             this.cmbToM.Size = new System.Drawing.Size(63, 21);
             this.cmbToM.TabIndex = 20;
-            this.cmbToM.Text = "кгс*см";
+            this.cmbToM.Text = "кг*см";
             // 
             // LabelFromM
             // 

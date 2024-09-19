@@ -1,4 +1,5 @@
-﻿using BSFiberConcrete.DeformationDiagram;
+﻿using BSFiberConcrete.CalcGroup2;
+using BSFiberConcrete.DeformationDiagram;
 using MathNet.Numerics.Integration;
 using OpenTK.Graphics.OpenGL;
 using System;
@@ -38,10 +39,10 @@ namespace BSFiberConcrete
 
         // Растяжение >>
 
-        [DisplayName("Напряжение в бетоне, [кгс/см2]")]
+        [DisplayName("Напряжение в бетоне, [кг/см2]")]
         public double sigmaB { get; private set; }
 
-        [DisplayName("Напряжение в арматуре, [кгс/см2]")]
+        [DisplayName("Напряжение в арматуре, [кг/см2]")]
         public double sigmaS { get; private set; }
 
         [DisplayName("Максимальная относительная деформация в фибробетоне, [.]")]
@@ -57,10 +58,10 @@ namespace BSFiberConcrete
         public double UtilRate_e_st => (Eps_s_ult != 0) ? e_s_max / Eps_s_ult : 1;
 
         // Cжатие >>
-        [DisplayName("Напряжение в бетоне (сжатие), [кгс/см2]")]
+        [DisplayName("Напряжение в бетоне (сжатие), [кг/см2]")]
         public double sigmaB_p { get; private set; }
 
-        [DisplayName("Напряжение в арматуре (сжатие), [кгс/см2]")]
+        [DisplayName("Напряжение в арматуре (сжатие), [кг/см2]")]
         public double sigmaS_p { get; private set; }
 
         [DisplayName("Максимальная относительная деформация в фибробетоне (сжатие) , [.]")]
@@ -77,11 +78,11 @@ namespace BSFiberConcrete
 
         // проверка по усилиям
 
-        [DisplayName("Момент Мx, [кгс*см]")]
+        [DisplayName("Момент Мx, [кг*см]")]
         public double Mx_calc { get; private set; }
-        [DisplayName("Момент Мy, [кгс*см]")]
+        [DisplayName("Момент Мy, [кг*см]")]
         public double My_calc { get; private set; }
-        [DisplayName("Сила N, [кгс]")]
+        [DisplayName("Сила N, [кг]")]
         public double N_calc { get; private set; }
 
         // напряжение
@@ -95,7 +96,7 @@ namespace BSFiberConcrete
         #endregion
 
         #region 2 группа предельных состояний
-        [DisplayName("П6.2.13. Момент возникновения трещины, [кгс*см]")]
+        [DisplayName("П6.2.13. Момент возникновения трещины, [кг*см]")]
         public double M_crc { get; set; }
 
         [DisplayName("П6.2.31. Кривизна 1/Rx, [1/см]")]
@@ -125,32 +126,32 @@ namespace BSFiberConcrete
         [DisplayName("Высота сечения, h [см]")]
         public double h { get; set; }
 
-        [DisplayName("Mx [кгс*см]")]
+        [DisplayName("Mx [кг*см]")]
         public double Mx { get; set; }
-        [DisplayName("My [кгс*см]")]
+        [DisplayName("My [кг*см]")]
         public double My { get; set; }
-        [DisplayName("N [кгс]")]
+        [DisplayName("N [кг]")]
         public double N { get; set; }
 
-        [DisplayName("Модуль упругости фибробетона Eb, [кгс/см2]")]
+        [DisplayName("Модуль упругости фибробетона Eb, [кг/см2]")]
         public double Eb { get; set; }
 
-        [DisplayName("Нормативное сопротивление фибробетона на сжатие R,fbn, [кгс/см2]")]
+        [DisplayName("Нормативное сопротивление фибробетона на сжатие R,fbn, [кг/см2]")]
         public double Rfbn { get; set; }
 
-        [DisplayName("Нормативное сопротивление фибробетона на растяжение R,fbtn, [кгс/см2]")]
+        [DisplayName("Нормативное сопротивление фибробетона на растяжение R,fbtn, [кг/см2]")]
         public double Rfbtn { get; set; }
 
-        [DisplayName("Расчетное сопротивление фибробетона на сжатие R,fbn, [кгс/см2]")]
+        [DisplayName("Расчетное сопротивление фибробетона на сжатие R,fbn, [кг/см2]")]
         public double Rfb { get; set; }
 
-        [DisplayName("Расчетное сопротивление фибробетона на растяжение R,fbtn, [кгс/см2]")]
+        [DisplayName("Расчетное сопротивление фибробетона на растяжение R,fbtn, [кг/см2]")]
         public double Rfbt { get; set; }
 
-        [DisplayName("Модуль упругости арматуры Es, [кгс/см2]")]
+        [DisplayName("Модуль упругости арматуры Es, [кг/см2]")]
         public double Es { get; set; }
 
-        [DisplayName("Нормативное сопротивление арматуры R,sn, [кгс/см2]")]
+        [DisplayName("Нормативное сопротивление арматуры R,sn, [кг/см2]")]
         public double Rs { get; set; }
 
         [DisplayName("Количество стержней арматуры, [шт]")]
@@ -454,6 +455,15 @@ namespace BSFiberConcrete
 
             _CalcResults = Res2Group;
         }
-        
+
+        public void InitFromCalcNDM(BSCalcNDM bsCalc1)
+        {
+            Sig_B = bsCalc1.SigmaBResult;
+            Sig_S = bsCalc1.SigmaSResult;
+            Eps_B = bsCalc1.EpsilonBResult;
+            Eps_S = bsCalc1.EpsilonSResult;
+
+            ErrorIdx.Add(bsCalc1.Err);
+        }
     }
 }

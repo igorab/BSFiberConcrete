@@ -505,8 +505,8 @@ namespace BSFiberConcrete
                 // диаграмма:
                 // арматура
                 string cR_class = cmbRebarClass.Text;
-                double cRs = (double)numRs.Value; // кгс/см2            
-                double cEs = (double)numEs.Value; // кгс/см2
+                double cRs = (double)numRs.Value; // кг/см2            
+                double cEs = (double)numEs.Value; // кг/см2
                 double c_eps_s0 = (double)numEpsilonS0.Value;// 0.00175; 
                 double c_eps_s2 = (double)numEpsilonS2.Value; ; // 0.025; 
 
@@ -525,7 +525,7 @@ namespace BSFiberConcrete
                 double c_b = bsBeam.Width;
                 double c_h = bsBeam.Height;
 
-                // Усилия Mx, My - моменты, кгс*см , N - сила, кгс              
+                // Усилия Mx, My - моменты, кг*см , N - сила, кг              
                 GetEffortsFromForm(out Dictionary<string, double> MNQ);
                 BSFiberCalc_Cracking calc_Cracking = new BSFiberCalc_Cracking(MNQ);
                 //calc_Cracking.Efforts = MNQ;
@@ -1000,7 +1000,7 @@ namespace BSFiberConcrete
         /// <returns>словарь данных</returns>
         private Dictionary<string, double> DictCalcParams(BeamSection _beamSection)
         {
-            // Усилия Mx, My - моменты, кгс*см , N - сила, кгс              
+            // Усилия Mx, My - моменты, кг*см , N - сила, кг              
             GetEffortsFromForm(out Dictionary<string, double> MNQ);
 
             BSMatFiber mf = new BSMatFiber((double)numEfb.Value, numYft.Value, numYb.Value, numYb1.Value, numYb2.Value, numYb3.Value, numYb5.Value);
@@ -1124,7 +1124,9 @@ namespace BSFiberConcrete
 
             // данные с формы
             Dictionary<string, double> D = DictCalcParams(_beamSection);
-            
+
+            NDMSetup setup = BSData.LoadNDMSetup();
+
             //привязка арматуры (по X - высота, по Y ширина балки)
             double leftX = 0;
             // для прямоугольных и тавровых сечений привязка к центу нижней грани 
@@ -1134,24 +1136,19 @@ namespace BSFiberConcrete
             D.Add("rods_qty", _qty);
             D.Add("rods_area", _area);
 
-            int BetonTypeId = (cmbTypeMaterial.SelectedIndex == 1) ? 1 : 0;
-
+            setup.BetonTypeId = (cmbTypeMaterial.SelectedIndex == 1) ? 1 : 0;
+            
             ///
             /// выполнить расчет по 1 группе предельных состояний
             ///
-            BSCalcNDM bsCalc1 = new BSCalcNDM(GR1, _beamSection, BetonTypeId);            
+            BSCalcNDM bsCalc1 = new BSCalcNDM(GR1, _beamSection, setup);            
             bsCalc1.SetDictParams(D);
             bsCalc1.SetRods(lD, lX, lY);
             bsCalc1.Run();
 
             BSCalcResultNDM calcRes = new BSCalcResultNDM(bsCalc1.Results);
-            calcRes.Sig_B = bsCalc1.SigmaBResult;
-            calcRes.Sig_S = bsCalc1.SigmaSResult;
-            calcRes.Eps_B = bsCalc1.EpsilonBResult;
-            calcRes.Eps_S = bsCalc1.EpsilonSResult;
-
-            calcRes.InitCalcParams(D);
-            calcRes.ErrorIdx.Add(bsCalc1.Err); // вывести описание ошибки
+            calcRes.InitFromCalcNDM(bsCalc1);            
+            calcRes.InitCalcParams(D);            
             calcRes.Results1Group(ref m_CalcResults);
             calcRes.ResultsMsg1Group(ref m_Message);
 
@@ -1164,7 +1161,7 @@ namespace BSFiberConcrete
             double eps_s_crc; // параметр для определения ширины раскрытия трещины
 
             // используем заданные усилия и определяем коэфф использования по 2-гр пр сост
-            BSCalcNDM bsCalc2 = new BSCalcNDM(GR2, _beamSection, BetonTypeId);            
+            BSCalcNDM bsCalc2 = new BSCalcNDM(GR2, _beamSection, setup);            
             bsCalc2.SetDictParams(D);
             bsCalc2.MzMyNUp(1);
             bsCalc2.SetRods(lD, lX, lY);
@@ -1177,7 +1174,7 @@ namespace BSFiberConcrete
 
             if (_useRebar)
             {
-                BSCalcNDM bsCalc3 = new BSCalcNDM(GR2, _beamSection, BetonTypeId);
+                BSCalcNDM bsCalc3 = new BSCalcNDM(GR2, _beamSection, setup);
                 bsCalc3.SetDictParams(D);
                 bsCalc3.MzMyNUp(ur_fb2);
                 bsCalc3.SetRods(lD, lX, lY);
@@ -1186,7 +1183,7 @@ namespace BSFiberConcrete
             
                 // Если же хотя бы один из моментов трещинообразования оказывается меньше
                 // соответствующего действующего момента, выполняют второй этап расчета.
-                BSCalcNDM bsCalc4 = new BSCalcNDM(GR2, _beamSection, BetonTypeId);
+                BSCalcNDM bsCalc4 = new BSCalcNDM(GR2, _beamSection, setup);
                 bsCalc4.SetDictParams(D);
                 bsCalc4.MzMyNUp(ur_fb2 * 1.182);
                 bsCalc4.SetRods(lD, lX, lY);
@@ -1204,7 +1201,7 @@ namespace BSFiberConcrete
 
                 // определение ширины раскрытия трещины
                 // расчитываем на заданные моменты и силы
-                BSCalcNDM bsCalc5 = new BSCalcNDM(GR2, _beamSection, BetonTypeId);
+                BSCalcNDM bsCalc5 = new BSCalcNDM(GR2, _beamSection, setup);
                 bsCalc5.SetDictParams(D);
                 bsCalc5.SetE_S_Crc(E_S_crc);
                 bsCalc5.SetRods(lD, lX, lY);
@@ -1243,14 +1240,14 @@ namespace BSFiberConcrete
             // класс фибробетона (бетона) на сжатие
             string cBt_class = cmbBfn.Text;
             // Фибробетон:
-            double cRb = (double)numRfb_n.Value; // сопротивление сжатию, кгс/см2
-            double cEb = (double)numEfb.Value; // модуль упругости,  кгс/см2
+            double cRb = (double)numRfb_n.Value; // сопротивление сжатию, кг/см2
+            double cEb = (double)numEfb.Value; // модуль упругости,  кг/см2
 
             // диаграмма:
             // арматура
             string cR_class = cmbRebarClass.Text;
-            double cRs = (double)numRs.Value; // кгс/см2            
-            double cEs = (double)numEs.Value; // кгс/см2
+            double cRs = (double)numRs.Value; // кг/см2            
+            double cEs = (double)numEs.Value; // кг/см2
             double c_eps_s0 = (double)numEpsilonS0.Value;// 0.00175; 
             double c_eps_s2 = (double)numEpsilonS2.Value; ; // 0.025; 
 
@@ -1265,7 +1262,7 @@ namespace BSFiberConcrete
             // расстановка арматурных стержней
             List<BSRod> Rods = new List<BSRod>();
 
-            // Усилия Mx, My - моменты, кгс*см , N - сила, кгс              
+            // Усилия Mx, My - моменты, кг*см , N - сила, кг              
             GetEffortsFromForm(out Dictionary<string, double> MNQ);
             double c_Mx = MNQ["Mx"];
             double c_My = MNQ["My"];

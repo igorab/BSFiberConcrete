@@ -128,11 +128,11 @@ namespace BSFiberConcrete
         {            
             if (string.IsNullOrEmpty(_s))
                 return "";
-            else if (_s.Contains("кгс/см2") || _s.Contains("кг/см2"))
+            else if ( _s.Contains("кг/см2"))
                 return $"{Rnd( BSHelper.Kgsm2MPa(_v))} МПа";
-            else if (_s.Contains("кгс*см") || _s.Contains("кг*см"))
+            else if (_s.Contains("кг*см"))
                 return $"{Rnd(BSHelper.kgssm2kNsm(_v))} Кн*см";
-            else if (_s.Contains("[кгс]") || _s.Contains("[кг]"))
+            else if ( _s.Contains("[кг]"))
                 return $"{Rnd(BSHelper.Kgs2kN(_v))} Кн";
 
             return "";

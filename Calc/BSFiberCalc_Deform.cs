@@ -136,9 +136,9 @@ namespace BSFiberConcrete
         {
             get { return new Dictionary<string, double> 
             { 
-                { "Mx, кгс*см", Mx }, 
-                { "My, кгс*см", My }, 
-                { "N, кгс", N } }; 
+                { "Mx, кг*см", Mx }, 
+                { "My, кг*см", My }, 
+                { "N, кг", N } }; 
             }
         }
 
@@ -147,11 +147,11 @@ namespace BSFiberConcrete
             get
             {
                 return new Dictionary<string, double> { 
-                    { "Rfb,n, кгс/см2", m_Fiber.Rfbn }, 
-                    { "Eb, кгс/см2", m_Fiber.Eb }, 
+                    { "Rfb,n, кг/см2", m_Fiber.Rfbn }, 
+                    { "Eb, кг/см2", m_Fiber.Eb }, 
                     { "e_fb_ult", m_Fiber.Eps_fb_ult },
-                    { "Rs, кгс/см2", m_Rod.Rs }, 
-                    { "Es, кгс/см2", m_Rod.Es }, 
+                    { "Rs, кг/см2", m_Rod.Rs }, 
+                    { "Es, кг/см2", m_Rod.Es }, 
                     { "e_s_ult", m_Rod.Eps_s_ult(DeformDiagram) }
                 };
             }

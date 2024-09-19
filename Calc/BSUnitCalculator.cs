@@ -40,15 +40,15 @@ namespace BSFiberConcrete.Calc
 
             if (uFrom == "кНм")
             {
-                if (uTo == "кгс*см")
+                if (uTo == "кг*см")
                     numToM.Value = UConv(numFromM.Value, BSHelper.kNm2kgssm);
             }
             else if (uFrom == "Нмм")
             {
-                if (uTo == "кгс*см")
+                if (uTo == "кг*см")
                     numToM.Value = UConv(numFromM.Value, BSHelper.Nmm2kgssm);
             }
-            else if (uFrom == "кгс*см")
+            else if (uFrom == "кг*см")
             {
                 if (uTo == "Нмм")
                     numToM.Value = UConv(numFromM.Value, BSHelper.kgssm2Nmm);

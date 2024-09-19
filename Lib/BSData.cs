@@ -105,7 +105,25 @@ namespace BSFiberConcrete.Lib
         }
 
 
-
+        /// <summary>
+        ///  
+        /// </summary>
+        /// <returns>Список</returns>
+        public static NDMSetup LoadNDMSetup(int Id = 1)
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    var output = cnn.Query<NDMSetup>($"select * from NDMSetup where Id = {Id}", new DynamicParameters());
+                    return output.ToList()[0];
+                }
+            }
+            catch
+            {
+                return new NDMSetup() {Id = 0, Iters = 1000, M = 20, N = 20, NSize = 40, BetonTypeId = 0 };
+            }
+        }
 
         /// <summary>
         /// Наименования типов бетона

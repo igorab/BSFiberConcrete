@@ -42,6 +42,20 @@ namespace BSFiberConcrete
 
 
     /// <summary>
+    /// Параметры расчета по НДМ
+    /// </summary>
+    public class NDMSetup
+    {
+        public int Id { get; set; }
+        public int Iters { get; set; }
+        public int N { get; set; }
+        public int M { get; set; }
+        public double NSize { get; set; }            
+        public int BetonTypeId { get; set; }
+    }
+
+
+    /// <summary>
     /// Единицы измерения
     /// </summary>
     public class Units

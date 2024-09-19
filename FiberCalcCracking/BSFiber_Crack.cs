@@ -61,7 +61,7 @@ namespace BSFiberConcrete
 
 
         // заданные нагрузки
-        //[DisplayName("Mx [кгс*см]")]
+        //[DisplayName("Mx [кг*см]")]
         public double Mx;
         public double My;
         // продольная сила от внешней нагрузки

@@ -1,20 +1,8 @@
-﻿using BSFiberConcrete.BSRFib;
-using BSFiberConcrete.Lib;
-using CBAnsDes.My;
-using MathNet.Numerics;
+﻿using BSFiberConcrete.Lib;
 using MathNet.Numerics.Statistics;
-using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data.Entity.ModelConfiguration.Configuration;
-using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Forms.DataVisualization.Charting;
 
 // Рачеты по второй группе предельных состояний
 namespace BSFiberConcrete.CalcGroup2
@@ -25,6 +13,8 @@ namespace BSFiberConcrete.CalcGroup2
         /// группа предельных состояний
         /// </summary>
         private readonly int GroupLSD;
+
+        private readonly NDMSetup Setup;
 
         /// <summary>   
         /// рассчитывать ширину раскрыттия трещины
@@ -40,11 +30,11 @@ namespace BSFiberConcrete.CalcGroup2
             GroupLSD = _groupLSD;
         }
 
-        public BSCalcNDM(int _groupLSD, BeamSection  _BeamSection, int _BetonTypeId)
+        public BSCalcNDM(int _groupLSD, BeamSection _BeamSection, NDMSetup _Setup)
         {
             GroupLSD = _groupLSD;
             BeamSection = _BeamSection;
-            BetonTypeId = _BetonTypeId;
+            BetonTypeId = _Setup.BetonTypeId;
             NdmCrc = BSData.LoadNdmCrc();
         }
 
@@ -143,9 +133,7 @@ namespace BSFiberConcrete.CalcGroup2
                 Rst = BSHelper.Kgssm2ToKNsm2(_D["Rst"]);
             }
             esc2 = _D["esc2"];
-            est2 = _D["est2"];
-
-            e_fbt_ult = _D["ebt_ult"]; 
+            est2 = _D["est2"];            
         }
 
         /// <summary>
@@ -354,8 +342,7 @@ namespace BSFiberConcrete.CalcGroup2
             As = new List<double>();
             A_Crc = new List<double>();
         }
-        
-              
+                      
         /// <summary>
         ///  Запустить расчет
         /// </summary>
