@@ -21,7 +21,10 @@ namespace BSFiberConcrete.CalcGroup2
             double s = 0;
 
             esc0 = Rsc / Es0;
+            esc2 = 0.025;
+
             est0 = Rst / Es0;
+            est2 = 0.025;
 
             bool rip = false;
 

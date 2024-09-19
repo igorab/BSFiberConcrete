@@ -78,4 +78,27 @@ namespace BSFiberConcrete
         /// </summary>
         public BSMatRod MatRod { get; set; }
     }
+
+    public class NdmSection
+    {
+        /// <summary>
+        /// Номер стержня
+        /// </summary>
+        public string Num { get; set; }
+
+        /// <summary>
+        /// Номер точки
+        /// </summary>        
+        public int N { get; set; }
+
+        /// <summary>
+        /// Координата точки X 
+        /// </summary>
+        public double X { get; set; }
+
+        /// <summary>
+        /// Координата точки Y
+        /// </summary>
+        public double Y { get; set; }
+    }
 }

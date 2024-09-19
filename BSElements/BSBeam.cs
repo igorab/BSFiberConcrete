@@ -116,12 +116,12 @@ namespace BSFiberConcrete
         /// <summary>
         /// Нормальные напряжения в сечении
         /// </summary>
-        /// <param name="_N">кгс</param>
-        /// <param name="_Mx">кгс*см</param>
-        /// <param name="_My">кгс*см</param>
+        /// <param name="_N">кг</param>
+        /// <param name="_Mx">кг*см</param>
+        /// <param name="_My">кг*см</param>
         /// <param name="_X">см</param>
         /// <param name="_Y">см</param>
-        /// <returns>кгс/см2</returns>       
+        /// <returns>кг/см2</returns>       
         public double Sigma_Z(double _N, double _Mx, double _My, double _X, double _Y)
         {
             double _Jx = Jx();
