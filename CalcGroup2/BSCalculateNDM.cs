@@ -385,7 +385,7 @@ namespace BSFiberConcrete.CalcGroup2
             double e_fbt_ult = 0;
 
             // СП 6.1.25 для эпюры с одним знаком
-            if ( Math.Sign(sigB_t) == Math.Sign(sigB_p))
+            if (Setup.UseRebar == false && Math.Sign(sigB_t) == Math.Sign(sigB_p))
             {
                 e_fb_ult = (epsB_p != 0) ? ebc2 - (ebc2 - ebc0) * epsB_t / epsB_p : 0;
                 e_fbt_ult = (epsB_p != 0) ? efbt3 - (efbt3 - efbt2) * epsB_t / epsB_p : 0;

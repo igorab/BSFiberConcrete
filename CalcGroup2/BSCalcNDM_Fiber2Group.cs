@@ -8,9 +8,7 @@ namespace BSFiberConcrete.CalcGroup2
     public partial class BSCalcNDM
     {
         private NdmCrc NdmCrc;
-
-        public int BetonTypeId { private get;  set; }
-
+                
         /// <summary>
         /// Диаграмма деформирования арматуры (двухлинейная) 
         /// </summary>
@@ -131,7 +129,7 @@ namespace BSFiberConcrete.CalcGroup2
         {
             double s = 0;
 
-            if (BetonTypeId == 1)
+            if (Setup.BetonTypeId == 1)
             {
                 return Diagr_Beton(_e);
             }

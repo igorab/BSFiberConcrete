@@ -1137,7 +1137,7 @@ namespace BSFiberConcrete
             D.Add("rods_area", _area);
 
             setup.BetonTypeId = (cmbTypeMaterial.SelectedIndex == 1) ? 1 : 0;
-            
+            setup.UseRebar  = _useRebar;
             ///
             /// выполнить расчет по 1 группе предельных состояний
             ///
