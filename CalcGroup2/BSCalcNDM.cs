@@ -294,10 +294,11 @@ namespace BSFiberConcrete.CalcGroup2
         public double UtilRate_s_t { get; private set; }
 
         // максимальное число итераций
-        private static int jmax = 20000;
+        private int jmax = 20000;
         // Максимальная абсолютная погрешность
-        private static double tolmax = Math.Pow(10, -6);
-        private static int err = 0;
+        private double tolmax = Math.Pow(10, -6);
+        private int err = 0;
+
         private Dictionary<string, double> m_Results = new Dictionary<string, double>();
 
         public int Err => err;

@@ -126,9 +126,20 @@ namespace BSFiberConcrete
 
         private double Rnd(double _v) => Math.Round( _v, 2);
 
+
+        /// <summary>
+        /// double 2 string converter
+        /// </summary>        
+        private string D2SValue(double _value)
+        {
+            return _value.ToString();
+        }
+
+
         // Конвертор единиц измерения
         private string UConv(string _s, double _v)
         {            
+
             if (string.IsNullOrEmpty(_s))
                 return "";
             else if ( _s.Contains("кг/см2"))
@@ -250,11 +261,16 @@ namespace BSFiberConcrete
                 w.WriteLine("<tr>");
 
                 foreach (var _pair in m_CalcResults)
-                {
+                {                    
                     w.WriteLine("<tr>");
-                    w.WriteLine($"<td width={bk}><b>{_pair.Key}</b></td>");
-
-                    if (Math.Abs(_pair.Value) < 0.00001)
+                    w.WriteLine($"<td width={bk}>{_pair.Key}</td>");
+                   
+                    if (double.IsNaN(_pair.Value))
+                    {
+                        w.WriteLine($"<td width={bv} align=center colspan=2></td>");
+                        w.WriteLine($"<td width={bv} align=center colspan=2></td>");
+                    }
+                    else if (Math.Abs(_pair.Value) < 0.00001)
                     {
                         w.WriteLine($"<td width={bv} align=center colspan=2>{_pair.Value.ToString("E")} </td>");
                         w.WriteLine($"<td width={bv} align=center colspan=2>{UConv(_pair.Key, _pair.Value)} </td>");
@@ -286,9 +302,14 @@ namespace BSFiberConcrete
                 foreach (var _pair in m_CalcResults2Group)
                 {
                     w.WriteLine("<tr>");
-                    w.WriteLine($"<td width={bk}><b>{_pair.Key}</b></td>");
-
-                    if (_pair.Value < 0.001)
+                    w.WriteLine($"<td width={bk}>{_pair.Key}</td>");
+                    
+                    if (double.IsNaN(_pair.Value))
+                    {
+                        w.WriteLine($"<td width={bv} align=center colspan=2></td>");
+                        w.WriteLine($"<td width={bv} align=center colspan=2></td>");
+                    }
+                    else if (_pair.Value < 0.001)
                     {
                         w.WriteLine($"<td width={bv} align=center colspan=2> {_pair.Value.ToString("E")} </td>");
                         w.WriteLine($"<td width={bv} align=center colspan=2>{UConv(_pair.Key, _pair.Value)} </td>");
@@ -296,7 +317,7 @@ namespace BSFiberConcrete
                     else
                     {
                         w.WriteLine($"<td width={bv} align=center colspan=2> {Math.Round(_pair.Value, 4)} </td>");
-                        w.WriteLine($"<td width={bv} align=center colspan=2>{UConv(_pair.Key, _pair.Value)} </td>");
+                        w.WriteLine($"<td width={bv} align=center colspan=2> {UConv(_pair.Key, _pair.Value)} </td>");
                     }
 
                     w.WriteLine("</tr>");

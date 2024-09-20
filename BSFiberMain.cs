@@ -1174,18 +1174,24 @@ namespace BSFiberConcrete
             ///
             /// выполнить расчет по 2 группе предельных состояний
             /// 
+            BSCalcNDM bsсalcgr2()
+            {
+                BSCalcNDM bscalc = new BSCalcNDM(GR2, _beamSection, setup);
+                bscalc.SetDictParams(D);
+                bscalc.MzMyNUp(1);
+                bscalc.SetRods(lD, lX, lY);
+                bscalc.Run();
+
+                return bscalc;
+            }
+
             // 1 этап
             // определяем моменты трещинообразования от кратковременных и длительных нагрузок (раздел X)
             double Mx_crc; double My_crc; double N_crc;
             double eps_s_crc; // параметр для определения ширины раскрытия трещины
 
             // используем заданные усилия и определяем коэфф использования по 2-гр пр сост
-            BSCalcNDM bsCalc2 = new BSCalcNDM(GR2, _beamSection, setup);            
-            bsCalc2.SetDictParams(D);
-            bsCalc2.MzMyNUp(1);
-            bsCalc2.SetRods(lD, lX, lY);
-            bsCalc2.Run();
-
+            BSCalcNDM bsCalc2 = bsсalcgr2();
             calcRes.ErrorIdx.Add(bsCalc2.Err);
             calcRes.GetRes2Group(bsCalc2.Results);
 

@@ -48,14 +48,14 @@ namespace BSFiberConcrete
         [DisplayName("Максимальная относительная деформация в фибробетоне, [.]")]
         public double e_fb_max { get; private set; }
 
-        [DisplayName("Коэффициент использования по деформации в фибробетоне (растяжение), [.]")]
-        public double UtilRate_e_fbt => (Eps_fb_ult !=0) ? e_fb_max_p / Eps_fb_ult : 1;
+        [DisplayName("---Коэффициент использования по деформации в фибробетоне (растяжение), [СП63]")]
+        public double UtilRate_e_fbt { get; private set; }
 
         [DisplayName("Максимальная относительная деформация в арматуре, [.]")]
         public double e_s_max { get; private set; }
 
-        [DisplayName("Коэффициент использования по деформации в арматуре (растяжение), [.]")]
-        public double UtilRate_e_st => (Eps_s_ult != 0) ? e_s_max / Eps_s_ult : 1;
+        [DisplayName("---Коэффициент использования по деформации в арматуре (растяжение), [СП63]")]
+        public double UtilRate_e_st { get; private set; }
 
         // Cжатие >>
         [DisplayName("Напряжение в бетоне (сжатие), [кг/см2]")]
@@ -67,14 +67,14 @@ namespace BSFiberConcrete
         [DisplayName("Максимальная относительная деформация в фибробетоне (сжатие) , [.]")]
         public double e_fb_max_p { get; private set; }
 
-        [DisplayName("Коэффициент использования по деформации в фибробетоне (сжатие), [.]")]
+        [DisplayName("---Коэффициент использования по деформации в фибробетоне (сжатие), [СП63]")]
         public double UtilRate_e_fb_p { get; private set; }
 
         [DisplayName("Максимальная относительная деформация в арматуре (сжатие), [.]")]
         public double e_s_max_p { get; private set; }
 
-        [DisplayName("Коэффициент использования по деформации в арматуре (сжатие), [.]")]
-        public double UtilRate_e_s_p => (Eps_s_ult != 0) ? e_s_max_p / Eps_s_ult : 1;
+        [DisplayName("---Коэффициент использования по деформации в арматуре (сжатие), [СП63]")]
+        public double UtilRate_e_s_p { get; private set; }
 
         // проверка по усилиям
 
@@ -313,8 +313,13 @@ namespace BSFiberConcrete
             N_calc = BSHelper.kN2Kgs(_D1gr["N"]);
 
             // использование
+            // сжатие
             UtilRate_e_fb_p = _D1gr["UR_fb_p"];
-            //UtilRate_e_s_p = _D1gr["UR_s_p"];
+            UtilRate_e_s_p = _D1gr["UR_s_p"];
+            // растяжение
+            UtilRate_e_fbt = _D1gr["UR_fb_t"];
+            UtilRate_e_st = _D1gr["UR_s_t"];
+
             Msg = new List<string>();
             Res1Group = new Dictionary<string, double>();
             Res2Group = new Dictionary<string, double>();
@@ -371,10 +376,8 @@ namespace BSFiberConcrete
         /// </summary>
         public void Results1Group(ref Dictionary<string, double> _CalcResults)
         {
-            // 
-            AddToResult("ItersCnt", ItersCnt);
-
-            Res1Group.Add("--------Изгиб:--------", 1);
+            //             
+            Res1Group.Add("<b>--------Изгиб:--------</b>", double.NaN);
             AddToResult("eps_0", eps_0);
             AddToResult("rx", rx);
             AddToResult("Kx", Kx);
@@ -382,7 +385,7 @@ namespace BSFiberConcrete
             AddToResult("Ky", Ky);
 
             // растяжение
-            Res1Group.Add("--------Растяжение:--------", 1);
+            Res1Group.Add("<b>--------Растяжение:--------</b>", double.NaN);
             AddToResult("sigmaB", sigmaB);            
             AddToResult("e_fb_max", e_fb_max);
             AddToResult("UtilRate_e_fbt", UtilRate_e_fbt);
@@ -392,7 +395,7 @@ namespace BSFiberConcrete
             AddToResult("UtilRate_e_st", UtilRate_e_st);
 
             // сжатие
-            Res1Group.Add("--------Сжатие:-------", 1);
+            Res1Group.Add("<b>--------Сжатие:-------</b>", double.NaN);
             // - бетон
             AddToResult("sigmaB_p", sigmaB_p);
             AddToResult("e_fb_max_p", e_fb_max_p);
@@ -403,10 +406,12 @@ namespace BSFiberConcrete
             AddToResult("UtilRate_e_s_p", UtilRate_e_s_p);
 
             // усилия
-            Res1Group.Add("--------Проверка по усилиям:-------", 1);
+            Res1Group.Add("<b>--------Проверка по усилиям:-------</b>", double.NaN);
             AddToResult("Mx_calc", Mx_calc);
             AddToResult("My_calc", My_calc);
             AddToResult("N_calc", N_calc);
+            AddToResult("ItersCnt", ItersCnt);
+
 
             _CalcResults = Res1Group;
         }
