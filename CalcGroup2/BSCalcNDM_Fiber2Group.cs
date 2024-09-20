@@ -270,11 +270,15 @@ namespace BSFiberConcrete.CalcGroup2
 
         public double y_interpolate(double _x)
         {
-            double y;
+            double[] Y = new double[] {4, 9, 64};
+            double[] X = new double[] {2, 3, 8};
 
-            y = 4E-23 * Math.Pow(_x, 3) - 1E-15 * Math.Pow(_x, 2) + 3E-8 * _x + 0.0011;
+            Lagrange.Lagrange lagrange = new Lagrange.Lagrange();
 
-            return y;
+            double value = lagrange.GetValue(X, Y, _x);
+            //y = 4E-23 * Math.Pow(_x, 3) - 1E-15 * Math.Pow(_x, 2) + 3E-8 * _x + 0.0011;
+
+            return value;
         }
 
     }

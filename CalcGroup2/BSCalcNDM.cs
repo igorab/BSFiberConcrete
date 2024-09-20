@@ -139,15 +139,15 @@ namespace BSFiberConcrete.CalcGroup2
         /// <summary>
         /// увеличить усилия на занданный коэффициент
         /// </summary>
-        /// <param name="_utilRate">коэффициент</param>
-        public void MzMyNUp(double _utilRate)
+        /// <param name="_coef">коэффициент</param>
+        public void MzMyNUp(double _coef)
         {
-            if (_utilRate == 0)
+            if (_coef == 0)
                 return;
 
-            Mz0 /= _utilRate;
-            My0 /= _utilRate ;
-            N0 /=  _utilRate;
+            Mz0 *= _coef;
+            My0 *= _coef ;
+            N0  *=  _coef;
 
             double iy = y_interpolate(My0);
         }
