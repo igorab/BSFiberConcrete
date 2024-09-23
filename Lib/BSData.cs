@@ -632,11 +632,11 @@ namespace BSFiberConcrete.Lib
                     cnn.Open();
                     using (var tr = cnn.BeginTransaction())
                     {
-                        cnn.Execute(string.Format("delete from NdmSection where Num = {0}", _SectionNum), null, tr);
+                        cnn.Execute(string.Format("delete from NdmSection where Num = '{0}'", _SectionNum), null, tr);
 
                         foreach (var sec in _ds)
                         {                            
-                            int cnt = cnn.Execute("insert into NdmSection (CG_X, CG_Y, D, SectionType) values (@X, @Y, @N, @Num)", sec, tr);
+                            int cnt = cnn.Execute("insert into NdmSection (X, Y, N, Num) values (@X, @Y, @N, @Num)", sec, tr);
 
                         }
                         tr.Commit();

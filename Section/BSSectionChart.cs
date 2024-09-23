@@ -438,13 +438,25 @@ namespace BSFiberConcrete.Section
             {
                 if (RodBS == null || RodBS.List == null || RodBS.List.Count == 0)
                 {
-                    List<BSRod> bSRods = (List<BSRod>)RodBS.List;
+                    //List<BSRod> bSRods = (List<BSRod>)RodBS.List;
 
-                    BSData.SaveRods(bSRods, BSBeamSection);
+                    //BSData.SaveRods(bSRods, BSBeamSection);
                 }
 
                 // TODO доделать
                 List<NdmSection> bsSec = new List<NdmSection>();
+
+                BindingList<BSPoint> p =(BindingList<BSPoint>)pointBS.List;
+
+                foreach (var pt in p)
+                {
+                    NdmSection ndmSection = new NdmSection();
+                    ndmSection.Num = pt.Num.ToString();
+                    ndmSection.N = 1;
+                    ndmSection.X =  pt.X;
+                    ndmSection.Y = pt.Y;
+                    bsSec.Add(ndmSection);
+                }    
 
                 BSData.SaveSection(bsSec, "");
             }
