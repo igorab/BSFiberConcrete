@@ -327,31 +327,45 @@ namespace BSFiberConcrete
         }
 
         /// <summary>
-        /// Результаты расчета по 2 группе предельных состояний
+        /// Результаты расчета по 2 группе предельных состояний. 
+        /// Преобразуем данные для окончательного вывода в отчет
         /// </summary>
         /// <param name="_D2gr">Словарь с результатами</param>
-        public void GetRes2Group(Dictionary<string, double> _D2gr)
+        public void SetRes2Group(Dictionary<string, double> _D2gr, bool _showM = true, bool _show_a = false)
         {            
             // кривизна
-            Ky_crc = _D2gr["Ky"];
-            Kx_crc = _D2gr["Kz"];
+            if (_D2gr.ContainsKey("Ky"))
+                Ky_crc = _D2gr["Ky"];
+            if (_D2gr.ContainsKey("Kz"))
+                Kx_crc = _D2gr["Kz"];
 
             if (Rods_qty > 0)
             {
-                // момент трещинообразования
-                M_crc = _D2gr["My_crc"];
-                // напряжение в арматуре (нужно реализовать для каждого стержня)
-                sig_s_crc = _D2gr["sig_s_crc"];
-                // ширина раскрытия трещины
-                a_crc = _D2gr["a_crc"];
+                if (_showM)
+                {
+                    // момент трещинообразования
+                    if (_D2gr.ContainsKey("My_crc"))
+                        M_crc = _D2gr["My_crc"];
+
+                    // напряжение в арматуре (нужно реализовать для каждого стержня)
+                    if (_D2gr.ContainsKey("sig_s_crc"))
+                        sig_s_crc = _D2gr["sig_s_crc"];
+                }
+
+                if (_show_a)
+                {
+                    // ширина раскрытия трещины
+                    if (_D2gr.ContainsKey("a_crc"))
+                        a_crc = _D2gr["a_crc"];
+                }
             }
         }
 
-        private void AddToResult(string _attr, double _value, int _group = 1)
+        private void AddToResult(string _attr, double _value, int _group = 1, bool _truncate = true)
         {
             Dictionary<string, double> res = (_group == 1) ? Res1Group : Res2Group;
 
-            if (Math.Abs(_value) < 10e-15 || Math.Abs(_value) > 10e15)
+            if (_truncate && (Math.Abs(_value) < 10e-15 || Math.Abs(_value) > 10e15))
             {
                 return;
             }
@@ -372,9 +386,9 @@ namespace BSFiberConcrete
 
 
         /// <summary>
-        ///  Результаты расчета по 1 группе предельных состояний
+        ///  Отформатированные результаты расчета по 1 группе предельных состояний для вывода в отчет
         /// </summary>
-        public void Results1Group(ref Dictionary<string, double> _CalcResults)
+        public Dictionary<string, double> GetResults1Group()
         {
             //             
             Res1Group.Add("<b>--------Изгиб:--------</b>", double.NaN);
@@ -412,8 +426,7 @@ namespace BSFiberConcrete
             AddToResult("N_calc", N_calc);
             AddToResult("ItersCnt", ItersCnt);
 
-
-            _CalcResults = Res1Group;
+            return  Res1Group;
         }
 
         /// <summary>
@@ -447,18 +460,20 @@ namespace BSFiberConcrete
         /// <summary>
         ///  Результаты расчета по 2 группе предельных состояний
         /// </summary>
-        public void Results2Group(ref Dictionary<string, double> _CalcResults)
-        {            
-            AddToResult("M_crc", BSHelper.kNsm2kgssm( M_crc), 2);                                  
+        public Dictionary<string, double> GetResults2Group()
+        {                        
+            Res2Group.Add("<b>--------Изгиб:--------</b>", double.NaN);
+            AddToResult("Kx_crc", Kx_crc, BSFiberLib.CG2, false);            
+            AddToResult("Ky_crc", Ky_crc, BSFiberLib.CG2, false);
 
-            AddToResult("Kx_crc", Kx_crc, 2);            
-            AddToResult("Ky_crc", Ky_crc, 2);
+            Res2Group.Add("<b>--------Усилия:--------</b>", double.NaN);
+            AddToResult("M_crc", BSHelper.kNsm2kgssm(M_crc), BSFiberLib.CG2, false);
+            AddToResult("sig_s_crc", sig_s_crc, BSFiberLib.CG2, false);
 
-            AddToResult("sig_s_crc", sig_s_crc, 2);
+            Res2Group.Add("<b>--------Трещины:--------</b>", double.NaN);
+            AddToResult("a_crc", a_crc, BSFiberLib.CG2, false);
 
-            AddToResult("a_crc", a_crc, 2);
-
-            _CalcResults = Res2Group;
+            return Res2Group;
         }
 
         public void InitFromCalcNDM(BSCalcNDM bsCalc1)

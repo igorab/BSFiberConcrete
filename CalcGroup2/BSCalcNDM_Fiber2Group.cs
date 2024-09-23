@@ -266,20 +266,6 @@ namespace BSFiberConcrete.CalcGroup2
             double res = fi1 * fi2 * fi3 * _sig_s / Es0 * _ls;
 
             return res / 10;
-        }
-
-        public double y_interpolate(double _x)
-        {
-            double[] Y = new double[] {4, 9, 64};
-            double[] X = new double[] {2, 3, 8};
-
-            Lagrange.Lagrange lagrange = new Lagrange.Lagrange();
-
-            double value = lagrange.GetValue(X, Y, _x);
-            //y = 4E-23 * Math.Pow(_x, 3) - 1E-15 * Math.Pow(_x, 2) + 3E-8 * _x + 0.0011;
-
-            return value;
-        }
-
+        }        
     }
 }

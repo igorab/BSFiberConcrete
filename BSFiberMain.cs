@@ -1137,112 +1137,27 @@ namespace BSFiberConcrete
         /// "Расчет по прочности нормальных сечений на основе нелинейной деформационной модели"
         /// </summary>        
         private void CalcNDM(BeamSection _beamSection, bool _useRebar = true)
-        {
-            const int GR1 = BSFiberLib.CG1;
-            const int GR2 = BSFiberLib.CG2; 
-
-            // данные с формы
-            Dictionary<string, double> D = DictCalcParams(_beamSection);
-
-            NDMSetup setup = BSData.LoadNDMSetup();
-
-            //привязка арматуры (по X - высота, по Y ширина балки)
-            double leftX = 0;
-            // для прямоугольных и тавровых сечений привязка к центу нижней грани 
-            if (BSHelper.IsRectangled(_beamSection)) leftX = -D["b"] / 2.0;
-            (List<double> lD, List<double> lX, List<double> lY, double _qty, double _area) = BSCalcNDM.ReinforcementBinding(_beamSection, leftX, 0, _useRebar);
-
-            D.Add("rods_qty", _qty);
-            D.Add("rods_area", _area);
-
-            setup.BetonTypeId = (cmbTypeMaterial.SelectedIndex == 1) ? 1 : 0;
-            setup.UseRebar  = _useRebar;
-            ///
-            /// выполнить расчет по 1 группе предельных состояний
-            ///
-            BSCalcNDM bsCalc1 = new BSCalcNDM(GR1, _beamSection, setup);            
-            bsCalc1.SetDictParams(D);
-            bsCalc1.SetRods(lD, lX, lY);
-            bsCalc1.Run();
-
-            BSCalcResultNDM calcRes = new BSCalcResultNDM(bsCalc1.Results);
-            calcRes.InitFromCalcNDM(bsCalc1);            
-            calcRes.InitCalcParams(D);            
-            calcRes.Results1Group(ref m_CalcResults);
-            calcRes.ResultsMsg1Group(ref m_Message);
-
-            ///
-            /// выполнить расчет по 2 группе предельных состояний
-            /// 
-            BSCalcNDM bsсalcgr2()
+        {             
+            // данные с формы:
+            Dictionary<string, double> _D = DictCalcParams(_beamSection);
+            NDMSetup _setup = BSData.LoadNDMSetup();                
+            _setup.BetonTypeId = (cmbTypeMaterial.SelectedIndex == 1) ? 1 : 0;
+            _setup.UseRebar  = _useRebar;
+            // расчет:
+            CalcNDM calcNDM = new CalcNDM(_beamSection) {setup = _setup, D = _D };            
+            calcNDM.Run();
+            // результаты:
+            if (calcNDM.CalcRes != null)
             {
-                BSCalcNDM bscalc = new BSCalcNDM(GR2, _beamSection, setup);
-                bscalc.SetDictParams(D);
-                bscalc.MzMyNUp(1);
-                bscalc.SetRods(lD, lX, lY);
-                bscalc.Run();
+                m_GeomParams = calcNDM.CalcRes.GeomParams;
+                m_Efforts = calcNDM.CalcRes.Efforts;
+                m_PhysParams = calcNDM.CalcRes.PhysParams;
+                m_Reinforcement = calcNDM.CalcRes.Reinforcement;
+                m_CalcResults =  calcNDM.CalcRes.GetResults1Group();
+                m_CalcResults2Group =  calcNDM.CalcRes.GetResults2Group();
 
-                return bscalc;
+                ShowMosaic(calcNDM.CalcRes);
             }
-
-            // 1 этап
-            // определяем моменты трещинообразования от кратковременных и длительных нагрузок (раздел X)
-            double Mx_crc; double My_crc; double N_crc;
-            double eps_s_crc; // параметр для определения ширины раскрытия трещины
-
-            // используем заданные усилия и определяем коэфф использования по 2-гр пр сост
-            BSCalcNDM bsCalc2 = bsсalcgr2();
-            calcRes.ErrorIdx.Add(bsCalc2.Err);
-            calcRes.GetRes2Group(bsCalc2.Results);
-
-            double ur_fb2 = bsCalc2.UtilRate_fb_t;
-
-            if (_useRebar)
-            {
-                BSCalcNDM bsCalc3 = new BSCalcNDM(GR2, _beamSection, setup);
-                bsCalc3.SetDictParams(D);
-                bsCalc3.MzMyNUp(ur_fb2);
-                bsCalc3.SetRods(lD, lX, lY);
-                bsCalc3.Run();
-                double ur_fb3 = bsCalc3.UtilRate_fb_t;
-            
-                // Если же хотя бы один из моментов трещинообразования оказывается меньше
-                // соответствующего действующего момента, выполняют второй этап расчета.
-                BSCalcNDM bsCalc4 = new BSCalcNDM(GR2, _beamSection, setup);
-                bsCalc4.SetDictParams(D);
-                bsCalc4.MzMyNUp(ur_fb2 * 1.182);
-                bsCalc4.SetRods(lD, lX, lY);
-                bsCalc4.Run();
-                calcRes.ErrorIdx.Add(bsCalc4.Err);
-                calcRes.GetRes2Group(bsCalc4.Results);
-                // момент трещинообразования
-                Mx_crc = bsCalc4.Mz_crc;
-                My_crc = bsCalc4.My_crc;
-                N_crc = bsCalc4.N_crc;
-                List<double> E_S_crc = bsCalc4.EpsilonSResult;
-                eps_s_crc = E_S_crc.Max();
-                double ur_s = bsCalc4.UtilRate_s_t;
-                double ur_fb4 = bsCalc4.UtilRate_fb_t;
-
-                // определение ширины раскрытия трещины
-                // расчитываем на заданные моменты и силы
-                BSCalcNDM bsCalc5 = new BSCalcNDM(GR2, _beamSection, setup);
-                bsCalc5.SetDictParams(D);
-                bsCalc5.SetE_S_Crc(E_S_crc);
-                bsCalc5.SetRods(lD, lX, lY);
-                bsCalc5.Run();
-                calcRes.ErrorIdx.Add(bsCalc5.Err);
-                calcRes.GetRes2Group(bsCalc5.Results);
-            }
-            
-            calcRes.Results2Group(ref m_CalcResults2Group);
-
-            m_GeomParams = calcRes.GeomParams;
-            m_Efforts = calcRes.Efforts;
-            m_PhysParams = calcRes.PhysParams;
-            m_Reinforcement = calcRes.Reinforcement;
-
-            ShowMosaic(calcRes);
         }
 
 

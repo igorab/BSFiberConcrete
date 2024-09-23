@@ -147,9 +147,7 @@ namespace BSFiberConcrete.CalcGroup2
 
             Mz0 *= _coef;
             My0 *= _coef ;
-            N0  *=  _coef;
-
-            double iy = y_interpolate(My0);
+            N0  *=  _coef;            
         }
 
         /// <summary>
