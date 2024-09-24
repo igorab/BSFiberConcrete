@@ -1769,7 +1769,7 @@ namespace BSFiberConcrete
                 mDraw.CreateRectanglePlot(sz, m_BeamSection);
                 mDraw.ShowMesh();
             }
-            else if (m_BeamSection == BeamSection.Ring)
+            else if (m_BeamSection == BeamSection.Ring )
             {
                 TriangleNet.Geometry.Point cg = new TriangleNet.Geometry.Point();
                 _= GenerateMesh(ref cg);
@@ -1786,6 +1786,25 @@ namespace BSFiberConcrete
                 mDraw.PaintSectionMesh();
                 mDraw.ShowMesh();                
             }
+            else if (m_BeamSection == BeamSection.None) //заданное пользователем сечение
+            {
+                TriangleNet.Geometry.Point cg = new TriangleNet.Geometry.Point();
+                _ = GenerateMesh(ref cg);
+
+                mDraw = new MeshDraw(Tri.Mesh);
+                mDraw.MosaicMode = _Mode;
+                mDraw.UltMax = _ultMax;
+                mDraw.UltMin = _ultMin;
+                mDraw.Rs_Ult = _ultRs;
+                mDraw.e_st_ult = _e_st_ult;
+                mDraw.e_s_ult = _e_s_ult;
+                mDraw.Values_B = _valuesB;
+                mDraw.Values_S = _valuesS;
+                mDraw.PaintSectionMesh();
+                mDraw.ShowMesh();
+            }
+
+
         }
 
         // <summary>
@@ -1841,6 +1860,15 @@ namespace BSFiberConcrete
                 _ = Tri.CalculationScheme();
             }
             else if (BSHelper.IsITL(m_BeamSection))
+            {
+                List<PointF> pts;
+                BSSection.IBeam(sz, out pts, out PointF _center);
+                _CG = new TriangleNet.Geometry.Point(_center.X, _center.Y);
+
+                pathToSvgFile = BSCalcLib.Tri.CreateIBeamContour(pts);
+                _ = Tri.CalculationScheme();
+            }
+            else if (m_BeamSection == BeamSection.None)
             {
                 List<PointF> pts;
                 BSSection.IBeam(sz, out pts, out PointF _center);

@@ -271,7 +271,7 @@ namespace BSFiberConcrete.Lib
         }
 
         /// <summary>
-        /// Армирование
+        /// Сечение произвольной формы для расчета по НДМ
         /// </summary>
         /// <returns></returns>
         public static List<NdmSection> LoadNdmSection(string _SectionNum)
