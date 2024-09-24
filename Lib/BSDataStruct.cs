@@ -53,6 +53,7 @@ namespace BSFiberConcrete
         public double NSize { get; set; }            
         public int BetonTypeId { get; set; }
         public bool UseRebar { get; set; }
+        public string RebarType { get; set; }
     }
 
 

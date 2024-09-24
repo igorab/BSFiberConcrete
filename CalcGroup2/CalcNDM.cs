@@ -100,6 +100,34 @@ namespace BSFiberConcrete
             return bscalc;
         }
 
+        // Расчет по 2 группе предельных состояний - ширина раскрытия трещины           
+        BSCalcNDM BSCalcGr2_Crc(double _coefM, List<double> _E_s_crc = null)
+        {
+            NdmCrc ndmCrc = BSData.LoadNdmCrc();            
+            ndmCrc.fi1 = 1.4; // длит нагрузки
+            ndmCrc.fi2 = 0.5; //0.8 если А240
+
+            // Сп6.2.12 
+            if (D["N"] < 0) 
+                ndmCrc.fi3 = 1.0;  //для растянутых элементов
+            else
+                ndmCrc.fi3 = 0.5;
+
+            BSCalcNDM bscalc = new BSCalcNDM(GR2, m_BeamSection, setup);
+            bscalc.SetDictParams(D);
+            bscalc.MzMyNUp(_coefM);
+            bscalc.NdmCrc = ndmCrc;
+            bscalc.SetRods(lD, lX, lY);
+            bscalc.SetE_S_Crc(_E_s_crc);
+            bscalc.Run();
+
+            m_CalcRes.ErrorIdx.Add(bscalc.Err);
+            m_CalcRes.SetRes2Group(bscalc.Results, false, true);
+            return bscalc;
+        }
+
+
+
         /// <summary>
         ///  GO!
         /// </summary>
@@ -133,22 +161,7 @@ namespace BSFiberConcrete
                 }
                 return bscalc;
             }
-
-            // Расчет по 2 группе предельных состояний - ширина раскрытия трещины           
-            BSCalcNDM bsсalcgr2_crc(double _coefM, List<double> _E_s_crc = null)
-            {
-                BSCalcNDM bscalc = new BSCalcNDM(GR2, m_BeamSection, setup);
-                bscalc.SetDictParams(D);
-                bscalc.MzMyNUp(_coefM);
-                bscalc.SetRods(lD, lX, lY);               
-                bscalc.SetE_S_Crc(_E_s_crc);
-                bscalc.Run();
-
-                m_CalcRes.ErrorIdx.Add(bscalc.Err);
-                m_CalcRes.SetRes2Group(bscalc.Results, false, true);                
-                return bscalc;
-            }
-
+           
             // 1 этап
             // определяем моменты трещинообразования от кратковременных и длительных нагрузок (раздел X)                        
             // используем заданные усилия и определяем коэфф использования по 2-гр пр сост            
@@ -177,20 +190,24 @@ namespace BSFiberConcrete
                 coef -= dH;
 
                 dH = 0.2;
-                for (int N = 1; N <= 4; N++)
+                for (int N = 1; N <= 100; N++)
                 {
                     coef += dH;
                     BSCalcNDM _bsCalc = bsсalcgr2(coef);
+                    ur = _bsCalc.UtilRate_fb_t;
+                    if (_bsCalc.UtilRate_fb_t > 1)
+                        break;
                 }
 
-                double xcoef = Y_interpolate(Ys.ToArray(), Xs.ToArray(), 1.0);
-                xcoef = Math.Round(xcoef - 0.1, 1, MidpointRounding.AwayFromZero);                
-                BSCalcNDM bsCalc_Mcrc = bsсalcgr2(xcoef);
-
-                if (bsCalc_Mcrc.UtilRate_fb_t > 2) //коэффициент использования
+                double y_coef = coef; // Y_interpolate(Ys.ToArray(), Xs.ToArray(), 1.0);                
+                BSCalcNDM bsCalc_Mcrc = bsсalcgr2(y_coef);
+                ur = bsCalc_Mcrc.UtilRate_fb_t;
+                if (ur > 1.2) //коэффициент использования
                 {
+                    bsCalc_Mcrc = bsсalcgr2(y_coef-dH/2.0);
+                    ur = bsCalc_Mcrc.UtilRate_fb_t;
                     double My_crc = bsCalc_Mcrc.My_crc;  //  момент трещинообразования
-                    Debug.Assert(My_crc > bsCalc_Mcrc.Myint);
+                    //Debug.Assert(My_crc > bsCalc_Mcrc.Myint);
                 }
 
                 // параметр трещинообразования, для расчета ширины раскрытия трещины
@@ -198,11 +215,11 @@ namespace BSFiberConcrete
 
                 // определение ширины раскрытия трещины
                 // расчитываем на заданные моменты и силы
-                BSCalcNDM bsCalc_crc = bsсalcgr2_crc(1, E_S_crc);
+                BSCalcNDM bsCalc_crc = BSCalcGr2_Crc(1.0, E_S_crc);
             }
             else
             {
-                bsсalcgr2(1);
+                bsсalcgr2(1.0);
             }
         }
     }

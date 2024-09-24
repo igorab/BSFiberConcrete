@@ -1081,8 +1081,7 @@ namespace BSFiberConcrete
                 ["ebt2"] = (double)numEps_fbt2.Value,
                 ["ebt3"] = (double)numEps_fbt3.Value,
                 ["ebt_ult"] = (double)numEps_fbt_ult.Value,
-
-                // арматура steel
+                // арматура steel                
                 ["Es0"] = (double)numEs.Value,
                 // нормативные 
                 ["Rscn"] = (double)(numRscn.Value),
@@ -1143,6 +1142,7 @@ namespace BSFiberConcrete
             NDMSetup _setup = BSData.LoadNDMSetup();                
             _setup.BetonTypeId = (cmbTypeMaterial.SelectedIndex == 1) ? 1 : 0;
             _setup.UseRebar  = _useRebar;
+            _setup.RebarType = cmbRebarClass.Text;
             // расчет:
             CalcNDM calcNDM = new CalcNDM(_beamSection) {setup = _setup, D = _D };            
             calcNDM.Run();

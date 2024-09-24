@@ -7,7 +7,7 @@ namespace BSFiberConcrete.CalcGroup2
     /// </summary>
     public partial class BSCalcNDM
     {
-        private NdmCrc NdmCrc;
+        public NdmCrc NdmCrc {private get; set; }
                 
         /// <summary>
         /// Диаграмма деформирования арматуры (двухлинейная) 
@@ -206,7 +206,7 @@ namespace BSFiberConcrete.CalcGroup2
         {
             if (_e_s == 0 || GroupLSD == BSFiberLib.CG1) return 1;
 
-            double res = 1 / (1 + 0.8 * es_crc / _e_s);
+            double res = 1 / (1 + 0.8 * Eps_s_crc / _e_s);
             return res;
         }
 
@@ -223,7 +223,7 @@ namespace BSFiberConcrete.CalcGroup2
             else
             {
                 double sigma = _sigma;
-                if (es_crc != 0)
+                if (Eps_s_crc != 0)
                 {
                     sigma = sigma * Psi_s(_e); 
                 }

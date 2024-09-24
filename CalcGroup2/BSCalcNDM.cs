@@ -35,7 +35,7 @@ namespace BSFiberConcrete.CalcGroup2
             GroupLSD = _groupLSD;
             BeamSection = _BeamSection;
             Setup = _Setup;
-            NdmCrc = BSData.LoadNdmCrc();
+            NdmCrc = new NdmCrc();
         }
 
         /// <summary>
