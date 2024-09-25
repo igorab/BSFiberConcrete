@@ -14,12 +14,22 @@ namespace BSFiberConcrete.CalcGroup2
         /// </summary>
         private readonly int GroupLSD;
 
+        /// <summary>
+        /// Настройки расчета
+        /// </summary>
         private readonly NDMSetup Setup;
+
+        /// <summary>
+        /// коэффициенты для расчета по трещиностойкости
+        /// </summary>
+        public NdmCrc NdmCrc { private get; set; }
 
         /// <summary>   
         /// рассчитывать ширину раскрыттия трещины
         /// </summary>
         public double Eps_s_crc { get; set; }
+        // рассчитывать ли ширину раскрытия трещины
+        private bool CalcA_crc => Eps_s_crc != 0;
         
         /// <summary>
         /// Конструктор

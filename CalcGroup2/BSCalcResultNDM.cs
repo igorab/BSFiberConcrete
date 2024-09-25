@@ -48,13 +48,13 @@ namespace BSFiberConcrete
         [DisplayName("Максимальная относительная деформация в фибробетоне, [.]")]
         public double e_fb_max { get; private set; }
 
-        [DisplayName("---Коэффициент использования по деформации в фибробетоне (растяжение), [СП63]")]
+        [DisplayName("---Коэффициент использования по деформации в фибробетоне (растяжение), [СП360 6.1.24]")]
         public double UtilRate_e_fbt { get; private set; }
 
         [DisplayName("Максимальная относительная деформация в арматуре, [.]")]
         public double e_s_max { get; private set; }
 
-        [DisplayName("---Коэффициент использования по деформации в арматуре (растяжение), [СП63]")]
+        [DisplayName("---Коэффициент использования по деформации в арматуре (растяжение), [СП360 6.1.21]")]
         public double UtilRate_e_st { get; private set; }
 
         // Cжатие >>
@@ -67,13 +67,13 @@ namespace BSFiberConcrete
         [DisplayName("Максимальная относительная деформация в фибробетоне (сжатие) , [.]")]
         public double e_fb_max_p { get; private set; }
 
-        [DisplayName("---Коэффициент использования по деформации в фибробетоне (сжатие), [СП63]")]
+        [DisplayName("---Коэффициент использования по деформации в фибробетоне (сжатие), [СП360 6.1.25]")]
         public double UtilRate_e_fb_p { get; private set; }
 
         [DisplayName("Максимальная относительная деформация в арматуре (сжатие), [.]")]
         public double e_s_max_p { get; private set; }
 
-        [DisplayName("---Коэффициент использования по деформации в арматуре (сжатие), [СП63]")]
+        [DisplayName("---Коэффициент использования по деформации в арматуре (сжатие), [СП360 6.1.21]")]
         public double UtilRate_e_s_p { get; private set; }
 
         // проверка по усилиям

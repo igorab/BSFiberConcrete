@@ -309,11 +309,13 @@ namespace BSFiberConcrete.CalcGroup2
                     N_crc = 0;
                     
                     //-- рассчитываем ширину раскрытия трещины
-                    if (ebt_crc != 0)
+                    if (CalcA_crc)
                     {
-                        es_crc = epS[j].Maximum(); // деформация арматуры
+                        // деформация арматуры
+                        es_crc = epS[j].Maximum();
 
-                        sig_s_crc = sigS[j].Maximum(); // напряжение в арматуре
+                        // напряжение в арматуре
+                        sig_s_crc = sigS[j].Maximum(); 
 
                         // цикл по стержням арматуры
                         foreach (double _d in d_nom)

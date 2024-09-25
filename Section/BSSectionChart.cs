@@ -470,5 +470,10 @@ namespace BSFiberConcrete.Section
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void buttonClose_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
     }
 }

@@ -103,16 +103,10 @@ namespace BSFiberConcrete
         // Расчет по 2 группе предельных состояний - ширина раскрытия трещины           
         BSCalcNDM BSCalcGr2_Crc(double _coefM, List<double> _E_s_crc = null)
         {
-            NdmCrc ndmCrc = BSData.LoadNdmCrc();            
-            ndmCrc.fi1 = 1.4; // длит нагрузки
-            ndmCrc.fi2 = 0.5; //0.8 если А240
-
-            // Сп6.2.12 
-            if (D["N"] < 0) 
-                ndmCrc.fi3 = 1.0;  //для растянутых элементов
-            else
-                ndmCrc.fi3 = 0.5;
-
+            NdmCrc ndmCrc = BSData.LoadNdmCrc();
+            ndmCrc.InitFi2(setup.RebarType);
+            ndmCrc.InitFi3(D["N"]);
+           
             BSCalcNDM bscalc = new BSCalcNDM(GR2, m_BeamSection, setup);
             bscalc.SetDictParams(D);
             bscalc.MzMyNUp(_coefM);
@@ -125,8 +119,6 @@ namespace BSFiberConcrete
             m_CalcRes.SetRes2Group(bscalc.Results, false, true);
             return bscalc;
         }
-
-
 
         /// <summary>
         ///  GO!
