@@ -46,6 +46,11 @@ namespace BSFiberConcrete.CalcGroup2
             BeamSection = _BeamSection;
             Setup = _Setup;
             NdmCrc = new NdmCrc();
+
+            //Mesh
+            ny = Setup.N;
+            nz = Setup.M;
+
         }
 
         /// <summary>
@@ -56,10 +61,57 @@ namespace BSFiberConcrete.CalcGroup2
         /// <param name="_N"></param>
         public void SetMN(double _Mx, double _My, double _N)
         {
-            N0 = BSHelper.Kgs2kN(_N);
-            My0 = BSHelper.kgssm2kNsm(_My);
             Mz0 = BSHelper.kgssm2kNsm(_Mx);
+            My0 = BSHelper.kgssm2kNsm(_My);            
+            N0 = BSHelper.Kgs2kN(_N);
         }
+
+        public void SetSizes(Dictionary<string, double> _D)
+        {
+            // size
+            b = _D["b"];
+            h = _D["h"];
+
+            bf = _D["bf"];
+            hf = _D["hf"];
+            bw = _D["bw"];
+            hw = _D["hw"];
+            b1f = _D["b1f"];
+            h1f = _D["h1f"];
+
+            r1 = _D["r1"];
+            R2 = _D["R2"];            
+        }
+
+        public void SetE(Dictionary<string, double> _D)
+        {
+            // fiber beton - pressure
+            Eb0 = BSHelper.Kgssm2ToKNsm2(_D["Eb0"]);
+            // fiber beton - tension
+            Ebt = BSHelper.Kgssm2ToKNsm2(_D["Ebt"]);
+            // steel / rebar
+            Es0 = BSHelper.Kgssm2ToKNsm2(_D["Es0"]);
+        }
+
+        public void Deform_e(Dictionary<string, double> _D)
+        {
+            // предельные деформации - фибробетон
+            //  сжатие
+            ebc0 = _D["ebc0"];
+            ebc2 = _D["ebc2"];
+
+            // растяжение
+            efbt0 = _D["ebt0"];
+            efbt2 = _D["ebt2"];
+            efbt3 = _D["ebt3"];
+
+            // арматура
+            // cжатие
+            esc2 = _D["esc2"];
+            // растяжение
+            est2 = _D["est2"];
+        }
+
 
         /// <summary>
         /// передаем параметр e_crc, полученный на предыдущем этапе при расчете момента трещинообразования
@@ -71,79 +123,56 @@ namespace BSFiberConcrete.CalcGroup2
             Eps_s_crc = _es.Maximum();
         }
 
+        public void SetRGroup1(Dictionary<string, double> _D)
+        {
+            // сжатие
+            Rbc = BSHelper.Kgssm2ToKNsm2(_D["Rbc"]);
+            // растяжение
+            Rfbt = BSHelper.Kgssm2ToKNsm2(_D["Rbt"]);
+            Rfbt2 = BSHelper.Kgssm2ToKNsm2(_D["Rbt2"]);
+            Rfbt3 = BSHelper.Kgssm2ToKNsm2(_D["Rbt3"]);
+
+            Rsc = BSHelper.Kgssm2ToKNsm2(_D["Rsc"]);
+            Rst = BSHelper.Kgssm2ToKNsm2(_D["Rst"]);
+        }
+
+        public void SetRGroup2(Dictionary<string, double> _D)
+        {
+            // сжатие
+            Rbc = BSHelper.Kgssm2ToKNsm2(_D["Rbcn"]);
+            // растяжение
+            Rfbt = BSHelper.Kgssm2ToKNsm2(_D["Rbtn"]);
+            Rfbt2 = BSHelper.Kgssm2ToKNsm2(_D["Rbt2n"]);
+            Rfbt3 = BSHelper.Kgssm2ToKNsm2(_D["Rbt3n"]);
+
+            Rsc = BSHelper.Kgssm2ToKNsm2(_D["Rscn"]);
+            Rst = BSHelper.Kgssm2ToKNsm2(_D["Rstn"]);
+        }
+
+
         // параметры для расчета
         public void SetDictParams(Dictionary<string, double> _D)
-        {            
-            // Enforces
-            N0 = BSHelper.Kgs2kN(_D["N"]);
-            My0 = BSHelper.kgssm2kNsm(_D["My"]) ;
-            Mz0 = BSHelper.kgssm2kNsm(_D["Mz"]) ;
+        {
+            SetMN(_D["Mz"], _D["My"], _D["N"]);
 
-            // size
-            b = _D["b"];
-            h = _D["h"];
+            SetSizes(_D);
 
-            bf = _D["bf"];
-            hf = _D["hf"];
-            bw = _D["bw"];
-            hw = _D["hw"]; 
-            b1f = _D["b1f"]; 
-            h1f = _D["h1f"];
-
-            r1 = _D["r1"];
-            R2 = _D["R2"];
-            //
             //Mesh
-            ny = (int)_D["ny"];
-            nz = (int)_D["nz"];
+            //ny = (int)_D["ny"];
+            //nz = (int)_D["nz"];
 
-            // beton
-            Eb0 = BSHelper.Kgssm2ToKNsm2(_D["Eb0"]);
-            // fiber
-            Ebt = BSHelper.Kgssm2ToKNsm2(_D["Ebt"]);
+            SetE(_D);
+
+            Deform_e(_D);
 
             if (GroupLSD == 2) 
             {
-                // сжатие
-                Rbc = BSHelper.Kgssm2ToKNsm2(_D["Rbcn"]);
-                // растяжение
-                Rfbt = BSHelper.Kgssm2ToKNsm2(_D["Rbtn"]);
-                Rfbt2 = BSHelper.Kgssm2ToKNsm2(_D["Rbt2n"]);
-                Rfbt3 = BSHelper.Kgssm2ToKNsm2(_D["Rbt3n"]);
+                SetRGroup2(_D);
             }
             else
             {
-                // сжатие
-                Rbc = BSHelper.Kgssm2ToKNsm2(_D["Rbc"]);
-                // растяжение
-                Rfbt = BSHelper.Kgssm2ToKNsm2(_D["Rbt"]);
-                Rfbt2 = BSHelper.Kgssm2ToKNsm2(_D["Rbt2"]);
-                Rfbt3 = BSHelper.Kgssm2ToKNsm2(_D["Rbt3"]);
-            }
-
-            // предельные деформации, сжатие
-            ebc0 = _D["ebc0"];
-            ebc2 = _D["ebc2"];
-
-            // растяжение
-            efbt0 = _D["ebt0"];
-            efbt2 = _D["ebt2"];
-            efbt3 = _D["ebt3"];
-
-            // steel / rebar
-            Es0 = BSHelper.Kgssm2ToKNsm2(_D["Es0"]);
-            if (GroupLSD == 2)
-            {
-                Rsc = BSHelper.Kgssm2ToKNsm2(_D["Rscn"]);
-                Rst = BSHelper.Kgssm2ToKNsm2(_D["Rstn"]);
-            }
-            else
-            {
-                Rsc = BSHelper.Kgssm2ToKNsm2(_D["Rsc"]);
-                Rst = BSHelper.Kgssm2ToKNsm2(_D["Rst"]);
-            }
-            esc2 = _D["esc2"];
-            est2 = _D["est2"];            
+                SetRGroup1(_D);
+            }                                    
         }
 
         /// <summary>

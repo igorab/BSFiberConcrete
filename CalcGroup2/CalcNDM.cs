@@ -4,6 +4,7 @@ using MathNet.Numerics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +28,9 @@ namespace BSFiberConcrete
 
         //привязка арматуры(по X - высота, по Y ширина балки)
         private double LeftX;
+
+        private List<double> Xs = new List<double>();
+        private List<double> Ys = new List<double>();
 
         private List<double> lD;
         private List<double> lX;
@@ -79,10 +83,11 @@ namespace BSFiberConcrete
         ///
         /// выполнить расчет по 1 группе предельных состояний
         ///
-        private BSCalcNDM BSCalcGr1()
+        private BSCalcNDM BSCalcGr1(double _coefM = 1.0)
         {           
             BSCalcNDM bsCalcGR1 = new BSCalcNDM(GR1, m_BeamSection, setup);
             bsCalcGR1.SetDictParams(D);
+            bsCalcGR1.MzMyNUp(_coefM);
             bsCalcGR1.SetRods(lD, lX, lY);
             bsCalcGR1.Run();
 
@@ -121,39 +126,70 @@ namespace BSFiberConcrete
         }
 
         /// <summary>
+        /// Выполнить расчет по 1 г пред сост
+        /// </summary>
+        /// <returns></returns>
+        public bool RunGroup1()
+        {
+            BSCalcNDM bsCalcGR1 = BSCalcGr1();
+
+            bool ok = bsCalcGR1.UtilRate_fb_t < 1;
+            Debug.Assert(!ok, "Предел прочности сечения превышен");
+
+            m_CalcRes = new BSCalcResultNDM(bsCalcGR1.Results);
+            m_CalcRes.InitFromCalcNDM(bsCalcGR1);
+            m_CalcRes.InitCalcParams(D);
+            m_CalcRes.ResultsMsg1Group(ref m_Message);
+
+            return true;
+        }
+
+        /// <summary>
         ///  GO!
         /// </summary>
         public void Run()
-        {    
-            Init();                                    
-            BSCalcNDM bsCalcGR1 = BSCalcGr1();
-            
-            m_CalcRes = new BSCalcResultNDM(bsCalcGR1.Results);
-            m_CalcRes.InitFromCalcNDM(bsCalcGR1);
-            m_CalcRes.InitCalcParams(D);            
-            m_CalcRes.ResultsMsg1Group(ref m_Message);
-            ///
-            /// выполнить расчет по 2 группе предельных состояний
-            /// 
-            List<double> Xs = new List<double>();
-            List<double> Ys = new List<double>();
+        {
+            Init();
 
-            // Расчет по 2 группе предельных состояний - момент трещинообразования          
-            BSCalcNDM bsсalcgr2(double _coefM)
+            bool ok = RunGroup1();
+
+            if (ok)
             {
-                BSCalcNDM bscalc = BSCalcGr2(_coefM);                
-                m_CalcRes.ErrorIdx.Add(bscalc.Err);
-                m_CalcRes.SetRes2Group(bscalc.Results);
+                BSCalcNDM bsCalc_Mcrc = RunGroup2();
 
-                // Определение момента образования трещины
-                if (bscalc.UtilRate_fb_t <= 1.0)
-                {
-                    Xs.Add(bscalc.UtilRate_fb_t); // увеличение усилия
-                    Ys.Add(_coefM);  // коэф использования по материалу
-                }
-                return bscalc;
+                // параметр трещинообразования, для расчета ширины раскрытия трещины
+                List<double> E_S_crc = bsCalc_Mcrc.EpsilonSResult;
+
+                // определение ширины раскрытия трещины
+                // расчитываем на заданные моменты и силы
+                BSCalcNDM bsCalc_crc = BSCalcGr2_Crc(1.0, E_S_crc);
+
+            }            
+        }
+
+        // Расчет по 2 группе предельных состояний - момент трещинообразования          
+        private BSCalcNDM bsсalcgr2(double _coefM)
+        {
+            BSCalcNDM bscalc = BSCalcGr2(_coefM);
+            m_CalcRes.ErrorIdx.Add(bscalc.Err);
+            m_CalcRes.SetRes2Group(bscalc.Results);
+
+            // Определение момента образования трещины
+            if (bscalc.UtilRate_fb_t <= 1.0)
+            {
+                Xs.Add(bscalc.UtilRate_fb_t); // увеличение усилия
+                Ys.Add(_coefM);  // коэф использования по материалу
             }
-           
+            return bscalc;
+        }
+
+        ///
+        /// выполнить расчет по 2 группе предельных состояний
+        /// 
+        public BSCalcNDM RunGroup2()
+        {
+            double My0, Mx0, N0;
+
             // 1 этап
             // определяем моменты трещинообразования от кратковременных и длительных нагрузок (раздел X)                        
             // используем заданные усилия и определяем коэфф использования по 2-гр пр сост            
@@ -163,6 +199,12 @@ namespace BSFiberConcrete
                 BSCalcNDM bsCalc1 = BSCalcGr2(coef);
                 double ur = bsCalc1.UtilRate_fb_t;
 
+                if (ur > 1)
+                {
+                    BSCalcNDM bscalc = bsсalcgr2(1/ur);
+                    ur = bscalc.UtilRate_fb_t;
+                }
+
                 // Если же хотя бы один из моментов трещинообразования оказывается меньше
                 // соответствующего действующего момента, выполняют второй этап расчета.
 
@@ -170,9 +212,9 @@ namespace BSFiberConcrete
                 // применяем переменный шаг
                 int iters = 0;
                 while (ur < 0.8)
-                {                    
+                {
                     BSCalcNDM bscalc = bsсalcgr2(coef);
-                    
+
                     iters++;
                     if (iters > 100) break;
                     if (bscalc.UtilRate_fb_t > 0.8) break;
@@ -196,22 +238,16 @@ namespace BSFiberConcrete
                 ur = bsCalc_Mcrc.UtilRate_fb_t;
                 if (ur > 1.2) //коэффициент использования
                 {
-                    bsCalc_Mcrc = bsсalcgr2(y_coef-dH/2.0);
+                    bsCalc_Mcrc = bsсalcgr2(y_coef - dH / 2.0);
                     ur = bsCalc_Mcrc.UtilRate_fb_t;
-                    double My_crc = bsCalc_Mcrc.My_crc;  //  момент трещинообразования
-                    //Debug.Assert(My_crc > bsCalc_Mcrc.Myint);
+                    double My_crc = bsCalc_Mcrc.My_crc;  //  момент трещинообразования                                                         
                 }
 
-                // параметр трещинообразования, для расчета ширины раскрытия трещины
-                List<double> E_S_crc = bsCalc_Mcrc.EpsilonSResult;
-
-                // определение ширины раскрытия трещины
-                // расчитываем на заданные моменты и силы
-                BSCalcNDM bsCalc_crc = BSCalcGr2_Crc(1.0, E_S_crc);
+                return bsCalc_Mcrc;                
             }
             else
             {
-                bsсalcgr2(1.0);
+                return bsсalcgr2(1.0);
             }
         }
     }
