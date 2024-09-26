@@ -13,24 +13,20 @@ namespace BSFiberConcrete.CalcGroup2
         /// группа предельных состояний
         /// </summary>
         private readonly int GroupLSD;
-
         /// <summary>
         /// Настройки расчета
         /// </summary>
         private readonly NDMSetup Setup;
-
         /// <summary>
         /// коэффициенты для расчета по трещиностойкости
         /// </summary>
         public NdmCrc NdmCrc { private get; set; }
-
         /// <summary>   
         /// рассчитывать ширину раскрыттия трещины
         /// </summary>
         public double Eps_s_crc { get; set; }
         // рассчитывать ли ширину раскрытия трещины
-        private bool CalcA_crc => Eps_s_crc != 0;
-        
+        private bool CalcA_crc => Eps_s_crc != 0;        
         /// <summary>
         /// Конструктор
         /// </summary>
@@ -46,13 +42,10 @@ namespace BSFiberConcrete.CalcGroup2
             BeamSection = _BeamSection;
             Setup = _Setup;
             NdmCrc = new NdmCrc();
-
             //Mesh
             ny = Setup.N;
             nz = Setup.M;
-
         }
-
         /// <summary>
         /// усилия переводятся :  кг, кг*см -> кН, кН*см
         /// </summary>
@@ -112,7 +105,6 @@ namespace BSFiberConcrete.CalcGroup2
             est2 = _D["est2"];
         }
 
-
         /// <summary>
         /// передаем параметр e_crc, полученный на предыдущем этапе при расчете момента трещинообразования
         /// для определения ширины раскрытия трещины
@@ -149,30 +141,21 @@ namespace BSFiberConcrete.CalcGroup2
             Rst = BSHelper.Kgssm2ToKNsm2(_D["Rstn"]);
         }
 
-
         // параметры для расчета
-        public void SetDictParams(Dictionary<string, double> _D)
-        {
-            SetMN(_D["Mz"], _D["My"], _D["N"]);
-
-            SetSizes(_D);
-
-            //Mesh
-            //ny = (int)_D["ny"];
-            //nz = (int)_D["nz"];
-
+        public void SetParamsGroup1(Dictionary<string, double> _D)
+        {            
+            SetSizes(_D);          
             SetE(_D);
+            Deform_e(_D);            
+            SetRGroup1(_D);                                                
+        }
 
-            Deform_e(_D);
-
-            if (GroupLSD == 2) 
-            {
-                SetRGroup2(_D);
-            }
-            else
-            {
-                SetRGroup1(_D);
-            }                                    
+        public void SetParamsGroup2(Dictionary<string, double> _D)
+        {            
+            SetSizes(_D);
+            SetE(_D);
+            Deform_e(_D);            
+            SetRGroup2(_D);            
         }
 
         /// <summary>
