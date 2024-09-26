@@ -64,7 +64,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(880, 500);
             this.Name = "CoefInform";
-            this.Text = "Коеффициент условной работы";
+            this.Text = "Коэффициент условий работы";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

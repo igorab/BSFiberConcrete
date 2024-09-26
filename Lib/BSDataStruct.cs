@@ -696,6 +696,10 @@ namespace BSFiberConcrete
 
         #region Габаритные размеры сечения. 
         //Для каждого типа сечения свой набор переменных, определяющий размеры.
+
+
+        public double? b { get; set; }
+        public double? h { get; set; }
         public double? bf { get; set; }
         public double? hf { get; set; }
         public double? bw { get; set; }
