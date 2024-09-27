@@ -800,7 +800,6 @@ namespace BSFiberConcrete
                 _MNQ.Add(tmpName, newValue);
             }
 
-
             if (_MNQ.Count == 0)
                 throw new Exception("Не заданы усилия");
 
@@ -980,9 +979,9 @@ namespace BSFiberConcrete
             // Данные, введенные пользователем
             InitMatFiber();
 
-            GetEffortsFromForm(out Dictionary<string, double> MNQ);
+            GetEffortsFromForm(out Dictionary<string, double> _MNQ);
 
-            (double _M, double _N, double _Q) = (MNQ["My"], MNQ["N"], MNQ["Qy"]);
+            (double _M, double _N, double _Qy, double _Qx ) = (_MNQ["My"], _MNQ["N"], _MNQ["Qy"], _MNQ["Qx"]);
             if (_M < 0 || _N < 0)
             {
                 MessageBox.Show("Расчет по методу статического равновесия не реализован для отрицательных значений M и N.\n Воспользуйтесь расчетом по методу НДМ");
@@ -999,7 +998,7 @@ namespace BSFiberConcrete
                 FiberCalculate_N();
             }
 
-            if (_Q != 0)
+            if (_Qy != 0)
             {
                 FiberCalculate_Shear();
             }

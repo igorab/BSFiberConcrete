@@ -491,10 +491,8 @@ namespace BSFiberConcrete
 
             // Предельная перерезывающая сила по полосе между наклонными сечениями
             double _Q_ult = 0.3 * Rfb * b * h0; // (6.74)
-            //_Q_ult = BSHelper.Kg2T(_Q_ult);
-
+            
             // Расчет элементов по наклонным сечениям на действие поперечных сил
-
             // Минимальная длина проекции(см)
             double c_min = h0;
             // Максимальная длина проекции(см)
@@ -579,35 +577,29 @@ namespace BSFiberConcrete
                 res = "Перерезываюзщая сила превышает предельно допустимую в данном сечении";
                 Msg.Add(res);
             }
-
         }
 
+        /// <summary>
+        ///  
+        /// </summary>
         protected void CalculateM()
         {
             // Растояние до цента тяжести арматуры растянутой арматуры, см
             double a = l_rebar.Length > 2 ? l_rebar[2] : 4;
-
             // рабочая высота сечения по растянутой арматуре
             double h0 = h - a;
-
             // Нормативное остаточное сопротивления осевому растяжению кг/см2
             double _Rfbt3 = R_fbt3();
-
             // Площадь растянутой арматуры см2
             double As = Rebar.As;
-
             // Расчетное сопротивление поперечной арматуры  
             double Rsw = Rebar.Rsw;
-
             // Площадь арматуры
             double Asw = Rebar.Asw;
-
             // шаг попреречной арматуры
             double sw = Rebar.s_w;
-
             // усилие в поперечной арматуре на единицу длины элемента
             double q_sw = Rsw * Asw / sw;
-
             // условие учета поперечной арматуры
             if (q_sw < 0.25 * _Rfbt3 * b)
                 q_sw = 0;
@@ -616,32 +608,23 @@ namespace BSFiberConcrete
             double c_max = 4 * h0;
             double c0_max = 2 * h0;
             List<double> С_x = new List<double>();
-
             InitC(ref С_x, c_min, c_max, 1);
-
             double Q_sw,
                    M_sw; // момент, воспр поперечной арматурой
             double M_fbt = 0; // момент, воспр сталефибробетоном
-
             double Q_fbt3 = (c_min!=0) ? 1.5d * _Rfbt3 * b * h0 * h0 / c_min : 0;
-
             // усилие в продольной растянутой арматуре
             double N_s = Rebar.Rs * Rebar.As;
-
             // плечо внутренней пары сил
             double z_S = 0.9 * h0;
-
             // момент, воспринимаемый продольной арматурой, пересекающей наклонное сечение, относительно противоположного конца наклонного сечения
             double Ms = N_s * z_S; // 6.80
-
             //  Усилие в поперечной арматуре:
             List<double> lst_Q_sw = new List<double>();
             // момент, воспринимаемый поперечной арматурой, пересекающей наклонное сечение, относительно противоположного конца наклонного сечения
             List<double> lst_M_sw = new List<double>();
-
             List<double> lst_Q_fbt3 = new List<double>();
             List<double> lst_M_fbt = new List<double>();
-
             List<double> lst_M_ult = new List<double>();
 
             foreach (double ci in С_x)
@@ -663,9 +646,13 @@ namespace BSFiberConcrete
                 Q_fbt3 = (ci != 0) ? 1.5d * _Rfbt3 * b * h0 * h0 / ci : 0;
 
                 if (Q_fbt3 >= 2.5d * _Rfbt3 * b * h0)
+                {
                     Q_fbt3 = 2.5d * _Rfbt3 * b * h0;
+                }
                 else if (Q_fbt3 <= 0.5d * _Rfbt3 * b * h0)
+                {
                     Q_fbt3 = 0.5d * _Rfbt3 * b * h0;
+                }
 
                 M_fbt = 0.5 * Q_fbt3 * ci;
 
