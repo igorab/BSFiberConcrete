@@ -149,7 +149,7 @@ namespace BSFiberConcrete
             //numE_beton.Text = prms.Eb;
             //numE_fiber.Text = prms.Efbt;
             cmbRebarClass.Text = prms.Rs;
-            cmbTRebarClass.Text = prms.Rsw;
+            cmbTRebarClass_X.Text = prms.Rsw;
 
             numAs.Value = (decimal)prms.Area_s;
             numAs1.Value = (decimal)prms.Area1_s;
@@ -922,11 +922,10 @@ namespace BSFiberConcrete
             }
         }
 
-
         /// <summary>
         ///  Расчет по наклонному сечению на действие Q
         /// </summary>        
-        private void FiberCalculate_Shear()
+        private void FiberCalculate_Shear(double _Qx, double _Qy)
         {
             BSFiberCalc_MNQ fiberCalc = new BSFiberCalc_MNQ();
 
@@ -935,6 +934,7 @@ namespace BSFiberConcrete
                 m_Message = new List<string>();
 
                 FiberCalc_MNQ(out fiberCalc, true, _shear: true);
+
                 // Расчет по второй группе предельных состояний
                 FiberCalculate_Cracking();
             }
@@ -998,9 +998,9 @@ namespace BSFiberConcrete
                 FiberCalculate_N();
             }
 
-            if (_Qy != 0)
+            if (_Qy != 0 || _Qx != 0)
             {
-                FiberCalculate_Shear();
+                FiberCalculate_Shear(_Qx, _Qy);
             }
         }
 
@@ -1443,7 +1443,7 @@ namespace BSFiberConcrete
                     //
                     CalcNDM(BeamSection.Ring, useRebar);
                 }
-                else if (m_BeamSection == BeamSection.None)
+                else if (m_BeamSection == BeamSection.Any)
                 {
                     CalcDeformNDM();
                 }
@@ -1494,7 +1494,7 @@ namespace BSFiberConcrete
                 Eb = numE_beton.Value.ToString(),
                 Efbt = numE_fiber.Value.ToString(),
                 Rs = Convert.ToString(cmbRebarClass.SelectedItem),
-                Rsw = Convert.ToString(cmbTRebarClass.SelectedItem),
+                Rsw = Convert.ToString(cmbTRebarClass_X.SelectedItem),
                 Area_s = (double)numAs.Value,
                 Area1_s = (double)numAs1.Value,
                 a_s = (double)num_a.Value,
@@ -1627,7 +1627,7 @@ namespace BSFiberConcrete
         {
             try
             {
-                Rebar trb = m_Rebar.Find(match => match.ID == cmbTRebarClass.Text);      //Lib.BSQuery.RebarFind(cmbTRebarClass.Text);
+                Rebar trb = m_Rebar.Find(match => match.ID == cmbTRebarClass_X.Text);      //Lib.BSQuery.RebarFind(cmbTRebarClass.Text);
                 if (trb != null)
                 {
                     numRsw.Value = (decimal)BSHelper.MPA2kgsm2(trb.Rsw);
@@ -1785,7 +1785,7 @@ namespace BSFiberConcrete
                 mDraw.PaintSectionMesh();
                 mDraw.ShowMesh();                
             }
-            else if (m_BeamSection == BeamSection.None) //заданное пользователем сечение
+            else if (m_BeamSection == BeamSection.Any) //заданное пользователем сечение
             {
                 TriangleNet.Geometry.Point cg = new TriangleNet.Geometry.Point();
                 _ = GenerateMesh(ref cg);
@@ -1867,7 +1867,7 @@ namespace BSFiberConcrete
                 pathToSvgFile = BSCalcLib.Tri.CreateIBeamContour(pts);
                 _ = Tri.CalculationScheme();
             }
-            else if (m_BeamSection == BeamSection.None)
+            else if (m_BeamSection == BeamSection.Any)
             {
                 List<PointF> pts;
                 BSSection.IBeam(sz, out pts, out PointF _center);
@@ -2242,10 +2242,11 @@ namespace BSFiberConcrete
         {
             BSSectionChart sectionChart = new BSSectionChart
             {
-                BSBeamSection = BeamSection.None,
+                BSBeamSection = BeamSection.Any,
                 Wdth = 0,
                 Hght = 0,
-                NumArea = 0
+                NumArea = 0,
+                UseRebar = checkBoxRebar.Checked
             };
 
             sectionChart.Show();

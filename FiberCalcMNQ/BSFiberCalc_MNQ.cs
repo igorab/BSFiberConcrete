@@ -143,7 +143,7 @@ namespace BSFiberConcrete
         //площадь сжатой зоны бетона ф. (6.22)
         protected double Ab;
         //поперечная сила
-        protected double Q;
+        protected double Qx;
         protected double Qy;
         // параметры продольной арматуры
         protected double[] l_rebar;
@@ -476,7 +476,15 @@ namespace BSFiberConcrete
         /// <summary>
         /// Расчет элементов по полосе между наклонными сечениями
         /// </summary>
-        protected void CalculateQ()
+        protected void Calculate_Qy()
+        {
+
+        }
+
+        /// <summary>
+        /// Расчет элементов по полосе между наклонными сечениями
+        /// </summary>
+        protected void Calculate_Qx()
         {
             m_ImgCalc = "Incline_Q.PNG";
 
@@ -526,11 +534,12 @@ namespace BSFiberConcrete
 
                 lstQ_fb.Add(Qfb_i);
             }
+
             // Qfb - максимальная поперечная сила, воспринимаемая сталефибробетоном в наклонном сечении
             double Qfb = (lstQ_fb.Count > 0) ? lstQ_fb.Max() : 0;
 
             // Максимальный шаг поперечной арматуры см
-            double s_w_max = (Q > 0) ? Rfbt * b * h0 * h0 / Q : 0;
+            double s_w_max = (Qx > 0) ? Rfbt * b * h0 * h0 / Qx : 0;
 
             string res;
             if (Rebar.s_w <= s_w_max)
@@ -704,7 +713,7 @@ namespace BSFiberConcrete
             N = m_Efforts["N"];
 
             // Поперечная сила
-            Q = m_Efforts["Qx"];
+            Qx = m_Efforts["Qx"];
             Qy = m_Efforts["Qy"];
 
             //Момент от действия постянных и длительных нагрузок нагрузок

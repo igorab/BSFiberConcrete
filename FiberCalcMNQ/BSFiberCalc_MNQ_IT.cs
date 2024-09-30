@@ -25,8 +25,13 @@ namespace BSFiberConcrete
                 Calculate_N_Out();                
             }
             else if (Shear)
-            {   // Расчет на действие поперечной силы
-                CalculateQ();
+            {   
+                // Расчет на действие поперечной силы вдоль оси X
+                Calculate_Qx();
+
+                // Расчет на действие поперечной силы вдоль оси Y
+                Calculate_Qy();
+
                 // Расчет на действие моментов
                 CalculateM();
             }
