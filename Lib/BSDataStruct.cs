@@ -33,11 +33,30 @@ namespace BSFiberConcrete
     public class NdmCrc
     {
         public int Id { get; set; }
-        public double  fi1 { get; set; }
+        public double fi1 { get; set; }
         public double fi2 { get; set; }
         public double fi3 { get; set; }
         public double mu_fv { get; set; }
         public double psi_s { get; set; }
+        public double kf { get;  set; }
+
+        // СП 63 6.2.16
+        public void InitFi2(string _RebarType)
+        {
+            if (_RebarType == "A240")            
+                fi2 = 0.8;
+            else
+                fi2 = 0.5;
+        }
+
+        // СП 63 6.2.12
+        public void InitFi3(double _N)
+        {
+            if (_N < 0)
+                fi3 = 1.0; // для растянутых элементов
+            else
+                fi3 = 0.5;
+        }
     }
 
 
@@ -52,6 +71,8 @@ namespace BSFiberConcrete
         public int M { get; set; }
         public double NSize { get; set; }            
         public int BetonTypeId { get; set; }
+        public bool UseRebar { get; set; }
+        public string RebarType { get; set; }
     }
 
 
@@ -675,6 +696,10 @@ namespace BSFiberConcrete
 
         #region Габаритные размеры сечения. 
         //Для каждого типа сечения свой набор переменных, определяющий размеры.
+
+
+        public double? b { get; set; }
+        public double? h { get; set; }
         public double? bf { get; set; }
         public double? hf { get; set; }
         public double? bw { get; set; }

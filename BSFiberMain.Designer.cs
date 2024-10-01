@@ -30,11 +30,11 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BSFiberMain));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabFiber = new System.Windows.Forms.TabControl();
             this.tabParams = new System.Windows.Forms.TabPage();
             this.groupVar = new System.Windows.Forms.GroupBox();
@@ -1537,45 +1537,45 @@
             // 
             // Mx
             // 
-            dataGridViewCellStyle1.Format = "N2";
-            dataGridViewCellStyle1.NullValue = "0";
-            this.Mx.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle21.Format = "N2";
+            dataGridViewCellStyle21.NullValue = "0";
+            this.Mx.DefaultCellStyle = dataGridViewCellStyle21;
             this.Mx.HeaderText = "Mx, кг*мм";
             this.Mx.Name = "Mx";
             this.Mx.ToolTipText = "Момент относительно оси X";
             // 
             // My
             // 
-            dataGridViewCellStyle2.Format = "N2";
-            dataGridViewCellStyle2.NullValue = "0";
-            this.My.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle22.Format = "N2";
+            dataGridViewCellStyle22.NullValue = "0";
+            this.My.DefaultCellStyle = dataGridViewCellStyle22;
             this.My.HeaderText = "My, кг*мм";
             this.My.Name = "My";
             this.My.ToolTipText = "Момент отн оси Y";
             // 
             // N
             // 
-            dataGridViewCellStyle3.Format = "N2";
-            dataGridViewCellStyle3.NullValue = "0";
-            this.N.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle23.Format = "N2";
+            dataGridViewCellStyle23.NullValue = "0";
+            this.N.DefaultCellStyle = dataGridViewCellStyle23;
             this.N.HeaderText = "N, кг";
             this.N.Name = "N";
             this.N.ToolTipText = "Продольная сила";
             // 
             // Qx
             // 
-            dataGridViewCellStyle4.Format = "N2";
-            dataGridViewCellStyle4.NullValue = "0";
-            this.Qx.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle24.Format = "N2";
+            dataGridViewCellStyle24.NullValue = "0";
+            this.Qx.DefaultCellStyle = dataGridViewCellStyle24;
             this.Qx.HeaderText = "Qx, кг";
             this.Qx.Name = "Qx";
             this.Qx.ToolTipText = "Поперечная сила вдоль оси X";
             // 
             // Qy
             // 
-            dataGridViewCellStyle5.Format = "N2";
-            dataGridViewCellStyle5.NullValue = "0";
-            this.Qy.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle25.Format = "N2";
+            dataGridViewCellStyle25.NullValue = "0";
+            this.Qy.DefaultCellStyle = dataGridViewCellStyle25;
             this.Qy.HeaderText = "Qy, кг";
             this.Qy.Name = "Qy";
             this.Qy.ToolTipText = "Поперечная сила вдоль оси Y";
@@ -2125,7 +2125,6 @@
             // cmbRebarSquare
             // 
             this.cmbRebarSquare.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.cmbRebarSquare.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbRebarSquare.Enabled = false;
             this.cmbRebarSquare.FormattingEnabled = true;
             this.cmbRebarSquare.Location = new System.Drawing.Point(231, 283);
@@ -2136,7 +2135,6 @@
             // cmbRebarDiameters
             // 
             this.cmbRebarDiameters.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.cmbRebarDiameters.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbRebarDiameters.FormattingEnabled = true;
             this.cmbRebarDiameters.Location = new System.Drawing.Point(231, 243);
             this.cmbRebarDiameters.Name = "cmbRebarDiameters";
@@ -2300,7 +2298,6 @@
             // cmbDeformDiagram
             // 
             this.cmbDeformDiagram.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmbDeformDiagram.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbDeformDiagram.FormattingEnabled = true;
             this.cmbDeformDiagram.Items.AddRange(new object[] {
             "Трехлинейная",
@@ -2309,6 +2306,7 @@
             this.cmbDeformDiagram.Name = "cmbDeformDiagram";
             this.cmbDeformDiagram.Size = new System.Drawing.Size(141, 21);
             this.cmbDeformDiagram.TabIndex = 16;
+            this.cmbDeformDiagram.Text = "Трехлинейная";
             // 
             // btnCalcDeformDiagram
             // 
@@ -2333,7 +2331,6 @@
             // cmbTypeMaterial
             // 
             this.cmbTypeMaterial.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmbTypeMaterial.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbTypeMaterial.FormattingEnabled = true;
             this.cmbTypeMaterial.Items.AddRange(new object[] {
             "Фибробетон",
@@ -2343,6 +2340,7 @@
             this.cmbTypeMaterial.Name = "cmbTypeMaterial";
             this.cmbTypeMaterial.Size = new System.Drawing.Size(141, 21);
             this.cmbTypeMaterial.TabIndex = 18;
+            this.cmbTypeMaterial.Text = "Фибробетон";
             // 
             // labelWetAir
             // 
@@ -2357,7 +2355,6 @@
             // cmbWetAir
             // 
             this.cmbWetAir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmbWetAir.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbWetAir.FormattingEnabled = true;
             this.cmbWetAir.Items.AddRange(new object[] {
             "Выше 75",
@@ -2368,6 +2365,7 @@
             this.cmbWetAir.Name = "cmbWetAir";
             this.cmbWetAir.Size = new System.Drawing.Size(141, 21);
             this.cmbWetAir.TabIndex = 20;
+            this.cmbWetAir.Text = "Не учитывать";
             this.cmbWetAir.SelectedIndexChanged += new System.EventHandler(this.cmbWetAir_SelectedIndexChanged);
             // 
             // tableLayoutEpsilonS
@@ -3143,7 +3141,6 @@
             // comboMosaic
             // 
             this.comboMosaic.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.comboMosaic.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboMosaic.FormattingEnabled = true;
             this.comboMosaic.Items.AddRange(new object[] {
             "Мозаика",
@@ -3155,6 +3152,7 @@
             this.comboMosaic.Name = "comboMosaic";
             this.comboMosaic.Size = new System.Drawing.Size(104, 21);
             this.comboMosaic.TabIndex = 16;
+            this.comboMosaic.Text = "Мозаика";
             // 
             // labelMeshNumX
             // 

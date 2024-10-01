@@ -14,12 +14,22 @@ namespace BSFiberConcrete.CalcGroup2
         /// </summary>
         private readonly int GroupLSD;
 
+        /// <summary>
+        /// Настройки расчета
+        /// </summary>
         private readonly NDMSetup Setup;
+
+        /// <summary>
+        /// коэффициенты для расчета по трещиностойкости
+        /// </summary>
+        public NdmCrc NdmCrc { private get; set; }
 
         /// <summary>   
         /// рассчитывать ширину раскрыттия трещины
         /// </summary>
         public double Eps_s_crc { get; set; }
+        // рассчитывать ли ширину раскрытия трещины
+        private bool CalcA_crc => Eps_s_crc != 0;
         
         /// <summary>
         /// Конструктор
@@ -34,8 +44,8 @@ namespace BSFiberConcrete.CalcGroup2
         {
             GroupLSD = _groupLSD;
             BeamSection = _BeamSection;
-            BetonTypeId = _Setup.BetonTypeId;
-            NdmCrc = BSData.LoadNdmCrc();
+            Setup = _Setup;
+            NdmCrc = new NdmCrc();
         }
 
         /// <summary>
@@ -139,17 +149,15 @@ namespace BSFiberConcrete.CalcGroup2
         /// <summary>
         /// увеличить усилия на занданный коэффициент
         /// </summary>
-        /// <param name="_utilRate">коэффициент</param>
-        public void MzMyNUp(double _utilRate)
+        /// <param name="_coef">коэффициент</param>
+        public void MzMyNUp(double _coef)
         {
-            if (_utilRate == 0)
+            if (_coef == 0)
                 return;
 
-            Mz0 /= _utilRate;
-            My0 /= _utilRate ;
-            N0 /=  _utilRate;
-
-            double iy = y_interpolate(My0);
+            Mz0 *= _coef;
+            My0 *= _coef ;
+            N0  *=  _coef;            
         }
 
         /// <summary>
@@ -294,10 +302,11 @@ namespace BSFiberConcrete.CalcGroup2
         public double UtilRate_s_t { get; private set; }
 
         // максимальное число итераций
-        private static int jmax = 20000;
+        private int jmax = 20000;
         // Максимальная абсолютная погрешность
-        private static double tolmax = Math.Pow(10, -6);
-        private static int err = 0;
+        private double tolmax = Math.Pow(10, -6);
+        private int err = 0;
+
         private Dictionary<string, double> m_Results = new Dictionary<string, double>();
 
         public int Err => err;

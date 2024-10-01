@@ -1,16 +1,12 @@
 ﻿using System;
 
 namespace BSFiberConcrete.CalcGroup2
-{   
+{
     /// <summary>
     /// Расчет по 2 группе предельных состояний
     /// </summary>
     public partial class BSCalcNDM
     {
-        private NdmCrc NdmCrc;
-
-        public int BetonTypeId { private get;  set; }
-
         /// <summary>
         /// Диаграмма деформирования арматуры (двухлинейная) 
         /// </summary>
@@ -41,7 +37,7 @@ namespace BSFiberConcrete.CalcGroup2
                 if (rip)
                     s = 0;
                 else
-                    s  = -Rsc + Es0 * (_e + esc2);
+                    s = -Rsc + Es0 * (_e + esc2);
             }
             else if (est0 <= _e && _e <= est2)
             {
@@ -73,7 +69,7 @@ namespace BSFiberConcrete.CalcGroup2
             double s = 0;
             double sc1 = 0.6 * Rbc;
             double st1 = 0.6 * Rfbt;
-            
+
             double ebc1 = sc1 / Eb0;
             double ebt1 = st1 / Eb0;
 
@@ -131,7 +127,7 @@ namespace BSFiberConcrete.CalcGroup2
         {
             double s = 0;
 
-            if (BetonTypeId == 1)
+            if (Setup.BetonTypeId == 1)
             {
                 return Diagr_Beton(_e);
             }
@@ -141,10 +137,10 @@ namespace BSFiberConcrete.CalcGroup2
             // сжатие по СП 63 6.1.20
             ebc0 = 0.002;
             ebc2 = 0.0035;
-            
-            double sc1 = 0.6 * Rbc;            
+
+            double sc1 = 0.6 * Rbc;
             double ebc1 = sc1 / Eb0;
-           
+
             // Растяжение - по СП 360
             efbt0 = Rfbt / Ebt;
             efbt1 = efbt0 + 0.0001;
@@ -153,14 +149,14 @@ namespace BSFiberConcrete.CalcGroup2
             efbt3 = 0.02 - 0.0125 * (Rfbt3 / Rfbt2 - 0.5);
 
             // сжатие: ПО СП 63 6.1.20 (как для обычного бетона)           
-            if (_e < -ebc2) 
+            if (_e < -ebc2)
             {
                 if (rip)
                     s = 0;
                 else
                     s = -Rbc + Eb0 * (_e + ebc2);
             }
-            else if (-ebc2 <= _e && _e <= -ebc0) 
+            else if (-ebc2 <= _e && _e <= -ebc0)
             {
                 s = -Rbc;
             }
@@ -204,11 +200,11 @@ namespace BSFiberConcrete.CalcGroup2
         /// коэффициент для напряжения арматуры для элементов с трещинами в растянутой зоне
         /// </summary>
         /// <returns></returns>
-        private double Psi_s(double  _e_s)
+        private double Psi_s(double _e_s)
         {
             if (_e_s == 0 || GroupLSD == BSFiberLib.CG1) return 1;
 
-            double res = 1 / (1 + 0.8 * es_crc / _e_s);
+            double res = 1 / (1 + 0.8 * Eps_s_crc / _e_s);
             return res;
         }
 
@@ -225,9 +221,9 @@ namespace BSFiberConcrete.CalcGroup2
             else
             {
                 double sigma = _sigma;
-                if (es_crc != 0)
+                if (CalcA_crc)
                 {
-                    sigma = sigma * Psi_s(_e); 
+                    sigma = sigma * Psi_s(_e);
                 }
 
                 E_Sec = sigma / _e;
@@ -241,14 +237,11 @@ namespace BSFiberConcrete.CalcGroup2
         /// </summary>
         /// <param name="_ds_nom">номинальный диаметр арматуры</param>
         /// <returns>Расстояние между трещинами</returns>
-        private double L_s (double _ds_nom)
+        private double L_s(double _ds_nom)
         {
-            double kf = 1;
-            double mu_fv = NdmCrc.mu_fv;
-            double fi2 = NdmCrc.fi2;
-            double fi3 = NdmCrc.fi3;
-
-            double res = kf * (50 + 0.5 * fi2 * fi3) * _ds_nom / mu_fv;
+            if (NdmCrc.mu_fv == 0) return 0;
+            
+            double res = NdmCrc.kf * (50 + 0.5 * NdmCrc.fi2 * NdmCrc.fi3) * _ds_nom / NdmCrc.mu_fv;
 
             if (res > h)
                 res = h;
@@ -256,28 +249,17 @@ namespace BSFiberConcrete.CalcGroup2
             return res;
         }
 
+        // СП360 6.2.14
         private double A_crc(double _sig_s, double _ls)
         {
-            double fi1 = NdmCrc.fi1;
-            double fi2 = NdmCrc.fi2;
-            double fi3 = NdmCrc.fi3;
-            double mu_fv = NdmCrc.mu_fv;
-            double psi_s = 1 - 0.8 * sig_s_crc / _sig_s;
-
+            if (_sig_s == 0 || _ls == 0) 
+                return 0; 
             
-            double res = fi1 * fi2 * fi3 * _sig_s / Es0 * _ls;
+            double psi_s = 1 - 0.8 * sig_s_crc / _sig_s;
+            
+            double a_crc = NdmCrc.fi1 * NdmCrc.fi3 * psi_s * _sig_s / Es0 * _ls;
 
-            return res / 10;
-        }
-
-        public double y_interpolate(double _x)
-        {
-            double y;
-
-            y = 4E-23 * Math.Pow(_x, 3) - 1E-15 * Math.Pow(_x, 2) + 3E-8 * _x + 0.0011;
-
-            return y;
-        }
-
+            return a_crc;
+        }        
     }
 }

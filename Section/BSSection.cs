@@ -18,6 +18,13 @@ namespace BSFiberConcrete.Section
 
         }
 
+        public BSPoint(NdmSection _NdmSection)
+        {
+            Num = _NdmSection.N;
+            X = (float) _NdmSection.X;
+            Y = (float) _NdmSection.Y;
+        }
+
         public BSPoint(Point _point)
         {
             X = _point.X;

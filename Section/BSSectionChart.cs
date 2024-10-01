@@ -18,6 +18,8 @@ using OpenTK;
 using ScottPlot.Colormaps;
 using System.Reflection;
 using TriangleNet.Geometry;
+using static CBAnsDes.Member;
+using System.Data.SqlTypes;
 
 namespace BSFiberConcrete.Section
 {
@@ -31,6 +33,8 @@ namespace BSFiberConcrete.Section
             get { return m_RodPoints; }
             set { m_RodPoints = value; }
         }
+
+        const string UserSection = "UserSection";
 
         public BeamSection BSBeamSection { get; set; }
         public bool UseRebar { private get; set; }
@@ -145,13 +149,13 @@ namespace BSFiberConcrete.Section
             }
             else if (BSBeamSection == BeamSection.None)
             {
-                var pointsSection = BSData.LoadNdmSection("");
-
-                PointsSection = new List<PointF>();
-
-                foreach (var _point in pointsSection) 
+                List<NdmSection> pointsSection = BSData.LoadNdmSection(UserSection);
+                int idx = 0;
+                foreach (NdmSection _pt in pointsSection) 
                 {
-                    InnerPoints.Add(new PointF((float)_point.X, (float)_point.Y));                   
+                    idx++;
+                    BSPoint bsPt = new BSPoint(_pt) ;
+                    pointBS.Add(bsPt);                    
                 }
             }
         }
@@ -433,25 +437,43 @@ namespace BSFiberConcrete.Section
 
        
         private void btnSaveChart_Click(object sender, EventArgs e)
-        {
+        {            
             try
             {
                 if (RodBS == null || RodBS.List == null || RodBS.List.Count == 0)
                 {
-                    List<BSRod> bSRods = (List<BSRod>)RodBS.List;
+                    //List<BSRod> bSRods = (List<BSRod>)RodBS.List;
 
-                    BSData.SaveRods(bSRods, BSBeamSection);
+                    //BSData.SaveRods(bSRods, BSBeamSection);
                 }
 
                 // TODO доделать
                 List<NdmSection> bsSec = new List<NdmSection>();
 
-                BSData.SaveSection(bsSec, "");
+                BindingList<BSPoint> p =(BindingList<BSPoint>)pointBS.List;
+
+                int idxN = 0;
+                foreach (var pt in p)
+                {
+                    NdmSection ndmSection = new NdmSection();
+                    ndmSection.Num = UserSection;
+                    ndmSection.N = ++idxN;
+                    ndmSection.X =  pt.X;
+                    ndmSection.Y = pt.Y;
+                    bsSec.Add(ndmSection);
+                }    
+
+                BSData.SaveSection(bsSec, UserSection);
             }
             catch (Exception ex) 
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void buttonClose_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

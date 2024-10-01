@@ -271,7 +271,7 @@ namespace BSFiberConcrete.Lib
         }
 
         /// <summary>
-        /// Армирование
+        /// Сечение произвольной формы для расчета по НДМ
         /// </summary>
         /// <returns></returns>
         public static List<NdmSection> LoadNdmSection(string _SectionNum)
@@ -632,11 +632,11 @@ namespace BSFiberConcrete.Lib
                     cnn.Open();
                     using (var tr = cnn.BeginTransaction())
                     {
-                        cnn.Execute(string.Format("delete from NdmSection where Num = {0}", _SectionNum), null, tr);
+                        cnn.Execute(string.Format("delete from NdmSection where Num = '{0}'", _SectionNum), null, tr);
 
                         foreach (var sec in _ds)
                         {                            
-                            int cnt = cnn.Execute("insert into NdmSection (CG_X, CG_Y, D, SectionType) values (@X, @Y, @N, @Num)", sec, tr);
+                            int cnt = cnn.Execute("insert into NdmSection (X, Y, N, Num) values (@X, @Y, @N, @Num)", sec, tr);
 
                         }
                         tr.Commit();
@@ -779,7 +779,7 @@ namespace BSFiberConcrete.Lib
                     if (output != null && output.Count() > 0)
                         return output.ToList()[0];
                     else
-                        return new NdmCrc();                  
+                        return new NdmCrc() {Id =1, fi1 = 1.4, fi2 = 0.5, fi3 = 0.4, mu_fv = 0.015, kf = 1};                  
                 }
             }
             catch
@@ -787,6 +787,32 @@ namespace BSFiberConcrete.Lib
                 return new NdmCrc();
             }
         }
+
+        /// <summary>
+        /// Сохранить коэффициенты расчета на раскрытие трещины
+        /// </summary>        
+        public static void SaveNdmCrc(NdmCrc _NdmCrc)
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    cnn.Open();
+                    using (var tr = cnn.BeginTransaction())
+                    {                                               
+                        cnn.Execute("update NDMCrc set fi1 = @fi1, fi2 = @fi2, fi3 = @fi3, mu_fv = @mu_fv, psi_s = @psi_s where Id = @Id", 
+                            _NdmCrc, tr);                                                    
+                        tr.Commit();
+                    }
+                }
+            }
+            catch
+            {
+                throw new Exception ("Не удалось сохранить значения в БД");
+            }
+        }
+
+
 
     }
 }

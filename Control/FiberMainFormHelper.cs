@@ -14,7 +14,7 @@ namespace BSFiberConcrete.Control
         /// <summary>
         /// список названий свойств класса "InitBeamSectionGeometry", используемых для отображения в таблице dataGridSelection
         /// </summary>
-        public static List<string> colNamesSectionGeometry = new List<string>() { "bw", "hw", "bf", "hf", "b1f", "h1f", "r1", "r2" };
+        public static List<string> colNamesSectionGeometry = new List<string>() { "b", "h", "bw", "hw", "bf", "hf", "b1f", "h1f", "r1", "r2" };
         /// <summary>
         /// Константа для добавления в название столбцов dataGridSelection
         /// </summary>
@@ -22,7 +22,7 @@ namespace BSFiberConcrete.Control
 
 
         /// <summary>
-        /// Метод возращает индекс из списка beamSectionsGeometry соответсвующий beamSectionType
+        /// Метод возвращает индекс из списка beamSectionsGeometry соответсвующий beamSectionType
         /// </summary>
         /// <param name="beamSectionsGeometry"></param>
         /// <param name="beamSectionType"></param>
