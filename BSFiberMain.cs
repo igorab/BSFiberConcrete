@@ -181,7 +181,7 @@ namespace BSFiberConcrete
                 m_Path2BeamDiagrams = new List<string>() { };
 
                 m_RebarDiameters = BSData.LoadRebarDiameters();
-                
+
                 m_Beam = new Dictionary<string, double>();
                 m_Table = new DataTable();
                 m_Rebar = BSData.LoadRebar();
@@ -200,7 +200,7 @@ namespace BSFiberConcrete
                 cmbDeformDiagram.SelectedIndex = (int)DeformDiagramType.D3Linear;
 
                 m_BSLoadData.InitEfforts(ref m_Iniv);
-               
+
                 num_eN.Value = (decimal)m_Iniv["eN"];
                 num_Ml1_M1.Value = (decimal)m_Iniv["Ml"];
 
@@ -624,7 +624,7 @@ namespace BSFiberConcrete
                 report.Reinforcement = m_Reinforcement;
                 report.BeamSection = _BeamSection;
                 report.CalcResults = m_CalcResults;
-                report.CalcResults2Group = m_CalcResults2Group;                
+                report.CalcResults2Group = m_CalcResults2Group;
                 report.ImageStream = m_ImageStream;
                 report.Messages = m_Message;
                 report.UseReinforcement = _useReinforcement;
@@ -811,6 +811,23 @@ namespace BSFiberConcrete
         /// <summary>
         ///  Введенные пользователем значения по арматуре
         /// </summary>
+        /// <param name="_Rebar">Установлены параметры стержней арматуры </param>
+        private void InitRebarFromForm(ref Rebar _Rebar)
+        {
+            _Rebar.As = (double)numAs.Value;
+            _Rebar.As1 = (double)numAs1.Value;
+            _Rebar.a = (double)num_a.Value;
+            _Rebar.a1 = (double)num_a1.Value;
+
+            _Rebar.Es = (double)numEs.Value;
+            _Rebar.Esw = (double)numEsw.Value;
+            _Rebar.s_w = _Rebar.s_w;
+        }
+
+
+        /// <summary>
+        ///  Введенные пользователем значения по арматуре
+        /// </summary>
         /// <param name="_Rebar"></param>
         private void InitRebarValues(ref Rebar _Rebar)
         {
@@ -821,9 +838,7 @@ namespace BSFiberConcrete
 
             _Rebar.Es = (double)numEs.Value;
             _Rebar.Esw = (double)numEsw.Value;
-
             _Rebar.s_w = _Rebar.s_w;
-
         }
 
         /// <summary>
@@ -874,10 +889,10 @@ namespace BSFiberConcrete
             fiberCalc.GetSize(sz);
 
             // передаем усилия и связанные с ними велечины
-            double e_tot = fiberCalc.GetEfforts(MNQ);
+            fiberCalc.SetEfforts(MNQ);
 
             bool _N_out = false;
-            if (fiberCalc.h / 2 < e_tot) _N_out = true;
+            if (fiberCalc.h / 2 < fiberCalc.Get_e_tot) _N_out = true;
             fiberCalc.N_Out = _N_out;
 
             fiberCalc.Calculate();
@@ -925,7 +940,45 @@ namespace BSFiberConcrete
         /// <summary>
         ///  Расчет по наклонному сечению на действие Q
         /// </summary>        
-        private void FiberCalculate_Shear(double _Qx, double _Qy)
+        private void FiberCalculate_Shear(Dictionary<string, double> _MNQ, double[] _sz)
+        {
+            bool _useRebar = true;
+            bool _shear = true;
+            
+            BSFiberCalc_MNQ fiberCalc = BSFiberCalc_MNQ.Construct(m_BeamSection);
+            fiberCalc.UseRebar = _useRebar;
+            fiberCalc.Shear = _shear;
+            fiberCalc.InitFiberParams(m_BSLoadData.Fiber);
+            fiberCalc.MatFiber = m_MatFiber;            
+            fiberCalc.BetonType = BSQuery.BetonTypeFind(0);
+
+            if (_shear || _useRebar)
+            {
+                Rebar rebar = new Rebar();                
+                InitRebarFromForm(ref rebar);                
+                fiberCalc.Rebar = rebar;                
+            }
+
+            double[] prms = m_BSLoadData.Params;
+            InitUserParams(prms);            
+            fiberCalc.SetParams(prms);                       
+            fiberCalc.GetSize(_sz);
+            // передаем усилия и связанные с ними велечины
+            fiberCalc.SetEfforts(_MNQ);
+
+            // расчет на усилие вне сечения            
+            fiberCalc.N_Out = (fiberCalc.h / 2 < fiberCalc.Get_e_tot);
+            fiberCalc.Calculate();
+
+            fiberCalc.Msg.Add("Расчет успешно выполнен!");
+
+            var xR = fiberCalc.Results();
+        }
+
+        /// <summary>
+        ///  Расчет по наклонному сечению на действие Q
+        /// </summary>        
+        private void FiberCalculate_Shear()
         {
             BSFiberCalc_MNQ fiberCalc = new BSFiberCalc_MNQ();
 
@@ -998,9 +1051,9 @@ namespace BSFiberConcrete
                 FiberCalculate_N();
             }
 
-            if (_Qy != 0 || _Qx != 0)
+            if (_Qx != 0)
             {
-                FiberCalculate_Shear(_Qx, _Qy);
+                FiberCalculate_Shear();
             }
         }
 
@@ -1033,6 +1086,8 @@ namespace BSFiberConcrete
                 ["N"] = -MNQ["N"],
                 ["My"] = MNQ["My"],
                 ["Mz"] = MNQ["Mx"],
+                ["Qx"] = MNQ["Qx"],
+                ["Qy"] = MNQ["Qy"],
                 //
 
                 //section size
@@ -1138,6 +1193,19 @@ namespace BSFiberConcrete
         {             
             // данные с формы:
             Dictionary<string, double> _D = DictCalcParams(_beamSection);
+
+            // расчет на поперечную силу    
+            if (_D["Qx"] != 0 || _D["Qy"] != 0)
+            {
+                //GetEffortsFromForm(out Dictionary<string, double> MNQ);
+                //double beamLngth = InitBeamLength(true);
+                //double[] sz = BeamSizes(beamLngth);
+                //FiberCalculate_Shear(MNQ, sz);
+            }
+
+            if (!ValidateNDMCalc()) return;
+
+            // расчет на MxMyN по НДМ            
             NDMSetup _setup = BSData.LoadNDMSetup();                
             _setup.BetonTypeId = (cmbTypeMaterial.SelectedIndex == 1) ? 1 : 0;
             _setup.UseRebar  = _useRebar;
@@ -1156,7 +1224,7 @@ namespace BSFiberConcrete
                 m_CalcResults2Group =  calcNDM.CalcRes.GetResults2Group();
 
                 ShowMosaic(calcNDM.CalcRes);
-            }
+            }            
         }
 
 
@@ -1420,9 +1488,7 @@ namespace BSFiberConcrete
         /// Расчет по НДМ            
         /// </summary>        
         private void btnCalc_Deform_Click(object sender, EventArgs e)
-        {
-            if (!ValidateNDMCalc()) return;
-
+        {            
             bool useRebar = checkBoxRebar.Checked;
 
             try
@@ -1456,7 +1522,7 @@ namespace BSFiberConcrete
             {
                 MessageBox.Show(_e.Message);
             }
-
+           
             CreateReportNDM();
         }
 
@@ -1586,7 +1652,7 @@ namespace BSFiberConcrete
                     numRscn.Value = (decimal)BSHelper.MPA2kgsm2(rebar.Rsn);
                     numEs.Value = (decimal)BSHelper.MPA2kgsm2(rebar.Es);
 
-                    labelTypeDDRebar.Text = rebar.TypeDiagramm;
+                    labelTypeDDRebar.Text = rebar.DiagramType;
                     numEps_s_ult.Value = (decimal)rebar.Epsilon_s_ult;
 
                     break;

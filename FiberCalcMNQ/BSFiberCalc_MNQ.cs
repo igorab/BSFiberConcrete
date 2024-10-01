@@ -478,7 +478,7 @@ namespace BSFiberConcrete
         /// </summary>
         protected void Calculate_Qy()
         {
-
+            
         }
 
         /// <summary>
@@ -687,6 +687,10 @@ namespace BSFiberConcrete
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Коэффициенты надежности
+        /// </summary>
+        /// <param name="_t">..в виде массива</param>
         public virtual void SetParams(double[] _t)
         {
             // TODO Refactoring
@@ -695,12 +699,15 @@ namespace BSFiberConcrete
 
         public virtual void GetSize(double[] _t) {}
 
+
+        public double Get_e_tot => m_Fiber.e_tot;
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="_efforts"></param>
         /// <returns>полный эксцентриситет </returns>
-        public double GetEfforts(Dictionary<string, double> _efforts)
+        public void SetEfforts(Dictionary<string, double> _efforts)
         {
             double e_tot; // полный эксцентриситет приложения силы
 
@@ -730,9 +737,7 @@ namespace BSFiberConcrete
             e_N += e_MN;
 
             e_tot = e0 + e_N + e_MN;
-            m_Fiber.e_tot = e_tot;
-
-            return e_tot;
+            m_Fiber.e_tot = e_tot;           
         }
 
         public virtual Dictionary<string, double> Results()
