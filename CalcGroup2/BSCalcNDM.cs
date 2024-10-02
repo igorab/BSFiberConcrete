@@ -180,6 +180,8 @@ namespace BSFiberConcrete.CalcGroup2
         /// <param name="_bY"></param>
         public void SetRods(List<double> _bD, List<double> _bX, List<double> _bY )
         {
+            if (_bD == null) return;
+
             ds.Clear();
             d_nom.Clear();
             y0s.Clear();
@@ -367,16 +369,20 @@ namespace BSFiberConcrete.CalcGroup2
         /// <summary>
         ///  Запустить расчет
         /// </summary>
-        public void Run()
+        public bool Run()
         {
+            bool ok = false;
             try
             {                
                 Calculate();
+                ok =  true;
             }
             catch (Exception ex) 
             {
                 MessageBox.Show(ex.Message);
-            }                   
+                ok = false;
+            }              
+            return ok;
         }       
     }
 }

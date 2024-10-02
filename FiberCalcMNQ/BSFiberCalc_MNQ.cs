@@ -451,6 +451,9 @@ namespace BSFiberConcrete
 
             N_ult = M_ult / e;
 
+            //Коэффициент использования
+            UtilRate_N = (N_ult != 0) ? m_Efforts["N"] / N_ult : 0;
+
             if (N * e <= M_ult)
                 info = "Прочность обеспечена";
             else

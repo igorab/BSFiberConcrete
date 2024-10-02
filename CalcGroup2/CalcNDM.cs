@@ -138,16 +138,29 @@ namespace BSFiberConcrete
         }
 
         /// <summary>
+        /// Для определения прогиба балки
+        /// </summary>
+        /// <returns></returns>
+        public Dictionary<string, double> RunMy(double _My)
+        {            
+            Init();
+            BSCalcNDM bsCalcGR1 = new BSCalcNDM(GR1, m_BeamSection, setup);
+            bsCalcGR1.SetParamsGroup1(D);
+            bsCalcGR1.SetMN(0, _My, 0);
+            bsCalcGR1.SetRods(lD, lX, lY);
+            bsCalcGR1.Run();
+            
+            return bsCalcGR1.Results;            
+        }
+
+        /// <summary>
         /// Выполнить расчет по 1 г пред сост
         /// </summary>
         /// <returns></returns>
         public bool RunGroup1()
         {
             BSCalcNDM bsCalcGR1 = BSCalcGr1();
-
-            bool ok = bsCalcGR1.UtilRate_fb_t < 1;
-            Debug.Assert(ok, "Предел прочности сечения превышен");
-
+            
             m_CalcRes = new BSCalcResultNDM(bsCalcGR1.Results);
             m_CalcRes.InitFromCalcNDM(bsCalcGR1);
             m_CalcRes.InitCalcParams(D);
