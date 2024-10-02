@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace BSBeamCalculator
 {
@@ -27,6 +29,10 @@ namespace BSBeamCalculator
         /// </summary>
         private DataGridView _beamEfforts;
 
+
+        private BeamDiagram _beamDiagramCalc;
+        private ControllerBeamDiagram _beamDiagramController;
+
         /// <summary>
         /// Результаты построения диамгрммы
         /// </summary>
@@ -37,8 +43,10 @@ namespace BSBeamCalculator
         {
             InitializeComponent();
 
-            ControllerBeamDiagram.load = "Concentrated";
-            ControllerBeamDiagram.support = "Fixed-Fixed";
+            _beamDiagramController = new ControllerBeamDiagram();
+            _beamDiagramController.load = "Concentrated";
+            _beamDiagramController.support = "Fixed-Fixed";
+
         }
 
         /// <summary>
@@ -47,15 +55,16 @@ namespace BSBeamCalculator
         /// <param name="len"> длина балки</param>
         /// <param name="effortsData"> таблица с нагрузками</param>
         /// /// <param name="path2Diagram"> путь к картинке с диагрммой</param>
-        public BeamCalculatorControl(TextBox len, DataGridView effortsData, List<string> path2Diagram)
+        public BeamCalculatorControl(TextBox len, DataGridView effortsData, List<string> path2Diagram, ControllerBeamDiagram beamDiagramController)
         {
             _beamLength = len;
             _beamEfforts = effortsData;
             _pathToBeamDiagrams = path2Diagram;
+            _beamDiagramController = beamDiagramController;
 
             InitializeComponent();
-            ControllerBeamDiagram.load = "Concentrated";
-            ControllerBeamDiagram.support = "Fixed-Fixed";
+            _beamDiagramController.load = "Concentrated";
+            _beamDiagramController.support = "Fixed-Fixed";
 
             double.TryParse(_beamLength.Text, out double tmpBeamLen );
             if (tmpBeamLen != 0)
@@ -86,18 +95,25 @@ namespace BSBeamCalculator
 
                 //ControllerBeamDiagram.support =
                 //ControllerBeamDiagram.load =
-                ControllerBeamDiagram.l = lengthBeam;
-                ControllerBeamDiagram.f = force;
-                ControllerBeamDiagram.x1 = startPointForce;
-                ControllerBeamDiagram.x2 = 0;
-
-                ControllerBeamDiagram.resultEfforts = effortsModel;
+                _beamDiagramController.l = lengthBeam;
+                _beamDiagramController.f = force;
+                _beamDiagramController.x1 = startPointForce;
+                _beamDiagramController.x2 = 0;
+                _beamDiagramController.resultEfforts = effortsModel;
 
                 // запуск расчета
-                ControllerBeamDiagram.RunCalculation();
+                _beamDiagramController.RunCalculation();
 
                 // Вывод результатов расчета
-                DiagramResult result = ControllerBeamDiagram.result;
+                DiagramResult result = _beamDiagramController.result;
+
+                //string[] names1 = { "Сила", "см", "кг", "BeamDiagramQ" };
+                //chart1 = _beamDiagramController.CreteChart(result.pointM[0].ToList(), result.pointM[1].ToList(), names1);
+
+                //string[] names2 = { "Момент", "см", "кг*см", "BeamDiagramM" };
+                //chart2 = _beamDiagramController.CreteChart(result.pointM[0].ToList(), result.pointM[1].ToList(), names2);
+
+
                 chart1.Series.Add("Series1");
                 chart1.Series["Series1"].BorderWidth = 4;
                 chart1.ChartAreas[0].AxisX.Minimum = 0;
@@ -128,12 +144,6 @@ namespace BSBeamCalculator
                 chart2.ChartAreas[0].AxisY.TitleFont = axisFont;
 
 
-                int n = 2;
-                label9.Text = Math.Round(result.maxM,n).ToString();
-                label12.Text = Math.Round(result.minM,n).ToString();
-                label18.Text = Math.Round(Math.Abs(result.maxAbsQ),n).ToString();
-
-
                 if (_pathToBeamDiagrams != null)
                 {
                     string pathToPictureQ = "BeamDiagramQ.png";
@@ -144,6 +154,12 @@ namespace BSBeamCalculator
                     chart2.SaveImage(pathToPictureM, System.Windows.Forms.DataVisualization.Charting.ChartImageFormat.Png);
                     _pathToBeamDiagrams.Add(pathToPictureM);
                 }
+
+
+                int n = 2;
+                label9.Text = Math.Round(result.maxM, n).ToString();
+                label12.Text = Math.Round(result.minM, n).ToString();
+                label18.Text = Math.Round(Math.Abs(result.maxAbsQ), n).ToString();
 
                 if (_beamEfforts != null)
                 {
@@ -183,6 +199,22 @@ namespace BSBeamCalculator
             label12.Text = "0";
             label18.Text = "0";
 
+
+
+            if (_pathToBeamDiagrams != null)
+            {
+                _pathToBeamDiagrams.Clear();
+
+                for (int i = 0; i < _beamEfforts.ColumnCount; i++)
+                {
+                    if (_beamEfforts.Columns[i].Name == "My")
+                    { _beamEfforts[i, 0].Value = "0"; }
+                    else if (_beamEfforts.Columns[i].Name == "Q")
+                    { _beamEfforts[i, 0].Value = "0"; }
+                }
+
+            }
+
             //if (effortsModel.ContainsKey("Mmax"))
             //    effortsModel["Mmax"] = 0;
             //if (effortsModel.ContainsKey("Mmin"))
@@ -197,7 +229,7 @@ namespace BSBeamCalculator
         {
             //numericUpDown4.Enabled = true;
             numericUpDown3.Enabled = false;
-            ControllerBeamDiagram.load = "Uniformly-Distributed";
+            _beamDiagramController.load = "Uniformly-Distributed";
         }
 
         private void radioButton11_CheckedChanged(object sender, EventArgs e)
@@ -205,36 +237,36 @@ namespace BSBeamCalculator
             //numericUpDown4.Enabled = false;
             //numericUpDown4.Value = 0;
             numericUpDown3.Enabled = true;
-            ControllerBeamDiagram.load = "Concentrated";
+            _beamDiagramController.load = "Concentrated";
         }
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
-            ControllerBeamDiagram.support = "Fixed-Fixed";
+            _beamDiagramController.support = "Fixed-Fixed";
         }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
-            ControllerBeamDiagram.support = "Fixed-No";
+            _beamDiagramController.support = "Fixed-No";
         }
         private void radioButton3_CheckedChanged(object sender, EventArgs e)
         {
-            ControllerBeamDiagram.support = "Pinned-Movable";
+            _beamDiagramController.support = "Pinned-Movable";
         }
 
         private void radioButton4_CheckedChanged(object sender, EventArgs e)
         {
-            ControllerBeamDiagram.support = "Fixed-Movable";
+            _beamDiagramController.support = "Fixed-Movable";
         }
 
         private void radioButton5_CheckedChanged(object sender, EventArgs e)
         {
-            ControllerBeamDiagram.support = "No-Fixed";
+            _beamDiagramController.support = "No-Fixed";
         }
 
         private void radioButton6_CheckedChanged(object sender, EventArgs e)
         {
-            ControllerBeamDiagram.support = "Movable-Fixed";
+            _beamDiagramController.support = "Movable-Fixed";
         }
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)

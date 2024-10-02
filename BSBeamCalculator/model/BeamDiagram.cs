@@ -25,28 +25,29 @@ namespace BSBeamCalculator
         /// </summary>
         protected double _beamLength;
         //protected string _supportBeamType;
-        //protected string _loadBeamTupe;
         protected SimpleBeamDiagramCase _simpleDiagram;
 
-        public BeamDiagram(string supportType, string loadype, double length, double force, double x1, double x2)
+
+        public BeamDiagram(string supportType, string loadType, double length, double force, double x1, double x2)
         {
 
             //// проверка на корректность типа опор и типа нагрузки
             //if (!SimpleBeamDiagramCase.supportBeamTypeValue.Contains(supportType)
-            //    && !SimpleBeamDiagramCase.loadBeamTypeValue.Contains(loadype))
-            //{ throw new Exception("Программная ошибка. Неккорректно определены характеристики балки"); }
+            //    && !SimpleBeamDiagramCase.loadBeamTypeValue.Contains(loadType))
+            //{ throw new Exception("Программная ошибка. Некорректно определены характеристики балки"); }
 
-            if (loadype == "Concentrated" && x1 > length )
+            if (loadType == "Concentrated" && x1 > length)
             { throw new Exception("Пользовательская ошибка. Значение 'Позиция x' не должно превышать 'Длина'."); }
 
             _beamLength = length;
-            _simpleDiagram = new SimpleBeamDiagramCase(supportType, loadype);
+            _simpleDiagram = new SimpleBeamDiagramCase(supportType, loadType);
             //_supportBeamType = supportType;
-            //_loadBeamTupe = loadype;
             _force = force;
             _startPointForce = x1;
             //_endPointForce;
         }
+
+
 
         public DiagramResult CalculateBeamDiagram()
         {

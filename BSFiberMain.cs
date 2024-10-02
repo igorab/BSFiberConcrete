@@ -82,6 +82,7 @@ namespace BSFiberConcrete
         private MemoryStream m_ImageStream;
 
         private LameUnitConverter _UnitConverter;
+        private ControllerBeamDiagram _beamDiagramController;
 
 
         public BSFiberMain()
@@ -126,7 +127,9 @@ namespace BSFiberConcrete
                     gridEfforts[i, 0].Value = "0";
                 }
                 m_Path2BeamDiagrams = new List<string>() { };
-                BeamCalculatorControl beamCalculatorControl = new BeamCalculatorControl(tbLength, gridEfforts, m_Path2BeamDiagrams);
+
+                _beamDiagramController = new ControllerBeamDiagram();
+                BeamCalculatorControl beamCalculatorControl = new BeamCalculatorControl(tbLength, gridEfforts, m_Path2BeamDiagrams, _beamDiagramController);
                 tabPBeam.Controls.Add(beamCalculatorControl);
             }
         }
