@@ -51,24 +51,20 @@ namespace BSBeamCalculator
 
         public Dictionary<string, double> resultEfforts;
 
+
         /// <summary>
         /// Путь для сохранения картинки
         /// </summary>
-        public List<string> Path2BeamDiagrams 
-        {
-            get { return _path2BeamDiagrams; }
-            set { _path2BeamDiagrams = value; }   
-        }
-        private List<string> _path2BeamDiagrams;
+        public List<string> path2BeamDiagrams;
 
         /// <summary>
         /// счетчик картинок
         /// </summary>
         private int _numChart = 1;
 
-        public ControllerBeamDiagram(List<string> path2BeamDiagrams = null )
+        public ControllerBeamDiagram(List<string> path2Diagrams = null )
         {
-            Path2BeamDiagrams = path2BeamDiagrams;
+            path2BeamDiagrams = path2Diagrams;
         }
 
         public void RunCalculation()
@@ -191,7 +187,10 @@ namespace BSBeamCalculator
                 double a = M[i-1];
                 double b = M[i];
                 double c = M[i+1];
-
+                if (b == 0)
+                {
+                    continue;
+                }
                 double a1 = GetM(res, X[i - 1]);
                 double b1 = GetM(res, X[i]);
                 double c1 = GetM(res, X[i + 1]);
@@ -244,7 +243,11 @@ namespace BSBeamCalculator
             chart.ChartAreas[0].AxisX.Maximum = l;
             chart.Series[sName].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             for (int i = 0; i < valueX.Count; i++)
-            { chart.Series[sName].Points.AddXY(valueX[i], valueY[i]); }
+            { 
+                
+                chart.Series[sName].Points.AddXY(valueX[i], valueY[i]);
+            
+            }
 
             Font axisFont = new System.Drawing.Font("Microsoft Sans Serif", 8F,
                 ((System.Drawing.FontStyle)(System.Drawing.FontStyle.Bold)), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -258,14 +261,24 @@ namespace BSBeamCalculator
 
 
         /// <summary>
-        /// Сохранить картинку
+        /// Сохранить картинку c прогибами
         /// </summary>
         public void SaveChart(System.Windows.Forms.DataVisualization.Charting.Chart chart, string pictureName)
         {
-            if (Path2BeamDiagrams != null)
+            if (path2BeamDiagrams != null)
             {
-                string pathToPictureQ = pictureName + ".png";
-                chart.SaveImage(pathToPictureQ, System.Windows.Forms.DataVisualization.Charting.ChartImageFormat.Png);
+                string pathToPicture = pictureName + ".png";
+                chart.SaveImage(pathToPicture, System.Windows.Forms.DataVisualization.Charting.ChartImageFormat.Png);
+                // little bit костыльно
+                if (pictureName == "BeamDiagramU")
+                { 
+                    if (path2BeamDiagrams.Count > 2)
+                    {
+                        path2BeamDiagrams[2] = pathToPicture;
+                        return;
+                    }
+                }
+                path2BeamDiagrams.Add(pathToPicture);
             }
             _numChart++;
         }

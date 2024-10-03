@@ -7,6 +7,7 @@ using BSFiberConcrete.Lib;
 using BSFiberConcrete.Section;
 using BSFiberConcrete.UnitsOfMeasurement;
 using BSFiberConcrete.UnitsOfMeasurement.PhysicalQuantities;
+using CsvHelper.TypeConversion;
 using ScottPlot.Statistics;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
+using static CBAnsDes.Member;
 
 
 namespace BSFiberConcrete
@@ -1202,22 +1204,138 @@ namespace BSFiberConcrete
         /// <param name="_My">Изгибающие моменты</param>
         /// <returns>кривизны</returns>
         private List<double> CalcNDM_My(List<double>  _My)
-        {            
+        {
             Dictionary<string, double> dictParams = DictCalcParams(m_BeamSection);
             NDMSetup ndmSetup = NDMSetupValuesFromForm();
-            List<double> l_Ky = new List<double>();
+            List<double> l_Kxz = new List<double>();
 
             foreach (double my in _My)
-            {                                    
+            {
                 CalcNDM calcNDM = new CalcNDM(m_BeamSection) { setup = ndmSetup, D = dictParams };
                 Dictionary<string, double> res = calcNDM.RunMy(my);
-                
+
                 if (res != null)
-                    l_Ky.Add(res["Ky"]);
+                    l_Kxz.Add(res["Kz"]);
             }
 
-            return l_Ky;
+            return l_Kxz;
+
         }
+
+        /// <summary>
+        ///  Расчет жесткости сечения для списка моментов
+        /// </summary>
+        /// <param name="_My">Изгибающие моменты кг*с</param>
+        /// <returns>Жесткость кг*см2</returns>
+        private List<double> CalculateStiffness(List<double> _My)
+        {
+            Dictionary<string, double> dictParams = DictCalcParams(m_BeamSection);
+            NDMSetup ndmSetup = NDMSetupValuesFromForm();
+            List<double> bendingStiffness = new List<double>();
+
+            foreach (double my in _My)
+            {
+                CalcNDM calcNDM = new CalcNDM(m_BeamSection) { setup = ndmSetup, D = dictParams };
+                Dictionary<string, double> res = calcNDM.RunMy(my);
+
+                if (res != null)
+                    bendingStiffness.Add(Math.Abs(my / res["Kz"]));
+            }
+
+            return bendingStiffness;
+        }
+
+
+        /// <summary>
+        ///  Расчет прогибов по длине балки
+        /// </summary>
+        private void CalculateBeamDeflections(ControllerBeamDiagram beamController)
+        {
+            // выполнять расчет только в случае, если ранее были сохранены 
+            if (beamController == null || beamController.path2BeamDiagrams.Count == 0)
+            { return; }
+
+            // Кол- во рассматриваемых участков
+            int n = 10;
+            // всего точек 
+            int m = n + 1 + n;
+            // шаг между точками
+            double delta = beamController.l / (2 * n);
+            // Значения в точках
+            List<double> X = new List<double>();
+            List<double> valueMomentInX = new List<double>();
+            // Значения на середине рассматриваемого участка
+            List<double> valuesMomentOnSection = new List<double>();
+            List<double> valuesStiffnesOnSection = new List<double>();
+
+
+            // цикл по рассматриваемым участкам
+            //for (int i = 0; n > i; i++)
+            //{
+            //    double aX = i * 2 * delta;
+            //    double bX = (i * 2  + 1) * delta;
+            //    double cX = (i * 2 + 2) * delta;
+
+
+            //    double bM = beamController.GetM(beamController.result, bX);
+            //    if (bM == 0)
+            //    { continue; }
+
+            //    double aM = beamController.GetM(beamController.result, aX);
+            //    double cM = beamController.GetM(beamController.result, cX);
+            //    if (X.Count == 0 || X[X.Count - 1] != aX)
+            //    {
+            //        X.AddRange(new List<double>() { aX, bX, cX });
+            //        valueMomentInX.AddRange(new List<double>() { aM, bM, cM });
+            //    }
+            //    else
+            //    {
+            //        X.AddRange(new List<double>() { bX, cX });
+            //        valueMomentInX.AddRange(new List<double>() { bM, cM });
+            //    }
+            //    valuesMomentOnSection.Add(bM);
+            //}
+
+            for (int i = 0; m > i; i++)
+            {
+                double tmpX = delta * i;
+                double tmpM = beamController.GetM(beamController.result, tmpX);
+
+                X.Add(tmpX);
+                valueMomentInX.Add(tmpM);
+
+                if (i > 0 && i % 2 != 0)
+                { valuesMomentOnSection.Add(tmpM); }
+            }
+
+
+
+            if (valuesMomentOnSection.Count == 0) { return; }
+
+            // Получение жесткости на участках
+            valuesStiffnesOnSection = CalculateStiffness(valuesMomentOnSection);
+
+            List<double> valuesСurvatureOnSection = CalcNDM_My(valuesMomentOnSection);
+
+            List<double> U = new List<double>();
+            List<double> XForU = new List<double>();
+            for (int i = 1; X.Count > i; i = i + 2)
+            {
+                double u = beamController.CalculateDeflectionAtPoint(valueMomentInX, X, valuesStiffnesOnSection, i);
+                U.Add(u);
+                XForU.Add(X[i]);
+            }
+
+            string textName = "Прогиб";
+            string TitleX = "см";
+            string TitleY = "см";
+            string name2Save = "BeamDiagramU";
+
+            string[] names = { textName, TitleX, TitleY, name2Save };
+            beamController.CreteChart(XForU, U, names);
+
+        }
+
 
         /// <summary>
         /// Данные с формы
@@ -1257,6 +1375,8 @@ namespace BSFiberConcrete
             // расчет:
             CalcNDM calcNDM = new CalcNDM(_beamSection) {setup = _setup, D = _D };            
             calcNDM.Run();
+
+            CalculateBeamDeflections(_beamDiagramController);
             // результаты:
 
             if (calcNDM.CalcRes != null)

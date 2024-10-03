@@ -78,8 +78,8 @@ namespace BSBeamCalculator
                 label9.Text = "0";
                 label12.Text = "0";
                 label18.Text = "0";
-                if (_beamDiagramController.Path2BeamDiagrams != null)
-                { _beamDiagramController.Path2BeamDiagrams = new List<string>(); }
+                if (_beamDiagramController.path2BeamDiagrams != null)
+                { _beamDiagramController.path2BeamDiagrams.Clear(); }
 
                 // собираем данные с формы
                 double lengthBeam = (double)numericUpDown1.Value;
@@ -102,7 +102,7 @@ namespace BSBeamCalculator
                 // Вывод результатов расчета
                 DiagramResult result = _beamDiagramController.result;
 
-                _beamDiagramController.Test();
+                //_beamDiagramController.Test();
                 //string[] names1 = { "Сила", "см", "кг", "BeamDiagramQ" };
                 //chart1 = _beamDiagramController.CreteChart(result.pointM[0].ToList(), result.pointM[1].ToList(), names1);
 
@@ -188,9 +188,9 @@ namespace BSBeamCalculator
 
 
 
-            if (_beamDiagramController.Path2BeamDiagrams != null)
+            if (_beamDiagramController.path2BeamDiagrams != null)
             {
-                _beamDiagramController.Path2BeamDiagrams = new List<string>();
+                _beamDiagramController.path2BeamDiagrams.Clear();
                 for (int i = 0; i < _beamEfforts.ColumnCount; i++)
                 {
                     if (_beamEfforts.Columns[i].Name == "My")
