@@ -81,7 +81,7 @@ namespace BSFiberConcrete
         {
             m_ImgCalc = "Incline_Q.PNG";
 
-            base.CalculateQ();            
+            base.Calculate_Qx();            
         }
        
         /// <summary>

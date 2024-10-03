@@ -147,7 +147,7 @@ namespace BSFiberConcrete.Section
                     m_RodPoints = new List<PointF>() { new PointF(0, -(h - 4)) };
                 }
             }
-            else if (BSBeamSection == BeamSection.None)
+            else if (BSBeamSection == BeamSection.Any)
             {
                 List<NdmSection> pointsSection = BSData.LoadNdmSection(UserSection);
                 int idx = 0;
@@ -157,6 +157,9 @@ namespace BSFiberConcrete.Section
                     BSPoint bsPt = new BSPoint(_pt) ;
                     pointBS.Add(bsPt);                    
                 }
+
+                m_RodPoints = new List<PointF> ();
+
             }
         }
 
@@ -262,6 +265,9 @@ namespace BSFiberConcrete.Section
             }
         }
 
+        /// <summary>
+        /// сохранить привязку стержней в БД
+        /// </summary>
         private void SaveRods2DB()
         {
             if (RodBS == null || RodBS.List == null || RodBS.List.Count == 0)
@@ -309,7 +315,7 @@ namespace BSFiberConcrete.Section
 
         private void InitControls()
         {
-            if (BSBeamSection == BeamSection.None)
+            if (BSBeamSection == BeamSection.Any)
             {
                 btnAdd.Visible = true;
                 btnDel.Visible = true;

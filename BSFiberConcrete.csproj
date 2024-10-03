@@ -309,6 +309,7 @@
     <Compile Include="FiberCalcCracking\CalcCrackingForm.Designer.cs">
       <DependentUpon>CalcCrackingForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="FiberCalcMNQ\BSFiberCalc_Q.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Inform\Coef\CoefInform.cs">
       <SubType>Form</SubType>

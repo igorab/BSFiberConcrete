@@ -213,10 +213,16 @@ namespace BSFiberConcrete
         public double As { get; set; }
         // Площадь сжатой арматуры
         public double As1 { get; set; }
+
+        // Поперечная арматура:
+        // Вдоль оси X:
         // Расчетное сопротивление поперечной арматуры растяжению;
         public double Rsw { get; set; }
-        public double Asw { get; set; }
+        public double Asw { get; set; }        
         public double s_w { get; set; }
+        // вдоль оси Y:
+        public double s_w_Y { get; set; }
+
         public TypeYieldStress typeYieldStress { get; set; }
         public double k_s { get; set; }
         public double ls { get; set; }
@@ -227,15 +233,15 @@ namespace BSFiberConcrete
         public double a1 { get; set; }
         public double Epsilon_s => (Es > 0 ) ? Rs / Es : 0;
 
-        public string TypeDiagramm
+        public string DiagramType
         { 
             get
             {
-                string res = "";
+                string res = BSHelper.TwoLineDiagram;
                 if (typeYieldStress == TypeYieldStress.Physical)
-                { res = BSHelper.TwoLineDiagram; }
+                    res = BSHelper.TwoLineDiagram;
                 if (typeYieldStress == TypeYieldStress.Offset)
-                { res = BSHelper.ThreeLineDiagram; }
+                    res = BSHelper.ThreeLineDiagram;
                 return res;
             }
         }
