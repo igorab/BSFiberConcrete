@@ -57,7 +57,7 @@ namespace BSBeamCalculator
         public List<string> Path2BeamDiagrams 
         {
             get { return _path2BeamDiagrams; }
-            private set { _path2BeamDiagrams = value; }   
+            set { _path2BeamDiagrams = value; }   
         }
         private List<string> _path2BeamDiagrams;
 
@@ -136,8 +136,8 @@ namespace BSBeamCalculator
             // шаг между точками
             double delta = l / (2 * n);
 
-            //double d = 1000000;
-            double d = 1;
+            //double d = 1;
+            double d = 2d * 1000000d * 520800d;
 
             List<double> X = new List<double>();
             List<double> M = new List<double>();
@@ -253,9 +253,18 @@ namespace BSBeamCalculator
             chart.ChartAreas[0].AxisY.Title = titleY;
             chart.ChartAreas[0].AxisY.TitleFont = axisFont;
 
+            SaveChart(chart, name2Save);
+        }
+
+
+        /// <summary>
+        /// Сохранить картинку
+        /// </summary>
+        public void SaveChart(System.Windows.Forms.DataVisualization.Charting.Chart chart, string pictureName)
+        {
             if (Path2BeamDiagrams != null)
             {
-                string pathToPictureQ = name2Save + ".png";
+                string pathToPictureQ = pictureName + ".png";
                 chart.SaveImage(pathToPictureQ, System.Windows.Forms.DataVisualization.Charting.ChartImageFormat.Png);
             }
             _numChart++;

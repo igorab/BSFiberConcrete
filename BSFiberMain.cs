@@ -128,8 +128,8 @@ namespace BSFiberConcrete
                 }
                 m_Path2BeamDiagrams = new List<string>() { };
 
-                _beamDiagramController = new ControllerBeamDiagram();
-                BeamCalculatorControl beamCalculatorControl = new BeamCalculatorControl(tbLength, gridEfforts, m_Path2BeamDiagrams, _beamDiagramController);
+                _beamDiagramController = new ControllerBeamDiagram(m_Path2BeamDiagrams);
+                BeamCalculatorControl beamCalculatorControl = new BeamCalculatorControl(tbLength, gridEfforts, _beamDiagramController);
                 tabPBeam.Controls.Add(beamCalculatorControl);
             }
         }

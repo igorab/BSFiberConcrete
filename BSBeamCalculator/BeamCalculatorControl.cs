@@ -17,10 +17,6 @@ namespace BSBeamCalculator
     {
 
         /// <summary>
-        /// список с именами картинок с эпюрам
-        /// </summary>
-        private List<string> _pathToBeamDiagrams;
-        /// <summary>
         /// TextBox с главной формы. Передается для оперативного изменения значения на главной форме.
         /// </summary>
         private TextBox _beamLength;
@@ -55,11 +51,10 @@ namespace BSBeamCalculator
         /// <param name="len"> длина балки</param>
         /// <param name="effortsData"> таблица с нагрузками</param>
         /// /// <param name="path2Diagram"> путь к картинке с диагрммой</param>
-        public BeamCalculatorControl(TextBox len, DataGridView effortsData, List<string> path2Diagram, ControllerBeamDiagram beamDiagramController)
+        public BeamCalculatorControl(TextBox len, DataGridView effortsData, ControllerBeamDiagram beamDiagramController)
         {
             _beamLength = len;
             _beamEfforts = effortsData;
-            _pathToBeamDiagrams = path2Diagram;
             _beamDiagramController = beamDiagramController;
 
             InitializeComponent();
@@ -83,8 +78,8 @@ namespace BSBeamCalculator
                 label9.Text = "0";
                 label12.Text = "0";
                 label18.Text = "0";
-                if (_pathToBeamDiagrams != null)
-                { _pathToBeamDiagrams.Clear(); }
+                if (_beamDiagramController.Path2BeamDiagrams != null)
+                { _beamDiagramController.Path2BeamDiagrams = new List<string>(); }
 
                 // собираем данные с формы
                 double lengthBeam = (double)numericUpDown1.Value;
@@ -107,12 +102,12 @@ namespace BSBeamCalculator
                 // Вывод результатов расчета
                 DiagramResult result = _beamDiagramController.result;
 
+                _beamDiagramController.Test();
                 //string[] names1 = { "Сила", "см", "кг", "BeamDiagramQ" };
                 //chart1 = _beamDiagramController.CreteChart(result.pointM[0].ToList(), result.pointM[1].ToList(), names1);
 
                 //string[] names2 = { "Момент", "см", "кг*см", "BeamDiagramM" };
                 //chart2 = _beamDiagramController.CreteChart(result.pointM[0].ToList(), result.pointM[1].ToList(), names2);
-
 
                 chart1.Series.Add("Series1");
                 chart1.Series["Series1"].BorderWidth = 4;
@@ -144,16 +139,8 @@ namespace BSBeamCalculator
                 chart2.ChartAreas[0].AxisY.TitleFont = axisFont;
 
 
-                if (_pathToBeamDiagrams != null)
-                {
-                    string pathToPictureQ = "BeamDiagramQ.png";
-                    chart1.SaveImage(pathToPictureQ, System.Windows.Forms.DataVisualization.Charting.ChartImageFormat.Png);
-                    _pathToBeamDiagrams.Add(pathToPictureQ);
-
-                    string pathToPictureM = "BeamDiagramM.png";
-                    chart2.SaveImage(pathToPictureM, System.Windows.Forms.DataVisualization.Charting.ChartImageFormat.Png);
-                    _pathToBeamDiagrams.Add(pathToPictureM);
-                }
+                _beamDiagramController.SaveChart(chart1, "BeamDiagramQ");
+                _beamDiagramController.SaveChart(chart2, "BeamDiagramM");
 
 
                 int n = 2;
@@ -201,10 +188,9 @@ namespace BSBeamCalculator
 
 
 
-            if (_pathToBeamDiagrams != null)
+            if (_beamDiagramController.Path2BeamDiagrams != null)
             {
-                _pathToBeamDiagrams.Clear();
-
+                _beamDiagramController.Path2BeamDiagrams = new List<string>();
                 for (int i = 0; i < _beamEfforts.ColumnCount; i++)
                 {
                     if (_beamEfforts.Columns[i].Name == "My")
@@ -212,7 +198,6 @@ namespace BSBeamCalculator
                     else if (_beamEfforts.Columns[i].Name == "Q")
                     { _beamEfforts[i, 0].Value = "0"; }
                 }
-
             }
 
             //if (effortsModel.ContainsKey("Mmax"))
