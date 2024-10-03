@@ -153,5 +153,32 @@ namespace BSFiberConcrete.CalcGroup2
             return triAreas.Count; 
         }
 
+        /// <summary>
+        /// произвольное сечение
+        /// </summary>        
+        private int InitAnySection()
+        {
+            List<object> Tr = Tri.CalculationScheme();
+
+            // площади треугольников
+            var triAreas = Tri.triAreas;
+
+            // ц.т. треугольников
+            var triCGs = Tri.triCGs;
+
+            //заполнить массив площадей элементов            
+            foreach (var _area in triAreas)
+                Ab.Add(_area);
+
+            //заполнить массив привязок бетонных эл-в к вспомогательной оси y0            
+            //заполнить массив привязок бетонных эл-в к вспомогательной оси z0            
+            foreach (var triCG in triCGs)
+            {
+                y0b.Add(triCG.X);
+                z0b.Add(triCG.Y);
+            }
+
+            return triAreas.Count;
+        }
     }
 }

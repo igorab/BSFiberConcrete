@@ -1196,13 +1196,13 @@ namespace BSFiberConcrete
         /// <summary>
         ///  Расчет балки по прогибам
         /// </summary>
-        /// <param name="_My">Изгибающие моменты</param>
-        /// <returns>кривизны</returns>
+        /// <param name="_My">Изгибающие моменты относительно оси Y</param>
+        /// <returns>кривизны в плосткости XOZ</returns>
         private List<double> CalcNDM_My(List<double>  _My)
         {            
             Dictionary<string, double> dictParams = DictCalcParams(m_BeamSection);
             NDMSetup ndmSetup = NDMSetupValuesFromForm();
-            List<double> l_Ky = new List<double>();
+            List<double> l_Kxz = new List<double>();
 
             foreach (double my in _My)
             {                                    
@@ -1210,10 +1210,10 @@ namespace BSFiberConcrete
                 Dictionary<string, double> res = calcNDM.RunMy(my);
                 
                 if (res != null)
-                    l_Ky.Add(res["Ky"]);
+                    l_Kxz.Add(res["Kz"]);
             }
 
-            return l_Ky;
+            return l_Kxz;
         }
 
         /// <summary>
@@ -1527,7 +1527,7 @@ namespace BSFiberConcrete
 
         private bool ValidateNDMCalc(Dictionary<string, double> _D)
         {
-            if (m_SectionChart == null || m_SectionChart.BSBeamSection != m_BeamSection)
+            if (m_SectionChart == null || m_SectionChart.m_BeamSection != m_BeamSection)
             {
                 MessageBox.Show("Нажмите кнопку Сечение и задайте диаметры и расстановку стержней арматуры.", 
                     "Расчет по НДМ", 
@@ -1551,7 +1551,9 @@ namespace BSFiberConcrete
         private void btnCalc_Deform_Click(object sender, EventArgs e)
         {                        
             try
-            {              
+            {
+                var CG = new TriangleNet.Geometry.Point(0, 0);
+
                 if (m_BeamSection == BeamSection.Rect)
                 {
                     CalcNDM(BeamSection.Rect);
@@ -1561,20 +1563,19 @@ namespace BSFiberConcrete
                     CalcNDM(BeamSection.IBeam);
                 }
                 else if (m_BeamSection == BeamSection.Ring)
-                {
-                    //
-                    var CG = new TriangleNet.Geometry.Point(0, 0);
-                    GenerateMesh(ref CG); // покрыть сечение сеткой
-                    //
+                {                    
+                    GenerateMesh(ref CG);                     
                     CalcNDM(BeamSection.Ring);
                 }
                 else if (m_BeamSection == BeamSection.Any)
                 {
-                    CalcDeformNDM();
+                    GenerateMesh(ref CG);
+                    CalcNDM(BeamSection.Any);
                 }
                 else
                 {
-                    throw new Exception("Тип сечения не поддерживается");
+                    // throw new Exception("Тип сечения не поддерживается");
+                    CalcDeformNDM();
                 }
             }
             catch (Exception _e)
@@ -1633,7 +1634,7 @@ namespace BSFiberConcrete
         {
             try
             {
-                // CalcNDM_My(new List<double>() { 1000, 1100 } );
+                //CalcNDM_My(new List<double>() { 750000 } );
 
                 FormParamsSaveData();
 
@@ -1824,7 +1825,7 @@ namespace BSFiberConcrete
         private void btnSection_Click(object sender, EventArgs e)
         {
             m_SectionChart = new BSSectionChart();
-            m_SectionChart.BSBeamSection = m_BeamSection;
+            m_SectionChart.m_BeamSection = m_BeamSection;
             m_SectionChart.UseRebar = checkBoxRebar.Checked;
             var sz = BeamWidtHeight(out double b, out double h, out double _area);
 
@@ -1931,7 +1932,7 @@ namespace BSFiberConcrete
 
         }
 
-        // <summary>
+        /// <summary>
         /// Покрыть сечение сеткой
         /// </summary>
         private string GenerateMesh(ref TriangleNet.Geometry.Point _CG)
@@ -2367,12 +2368,14 @@ namespace BSFiberConcrete
         {
             BSSectionChart sectionChart = new BSSectionChart
             {
-                BSBeamSection = BeamSection.Any,
+                m_BeamSection = BeamSection.Any,
                 Wdth = 0,
                 Hght = 0,
                 NumArea = 0,
                 UseRebar = checkBoxRebar.Checked
             };
+
+            sectionChart.DictCalcParams = DictCalcParams(BeamSection.Any);
 
             sectionChart.Show();
         }

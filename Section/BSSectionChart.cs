@@ -20,6 +20,7 @@ using System.Reflection;
 using TriangleNet.Geometry;
 using static CBAnsDes.Member;
 using System.Data.SqlTypes;
+using BSCalcLib;
 
 namespace BSFiberConcrete.Section
 {
@@ -35,8 +36,8 @@ namespace BSFiberConcrete.Section
         }
 
         const string UserSection = "UserSection";
-
-        public BeamSection BSBeamSection { get; set; }
+        public Dictionary<string, double> DictCalcParams { private get; set;}
+        public BeamSection m_BeamSection { get; set; }
         public bool UseRebar { private get; set; }
 
         /// <summary>
@@ -81,7 +82,7 @@ namespace BSFiberConcrete.Section
 
             InnerPoints = new List<PointF>();
 
-            BSBeamSection = BeamSection.Rect;
+            m_BeamSection = BeamSection.Rect;
             w = 0;
             h = 0;
             Sz = new double[]  { 0, 0, 0, 0, 0, 0 };
@@ -95,7 +96,7 @@ namespace BSFiberConcrete.Section
             if (m_RodPoints == null)
                 return;
 
-            List<BSRod> bsRods =  BSData.LoadBSRod(BSBeamSection);
+            List<BSRod> bsRods =  BSData.LoadBSRod(m_BeamSection);
 
             if (bsRods.Count == 0)
             {
@@ -108,24 +109,24 @@ namespace BSFiberConcrete.Section
 
         private void InitPoints()
         {
-            if (BSBeamSection == BeamSection.Rect)                 
+            if (m_BeamSection == BeamSection.Rect)                 
             {
                 BSSection.RectangleBeam(Sz);
                 PointsSection = BSSection.SectionPoints;
                 m_RodPoints = BSSection.RodPoints;               
             }
-            else if (BSBeamSection == BeamSection.IBeam ||                      
-                     BSBeamSection == BeamSection.LBeam)
+            else if (m_BeamSection == BeamSection.IBeam ||                      
+                     m_BeamSection == BeamSection.LBeam)
             {                
                 BSSection.IBeam(Sz, out PointsSection, out PointF _center);
                 m_RodPoints = BSSection.RodPoints;
             }
-            else if (BSBeamSection == BeamSection.TBeam)
+            else if (m_BeamSection == BeamSection.TBeam)
             {
                 BSSection.IBeam(Sz, out PointsSection, out PointF _center);
                 m_RodPoints = BSSection.RodPoints;
             }
-            else if (BSBeamSection == BeamSection.Ring)
+            else if (m_BeamSection == BeamSection.Ring)
             {
                 PointsSection = new List<PointF>();
                 int amountOfEdges = 40;
@@ -147,7 +148,7 @@ namespace BSFiberConcrete.Section
                     m_RodPoints = new List<PointF>() { new PointF(0, -(h - 4)) };
                 }
             }
-            else if (BSBeamSection == BeamSection.Any)
+            else if (m_BeamSection == BeamSection.Any)
             {
                 List<NdmSection> pointsSection = BSData.LoadNdmSection(UserSection);
                 int idx = 0;
@@ -275,7 +276,7 @@ namespace BSFiberConcrete.Section
 
             List<BSRod> bSRods = (List<BSRod>) RodBS.List; 
             
-            BSData.SaveRods(bSRods, BSBeamSection);            
+            BSData.SaveRods(bSRods, m_BeamSection);            
         }
 
         /// <summary>
@@ -315,7 +316,7 @@ namespace BSFiberConcrete.Section
 
         private void InitControls()
         {
-            if (BSBeamSection == BeamSection.Any)
+            if (m_BeamSection == BeamSection.Any)
             {
                 btnAdd.Visible = true;
                 btnDel.Visible = true;
@@ -441,7 +442,7 @@ namespace BSFiberConcrete.Section
             }           
         }
 
-       
+               
         private void btnSaveChart_Click(object sender, EventArgs e)
         {            
             try
@@ -480,6 +481,131 @@ namespace BSFiberConcrete.Section
         private void buttonClose_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        /// <summary>
+        /// Расчет сечения по НДМ
+        /// </summary>
+        /// <param name="_My"></param>
+        /// <returns></returns>
+        private List<double> CalcNDM_My(double _My)
+        {
+            Dictionary<string, double> dictParams = DictCalcParams;
+
+            NDMSetup ndmSetup = BSData.LoadNDMSetup(); 
+
+            List<double> l_Ky = new List<double>();
+            
+            CalcNDM calcNDM = new CalcNDM(m_BeamSection) { setup = ndmSetup, D = dictParams };
+            Dictionary<string, double> res = calcNDM.RunMy(_My);
+
+            if (res != null)
+                l_Ky.Add(res["Ky"]);
+            
+            return l_Ky;
+        }
+
+        private void btnCalc_Click(object sender, EventArgs e)
+        {
+            var CG = new TriangleNet.Geometry.Point(0, 0);
+            GenerateMesh(ref CG);
+            CalcNDM_My(1000);
+        }
+
+        private void BeamSectionFromPoints(double[] _Sz, out List<PointF> _PointsSection, out PointF _center)
+        {
+            float[] Sz = Array.ConvertAll(_Sz, element => (float)element);
+
+            float bf = Sz[0], hf = Sz[1], bw = 0, hw = 0, b1f = 0, h1f = 0;
+
+            _center = new PointF(0, (hf + hw + h1f) / 2f);
+
+            _PointsSection = new List<PointF>()
+            {
+                new PointF(bf/2f, 0),
+                new PointF(bf/2f, hf) ,
+                new PointF(bw/2f, hf),
+                new PointF(bw/2f, hf + hw),
+                new PointF(b1f/2f, hf + hw),
+                new PointF(b1f/2f, hf + hw + h1f),
+                new PointF(-b1f/2f, hf + hw + h1f),
+                new PointF(-b1f/2f, hf + hw),
+                new PointF(-bw/2f, hf + hw),
+                new PointF(-bw/2f, hf),
+                new PointF(-bf/2f, hf),
+                new PointF(-bf/2f, 0),
+                new PointF(bf/2f, 0),
+            };
+
+            BindingList<BSPoint> bspoints = (BindingList<BSPoint>)pointBS.List;
+
+            int idxN = 0;
+            foreach (var pt in bspoints)
+            {
+                NdmSection ndmSection = new NdmSection();
+                ndmSection.Num = UserSection;
+                ndmSection.N = ++idxN;
+                ndmSection.X = pt.X;
+                ndmSection.Y = pt.Y;
+                //bsSec.Add(ndmSection);
+            }
+
+
+
+            //RodPoints = new List<PointF>()
+            //{
+            //    new PointF(-bf/2f+a, a),
+            //    new PointF(0, a) ,
+            //    new PointF(bf/2f-a, a),
+            //};
+        }
+    
+
+        private string GenerateMesh(ref TriangleNet.Geometry.Point cG)
+        {
+            string pathToSvgFile;
+
+            double[] sz = new double[] {0, 0};
+            double meshSize = 20;
+
+            BSMesh.Nx = (int)meshSize;
+            BSMesh.Ny = (int)meshSize;
+
+            BSMesh.MinAngle = 45;
+            Tri.MinAngle = 45;
+
+            double area = 1;
+
+            if (meshSize > 0)
+            {
+                Tri.MaxArea = area / meshSize;
+                BSMesh.MaxArea = Tri.MaxArea;
+            }
+
+            BSMesh.FilePath = Path.Combine(Environment.CurrentDirectory, "Templates");
+            Tri.FilePath = BSMesh.FilePath;
+            
+            if (m_BeamSection == BeamSection.Any)
+            {                
+                BeamSectionFromPoints(sz, out List<PointF> pts, out PointF _center);
+
+                var _CG = new TriangleNet.Geometry.Point(_center.X, _center.Y);
+
+                pathToSvgFile = BSCalcLib.Tri.CreateIBeamContour(pts);
+
+                _ = Tri.CalculationScheme();
+            }
+            else
+            {
+                throw new Exception("Не задано сечение");
+            }
+
+            // площади треугольников
+            var triAreas = Tri.triAreas;
+            // центры тяжести треугольников
+            var triCGs = Tri.triCGs;
+
+            return pathToSvgFile;
         }
     }
 }
