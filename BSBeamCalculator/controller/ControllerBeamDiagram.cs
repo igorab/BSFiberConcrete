@@ -188,7 +188,8 @@ namespace BSBeamCalculator
                 double b = M[i];
                 double c = M[i+1];
                 if (b == 0)
-                {
+                { 
+                    // если значение момента в точке равно 0, исключаем точку из расчета, тк получается некорректное значение жесткости
                     continue;
                 }
                 double a1 = GetM(res, X[i - 1]);

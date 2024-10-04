@@ -1256,7 +1256,7 @@ namespace BSFiberConcrete
             { return; }
 
             // Кол- во рассматриваемых участков
-            int n = 10;
+            int n = 20;
             // всего точек 
             int m = n + 1 + n;
             // шаг между точками
@@ -1267,34 +1267,6 @@ namespace BSFiberConcrete
             // Значения на середине рассматриваемого участка
             List<double> valuesMomentOnSection = new List<double>();
             List<double> valuesStiffnesOnSection = new List<double>();
-
-
-            // цикл по рассматриваемым участкам
-            //for (int i = 0; n > i; i++)
-            //{
-            //    double aX = i * 2 * delta;
-            //    double bX = (i * 2  + 1) * delta;
-            //    double cX = (i * 2 + 2) * delta;
-
-
-            //    double bM = beamController.GetM(beamController.result, bX);
-            //    if (bM == 0)
-            //    { continue; }
-
-            //    double aM = beamController.GetM(beamController.result, aX);
-            //    double cM = beamController.GetM(beamController.result, cX);
-            //    if (X.Count == 0 || X[X.Count - 1] != aX)
-            //    {
-            //        X.AddRange(new List<double>() { aX, bX, cX });
-            //        valueMomentInX.AddRange(new List<double>() { aM, bM, cM });
-            //    }
-            //    else
-            //    {
-            //        X.AddRange(new List<double>() { bX, cX });
-            //        valueMomentInX.AddRange(new List<double>() { bM, cM });
-            //    }
-            //    valuesMomentOnSection.Add(bM);
-            //}
 
             for (int i = 0; m > i; i++)
             {
@@ -1308,32 +1280,29 @@ namespace BSFiberConcrete
                 { valuesMomentOnSection.Add(tmpM); }
             }
 
-
-
             if (valuesMomentOnSection.Count == 0) { return; }
 
             // Получение жесткости на участках
             valuesStiffnesOnSection = CalculateStiffness(valuesMomentOnSection);
 
-            List<double> valuesСurvatureOnSection = CalcNDM_My(valuesMomentOnSection);
+            //List<double> valuesСurvatureOnSection = CalcNDM_My(valuesMomentOnSection);
 
             List<double> U = new List<double>();
             List<double> XForU = new List<double>();
             for (int i = 1; X.Count > i; i = i + 2)
             {
                 double u = beamController.CalculateDeflectionAtPoint(valueMomentInX, X, valuesStiffnesOnSection, i);
-                U.Add(u);
+                U.Add(u*10); // перевод из см в мм 
                 XForU.Add(X[i]);
             }
-
+            // Результат в см
             string textName = "Прогиб";
             string TitleX = "см";
-            string TitleY = "см";
+            string TitleY = "мм";
             string name2Save = "BeamDiagramU";
 
             string[] names = { textName, TitleX, TitleY, name2Save };
             beamController.CreteChart(XForU, U, names);
-
         }
 
 
