@@ -1960,7 +1960,7 @@ namespace BSFiberConcrete
             if (m_BeamSection == BeamSection.Rect)
             {
                 List<double> rect = new List<double> { 0, 0, b, h };
-                //_CG = new TriangleNet.Geometry.Point(0.0, h/2.0);                
+                              
                 pathToSvgFile = BSCalcLib.BSMesh.GenerateRectangle(rect);
                 Tri.Mesh = BSMesh.Mesh;
                 // сместить начало координат из левого нижнего угла в центр тяжести
@@ -1990,16 +1990,16 @@ namespace BSFiberConcrete
                 BSSection.IBeam(sz, out pts, out PointF _center);
                 _CG = new TriangleNet.Geometry.Point(_center.X, _center.Y);
 
-                pathToSvgFile = BSCalcLib.Tri.CreateIBeamContour(pts);
+                pathToSvgFile = BSCalcLib.Tri.CreateSectionContour(pts);
                 _ = Tri.CalculationScheme();
             }
             else if (m_BeamSection == BeamSection.Any)
             {
                 List<PointF> pts;
-                BSSection.IBeam(sz, out pts, out PointF _center);
+                BSSection.IBeam(sz, out pts, out PointF _center); // TODO доработать до произвольного сечения
                 _CG = new TriangleNet.Geometry.Point(_center.X, _center.Y);
 
-                pathToSvgFile = BSCalcLib.Tri.CreateIBeamContour(pts);
+                pathToSvgFile = BSCalcLib.Tri.CreateSectionContour(pts);
                 _ = Tri.CalculationScheme();
             }
             else

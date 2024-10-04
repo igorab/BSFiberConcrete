@@ -21,6 +21,7 @@ using TriangleNet.Geometry;
 using static CBAnsDes.Member;
 using System.Data.SqlTypes;
 using BSCalcLib;
+using System.Diagnostics;
 
 namespace BSFiberConcrete.Section
 {
@@ -60,6 +61,8 @@ namespace BSFiberConcrete.Section
         // точки на диаграмме для отображения отверстия в сечении
         private List<PointF> InnerPoints;
 
+        private NDMSetup ndmSetup;
+
         public PointF Center { get; set; }
 
         public float Wdth { set { w = value; } }
@@ -79,6 +82,8 @@ namespace BSFiberConcrete.Section
             UseRebar = true;
 
             Center = new PointF(0, 0);
+
+            ndmSetup = BSData.LoadNDMSetup();
 
             InnerPoints = new List<PointF>();
 
@@ -491,9 +496,7 @@ namespace BSFiberConcrete.Section
         private List<double> CalcNDM_My(double _My)
         {
             Dictionary<string, double> dictParams = DictCalcParams;
-
-            NDMSetup ndmSetup = BSData.LoadNDMSetup(); 
-
+            
             List<double> l_Ky = new List<double>();
             
             CalcNDM calcNDM = new CalcNDM(m_BeamSection) { setup = ndmSetup, D = dictParams };
@@ -505,93 +508,57 @@ namespace BSFiberConcrete.Section
             return l_Ky;
         }
 
+        // Запустить расчет
         private void btnCalc_Click(object sender, EventArgs e)
-        {
-            var CG = new TriangleNet.Geometry.Point(0, 0);
-            GenerateMesh(ref CG);
+        {            
+            GenerateMesh();
             CalcNDM_My(1000);
         }
 
-        private void BeamSectionFromPoints(double[] _Sz, out List<PointF> _PointsSection, out PointF _center)
-        {
-            float[] Sz = Array.ConvertAll(_Sz, element => (float)element);
-
-            float bf = Sz[0], hf = Sz[1], bw = 0, hw = 0, b1f = 0, h1f = 0;
-
-            _center = new PointF(0, (hf + hw + h1f) / 2f);
-
-            _PointsSection = new List<PointF>()
-            {
-                new PointF(bf/2f, 0),
-                new PointF(bf/2f, hf) ,
-                new PointF(bw/2f, hf),
-                new PointF(bw/2f, hf + hw),
-                new PointF(b1f/2f, hf + hw),
-                new PointF(b1f/2f, hf + hw + h1f),
-                new PointF(-b1f/2f, hf + hw + h1f),
-                new PointF(-b1f/2f, hf + hw),
-                new PointF(-bw/2f, hf + hw),
-                new PointF(-bw/2f, hf),
-                new PointF(-bf/2f, hf),
-                new PointF(-bf/2f, 0),
-                new PointF(bf/2f, 0),
-            };
-
-            BindingList<BSPoint> bspoints = (BindingList<BSPoint>)pointBS.List;
-
-            int idxN = 0;
-            foreach (var pt in bspoints)
-            {
-                NdmSection ndmSection = new NdmSection();
-                ndmSection.Num = UserSection;
-                ndmSection.N = ++idxN;
-                ndmSection.X = pt.X;
-                ndmSection.Y = pt.Y;
-                //bsSec.Add(ndmSection);
+        private void BeamSectionFromPoints(ref List<PointF> _PointsSection, PointF _center)
+        {                                              
+            BindingList<BSPoint> bspoints = (BindingList<BSPoint>)pointBS.List;           
+            foreach (BSPoint pt in bspoints)
+            {             
+                _PointsSection.Add(new PointF(pt.X, pt.Y));
             }
+            
+            //RodPoints = new List<PointF>();
 
-
-
-            //RodPoints = new List<PointF>()
+            //foreach (BSPoint rod in RodBS)
             //{
-            //    new PointF(-bf/2f+a, a),
-            //    new PointF(0, a) ,
-            //    new PointF(bf/2f-a, a),
-            //};
+            //    RodPoints.Add(new PointF(rod.X, rod.Y));
+            //}            
         }
     
-
-        private string GenerateMesh(ref TriangleNet.Geometry.Point cG)
+        /// <summary>
+        /// Сгенерировать сетеку сечения
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        private string GenerateMesh()
         {
             string pathToSvgFile;
+                        
+            BSMesh.Nx = ndmSetup.N;
+            BSMesh.Ny = ndmSetup.M;
+            BSMesh.MinAngle = ndmSetup.NSize;
+            Tri.MinAngle = ndmSetup.NSize;
 
-            double[] sz = new double[] {0, 0};
-            double meshSize = 20;
-
-            BSMesh.Nx = (int)meshSize;
-            BSMesh.Ny = (int)meshSize;
-
-            BSMesh.MinAngle = 45;
-            Tri.MinAngle = 45;
-
-            double area = 1;
-
-            if (meshSize > 0)
-            {
-                Tri.MaxArea = area / meshSize;
-                BSMesh.MaxArea = Tri.MaxArea;
-            }
-
+            double area = 10*10;
+            double meshSize = Math.Max(BSMesh.Nx, BSMesh.Ny);            
+            Tri.MaxArea = area / meshSize;
+            BSMesh.MaxArea = Tri.MaxArea;
+            
             BSMesh.FilePath = Path.Combine(Environment.CurrentDirectory, "Templates");
             Tri.FilePath = BSMesh.FilePath;
             
             if (m_BeamSection == BeamSection.Any)
-            {                
-                BeamSectionFromPoints(sz, out List<PointF> pts, out PointF _center);
-
-                var _CG = new TriangleNet.Geometry.Point(_center.X, _center.Y);
-
-                pathToSvgFile = BSCalcLib.Tri.CreateIBeamContour(pts);
+            {
+                List<PointF> pts = new List<PointF>();
+                BeamSectionFromPoints(ref pts, Center);
+                
+                pathToSvgFile = BSCalcLib.Tri.CreateSectionContour(pts);
 
                 _ = Tri.CalculationScheme();
             }
@@ -606,6 +573,23 @@ namespace BSFiberConcrete.Section
             var triCGs = Tri.triCGs;
 
             return pathToSvgFile;
+        }
+
+        /// <summary>
+        /// сетка
+        /// </summary>        
+        private void btnMesh_Click(object sender, EventArgs e)
+        {            
+            try
+            {
+                string pathToSvgFile = GenerateMesh();
+                
+                Process.Start(new ProcessStartInfo { FileName = pathToSvgFile, UseShellExecute = true });
+            }
+            catch (Exception _e)
+            {
+                MessageBox.Show(_e.Message);
+            }
         }
     }
 }

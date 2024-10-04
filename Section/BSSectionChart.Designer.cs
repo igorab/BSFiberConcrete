@@ -73,6 +73,7 @@
             this.btnSaveChart = new System.Windows.Forms.Button();
             this.buttonClose = new System.Windows.Forms.Button();
             this.btnCalc = new System.Windows.Forms.Button();
+            this.btnMesh = new System.Windows.Forms.Button();
             this.tableLayoutPanel.SuspendLayout();
             this.tableLayoutPanelSection.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart)).BeginInit();
@@ -116,8 +117,8 @@
             // tableLayoutPanelSection
             // 
             this.tableLayoutPanelSection.ColumnCount = 2;
-            this.tableLayoutPanelSection.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanelSection.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanelSection.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 52.88462F));
+            this.tableLayoutPanelSection.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 47.11538F));
             this.tableLayoutPanelSection.Controls.Add(this.btnDel, 1, 0);
             this.tableLayoutPanelSection.Controls.Add(this.btnAdd, 0, 0);
             this.tableLayoutPanelSection.Location = new System.Drawing.Point(3, 615);
@@ -130,10 +131,12 @@
             // 
             // btnDel
             // 
+            this.btnDel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.btnDel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnDel.Location = new System.Drawing.Point(55, 3);
+            this.btnDel.Location = new System.Drawing.Point(58, 3);
             this.btnDel.Name = "btnDel";
-            this.btnDel.Size = new System.Drawing.Size(35, 35);
+            this.btnDel.Size = new System.Drawing.Size(43, 35);
             this.btnDel.TabIndex = 3;
             this.btnDel.Text = "-";
             this.btnDel.UseVisualStyleBackColor = true;
@@ -142,10 +145,12 @@
             // 
             // btnAdd
             // 
+            this.btnAdd.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnAdd.Location = new System.Drawing.Point(3, 3);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(35, 35);
+            this.btnAdd.Size = new System.Drawing.Size(49, 35);
             this.btnAdd.TabIndex = 2;
             this.btnAdd.Text = "+";
             this.btnAdd.UseVisualStyleBackColor = true;
@@ -451,10 +456,11 @@
             // 
             // tableLayoutButtonRods
             // 
-            this.tableLayoutButtonRods.ColumnCount = 3;
-            this.tableLayoutButtonRods.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.04167F));
-            this.tableLayoutButtonRods.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.95833F));
-            this.tableLayoutButtonRods.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 163F));
+            this.tableLayoutButtonRods.ColumnCount = 4;
+            this.tableLayoutButtonRods.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.80723F));
+            this.tableLayoutButtonRods.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.19277F));
+            this.tableLayoutButtonRods.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 41F));
+            this.tableLayoutButtonRods.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90F));
             this.tableLayoutButtonRods.Controls.Add(this.btnDelRod, 2, 0);
             this.tableLayoutButtonRods.Controls.Add(this.btnAddRod, 1, 0);
             this.tableLayoutButtonRods.Controls.Add(this.btnSave, 0, 0);
@@ -469,8 +475,10 @@
             // 
             // btnDelRod
             // 
+            this.btnDelRod.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.btnDelRod.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnDelRod.Location = new System.Drawing.Point(53, 3);
+            this.btnDelRod.Location = new System.Drawing.Point(85, 3);
             this.btnDelRod.Name = "btnDelRod";
             this.btnDelRod.Size = new System.Drawing.Size(35, 35);
             this.btnDelRod.TabIndex = 6;
@@ -480,10 +488,12 @@
             // 
             // btnAddRod
             // 
+            this.btnAddRod.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAddRod.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnAddRod.Location = new System.Drawing.Point(29, 3);
+            this.btnAddRod.Location = new System.Drawing.Point(46, 3);
             this.btnAddRod.Name = "btnAddRod";
-            this.btnAddRod.Size = new System.Drawing.Size(18, 35);
+            this.btnAddRod.Size = new System.Drawing.Size(33, 35);
             this.btnAddRod.TabIndex = 5;
             this.btnAddRod.Text = "+";
             this.btnAddRod.UseVisualStyleBackColor = true;
@@ -491,10 +501,12 @@
             // 
             // btnSave
             // 
+            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnSave.Location = new System.Drawing.Point(3, 3);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(20, 35);
+            this.btnSave.Size = new System.Drawing.Size(37, 35);
             this.btnSave.TabIndex = 4;
             this.btnSave.Text = "s";
             this.btnSave.UseVisualStyleBackColor = true;
@@ -505,11 +517,12 @@
             this.tableLayoutPanelChart.ColumnCount = 3;
             this.tableLayoutPanelChart.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.53381F));
             this.tableLayoutPanelChart.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.46619F));
-            this.tableLayoutPanelChart.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 468F));
+            this.tableLayoutPanelChart.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 483F));
             this.tableLayoutPanelChart.Controls.Add(this.btnDraw, 0, 0);
             this.tableLayoutPanelChart.Controls.Add(this.btnSaveChart, 1, 0);
             this.tableLayoutPanelChart.Controls.Add(this.buttonClose, 2, 1);
             this.tableLayoutPanelChart.Controls.Add(this.btnCalc, 1, 1);
+            this.tableLayoutPanelChart.Controls.Add(this.btnMesh, 0, 1);
             this.tableLayoutPanelChart.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelChart.Location = new System.Drawing.Point(333, 615);
             this.tableLayoutPanelChart.Name = "tableLayoutPanelChart";
@@ -523,7 +536,7 @@
             // 
             this.btnDraw.Location = new System.Drawing.Point(3, 3);
             this.btnDraw.Name = "btnDraw";
-            this.btnDraw.Size = new System.Drawing.Size(116, 38);
+            this.btnDraw.Size = new System.Drawing.Size(109, 38);
             this.btnDraw.TabIndex = 1;
             this.btnDraw.Text = "Построить сечение";
             this.btnDraw.UseVisualStyleBackColor = true;
@@ -531,9 +544,9 @@
             // 
             // btnSaveChart
             // 
-            this.btnSaveChart.Location = new System.Drawing.Point(125, 3);
+            this.btnSaveChart.Location = new System.Drawing.Point(118, 3);
             this.btnSaveChart.Name = "btnSaveChart";
-            this.btnSaveChart.Size = new System.Drawing.Size(114, 38);
+            this.btnSaveChart.Size = new System.Drawing.Size(106, 38);
             this.btnSaveChart.TabIndex = 2;
             this.btnSaveChart.Text = "Сохранить";
             this.btnSaveChart.UseVisualStyleBackColor = true;
@@ -552,13 +565,23 @@
             // 
             // btnCalc
             // 
-            this.btnCalc.Location = new System.Drawing.Point(125, 52);
+            this.btnCalc.Location = new System.Drawing.Point(118, 52);
             this.btnCalc.Name = "btnCalc";
-            this.btnCalc.Size = new System.Drawing.Size(114, 38);
+            this.btnCalc.Size = new System.Drawing.Size(106, 38);
             this.btnCalc.TabIndex = 4;
             this.btnCalc.Text = "Рассчитать";
             this.btnCalc.UseVisualStyleBackColor = true;
             this.btnCalc.Click += new System.EventHandler(this.btnCalc_Click);
+            // 
+            // btnMesh
+            // 
+            this.btnMesh.Location = new System.Drawing.Point(3, 52);
+            this.btnMesh.Name = "btnMesh";
+            this.btnMesh.Size = new System.Drawing.Size(109, 38);
+            this.btnMesh.TabIndex = 5;
+            this.btnMesh.Text = "Сетка";
+            this.btnMesh.UseVisualStyleBackColor = true;
+            this.btnMesh.Click += new System.EventHandler(this.btnMesh_Click);
             // 
             // BSSectionChart
             // 
@@ -625,5 +648,6 @@
         private System.Windows.Forms.Button btnSaveChart;
         private System.Windows.Forms.Button buttonClose;
         private System.Windows.Forms.Button btnCalc;
+        private System.Windows.Forms.Button btnMesh;
     }
 }

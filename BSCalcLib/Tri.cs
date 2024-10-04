@@ -128,12 +128,14 @@ namespace BSCalcLib
         }
 
         /// <summary>
-        /// 
+        /// Сформировать контур сечения
         /// </summary>
-        /// <param name="_points"></param>
-        /// <returns></returns>
-        public static string CreateIBeamContour(List<System.Drawing.PointF> _points)
-        {            
+        /// <param name="_points">координаты точек</param>
+        /// <returns>Путь к файлу</returns>
+        public static string CreateSectionContour(List<System.Drawing.PointF> _points)
+        {
+            if (_points.Count == 0) return "";  
+
             Polygon p = new Polygon();
 
             Vertex[] vrtx = new Vertex[_points.Count];
@@ -157,8 +159,8 @@ namespace BSCalcLib
             };
             quality.UseLegacyRefinement = true;
             quality.MaximumAngle = 180;
-            quality.MaximumArea = MaxArea;
-            //SweepLine();
+            //quality.MaximumArea = MaxArea;
+            
             Mesh = p.Triangulate(options, quality) as Mesh;
 
             var statistic = new Statistic();
