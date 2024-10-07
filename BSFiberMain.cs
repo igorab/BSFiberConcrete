@@ -1824,9 +1824,7 @@ namespace BSFiberConcrete
         /// <param name="e"></param>
         private void btnSection_Click(object sender, EventArgs e)
         {
-            m_SectionChart = new BSSectionChart();
-            m_SectionChart.m_BeamSection = m_BeamSection;
-            m_SectionChart.UseRebar = checkBoxRebar.Checked;
+            m_SectionChart = new BSSectionChart(m_BeamSection, checkBoxRebar.Checked);            
             var sz = BeamWidtHeight(out double b, out double h, out double _area);
 
             m_SectionChart.RebarClass = cmbRebarClass.SelectedItem.ToString();
@@ -1938,20 +1936,19 @@ namespace BSFiberConcrete
         private string GenerateMesh(ref TriangleNet.Geometry.Point _CG)
         {
             string pathToSvgFile;
-
             double[] sz = BeamWidtHeight(out double b, out double h, out double area);
-            double meshSize = (double)numMeshNX.Value;
-
-            BSMesh.Nx = (int)meshSize;
-            BSMesh.Ny = (int)meshSize;
+            
+            BSMesh.Nx = (int)numMeshNX.Value;
+            BSMesh.Ny = (int)numMeshNY.Value;
+            double meshSize = Math.Max(BSMesh.Nx, BSMesh.Ny);
 
             BSMesh.MinAngle = (double)numTriAngle.Value;
-            Tri.MinAngle = (double)numTriAngle.Value;
+            Tri.MinAngle = (double)numTriAngle.Value;            
+            BSMesh.MaxArea = 0;
 
             if (meshSize > 0)
             {
-                Tri.MaxArea = area / meshSize;
-                BSMesh.MaxArea = Tri.MaxArea;
+                BSMesh.MaxArea = area / meshSize;
             }
 
             BSMesh.FilePath = Path.Combine(Environment.CurrentDirectory, "Templates");
@@ -1990,7 +1987,7 @@ namespace BSFiberConcrete
                 BSSection.IBeam(sz, out pts, out PointF _center);
                 _CG = new TriangleNet.Geometry.Point(_center.X, _center.Y);
 
-                pathToSvgFile = BSCalcLib.Tri.CreateSectionContour(pts);
+                pathToSvgFile = BSCalcLib.Tri.CreateSectionContour(pts, BSMesh.MaxArea);
                 _ = Tri.CalculationScheme();
             }
             else if (m_BeamSection == BeamSection.Any)
@@ -1999,8 +1996,8 @@ namespace BSFiberConcrete
                 BSSection.IBeam(sz, out pts, out PointF _center); // TODO доработать до произвольного сечения
                 _CG = new TriangleNet.Geometry.Point(_center.X, _center.Y);
 
-                pathToSvgFile = BSCalcLib.Tri.CreateSectionContour(pts);
-                _ = Tri.CalculationScheme();
+                pathToSvgFile = BSCalcLib.Tri.CreateSectionContour(pts, BSMesh.MaxArea);
+                _ = Tri.CalculationScheme(false);
             }
             else
             {
@@ -2366,13 +2363,12 @@ namespace BSFiberConcrete
         // создать сечение произвольной формы
         private void btnSectionAdd_Click(object sender, EventArgs e)
         {
-            BSSectionChart sectionChart = new BSSectionChart
-            {
-                m_BeamSection = BeamSection.Any,
+            BSSectionChart sectionChart = new BSSectionChart(BeamSection.Any, checkBoxRebar.Checked)
+            {                
                 Wdth = 0,
                 Hght = 0,
                 NumArea = 0,
-                UseRebar = checkBoxRebar.Checked
+                RebarClass = cmbRebarClass.Text
             };
 
             sectionChart.DictCalcParams = DictCalcParams(BeamSection.Any);

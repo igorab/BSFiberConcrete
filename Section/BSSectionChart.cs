@@ -38,9 +38,8 @@ namespace BSFiberConcrete.Section
 
         const string UserSection = "UserSection";
         public Dictionary<string, double> DictCalcParams { private get; set;}
-        public BeamSection m_BeamSection { get; set; }
-        public bool UseRebar { private get; set; }
-
+        public BeamSection m_BeamSection { get; private set; }
+                
         /// <summary>
         /// Класс используемой арматуры
         /// </summary>
@@ -75,19 +74,17 @@ namespace BSFiberConcrete.Section
         private float h;
         
 
-        public BSSectionChart()
+        public BSSectionChart(BeamSection _beamSection,  bool _useRebar )
         {
             InitializeComponent();
-
-            UseRebar = true;
-
+            
             Center = new PointF(0, 0);
 
             ndmSetup = BSData.LoadNDMSetup();
+            ndmSetup.UseRebar = _useRebar;
+            m_BeamSection = _beamSection;
 
-            InnerPoints = new List<PointF>();
-
-            m_BeamSection = BeamSection.Rect;
+            InnerPoints = new List<PointF>();            
             w = 0;
             h = 0;
             Sz = new double[]  { 0, 0, 0, 0, 0, 0 };
@@ -176,7 +173,7 @@ namespace BSFiberConcrete.Section
 
             InitPoints();
 
-            if (UseRebar)
+            if (ndmSetup.UseRebar)
                 InitRods();
 
             int idx = 0;
@@ -423,6 +420,9 @@ namespace BSFiberConcrete.Section
             MessageBox.Show("Задайте привязку арматуры - укажите координаты стержней");
         }
 
+        /// <summary>
+        /// по номинальному диаметру заполнить фактический
+        /// </summary>        
         private void bSRodDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             try
@@ -431,13 +431,21 @@ namespace BSFiberConcrete.Section
                 {
                     var d_nom = int.Parse(bSRodDataGridView.Rows[e.RowIndex].Cells["Dnom"].Value?.ToString() ?? "0");
 
-                    if (m_Diameters != null && d_nom > 0)
+                    if (m_Diameters != null)
                     {
-                        double ar = m_Diameters.Find(_D => _D.Diameter == d_nom).Square;
+                        if (d_nom > 0)
+                        {
+                            double ar = m_Diameters.Find(_D => _D.Diameter == d_nom).Square;
 
-                        double d_fact = BSHelper.DCircle(ar);
+                            double d_fact = BSHelper.DCircle(ar);
 
-                        bSRodDataGridView.Rows[e.RowIndex].Cells["D"].Value = Math.Round(d_fact, 2);
+                            bSRodDataGridView.Rows[e.RowIndex].Cells["D"].Value = Math.Round(d_fact, 2);
+                        }
+                    }
+                    else
+                    {
+                        if (d_nom > 0)
+                            bSRodDataGridView.Rows[e.RowIndex].Cells["D"].Value = d_nom / 10.0;
                     }
                 }
             }
@@ -493,10 +501,11 @@ namespace BSFiberConcrete.Section
         /// </summary>
         /// <param name="_My"></param>
         /// <returns></returns>
-        private List<double> CalcNDM_My(double _My)
+        private List<double> CalcNDM_My()
         {
             Dictionary<string, double> dictParams = DictCalcParams;
-            
+            double _My = dictParams["My"];
+
             List<double> l_Ky = new List<double>();
             
             CalcNDM calcNDM = new CalcNDM(m_BeamSection) { setup = ndmSetup, D = dictParams };
@@ -512,7 +521,8 @@ namespace BSFiberConcrete.Section
         private void btnCalc_Click(object sender, EventArgs e)
         {            
             GenerateMesh();
-            CalcNDM_My(1000);
+            List<double> kx = CalcNDM_My();
+            MessageBox.Show($"kx = {kx[0]}");                           
         }
 
         private void BeamSectionFromPoints(ref List<PointF> _PointsSection, PointF _center)
@@ -545,11 +555,10 @@ namespace BSFiberConcrete.Section
             BSMesh.MinAngle = ndmSetup.NSize;
             Tri.MinAngle = ndmSetup.NSize;
 
-            double area = 10*10;
+            double area = 20; // TODO доработать
             double meshSize = Math.Max(BSMesh.Nx, BSMesh.Ny);            
-            Tri.MaxArea = area / meshSize;
-            BSMesh.MaxArea = Tri.MaxArea;
-            
+            BSMesh.MaxArea = area; // meshSize;
+
             BSMesh.FilePath = Path.Combine(Environment.CurrentDirectory, "Templates");
             Tri.FilePath = BSMesh.FilePath;
             
@@ -557,10 +566,9 @@ namespace BSFiberConcrete.Section
             {
                 List<PointF> pts = new List<PointF>();
                 BeamSectionFromPoints(ref pts, Center);
-                
-                pathToSvgFile = BSCalcLib.Tri.CreateSectionContour(pts);
-
-                _ = Tri.CalculationScheme();
+                                
+                pathToSvgFile = Tri.CreateSectionContour(pts, BSMesh.MaxArea);
+                _ = Tri.CalculationScheme(false);
             }
             else
             {
@@ -591,5 +599,6 @@ namespace BSFiberConcrete.Section
                 MessageBox.Show(_e.Message);
             }
         }
+        
     }
 }
