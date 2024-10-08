@@ -74,14 +74,12 @@ namespace BSFiberConcrete.Section
         private float h;
         
 
-        public BSSectionChart(BeamSection _beamSection,  bool _useRebar )
+        public BSSectionChart(BeamSection _beamSection )
         {
             InitializeComponent();
             
             Center = new PointF(0, 0);
-
-            ndmSetup = BSData.LoadNDMSetup();
-            ndmSetup.UseRebar = _useRebar;
+            ndmSetup = BSData.LoadNDMSetup();            
             m_BeamSection = _beamSection;
 
             InnerPoints = new List<PointF>();            
@@ -509,6 +507,7 @@ namespace BSFiberConcrete.Section
             List<double> l_Ky = new List<double>();
             
             CalcNDM calcNDM = new CalcNDM(m_BeamSection) { setup = ndmSetup, D = dictParams };
+            calcNDM.RunGroup1();
             Dictionary<string, double> res = calcNDM.RunMy(_My);
 
             if (res != null)
@@ -548,26 +547,23 @@ namespace BSFiberConcrete.Section
         /// <exception cref="Exception"></exception>
         private string GenerateMesh()
         {
-            string pathToSvgFile;
-                        
-            BSMesh.Nx = ndmSetup.N;
-            BSMesh.Ny = ndmSetup.M;
-            BSMesh.MinAngle = ndmSetup.NSize;
-            Tri.MinAngle = ndmSetup.NSize;
-
-            double area = 20; // TODO доработать
-            double meshSize = Math.Max(BSMesh.Nx, BSMesh.Ny);            
-            BSMesh.MaxArea = area; // meshSize;
-
+            string pathToSvgFile;                                    
+            BSMesh.Nx       = ndmSetup.N;
+            BSMesh.Ny       = ndmSetup.M;
+            BSMesh.MinAngle = ndmSetup.MinAngle;
+            Tri.MinAngle    = ndmSetup.MinAngle;            
+            BSMesh.MaxArea  = ndmSetup.MaxArea;
             BSMesh.FilePath = Path.Combine(Environment.CurrentDirectory, "Templates");
-            Tri.FilePath = BSMesh.FilePath;
+            Tri.FilePath    = BSMesh.FilePath;
             
             if (m_BeamSection == BeamSection.Any)
             {
                 List<PointF> pts = new List<PointF>();
-                BeamSectionFromPoints(ref pts, Center);
-                                
+
+                BeamSectionFromPoints(ref pts, Center);                                
+
                 pathToSvgFile = Tri.CreateSectionContour(pts, BSMesh.MaxArea);
+
                 _ = Tri.CalculationScheme(false);
             }
             else

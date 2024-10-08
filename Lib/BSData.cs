@@ -106,7 +106,7 @@ namespace BSFiberConcrete.Lib
 
 
         /// <summary>
-        ///  
+        /// Параметры расчета по НДМ
         /// </summary>
         /// <returns>Список</returns>
         public static NDMSetup LoadNDMSetup(int Id = 1)
@@ -121,7 +121,36 @@ namespace BSFiberConcrete.Lib
             }
             catch
             {
-                return new NDMSetup() {Id = 0, Iters = 1000, M = 20, N = 20, NSize = 40, BetonTypeId = 0 };
+                return new NDMSetup() {Id = 0, Iters = 1000, M = 20, N = 20, MinAngle = 40, MaxArea = 10, BetonTypeId = 0 };
+            }
+        }
+
+        /// <summary>
+        /// Сохранить параметры расчета по НДМ
+        /// </summary>        
+        public static void SaveNDMSetup(NDMSetup _ndmSetup)
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    cnn.Open();
+                    using (var tr = cnn.BeginTransaction())
+                    {
+                        cnn.Execute($"update NDMSetup set " +
+                            " Id = @Id, Iters = @Iters, N = @N, M = @M," +
+                            " BetonTypeId = @BetonTypeId, MinAngle = @MinAngle, MaxArea = @MaxArea, " +
+                            " UseRebar = @UseRebar, RebarType = @RebarType " +
+                            " where Id = @Id",
+                            _ndmSetup, tr);
+
+                        tr.Commit();
+                    }
+                }
+            }
+            catch
+            {
+                throw new Exception("Не удалось сохранить значения в БД");
             }
         }
 
@@ -649,10 +678,6 @@ namespace BSFiberConcrete.Lib
             }
         }
 
-
-
-
-
         /// <summary>
         /// Загружается геометрия сечений
         /// </summary>
@@ -701,8 +726,6 @@ namespace BSFiberConcrete.Lib
                 throw;
             }
         }
-
-
 
         public static List<RebarDiameters> LoadRebarDiameters()
         {
@@ -809,6 +832,32 @@ namespace BSFiberConcrete.Lib
             catch
             {
                 throw new Exception ("Не удалось сохранить значения в БД");
+            }
+        }
+
+        /// <summary>
+        /// Сохранить коэффициенты расчета на раскрытие трещины
+        /// </summary>        
+        public static void SaveStrengthFactors(StrengthFactors _sFactors)
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    cnn.Open();
+                    using (var tr = cnn.BeginTransaction())
+                    {
+                        cnn.Execute("update StrengthFactors set " +
+                            " Yft = @Yft, Yb = @Yb, Yb1 = @Yb1, Yb2 = @Yb2, Yb3 = @Yb3, Yb5 = @Yb5 " +
+                            " where Id = @Id",
+                            _sFactors, tr);
+                        tr.Commit();
+                    }
+                }
+            }
+            catch
+            {
+                throw new Exception("Не удалось сохранить значения в БД");
             }
         }
 

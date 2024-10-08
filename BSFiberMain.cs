@@ -159,27 +159,71 @@ namespace BSFiberConcrete
             num_a1.Value = (decimal)prms.a1_s;
         }
 
+        /// <summary>
+        /// коэффициенты надежности
+        /// </summary>
+        private void InitStrengthFactors()
+        {
+            StrengthFactors strengthFactors = BSFiberLib.StrengthFactors();
+
+            numYft.Value = (decimal)strengthFactors.Yft;
+            numYb.Value = (decimal)strengthFactors.Yb;
+            numYb1.Value = (decimal)strengthFactors.Yb1;
+            numYb2.Value = (decimal)strengthFactors.Yb2;
+            numYb3.Value = (decimal)strengthFactors.Yb3;
+            numYb5.Value = (decimal)strengthFactors.Yb5;
+        }
+
+        // подсказки
+        private void InitToolTips()
+        {
+            // Установка высплывающего текста
+            System.Windows.Forms.ToolTip toolTip1 = new System.Windows.Forms.ToolTip();
+            // Set up the delays for the ToolTip.
+            toolTip1.AutoPopDelay = 5000;
+            toolTip1.InitialDelay = 1000;
+            toolTip1.ReshowDelay = 50;
+            // Force the ToolTip text to be displayed whether or not the form is active.
+            toolTip1.ShowAlways = true;
+            // Set up the ToolTip text for the Button and Checkbox.
+            toolTip1.SetToolTip(this.btnRectang, "Прямоугольное сечение");
+            toolTip1.SetToolTip(this.btnTSection, "Тавровое сечение \"Верхняя полка\"");
+            toolTip1.SetToolTip(this.btnLSection, "Тавровое сечение \"Нижняя полка\"");
+            toolTip1.SetToolTip(this.btnIBeam, "Двутавровое сечение");
+            toolTip1.SetToolTip(this.btnRing, "Кольцевое сечение");
+            toolTip1.SetToolTip(btnCalcResults, "Результаты расчета");
+        }
+
+        // арматура
+        private void InitRebarValues()
+        {
+            // настройки из БД
+            Rebar dbRebar = m_Rebar.Where(x => x.ID == Convert.ToString(cmbRebarClass.SelectedItem))?.First();
+            numEs.Value = (decimal)BSHelper.MPA2kgsm2(dbRebar.Es);
+            numAs.Value = (decimal)dbRebar.As;
+            numAs1.Value = (decimal)dbRebar.As1;
+            num_a.Value = (decimal)dbRebar.a;
+            num_a1.Value = (decimal)dbRebar.a1;
+        }
+
+        //Mx My N Qx Qy
+        private void InitEffortValues()
+        {           
+            double[] mnq = { m_Iniv["Mx"], m_Iniv["My"], m_Iniv["N"], m_Iniv["Qx"], m_Iniv["Qy"] };
+            gridEfforts.Rows.Add(mnq);
+            for (int i = 0; i < mnq.Length; i++)
+            {
+                gridEfforts.Rows[0].Cells[i].Value = mnq[i];
+            }
+        }
 
         // глобальные настройки
         public void BSFiberMain_Load(object sender, EventArgs e)
         {
             try
             {
-                // Установка высплывающего текста
-                System.Windows.Forms.ToolTip toolTip1 = new System.Windows.Forms.ToolTip();
-                // Set up the delays for the ToolTip.
-                toolTip1.AutoPopDelay = 5000;
-                toolTip1.InitialDelay = 1000;
-                toolTip1.ReshowDelay = 50;
-                // Force the ToolTip text to be displayed whether or not the form is active.
-                toolTip1.ShowAlways = true;
-                // Set up the ToolTip text for the Button and Checkbox.
-                toolTip1.SetToolTip(this.btnRectang, "Прямоугольное сечение");
-                toolTip1.SetToolTip(this.btnTSection, "Тавровое сечение \"Верхняя полка\"");
-                toolTip1.SetToolTip(this.btnLSection, "Тавровое сечение \"Нижняя полка\"");
-                toolTip1.SetToolTip(this.btnIBeam, "Двутавровое сечение");
-                toolTip1.SetToolTip(this.btnRing, "Кольцевое сечение");
-                toolTip1.SetToolTip(btnCalcResults, "Результаты расчета");
+                InitToolTips();
+               
                 m_Path2BeamDiagrams = new List<string>() { };
 
                 m_RebarDiameters = BSData.LoadRebarDiameters();
@@ -198,7 +242,7 @@ namespace BSFiberConcrete
                 FiberConcrete = BSData.LoadFiberConcreteTable();
                 cmbFib_i.SelectedIndex = 0;
                 comboBetonType.SelectedIndex = 0;
-                cmbRebarClass.SelectedIndex = 1;
+                cmbRebarClass.SelectedItem = "A400";
                 cmbDeformDiagram.SelectedIndex = (int)DeformDiagramType.D3Linear;
 
                 m_BSLoadData.InitEfforts(ref m_Iniv);
@@ -231,24 +275,12 @@ namespace BSFiberConcrete
                 cmbBftn.ValueMember = "ID";
                 cmbBftn.SelectedValue = "Bft3";
 
-                Elements fiberConcrete = BSFiberLib.PhysElements;
-
-                numYft.Value = (decimal)fiberConcrete.Yft;
-                numYb.Value = (decimal)fiberConcrete.Yb;
-                numYb1.Value = (decimal)fiberConcrete.Yb1;
-                numYb2.Value = (decimal)fiberConcrete.Yb2;
-                numYb3.Value = (decimal)fiberConcrete.Yb3;
-                numYb5.Value = (decimal)fiberConcrete.Yb5;
-
+                InitStrengthFactors();
+                
                 InitFormControls();
-                //Mx My N Qx Qy
-                double[] mnq = { m_Iniv["Mx"], m_Iniv["My"], m_Iniv["N"], m_Iniv["Qx"], m_Iniv["Qy"] };
-                gridEfforts.Rows.Add(mnq);
-                for (int i = 0; i < mnq.Length; i++)
-                {
-                    gridEfforts.Rows[0].Cells[i].Value = mnq[i];
-                }
 
+                InitEffortValues();
+                
                 // пользовательское изменение ед измерения для нагрузок
                 List<Enum> modelUnitsMeasurement = new List<Enum>()
                 {
@@ -261,19 +293,14 @@ namespace BSFiberConcrete
                 cmbMomentOfForceUnit.DataSource = MomentOfForceMeasurement.ListOfName;
                 cmbMomentOfForceUnit.SelectedIndex = 1;
 
-
-                // настройки из БД
-                Rebar dbRebar = m_Rebar.Where(x => x.ID == Convert.ToString(cmbRebarClass.SelectedItem))?.First();
-                numEs.Value = (decimal)BSHelper.MPA2kgsm2(dbRebar.Es);
-                numAs.Value = (decimal)dbRebar.As;
-                numAs1.Value = (decimal)dbRebar.As1;
-                num_a.Value = (decimal)dbRebar.a;
-                num_a1.Value = (decimal)dbRebar.a1;
+                InitRebarValues();               
 
                 //СП63 6.1.20 
                 numEps_fb2.Value = 0.0035M;
 
                 CalcTypeShow();
+
+                NDMSetupInitFormValues();
             }
             catch (Exception _ex)
             {
@@ -765,14 +792,7 @@ namespace BSFiberConcrete
                     Elements fib = getQuery?.First();
 
                     numRfbt3n.Value = Convert.ToDecimal(BSHelper.MPA2kgsm2(fib.Rfbt3n));
-                    numRfbt2n.Value = Convert.ToDecimal(BSHelper.MPA2kgsm2(fib.Rfbt2n));
-
-                    numYft.Value = Convert.ToDecimal(fib?.Yft);
-                    numYb.Value = Convert.ToDecimal(fib?.Yb);
-                    numYb1.Value = Convert.ToDecimal(fib?.Yb1);
-                    numYb2.Value = Convert.ToDecimal(fib?.Yb2);
-                    numYb3.Value = Convert.ToDecimal(fib?.Yb3);
-                    numYb5.Value = Convert.ToDecimal(fib?.Yb5);
+                    numRfbt2n.Value = Convert.ToDecimal(BSHelper.MPA2kgsm2(fib.Rfbt2n));                   
                 }
 
             }
@@ -1225,10 +1245,33 @@ namespace BSFiberConcrete
             NDMSetup ndmSetup = BSData.LoadNDMSetup();
             ndmSetup.BetonTypeId = (cmbTypeMaterial.SelectedIndex == 1) ? 1 : 0;
             ndmSetup.UseRebar = checkBoxRebar.Checked;
-            ndmSetup.RebarType = cmbRebarClass.Text;
+            ndmSetup.RebarType = Convert.ToString(cmbRebarClass.SelectedItem);
+            ndmSetup.N = (int) numMeshNX.Value;
+            ndmSetup.M = (int) numMeshNY.Value;
+            ndmSetup.MinAngle = (double)numMinAngle.Value;
+            ndmSetup.MaxArea = (double)numMaxArea.Value;
+
+            BSData.SaveNDMSetup(ndmSetup);
+
             return ndmSetup;
         }
 
+        private NDMSetup NDMSetupInitFormValues()
+        {
+            NDMSetup ndmSetup = BSData.LoadNDMSetup();
+
+            // нужна ли инициализация?
+            //cmbTypeMaterial.SelectedIndex = ndmSetup.BetonTypeId;
+            //checkBoxRebar.Checked = ndmSetup.UseRebar;
+            //cmbRebarClass.SelectedItem = ndmSetup.RebarType ;
+
+            numMeshNX.Value  = ndmSetup.N;
+            numMeshNY.Value =  ndmSetup.M;
+            numMinAngle.Value = (decimal) ndmSetup.MinAngle;
+            numMaxArea.Value = (decimal) ndmSetup.MaxArea;
+            
+            return ndmSetup;
+        }
         /// <summary>
         /// "Расчет по прочности нормальных сечений на основе нелинейной деформационной модели"
         /// </summary>        
@@ -1824,7 +1867,9 @@ namespace BSFiberConcrete
         /// <param name="e"></param>
         private void btnSection_Click(object sender, EventArgs e)
         {
-            m_SectionChart = new BSSectionChart(m_BeamSection, checkBoxRebar.Checked);            
+            NDMSetupValuesFromForm();
+
+            m_SectionChart = new BSSectionChart(m_BeamSection);            
             var sz = BeamWidtHeight(out double b, out double h, out double _area);
 
             m_SectionChart.RebarClass = cmbRebarClass.SelectedItem.ToString();
@@ -1858,7 +1903,6 @@ namespace BSFiberConcrete
                 ShowMosaic(mode, _CalcResNDM.Sig_B, _CalcResNDM.Sig_S);
             }
         }
-
 
         /// <summary>
         ///  Разбиение сечения на конечные элементы
@@ -1926,8 +1970,6 @@ namespace BSFiberConcrete
                 mDraw.PaintSectionMesh();
                 mDraw.ShowMesh();
             }
-
-
         }
 
         /// <summary>
@@ -1942,8 +1984,8 @@ namespace BSFiberConcrete
             BSMesh.Ny = (int)numMeshNY.Value;
             double meshSize = Math.Max(BSMesh.Nx, BSMesh.Ny);
 
-            BSMesh.MinAngle = (double)numTriAngle.Value;
-            Tri.MinAngle = (double)numTriAngle.Value;            
+            BSMesh.MinAngle = (double)numMinAngle.Value;
+            Tri.MinAngle = (double)numMinAngle.Value;            
             BSMesh.MaxArea = 0;
 
             if (meshSize > 0)
@@ -2164,6 +2206,13 @@ namespace BSFiberConcrete
                 GetEffortsFromForm(out Dictionary<string, double> _MNQ);
 
                 Lib.BSData.SaveEfforts(new Efforts() { Id = 1, Mx = _MNQ["Mx"], My = _MNQ["My"], N = _MNQ["N"], Qx = _MNQ["Qx"], Qy = _MNQ["Qy"]});
+
+                NDMSetupValuesFromForm();
+
+                StrengthFactors sf = new StrengthFactors() {Id=1, Yft=(double)numYft.Value, Yb= (double)numYb.Value, Yb1= (double)numYb1.Value, 
+                                                            Yb2 = (double)numYb2.Value, Yb3 = (double)numYb3.Value, Yb5 = (double)numYb5.Value };
+                BSData.SaveStrengthFactors(sf);
+
             }
             catch (Exception _e)
             {
@@ -2363,7 +2412,9 @@ namespace BSFiberConcrete
         // создать сечение произвольной формы
         private void btnSectionAdd_Click(object sender, EventArgs e)
         {
-            BSSectionChart sectionChart = new BSSectionChart(BeamSection.Any, checkBoxRebar.Checked)
+            NDMSetupValuesFromForm();
+
+            BSSectionChart sectionChart = new BSSectionChart(BeamSection.Any)
             {                
                 Wdth = 0,
                 Hght = 0,
@@ -2425,6 +2476,11 @@ namespace BSFiberConcrete
                 string headerText = columns[i].HeaderText;
                 columns[i].HeaderText = _UnitConverter.ChangeHTForMomentOfForce(headerText);
             }
+
+        }
+
+        private void comboBetonType_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
         }
     }
