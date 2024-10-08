@@ -1288,21 +1288,38 @@ namespace BSFiberConcrete
             //List<double> valuesСurvatureOnSection = CalcNDM_My(valuesMomentOnSection);
 
             List<double> U = new List<double>();
-            List<double> XForU = new List<double>();
+            List<double> XForChart = new List<double>();
             for (int i = 1; X.Count > i; i = i + 2)
             {
                 double u = beamController.CalculateDeflectionAtPoint(valueMomentInX, X, valuesStiffnesOnSection, i);
                 U.Add(u*10); // перевод из см в мм 
-                XForU.Add(X[i]);
+                XForChart.Add(X[i]);
             }
-            // Результат в см
-            string textName = "Прогиб";
-            string TitleX = "см";
-            string TitleY = "мм";
-            string name2Save = "BeamDiagramU";
+            string[] names = { "Прогиб", "см", "мм", "BeamDiagramU" };
+            beamController.CreteChart(XForChart, U, names);
 
-            string[] names = { textName, TitleX, TitleY, name2Save };
-            beamController.CreteChart(XForU, U, names);
+            
+            if (beamController.beamDiagram.simpleDiagram.IsCalculateBeamDeflection)
+            {
+                double d = 0;
+                foreach (double Stiffnes in valuesStiffnesOnSection)
+                {
+                    if (double.IsNaN(Stiffnes))
+                    { continue; }
+
+                    d = (d + Stiffnes) / 2;
+                }
+                List<double> simpleU = new List<double>();
+                List<double> XForChart1 = new List<double>();
+                for (int i = 1; X.Count > i; i = i + 2)
+                {
+
+                    XForChart1.Add(X[i]);
+                    double tmpU = beamController.beamDiagram.simpleDiagram.CalculateBeamDeflection(X[i], d) * 10;
+                    simpleU.Add(tmpU);
+                }
+                beamController.CreteChart(XForChart, simpleU, new string[] { "Прогиб по формуле", "cм", "мм", "SimpleBeamDiagramU" });
+            }
         }
 
 

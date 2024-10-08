@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Xml.Linq;
+using System.Xml.Schema;
 
 namespace BSBeamCalculator
 {
@@ -51,6 +52,8 @@ namespace BSBeamCalculator
 
         public Dictionary<string, double> resultEfforts;
 
+        public BeamDiagram beamDiagram;
+
 
         /// <summary>
         /// Путь для сохранения картинки
@@ -69,7 +72,7 @@ namespace BSBeamCalculator
 
         public void RunCalculation()
         {
-            BeamDiagram beamDiagram = new BeamDiagram(support, load, l, f, x1, x2);
+            beamDiagram = new BeamDiagram(support, load, l, f, x1, x2);
             result = beamDiagram.CalculateBeamDiagram();
 
             //if (resultEfforts.ContainsKey("Mmax"))
@@ -152,22 +155,26 @@ namespace BSBeamCalculator
                 { D.Add(d); }
             }
 
+            List<double> XForChart = new List<double>();
             List<double> U = new List<double>();
-            List<double> XForU = new List<double>();
             for (int i = 1; m > i; i = i + 2)
             {
                 double u = CalculateDeflectionAtPoint(M, X, D, i);
+                XForChart.Add(X[i]);
                 U.Add(u);
-                XForU.Add(X[i]);
             }
 
-            string textName = "Прогиб";
-            string TitleX = "см";
-            string TitleY = "см";
-            string name2Save = "BeamDiagramU";
+            string[] names = { "Прогиб", "см", "см", "BeamDiagramUTest" };
+            CreteChart(XForChart, U, names);
 
-            string[] names = { textName, TitleX, TitleY, name2Save };
-            CreteChart(XForU, U, names);
+
+            if (beamDiagram.simpleDiagram.IsCalculateBeamDeflection)
+            {
+                List<double> simpleU = new List<double>();
+                for (int i = 1; m > i; i = i + 2)
+                { simpleU.Add(beamDiagram.simpleDiagram.CalculateBeamDeflection(X[i], d)); }
+                CreteChart(XForChart, simpleU, new string[] { "Прогиб", "см", "см", "SimpleBeamDiagramU" });
+            }
         }
 
 
@@ -178,6 +185,10 @@ namespace BSBeamCalculator
 
             BeamDiagram beamDiagram = new BeamDiagram(support, forceType, l, forceValue, X[index], 0);
             DiagramResult res = beamDiagram.CalculateBeamDiagram();
+
+
+            //string[] names = { "Момент", "кг*см", "см", $"BeamDiagramM_Test {index}" };
+            //CreteChart(res.pointM[0].ToList(), res.pointM[1].ToList(), names);
 
             double sectionLength = X[index + 1] - X[index - 1];
             double u = 0;
@@ -244,11 +255,7 @@ namespace BSBeamCalculator
             chart.ChartAreas[0].AxisX.Maximum = l;
             chart.Series[sName].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             for (int i = 0; i < valueX.Count; i++)
-            { 
-                
-                chart.Series[sName].Points.AddXY(valueX[i], valueY[i]);
-            
-            }
+            {  chart.Series[sName].Points.AddXY(valueX[i], valueY[i]); }
 
             Font axisFont = new System.Drawing.Font("Microsoft Sans Serif", 8F,
                 ((System.Drawing.FontStyle)(System.Drawing.FontStyle.Bold)), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -276,6 +283,14 @@ namespace BSBeamCalculator
                     if (path2BeamDiagrams.Count > 2)
                     {
                         path2BeamDiagrams[2] = pathToPicture;
+                        return;
+                    }
+                }
+                if (pictureName == "SimpleBeamDiagramU")
+                {
+                    if (path2BeamDiagrams.Count > 3)
+                    {
+                        path2BeamDiagrams[3] = pathToPicture;
                         return;
                     }
                 }

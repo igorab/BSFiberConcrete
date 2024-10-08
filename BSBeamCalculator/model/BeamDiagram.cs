@@ -4,6 +4,7 @@ using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Runtime.Remoting.Messaging;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,21 +13,21 @@ using System.Xml.Schema;
 
 namespace BSBeamCalculator
 {
+
     public class BeamDiagram
     {
         /// <summary>
         /// величина нагрузки
         /// </summary>
-        protected double _force;
+        private double _force;
         protected double _startPointForce;
         protected double _endPointForce;
         /// <summary>
         /// Длинна балки
         /// </summary>
-        protected double _beamLength;
-        //protected string _supportBeamType;
-        protected SimpleBeamDiagramCase _simpleDiagram;
-
+        private double _beamLength;
+        //private string _supportBeamType;
+        public SimpleBeamDiagramCase simpleDiagram;
 
         public BeamDiagram(string supportType, string loadType, double length, double force, double x1, double x2)
         {
@@ -40,7 +41,7 @@ namespace BSBeamCalculator
             { throw new Exception("Пользовательская ошибка. Значение 'Позиция x' не должно превышать 'Длина'."); }
 
             _beamLength = length;
-            _simpleDiagram = new SimpleBeamDiagramCase(supportType, loadType);
+            simpleDiagram = new SimpleBeamDiagramCase(supportType, loadType);
             //_supportBeamType = supportType;
             _force = force;
             _startPointForce = x1;
@@ -54,13 +55,13 @@ namespace BSBeamCalculator
             //List<double> x, double length, double c1, double c2, double F
 
             // кол-во точек
-            int n = 11;
-            double[] x = new double[n];
-            // шаг точек
-            double m = _beamLength / (n - 1);
-            for (int i = 0; i < n; i++)
-            { x[i] = i * m;  }
-            double[][] values_xQ_xM= _simpleDiagram.CalculateValuesForDiagram(_beamLength, _startPointForce, _endPointForce, _force);
+            //int n = 11;
+            //double[] x = new double[n];
+            //// шаг точек
+            //double m = _beamLength / (n - 1);
+            //for (int i = 0; i < n; i++)
+            //{ x[i] = i * m;  }
+            double[][] values_xQ_xM= simpleDiagram.CalculateValuesForDiagram(_beamLength, _startPointForce, _endPointForce, _force);
             DiagramResult result = new DiagramResult(values_xQ_xM);
 
 
@@ -107,6 +108,16 @@ namespace BSBeamCalculator
             "Concentrated",
         };
 
+        /// <summary>
+        /// Определен ли делегат CalculateBeamDeflection
+        /// </summary>
+        public bool IsCalculateBeamDeflection;
+        /// <summary>
+        /// Расчитать прогиб балки по ее длине
+        /// </summary>
+        public Func<double, double, double> CalculateBeamDeflection;
+
+
         public SimpleBeamDiagramCase(string supportType, string loadType)
         {
             if (supportBeamTypeValue.Contains(supportType) && loadBeamTypeValue.Contains(loadType))
@@ -151,6 +162,9 @@ namespace BSBeamCalculator
                         R2 = F * (a + 3 * b) * Math.Pow(a, 2) / Math.Pow(length, 3);
                         M1 = F * a * Math.Pow(b, 2) / Math.Pow(length, 2);
                         M2 = F * b * Math.Pow(a, 2) / Math.Pow(length, 2);
+
+                        IsCalculateBeamDeflection = false;
+                        //CalculateBeamDeflection = (x, D) => { return F * Math.Pow(a, 3) * Math.Pow(b, 3) / (3 * D * length; }
                     }
                     else if (loadBeamType == "Uniformly-Distributed")
                     {
@@ -159,6 +173,10 @@ namespace BSBeamCalculator
                         R2 = F * length / 2;
                         M1 = F * Math.Pow(length, 2) / 12;
                         M2 = F * Math.Pow(length, 2) / 12;
+
+                        IsCalculateBeamDeflection = false;
+                        //CalculateBeamDeflection = (x, D) =>
+                        //{ return F * Math.Pow(a, 3) * Math.Pow(b, 3) / (3 * D * length); };
                     }
                     break;
 
@@ -170,6 +188,14 @@ namespace BSBeamCalculator
                         M1 = F * a;
                         R2 = 0;
                         M2 = 0;
+
+                        IsCalculateBeamDeflection = true;
+                        CalculateBeamDeflection = (x, D) => 
+                        {
+                            if (x <= a)
+                            { return -F * Math.Pow(x, 2) / (6 * D) * (3 * a - x); }
+                            return -F * Math.Pow(a, 2) / (6 * D) *(3 * x - a);
+                        };
                     }
                     else if (loadBeamType == "Uniformly-Distributed")
                     {
@@ -178,6 +204,13 @@ namespace BSBeamCalculator
                         R2 = 0;
                         M1 = F * Math.Pow(length,2) /2;
                         M2 = 0;
+
+                        IsCalculateBeamDeflection = true;
+                        CalculateBeamDeflection = (x, D) =>
+                        {
+                            return -F * Math.Pow(length, 4) / (24 * D) * (Math.Pow(x,2) / Math.Pow(length, 2)) *
+                            ( 6 - 4 * x / length + Math.Pow(x, 2) / Math.Pow(length, 2));
+                        };
                     }    
                     break;
 
@@ -186,9 +219,18 @@ namespace BSBeamCalculator
                     {
                         // Определение реакций:
                         R1 = 0;
-                        R2 = F;
                         M1 = 0;
-                        M2 = F * a;
+                        R2 = F;
+                        M2 = F * b;
+
+                        IsCalculateBeamDeflection = true;
+                        CalculateBeamDeflection = (x, D) => {
+                            double x1 = length - x;
+                            if (x1 <= a)
+                            { return -F * Math.Pow(x1, 2) / (6 * D) * (3 * a - x1); }
+                            return -F * Math.Pow(a, 2) / (6 * D) * (3 * x1 - a);
+
+                        };
                     }
                     else if (loadBeamType == "Uniformly-Distributed")
                     {
@@ -197,6 +239,15 @@ namespace BSBeamCalculator
                         R2 = F * length;
                         M1 = 0;
                         M2 = F * Math.Pow(length, 2) / 2;
+
+
+                        IsCalculateBeamDeflection = true;
+                        CalculateBeamDeflection = (x, D) =>
+                        {
+                            double x1 = length - x;
+                            return F * Math.Pow(length, 4) / (24 * D) * (Math.Pow(x1, 2) / Math.Pow(length, 2)) *
+                            (6 - 4 * x1 / length + Math.Pow(x1, 2) / Math.Pow(length, 2));
+                        };
                     }
                     break;
 
@@ -208,6 +259,10 @@ namespace BSBeamCalculator
                         R2 = F * Math.Pow(al, 2) * (3 - al) / 2;
                         M1 = F * a * b * (length + b)/(2 * Math.Pow(length, 2));
                         M2 = 0;
+
+                        IsCalculateBeamDeflection = false;
+                        //CalculateBeamDeflection = (x, D) =>
+                        //{ return F * Math.Pow(a, 3) * Math.Pow(b, 2) * (3 * a + 4 * b) / (12 * D * length); };
                     }
                     else if (loadBeamType == "Uniformly-Distributed")
                     {
@@ -216,6 +271,8 @@ namespace BSBeamCalculator
                         R2 = F * length * 3 / 8;
                         M1 = F * Math.Pow(length, 2) / 8;
                         M2 = 0;
+
+                        IsCalculateBeamDeflection = false;
                     }
                     break;
 
@@ -223,10 +280,14 @@ namespace BSBeamCalculator
                     if (loadBeamType == "Concentrated")
                     {
                         // Определение реакции опоры:
-                        R1 = F * Math.Pow(al, 2) * (3 - al) / 2; 
-                        R2 = F * bl * (3 - Math.Pow(bl, 2)) / 2;
+                        R1 = F * Math.Pow(bl, 2) * (3 - bl) / 2; 
+                        R2 = F * al * (3 - Math.Pow(al, 2)) / 2;
                         M1 = 0;
-                        M2 = F * a * b * (length + b) / (2 * Math.Pow(length, 2));
+                        M2 = F * a * b * (length + a) / (2 * Math.Pow(length, 2));
+
+                        IsCalculateBeamDeflection = false; 
+                        //CalculateBeamDeflection = (x, D) =>
+                        //{ return F * Math.Pow(b, 3) * Math.Pow(a, 2) * (3 * b + 4 * a) / (12 * D * length); };
                     }
                     else if (loadBeamType == "Uniformly-Distributed")
                     {
@@ -235,6 +296,8 @@ namespace BSBeamCalculator
                         R2 = F * length * 5 / 8;
                         M1 = 0;
                         M2 = F * Math.Pow(length, 2) / 8;
+
+                        IsCalculateBeamDeflection = false;
                     }
                     break;
 
@@ -246,6 +309,11 @@ namespace BSBeamCalculator
                         R2 = F * c1 / length;
                         M1 = 0;
                         M2 = 0;
+
+                        IsCalculateBeamDeflection = true;
+                        CalculateBeamDeflection = (x, D) =>
+                        { return -F *  b * Math.Pow(length, 2) / (6 * D) * x / length * 
+                            (1 - Math.Pow(b, 2) / Math.Pow(length, 2) - Math.Pow(x, 3) / Math.Pow(length, 3)); };
                     }
                     if (loadBeamType == "Uniformly-Distributed")
                     {
@@ -254,6 +322,13 @@ namespace BSBeamCalculator
                         R2 = F * length / 2;
                         M1 = 0;
                         M2 = 0;
+
+                        IsCalculateBeamDeflection = true;
+                        CalculateBeamDeflection = (x, D) =>
+                        {
+                            return -F * Math.Pow(length, 4) / (24 * D) * (x / length) 
+                            *(1 - 2 * (Math.Pow(x, 2) / Math.Pow(length, 2)) + (Math.Pow(x, 3) / Math.Pow(length, 3)));
+                        };
                     }
                     break;
             }
@@ -346,5 +421,25 @@ namespace BSBeamCalculator
             M[M.Length-1] = 0;
             return new double[4][] { xQ, Q, xM, M };
         }
+
+
+//        public double[] DeflectionFixid_No_C(double[] x)
+//        {
+//            double[] deflection = new double[x.Count()];
+
+//            for (int i = 1; x.Count() < i; i++)
+//            {
+//                deflection[i] = _force* Math.Pow(x[i],2);
+//_startPointForce
+//_endPointForce
+
+
+
+
+
+//            }
+
+//            return deflection;
+//        }
     }
 }

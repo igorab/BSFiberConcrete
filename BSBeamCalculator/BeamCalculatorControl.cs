@@ -25,6 +25,15 @@ namespace BSBeamCalculator
         /// </summary>
         private DataGridView _beamEfforts;
 
+        /// <summary>
+        /// Тип защемеления балки
+        /// </summary>
+        private string _typeBeamSuppote;
+        /// <summary>
+        /// Тип нагрузки на балку
+        /// </summary>
+        private string _typeBeamLoad;
+
 
         private BeamDiagram _beamDiagramCalc;
         private ControllerBeamDiagram _beamDiagramController;
@@ -40,8 +49,10 @@ namespace BSBeamCalculator
             InitializeComponent();
 
             _beamDiagramController = new ControllerBeamDiagram();
-            _beamDiagramController.load = "Concentrated";
-            _beamDiagramController.support = "Fixed-Fixed";
+
+
+            _typeBeamLoad = "Concentrated";
+            _typeBeamSuppote = "Fixed-Fixed";
 
         }
 
@@ -58,8 +69,9 @@ namespace BSBeamCalculator
             _beamDiagramController = beamDiagramController;
 
             InitializeComponent();
-            _beamDiagramController.load = "Concentrated";
-            _beamDiagramController.support = "Fixed-Fixed";
+
+            _typeBeamLoad = "Concentrated";
+            _typeBeamSuppote = "Fixed-Fixed"; 
 
             double.TryParse(_beamLength.Text, out double tmpBeamLen );
             if (tmpBeamLen != 0)
@@ -85,11 +97,9 @@ namespace BSBeamCalculator
                 double lengthBeam = (double)numericUpDown1.Value;
                 double force = (double)numericUpDown2.Value;
                 double startPointForce = (double)numericUpDown3.Value;
-                //double supportBeam = 
-                //double loadBeam = 
 
-                //ControllerBeamDiagram.support =
-                //ControllerBeamDiagram.load =
+                _beamDiagramController.support = _typeBeamSuppote;
+                _beamDiagramController.load = _typeBeamLoad;
                 _beamDiagramController.l = lengthBeam;
                 _beamDiagramController.f = force;
                 _beamDiagramController.x1 = startPointForce;
@@ -214,7 +224,7 @@ namespace BSBeamCalculator
         {
             //numericUpDown4.Enabled = true;
             numericUpDown3.Enabled = false;
-            _beamDiagramController.load = "Uniformly-Distributed";
+            _typeBeamLoad = "Uniformly-Distributed";
         }
 
         private void radioButton11_CheckedChanged(object sender, EventArgs e)
@@ -222,36 +232,36 @@ namespace BSBeamCalculator
             //numericUpDown4.Enabled = false;
             //numericUpDown4.Value = 0;
             numericUpDown3.Enabled = true;
-            _beamDiagramController.load = "Concentrated";
+            _typeBeamLoad = "Concentrated";
         }
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
-            _beamDiagramController.support = "Fixed-Fixed";
+            _typeBeamSuppote = "Fixed-Fixed";
         }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
-            _beamDiagramController.support = "Fixed-No";
+            _typeBeamSuppote = "Fixed-No";
         }
         private void radioButton3_CheckedChanged(object sender, EventArgs e)
         {
-            _beamDiagramController.support = "Pinned-Movable";
+            _typeBeamSuppote = "Pinned-Movable";
         }
 
         private void radioButton4_CheckedChanged(object sender, EventArgs e)
         {
-            _beamDiagramController.support = "Fixed-Movable";
+            _typeBeamSuppote = "Fixed-Movable";
         }
 
         private void radioButton5_CheckedChanged(object sender, EventArgs e)
         {
-            _beamDiagramController.support = "No-Fixed";
+            _typeBeamSuppote = "No-Fixed";
         }
 
         private void radioButton6_CheckedChanged(object sender, EventArgs e)
         {
-            _beamDiagramController.support = "Movable-Fixed";
+            _typeBeamSuppote = "Movable-Fixed";
         }
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
@@ -262,6 +272,9 @@ namespace BSBeamCalculator
 
         private void BeamCalculatorControl_Load(object sender, EventArgs e)
         {
+
+
+            //radioButton1.Text
 
 
             // Create the ToolTip and associate with the Form container.
