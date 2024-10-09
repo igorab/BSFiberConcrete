@@ -164,6 +164,22 @@ namespace BSFiberConcrete
         }
 
         /// <summary>
+        ///  Рассчитать случайный эксцентриситет CG 63 п 8.1.7
+        /// </summary>        
+        /// <param name="_length"> Длина см</param>
+        /// <param name="_h"> высота сечения см</param>
+        /// <returns>e_а</returns>
+        public static double Calc_e_a(double _length, double _h)
+        {
+            double e_a = 1.0;
+
+            if (_length != 0 && _h != 0)            
+                e_a = Math.Max(1.0,  Math.Max(_length/60.0,  _h/ 30.0));
+
+            return e_a; // см
+        }
+
+        /// <summary>
         ///  Расчетная схема , рисунок
         /// </summary>
         /// <returns>Наименование файла</returns>
