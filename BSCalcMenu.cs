@@ -30,6 +30,9 @@ namespace BSCalcMenu
         public BSCalcMenu()
         {
             InitializeComponent();
+
+
+            btnBeamDefl.Visible = false;
         }
 
         private void btnClose_Click(object sender, EventArgs e)
