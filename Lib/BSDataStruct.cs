@@ -69,7 +69,8 @@ namespace BSFiberConcrete
         public int Iters { get; set; }
         public int N { get; set; }
         public int M { get; set; }
-        public double NSize { get; set; }            
+        public double MinAngle { get; set; }
+        public double MaxArea { get; set; }
         public int BetonTypeId { get; set; }
         public bool UseRebar { get; set; }
         public string RebarType { get; set; }
@@ -348,6 +349,17 @@ namespace BSFiberConcrete
         /// Сжатие осевое
         /// </summary>
         public double Rfbn { get; set; }
+    }
+
+    public class StrengthFactors
+    {
+        public int Id { get; set; }
+        public double Yb { get; set; }
+        public double Yft { get; set; }
+        public double Yb1 { get; set; }
+        public double Yb2 { get; set; }
+        public double Yb3 { get; set; }
+        public double Yb5 { get; set; }
     }
 
 

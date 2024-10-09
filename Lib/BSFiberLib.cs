@@ -62,5 +62,28 @@ namespace BSFiberConcrete
                 }               
             }
         }
+
+        /// <summary>
+        /// Значения по-умолчанию для коэффициентов на форме
+        /// </summary>
+        public static StrengthFactors StrengthFactors()
+        {            
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(Lib.BSData.LoadConnectionString()))
+                {
+                    string sql = "select * from StrengthFactors where id = 1";
+                    IEnumerable<StrengthFactors> rec = cnn.Query<StrengthFactors>(sql, new DynamicParameters());
+
+                    StrengthFactors elements = rec?.Count() > 0 ? rec.First() : new StrengthFactors();
+                    return elements;
+                }
+            }
+            catch
+            {
+                return new StrengthFactors { Yft = 1.3, Yb = 1.3, Yb1 = 0.9, Yb2 = 0.9, Yb3 = 0.9, Yb5 = 1 };
+            }            
+        }
+
     }
 }

@@ -38,6 +38,11 @@ namespace BSFiberConcrete.CalcGroup2
                 n = InitRingSection(r1, R2);
                 m = InitReinforcement();
             }
+            else if (m_BeamSection == BeamSection.Any)
+            {
+                n = InitAnySection();
+                m = InitReinforcement();
+            }
             else
             {
                 throw new Exception($"Тип сечения {m_BeamSection} не поддерживается в данном расчете ");

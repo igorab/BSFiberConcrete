@@ -20,6 +20,8 @@ using System.Reflection;
 using TriangleNet.Geometry;
 using static CBAnsDes.Member;
 using System.Data.SqlTypes;
+using BSCalcLib;
+using System.Diagnostics;
 
 namespace BSFiberConcrete.Section
 {
@@ -35,10 +37,9 @@ namespace BSFiberConcrete.Section
         }
 
         const string UserSection = "UserSection";
-
-        public BeamSection BSBeamSection { get; set; }
-        public bool UseRebar { private get; set; }
-
+        public Dictionary<string, double> DictCalcParams { private get; set;}
+        public BeamSection m_BeamSection { get; private set; }
+                
         /// <summary>
         /// Класс используемой арматуры
         /// </summary>
@@ -59,6 +60,8 @@ namespace BSFiberConcrete.Section
         // точки на диаграмме для отображения отверстия в сечении
         private List<PointF> InnerPoints;
 
+        private NDMSetup ndmSetup;
+
         public PointF Center { get; set; }
 
         public float Wdth { set { w = value; } }
@@ -71,17 +74,15 @@ namespace BSFiberConcrete.Section
         private float h;
         
 
-        public BSSectionChart()
+        public BSSectionChart(BeamSection _beamSection )
         {
             InitializeComponent();
-
-            UseRebar = true;
-
+            
             Center = new PointF(0, 0);
+            ndmSetup = BSData.LoadNDMSetup();            
+            m_BeamSection = _beamSection;
 
-            InnerPoints = new List<PointF>();
-
-            BSBeamSection = BeamSection.Rect;
+            InnerPoints = new List<PointF>();            
             w = 0;
             h = 0;
             Sz = new double[]  { 0, 0, 0, 0, 0, 0 };
@@ -95,7 +96,7 @@ namespace BSFiberConcrete.Section
             if (m_RodPoints == null)
                 return;
 
-            List<BSRod> bsRods =  BSData.LoadBSRod(BSBeamSection);
+            List<BSRod> bsRods =  BSData.LoadBSRod(m_BeamSection);
 
             if (bsRods.Count == 0)
             {
@@ -108,24 +109,24 @@ namespace BSFiberConcrete.Section
 
         private void InitPoints()
         {
-            if (BSBeamSection == BeamSection.Rect)                 
+            if (m_BeamSection == BeamSection.Rect)                 
             {
                 BSSection.RectangleBeam(Sz);
                 PointsSection = BSSection.SectionPoints;
                 m_RodPoints = BSSection.RodPoints;               
             }
-            else if (BSBeamSection == BeamSection.IBeam ||                      
-                     BSBeamSection == BeamSection.LBeam)
+            else if (m_BeamSection == BeamSection.IBeam ||                      
+                     m_BeamSection == BeamSection.LBeam)
             {                
                 BSSection.IBeam(Sz, out PointsSection, out PointF _center);
                 m_RodPoints = BSSection.RodPoints;
             }
-            else if (BSBeamSection == BeamSection.TBeam)
+            else if (m_BeamSection == BeamSection.TBeam)
             {
                 BSSection.IBeam(Sz, out PointsSection, out PointF _center);
                 m_RodPoints = BSSection.RodPoints;
             }
-            else if (BSBeamSection == BeamSection.Ring)
+            else if (m_BeamSection == BeamSection.Ring)
             {
                 PointsSection = new List<PointF>();
                 int amountOfEdges = 40;
@@ -147,7 +148,7 @@ namespace BSFiberConcrete.Section
                     m_RodPoints = new List<PointF>() { new PointF(0, -(h - 4)) };
                 }
             }
-            else if (BSBeamSection == BeamSection.Any)
+            else if (m_BeamSection == BeamSection.Any)
             {
                 List<NdmSection> pointsSection = BSData.LoadNdmSection(UserSection);
                 int idx = 0;
@@ -170,7 +171,7 @@ namespace BSFiberConcrete.Section
 
             InitPoints();
 
-            if (UseRebar)
+            if (ndmSetup.UseRebar)
                 InitRods();
 
             int idx = 0;
@@ -275,7 +276,7 @@ namespace BSFiberConcrete.Section
 
             List<BSRod> bSRods = (List<BSRod>) RodBS.List; 
             
-            BSData.SaveRods(bSRods, BSBeamSection);            
+            BSData.SaveRods(bSRods, m_BeamSection);            
         }
 
         /// <summary>
@@ -315,7 +316,7 @@ namespace BSFiberConcrete.Section
 
         private void InitControls()
         {
-            if (BSBeamSection == BeamSection.Any)
+            if (m_BeamSection == BeamSection.Any)
             {
                 btnAdd.Visible = true;
                 btnDel.Visible = true;
@@ -417,6 +418,9 @@ namespace BSFiberConcrete.Section
             MessageBox.Show("Задайте привязку арматуры - укажите координаты стержней");
         }
 
+        /// <summary>
+        /// по номинальному диаметру заполнить фактический
+        /// </summary>        
         private void bSRodDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             try
@@ -425,13 +429,21 @@ namespace BSFiberConcrete.Section
                 {
                     var d_nom = int.Parse(bSRodDataGridView.Rows[e.RowIndex].Cells["Dnom"].Value?.ToString() ?? "0");
 
-                    if (m_Diameters != null && d_nom > 0)
+                    if (m_Diameters != null)
                     {
-                        double ar = m_Diameters.Find(_D => _D.Diameter == d_nom).Square;
+                        if (d_nom > 0)
+                        {
+                            double ar = m_Diameters.Find(_D => _D.Diameter == d_nom).Square;
 
-                        double d_fact = BSHelper.DCircle(ar);
+                            double d_fact = BSHelper.DCircle(ar);
 
-                        bSRodDataGridView.Rows[e.RowIndex].Cells["D"].Value = Math.Round(d_fact, 2);
+                            bSRodDataGridView.Rows[e.RowIndex].Cells["D"].Value = Math.Round(d_fact, 2);
+                        }
+                    }
+                    else
+                    {
+                        if (d_nom > 0)
+                            bSRodDataGridView.Rows[e.RowIndex].Cells["D"].Value = d_nom / 10.0;
                     }
                 }
             }
@@ -441,7 +453,7 @@ namespace BSFiberConcrete.Section
             }           
         }
 
-       
+               
         private void btnSaveChart_Click(object sender, EventArgs e)
         {            
             try
@@ -481,5 +493,108 @@ namespace BSFiberConcrete.Section
         {
             Close();
         }
+
+        /// <summary>
+        /// Расчет сечения по НДМ
+        /// </summary>
+        /// <param name="_My"></param>
+        /// <returns></returns>
+        private List<double> CalcNDM_My()
+        {
+            Dictionary<string, double> dictParams = DictCalcParams;
+            double _My = dictParams["My"];
+
+            List<double> l_Ky = new List<double>();
+            
+            CalcNDM calcNDM = new CalcNDM(m_BeamSection) { setup = ndmSetup, D = dictParams };
+            calcNDM.RunGroup1();
+            Dictionary<string, double> res = calcNDM.RunMy(_My);
+
+            if (res != null)
+                l_Ky.Add(res["Ky"]);
+            
+            return l_Ky;
+        }
+
+        // Запустить расчет
+        private void btnCalc_Click(object sender, EventArgs e)
+        {            
+            GenerateMesh();
+            List<double> kx = CalcNDM_My();
+            MessageBox.Show($"kx = {kx[0]}");                           
+        }
+
+        private void BeamSectionFromPoints(ref List<PointF> _PointsSection, PointF _center)
+        {                                              
+            BindingList<BSPoint> bspoints = (BindingList<BSPoint>)pointBS.List;           
+            foreach (BSPoint pt in bspoints)
+            {             
+                _PointsSection.Add(new PointF(pt.X, pt.Y));
+            }
+            
+            //RodPoints = new List<PointF>();
+
+            //foreach (BSPoint rod in RodBS)
+            //{
+            //    RodPoints.Add(new PointF(rod.X, rod.Y));
+            //}            
+        }
+    
+        /// <summary>
+        /// Сгенерировать сетеку сечения
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        private string GenerateMesh()
+        {
+            string pathToSvgFile;                                    
+            BSMesh.Nx       = ndmSetup.N;
+            BSMesh.Ny       = ndmSetup.M;
+            BSMesh.MinAngle = ndmSetup.MinAngle;
+            Tri.MinAngle    = ndmSetup.MinAngle;            
+            BSMesh.MaxArea  = ndmSetup.MaxArea;
+            BSMesh.FilePath = Path.Combine(Environment.CurrentDirectory, "Templates");
+            Tri.FilePath    = BSMesh.FilePath;
+            
+            if (m_BeamSection == BeamSection.Any)
+            {
+                List<PointF> pts = new List<PointF>();
+
+                BeamSectionFromPoints(ref pts, Center);                                
+
+                pathToSvgFile = Tri.CreateSectionContour(pts, BSMesh.MaxArea);
+
+                _ = Tri.CalculationScheme(false);
+            }
+            else
+            {
+                throw new Exception("Не задано сечение");
+            }
+
+            // площади треугольников
+            var triAreas = Tri.triAreas;
+            // центры тяжести треугольников
+            var triCGs = Tri.triCGs;
+
+            return pathToSvgFile;
+        }
+
+        /// <summary>
+        /// сетка
+        /// </summary>        
+        private void btnMesh_Click(object sender, EventArgs e)
+        {            
+            try
+            {
+                string pathToSvgFile = GenerateMesh();
+                
+                Process.Start(new ProcessStartInfo { FileName = pathToSvgFile, UseShellExecute = true });
+            }
+            catch (Exception _e)
+            {
+                MessageBox.Show(_e.Message);
+            }
+        }
+        
     }
 }

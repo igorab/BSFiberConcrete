@@ -9,6 +9,9 @@ namespace BSFiberConcrete
     [Flags, Description("Сечение балки")]
     public enum BeamSection
     {
+        /// <summary>
+        /// Произвольное сечение
+        /// </summary>
         [Description("Cечение произвольное")]
         Any = 0,
         /// <summary>

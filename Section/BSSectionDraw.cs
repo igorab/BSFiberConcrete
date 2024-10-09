@@ -80,8 +80,7 @@ namespace BSFiberConcrete.Section
 
         private void btnSectionGrid_Click(object sender, EventArgs e)
         {
-            BSSectionGrid sectionGrid   = new BSSectionGrid();
-            sectionGrid.Show();
+            
         }
         
         private void btnCalcGo_Click(object sender, EventArgs e)

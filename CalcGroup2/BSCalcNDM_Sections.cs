@@ -47,29 +47,24 @@ namespace BSFiberConcrete.CalcGroup2
             return (rodD, hX, bY, d_qty, area_total);
         }
 
-
         /// <summary>
         /// Массивы координат продольной арматуры
         /// </summary>        
         public int InitReinforcement(double _y0 = 0, double _z0 = 0 )
-        {
-            // количество элементов арматуры
-            int m = 0;
-
-            //заполнить  массив площадей арматуры            
+        {                        
+            // заполнить  массив площадей арматуры            
             foreach (double d in ds)
             {
                 As.Add(Math.PI * Math.Pow(d, 2) / 4.0);
             }
-
+            // координаты стержней
             for (int l = 0; l < ds.Count; l++)
             {
                 y0s[l] += _y0;
                 z0s[l] += _z0;
             }
-
-            m = As.Count;
-
+            // количество элементов арматуры
+            int m = As.Count;
             return m;
         }
 
@@ -153,5 +148,32 @@ namespace BSFiberConcrete.CalcGroup2
             return triAreas.Count; 
         }
 
+        /// <summary>
+        /// произвольное сечение
+        /// </summary>        
+        private int InitAnySection()
+        {
+            _ = Tri.CalculationScheme(false);
+
+            // площади треугольников
+            var triAreas = Tri.triAreas;
+
+            // ц.т. треугольников
+            var triCGs = Tri.triCGs;
+
+            //заполнить массив площадей элементов            
+            foreach (var _area in triAreas)
+                Ab.Add(_area);
+
+            //заполнить массив привязок бетонных эл-в к вспомогательной оси y0            
+            //заполнить массив привязок бетонных эл-в к вспомогательной оси z0            
+            foreach (var triCG in triCGs)
+            {
+                y0b.Add(triCG.X);
+                z0b.Add(triCG.Y);
+            }
+
+            return triAreas.Count;
+        }
     }
 }
