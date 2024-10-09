@@ -56,15 +56,16 @@ namespace BSFiberConcrete.Lib
         /// Найти строку из таблицы ТЯЖЕЛОГО бетона
         /// </summary>
         /// <param name="_BT">Класс бетона</param>
+        /// /// <param name="_betonTypeId">"Тип: тяжелый, мелкозернистый А, Б"</param>
         /// <returns></returns>
-        public static Beton HeavyBetonTableFind(string _BT)
+        public static Beton HeavyBetonTableFind(string _BT, int _betonTypeId = 0)
         {
             Beton bt = new Beton();
             try
             {
                 using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
                 {
-                    string query = $"select * from Beton where BetonType = 1 AND BT = '{_BT}'";
+                    string query = $"select * from Beton where BetonType = {_betonTypeId} AND BT = '{_BT}'";
                     var output = cnn.Query<Beton>(query, new DynamicParameters());
                     if (output.Count() > 0)
                         bt = output.ToList()[0];

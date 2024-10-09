@@ -29,11 +29,12 @@ namespace BSFiberConcrete
                 comboBetonType.DataSource = BSData.LoadBetonTypeName();
 
                 string i_b = Convert.ToString(comboBox_i.Text);
+
                 dataGridElements.DataSource =  BSData.LoadFiberConcreteTable(i_b);
 
                 dataGridCoeffs.DataSource = BSData.LoadCoeffs();
 
-                dataGridBeton.DataSource = BSData.LoadHeavyBetonData();
+                dataGridBeton.DataSource = BSData.LoadBetonData(0);
 
                 //using (var streamreader = new StreamReader(BSFiberLoadData.FiberConcretePath))
                 //{

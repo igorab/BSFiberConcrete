@@ -35,6 +35,8 @@ namespace BSFiberConcrete
         private BSMatFiber m_MatFiber;
         private List<Elements> FiberConcrete;
         private List<Beton> m_Beton;
+        private List<Beton> m_Beton_GrA;
+        private List<Beton> m_Beton_GrB;
         private List<RebarDiameters> m_RebarDiameters;
         // Список, в котором хранится актуальные данные геометрии сечений
         private List<InitBeamSectionGeometry> m_InitBeamSectionsGeometry;
@@ -83,10 +85,13 @@ namespace BSFiberConcrete
 
         private LameUnitConverter _UnitConverter;
 
-
         public BSFiberMain()
         {
             InitializeComponent();
+
+            m_Path2BeamDiagrams = new List<string>();
+            m_Beam = new Dictionary<string, double>();
+            m_Table = new DataTable();
         }
 
         /// <summary>
@@ -217,6 +222,24 @@ namespace BSFiberConcrete
             }
         }
 
+        private void InitBetonControls()
+        {
+            cmbBetonClass.DataSource = BSFiberLib.BetonList;
+            cmbBetonClass.DisplayMember = "Name";
+            cmbBetonClass.ValueMember = "Name";
+            cmbBetonClass.SelectedValue = BSFiberLib.BetonList[5].Name;
+
+            m_Beton = BSData.LoadBetonData(0);
+            cmbBfn.DataSource = m_Beton;
+            cmbBfn.DisplayMember = "BT";
+            cmbBfn.ValueMember = "BT";
+            
+            cmbBftn.DataSource = BSData.LoadFiberBft();
+            cmbBftn.DisplayMember = "ID";
+            cmbBftn.ValueMember = "ID";
+            cmbBftn.SelectedValue = "Bft3";
+        }
+
         // глобальные настройки
         public void BSFiberMain_Load(object sender, EventArgs e)
         {
@@ -224,12 +247,7 @@ namespace BSFiberConcrete
             {
                 InitToolTips();
                
-                m_Path2BeamDiagrams = new List<string>() { };
-
-                m_RebarDiameters = BSData.LoadRebarDiameters();
-
-                m_Beam = new Dictionary<string, double>();
-                m_Table = new DataTable();
+                m_RebarDiameters = BSData.LoadRebarDiameters();                
                 m_Rebar = BSData.LoadRebar();
 
                 dataGridSection.DataSource = m_Table;
@@ -259,22 +277,8 @@ namespace BSFiberConcrete
 
                 LoadRectangle();
 
-                cmbBetonClass.DataSource = BSFiberLib.BetonList;
-                cmbBetonClass.DisplayMember = "Name";
-                cmbBetonClass.ValueMember = "Name";
-                cmbBetonClass.SelectedValue = BSFiberLib.BetonList[5].Name;
-
-                m_Beton = BSData.LoadHeavyBetonData();
-                cmbBfn.DataSource = m_Beton;
-                cmbBfn.DisplayMember = "BT";
-                cmbBfn.ValueMember = "BT";
-                cmbBfn.SelectedValue = (m_Beton.Count > 7) ? m_Beton[7].BT : ""; // в настройки
-
-                cmbBftn.DataSource = BSData.LoadFiberBft();
-                cmbBftn.DisplayMember = "ID";
-                cmbBftn.ValueMember = "ID";
-                cmbBftn.SelectedValue = "Bft3";
-
+                InitBetonControls();
+                
                 InitStrengthFactors();
                 
                 InitFormControls();
@@ -288,6 +292,7 @@ namespace BSFiberConcrete
                     ForceUnits.kg,
                     MomentOfForceUnits.kgBycm
                 };
+
                 _UnitConverter = new LameUnitConverter(modelUnitsMeasurement);
                 cmbForceUnit.DataSource = ForceMeasurement.ListOfName;
                 cmbMomentOfForceUnit.DataSource = MomentOfForceMeasurement.ListOfName;
@@ -1645,7 +1650,9 @@ namespace BSFiberConcrete
         }
 
         
-        // сохранить данные с формы
+        /// <summary>
+        /// сохранить данные с формы
+        /// </summary>
         private void FormParamsSaveData()
         {
             FormParams formParams = new FormParams()
@@ -1669,6 +1676,19 @@ namespace BSFiberConcrete
             };
 
             BSData.UpdateFormParams(formParams);
+
+            StrengthFactors sf = new StrengthFactors()
+            {
+                Id = 1,
+                Yft = (double)numYft.Value,
+                Yb = (double)numYb.Value,
+                Yb1 = (double)numYb1.Value,
+                Yb2 = (double)numYb2.Value,
+                Yb3 = (double)numYb3.Value,
+                Yb5 = (double)numYb5.Value
+            };
+            BSData.SaveStrengthFactors(sf);
+
         }
 
 
@@ -1676,9 +1696,7 @@ namespace BSFiberConcrete
         private void btnSaveParams_Click(object sender, EventArgs e)
         {
             try
-            {
-                //CalcNDM_My(new List<double>() { 750000 } );
-
+            {                
                 FormParamsSaveData();
 
                 Dictionary<string, double> SZ = new Dictionary<string, double>();
@@ -1731,14 +1749,30 @@ namespace BSFiberConcrete
             catch { }
         }
 
+
+        private void Init_Rfb_Efb(int _betonTypeId)
+        {         
+            string betonClass = Convert.ToString(cmbBfn.SelectedValue);
+            if (string.IsNullOrEmpty(betonClass)) return; 
+
+            Beton bt = BSQuery.HeavyBetonTableFind(betonClass, _betonTypeId);
+            
+            if (bt.Rbn != 0)
+                numRfb_n.Value = (decimal)BSHelper.MPA2kgsm2(bt.Rbn);
+            if (bt.Eb != 0)
+                numE_beton.Value = (decimal)BSHelper.MPA2kgsm2(bt.Eb * 1000);
+        }
+
+
+        // B, fn класс на сжатие
         private void cmbBfn_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
             {
-                Beton bt = Lib.BSQuery.HeavyBetonTableFind(cmbBfn.Text);
-                numRfb_n.Value = (decimal)BSHelper.MPA2kgsm2(bt.Rbn);
-                numE_beton.Value = (decimal)BSHelper.MPA2kgsm2(bt.Eb * 1000);
-
+                if (cmbBfn.SelectedIndex > -1 && comboBetonType.SelectedIndex > -1)
+                {
+                    Init_Rfb_Efb(comboBetonType.SelectedIndex);   
+                }
             }
             catch { }
         }
@@ -2207,11 +2241,7 @@ namespace BSFiberConcrete
 
                 Lib.BSData.SaveEfforts(new Efforts() { Id = 1, Mx = _MNQ["Mx"], My = _MNQ["My"], N = _MNQ["N"], Qx = _MNQ["Qx"], Qy = _MNQ["Qy"]});
 
-                NDMSetupValuesFromForm();
-
-                StrengthFactors sf = new StrengthFactors() {Id=1, Yft=(double)numYft.Value, Yb= (double)numYb.Value, Yb1= (double)numYb1.Value, 
-                                                            Yb2 = (double)numYb2.Value, Yb3 = (double)numYb3.Value, Yb5 = (double)numYb5.Value };
-                BSData.SaveStrengthFactors(sf);
+                NDMSetupValuesFromForm();                
 
             }
             catch (Exception _e)
@@ -2481,7 +2511,12 @@ namespace BSFiberConcrete
 
         private void comboBetonType_SelectedIndexChanged(object sender, EventArgs e)
         {
+            int betonTypeId = comboBetonType.SelectedIndex;
 
+            if (betonTypeId == 0 || betonTypeId == 1 || betonTypeId == 2)
+            {
+                Init_Rfb_Efb(betonTypeId);
+            }            
         }
     }
 }
