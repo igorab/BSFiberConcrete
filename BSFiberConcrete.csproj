@@ -598,6 +598,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Images\save.png" />
+    <None Include="Images\update.png" />
     <Content Include="Logo_house.ico" />
     <Content Include="Resources\balka_rect.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

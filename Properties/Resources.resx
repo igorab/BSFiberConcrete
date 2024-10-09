@@ -121,14 +121,17 @@
   <data name="Rebar" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Rebar.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="FiberBeton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FiberBeton.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="IBeam" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\IBeam.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="BeamLab" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\BeamLab.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="СК1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\СК1.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="IBeamArm" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\IBeamArm.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Rect_Rods_N_out" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Rect_Rods_N_out.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="EffortsSign" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\EffortsSign.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -142,26 +145,26 @@
   <data name="Ring_N_Rods" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Ring_N_Rods.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Rect_Rods" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Rect_Rods.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Rect_N_out" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Rect_N_out.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Logo_small" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Logo_small.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="СК" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\СК.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Logo_300x67" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Logo-300x67.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Rect_Rods" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Rect_Rods.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="СК" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\СК.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="balka_rect" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\balka_rect.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Rect_Rods_N_out" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Rect_Rods_N_out.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="IBeamArm" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\IBeamArm.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Rect_N" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Rect_N.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -175,10 +178,13 @@
   <data name="Incline_Q" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Incline_Q.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="FiberBeton" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\FiberBeton.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="BeamLab" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BeamLab.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="СК1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\СК1.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="save" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\save.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="update" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\update.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
