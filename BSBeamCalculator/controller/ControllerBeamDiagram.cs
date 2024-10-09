@@ -144,8 +144,6 @@ namespace BSBeamCalculator
 
             for (int i = 0; m > i; i++)
             {
-                if (i == 2 * n)
-                { int a = 10; }
                 double tmpX = delta * i;
                 double tmpM = GetM(result, tmpX);
                 X.Add(tmpX);

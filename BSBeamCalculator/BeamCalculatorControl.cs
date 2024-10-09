@@ -34,8 +34,6 @@ namespace BSBeamCalculator
         /// </summary>
         private string _typeBeamLoad;
 
-
-        private BeamDiagram _beamDiagramCalc;
         private ControllerBeamDiagram _beamDiagramController;
 
         /// <summary>

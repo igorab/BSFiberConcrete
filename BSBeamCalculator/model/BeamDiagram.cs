@@ -350,10 +350,10 @@ namespace BSBeamCalculator
 
 
         /// <summary>
-        ///  Метод для расчета значений силы и моменета для построения эпюр.
-        ///  Рассматривается общий случай сосредлоточенной нагрузки
+        ///  Метод для расчета значений силы и момента для построения эпюр.
+        ///  Рассматривается общий случай сосредоточенной нагрузки
         /// </summary>
-        /// <param name="load"> массив значений рекаций [F, R1, R2, M1, M2]</param>
+        /// <param name="load"> массив значений реакций [F, R1, R2, M1, M2]</param>
         /// <param name="length">Массив длин [Length, a, b ]</param>
         /// <returns>Результат в формате [ xQ, Q, xM, M]</returns>
         public double[][] CalculateSimpleConcentratedLoad(double[] load, double[] len)
