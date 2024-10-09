@@ -223,6 +223,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
             double b = 200;
             _fiberCoef = new FiberCoef_K(h,b, _fiber.Length);
 
+            _msgToReport = new List<string>();
             // Определить класс 
             // определить тип нагрузки для 
 
@@ -238,6 +239,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
             // Определяем коэффициенты фибры
             _fiberCoef = new FiberCoef_K(h, b, _fiber.Length);
 
+            _msgToReport = new List<string>();
             // Определить класс 
             // определить тип нагрузки для 
 
@@ -482,24 +484,24 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
                 { InputData.Add("Коэф. фибрового армирования μ_fv ", Convert.ToString(Math.Round(_mu_fv, 4))); }
                 else
                 { InputData.Add("Коэф. фибрового армирования μ_fv = μfv_min", Convert.ToString(Math.Round(mu_fv_min, 4))); }
-                InputData.Add("Безразмерный коэф. C (формула  8.4) ", Convert.ToString(Math.Round(Fiber.coef_C, 4)));
+                InputData.Add("П 8.10. Безразмерный коэф. C", Convert.ToString(Math.Round(Fiber.coef_C, 4)));
 
 
                 Dictionary<string, string> LabItems = new Dictionary<string, string>()
                 {
-                    ["Коэф. ориентации фибры Kor"] = Convert.ToString(Math.Round(FiberCoef.Kor, 3)),
-                    ["Коэф. работы фибры Kn"] = Convert.ToString(Math.Round(FiberCoef.Kn, 3)),
-                    ["Длина заделки фибры в бетоне l_f,an [мм]"] = Convert.ToString(Math.Round(l_f_an,3)),
-                    ["Минимальное значение коэф. фибрового армирования μfv_min "] = Convert.ToString(Math.Round(mu_fv_min,4)),
-                    ["Максимальный размер зерен крупного заполнителя C_max [мм]"] = Convert.ToString(Math.Round(C_max,3)),
-                    ["Минимальная площадь поперечного сечения элемента [мм2]"] = Convert.ToString(Math.Round(A_min, 3)),
-                    ["Минимальное значение длины фибры l_f_min [мм]"] = Convert.ToString(Math.Round(l_f_min,3)),
-                    ["Расчетное остаточное сопротивление растяжение Rfbt3 [МПа]"] = Convert.ToString(Math.Round(R_fbt3,6)),
-                    ["Нормативное остаточное сопротивление растяжение Rfbt3_n [МПа]"] = Convert.ToString(Math.Round(R_fbt3_n, 6)),
-                    ["Расчетное сопротивление сжатия Rfb [МПа]"] = Convert.ToString(Math.Round(R_fb,6)),
-                    ["Коэф. фибрового армирования по площади (растянутой зоны) μ_fa"] = Convert.ToString(Math.Round(mu_fa,4)),
-                    ["Коэф. фибрового армирования по площади (сжатой зоны) μ'_fa"] = Convert.ToString(Math.Round(mu_1_fa, 4)),
-                    ["Модуль упругости Efb [МПа]"] = Convert.ToString(Math.Round(E_fb,6)),
+                    ["Таблица В1. Коэф. ориентации фибры Kor"] = Convert.ToString(Math.Round(FiberCoef.Kor, 3)),
+                    ["Таблица В2. Коэф. работы фибры Kn"] = Convert.ToString(Math.Round(FiberCoef.Kn, 3)),
+                    ["П В1. Длина заделки фибры в бетоне l_f,an [мм]"] = Convert.ToString(Math.Round(l_f_an,3)),
+                    ["П 8.10. Минимальное значение коэф. фибрового армирования μfv_min "] = Convert.ToString(Math.Round(mu_fv_min,4)),
+                    ["П 8.11. Максимальный размер зерен крупного заполнителя C_max [мм]"] = Convert.ToString(Math.Round(C_max,3)),
+                    ["П 8.8. Минимальная площадь поперечного сечения элемента [мм2]"] = Convert.ToString(Math.Round(A_min, 3)),
+                    ["П 8.12. Минимальное значение длины фибры l_f_min [мм]"] = Convert.ToString(Math.Round(l_f_min,3)),
+                    ["П В2, В3. Расчетное остаточное сопротивление растяжение Rfbt3 [МПа]"] = Convert.ToString(Math.Round(R_fbt3,6)),
+                    ["П 5.2.6. Нормативное остаточное сопротивление растяжение Rfbt3_n [МПа]"] = Convert.ToString(Math.Round(R_fbt3_n, 6)),
+                    ["П В5. Расчетное сопротивление сжатия Rfb [МПа]"] = Convert.ToString(Math.Round(R_fb,6)),
+                    ["П В7. Коэф. фибрового армирования по площади (растянутой зоны) μ_fa"] = Convert.ToString(Math.Round(mu_fa,4)),
+                    ["П В7. Коэф. фибрового армирования по площади (сжатой зоны) μ'_fa"] = Convert.ToString(Math.Round(mu_1_fa, 4)),
+                    ["П 5.2.8. Модуль упругости Efb [МПа]"] = Convert.ToString(Math.Round(E_fb,6)),
                     ["Модуль сдвига Gfb [МПа]"] = Convert.ToString(Math.Round(G_fb,6))
                 };
                 labReport.InputData = InputData;

@@ -994,6 +994,7 @@
             // 
             // cmbConcreteType
             // 
+            this.cmbConcreteType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbConcreteType.FormattingEnabled = true;
             this.cmbConcreteType.Location = new System.Drawing.Point(10, 19);
             this.cmbConcreteType.Name = "cmbConcreteType";
@@ -1185,6 +1186,7 @@
             // 
             // cmbConcrete
             // 
+            this.cmbConcrete.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbConcrete.FormattingEnabled = true;
             this.cmbConcrete.Location = new System.Drawing.Point(255, 19);
             this.cmbConcrete.Name = "cmbConcrete";

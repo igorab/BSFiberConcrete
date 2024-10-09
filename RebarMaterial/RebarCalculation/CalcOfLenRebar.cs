@@ -138,7 +138,7 @@ namespace BSFiberConcrete
 
                 Dictionary<string, string> LabItems = new Dictionary<string, string>()
                 {
-                    ["Базовая (основная) длина анкеровки l0,an [мм] "] = Convert.ToString(Math.Round(l0_an, 3)),
+                    ["П 8.7. Базовая (основная) длина анкеровки l0,an [мм] "] = Convert.ToString(Math.Round(l0_an, 3)),
                     ["Требуемая расчетная длина lan [мм] "] = Convert.ToString(Math.Round(lan, 3)),
                 };
                 labReport.InputData = InputData;

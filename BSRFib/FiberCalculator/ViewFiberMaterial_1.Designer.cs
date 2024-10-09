@@ -48,6 +48,7 @@
             this.cmbFiber_Geometry = new System.Windows.Forms.ComboBox();
             this.lab_FiberMat = new System.Windows.Forms.Label();
             this.lab_Fiber_l = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel3.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -71,7 +72,8 @@
             this.tableLayoutPanel3.Controls.Add(this.lab_Rf_ser, 1, 2);
             this.tableLayoutPanel3.Controls.Add(this.label_Rf, 0, 3);
             this.tableLayoutPanel3.Controls.Add(this.label_Rf_ser, 0, 2);
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 35);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(4, 43);
+            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 5;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
@@ -79,16 +81,17 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(401, 100);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(535, 123);
             this.tableLayoutPanel3.TabIndex = 6;
             // 
             // label_Hf
             // 
             this.label_Hf.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label_Hf.AutoSize = true;
-            this.label_Hf.Location = new System.Drawing.Point(3, 3);
+            this.label_Hf.Location = new System.Drawing.Point(4, 4);
+            this.label_Hf.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label_Hf.Name = "label_Hf";
-            this.label_Hf.Size = new System.Drawing.Size(143, 13);
+            this.label_Hf.Size = new System.Drawing.Size(178, 16);
             this.label_Hf.TabIndex = 12;
             this.label_Hf.Text = "Коэф. анкеровки фибры ηf";
             // 
@@ -96,9 +99,10 @@
             // 
             this.lab_Hf.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lab_Hf.AutoSize = true;
-            this.lab_Hf.Location = new System.Drawing.Point(304, 3);
+            this.lab_Hf.Location = new System.Drawing.Point(406, 4);
+            this.lab_Hf.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lab_Hf.Name = "lab_Hf";
-            this.lab_Hf.Size = new System.Drawing.Size(35, 13);
+            this.lab_Hf.Size = new System.Drawing.Size(44, 16);
             this.lab_Hf.TabIndex = 16;
             this.lab_Hf.Text = "label8";
             // 
@@ -106,9 +110,10 @@
             // 
             this.label_Ef.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label_Ef.AutoSize = true;
-            this.label_Ef.Location = new System.Drawing.Point(3, 83);
+            this.label_Ef.Location = new System.Drawing.Point(4, 101);
+            this.label_Ef.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label_Ef.Name = "label_Ef";
-            this.label_Ef.Size = new System.Drawing.Size(151, 13);
+            this.label_Ef.Size = new System.Drawing.Size(190, 16);
             this.label_Ef.TabIndex = 14;
             this.label_Ef.Text = "Модуль упругости Фибры Ef";
             // 
@@ -116,9 +121,10 @@
             // 
             this.lab_Gamma_fb1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lab_Gamma_fb1.AutoSize = true;
-            this.lab_Gamma_fb1.Location = new System.Drawing.Point(304, 23);
+            this.lab_Gamma_fb1.Location = new System.Drawing.Point(406, 28);
+            this.lab_Gamma_fb1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lab_Gamma_fb1.Name = "lab_Gamma_fb1";
-            this.lab_Gamma_fb1.Size = new System.Drawing.Size(41, 13);
+            this.lab_Gamma_fb1.Size = new System.Drawing.Size(51, 16);
             this.lab_Gamma_fb1.TabIndex = 21;
             this.lab_Gamma_fb1.Text = "label12";
             // 
@@ -126,9 +132,10 @@
             // 
             this.lab_Ef.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lab_Ef.AutoSize = true;
-            this.lab_Ef.Location = new System.Drawing.Point(304, 83);
+            this.lab_Ef.Location = new System.Drawing.Point(406, 101);
+            this.lab_Ef.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lab_Ef.Name = "lab_Ef";
-            this.lab_Ef.Size = new System.Drawing.Size(41, 13);
+            this.lab_Ef.Size = new System.Drawing.Size(51, 16);
             this.lab_Ef.TabIndex = 19;
             this.lab_Ef.Text = "label11";
             // 
@@ -136,9 +143,10 @@
             // 
             this.label12.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(355, 83);
+            this.label12.Location = new System.Drawing.Point(475, 101);
+            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(30, 13);
+            this.label12.Size = new System.Drawing.Size(36, 16);
             this.label12.TabIndex = 25;
             this.label12.Text = "МПа";
             // 
@@ -146,9 +154,10 @@
             // 
             this.label_Gamma_fb1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label_Gamma_fb1.AutoSize = true;
-            this.label_Gamma_fb1.Location = new System.Drawing.Point(3, 23);
+            this.label_Gamma_fb1.Location = new System.Drawing.Point(4, 28);
+            this.label_Gamma_fb1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label_Gamma_fb1.Name = "label_Gamma_fb1";
-            this.label_Gamma_fb1.Size = new System.Drawing.Size(145, 13);
+            this.label_Gamma_fb1.Size = new System.Drawing.Size(182, 16);
             this.label_Gamma_fb1.TabIndex = 20;
             this.label_Gamma_fb1.Text = "Коэф. условий работы γfb1";
             // 
@@ -156,9 +165,10 @@
             // 
             this.label11.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(355, 63);
+            this.label11.Location = new System.Drawing.Point(475, 76);
+            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(30, 13);
+            this.label11.Size = new System.Drawing.Size(36, 16);
             this.label11.TabIndex = 24;
             this.label11.Text = "МПа";
             // 
@@ -166,9 +176,10 @@
             // 
             this.label10.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(355, 43);
+            this.label10.Location = new System.Drawing.Point(475, 52);
+            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(30, 13);
+            this.label10.Size = new System.Drawing.Size(36, 16);
             this.label10.TabIndex = 23;
             this.label10.Text = "МПа";
             // 
@@ -176,9 +187,10 @@
             // 
             this.lab_Rf.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lab_Rf.AutoSize = true;
-            this.lab_Rf.Location = new System.Drawing.Point(304, 63);
+            this.lab_Rf.Location = new System.Drawing.Point(406, 76);
+            this.lab_Rf.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lab_Rf.Name = "lab_Rf";
-            this.lab_Rf.Size = new System.Drawing.Size(41, 13);
+            this.lab_Rf.Size = new System.Drawing.Size(51, 16);
             this.lab_Rf.TabIndex = 18;
             this.lab_Rf.Text = "label10";
             // 
@@ -186,9 +198,10 @@
             // 
             this.lab_Rf_ser.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lab_Rf_ser.AutoSize = true;
-            this.lab_Rf_ser.Location = new System.Drawing.Point(304, 43);
+            this.lab_Rf_ser.Location = new System.Drawing.Point(406, 52);
+            this.lab_Rf_ser.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lab_Rf_ser.Name = "lab_Rf_ser";
-            this.lab_Rf_ser.Size = new System.Drawing.Size(35, 13);
+            this.lab_Rf_ser.Size = new System.Drawing.Size(44, 16);
             this.lab_Rf_ser.TabIndex = 17;
             this.lab_Rf_ser.Text = "label9";
             // 
@@ -196,9 +209,10 @@
             // 
             this.label_Rf.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label_Rf.AutoSize = true;
-            this.label_Rf.Location = new System.Drawing.Point(3, 63);
+            this.label_Rf.Location = new System.Drawing.Point(4, 76);
+            this.label_Rf.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label_Rf.Name = "label_Rf";
-            this.label_Rf.Size = new System.Drawing.Size(260, 13);
+            this.label_Rf.Size = new System.Drawing.Size(337, 16);
             this.label_Rf.TabIndex = 15;
             this.label_Rf.Text = "Расчетное сопротивление фибровой арматуры Rf";
             // 
@@ -206,9 +220,10 @@
             // 
             this.label_Rf_ser.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label_Rf_ser.AutoSize = true;
-            this.label_Rf_ser.Location = new System.Drawing.Point(3, 43);
+            this.label_Rf_ser.Location = new System.Drawing.Point(4, 52);
+            this.label_Rf_ser.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label_Rf_ser.Name = "label_Rf_ser";
-            this.label_Rf_ser.Size = new System.Drawing.Size(293, 13);
+            this.label_Rf_ser.Size = new System.Drawing.Size(374, 16);
             this.label_Rf_ser.TabIndex = 13;
             this.label_Rf_ser.Text = "Нормативное сопротивление растяжению фибры Rf_ser";
             // 
@@ -216,39 +231,46 @@
             // 
             this.lab_Fiber_Geometry.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lab_Fiber_Geometry.AutoSize = true;
-            this.lab_Fiber_Geometry.Location = new System.Drawing.Point(467, 77);
+            this.lab_Fiber_Geometry.Location = new System.Drawing.Point(623, 95);
+            this.lab_Fiber_Geometry.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lab_Fiber_Geometry.Name = "lab_Fiber_Geometry";
-            this.lab_Fiber_Geometry.Size = new System.Drawing.Size(102, 13);
+            this.lab_Fiber_Geometry.Size = new System.Drawing.Size(124, 16);
             this.lab_Fiber_Geometry.TabIndex = 12;
             this.lab_Fiber_Geometry.Text = "Геометрия Фибры";
             // 
             // cmbFiberMaterial
             // 
             this.cmbFiberMaterial.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.cmbFiberMaterial.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbFiberMaterial.FormattingEnabled = true;
-            this.cmbFiberMaterial.Location = new System.Drawing.Point(133, 3);
+            this.cmbFiberMaterial.Location = new System.Drawing.Point(177, 4);
+            this.cmbFiberMaterial.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cmbFiberMaterial.Name = "cmbFiberMaterial";
-            this.cmbFiberMaterial.Size = new System.Drawing.Size(540, 21);
+            this.cmbFiberMaterial.Size = new System.Drawing.Size(719, 24);
             this.cmbFiberMaterial.TabIndex = 5;
             this.cmbFiberMaterial.SelectedIndexChanged += new System.EventHandler(this.cmbFiberMaterial_SelectedIndexChanged);
             // 
             // cmbFiber_l
             // 
             this.cmbFiber_l.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.cmbFiber_l.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbFiber_l.FormattingEnabled = true;
-            this.cmbFiber_l.Location = new System.Drawing.Point(578, 101);
+            this.cmbFiber_l.Location = new System.Drawing.Point(771, 126);
+            this.cmbFiber_l.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cmbFiber_l.Name = "cmbFiber_l";
-            this.cmbFiber_l.Size = new System.Drawing.Size(95, 21);
+            this.cmbFiber_l.Size = new System.Drawing.Size(86, 24);
             this.cmbFiber_l.TabIndex = 11;
             this.cmbFiber_l.SelectedIndexChanged += new System.EventHandler(this.cmbFiber_l_SelectedIndexChanged);
             // 
             // cmbFiber_Geometry
             // 
             this.cmbFiber_Geometry.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.cmbFiber_Geometry.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbFiber_Geometry.FormattingEnabled = true;
-            this.cmbFiber_Geometry.Location = new System.Drawing.Point(578, 74);
+            this.cmbFiber_Geometry.Location = new System.Drawing.Point(771, 91);
+            this.cmbFiber_Geometry.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cmbFiber_Geometry.Name = "cmbFiber_Geometry";
-            this.cmbFiber_Geometry.Size = new System.Drawing.Size(95, 21);
+            this.cmbFiber_Geometry.Size = new System.Drawing.Size(125, 24);
             this.cmbFiber_Geometry.TabIndex = 10;
             this.cmbFiber_Geometry.SelectedIndexChanged += new System.EventHandler(this.cmbFiber_Geometry_SelectedIndexChanged);
             // 
@@ -256,9 +278,10 @@
             // 
             this.lab_FiberMat.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lab_FiberMat.AutoSize = true;
-            this.lab_FiberMat.Location = new System.Drawing.Point(0, 7);
+            this.lab_FiberMat.Location = new System.Drawing.Point(0, 9);
+            this.lab_FiberMat.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lab_FiberMat.Name = "lab_FiberMat";
-            this.lab_FiberMat.Size = new System.Drawing.Size(135, 13);
+            this.lab_FiberMat.Size = new System.Drawing.Size(170, 16);
             this.lab_FiberMat.TabIndex = 4;
             this.lab_FiberMat.Text = "Тип Фибровой арматуры";
             // 
@@ -266,16 +289,29 @@
             // 
             this.lab_Fiber_l.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lab_Fiber_l.AutoSize = true;
-            this.lab_Fiber_l.Location = new System.Drawing.Point(467, 105);
+            this.lab_Fiber_l.Location = new System.Drawing.Point(623, 129);
+            this.lab_Fiber_l.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lab_Fiber_l.Name = "lab_Fiber_l";
-            this.lab_Fiber_l.Size = new System.Drawing.Size(80, 13);
+            this.lab_Fiber_l.Size = new System.Drawing.Size(95, 16);
             this.lab_Fiber_l.TabIndex = 9;
             this.lab_Fiber_l.Text = "Длина Фибры";
             // 
+            // label1
+            // 
+            this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(865, 129);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(25, 16);
+            this.label1.TabIndex = 13;
+            this.label1.Text = "мм";
+            // 
             // ViewFiberMaterial_1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.tableLayoutPanel3);
             this.Controls.Add(this.lab_Fiber_Geometry);
             this.Controls.Add(this.cmbFiberMaterial);
@@ -285,7 +321,7 @@
             this.Controls.Add(this.cmbFiber_Geometry);
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "ViewFiberMaterial_1";
-            this.Size = new System.Drawing.Size(710, 140);
+            this.Size = new System.Drawing.Size(947, 172);
             this.Load += new System.EventHandler(this.ViewFiberMaterial_1_Load);
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
@@ -315,5 +351,6 @@
         private System.Windows.Forms.ComboBox cmbFiber_Geometry;
         private System.Windows.Forms.Label lab_FiberMat;
         private System.Windows.Forms.Label lab_Fiber_l;
+        private System.Windows.Forms.Label label1;
     }
 }

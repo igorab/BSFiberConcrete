@@ -1,56 +1,79 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Data;
+using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
+using System.Xml.Linq;
+using System.Xml.Schema;
 
 namespace BSBeamCalculator
 {
     /// <summary>
     /// Класс нужен для сбора информации с формы
     /// и дальнейшей передачи информации в вычислительный класс BeamDiagram
-    /// Для данных расчета используется класс 
     /// </summary>
-    public static class ControllerBeamDiagram
+    public class ControllerBeamDiagram
     {
         /// <summary>
         /// Длинна балки
         /// </summary>
-        public static double l;
+        public double l;
         /// <summary>
         /// Тип защемления балки
         /// </summary>
-        public static string support;
+        public string support;
         /// <summary>
         /// тип нагрузки на балку
         /// </summary>
-        public static string load;
+        public string load;
         /// <summary>
         /// Значение силы на балку
         /// </summary>
-        public static double f;
+        public double f;
         /// <summary>
         /// координата приложение силы
         /// </summary>
-        public static double x1;
+        public double x1;
         /// <summary>
         /// конечная координата приложение силы
         /// (для распределенной нагрузки)
         /// </summary>
-        public static double x2;
+        public double x2;
         /// <summary>
         /// DiagramResult - класс для данных необходимых для построения грфика
         /// </summary>
-        public static DiagramResult result;
+        public DiagramResult result;
 
-        public static Dictionary<string, double> resultEfforts;
+        public Dictionary<string, double> resultEfforts;
+
+        public BeamDiagram beamDiagram;
 
 
-        public static void RunCalculation()
+        /// <summary>
+        /// Путь для сохранения картинки
+        /// </summary>
+        public List<string> path2BeamDiagrams;
+
+        /// <summary>
+        /// счетчик картинок
+        /// </summary>
+        private int _numChart = 1;
+
+        public ControllerBeamDiagram(List<string> path2Diagrams = null )
         {
-            BeamDiagram BD = new BeamDiagram(support, load, l, f, x1, x2);
-            result = BD.CalculateBeamDiagram();
+            path2BeamDiagrams = path2Diagrams;
+        }
 
+        public void RunCalculation()
+        {
+            beamDiagram = new BeamDiagram(support, load, l, f, x1, x2);
+            result = beamDiagram.CalculateBeamDiagram();
 
             //if (resultEfforts.ContainsKey("Mmax"))
             //    resultEfforts["Mmax"] = result.maxM;
@@ -60,6 +83,219 @@ namespace BSBeamCalculator
             //    resultEfforts["Q"] = result.maxAbsQ;
         }
 
+
+        /// <summary>
+        /// Получить значение момента в зависимости от координаты
+        /// </summary>
+        /// <param name="x"> значение длины</param>
+        /// <returns></returns>
+        public double GetM(DiagramResult res, double x)
+        {
+
+            if (x < 0 && x > l) 
+            { return 0; }
+
+            if (x == 0)
+            { return res.pointM[1][1]; }
+
+            if (x == l)
+            { return res.pointM[1][res.pointM[1].Length-2]; }
+
+            List<double> X = res.pointM[0].ToList();
+            List<double> M = res.pointM[1].ToList();
+
+            if (X.Contains(x))
+            { return M[X.IndexOf(x)]; }
+
+            int index = 0;
+            for (int i = 0; X.Count > i; i++)
+            {
+                if ((x - X[i]) < 0)
+                {
+                    index = i;
+                    break;
+                }
+            }
+
+            double resultM;
+            double ro = (x - X[index - 1]) / (X[index] - X[index - 1]);
+            resultM = M[index - 1] + (M[index] - M[index - 1]) * ro;
+
+            return resultM;
+
+        }
+
+
+        public void Test()
+        {
+            // Кол- во рассматриваемых участков
+            int n = 20;
+            // всего рассматриваемых точек
+            int m = n + 1 + n;
+            // шаг между точками
+            double delta = l / (2 * n);
+
+            //double d = 1;
+            double d = 2d * 1000000d * 520800d;
+
+            List<double> X = new List<double>();
+            List<double> M = new List<double>();
+            List<double> D = new List<double>();
+
+            for (int i = 0; m > i; i++)
+            {
+                double tmpX = delta * i;
+                double tmpM = GetM(result, tmpX);
+                X.Add(tmpX);
+                M.Add(tmpM);
+
+                if (i > 0 && i % 2 != 0)
+                { D.Add(d); }
+            }
+
+            List<double> XForChart = new List<double>();
+            List<double> U = new List<double>();
+            for (int i = 1; m > i; i = i + 2)
+            {
+                double u = CalculateDeflectionAtPoint(M, X, D, i);
+                XForChart.Add(X[i]);
+                U.Add(u);
+            }
+
+            string[] names = { "Прогиб", "см", "см", "BeamDiagramUTest" };
+            CreteChart(XForChart, U, names);
+
+
+            if (beamDiagram.simpleDiagram.IsCalculateBeamDeflection)
+            {
+                List<double> simpleU = new List<double>();
+                for (int i = 1; m > i; i = i + 2)
+                { simpleU.Add(beamDiagram.simpleDiagram.CalculateBeamDeflection(X[i], d)); }
+                CreteChart(XForChart, simpleU, new string[] { "Прогиб", "см", "см", "SimpleBeamDiagramU" });
+            }
+        }
+
+
+        public double CalculateDeflectionAtPoint(List<double> M, List<double> X, List<double> D, int index)
+        {
+            string forceType = "Concentrated";
+            double forceValue = 1;
+
+            BeamDiagram beamDiagram = new BeamDiagram(support, forceType, l, forceValue, X[index], 0);
+            DiagramResult res = beamDiagram.CalculateBeamDiagram();
+
+
+            //string[] names = { "Момент", "кг*см", "см", $"BeamDiagramM_Test {index}" };
+            //CreteChart(res.pointM[0].ToList(), res.pointM[1].ToList(), names);
+
+            double sectionLength = X[index + 1] - X[index - 1];
+            double u = 0;
+
+            for (int i = 1; X.Count > i; i = i + 2)
+            { 
+                double a = M[i-1];
+                double b = M[i];
+                double c = M[i+1];
+                if (b == 0)
+                { 
+                    // если значение момента в точке равно 0, исключаем точку из расчета, тк получается некорректное значение жесткости
+                    continue;
+                }
+                double a1 = GetM(res, X[i - 1]);
+                double b1 = GetM(res, X[i]);
+                double c1 = GetM(res, X[i + 1]);
+
+                int num = (i - 1) / 2;
+                double tmpU = sectionLength / (6 * D[num]) * (a * a1 + 4 * b * b1 + c * c1);
+                u = u + tmpU;
+            }
+            return -u;
+        }
+
+
+
+        public void CreteChart(List<double> valueX, List<double> valueY, string[] names)
+        {
+            System.Windows.Forms.DataVisualization.Charting.Chart chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Title title = new System.Windows.Forms.DataVisualization.Charting.Title();
+
+            string numChart = _numChart.ToString();
+
+            string CAName = $"ChartArea{numChart}";
+            string cName = $"chart{numChart}";
+            string tName = $"Title{numChart}";
+            string sName = $"Series{numChart}";
+
+            //names;
+            string textName = names[0];
+            string titleX = names[1];
+            string titleY = names[2];
+            string name2Save = names[3];
+
+            chartArea.Name = CAName;
+            chart.Name = cName;
+            chart.Text = cName;
+
+            title.Name = tName;
+            title.Text = textName;
+
+            chart.ChartAreas.Add(chartArea);
+            chart.Dock = System.Windows.Forms.DockStyle.Fill;
+            chart.Location = new System.Drawing.Point(3, 3);
+            chart.Size = new System.Drawing.Size(664, 217);
+            chart.TabIndex = 0;
+            chart.Titles.Add(title);
+
+            chart.Series.Add(sName);
+            chart.Series[sName].BorderWidth = 4;
+            chart.ChartAreas[0].AxisX.Minimum = 0;
+            chart.ChartAreas[0].AxisX.Maximum = l;
+            chart.Series[sName].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            for (int i = 0; i < valueX.Count; i++)
+            {  chart.Series[sName].Points.AddXY(valueX[i], valueY[i]); }
+
+            Font axisFont = new System.Drawing.Font("Microsoft Sans Serif", 8F,
+                ((System.Drawing.FontStyle)(System.Drawing.FontStyle.Bold)), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            chart.ChartAreas[0].AxisX.Title = titleX;
+            chart.ChartAreas[0].AxisX.TitleFont = axisFont;
+            chart.ChartAreas[0].AxisY.Title = titleY;
+            chart.ChartAreas[0].AxisY.TitleFont = axisFont;
+
+            SaveChart(chart, name2Save);
+        }
+
+
+        /// <summary>
+        /// Сохранить картинку c прогибами
+        /// </summary>
+        public void SaveChart(System.Windows.Forms.DataVisualization.Charting.Chart chart, string pictureName)
+        {
+            if (path2BeamDiagrams != null)
+            {
+                string pathToPicture = pictureName + ".png";
+                chart.SaveImage(pathToPicture, System.Windows.Forms.DataVisualization.Charting.ChartImageFormat.Png);
+                // little bit костыльно
+                if (pictureName == "BeamDiagramU")
+                { 
+                    if (path2BeamDiagrams.Count > 2)
+                    {
+                        path2BeamDiagrams[2] = pathToPicture;
+                        return;
+                    }
+                }
+                if (pictureName == "SimpleBeamDiagramU")
+                {
+                    if (path2BeamDiagrams.Count > 3)
+                    {
+                        path2BeamDiagrams[3] = pathToPicture;
+                        return;
+                    }
+                }
+                path2BeamDiagrams.Add(pathToPicture);
+            }
+            _numChart++;
+        }
     }
 
 

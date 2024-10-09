@@ -21,8 +21,8 @@ namespace CBAnsDes
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
-            CBAnsDes.My.MyApplication.Main([]);
+            string[] a = new string[] { };
+            CBAnsDes.My.MyApplication.Main(a);
 
             //Application.Run(new MDIMain());
         }

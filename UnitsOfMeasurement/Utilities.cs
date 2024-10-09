@@ -72,8 +72,6 @@ namespace BSFiberConcrete.UnitsOfMeasurement
         cm = 1,
         [Description("м")]
         m = 2,
-        [Description("test")]
-        test = 8
     }
 
 

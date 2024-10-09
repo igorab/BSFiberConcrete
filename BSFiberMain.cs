@@ -7,6 +7,7 @@ using BSFiberConcrete.Lib;
 using BSFiberConcrete.Section;
 using BSFiberConcrete.UnitsOfMeasurement;
 using BSFiberConcrete.UnitsOfMeasurement.PhysicalQuantities;
+using CsvHelper.TypeConversion;
 using ScottPlot.Statistics;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
+using static CBAnsDes.Member;
 
 
 namespace BSFiberConcrete
@@ -84,6 +86,7 @@ namespace BSFiberConcrete
         private MemoryStream m_ImageStream;
 
         private LameUnitConverter _UnitConverter;
+        private ControllerBeamDiagram _beamDiagramController;
 
         public BSFiberMain()
         {
@@ -133,7 +136,9 @@ namespace BSFiberConcrete
                     gridEfforts[i, 0].Value = "0";
                 }
                 m_Path2BeamDiagrams = new List<string>() { };
-                BeamCalculatorControl beamCalculatorControl = new BeamCalculatorControl(tbLength, gridEfforts, m_Path2BeamDiagrams);
+
+                _beamDiagramController = new ControllerBeamDiagram(m_Path2BeamDiagrams);
+                BeamCalculatorControl beamCalculatorControl = new BeamCalculatorControl(tbLength, gridEfforts, _beamDiagramController);
                 tabPBeam.Controls.Add(beamCalculatorControl);
             }
         }
@@ -1224,22 +1229,128 @@ namespace BSFiberConcrete
         /// <param name="_My">Изгибающие моменты относительно оси Y</param>
         /// <returns>кривизны в плосткости XOZ</returns>
         private List<double> CalcNDM_My(List<double>  _My)
-        {            
+        {
             Dictionary<string, double> dictParams = DictCalcParams(m_BeamSection);
             NDMSetup ndmSetup = NDMSetupValuesFromForm();
             List<double> l_Kxz = new List<double>();
 
             foreach (double my in _My)
-            {                                    
+            {
                 CalcNDM calcNDM = new CalcNDM(m_BeamSection) { setup = ndmSetup, D = dictParams };
                 Dictionary<string, double> res = calcNDM.RunMy(my);
-                
+
                 if (res != null)
                     l_Kxz.Add(res["Kz"]);
             }
 
             return l_Kxz;
+
         }
+
+        /// <summary>
+        ///  Расчет жесткости сечения для списка моментов
+        /// </summary>
+        /// <param name="_My">Изгибающие моменты кг*с</param>
+        /// <returns>Жесткость кг*см2</returns>
+        private List<double> CalculateStiffness(List<double> _My)
+        {
+            Dictionary<string, double> dictParams = DictCalcParams(m_BeamSection);
+            NDMSetup ndmSetup = NDMSetupValuesFromForm();
+            List<double> bendingStiffness = new List<double>();
+
+            foreach (double my in _My)
+            {
+                CalcNDM calcNDM = new CalcNDM(m_BeamSection) { setup = ndmSetup, D = dictParams };
+                Dictionary<string, double> res = calcNDM.RunMy(my);
+
+                if (res != null)
+                    bendingStiffness.Add(Math.Abs(my / res["Kz"]));
+            }
+
+            return bendingStiffness;
+        }
+
+        
+        /// <summary>
+        ///
+        /// </summary>
+        private double CalculateBeamDeflections(ControllerBeamDiagram beamController)
+        {
+            // выполнять расчет только в случае, если ранее были сохранены 
+            if (beamController == null || beamController.path2BeamDiagrams.Count == 0)
+            { return double.NaN; }
+
+            double deflexionMax = 0;
+
+            // Кол- во рассматриваемых участков
+            int n = 20;
+            // всего точек 
+            int m = n + 1 + n;
+            // шаг между точками
+            double delta = beamController.l / (2 * n);
+            // Значения в точках
+            List<double> X = new List<double>();
+            List<double> valueMomentInX = new List<double>();
+            // Значения на середине рассматриваемого участка
+            List<double> valuesMomentOnSection = new List<double>();
+            List<double> valuesStiffnesOnSection = new List<double>();
+
+            for (int i = 0; m > i; i++)
+            {
+                double tmpX = delta * i;
+                double tmpM = beamController.GetM(beamController.result, tmpX);
+
+                X.Add(tmpX);
+                valueMomentInX.Add(tmpM);
+
+                if (i > 0 && i % 2 != 0)
+                { valuesMomentOnSection.Add(tmpM); }
+            }
+
+            if (valuesMomentOnSection.Count == 0) { return double.NaN; }
+
+            // Получение жесткости на участках
+            valuesStiffnesOnSection = CalculateStiffness(valuesMomentOnSection);
+            //List<double> valuesСurvatureOnSection = CalcNDM_My(valuesMomentOnSection);
+
+            List<double> U = new List<double>();
+            List<double> XForChart = new List<double>();
+            for (int i = 1; X.Count > i; i = i + 2)
+            {
+                double u = beamController.CalculateDeflectionAtPoint(valueMomentInX, X, valuesStiffnesOnSection, i);
+                U.Add(u*10); // перевод из см в мм 
+                XForChart.Add(X[i]);
+                if (deflexionMax > u * 10) // знеачение прогиба с минусом
+                { deflexionMax = u * 10; }
+            }
+            string[] names = { "Прогиб", "см", "мм", "BeamDiagramU" };
+            beamController.CreteChart(XForChart, U, names);
+            
+            if (beamController.beamDiagram.simpleDiagram.IsCalculateBeamDeflection)
+            {
+                double d = 0;
+                foreach (double Stiffnes in valuesStiffnesOnSection)
+                {
+                    if (double.IsNaN(Stiffnes)) { continue; }
+                    d = (d + Stiffnes) / 2;
+                }
+                List<double> simpleU = new List<double>();
+                List<double> XForChart1 = new List<double>();
+                for (int i = 1; X.Count > i; i = i + 2)
+                {
+                    XForChart1.Add(X[i]);
+                    double tmpU = beamController.beamDiagram.simpleDiagram.CalculateBeamDeflection(X[i], d) * 10;
+                    simpleU.Add(tmpU);
+                }
+                beamController.CreteChart(XForChart, simpleU, new string[] { "Прогиб по формуле", "cм", "мм", "SimpleBeamDiagramU" });
+            }
+
+            if (deflexionMax == 0)
+                return double.NaN;
+
+            return deflexionMax;
+        }
+
 
         /// <summary>
         /// Данные с формы
@@ -1302,6 +1413,8 @@ namespace BSFiberConcrete
             // расчет:
             CalcNDM calcNDM = new CalcNDM(_beamSection) {setup = _setup, D = _D };            
             calcNDM.Run();
+
+            calcNDM.CalcRes.Deflexion_max = CalculateBeamDeflections(_beamDiagramController);
             // результаты:
 
             if (calcNDM.CalcRes != null)
