@@ -169,6 +169,9 @@ namespace BSFiberConcrete
         [DisplayName("Максимально допустимая относительная деформация в арматуре, [.]")]
         public double Eps_s_ult { get; set; }
 
+        [DisplayName("Максимальный прогиб балки [мм]")]
+        public double Deflexion_max { get; set; }
+
         #endregion
 
         private string DN(string _attr) => BSFiberCalculation.DsplN(typeof(BSCalcResultNDM), _attr);
@@ -397,6 +400,8 @@ namespace BSFiberConcrete
             AddToResult("Kx", Kx);
             AddToResult("ry", ry);
             AddToResult("Ky", Ky);
+            if (!(Deflexion_max is double.NaN))
+                AddToResult("Deflexion_max", Deflexion_max);
 
             // растяжение
             Res1Group.Add("<b>--------Растяжение:--------</b>", double.NaN);

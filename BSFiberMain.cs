@@ -1265,15 +1265,17 @@ namespace BSFiberConcrete
             return bendingStiffness;
         }
 
-
+        
         /// <summary>
-        ///  Расчет прогибов по длине балки
+        ///
         /// </summary>
-        private void CalculateBeamDeflections(ControllerBeamDiagram beamController)
+        private double CalculateBeamDeflections(ControllerBeamDiagram beamController)
         {
             // выполнять расчет только в случае, если ранее были сохранены 
             if (beamController == null || beamController.path2BeamDiagrams.Count == 0)
-            { return; }
+            { return double.NaN; }
+
+            double deflexionMax = 0;
 
             // Кол- во рассматриваемых участков
             int n = 20;
@@ -1300,11 +1302,10 @@ namespace BSFiberConcrete
                 { valuesMomentOnSection.Add(tmpM); }
             }
 
-            if (valuesMomentOnSection.Count == 0) { return; }
+            if (valuesMomentOnSection.Count == 0) { return double.NaN; }
 
             // Получение жесткости на участках
             valuesStiffnesOnSection = CalculateStiffness(valuesMomentOnSection);
-
             //List<double> valuesСurvatureOnSection = CalcNDM_My(valuesMomentOnSection);
 
             List<double> U = new List<double>();
@@ -1314,32 +1315,35 @@ namespace BSFiberConcrete
                 double u = beamController.CalculateDeflectionAtPoint(valueMomentInX, X, valuesStiffnesOnSection, i);
                 U.Add(u*10); // перевод из см в мм 
                 XForChart.Add(X[i]);
+                if (deflexionMax > u * 10) // знеачение прогиба с минусом
+                { deflexionMax = u * 10; }
             }
             string[] names = { "Прогиб", "см", "мм", "BeamDiagramU" };
             beamController.CreteChart(XForChart, U, names);
-
             
             if (beamController.beamDiagram.simpleDiagram.IsCalculateBeamDeflection)
             {
                 double d = 0;
                 foreach (double Stiffnes in valuesStiffnesOnSection)
                 {
-                    if (double.IsNaN(Stiffnes))
-                    { continue; }
-
+                    if (double.IsNaN(Stiffnes)) { continue; }
                     d = (d + Stiffnes) / 2;
                 }
                 List<double> simpleU = new List<double>();
                 List<double> XForChart1 = new List<double>();
                 for (int i = 1; X.Count > i; i = i + 2)
                 {
-
                     XForChart1.Add(X[i]);
                     double tmpU = beamController.beamDiagram.simpleDiagram.CalculateBeamDeflection(X[i], d) * 10;
                     simpleU.Add(tmpU);
                 }
                 beamController.CreteChart(XForChart, simpleU, new string[] { "Прогиб по формуле", "cм", "мм", "SimpleBeamDiagramU" });
             }
+
+            if (deflexionMax == 0)
+                return double.NaN;
+
+            return deflexionMax;
         }
 
 
@@ -1405,7 +1409,7 @@ namespace BSFiberConcrete
             CalcNDM calcNDM = new CalcNDM(_beamSection) {setup = _setup, D = _D };            
             calcNDM.Run();
 
-            CalculateBeamDeflections(_beamDiagramController);
+            calcNDM.CalcRes.Deflexion_max = CalculateBeamDeflections(_beamDiagramController);
             // результаты:
 
             if (calcNDM.CalcRes != null)
