@@ -2631,5 +2631,19 @@ namespace BSFiberConcrete
                 Init_Rfb_Efb(betonTypeId);
             }            
         }
+
+        private void tbLength_TextChanged(object sender, EventArgs e)
+        {
+            bool ok = double.TryParse(tbLength.Text, out double _lgth);
+            if (ok)
+            {
+                numRandomEccentricity.Value = (decimal) BSFiberCalc_MNQ.Calc_e_a(_lgth, 1);
+            }
+        }
+
+        private void tbLength_ModifiedChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
