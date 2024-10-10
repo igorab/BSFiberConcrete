@@ -94,7 +94,7 @@ namespace BSFiberConcrete
         [DisplayName("Предельная продольная сила, [кг]"), Description("Res")]
         public double N_ult { get; protected set; }
 
-        [DisplayName("Коэффициент использования по усилию")]
+        [DisplayName("Коэффициент использования по усилию, [СП 360 П6.1.14 П6.1.15]")]
         public double UtilRate_N { get; protected set; }
 
         public string DN(Type _T, string _property) => _T.GetProperty(_property).GetCustomAttribute<DisplayNameAttribute>().DisplayName;
