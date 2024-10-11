@@ -216,14 +216,13 @@ namespace BSFiberConcrete
                     w.WriteLine($"<td width={bk}>{_pair.Key}</td>");
                     w.WriteLine($"<td width={bv} align=center>{_pair.Value} </td>");
 
-                    string nameCustomUnitMeasure;
-                    double newValue = _unitConverter.ConvertEffortsForReport(_pair.Key, _pair.Value, out nameCustomUnitMeasure);
-                    if (nameCustomUnitMeasure != "")
+                    string nameCustomUnitMeasure = "";
+                    double newValue = _unitConverter?.ConvertEffortsForReport(_pair.Key, _pair.Value, out nameCustomUnitMeasure) ?? 0;
+                    if (!string.IsNullOrEmpty(nameCustomUnitMeasure))
                     {
-                        w.WriteLine($"<td width={bv} align=center>{newValue + " " +nameCustomUnitMeasure} </td>");
+                        w.WriteLine($"<td width={bv} align=center>{newValue + " " + nameCustomUnitMeasure} </td>");
                     }
-                    //else
-                    //w.WriteLine($"<td width={bv} align=center>{UConv(_pair.Key, _pair.Value)} </td>");
+                    
                     w.WriteLine("</tr>");
                 }
                 w.WriteLine("</Table>");

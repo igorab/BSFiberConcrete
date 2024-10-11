@@ -174,6 +174,9 @@ namespace BSFiberConcrete
 
         #endregion
 
+        private Dictionary<string, double> m_Beam;
+
+
         private string DN(string _attr) => BSFiberCalculation.DsplN(typeof(BSCalcResultNDM), _attr);
 
         private Dictionary<int, string> DictErrors = new Dictionary<int, string>()
@@ -246,7 +249,21 @@ namespace BSFiberConcrete
             { DN("b"), b },
             { DN("h"), h }
         };
-       
+
+        public Dictionary<string, double> Beam => m_Beam;
+
+        private double InitBeamLength(double _lgth, double _coeflgth)
+        {
+            m_Beam = new Dictionary<string, double>
+            {
+                { "Длина элемента, см", _lgth },
+                { "Коэффициет расчетной длины", _coeflgth }
+            };
+
+            return (_coeflgth != 0) ? _lgth * _coeflgth : _lgth;
+        }
+
+
         /// <summary>
         /// Параметры расчета
         /// </summary>
@@ -275,8 +292,14 @@ namespace BSFiberConcrete
             Eps_fb_ult = _D["eb_ult"];
             //Eps_s_ult = _D["es_ult"];
 
-            Rods_qty = _D["rods_qty"];
-            Rods_area = _D["rods_area"];            
+            if (_D.ContainsKey("rods_qty"))
+                Rods_qty = _D["rods_qty"];
+            if (_D.ContainsKey("rods_area"))
+                Rods_area = _D["rods_area"];
+
+            if (_D.ContainsKey("lgth") && _D.ContainsKey("coeflgth"))
+                InitBeamLength(_D["lgth"], _D["coeflgth"]);
+
         }
 
         /// <summary>

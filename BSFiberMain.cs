@@ -410,6 +410,15 @@ namespace BSFiberConcrete
             }
         }
 
+        private (double, double) BeamLength()
+        {
+            double.TryParse(tbLength.Text, out double lgth);
+            double.TryParse(cmbEffectiveLengthFactor.Text, out double coeflgth);
+
+            return (lgth, coeflgth);
+        }
+
+
         /// <summary>
         /// Расчетная длина балки 
         /// </summary>
@@ -417,8 +426,8 @@ namespace BSFiberConcrete
         /// <returns></returns>
         private double InitBeamLength(bool _beaminit = false)
         {
-            double.TryParse(tbLength.Text, out double lgth);
-            double.TryParse(cmbEffectiveLengthFactor.Text, out double coeflgth);
+            double lgth, coeflgth;
+            (lgth, coeflgth) = BeamLength();
 
             if (_beaminit)
             {
@@ -1121,6 +1130,9 @@ namespace BSFiberConcrete
             mf.Rfbt2n = (double)numRfbt2n.Value;
             mf.Rfbt3n = (double)numRfbt3n.Value;
 
+            double lgth, coeflgth;
+            (lgth, coeflgth) = BeamLength();
+
             Dictionary<string, double> D = new Dictionary<string, double>()
             {
                 // enforces
@@ -1130,7 +1142,10 @@ namespace BSFiberConcrete
                 ["Qx"] = MNQ["Qx"],
                 ["Qy"] = MNQ["Qy"],
                 //
-
+                //length
+                ["lgth"] = lgth,
+                ["coeflgth"] = coeflgth,
+                //
                 //section size
                 ["b"] = 0,
                 ["h"] = 0,
@@ -1145,7 +1160,6 @@ namespace BSFiberConcrete
                 ["r1"] = 0,
                 ["R2"] = 0,
                 //
-
                 //Mesh
                 ["ny"] = (int)numMeshNY.Value,
                 ["nz"] = (int)numMeshNX.Value, // в алгоритме плосткость сечения YOZ

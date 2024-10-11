@@ -12,37 +12,36 @@ namespace BSFiberConcrete.Report
 {
     public class BSReport
     {
-        BeamSection m_BeamSection;
-        Dictionary<string, double> m_Beam;
-        Dictionary<string, double> m_Coeffs;
+        private BeamSection m_BeamSection;
 
-        public BSCalcResultNDM calcRes;
+        private Dictionary<string, double> m_Beam;
 
-        private double InitBeamLength(double _lgth, double _coeflgth)
-        {                        
-            m_Beam.Clear();
-            m_Beam.Add("Длина элемента, см", _lgth);
-            m_Beam.Add("Коэффициет расчетной длины", _coeflgth);
-            
-            return (_coeflgth != 0) ? _lgth * _coeflgth : _lgth;
+        private Dictionary<string, double> m_Coeffs;
+
+        public BSCalcResultNDM CalcRes { get; set; }
+
+        public BSReport(BeamSection _beamSection)
+        {
+            m_BeamSection = _beamSection;
+            m_Beam = new Dictionary<string, double>();
+            m_Coeffs = new Dictionary<string, double>();
         }
-
+        
         private void InitReportSections(ref BSFiberReport report)
         {            
-            report.Beam = m_Beam;
+            report.Beam = CalcRes.Beam;
             report.Coeffs =  m_Coeffs;
-            report.Efforts = calcRes.Efforts;
-            report.GeomParams = calcRes.GeomParams;
-            report.PhysParams = calcRes.PhysParams; //m_PhysParams;
-            report.Reinforcement = calcRes.Reinforcement;
-            report.CalcResults = calcRes.GetResults1Group();
-            report.CalcResults2Group = calcRes.GetResults2Group();
+            report.Efforts = CalcRes.Efforts;
+            report.GeomParams = CalcRes.GeomParams;
+            report.PhysParams = CalcRes.PhysParams; //m_PhysParams;
+            report.Reinforcement = CalcRes.Reinforcement;
+            report.CalcResults = CalcRes.GetResults1Group();
+            report.CalcResults2Group = CalcRes.GetResults2Group();
             //report.ImageStream = m_ImageStream;
             //report.Messages = m_Message;
             //report.Path2BeamDiagrams = m_Path2BeamDiagrams;
             //report._unitConverter = _UnitConverter;
         }
-
 
         private string CreateReport(int _fileId,
                                     BeamSection _BeamSection,
@@ -71,14 +70,11 @@ namespace BSFiberConcrete.Report
             }
         }
 
-
         [DisplayName("Расчет по прочности нормальных сечений на основе нелинейной деформационной модели")]
         public void CreateReportNDM()
         {
             try
-            {
-                InitBeamLength(0, 0);
-
+            {                
                 string reportName = "";
                 try
                 {
@@ -92,17 +88,7 @@ namespace BSFiberConcrete.Report
                 }
 
                 string pathToHtmlFile = CreateReport(1, m_BeamSection, reportName);
-
-                BSFiberReport report = new BSFiberReport();
-                report.ReportName = reportName;
-                report.BeamSection = m_BeamSection;
-                report.UseReinforcement = true;
-
-                InitReportSections(ref report);
-
-                pathToHtmlFile = report.CreateReport(1);
-
-
+                
                 System.Diagnostics.Process.Start(pathToHtmlFile);
             }
             catch (Exception _e)
@@ -110,7 +96,5 @@ namespace BSFiberConcrete.Report
                 MessageBox.Show("Ошибка в отчете " + _e.Message);
             }
         }
-
-
     }
 }
