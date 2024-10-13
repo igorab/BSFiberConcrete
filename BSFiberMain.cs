@@ -988,7 +988,7 @@ namespace BSFiberConcrete
         /// <summary>
         ///  Расчет по наклонному сечению на действие Q
         /// </summary>        
-        private void FiberCalculate_Shear(Dictionary<string, double> _MNQ, double[] _sz)
+        private void FiberCalculate_Shear(Dictionary<string, double> _MNQ, double[] _sz, double[] _l_rebar, double[] _t_rebar)
         {
             bool _useRebar = true;
             bool _shear = true;
@@ -1007,12 +1007,13 @@ namespace BSFiberConcrete
                 fiberCalc.Rebar = rebar;                
             }
 
-            double[] prms = m_BSLoadData.Params;
+            double[] prms = new double[9];
             InitUserParams(prms);            
             fiberCalc.SetParams(prms);                       
             fiberCalc.GetSize(_sz);
             // передаем усилия и связанные с ними велечины
             fiberCalc.SetEfforts(_MNQ);
+            fiberCalc.SetRebarParams(_l_rebar, _t_rebar);
 
             // расчет на усилие вне сечения            
             fiberCalc.N_Out = (fiberCalc.h / 2 < fiberCalc.Get_e_tot);
@@ -1406,6 +1407,25 @@ namespace BSFiberConcrete
             
             return ndmSetup;
         }
+
+        /// <summary>
+        /// Расчет на действие поперечных сил
+        /// </summary>
+        private void CalcQxQy(Dictionary<string, double> _D)
+        {
+            // расчет на поперечную силу    
+            if (_D["Qx"] != 0 || _D["Qy"] != 0)
+            {
+                GetEffortsFromForm(out Dictionary<string, double> MNQ);
+                double beamLngth = InitBeamLength(true);
+                double[] sz = BeamSizes(beamLngth);
+                double[] l_r = new double[2];
+                double[] t_r = new double[2];
+
+                FiberCalculate_Shear(MNQ, sz, l_r, t_r);
+            }
+        }
+
         /// <summary>
         /// "Расчет по прочности нормальных сечений на основе нелинейной деформационной модели"
         /// </summary>        
@@ -1414,14 +1434,7 @@ namespace BSFiberConcrete
             // данные с формы:
             Dictionary<string, double> _D = DictCalcParams(_beamSection);
 
-            // расчет на поперечную силу    
-            if (_D["Qx"] != 0 || _D["Qy"] != 0)
-            {
-                //GetEffortsFromForm(out Dictionary<string, double> MNQ);
-                //double beamLngth = InitBeamLength(true);
-                //double[] sz = BeamSizes(beamLngth);
-                //FiberCalculate_Shear(MNQ, sz);
-            }
+            CalcQxQy(_D);
 
             if (!ValidateNDMCalc(_D)) return;
 
