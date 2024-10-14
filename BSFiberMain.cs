@@ -860,8 +860,10 @@ namespace BSFiberConcrete
         ///  Введенные пользователем значения по арматуре
         /// </summary>
         /// <param name="_Rebar">Установлены параметры стержней арматуры </param>
-        private void InitRebarFromForm(ref Rebar _Rebar)
+        private Rebar InitRebarFromForm()
         {
+            Rebar _Rebar = new Rebar();
+            
             _Rebar.As = (double)numAs.Value;
             _Rebar.As1 = (double)numAs1.Value;
             _Rebar.a = (double)num_a.Value;
@@ -870,6 +872,8 @@ namespace BSFiberConcrete
             _Rebar.Es = (double)numEs.Value;
             _Rebar.Esw = (double)numEsw.Value;
             _Rebar.s_w = _Rebar.s_w;
+
+            return _Rebar;
         }
 
 
@@ -992,28 +996,19 @@ namespace BSFiberConcrete
             double[] _sz, 
             double[] _l_rebar, 
             double[] _t_rebar)
-        {
-            bool _useRebar = true;
-            bool _shear = true;
-            
+        {            
             BSFiberCalc_MNQ fiberCalc = BSFiberCalc_MNQ.Construct(m_BeamSection);
-            fiberCalc.UseRebar = _useRebar;
-            fiberCalc.Shear = _shear;
+            fiberCalc.UseRebar = true;
+            fiberCalc.Shear = true;
             fiberCalc.InitFiberParams(m_BSLoadData.Fiber);
             fiberCalc.MatFiber = m_MatFiber;            
-            fiberCalc.BetonType = BSQuery.BetonTypeFind(0);
-
-            if (_shear || _useRebar)
-            {
-                Rebar rebar = new Rebar();                
-                InitRebarFromForm(ref rebar);                
-                fiberCalc.Rebar = rebar;                
-            }
-
+            fiberCalc.BetonType = BSQuery.BetonTypeFind(0);            
+            fiberCalc.Rebar = InitRebarFromForm();             
             double[] prms = new double[9];
             InitUserParams(prms);            
             fiberCalc.SetParams(prms);                       
             fiberCalc.GetSize(_sz);
+
             // передаем усилия и связанные с ними велечины
             fiberCalc.SetEfforts(_MNQ);
             fiberCalc.SetRebarParams(_l_rebar, _t_rebar);
@@ -1434,10 +1429,13 @@ namespace BSFiberConcrete
                             
             double beamLngth = InitBeamLength(true);
             double[] sz = BeamSizes(beamLngth);
-            double[] l_r = new double[2];
-            double[] t_r = new double[2];
+                        
+            InitTRebar(out double[] t_r_X);
 
-            Dictionary<string, double> resQxQy = FiberCalculate_Shear(_MNQ, sz, l_r, t_r);
+            InitTRebar(out double[] t_r_Y);
+
+            Dictionary<string, double> resQxQy = FiberCalculate_Shear(_MNQ, sz, t_r_X, t_r_Y);
+
             return resQxQy;            
         }
 
@@ -1465,7 +1463,6 @@ namespace BSFiberConcrete
             if (calcRes != null)
             {
                 calcRes.Deflexion_max = CalculateBeamDeflections(_beamDiagramController);
-
                 calcRes.ResQxQy = resQxQy;
 
                 m_GeomParams = calcRes.GeomParams;

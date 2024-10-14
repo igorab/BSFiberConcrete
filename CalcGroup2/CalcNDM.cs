@@ -173,7 +173,7 @@ namespace BSFiberConcrete
         {
             bool res = true;
 
-            if (Mx0 == 0 && My0 == 0 && N0 == 0)
+            if (D["Mz"] == 0 && D["My"] == 0 && D["N"] == 0)
             {
                 res = false;
             }            
