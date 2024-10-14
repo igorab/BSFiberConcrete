@@ -1,10 +1,14 @@
-﻿using MathNet.Numerics.Integration;
+﻿using BSFiberConcrete.DeformationDiagram.UserControls;
+using MathNet.Numerics.Integration;
 using Microsoft.SqlServer.Server;
+using SQLitePCL;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace BSFiberConcrete.DeformationDiagram
 {
@@ -60,36 +64,102 @@ namespace BSFiberConcrete.DeformationDiagram
         public double e2;
         # endregion 
 
+
+
+        /// <summary>
+        /// Поле содержит в себе форму, которая должна отображаться на форме в зависимости от typeMaterial
+        /// </summary>
+        private UserControl _deformationsView;
+
+        private double[] _valuesRelativeDeformation;
+
         /// <summary>
         /// Массив, определяющий характерные значения относительных деформаций в зависимости от typeMaterial и typeDiagram 
         /// </summary>
         public double[] deformsArray;
 
+
+
         /// <summary>
-        /// Производится заполнене полей класса используя DataForDeformDiagram
+        /// Производится заполнение полей класса используя DataForDeformDiagram
         /// </summary>
         /// <exception cref="Exception"></exception>
-        public CalcDeformDiagram()
+        public CalcDeformDiagram(string[] typesDiagram, double[] resists, double[] elasticity)
         {
-            typeMaterial = DataForDeformDiagram.typesDiagram[0];
-            typeDiagram = DataForDeformDiagram.typesDiagram[1];
-            R_n = DataForDeformDiagram.resists[0];
-            Rt_n = DataForDeformDiagram.resists[1];
-            Rt2_n =DataForDeformDiagram.resists[2];
-            Rt3_n = DataForDeformDiagram.resists[3];
+            
+            typeMaterial = typesDiagram[0];
+            typeDiagram = typesDiagram[1];
 
-            e0 = DataForDeformDiagram.deforms[0];
-            e2 = DataForDeformDiagram.deforms[1];
-            et0 = DataForDeformDiagram.deforms[2];
-            et2 = DataForDeformDiagram.deforms[3];
-            et3 = DataForDeformDiagram.deforms[4];
+            R_n = resists[0];
+            Rt_n = resists[1];
+            Rt2_n = resists[2];
+            Rt3_n = resists[3];
 
-            E= DataForDeformDiagram.E[0];
-            Et = DataForDeformDiagram.E[1];
+            E = elasticity[0];
+            Et = elasticity[1];
+
+            if (typeMaterial == BSHelper.FiberConcrete)
+            {
+                //FiberBetonDeformationView a = new FiberBetonDeformationView();
+                //e0, e1, e2,      et0,  et1, et2,  et3 
+                _valuesRelativeDeformation = new double[] { 0.003, 0, 0.0035, 0, 0, 0.004, 0.015 };
+                SetValuesRelativeDeformation();
+                _deformationsView = new FiberBetonDeformationView(_valuesRelativeDeformation);
+
+                //UserControl//
+            }
+            else if (typeMaterial == BSHelper.Rebar)
+            {
+                _valuesRelativeDeformation = new double[] { 0.00175, 0.02, 0.025};
+                SetValuesRelativeDeformation();
+                _deformationsView = new RebarDeformationView(_valuesRelativeDeformation);
+
+            }
+
+        }
 
 
+        /// <summary>
+        /// Установить значение относительных деформаций
+        /// </summary>
+        /// <param name="deformations"></param>
+        public void SetValuesRelativeDeformation()
+        {
+
+            if (typeMaterial == BSHelper.FiberConcrete)
+            {
+                //e0, e1, e2,      et0,  et1, et2,  et3 
+                e0 = _valuesRelativeDeformation[0];
+                //e1 = _valuesRelativeDeformation[1];
+                e2 = _valuesRelativeDeformation[2];
+                //et0 = _valuesRelativeDeformation[3];
+                //et1 = _valuesRelativeDeformation[4];
+                et2 = _valuesRelativeDeformation[5];
+                et3 = _valuesRelativeDeformation[6];
+                FillDiagramsData();
+
+                _valuesRelativeDeformation[1] = e1;
+                _valuesRelativeDeformation[3] = et0;
+                _valuesRelativeDeformation[4] = et1;
+            }
+            else if (typeMaterial == BSHelper.Rebar)
+            {
+                e2 = _valuesRelativeDeformation[2];
+                et2 = _valuesRelativeDeformation[2];
+                FillDiagramsData();
+                 _valuesRelativeDeformation[0] = e0;
+                _valuesRelativeDeformation[1] = e1;
+            }
+        }
+
+
+        /// <summary>
+        /// Заполнить данные для построения диаграммы
+        /// </summary>
+        private void FillDiagramsData()
+        {
             if (typeMaterial == BSHelper.Concrete || typeMaterial == BSHelper.FiberConcrete)
-            { 
+            {
                 if (typeDiagram == BSHelper.TwoLineDiagram)
                 { R1 = R_n; }
                 else if (typeDiagram == BSHelper.ThreeLineDiagram)
@@ -104,12 +174,12 @@ namespace BSFiberConcrete.DeformationDiagram
             else if (typeMaterial == BSHelper.Rebar)
             {
                 if (typeDiagram == BSHelper.TwoLineDiagram)
-                { 
+                {
                     R1 = R_n;
                     Rt1 = Rt_n;
                 }
                 else if (typeDiagram == BSHelper.ThreeLineDiagram)
-                { 
+                {
                     R1 = R_n * 0.9;
                     Rt1 = Rt_n * 0.9;
                 }
@@ -144,13 +214,13 @@ namespace BSFiberConcrete.DeformationDiagram
                 { deformsArray = new double[] { -e2, -e0, -e1, 0, et1, et0, et2 }; }
             }
         }
-    
 
-        /// <summary>
-        /// Определяется массив относительных деформаций и напряжений
-        /// </summary>
-        /// <returns></returns>
-        public double[,] Calculate()
+
+    /// <summary>
+    /// Определяется массив относительных деформаций и напряжений
+    /// </summary>
+    /// <returns></returns>
+    public double[,] Calculate()
         {
             double[,] result = new double[1, 1];
             if (typeMaterial == BSHelper.Concrete)
@@ -178,6 +248,7 @@ namespace BSFiberConcrete.DeformationDiagram
             return result;
         }
 
+
         /// <summary>
         /// определяется напряжение для относительной деформации epsilon
         /// </summary>
@@ -186,7 +257,6 @@ namespace BSFiberConcrete.DeformationDiagram
         public double getResists(double epsilon)
         {
             double res = 0;
-
 
             if (typeMaterial == BSHelper.Rebar)
             {
@@ -340,14 +410,22 @@ namespace BSFiberConcrete.DeformationDiagram
 
             return res;
         }
+
+
+        public void UpDateUserControll(TableLayoutPanel table)
+        {
+            table.Controls.Add(_deformationsView, 0, 0);
+
+        }
     }
+
 
     public static class DataForDeformDiagram
     {
-        public static string[] typesDiagram;
+        //public static string[] typesDiagram;
         public static double[] resists;
         public static double[] deforms;
-        public static double[] E; 
+        public static double[] E;
 
     }
 }
