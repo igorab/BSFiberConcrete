@@ -123,15 +123,24 @@ namespace BSFiberConcrete
 
         [DisplayName("Ширина сечения, b [см]")]
         public double b { get; set; }
+
         [DisplayName("Высота сечения, h [см]")]
         public double h { get; set; }
 
         [DisplayName("Mx [кг*см]")]
         public double Mx { get; set; }
+
         [DisplayName("My [кг*см]")]
         public double My { get; set; }
+
         [DisplayName("N [кг]")]
         public double N { get; set; }
+
+        [DisplayName("Qx [кг]")]
+        public double Qx { get; set; }
+
+        [DisplayName("Qy [кг]")]
+        public double Qy { get; set; }
 
         [DisplayName("Модуль упругости фибробетона Eb, [кг/см2]")]
         public double Eb { get; set; }
@@ -200,7 +209,9 @@ namespace BSFiberConcrete
                 {
                     { DN("Mx"), Mx },
                     { DN("My"), My },
-                    { DN("N"), N  }
+                    { DN("N"), N  },
+                    { DN("Qx"), Qx  },
+                    { DN("Qy"), Qy  }
                 };
             }
         }
@@ -251,6 +262,11 @@ namespace BSFiberConcrete
         };
 
         public Dictionary<string, double> Beam => m_Beam;
+
+        /// <summary>
+        /// На действие поперечных сил
+        /// </summary>
+        public Dictionary<string, double> ResQxQy { get; internal set; }
 
         private double InitBeamLength(double _lgth, double _coeflgth)
         {
@@ -435,7 +451,6 @@ namespace BSFiberConcrete
             AddToResult("sigmaS", sigmaS);
             AddToResult("e_s_max", e_s_max);
             AddToResult("UtilRate_e_st", UtilRate_e_st);
-
             // сжатие
             Res1Group.Add("<b>--------Сжатие:-------</b>", double.NaN);
             // - бетон
@@ -453,6 +468,16 @@ namespace BSFiberConcrete
             AddToResult("My_calc", My_calc);
             AddToResult("N_calc", N_calc);
             AddToResult("ItersCnt", ItersCnt);
+
+            // -поперечные силы
+            if (ResQxQy != null)
+            {                
+                Res1Group.Add("<b>--------Проверка на действие поперечныx сил:-------</b>", double.NaN);
+                foreach (var _resQ in ResQxQy)
+                {
+                    Res1Group.Add(_resQ.Key, _resQ.Value);                 
+                }
+            }
 
             return  Res1Group;
         }

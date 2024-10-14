@@ -512,16 +512,19 @@ namespace BSFiberConcrete.Section
 
         // Запустить расчет
         private void btnCalc_Click(object sender, EventArgs e)
-        {            
-            GenerateMesh();
+        {
+            try
+            {
+                GenerateMesh();
 
-            BSCalcResultNDM calcRes = CalcNDM_MxMyN();
+                BSCalcResultNDM calcRes = CalcNDM_MxMyN();
 
-            BSReport bSReport = new BSReport(m_BeamSection);
-            bSReport.CalcRes = calcRes;
-            bSReport.CreateReportNDM();
-
-            MessageBox.Show($"Расчет готов");                           
+                BSReport.RunFromCode(m_BeamSection, calcRes);
+            }
+            catch (Exception _ex)
+            {
+                MessageBox.Show(_ex.Message);
+            }            
         }
 
         private void BeamSectionFromPoints(ref List<PointF> _PointsSection, PointF _center)

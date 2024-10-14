@@ -988,7 +988,10 @@ namespace BSFiberConcrete
         /// <summary>
         ///  Расчет по наклонному сечению на действие Q
         /// </summary>        
-        private void FiberCalculate_Shear(Dictionary<string, double> _MNQ, double[] _sz, double[] _l_rebar, double[] _t_rebar)
+        private Dictionary<string, double> FiberCalculate_Shear(Dictionary<string, double> _MNQ, 
+            double[] _sz, 
+            double[] _l_rebar, 
+            double[] _t_rebar)
         {
             bool _useRebar = true;
             bool _shear = true;
@@ -1021,7 +1024,9 @@ namespace BSFiberConcrete
 
             fiberCalc.Msg.Add("Расчет успешно выполнен!");
 
-            var xR = fiberCalc.Results();
+            Dictionary<string, double> xR = fiberCalc.Results();
+
+            return xR;
         }
 
         /// <summary>
@@ -1088,11 +1093,11 @@ namespace BSFiberConcrete
             (double _M, double _N, double _Qy, double _Qx ) = (_MNQ["My"], _MNQ["N"], _MNQ["Qy"], _MNQ["Qx"]);
             if (_M < 0 || _N < 0)
             {
-                MessageBox.Show("Расчет по методу статического равновесия не реализован для отрицательных значений M и N.\n Воспользуйтесь расчетом по методу НДМ");
-
+                MessageBox.Show("Расчет по методу статического равновесия не реализован для отрицательных значений M и N.\n " +
+                                "Воспользуйтесь расчетом по методу НДМ");
                 return;
             }
-
+            
             if (_M != 0 && _N == 0)
             {
                 FiberCalculate_M(_M);
@@ -1106,6 +1111,12 @@ namespace BSFiberConcrete
             {
                 FiberCalculate_Shear();
             }
+
+            if (_Qy != 0)
+            {
+                // Применяется только в расчете по НДМ
+            }
+
         }
 
         private void btnFactors_Click(object sender, EventArgs e)
@@ -1411,31 +1422,35 @@ namespace BSFiberConcrete
         /// <summary>
         /// Расчет на действие поперечных сил
         /// </summary>
-        private void CalcQxQy(Dictionary<string, double> _D)
+        private Dictionary<string, double> CalcQxQy()
         {
-            // расчет на поперечную силу    
-            if (_D["Qx"] != 0 || _D["Qy"] != 0)
-            {
-                GetEffortsFromForm(out Dictionary<string, double> MNQ);
-                double beamLngth = InitBeamLength(true);
-                double[] sz = BeamSizes(beamLngth);
-                double[] l_r = new double[2];
-                double[] t_r = new double[2];
+            InitMatFiber();
 
-                FiberCalculate_Shear(MNQ, sz, l_r, t_r);
-            }
+            RecalRandomEccentricity_e0();
+
+            GetEffortsFromForm(out Dictionary<string, double> _MNQ);
+
+            if (_MNQ["Qx"] == 0 && _MNQ["Qy"] == 0) return null;
+                            
+            double beamLngth = InitBeamLength(true);
+            double[] sz = BeamSizes(beamLngth);
+            double[] l_r = new double[2];
+            double[] t_r = new double[2];
+
+            Dictionary<string, double> resQxQy = FiberCalculate_Shear(_MNQ, sz, l_r, t_r);
+            return resQxQy;            
         }
 
         /// <summary>
         /// "Расчет по прочности нормальных сечений на основе нелинейной деформационной модели"
         /// </summary>        
         private void CalcNDM(BeamSection _beamSection)
-        {             
+        {
+            Dictionary<string, double> resQxQy = CalcQxQy();
+
             // данные с формы:
             Dictionary<string, double> _D = DictCalcParams(_beamSection);
-
-            CalcQxQy(_D);
-
+            
             if (!ValidateNDMCalc(_D)) return;
 
             // расчет на MxMyN по НДМ            
@@ -1445,21 +1460,24 @@ namespace BSFiberConcrete
             CalcNDM calcNDM = new CalcNDM(_beamSection) {setup = _setup, D = _D };            
             calcNDM.Run();
 
-            calcNDM.CalcRes.Deflexion_max = CalculateBeamDeflections(_beamDiagramController);
             // результаты:
-
-            if (calcNDM.CalcRes != null)
+            BSCalcResultNDM calcRes = calcNDM.CalcRes;
+            if (calcRes != null)
             {
-                m_GeomParams = calcNDM.CalcRes.GeomParams;
-                m_Efforts = calcNDM.CalcRes.Efforts;
-                m_PhysParams = calcNDM.CalcRes.PhysParams;
-                m_Reinforcement = calcNDM.CalcRes.Reinforcement;
-                m_CalcResults =  calcNDM.CalcRes.GetResults1Group();
-                m_CalcResults2Group =  calcNDM.CalcRes.GetResults2Group();
+                calcRes.Deflexion_max = CalculateBeamDeflections(_beamDiagramController);
 
-                ShowMosaic(calcNDM.CalcRes);
+                calcRes.ResQxQy = resQxQy;
 
-                CreateReportNDM(calcNDM.CalcRes);
+                m_GeomParams = calcRes.GeomParams;
+                m_Efforts = calcRes.Efforts;
+                m_PhysParams = calcRes.PhysParams;
+                m_Reinforcement = calcRes.Reinforcement;
+                m_CalcResults = calcRes.GetResults1Group();
+                m_CalcResults2Group = calcRes.GetResults2Group();
+
+                ShowMosaic(calcRes);
+
+                CreateReportNDM(calcRes);
             }            
         }
 
@@ -1727,9 +1745,9 @@ namespace BSFiberConcrete
                 return false;
             }
 
-            if (_D["Mz"] == 0 && _D["My"] == 0 && _D["N"] == 0)
+            if (_D["Mz"] == 0 && _D["My"] == 0 && _D["N"] == 0 &&  _D["Qx"] == 0 &&  _D["Qy"] == 0)
             {
-                MessageBox.Show("Задайте усилия Mx My или И", "Расчет по НДМ",
+                MessageBox.Show("Требуется задать моменты Mx My или силу N или поперчные силы Qx Qy ", "Расчет по НДМ",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
@@ -1744,7 +1762,7 @@ namespace BSFiberConcrete
         {                        
             try
             {
-                var CG = new TriangleNet.Geometry.Point(0, 0);
+                TriangleNet.Geometry.Point CG = new TriangleNet.Geometry.Point(0, 0);
 
                 if (m_BeamSection == BeamSection.Rect)
                 {
