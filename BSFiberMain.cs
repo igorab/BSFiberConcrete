@@ -2292,29 +2292,32 @@ namespace BSFiberConcrete
             double et2 = 0;
             double et3 = 0;
 
-            if (typeMaterial == BSHelper.Concrete)
-            {
-                // Характеристики по сжатию
-                R_n = (double)numRfb_n.Value;       // Rb_n 
-                e0 = (double)numEps_fb0.Value;      // eb0
-                e2 = (double)numEps_fb2.Value;      // eb2
-                E = (double)numEfb.Value;           // Eb
+            //if (typeMaterial == BSHelper.Concrete)
+            //{
+            //    // Характеристики по сжатию
+            //    R_n = (double)numRfb_n.Value;       // Rb_n 
+            //    e0 = (double)numEps_fb0.Value;      // eb0
+            //    e2 = (double)numEps_fb2.Value;      // eb2
+            //    E = (double)numEfb.Value;           // Eb
 
-            }
-            else if (typeMaterial == BSHelper.FiberConcrete)
+            //}
+            if (typeMaterial == BSHelper.FiberConcrete)
             {
                 // Характеристики по сжатию такие же как у бетона
                 R_n = (double)numRfb_n.Value;       // Rb_n 
-                e0 = (double)numEps_fb0.Value;      // eb0
-                e2 = (double)numEps_fb2.Value;      // eb2
-                //e0 = (double)0.003m;
-                //e2 = (double)0.0042m;
-                E = (double)numEfb.Value;           //Eb
+                E = (double)numE_fiber.Value;           //Eb
                 // Характеристики по растяжению
                 Rt_n = (double)numRfbt_n.Value;     // Rfbt_n
                 Rt2_n = (double)numRfbt2n.Value;    // Rfbt2_n
                 Rt3_n = (double)numRfbt3n.Value;    // Rfbt3_n
                 Et = E;                    // !!!   // Efbt
+
+
+
+                e0 = (double)numEps_fb0.Value;      // eb0
+                e2 = (double)numEps_fb2.Value;      // eb2
+                //e0 = (double)0.003m;
+                //e2 = (double)0.0042m;
                 et2 = (double)numEps_fbt2.Value;    // efbt2
                 et3 = (double)numEps_fbt3.Value;    // efbt3
             }
@@ -2324,26 +2327,37 @@ namespace BSFiberConcrete
                 // Характеристики по растяжению
                 Rt_n = (double)numRs.Value;         // 
                 Et = (double)numEs.Value;           //
-                et0 = (double)numEpsilonS0.Value;   //
-                et2 = (double)numEpsilonS2.Value;   //
-
                 // Характеристики по сжатию
                 R_n = (double)numRsc.Value;
+                E = Et;
+
                 e0 = et0;
                 e2 = et2;
-                E = Et;
+                et0 = (double)numEpsilonS0.Value;   //
+                et2 = (double)numEpsilonS2.Value;   //
             }
             else
             {
                 throw new Exception("Выбрано значение материала, выходящее за предел предопределенных значений.");
             }
 
-            DataForDeformDiagram.typesDiagram = new string[] { typeMaterial, typeDiagram };
+            //DataForDeformDiagram.typesDiagram = new string[] { typeMaterial, typeDiagram };
+            
+            string[] typesDiagram = new string[] { typeMaterial, typeDiagram };
+            double[] resists = new double[] { R_n, Rt_n, Rt2_n, Rt3_n };
+            double[] elasticity = new double[] { E, Et };
+
             DataForDeformDiagram.resists = new double[] { R_n, Rt_n, Rt2_n, Rt3_n };
-            DataForDeformDiagram.deforms = new double[] { e0, e2, et0, et2, et3 };
+            //DataForDeformDiagram.deforms = new double[] { e0, e2, et0, et2, et3 };
             DataForDeformDiagram.E = new double[] { E, Et };
 
-            DeformDiagram deformDiagram = new DeformDiagram();
+            // Присваиваем значение на форму
+
+            CalcDeformDiagram calculateDiagram = new CalcDeformDiagram(typesDiagram, resists, elasticity);
+
+
+
+            DeformDiagram deformDiagram = new DeformDiagram(calculateDiagram);
             deformDiagram.Show();
         }
 
