@@ -503,7 +503,7 @@
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(252, 26);
             this.label5.TabIndex = 4;
-            this.label5.Text = "Коэф. учитывающий виляние вида поверхности арматуры";
+            this.label5.Text = "Коэф. учитывающий влияние вида поверхности арматуры";
             // 
             // label6
             // 
@@ -513,7 +513,7 @@
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(257, 26);
             this.label6.TabIndex = 5;
-            this.label6.Text = "Коэф. учитывающий виляние размера диаметра арматуры";
+            this.label6.Text = "Коэф. учитывающий влияние размера диаметра арматуры";
             // 
             // labHita_1
             // 
@@ -543,7 +543,7 @@
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(246, 26);
             this.label7.TabIndex = 8;
-            this.label7.Text = "Расчетное значения сопротивления арматуры растяжению";
+            this.label7.Text = "Расчетное значение сопротивления арматуры растяжению";
             // 
             // tableLayoutPanel5
             // 

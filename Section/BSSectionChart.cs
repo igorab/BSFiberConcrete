@@ -22,6 +22,7 @@ using static CBAnsDes.Member;
 using System.Data.SqlTypes;
 using BSCalcLib;
 using System.Diagnostics;
+using BSFiberConcrete.Report;
 
 namespace BSFiberConcrete.Section
 {
@@ -68,8 +69,8 @@ namespace BSFiberConcrete.Section
         public float Hght { set { h = value; } }
 
         public double[] Sz { get; set; }
-        public double NumArea {set { numArea.Value = (decimal) value; }}
-
+        public double NumArea {set { numArea.Value = (decimal) value; } get { return (double) numArea.Value;  } } 
+        
         private float w;
         private float h;
         
@@ -499,29 +500,28 @@ namespace BSFiberConcrete.Section
         /// </summary>
         /// <param name="_My"></param>
         /// <returns></returns>
-        private List<double> CalcNDM_My()
+        private BSCalcResultNDM CalcNDM_MxMyN()
         {
             Dictionary<string, double> dictParams = DictCalcParams;
-            double _My = dictParams["My"];
-
-            List<double> l_Ky = new List<double>();
-            
+                        
             CalcNDM calcNDM = new CalcNDM(m_BeamSection) { setup = ndmSetup, D = dictParams };
             calcNDM.RunGroup1();
-            Dictionary<string, double> res = calcNDM.RunMy(_My);
 
-            if (res != null)
-                l_Ky.Add(res["Ky"]);
-            
-            return l_Ky;
+            return calcNDM.CalcRes;                                    
         }
 
         // Запустить расчет
         private void btnCalc_Click(object sender, EventArgs e)
         {            
             GenerateMesh();
-            List<double> kx = CalcNDM_My();
-            MessageBox.Show($"kx = {kx[0]}");                           
+
+            BSCalcResultNDM calcRes = CalcNDM_MxMyN();
+
+            BSReport bSReport = new BSReport(m_BeamSection);
+            bSReport.CalcRes = calcRes;
+            bSReport.CreateReportNDM();
+
+            MessageBox.Show($"Расчет готов");                           
         }
 
         private void BeamSectionFromPoints(ref List<PointF> _PointsSection, PointF _center)
@@ -539,7 +539,7 @@ namespace BSFiberConcrete.Section
             //    RodPoints.Add(new PointF(rod.X, rod.Y));
             //}            
         }
-    
+
         /// <summary>
         /// Сгенерировать сетеку сечения
         /// </summary>
@@ -547,35 +547,30 @@ namespace BSFiberConcrete.Section
         /// <exception cref="Exception"></exception>
         private string GenerateMesh()
         {
-            string pathToSvgFile;                                    
-            BSMesh.Nx       = ndmSetup.N;
-            BSMesh.Ny       = ndmSetup.M;
+            if (m_BeamSection != BeamSection.Any) return "";
+
+            BSMesh.Nx = ndmSetup.N;
+            BSMesh.Ny = ndmSetup.M;
             BSMesh.MinAngle = ndmSetup.MinAngle;
-            Tri.MinAngle    = ndmSetup.MinAngle;            
-            BSMesh.MaxArea  = ndmSetup.MaxArea;
-            BSMesh.FilePath = Path.Combine(Environment.CurrentDirectory, "Templates");
-            Tri.FilePath    = BSMesh.FilePath;
-            
-            if (m_BeamSection == BeamSection.Any)
-            {
-                List<PointF> pts = new List<PointF>();
+            Tri.MinAngle = ndmSetup.MinAngle;
+            BSMesh.MaxArea = ndmSetup.MaxArea;
 
-                BeamSectionFromPoints(ref pts, Center);                                
+            List<PointF> pts = new List<PointF>();
+            BeamSectionFromPoints(ref pts, Center);
 
-                pathToSvgFile = Tri.CreateSectionContour(pts, BSMesh.MaxArea);
+            string pathToSvgFile = Tri.CreateSectionContour(pts, BSMesh.MaxArea);
 
-                _ = Tri.CalculationScheme(false);
-            }
-            else
-            {
-                throw new Exception("Не задано сечение");
-            }
+            _ = Tri.CalculationScheme(false);
 
-            // площади треугольников
-            var triAreas = Tri.triAreas;
             // центры тяжести треугольников
-            var triCGs = Tri.triCGs;
+            int? nTri = Tri.triCGs?.Count();
 
+            if (nTri > 0)
+            {        
+                // площади треугольников
+                NumArea = Tri.triAreas?.Sum() ?? 0;
+            }
+                        
             return pathToSvgFile;
         }
 

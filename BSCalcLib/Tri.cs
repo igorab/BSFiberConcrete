@@ -44,6 +44,7 @@ namespace BSCalcLib
             triCGs = new List<Point>();
             MinAngle = 25.0;            
             Oxy = new Point() {ID = 0, X = 0, Y = 0 };
+            FilePath = Path.Combine(Environment.CurrentDirectory, "Templates");
         }
 
         /// <summary>

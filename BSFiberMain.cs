@@ -86,6 +86,7 @@ namespace BSFiberConcrete
         private MemoryStream m_ImageStream;
 
         private LameUnitConverter _UnitConverter;
+
         private ControllerBeamDiagram _beamDiagramController;
 
         public BSFiberMain()
@@ -95,6 +96,9 @@ namespace BSFiberConcrete
             m_Path2BeamDiagrams = new List<string>();
             m_Beam = new Dictionary<string, double>();
             m_Table = new DataTable();
+
+            m_BSLoadData = new BSFiberLoadData();
+            m_MatFiber = new BSMatFiber();
         }
 
         /// <summary>
@@ -225,6 +229,9 @@ namespace BSFiberConcrete
             {
                 gridEfforts.Rows[0].Cells[i].Value = mnq[i];
             }
+
+            num_eN.Value = (decimal)m_Iniv["eN"];
+            num_Ml1_M1.Value = (decimal)m_Iniv["Ml"];
         }
 
         private void InitBetonControls()
@@ -256,28 +263,23 @@ namespace BSFiberConcrete
                 m_Rebar = BSData.LoadRebar();
 
                 dataGridSection.DataSource = m_Table;
-
-                m_BSLoadData = new BSFiberLoadData();
-                m_MatFiber = new BSMatFiber();
-
+                
                 flowLayoutPanelRebar.Enabled = true;
 
                 FiberConcrete = BSData.LoadFiberConcreteTable();
+
                 cmbFib_i.SelectedIndex = 0;
                 comboBetonType.SelectedIndex = 0;
                 cmbRebarClass.SelectedItem = "A400";
                 cmbDeformDiagram.SelectedIndex = (int)DeformDiagramType.D3Linear;
 
                 m_BSLoadData.InitEfforts(ref m_Iniv);
-
-                num_eN.Value = (decimal)m_Iniv["eN"];
-                num_Ml1_M1.Value = (decimal)m_Iniv["Ml"];
-
+                
                 m_BSLoadData.ReadParamsFromJson();
                 m_MatFiber.e_b2 = m_BSLoadData.Beton2.eps_b2;
-                m_MatFiber.Efb = m_BSLoadData.Fiber.Efb; // TODO источником должно быть значение с формы.
-
+                
                 m_InitBeamSectionsGeometry = Lib.BSData.LoadBeamSectionGeometry(m_BeamSection);
+
                 numRandomEccentricity.Value = (decimal)m_BSLoadData.Fiber.e_tot;
 
                 LoadRectangle();
@@ -376,7 +378,7 @@ namespace BSFiberConcrete
                 _h = Math.Max(sz[0], sz[1]);
                 _area = Math.PI * Math.Pow(Math.Abs(sz[1] - sz[0]), 2) / 4.0;
             }
-            else if (m_BeamSection == BeamSection.TBeam || m_BeamSection == BeamSection.IBeam || m_BeamSection == BeamSection.LBeam)
+            else if (BSHelper.IsITL(m_BeamSection))
             {
                 _w = Math.Max(sz[0], sz[4]);
                 _h = sz[1] + sz[3] + sz[5];
@@ -408,6 +410,15 @@ namespace BSFiberConcrete
             }
         }
 
+        private (double, double) BeamLength()
+        {
+            double.TryParse(tbLength.Text, out double lgth);
+            double.TryParse(cmbEffectiveLengthFactor.Text, out double coeflgth);
+
+            return (lgth, coeflgth);
+        }
+
+
         /// <summary>
         /// Расчетная длина балки 
         /// </summary>
@@ -415,8 +426,8 @@ namespace BSFiberConcrete
         /// <returns></returns>
         private double InitBeamLength(bool _beaminit = false)
         {
-            double.TryParse(tbLength.Text, out double lgth);
-            double.TryParse(cmbEffectiveLengthFactor.Text, out double coeflgth);
+            double lgth, coeflgth;
+            (lgth, coeflgth) = BeamLength();
 
             if (_beaminit)
             {
@@ -977,7 +988,7 @@ namespace BSFiberConcrete
         /// <summary>
         ///  Расчет по наклонному сечению на действие Q
         /// </summary>        
-        private void FiberCalculate_Shear(Dictionary<string, double> _MNQ, double[] _sz)
+        private void FiberCalculate_Shear(Dictionary<string, double> _MNQ, double[] _sz, double[] _l_rebar, double[] _t_rebar)
         {
             bool _useRebar = true;
             bool _shear = true;
@@ -996,12 +1007,13 @@ namespace BSFiberConcrete
                 fiberCalc.Rebar = rebar;                
             }
 
-            double[] prms = m_BSLoadData.Params;
+            double[] prms = new double[9];
             InitUserParams(prms);            
             fiberCalc.SetParams(prms);                       
             fiberCalc.GetSize(_sz);
             // передаем усилия и связанные с ними велечины
             fiberCalc.SetEfforts(_MNQ);
+            fiberCalc.SetRebarParams(_l_rebar, _t_rebar);
 
             // расчет на усилие вне сечения            
             fiberCalc.N_Out = (fiberCalc.h / 2 < fiberCalc.Get_e_tot);
@@ -1069,6 +1081,8 @@ namespace BSFiberConcrete
             // Данные, введенные пользователем
             InitMatFiber();
 
+            RecalRandomEccentricity_e0(); 
+
             GetEffortsFromForm(out Dictionary<string, double> _MNQ);
 
             (double _M, double _N, double _Qy, double _Qx ) = (_MNQ["My"], _MNQ["N"], _MNQ["Qy"], _MNQ["Qx"]);
@@ -1117,6 +1131,9 @@ namespace BSFiberConcrete
             mf.Rfbt2n = (double)numRfbt2n.Value;
             mf.Rfbt3n = (double)numRfbt3n.Value;
 
+            double lgth, coeflgth;
+            (lgth, coeflgth) = BeamLength();
+
             Dictionary<string, double> D = new Dictionary<string, double>()
             {
                 // enforces
@@ -1126,7 +1143,10 @@ namespace BSFiberConcrete
                 ["Qx"] = MNQ["Qx"],
                 ["Qy"] = MNQ["Qy"],
                 //
-
+                //length
+                ["lgth"] = lgth,
+                ["coeflgth"] = coeflgth,
+                //
                 //section size
                 ["b"] = 0,
                 ["h"] = 0,
@@ -1141,7 +1161,6 @@ namespace BSFiberConcrete
                 ["r1"] = 0,
                 ["R2"] = 0,
                 //
-
                 //Mesh
                 ["ny"] = (int)numMeshNY.Value,
                 ["nz"] = (int)numMeshNX.Value, // в алгоритме плосткость сечения YOZ
@@ -1388,6 +1407,25 @@ namespace BSFiberConcrete
             
             return ndmSetup;
         }
+
+        /// <summary>
+        /// Расчет на действие поперечных сил
+        /// </summary>
+        private void CalcQxQy(Dictionary<string, double> _D)
+        {
+            // расчет на поперечную силу    
+            if (_D["Qx"] != 0 || _D["Qy"] != 0)
+            {
+                GetEffortsFromForm(out Dictionary<string, double> MNQ);
+                double beamLngth = InitBeamLength(true);
+                double[] sz = BeamSizes(beamLngth);
+                double[] l_r = new double[2];
+                double[] t_r = new double[2];
+
+                FiberCalculate_Shear(MNQ, sz, l_r, t_r);
+            }
+        }
+
         /// <summary>
         /// "Расчет по прочности нормальных сечений на основе нелинейной деформационной модели"
         /// </summary>        
@@ -1396,14 +1434,7 @@ namespace BSFiberConcrete
             // данные с формы:
             Dictionary<string, double> _D = DictCalcParams(_beamSection);
 
-            // расчет на поперечную силу    
-            if (_D["Qx"] != 0 || _D["Qy"] != 0)
-            {
-                //GetEffortsFromForm(out Dictionary<string, double> MNQ);
-                //double beamLngth = InitBeamLength(true);
-                //double[] sz = BeamSizes(beamLngth);
-                //FiberCalculate_Shear(MNQ, sz);
-            }
+            CalcQxQy(_D);
 
             if (!ValidateNDMCalc(_D)) return;
 
@@ -1862,8 +1893,11 @@ namespace BSFiberConcrete
             catch { }
         }
 
-
-        private void Init_Rfb_Efb(int _betonTypeId)
+        /// <summary>
+        /// Свойства бетона по классу на сжатие
+        /// </summary>
+        /// <param name="_betonTypeId"></param>
+        private void Init_Rfb_Efb(int _betonTypeId, int _airHumidityId = 0)
         {         
             string betonClass = Convert.ToString(cmbBfn.SelectedValue);
             if (string.IsNullOrEmpty(betonClass)) return; 
@@ -1872,8 +1906,21 @@ namespace BSFiberConcrete
             
             if (bt.Rbn != 0)
                 numRfb_n.Value = (decimal)BSHelper.MPA2kgsm2(bt.Rbn);
+
+            double fi_b_cr = 0;
+
+            if (_airHumidityId >= 0 && _airHumidityId <= 3 && bt.B >= 10)
+            {
+                int iBClass = (int)Math.Round(bt.B, MidpointRounding.AwayFromZero);
+
+                fi_b_cr = BSFiberLib.CalcFi_b_cr(_airHumidityId, iBClass);
+            }
+
             if (bt.Eb != 0)
-                numE_beton.Value = (decimal)BSHelper.MPA2kgsm2(bt.Eb * 1000);
+            {
+                double _eb = BSHelper.MPA2kgsm2(bt.Eb * 1000);
+                numE_beton.Value = (decimal)(_eb / (1.0 + fi_b_cr));
+            }
         }
 
 
@@ -1884,7 +1931,7 @@ namespace BSFiberConcrete
             {
                 if (cmbBfn.SelectedIndex > -1 && comboBetonType.SelectedIndex > -1)
                 {
-                    Init_Rfb_Efb(comboBetonType.SelectedIndex);   
+                    Init_Rfb_Efb(comboBetonType.SelectedIndex, cmbWetAir.SelectedIndex+1);   
                 }
             }
             catch { }
@@ -2245,29 +2292,32 @@ namespace BSFiberConcrete
             double et2 = 0;
             double et3 = 0;
 
-            if (typeMaterial == BSHelper.Concrete)
-            {
-                // Характеристики по сжатию
-                R_n = (double)numRfb_n.Value;       // Rb_n 
-                e0 = (double)numEps_fb0.Value;      // eb0
-                e2 = (double)numEps_fb2.Value;      // eb2
-                E = (double)numEfb.Value;           // Eb
+            //if (typeMaterial == BSHelper.Concrete)
+            //{
+            //    // Характеристики по сжатию
+            //    R_n = (double)numRfb_n.Value;       // Rb_n 
+            //    e0 = (double)numEps_fb0.Value;      // eb0
+            //    e2 = (double)numEps_fb2.Value;      // eb2
+            //    E = (double)numEfb.Value;           // Eb
 
-            }
-            else if (typeMaterial == BSHelper.FiberConcrete)
+            //}
+            if (typeMaterial == BSHelper.FiberConcrete)
             {
                 // Характеристики по сжатию такие же как у бетона
                 R_n = (double)numRfb_n.Value;       // Rb_n 
-                e0 = (double)numEps_fb0.Value;      // eb0
-                e2 = (double)numEps_fb2.Value;      // eb2
-                //e0 = (double)0.003m;
-                //e2 = (double)0.0042m;
-                E = (double)numEfb.Value;           //Eb
+                E = (double)numE_fiber.Value;           //Eb
                 // Характеристики по растяжению
                 Rt_n = (double)numRfbt_n.Value;     // Rfbt_n
                 Rt2_n = (double)numRfbt2n.Value;    // Rfbt2_n
                 Rt3_n = (double)numRfbt3n.Value;    // Rfbt3_n
                 Et = E;                    // !!!   // Efbt
+
+
+
+                e0 = (double)numEps_fb0.Value;      // eb0
+                e2 = (double)numEps_fb2.Value;      // eb2
+                //e0 = (double)0.003m;
+                //e2 = (double)0.0042m;
                 et2 = (double)numEps_fbt2.Value;    // efbt2
                 et3 = (double)numEps_fbt3.Value;    // efbt3
             }
@@ -2277,26 +2327,37 @@ namespace BSFiberConcrete
                 // Характеристики по растяжению
                 Rt_n = (double)numRs.Value;         // 
                 Et = (double)numEs.Value;           //
-                et0 = (double)numEpsilonS0.Value;   //
-                et2 = (double)numEpsilonS2.Value;   //
-
                 // Характеристики по сжатию
                 R_n = (double)numRsc.Value;
+                E = Et;
+
                 e0 = et0;
                 e2 = et2;
-                E = Et;
+                et0 = (double)numEpsilonS0.Value;   //
+                et2 = (double)numEpsilonS2.Value;   //
             }
             else
             {
                 throw new Exception("Выбрано значение материала, выходящее за предел предопределенных значений.");
             }
 
-            DataForDeformDiagram.typesDiagram = new string[] { typeMaterial, typeDiagram };
+            //DataForDeformDiagram.typesDiagram = new string[] { typeMaterial, typeDiagram };
+            
+            string[] typesDiagram = new string[] { typeMaterial, typeDiagram };
+            double[] resists = new double[] { R_n, Rt_n, Rt2_n, Rt3_n };
+            double[] elasticity = new double[] { E, Et };
+
             DataForDeformDiagram.resists = new double[] { R_n, Rt_n, Rt2_n, Rt3_n };
-            DataForDeformDiagram.deforms = new double[] { e0, e2, et0, et2, et3 };
+            //DataForDeformDiagram.deforms = new double[] { e0, e2, et0, et2, et3 };
             DataForDeformDiagram.E = new double[] { E, Et };
 
-            DeformDiagram deformDiagram = new DeformDiagram();
+            // Присваиваем значение на форму
+
+            CalcDeformDiagram calculateDiagram = new CalcDeformDiagram(typesDiagram, resists, elasticity);
+
+
+
+            DeformDiagram deformDiagram = new DeformDiagram(calculateDiagram);
             deformDiagram.Show();
         }
 
@@ -2527,11 +2588,22 @@ namespace BSFiberConcrete
        
         private void lbE_beton_info_Click(object sender, EventArgs e)
         {
-            MessageBox.Show($"Модуль упругости на сжатие: \n " +
-                $"{BSHelper.Kgsm2MPa((double) numE_beton.Value ) } МПа \n" +
-                $"{BSHelper.Kgssm2ToKNsm2((double)numE_beton.Value, 2)} КН/см2 \n" +
-                $"СП 63. Таблица 6.11", 
-                "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            try
+            {
+                BSFiberConcrete.Beton val = cmbBfn.SelectedItem as BSFiberConcrete.Beton;
+
+                double fi_b_cr = BSFiberLib.CalcFi_b_cr(cmbWetAir.SelectedIndex+1, (int)val.B);
+
+                MessageBox.Show($"Модуль упругости на сжатие: \n " +
+                    $"{BSHelper.Kgsm2MPa((double)numE_beton.Value)} МПа \n" +
+                    $"{BSHelper.Kgssm2ToKNsm2((double)numE_beton.Value, 2)} КН/см2 \n" +
+                    $"СП 63. Таблица 6.11 \n" +
+                    $"СП 63 п 6.1.15 учет коэффицента ползучести φb,cr = {fi_b_cr} ",
+                    "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch
+            {
+            }
         }
     
         private void lbE_fb_info_Click(object sender, EventArgs e)
@@ -2628,8 +2700,44 @@ namespace BSFiberConcrete
 
             if (betonTypeId == 0 || betonTypeId == 1 || betonTypeId == 2)
             {
-                Init_Rfb_Efb(betonTypeId);
+                Init_Rfb_Efb(betonTypeId, cmbWetAir.SelectedIndex+1);
             }            
+        }
+
+        /// <summary>
+        /// Рассчитать случайный эксцентриситет
+        /// </summary>
+        private void RecalRandomEccentricity_e0()
+        {
+            bool ok = double.TryParse(tbLength.Text, out double _lgth);
+            if (ok)
+            {
+                BeamWidtHeight(out double _w, out double _h, out double _area);
+                numRandomEccentricity.Value = (decimal)BSFiberCalc_MNQ.Calc_e_a(_lgth, _h);
+            }
+        }
+
+        private void tbLength_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                RecalRandomEccentricity_e0();
+            }
+            catch
+            {
+            }            
+        }
+
+        private void cmbWetAir_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            try
+            {
+                if (cmbBfn.SelectedIndex > -1 && comboBetonType.SelectedIndex > -1 && cmbWetAir.SelectedIndex > -1)
+                {
+                    Init_Rfb_Efb(comboBetonType.SelectedIndex, cmbWetAir.SelectedIndex+1);
+                }
+            }
+            catch { }
         }
     }
 }

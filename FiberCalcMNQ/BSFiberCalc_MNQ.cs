@@ -94,7 +94,7 @@ namespace BSFiberConcrete
         [DisplayName("Предельная продольная сила, [кг]"), Description("Res")]
         public double N_ult { get; protected set; }
 
-        [DisplayName("Коэффициент использования по усилию")]
+        [DisplayName("Коэффициент использования по усилию, [СП 360 П6.1.14 П6.1.15]")]
         public double UtilRate_N { get; protected set; }
 
         public string DN(Type _T, string _property) => _T.GetProperty(_property).GetCustomAttribute<DisplayNameAttribute>().DisplayName;
@@ -161,6 +161,22 @@ namespace BSFiberConcrete
             Msg = new List<string>();
             // TODO refactoring
             fi = 0.9;
+        }
+
+        /// <summary>
+        ///  Рассчитать случайный эксцентриситет CG 63 п 8.1.7
+        /// </summary>        
+        /// <param name="_length"> Длина см</param>
+        /// <param name="_h"> высота сечения см</param>
+        /// <returns>e_а</returns>
+        public static double Calc_e_a(double _length, double _h)
+        {
+            double e_a = 1.0;
+
+            if (_length != 0 && _h != 0)            
+                e_a = Math.Max(1.0,  Math.Max(_length/60.0,  _h/ 30.0));
+
+            return e_a; // см
         }
 
         /// <summary>

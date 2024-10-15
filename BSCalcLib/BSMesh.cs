@@ -26,7 +26,19 @@ namespace BSCalcLib
         
         public static Point Center { get; set; }  
 
-        public static string FilePath {  get; set; }     
+        public static string FilePath {  get; set; }
+
+        public  BSMesh()
+        {
+            Nx = 2;
+            Ny = 2;
+            MinAngle = 30;
+            MaxArea = 10;
+            Center = new Point(0, 0);
+
+            FilePath = Path.Combine(Environment.CurrentDirectory, "Templates");
+        }
+
 
         static BSMesh()
         {
@@ -34,8 +46,9 @@ namespace BSCalcLib
             Ny = 2;
             MinAngle = 30;
             MaxArea = 10;
-
             Center = new Point(0, 0);
+
+            FilePath  = Path.Combine(Environment.CurrentDirectory, "Templates");
         }
 
         public static void Example()
@@ -204,8 +217,6 @@ namespace BSCalcLib
 
             return poly;
         }
-
-
     }
 
 }
