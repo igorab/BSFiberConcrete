@@ -123,7 +123,7 @@ namespace BSFiberConcrete
 
             items[++idx] = new ListViewItem("s_w", idx);
             items[idx].Checked = true;
-            items[idx].SubItems.Add(_rebar.s_w.ToString());
+            items[idx].SubItems.Add(_rebar.Sw_X.ToString());
             items[idx].SubItems.Add("Шаг попреречной арматуры");
             items[idx].SubItems.Add("см");
 

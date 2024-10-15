@@ -219,10 +219,16 @@ namespace BSFiberConcrete
         // Вдоль оси X:
         // Расчетное сопротивление поперечной арматуры растяжению;
         public double Rsw { get; set; }
-        public double Asw { get; set; }        
-        public double s_w { get; set; }
-        // вдоль оси Y:
-        public double s_w_Y { get; set; }
+        public double Asw { get; set; }
+        /// <summary>
+        /// Шаг по оси X
+        /// </summary>
+        public double Sw_X { get; set; }
+
+        /// <summary>
+        /// Шаг по оси Y
+        /// </summary>
+        public double Sw_Y { get; set; }
 
         public TypeYieldStress typeYieldStress { get; set; }
         public double k_s { get; set; }
