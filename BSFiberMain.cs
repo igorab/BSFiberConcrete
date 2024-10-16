@@ -277,6 +277,7 @@ namespace BSFiberConcrete
                 comboBetonType.SelectedIndex = 0;
                 cmbRebarClass.SelectedItem = "A400";
                 cmbDeformDiagram.SelectedIndex = (int)DeformDiagramType.D3Linear;
+                cmbTypeMaterial.SelectedIndex = 0;
 
                 m_BSLoadData.InitEfforts(ref m_Iniv);
                 
