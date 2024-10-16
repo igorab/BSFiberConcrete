@@ -205,7 +205,9 @@ namespace BSFiberConcrete
             toolTip1.SetToolTip(this.btnLSection, "Тавровое сечение \"Нижняя полка\"");
             toolTip1.SetToolTip(this.btnIBeam, "Двутавровое сечение");
             toolTip1.SetToolTip(this.btnRing, "Кольцевое сечение");
+            toolTip1.SetToolTip(btnCustomSection, "Произвольное сечение");
             toolTip1.SetToolTip(btnCalcResults, "Результаты расчета");
+
         }
 
         // арматура
