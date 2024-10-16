@@ -169,11 +169,25 @@ namespace BSFiberConcrete
             return true;
         }
 
+        private bool Validate()
+        {
+            bool res = true;
+
+            if (D["Mz"] == 0 && D["My"] == 0 && D["N"] == 0)
+            {
+                res = false;
+            }            
+            return res;
+        }
+
         /// <summary>
         ///  GO!
         /// </summary>
         public void Run()
         {
+            if (!Validate())
+                return;
+
             Init();
 
             bool ok = RunGroup1();

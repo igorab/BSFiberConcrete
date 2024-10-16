@@ -20,6 +20,13 @@ namespace BSFiberConcrete.Report
 
         public BSCalcResultNDM CalcRes { get; set; }
 
+        public static void RunFromCode(BeamSection m_BeamSection, BSCalcResultNDM calcRes)
+        {
+            BSReport bSReport = new BSReport(m_BeamSection);
+            bSReport.CalcRes = calcRes;
+            bSReport.CreateReportNDM();
+        }
+
         public BSReport(BeamSection _beamSection)
         {
             m_BeamSection = _beamSection;

@@ -17,8 +17,8 @@ namespace BSFiberConcrete
         // Начальный модуль упругости бетона-матрицы B30 СП63
         public double Eb { get => Efb; }
 
-        //для фибры из тонкой низкоуглеродистой проволоки МП п.п  кг/см2
-        public double Ef { get; set; }
+        //Модуль упругости на растяжение
+        public double Efbt { get; set; }
 
         /// <summary>
         /// Начальный модуль упругости

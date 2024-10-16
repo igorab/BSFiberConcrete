@@ -508,7 +508,7 @@ namespace BSFiberConcrete
             m_ImgCalc = "Incline_Q.PNG";
 
             // Растояние до цента тяжести арматуры растянутой арматуры, см
-            double a = l_rebar.Length > 2 ? l_rebar[2] : 4;
+            double a = Rebar.a; // l_rebar.Length > 2 ? l_rebar[2] : 4;
 
             // рабочая высота сечения по растянутой арматуре
             double h0 = h - a;
@@ -561,7 +561,7 @@ namespace BSFiberConcrete
             double s_w_max = (Qx > 0) ? Rfbt * b * h0 * h0 / Qx : 0;
 
             string res;
-            if (Rebar.s_w <= s_w_max)
+            if (Rebar.Sw_X <= s_w_max)
             {
                 res = "Условие выполнено, шаг удовлетворяет требованию 6.1.28";
                 Msg.Add(res);
@@ -573,7 +573,7 @@ namespace BSFiberConcrete
             }
 
             // усилие в поперечной арматуре на единицу длины элемента
-            double q_sw = Rebar.Rsw * Rebar.Asw / Rebar.s_w; // 6.78 
+            double q_sw = (Rebar.Sw_X !=0) ? Rebar.Rsw * Rebar.Asw / Rebar.Sw_X : 0; // 6.78 
 
             // условие учета поперечной арматуры
             if (q_sw < 0.25 * Rfbt * b)
@@ -613,7 +613,7 @@ namespace BSFiberConcrete
         protected void CalculateM()
         {
             // Растояние до цента тяжести арматуры растянутой арматуры, см
-            double a = l_rebar.Length > 2 ? l_rebar[2] : 4;
+            double a = Rebar.a; // l_rebar.Length > 2 ? l_rebar[2] : 4;
             // рабочая высота сечения по растянутой арматуре
             double h0 = h - a;
             // Нормативное остаточное сопротивления осевому растяжению кг/см2
@@ -625,9 +625,9 @@ namespace BSFiberConcrete
             // Площадь арматуры
             double Asw = Rebar.Asw;
             // шаг попреречной арматуры
-            double sw = Rebar.s_w;
+            double sw = Rebar.Sw_X;
             // усилие в поперечной арматуре на единицу длины элемента
-            double q_sw = Rsw * Asw / sw;
+            double q_sw = (sw !=0) ? Rsw * Asw / sw : 0;
             // условие учета поперечной арматуры
             if (q_sw < 0.25 * _Rfbt3 * b)
                 q_sw = 0;

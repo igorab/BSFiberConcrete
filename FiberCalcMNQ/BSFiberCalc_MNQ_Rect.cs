@@ -133,10 +133,12 @@ namespace BSFiberConcrete
                 };
             }
 
-            return new Dictionary<string, double>() 
+            var xres =  new Dictionary<string, double>() 
             { 
                 { "M_ult", M_ult }, { "Q_ult", Q_ult }, { "N_ult", N_ult } 
             };
+
+            return xres;
         }
     }
 }
