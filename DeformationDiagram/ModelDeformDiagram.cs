@@ -110,7 +110,7 @@ namespace BSFiberConcrete.DeformationDiagram
             }
             else if (typeMaterial == BSHelper.Rebar)
             {
-                _valuesRelativeDeformation = new double[] { 0.00175, 0.02, 0.025};
+                _valuesRelativeDeformation = new double[] { 0, 0, 0.025};
                 SetValuesRelativeDeformation();
                 _deformationsView = new RebarDeformationView(_valuesRelativeDeformation);
 

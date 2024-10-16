@@ -23,6 +23,7 @@ namespace BSFiberConcrete.DeformationDiagram.UserControls
             // es0 es1 es2 
             _valuesDeformation = valuesDeformation;
 
+            UpdateDisabledNumeric();
         }
 
 

@@ -599,6 +599,7 @@
       <DependentUpon>FormForTest.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="BSClassDiagram.cd" />
+    <None Include="DeformationDiagram\UserControls\ClassDiagram1.cd" />
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\BSFiberCalculation.datasource" />
