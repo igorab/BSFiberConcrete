@@ -287,7 +287,6 @@
     <Compile Include="CalcGroup2\BSCalculateNDM.cs" />
     <Compile Include="CalcGroup2\BSExtensions.cs" />
     <Compile Include="CalcGroup2\CalcNDM.cs" />
-    <Compile Include="Calc\BSFiberCalc_Cracking.cs" />
     <Compile Include="Calc\BSFiberCalc_Deform.cs" />
     <Compile Include="Calc\BSFiberCalc_IBeamRods.cs" />
     <Compile Include="Calc\BSFiberCalc_NormRods.cs" />

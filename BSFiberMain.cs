@@ -588,7 +588,7 @@ namespace BSFiberConcrete
                 string cR_class = cmbRebarClass.Text;
                 double cRs = (double)numRs.Value; // кг/см2            
                 double cEs = (double)numEs.Value; // кг/см2
-                //TODO 15102024
+                // Значения не нужны для расчета
                 double c_eps_s0 = 0;// 0.00175; 
                 double c_eps_s2 = 0; // 0.025; 
 
@@ -2052,41 +2052,26 @@ namespace BSFiberConcrete
         private void numRfbt_n_ValueChanged(object sender, EventArgs e)
         {
             labelRfbtnMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numRfbt_n.Value));
-            //TODO 15102024
-            //numEps_fbt0.Value = BSMatFiber.NumEps_fbt0(numRfbt_n.Value, numE_fiber.Value);
-            //numEps_fbt1.Value = numEps_fbt0.Value + 0.0001m;
         }
 
         private void numRfb_n_ValueChanged(object sender, EventArgs e)
         {
             labelRfbnMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numRfb_n.Value));
-            //TODO 15102024
-            //numEps_fb1.Value = BSMatFiber.NumEps_fb1(numRfb_n.Value, numE_fiber.Value);
         }
 
         private void numRfbt2n_ValueChanged(object sender, EventArgs e)
         {
             labelRfbt2nMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numRfbt2n.Value));
-
-            // расчетные значения отличаются от нормативных коэфициентом numYft, поэтому можно передать нормативные значения
-            //TODO 15102024
-            //numEps_fbt3.Value = (decimal) BSMatFiber.NumEps_fbt3((double)numRfbt2n.Value, (double) numRfbt3n.Value);
         }
 
         private void numRfbt3n_ValueChanged(object sender, EventArgs e)
         {
             labelRfbt3nMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numRfbt3n.Value));
-            //TODO 15102024
-            //numEps_fbt3.Value = (decimal) BSMatFiber.NumEps_fbt3((double) numRfbt2n.Value, (double) numRfbt3n.Value);
         }
 
         private void numRs_ValueChanged(object sender, EventArgs e)
         {
             labelRsMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numRs.Value));
-
-            //TODO 15102024
-            //numEpsilonS1.Value = BSMatRod.NumEps_s1(numRs.Value, numEs.Value);
-            //numEpsilonS0.Value = BSMatRod.NumEps_s0(numRs.Value, numEs.Value);
         }
 
         private void numRsw_ValueChanged(object sender, EventArgs e)
@@ -2362,11 +2347,11 @@ namespace BSFiberConcrete
                 Rt3_n = (double)numRfbt3n.Value;    // Rfbt3_n
                 Et = E;                    // !!!   // Efbt
 
-                //TODO 15102024
-                e0 = 0;      // eb0
-                e2 = 0;      // eb2                
-                et2 = 0;    // efbt2
-                et3 = 0;    // efbt3
+                // значения забираются с другой формы
+                //e0 = 0;      // eb0
+                //e2 = 0;      // eb2                
+                //et2 = 0;    // efbt2
+                //et3 = 0;    // efbt3
             }
             else if (typeMaterial == BSHelper.Rebar)
             {
@@ -2378,11 +2363,11 @@ namespace BSFiberConcrete
                 R_n = (double)numRsc.Value;
                 E = Et;
 
-                e0 = et0;
-                e2 = et2;
-                //TODO 15102024
-                et0 = 0; // (double)numEpsilonS0.Value;   //
-                et2 = 0; //(double)numEpsilonS2.Value;   //
+                // значения забираются с другой формы
+                //e0 = et0;
+                //e2 = et2;
+                //et0 = 0; // (double)numEpsilonS0.Value;
+                //et2 = 0; //(double)numEpsilonS2.Value;
             }
             else
             {
@@ -2450,9 +2435,6 @@ namespace BSFiberConcrete
         private void numEs_ValueChanged(object sender, EventArgs e)
         {
             labelEsMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numEs.Value));
-            //TODO 15102024
-            //numEpsilonS1.Value = BSMatRod.NumEps_s1(numRs.Value, numEs.Value);
-            //numEpsilonS0.Value = BSMatRod.NumEps_s0(numRs.Value, numEs.Value);
         }
         
         private void numRsc_ValueChanged(object sender, EventArgs e)
@@ -2475,11 +2457,6 @@ namespace BSFiberConcrete
         // модуль упругости для фибробетона на растяжение
         private void numE_fiber_ValueChanged(object sender, EventArgs e)
         {
-            //TODO 15102024
-            //numEps_fbt0.Value = BSMatFiber.NumEps_fbt0(numRfbt_n.Value, numE_fiber.Value);
-            //numEps_fbt1.Value = numEps_fbt0.Value + 0.0001m;            
-            //numEps_fb1.Value = BSMatFiber.NumEps_fb1(numRfb_n.Value, numE_fiber.Value);
-
             numE_beton.Value = numE_fiber.Value;
         }
 
