@@ -1318,79 +1318,46 @@ namespace BSFiberConcrete
         }
 
         
+
         /// <summary>
-        ///
+        /// расчет прогибов, построение графика прогибов для балки
         /// </summary>
-        private double CalculateBeamDeflections(ControllerBeamDiagram beamController)
+        /// <param name="beamController"></param>
+        /// <param name="isUtilizationFactor"> флаг, определяющий превышение коэф использования; false - превышает, true - коэф в норме</param>
+        /// <returns></returns>
+        private double CalculateBeamDeflections(ControllerBeamDiagram beamController, bool isUtilizationFactor)
         {
             // выполнять расчет только в случае, если ранее были сохранены 
             if (beamController == null || beamController.path2BeamDiagrams.Count == 0)
-            { return double.NaN; }
-
-            double deflexionMax = 0;
-
-            // Кол- во рассматриваемых участков
-            int n = 20;
-            // всего точек 
-            int m = n + 1 + n;
-            // шаг между точками
-            double delta = beamController.l / (2 * n);
+            { 
+                return double.NaN;
+            }
+            if (!isUtilizationFactor)
+            {
+                MessageBox.Show("Конструкция не удовлетворяет требованиям прочности.\n " +
+                    "Расчет прогибов не производится.");
+                return double.NaN;
+            }
+            
             // Значения в точках
             List<double> X = new List<double>();
             List<double> valueMomentInX = new List<double>();
             // Значения на середине рассматриваемого участка
             List<double> valuesMomentOnSection = new List<double>();
-            List<double> valuesStiffnesOnSection = new List<double>();
-
-            for (int i = 0; m > i; i++)
-            {
-                double tmpX = delta * i;
-                double tmpM = beamController.GetM(beamController.result, tmpX);
-
-                X.Add(tmpX);
-                valueMomentInX.Add(tmpM);
-
-                if (i > 0 && i % 2 != 0)
-                { valuesMomentOnSection.Add(tmpM); }
-            }
+            //List<double> valuesStiffnesOnSection = new List<double>();
+            beamController.BreakBeamIntoSections(X, valueMomentInX, valuesMomentOnSection);
 
             if (valuesMomentOnSection.Count == 0) { return double.NaN; }
 
             // Получение жесткости на участках
-            valuesStiffnesOnSection = CalculateStiffness(valuesMomentOnSection);
+            List<double> valuesStiffnesOnSection = CalculateStiffness(valuesMomentOnSection);
             //List<double> valuesСurvatureOnSection = CalcNDM_My(valuesMomentOnSection);
 
-            List<double> U = new List<double>();
-            List<double> XForChart = new List<double>();
-            for (int i = 1; X.Count > i; i = i + 2)
-            {
-                double u = beamController.CalculateDeflectionAtPoint(valueMomentInX, X, valuesStiffnesOnSection, i);
-                U.Add(u*10); // перевод из см в мм 
-                XForChart.Add(X[i]);
-                if (deflexionMax > u * 10) // знеачение прогиба с минусом
-                { deflexionMax = u * 10; }
-            }
-            string[] names = { "Прогиб", "см", "мм", "BeamDiagramU" };
-            beamController.CreteChart(XForChart, U, names);
-            
-            if (beamController.beamDiagram.simpleDiagram.IsCalculateBeamDeflection)
-            {
-                double d = 0;
-                foreach (double Stiffnes in valuesStiffnesOnSection)
-                {
-                    if (double.IsNaN(Stiffnes)) { continue; }
-                    d = (d + Stiffnes) / 2;
-                }
-                List<double> simpleU = new List<double>();
-                List<double> XForChart1 = new List<double>();
-                for (int i = 1; X.Count > i; i = i + 2)
-                {
-                    XForChart1.Add(X[i]);
-                    double tmpU = beamController.beamDiagram.simpleDiagram.CalculateBeamDeflection(X[i], d) * 10;
-                    simpleU.Add(tmpU);
-                }
-                beamController.CreteChart(XForChart, simpleU, new string[] { "Прогиб по формуле", "cм", "мм", "SimpleBeamDiagramU" });
-            }
+            // график прогиба по расчетным значениям
+            double deflexionMax = beamController.CalculateDeflectionDiagram(X, valueMomentInX, valuesStiffnesOnSection);
+
+            // график прогибов по формулам
+            beamController.CalculateDeflectionDiagramByFormula(X, valuesStiffnesOnSection);
 
             if (deflexionMax == 0)
                 return double.NaN;
@@ -1495,7 +1462,6 @@ namespace BSFiberConcrete
             BSCalcResultNDM calcRes = calcNDM.CalcRes;
             if (calcRes != null)
             {
-                calcRes.Deflexion_max = CalculateBeamDeflections(_beamDiagramController);
                 calcRes.ResQxQy = resQxQy;
 
                 m_GeomParams = calcRes.GeomParams;
@@ -1504,6 +1470,8 @@ namespace BSFiberConcrete
                 m_Reinforcement = calcRes.Reinforcement;
                 m_CalcResults = calcRes.GetResults1Group();
                 m_CalcResults2Group = calcRes.GetResults2Group();
+
+                calcRes.Deflexion_max = CalculateBeamDeflections(_beamDiagramController,CheckUtilizationFactor());
 
                 ShowMosaic(calcRes);
 
@@ -2740,6 +2708,31 @@ namespace BSFiberConcrete
                 }
             }
             catch { }
+        }
+
+
+        /// <summary>
+        /// Проверить не превышение коэффициентов использования
+        /// </summary>
+        /// <returns></returns>
+        private bool CheckUtilizationFactor()
+        {
+
+            // Проходимо по всем парам из  m_CalcResults, если есть хоть одно значение превышающее 1 ( или -1), выдает false
+            foreach (KeyValuePair<string, double> item in m_CalcResults)
+            {
+                if (item.Key.Contains("Коэффициент использования"))
+                {
+                    if (item.Value > 1d || item.Value < -1d)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+
+
+            return true;
         }
     }
 }
