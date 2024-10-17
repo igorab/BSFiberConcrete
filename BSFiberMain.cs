@@ -2729,9 +2729,6 @@ namespace BSFiberConcrete
                     }
                 }
             }
-
-
-
             return true;
         }
     }
