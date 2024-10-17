@@ -11,7 +11,7 @@ namespace BSFiberConcrete
     {
         public List<string> Msg;
 
-        private string m_ImgCalc;
+        protected string m_ImgCalc { get; set; }
 
         #region attributes
 
@@ -495,13 +495,13 @@ namespace BSFiberConcrete
         /// <summary>
         /// Расчет элементов по полосе между наклонными сечениями
         /// </summary>
-        protected void Calculate_Qy()
+        protected void Calculate_Qy(double _b, double _h)
         {
             // Растояние до цента тяжести арматуры растянутой арматуры, см
-            double a = Rebar.a; // l_rebar.Length > 2 ? l_rebar[2] : 4;
+            double a = Rebar.a;
 
             // рабочая высота сечения по растянутой арматуре
-            double h0 = b - a;
+            double h0 = _h - a;
 
             // Расчетные значения сопротивления  на сжатиие по B30 СП63
             Rfb = R_fb();
@@ -563,7 +563,7 @@ namespace BSFiberConcrete
             }
 
             // усилие в поперечной арматуре на единицу длины элемента
-            double q_sw = (Rebar.Sw_X != 0) ? Rebar.Rsw * Rebar.Asw / Rebar.Sw_X : 0; // 6.78 
+            double q_sw = (Rebar.Sw_Y != 0) ? Rebar.Rsw_Y * Rebar.Asw / Rebar.Sw_Y : 0; // 6.78 
 
             // условие учета поперечной арматуры
             if (q_sw < 0.25 * Rfbt * b)
@@ -600,21 +600,19 @@ namespace BSFiberConcrete
         /// <summary>
         /// Расчет элементов по полосе между наклонными сечениями
         /// </summary>
-        protected void Calculate_Qx()
-        {
-            m_ImgCalc = "Incline_Q.PNG";
-
+        protected void Calculate_Qx(double _b, double _h)
+        {            
             // Растояние до цента тяжести арматуры растянутой арматуры, см
             double a = Rebar.a; // l_rebar.Length > 2 ? l_rebar[2] : 4;
 
             // рабочая высота сечения по растянутой арматуре
-            double h0 = h - a;
+            double h0 = _h - a;
 
             // Расчетные значения сопротивления  на сжатиие по B30 СП63
             Rfb = R_fb();
 
             // Предельная перерезывающая сила по полосе между наклонными сечениями
-            double _Q_ult = 0.3 * Rfb * b * h0; // (6.74)
+            double _Q_ult = 0.3 * Rfb * _b * h0; // (6.74)
             
             // Расчет элементов по наклонным сечениям на действие поперечных сил
             // Минимальная длина проекции(см)
@@ -640,13 +638,13 @@ namespace BSFiberConcrete
             {
                 if (_c == 0) continue;
 
-                Qfb_i = 1.5d * Rfbt * b * h0 * h0 / _c; // 6.76
+                Qfb_i = 1.5d * Rfbt * _b * h0 * h0 / _c; // 6.76
 
                 // условие на 0.5..2.5
-                if (Qfb_i >= 2.5 * Rfbt * b * h0)
-                    Qfb_i = 2.5 * Rfbt * b * h0;
-                else if (Qfb_i <= 0.5 * Rfbt * b * h0)
-                    Qfb_i = 0.5 * Rfbt * b * h0;
+                if (Qfb_i >= 2.5 * Rfbt * _b * h0)
+                    Qfb_i = 2.5 * Rfbt * _b * h0;
+                else if (Qfb_i <= 0.5 * Rfbt * _b * h0)
+                    Qfb_i = 0.5 * Rfbt * _b * h0;
 
                 lstQ_fb.Add(Qfb_i);
             }
@@ -655,7 +653,7 @@ namespace BSFiberConcrete
             double Qfb = (lstQ_fb.Count > 0) ? lstQ_fb.Max() : 0;
 
             // Максимальный шаг поперечной арматуры см
-            double s_w_max = (Qx > 0) ? Rfbt * b * h0 * h0 / Qx : 0;
+            double s_w_max = (Qx > 0) ? Rfbt * _b * h0 * h0 / Qx : 0;
 
             string res;
             if (Rebar.Sw_X <= s_w_max)
@@ -673,7 +671,7 @@ namespace BSFiberConcrete
             double q_sw = (Rebar.Sw_X !=0) ? Rebar.Rsw * Rebar.Asw / Rebar.Sw_X : 0; // 6.78 
 
             // условие учета поперечной арматуры
-            if (q_sw < 0.25 * Rfbt * b)
+            if (q_sw < 0.25 * Rfbt * _b)
                 q_sw = 0;
 
             // поперечная сила, воспринимаемая поперечной арматурой в наклонном сечении
@@ -705,14 +703,14 @@ namespace BSFiberConcrete
         }
 
         /// <summary>
-        ///  
+        ///  6.1.30 Расчет элементов по наклонным сечениями на действие моментов My
         /// </summary>
-        protected void CalculateM()
+        protected void Calculate_My(double _b, double _h)
         {
             // Растояние до цента тяжести арматуры растянутой арматуры, см
-            double a = Rebar.a; // l_rebar.Length > 2 ? l_rebar[2] : 4;
+            double a = Rebar.a;  
             // рабочая высота сечения по растянутой арматуре
-            double h0 = h - a;
+            double h0 = _h - a;
             // Нормативное остаточное сопротивления осевому растяжению кг/см2
             double _Rfbt3 = R_fbt3();
             // Площадь растянутой арматуры см2
@@ -737,7 +735,7 @@ namespace BSFiberConcrete
             double Q_sw,
                    M_sw; // момент, воспр поперечной арматурой
             double M_fbt = 0; // момент, воспр сталефибробетоном
-            double Q_fbt3 = (c_min!=0) ? 1.5d * _Rfbt3 * b * h0 * h0 / c_min : 0;
+            double Q_fbt3 = (c_min!=0) ? 1.5d * _Rfbt3 * _b * h0 * h0 / c_min : 0;
             // усилие в продольной растянутой арматуре
             double N_s = Rebar.Rs * Rebar.As;
             // плечо внутренней пары сил
@@ -768,20 +766,21 @@ namespace BSFiberConcrete
                 lst_Q_sw.Add(Q_sw);
                 lst_M_sw.Add(M_sw);
 
-                Q_fbt3 = (ci != 0) ? 1.5d * _Rfbt3 * b * h0 * h0 / ci : 0;
+                Q_fbt3 = (ci != 0) ? 1.5d * _Rfbt3 * _b * h0 * h0 / ci : 0;
 
-                if (Q_fbt3 >= 2.5d * _Rfbt3 * b * h0)
+                if (Q_fbt3 >= 2.5d * _Rfbt3 * _b * h0)
                 {
-                    Q_fbt3 = 2.5d * _Rfbt3 * b * h0;
+                    Q_fbt3 = 2.5d * _Rfbt3 * _b * h0;
                 }
-                else if (Q_fbt3 <= 0.5d * _Rfbt3 * b * h0)
+                else if (Q_fbt3 <= 0.5d * _Rfbt3 * _b * h0)
                 {
-                    Q_fbt3 = 0.5d * _Rfbt3 * b * h0;
+                    Q_fbt3 = 0.5d * _Rfbt3 * _b * h0;
                 }
 
                 M_fbt = 0.5 * Q_fbt3 * ci;
 
                 lst_Q_fbt3.Add(Q_fbt3);
+
                 lst_M_fbt.Add(M_fbt);
 
                 // расчет по наклонным сечениям; условие : M <= M_ult (Ms - продольная, Msw - поперечная, М_fbt - фибробетон)
@@ -791,6 +790,13 @@ namespace BSFiberConcrete
             }
 
             M_ult = (lst_M_ult.Count > 0) ? lst_M_ult.Min() : 0;            
+        }
+
+        /// <summary>
+        ///  6.1.30 Расчет элементов по наклонным сечениями на действие моментов Mx
+        /// </summary>
+        protected void Calculate_Mx()
+        {       
         }
 
         public virtual bool Calculate() 

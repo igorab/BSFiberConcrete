@@ -25,15 +25,21 @@ namespace BSFiberConcrete
                 Calculate_N_Out();                
             }
             else if (Shear)
-            {   
+            {
+                m_ImgCalc = "Incline_Q.PNG";
+
                 // Расчет на действие поперечной силы вдоль оси X
-                Calculate_Qx();
+                Calculate_Qx(b, h);
 
                 // Расчет на действие поперечной силы вдоль оси Y
-                Calculate_Qy();
+                Calculate_Qy(h, b);
 
-                // Расчет на действие моментов
-                CalculateM();
+                // Расчет на действие моментов относительно оси Y
+                Calculate_My(b, h);
+
+                // Расчет на действие моментов относительно оси X
+                Calculate_Mx();
+
             }
             else if (UseRebar)
             {
@@ -48,6 +54,7 @@ namespace BSFiberConcrete
             return true;
         }
 
+       
         public override void GetSize(double[] _t)
         {
             beam.SetSizes(_t);

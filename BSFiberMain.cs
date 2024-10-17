@@ -117,6 +117,8 @@ namespace BSFiberConcrete
                 gridEfforts.Columns["Qy"].Visible = false;
                 tabFiber.TabPages.Remove(tabPageNDM);
                 tabFiber.TabPages.Remove(tabPBeam);
+                btnCustomSection.Enabled = false;
+
             }
             else if (CalcType == CalcType.Nonlinear)
             {
@@ -125,7 +127,8 @@ namespace BSFiberConcrete
                 gridEfforts.Columns["Mx"].Visible = true;
                 gridEfforts.Columns["Qy"].Visible = true;
                 tabFiber.TabPages.Remove(tabPBeam);
-                tableLayoutAreaRebar.Visible = false;
+                //tableLayoutAreaRebar.Visible = false;
+                btnCustomSection.Enabled = true;
             }
             else if (CalcType == CalcType.BeamCalc)
             {
@@ -312,11 +315,7 @@ namespace BSFiberConcrete
                 cmbMomentOfForceUnit.SelectedIndex = 1;
 
                 InitRebarValues();
-
-                //СП63 6.1.20 
-                //TODO 15102024
-                // numEps_fb2.Value = 0.0035M;
-
+                
                 CalcTypeShow();
 
                 NDMSetupInitFormValues();
@@ -883,7 +882,10 @@ namespace BSFiberConcrete
 
             _Rebar.Es = (double)numEs.Value;
             _Rebar.Esw = (double)numEsw.Value;
+
             _Rebar.Sw_X = (double) num_s_w_X.Value;
+            _Rebar.Esw_Y = (double)numEsw_Y.Value;
+            _Rebar.Rsw_Y = (double)numRsw_Y.Value;
 
             return _Rebar;
         }
@@ -1133,7 +1135,6 @@ namespace BSFiberConcrete
             {
                 // Применяется только в расчете по НДМ
             }
-
         }
 
         private void btnFactors_Click(object sender, EventArgs e)
@@ -2588,12 +2589,7 @@ namespace BSFiberConcrete
             }
         }
 
-        // СП63 П 6.1.25 
-        private void numEps_fbt1_ValueChanged(object sender, EventArgs e)
-        {
-            //numEps_fbt_ult.Value = numEps_fbt1.Value;
-        }
-       
+              
         private void lbE_beton_info_Click(object sender, EventArgs e)
         {
             try
@@ -2631,25 +2627,7 @@ namespace BSFiberConcrete
         {
             Cursor.Current = Cursors.Hand;
         }
-        
-        // создать сечение произвольной формы
-        private void btnSectionAdd_Click(object sender, EventArgs e)
-        {
-            NDMSetupValuesFromForm();
-
-            BSSectionChart sectionChart = new BSSectionChart(BeamSection.Any)
-            {                
-                Wdth = 0,
-                Hght = 0,
-                NumArea = 0,
-                RebarClass = cmbRebarClass.Text
-            };
-
-            sectionChart.DictCalcParams = DictCalcParams(BeamSection.Any);
-
-            sectionChart.Show();
-        }
-
+                
         private void picEffortsSign_MouseMove(object sender, MouseEventArgs e)
         {
             Cursor.Current = Cursors.Hand; 
@@ -2763,6 +2741,26 @@ namespace BSFiberConcrete
                 }
             }
             catch { }
+        }
+
+        /// <summary>
+        /// создать и рассчитать сечение произвольной формы
+        /// </summary>        
+        private void btnCustomSection_Click(object sender, EventArgs e)
+        {
+            NDMSetupValuesFromForm();
+
+            BSSectionChart sectionChart = new BSSectionChart(BeamSection.Any)
+            {
+                Wdth = 0,
+                Hght = 0,
+                NumArea = 0,
+                RebarClass = cmbRebarClass.Text
+            };
+
+            sectionChart.DictCalcParams = DictCalcParams(BeamSection.Any);
+
+            sectionChart.Show();
         }
     }
 }

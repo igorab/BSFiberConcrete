@@ -77,19 +77,23 @@ namespace BSFiberConcrete
         /// <summary>
         /// Расчет элементов по полосе между наклонными сечениями
         /// </summary>
-        private new void CalculateQ()
+        private void CalculateQ()
         {
             m_ImgCalc = "Incline_Q.PNG";
 
-            base.Calculate_Qx();            
+            base.Calculate_Qx(b, h);
+
+            base.Calculate_Qy(h, b);
         }
        
         /// <summary>
         ///  Расчет элементов по наклонным сечениям на действие моментов
         /// </summary>
-        private new void CalculateM()
+        private void CalculateM()
         {
-            base.CalculateM();            
+            base.Calculate_My(b, h);
+
+            base.Calculate_Mx();
         }
 
         /// <summary>
@@ -101,6 +105,7 @@ namespace BSFiberConcrete
             {                
                 // Расчет на действие поперечной силы
                 CalculateQ();
+
                 // Расчет на действие моментов
                 CalculateM();
             }
