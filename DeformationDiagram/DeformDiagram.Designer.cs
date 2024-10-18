@@ -47,10 +47,10 @@
             chartArea1.Name = "ChartArea1";
             this.chartDeformDiagram.ChartAreas.Add(chartArea1);
             this.chartDeformDiagram.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chartDeformDiagram.Location = new System.Drawing.Point(208, 3);
+            this.chartDeformDiagram.Location = new System.Drawing.Point(203, 3);
             this.chartDeformDiagram.Name = "chartDeformDiagram";
             this.chartDeformDiagram.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
-            this.chartDeformDiagram.Size = new System.Drawing.Size(589, 444);
+            this.chartDeformDiagram.Size = new System.Drawing.Size(593, 445);
             this.chartDeformDiagram.TabIndex = 0;
             this.chartDeformDiagram.Text = "chart1";
             title1.Name = "Title1";
@@ -59,8 +59,8 @@
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.625F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 74.375F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.chartDeformDiagram, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -68,8 +68,7 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 450F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(800, 450);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(799, 451);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // tableLayoutPanel2
@@ -84,15 +83,15 @@
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 89.86487F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.13513F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(199, 444);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(194, 445);
             this.tableLayoutPanel2.TabIndex = 2;
             // 
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(112, 402);
+            this.button1.Location = new System.Drawing.Point(109, 402);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(84, 23);
+            this.button1.Size = new System.Drawing.Size(82, 23);
             this.button1.TabIndex = 2;
             this.button1.Text = "Перестроить ";
             this.button1.UseVisualStyleBackColor = true;
@@ -107,9 +106,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(799, 451);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(815, 490);
             this.Name = "DeformDiagram";
             this.Text = "Диаграмма деформирования";
             ((System.ComponentModel.ISupportInitialize)(this.chartDeformDiagram)).EndInit();

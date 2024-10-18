@@ -415,7 +415,7 @@ namespace BSFiberConcrete.DeformationDiagram
         public void UpDateUserControll(TableLayoutPanel table)
         {
             table.Controls.Add(_deformationsView, 0, 0);
-
+            _deformationsView.Dock = System.Windows.Forms.DockStyle.Fill;
         }
     }
 
