@@ -229,6 +229,8 @@ namespace BSFiberConcrete
         /// Шаг по оси Y
         /// </summary>
         public double Sw_Y { get; set; }
+        public double Esw_Y { get; set; }
+        public double Rsw_Y { get; set; }
 
         public TypeYieldStress typeYieldStress { get; set; }
         public double k_s { get; set; }

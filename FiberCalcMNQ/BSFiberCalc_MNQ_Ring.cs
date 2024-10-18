@@ -160,10 +160,14 @@ namespace BSFiberConcrete
                 Calculate_N_Out();
             }
             else if (Shear)
-            {   // Расчет на действие поперечной силы
-                Calculate_Qx();
+            {
+                m_ImgCalc = "Incline_Q.PNG";
+
+                // Расчет на действие поперечной силы
+                Calculate_Qx(b, h);
+
                 // Расчет на действие моментов
-                CalculateM();
+                Calculate_My(b, h);
             }
             else if (UseRebar)
             {
