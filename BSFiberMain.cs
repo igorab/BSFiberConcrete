@@ -587,7 +587,7 @@ namespace BSFiberConcrete
                 string cR_class = cmbRebarClass.Text;
                 double cRs = (double)numRs.Value; // кг/см2            
                 double cEs = (double)numEs.Value; // кг/см2
-                //TODO 15102024
+                // Значения не нужны для расчета
                 double c_eps_s0 = 0;// 0.00175; 
                 double c_eps_s2 = 0; // 0.025; 
 
@@ -1314,79 +1314,46 @@ namespace BSFiberConcrete
         }
 
         
+
         /// <summary>
-        ///
+        /// расчет прогибов, построение графика прогибов для балки
         /// </summary>
-        private double CalculateBeamDeflections(ControllerBeamDiagram beamController)
+        /// <param name="beamController"></param>
+        /// <param name="isUtilizationFactor"> флаг, определяющий превышение коэф использования; false - превышает, true - коэф в норме</param>
+        /// <returns></returns>
+        private double CalculateBeamDeflections(ControllerBeamDiagram beamController, bool isUtilizationFactor)
         {
             // выполнять расчет только в случае, если ранее были сохранены 
             if (beamController == null || beamController.path2BeamDiagrams.Count == 0)
-            { return double.NaN; }
-
-            double deflexionMax = 0;
-
-            // Кол- во рассматриваемых участков
-            int n = 20;
-            // всего точек 
-            int m = n + 1 + n;
-            // шаг между точками
-            double delta = beamController.l / (2 * n);
+            { 
+                return double.NaN;
+            }
+            if (!isUtilizationFactor)
+            {
+                MessageBox.Show("Конструкция не удовлетворяет требованиям прочности.\n " +
+                    "Расчет прогибов не производится.");
+                return double.NaN;
+            }
+            
             // Значения в точках
             List<double> X = new List<double>();
             List<double> valueMomentInX = new List<double>();
             // Значения на середине рассматриваемого участка
             List<double> valuesMomentOnSection = new List<double>();
-            List<double> valuesStiffnesOnSection = new List<double>();
-
-            for (int i = 0; m > i; i++)
-            {
-                double tmpX = delta * i;
-                double tmpM = beamController.GetM(beamController.result, tmpX);
-
-                X.Add(tmpX);
-                valueMomentInX.Add(tmpM);
-
-                if (i > 0 && i % 2 != 0)
-                { valuesMomentOnSection.Add(tmpM); }
-            }
+            //List<double> valuesStiffnesOnSection = new List<double>();
+            beamController.BreakBeamIntoSections(X, valueMomentInX, valuesMomentOnSection);
 
             if (valuesMomentOnSection.Count == 0) { return double.NaN; }
 
             // Получение жесткости на участках
-            valuesStiffnesOnSection = CalculateStiffness(valuesMomentOnSection);
+            List<double> valuesStiffnesOnSection = CalculateStiffness(valuesMomentOnSection);
             //List<double> valuesСurvatureOnSection = CalcNDM_My(valuesMomentOnSection);
 
-            List<double> U = new List<double>();
-            List<double> XForChart = new List<double>();
-            for (int i = 1; X.Count > i; i = i + 2)
-            {
-                double u = beamController.CalculateDeflectionAtPoint(valueMomentInX, X, valuesStiffnesOnSection, i);
-                U.Add(u*10); // перевод из см в мм 
-                XForChart.Add(X[i]);
-                if (deflexionMax > u * 10) // знеачение прогиба с минусом
-                { deflexionMax = u * 10; }
-            }
-            string[] names = { "Прогиб", "см", "мм", "BeamDiagramU" };
-            beamController.CreteChart(XForChart, U, names);
-            
-            if (beamController.beamDiagram.simpleDiagram.IsCalculateBeamDeflection)
-            {
-                double d = 0;
-                foreach (double Stiffnes in valuesStiffnesOnSection)
-                {
-                    if (double.IsNaN(Stiffnes)) { continue; }
-                    d = (d + Stiffnes) / 2;
-                }
-                List<double> simpleU = new List<double>();
-                List<double> XForChart1 = new List<double>();
-                for (int i = 1; X.Count > i; i = i + 2)
-                {
-                    XForChart1.Add(X[i]);
-                    double tmpU = beamController.beamDiagram.simpleDiagram.CalculateBeamDeflection(X[i], d) * 10;
-                    simpleU.Add(tmpU);
-                }
-                beamController.CreteChart(XForChart, simpleU, new string[] { "Прогиб по формуле", "cм", "мм", "SimpleBeamDiagramU" });
-            }
+            // график прогиба по расчетным значениям
+            double deflexionMax = beamController.CalculateDeflectionDiagram(X, valueMomentInX, valuesStiffnesOnSection);
+
+            // график прогибов по формулам
+            beamController.CalculateDeflectionDiagramByFormula(X, valuesStiffnesOnSection);
 
             if (deflexionMax == 0)
                 return double.NaN;
@@ -1491,7 +1458,6 @@ namespace BSFiberConcrete
             BSCalcResultNDM calcRes = calcNDM.CalcRes;
             if (calcRes != null)
             {
-                calcRes.Deflexion_max = CalculateBeamDeflections(_beamDiagramController);
                 calcRes.ResQxQy = resQxQy;
 
                 m_GeomParams = calcRes.GeomParams;
@@ -1500,6 +1466,8 @@ namespace BSFiberConcrete
                 m_Reinforcement = calcRes.Reinforcement;
                 m_CalcResults = calcRes.GetResults1Group();
                 m_CalcResults2Group = calcRes.GetResults2Group();
+
+                calcRes.Deflexion_max = CalculateBeamDeflections(_beamDiagramController,CheckUtilizationFactor());
 
                 ShowMosaic(calcRes);
 
@@ -2048,41 +2016,26 @@ namespace BSFiberConcrete
         private void numRfbt_n_ValueChanged(object sender, EventArgs e)
         {
             labelRfbtnMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numRfbt_n.Value));
-            //TODO 15102024
-            //numEps_fbt0.Value = BSMatFiber.NumEps_fbt0(numRfbt_n.Value, numE_fiber.Value);
-            //numEps_fbt1.Value = numEps_fbt0.Value + 0.0001m;
         }
 
         private void numRfb_n_ValueChanged(object sender, EventArgs e)
         {
             labelRfbnMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numRfb_n.Value));
-            //TODO 15102024
-            //numEps_fb1.Value = BSMatFiber.NumEps_fb1(numRfb_n.Value, numE_fiber.Value);
         }
 
         private void numRfbt2n_ValueChanged(object sender, EventArgs e)
         {
             labelRfbt2nMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numRfbt2n.Value));
-
-            // расчетные значения отличаются от нормативных коэфициентом numYft, поэтому можно передать нормативные значения
-            //TODO 15102024
-            //numEps_fbt3.Value = (decimal) BSMatFiber.NumEps_fbt3((double)numRfbt2n.Value, (double) numRfbt3n.Value);
         }
 
         private void numRfbt3n_ValueChanged(object sender, EventArgs e)
         {
             labelRfbt3nMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numRfbt3n.Value));
-            //TODO 15102024
-            //numEps_fbt3.Value = (decimal) BSMatFiber.NumEps_fbt3((double) numRfbt2n.Value, (double) numRfbt3n.Value);
         }
 
         private void numRs_ValueChanged(object sender, EventArgs e)
         {
             labelRsMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numRs.Value));
-
-            //TODO 15102024
-            //numEpsilonS1.Value = BSMatRod.NumEps_s1(numRs.Value, numEs.Value);
-            //numEpsilonS0.Value = BSMatRod.NumEps_s0(numRs.Value, numEs.Value);
         }
 
         private void numRsw_ValueChanged(object sender, EventArgs e)
@@ -2358,11 +2311,11 @@ namespace BSFiberConcrete
                 Rt3_n = (double)numRfbt3n.Value;    // Rfbt3_n
                 Et = E;                    // !!!   // Efbt
 
-                //TODO 15102024
-                e0 = 0;      // eb0
-                e2 = 0;      // eb2                
-                et2 = 0;    // efbt2
-                et3 = 0;    // efbt3
+                // значения забираются с другой формы
+                //e0 = 0;      // eb0
+                //e2 = 0;      // eb2                
+                //et2 = 0;    // efbt2
+                //et3 = 0;    // efbt3
             }
             else if (typeMaterial == BSHelper.Rebar)
             {
@@ -2374,11 +2327,11 @@ namespace BSFiberConcrete
                 R_n = (double)numRsc.Value;
                 E = Et;
 
-                e0 = et0;
-                e2 = et2;
-                //TODO 15102024
-                et0 = 0; // (double)numEpsilonS0.Value;   //
-                et2 = 0; //(double)numEpsilonS2.Value;   //
+                // значения забираются с другой формы
+                //e0 = et0;
+                //e2 = et2;
+                //et0 = 0; // (double)numEpsilonS0.Value;
+                //et2 = 0; //(double)numEpsilonS2.Value;
             }
             else
             {
@@ -2446,9 +2399,6 @@ namespace BSFiberConcrete
         private void numEs_ValueChanged(object sender, EventArgs e)
         {
             labelEsMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numEs.Value));
-            //TODO 15102024
-            //numEpsilonS1.Value = BSMatRod.NumEps_s1(numRs.Value, numEs.Value);
-            //numEpsilonS0.Value = BSMatRod.NumEps_s0(numRs.Value, numEs.Value);
         }
         
         private void numRsc_ValueChanged(object sender, EventArgs e)
@@ -2471,11 +2421,6 @@ namespace BSFiberConcrete
         // модуль упругости для фибробетона на растяжение
         private void numE_fiber_ValueChanged(object sender, EventArgs e)
         {
-            //TODO 15102024
-            //numEps_fbt0.Value = BSMatFiber.NumEps_fbt0(numRfbt_n.Value, numE_fiber.Value);
-            //numEps_fbt1.Value = numEps_fbt0.Value + 0.0001m;            
-            //numEps_fb1.Value = BSMatFiber.NumEps_fb1(numRfb_n.Value, numE_fiber.Value);
-
             numE_beton.Value = numE_fiber.Value;
         }
 
@@ -2756,6 +2701,28 @@ namespace BSFiberConcrete
             sectionChart.DictCalcParams = DictCalcParams(BeamSection.Any);
 
             sectionChart.Show();
+        }
+
+
+        /// <summary>
+        /// Проверить не превышение коэффициентов использования
+        /// </summary>
+        /// <returns></returns>
+        private bool CheckUtilizationFactor()
+        {
+
+            // Проходимо по всем парам из  m_CalcResults, если есть хоть одно значение превышающее 1 ( или -1), выдает false
+            foreach (KeyValuePair<string, double> item in m_CalcResults)
+            {
+                if (item.Key.Contains("Коэффициент использования"))
+                {
+                    if (item.Value > 1d || item.Value < -1d)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
         }
     }
 }

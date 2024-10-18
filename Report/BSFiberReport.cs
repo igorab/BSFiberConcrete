@@ -276,7 +276,8 @@ namespace BSFiberConcrete
                     }
                     else
                     {
-                        w.WriteLine($"<td width={bv} align=center colspan=2>{Math.Round(_pair.Value, 6)} </td>");
+                        string bgColor = ColorForUtilizationFactor(_pair);
+                        w.WriteLine($"<td width={bv} align=center colspan=2 {bgColor}>{Math.Round(_pair.Value, 6)} </td>");
                         w.WriteLine($"<td width={bv} align=center colspan=2>{UConv(_pair.Key, _pair.Value)} </td>");
                     }
 
@@ -439,5 +440,30 @@ namespace BSFiberConcrete
 
             return pathToHtmlFile;
         }
+
+
+        /// <summary>
+        /// Для Коэффициент использования у которых значение превышает 1 или -1 добавляется строчка изменяющая цвет фона таблицы на красный
+        /// </summary>
+        /// <param name="pair"></param>
+        /// <returns></returns>
+        public string ColorForUtilizationFactor(KeyValuePair<string,double> pair)
+        {
+            string bgColor = "";
+            if (pair.Key.Contains("Коэффициент использования"))
+            {
+                if (pair.Value > 1 || pair.Value < -1)
+                {
+                    bgColor = "bgcolor=\"#FF3333\"";
+                }
+                else
+                { 
+                    bgColor = "bgcolor=\"#33CC00 \"";
+                }
+            }
+            return bgColor; 
+        }
+
+
     }
 }

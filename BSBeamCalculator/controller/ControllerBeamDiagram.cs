@@ -214,6 +214,86 @@ namespace BSBeamCalculator
 
 
 
+        /// <summary>
+        /// Разделить балку на участки
+        /// </summary>
+        /// <param name="X"> значения X в точках</param>
+        /// <param name="valueMomentInX">Значения M в точках</param>
+        /// <param name="valuesMomentOnSection">Значения M на середине рассматриваемого участка</param>
+        public void BreakBeamIntoSections(List<double> X, List<double> valueMomentInX, List<double> valuesMomentOnSection)
+        {
+            // Кол- во рассматриваемых участков
+            int n = 20;
+            // всего точек 
+            int m = n + 1 + n;
+            // шаг между точками
+            double delta = this.l / (2 * n);
+
+            for (int i = 0; m > i; i++)
+            {
+                double tmpX = delta * i;
+                double tmpM = this.GetM(this.result, tmpX);
+
+                X.Add(tmpX);
+                valueMomentInX.Add(tmpM);
+
+                if (i > 0 && i % 2 != 0)
+                { valuesMomentOnSection.Add(tmpM); }
+            }
+        }
+
+
+        /// <summary>
+        /// Построить график прогибов по расчетным значениям
+        /// </summary>
+        public double  CalculateDeflectionDiagram(List<double> X, List<double> valueMomentInX, List<double> valuesStiffnesOnSection)
+        {
+            double deflexionMax = 0;
+            // график прогибов по расчетным значениям
+            List<double> U = new List<double>();
+            List<double> XForChart = new List<double>();
+            for (int i = 1; X.Count > i; i = i + 2)
+            {
+                double u = this.CalculateDeflectionAtPoint(valueMomentInX, X, valuesStiffnesOnSection, i);
+                U.Add(u * 10); // перевод из см в мм 
+                XForChart.Add(X[i]);
+                if (deflexionMax > u * 10) // значение прогиба с минусом
+                { deflexionMax = u * 10; }
+            }
+            string[] names = { "Прогиб", "см", "мм", "BeamDiagramU" };
+            this.CreteChart(XForChart, U, names);
+            return deflexionMax;
+        }
+
+        /// <summary>
+        /// Построить график прогиба по формуле
+        /// </summary>
+        /// <param name="X"></param>
+        /// <param name="valuesStiffnesOnSection"></param>
+        /// <param name=""></param>
+        public void CalculateDeflectionDiagramByFormula(List<double> X, List<double> valuesStiffnesOnSection)
+        {
+            // график прогибов по формулам
+            if (this.beamDiagram.simpleDiagram.IsCalculateBeamDeflection)
+            {
+                double d = 0;
+                foreach (double Stiffnes in valuesStiffnesOnSection)
+                {
+                    if (double.IsNaN(Stiffnes)) { continue; }
+                    d = (d + Stiffnes) / 2;
+                }
+                List<double> simpleU = new List<double>();
+                List<double> XForChart = new List<double>();
+                for (int i = 1; X.Count > i; i = i + 2)
+                {
+                    XForChart.Add(X[i]);
+                    double tmpU = this.beamDiagram.simpleDiagram.CalculateBeamDeflection(X[i], d) * 10;
+                    simpleU.Add(tmpU);
+                }
+                this.CreteChart(XForChart, simpleU, new string[] { "Прогиб по формуле", "cм", "мм", "SimpleBeamDiagramU" });
+            }
+        }
+
         public void CreteChart(List<double> valueX, List<double> valueY, string[] names)
         {
             System.Windows.Forms.DataVisualization.Charting.Chart chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
