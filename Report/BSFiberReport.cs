@@ -450,12 +450,15 @@ namespace BSFiberConcrete
         public string ColorForUtilizationFactor(KeyValuePair<string,double> pair)
         {
             string bgColor = "";
-            //bgcolor="#f54242"
             if (pair.Key.Contains("Коэффициент использования"))
             {
                 if (pair.Value > 1 || pair.Value < -1)
                 {
-                    bgColor = "bgcolor=\"#f54242\"";
+                    bgColor = "bgcolor=\"#FF3333\"";
+                }
+                else
+                { 
+                    bgColor = "bgcolor=\"#33CC00 \"";
                 }
             }
             return bgColor; 
