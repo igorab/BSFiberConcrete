@@ -890,7 +890,6 @@ namespace BSFiberConcrete
             return _Rebar;
         }
 
-
         /// <summary>
         ///  Введенные пользователем значения по арматуре
         /// </summary>
@@ -946,10 +945,7 @@ namespace BSFiberConcrete
                 // Армирование
                 fiberCalc.Rebar = rebar;
 
-                InitTRebar(out double[] t_r);
-
-                double[] l_rebar = new double[1]; // TODO rebar 
-                fiberCalc.SetRebarParams(l_rebar, t_r);
+                InitTRebar(out double[] t_r);                
             }
 
             double[] prms = m_BSLoadData.Params;
@@ -1035,8 +1031,7 @@ namespace BSFiberConcrete
 
             // передаем усилия и связанные с ними велечины
             fiberCalc.SetEfforts(_MNQ);
-            fiberCalc.SetRebarParams(_l_rebar, _t_rebar);
-
+            
             // расчет на усилие вне сечения            
             fiberCalc.N_Out = (fiberCalc.h / 2 < fiberCalc.Get_e_tot);
             fiberCalc.Calculate();

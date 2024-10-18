@@ -15,13 +15,9 @@ namespace BSFiberConcrete.CalcGroup2
         private double Diagr_S(double _e)
         {
             double s = 0;
-
-            esc0 = Rsc / Es0;
-            esc2 = 0.025;
-
+            esc0 = Rsc / Es0;            
             est0 = Rst / Es0;
-            est2 = 0.025;
-
+            
             bool rip = false;
 
             if (_e > est2)
@@ -30,7 +26,6 @@ namespace BSFiberConcrete.CalcGroup2
                     s = 0;
                 else
                     s = Rst + Es0 * (_e - est2);
-
             }
             else if (_e < -esc2)
             {
@@ -133,19 +128,13 @@ namespace BSFiberConcrete.CalcGroup2
             }
 
             bool rip = false;
-
-            // сжатие по СП 63 6.1.20
-            ebc0 = 0.002;
-            ebc2 = 0.0035;
-
+            
             double sc1 = 0.6 * Rbc;
             double ebc1 = sc1 / Eb0;
 
             // Растяжение - по СП 360
             efbt0 = Rfbt / Ebt;
-            efbt1 = efbt0 + 0.0001;
-            //TODO refactoring
-            efbt2 = 0.004;
+            efbt1 = efbt0 + 0.0001;            
             efbt3 = 0.02 - 0.0125 * (Rfbt3 / Rfbt2 - 0.5);
 
             // сжатие: ПО СП 63 6.1.20 (как для обычного бетона)           

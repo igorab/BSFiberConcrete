@@ -19,6 +19,8 @@ namespace BSFiberConcrete.CalcGroup2
             Mz = new List<double> { Mz0 };
             #endregion
 
+            InitDeformParams();
+
             #region Section initialization
             InitSectionsLists();
             int n, m;
@@ -57,15 +59,13 @@ namespace BSFiberConcrete.CalcGroup2
             List<List<double>> Ebs = new List<List<double>>() { new List<double>() };
             // Заполняем секущие модули для нулевой итерации
             for (int i = 0; i < n; i++)
-            {
-                //Eb[0].Add(Eb0);
+            {                
                 Eb[0].Add(Ebt);
             }
 
             for (int i = 0; i < As.Count; i++)
             {
-                Es[0].Add(Es0);
-                //Ebs[0].Add(Eb0);
+                Es[0].Add(Es0);             
                 Ebs[0].Add(Ebt);
             }
 
@@ -385,12 +385,7 @@ namespace BSFiberConcrete.CalcGroup2
             // деформации:
             double epsB_p = NuNTo0(epB[jend].Minimum());
             double epsS_p = NuNTo0(epS[jend].Minimum());
-
-            //СП 6.1.24
-            double e_s_ult = 0;
-            double e_fb_ult = 0;
-            double e_fbt_ult = 0;
-
+            
             // СП 6.1.25 для эпюры с одним знаком
             if (Setup.UseRebar == false && Math.Sign(sigB_t) == Math.Sign(sigB_p))
             {
@@ -401,10 +396,8 @@ namespace BSFiberConcrete.CalcGroup2
             {
                 e_fb_ult = 0;
                 //если не допускаются трещины
-                e_fbt_ult = efbt1; //  efbt3; 
-                e_s_ult = 0.025; //0.015
+                e_fbt_ult = efbt1; //  efbt3;                 
             }
-
 
             // определяем коэффициенты использоввания:
             // -- по деформациям на растяжение            

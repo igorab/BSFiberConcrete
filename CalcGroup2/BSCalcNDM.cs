@@ -26,16 +26,47 @@ namespace BSFiberConcrete.CalcGroup2
         /// </summary>
         public double Eps_s_crc { get; set; }
         // рассчитывать ли ширину раскрытия трещины
-        private bool CalcA_crc => Eps_s_crc != 0;        
+        private bool CalcA_crc => Eps_s_crc != 0;
+
+
+        /// <summary>
+        /// Деформационные параметры СП 6.1.25
+        /// </summary>
+        private void InitDeformParams()
+        {
+            // Деформационные параметры бетона на сжатие
+            ebc0 = 0.002;
+            ebc2 = 0.0035;
+
+            // Деформационные параметры фибробетона на растяжение
+            efbt0 = 0.0;
+            efbt1 = 0.0;
+            efbt2 = 0.00015;
+            efbt2 = 0.004;
+            efbt3 = 0.02;
+
+            // Деформационные параметры арматуры
+            // сжатие
+            esc2 = 0.025;
+            // растяжение
+            est2 = 0.025;
+
+            //Предельные деформационные параметры арматуры
+            e_s_ult = 0.025;
+        }
+
         /// <summary>
         /// Конструктор
         /// </summary>
         /// <param name="_groupLSD"> группа предельных состояний</param>
         public BSCalcNDM(int _groupLSD)
         {
-            GroupLSD = _groupLSD;
+            GroupLSD = _groupLSD;            
         }
 
+        /// <summary>
+        ///  основной конструктор 
+        /// </summary>        
         public BSCalcNDM(int _groupLSD, BeamSection _BeamSection, NDMSetup _Setup)
         {
             GroupLSD = _groupLSD;
@@ -44,8 +75,9 @@ namespace BSFiberConcrete.CalcGroup2
             NdmCrc = new NdmCrc();
             //Mesh
             ny = Setup.N;
-            nz = Setup.M;
+            nz = Setup.M;            
         }
+
         /// <summary>
         /// усилия переводятся :  кг, кг*см -> кН, кН*см
         /// </summary>
@@ -250,17 +282,19 @@ namespace BSFiberConcrete.CalcGroup2
         // Расчетное сопротивление фибробетона на сжатие, кН/см2
         private double Rfbt3 = 0;
 
-        // сжатие
-        // Деформация бетона на сжатие
-        private double ebc0 = 0.002;
-        // Предельная деформация бетона на сжатие                 
-        private double ebc2 = 0.0035; 
+        // Деформационные параметры бетона на сжатие
+        private double ebc0;
+        private double ebc2;
 
-        // растяжение 
-        private double efbt0 = 0.0; // Деформация фибробетона на растяжение
-        private double efbt1 = 0.0;
-        private double efbt2 = 0.00015; // Предельная деформация фибробетона на растяжение
-        private double efbt3 = 0.02; // Предельная деформация фибробетона на растяжение
+        // Деформационные параметры фибробетона на растяжение
+        private double efbt0;
+        private double efbt1;
+        private double efbt2;
+        private double efbt3;
+
+        //СП 6.1.24
+        private double e_s_ult;
+        private double e_fb_ult = 0;
         private double e_fbt_ult = 0;
 
         // Арматура кН/см2
@@ -371,7 +405,7 @@ namespace BSFiberConcrete.CalcGroup2
         /// </summary>
         public bool Run()
         {
-            bool ok = false;
+            bool ok;
             try
             {                
                 Calculate();

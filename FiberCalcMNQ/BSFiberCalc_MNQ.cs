@@ -91,10 +91,22 @@ namespace BSFiberConcrete
         [DisplayName("Предельная поперечная сила, [кг]"), Description("Res")]
         public double Q_ult { get; protected set; }
 
-        [DisplayName("Предельная продольная сила, [кг]"), Description("Res")]
+        [DisplayName("Коэффициент использования по Qx, [СП 360 П6.1.28]")]
+        public double UtilRate_Qx { get; protected set; }
+
+        [DisplayName("Коэффициент использования по Qy, [СП 360 П6.1.28]")]
+        public double UtilRate_Qy { get; protected set; }
+
+        [DisplayName("Коэффициент использования по моменту My, [СП 360 П6.1.30]")]
+        public double UtilRate_My { get; protected set; }
+
+        [DisplayName("Коэффициент использования по моменту Mx, [СП 360 П6.1.30]")]
+        public double UtilRate_Mx { get; protected set; }
+
+        [DisplayName("Предельная продольная сила N, [кг]"), Description("Res")]
         public double N_ult { get; protected set; }
 
-        [DisplayName("Коэффициент использования по усилию, [СП 360 П6.1.14 П6.1.15]")]
+        [DisplayName("Коэффициент использования по усилию N, [СП 360 П6.1.14 П6.1.15]")]
         public double UtilRate_N { get; protected set; }
 
         public string DN(Type _T, string _property) => _T.GetProperty(_property).GetCustomAttribute<DisplayNameAttribute>().DisplayName;
@@ -145,11 +157,7 @@ namespace BSFiberConcrete
         //поперечная сила
         protected double Qx;
         protected double Qy;
-        // параметры продольной арматуры
-        protected double[] l_rebar;
-        // параметры поперечной арматуры
-        protected double[] t_rebar;
-
+        
         public Dictionary<string, double> m_Efforts;
 
         protected BSBeam m_Beam;
@@ -255,17 +263,7 @@ namespace BSFiberConcrete
 
             Efb = m_Fiber.Efib != 0 ? m_Fiber.Efib :  m_Fiber.Efb;
         } 
-        
-        // параметры арматуры
-        public void SetRebarParams(double[] _l_rebar, double[] _t_rebar)
-        {
-            l_rebar = _l_rebar;
-            t_rebar = _t_rebar;
-            
-            // Шаг поперечной арматуры
-            //Rebar.s_w = _t_rebar[1];
-        }
-
+                
         /// <summary>
         /// Информация о результате проверки сечения на действие продольной силы
         /// </summary>                
@@ -497,6 +495,8 @@ namespace BSFiberConcrete
         /// </summary>
         protected void Calculate_Qy(double _b, double _h)
         {
+            if (m_Efforts["Qy"] == 0) return;
+
             // Растояние до цента тяжести арматуры растянутой арматуры, см
             double a = Rebar.a;
 
@@ -590,9 +590,17 @@ namespace BSFiberConcrete
 
             Q_ult = Qfb + Qsw; // 6.75
 
+            //Коэффициент использования
+            UtilRate_Qy = (Q_ult != 0) ? m_Efforts["Qy"] / Q_ult : 0;
+            
             if (_Q_ult <= Q_ult)
             {
-                res = "Перерезываюзщая сила превышает предельно допустимую в данном сечении";
+                res = "Поперечная сила превышает предельно допустимую в данном сечении";
+                Msg.Add(res);
+            }
+            else
+            {
+                res = "Проверка по наклонному сечению на действие поперечной силы Qy пройдена";
                 Msg.Add(res);
             }
         }
@@ -603,7 +611,7 @@ namespace BSFiberConcrete
         protected void Calculate_Qx(double _b, double _h)
         {            
             // Растояние до цента тяжести арматуры растянутой арматуры, см
-            double a = Rebar.a; // l_rebar.Length > 2 ? l_rebar[2] : 4;
+            double a = Rebar.a; 
 
             // рабочая высота сечения по растянутой арматуре
             double h0 = _h - a;
@@ -695,9 +703,17 @@ namespace BSFiberConcrete
 
             Q_ult = Qfb + Qsw; // 6.75
 
+            //Коэффициент использования
+            UtilRate_Qx = (Q_ult != 0) ? m_Efforts["Qx"] / Q_ult : 0;
+
             if (_Q_ult <= Q_ult)
             {
                 res = "Перерезываюзщая сила превышает предельно допустимую в данном сечении";
+                Msg.Add(res);
+            }
+            else
+            {
+                res = "Проверка по наклонному сечению на действие поперечной силы Qx пройдена";
                 Msg.Add(res);
             }
         }
@@ -789,14 +805,22 @@ namespace BSFiberConcrete
                 lst_M_ult.Add(M_ult);
             }
 
-            M_ult = (lst_M_ult.Count > 0) ? lst_M_ult.Min() : 0;            
+            M_ult = (lst_M_ult.Count > 0) ? lst_M_ult.Min() : 0;
+
+            //Коэффициент использования
+            UtilRate_My = (M_ult != 0) ? m_Efforts["My"] / M_ult : 0;
+           
         }
 
         /// <summary>
         ///  6.1.30 Расчет элементов по наклонным сечениями на действие моментов Mx
         /// </summary>
         protected void Calculate_Mx()
-        {       
+        {
+            if (m_Efforts["Mx"] == 0) return;
+
+            //Коэффициент использования
+            UtilRate_Mx = (M_ult != 0) ? m_Efforts["Mx"] / M_ult : 0;
         }
 
         public virtual bool Calculate() 

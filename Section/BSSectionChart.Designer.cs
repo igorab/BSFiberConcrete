@@ -29,15 +29,15 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanelSection = new System.Windows.Forms.TableLayoutPanel();
             this.btnDel = new System.Windows.Forms.Button();
@@ -161,41 +161,41 @@
             // 
             this.chart.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
             this.chart.BorderlineWidth = 3;
-            chartArea2.AxisX.Title = "X, см";
-            chartArea2.AxisY.Title = "Y, см";
-            chartArea2.Name = "ChartArea1";
-            this.chart.ChartAreas.Add(chartArea2);
+            chartArea1.AxisX.Title = "X, см";
+            chartArea1.AxisY.Title = "Y, см";
+            chartArea1.Name = "ChartArea1";
+            this.chart.ChartAreas.Add(chartArea1);
             this.chart.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend2.Name = "Legend1";
-            legend2.Title = "Контуры";
-            this.chart.Legends.Add(legend2);
+            legend1.Name = "Legend1";
+            legend1.Title = "Контуры";
+            this.chart.Legends.Add(legend1);
             this.chart.Location = new System.Drawing.Point(333, 32);
             this.chart.Name = "chart";
-            series4.BorderWidth = 3;
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series4.Legend = "Legend1";
-            series4.Name = "Сечение";
-            series5.BorderWidth = 3;
-            series5.ChartArea = "ChartArea1";
-            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series5.EmptyPointStyle.BorderWidth = 3;
-            series5.Legend = "Legend1";
-            series5.MarkerSize = 10;
-            series5.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
-            series5.Name = "Армирование";
-            series6.ChartArea = "ChartArea1";
-            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series6.Legend = "Legend1";
-            series6.Name = "сечение";
-            this.chart.Series.Add(series4);
-            this.chart.Series.Add(series5);
-            this.chart.Series.Add(series6);
+            series1.BorderWidth = 3;
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.Legend = "Legend1";
+            series1.Name = "Сечение";
+            series2.BorderWidth = 3;
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series2.EmptyPointStyle.BorderWidth = 3;
+            series2.Legend = "Legend1";
+            series2.MarkerSize = 10;
+            series2.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
+            series2.Name = "Армирование";
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series3.Legend = "Legend1";
+            series3.Name = "сечение";
+            this.chart.Series.Add(series1);
+            this.chart.Series.Add(series2);
+            this.chart.Series.Add(series3);
             this.chart.Size = new System.Drawing.Size(711, 577);
             this.chart.TabIndex = 0;
-            title2.Name = "TitleX";
-            title2.Text = "Геометрия сечения и распололжение арматуры";
-            this.chart.Titles.Add(title2);
+            title1.Name = "TitleX";
+            title1.Text = "Геометрия сечения и распололжение арматуры";
+            this.chart.Titles.Add(title1);
             // 
             // dataGrid
             // 
@@ -303,9 +303,9 @@
             // X
             // 
             this.X.DataPropertyName = "CG_X";
-            dataGridViewCellStyle4.Format = "N2";
-            dataGridViewCellStyle4.NullValue = "0";
-            this.X.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Format = "N2";
+            dataGridViewCellStyle1.NullValue = "0";
+            this.X.DefaultCellStyle = dataGridViewCellStyle1;
             this.X.HeaderText = "X (h)";
             this.X.Name = "X";
             this.X.ToolTipText = "X, по ширине сечения, см";
@@ -314,9 +314,9 @@
             // Y
             // 
             this.Y.DataPropertyName = "CG_Y";
-            dataGridViewCellStyle5.Format = "N2";
-            dataGridViewCellStyle5.NullValue = "0";
-            this.Y.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Format = "N2";
+            dataGridViewCellStyle2.NullValue = "0";
+            this.Y.DefaultCellStyle = dataGridViewCellStyle2;
             this.Y.HeaderText = "Y (b)";
             this.Y.Name = "Y";
             this.Y.ToolTipText = "Y, по высоте сечения, см";
@@ -351,9 +351,9 @@
             // D
             // 
             this.D.DataPropertyName = "D";
-            dataGridViewCellStyle6.Format = "N2";
-            dataGridViewCellStyle6.NullValue = "0";
-            this.D.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Format = "N2";
+            dataGridViewCellStyle3.NullValue = "0";
+            this.D.DefaultCellStyle = dataGridViewCellStyle3;
             this.D.HeaderText = "D";
             this.D.Name = "D";
             this.D.ToolTipText = "Диаметр, см";
