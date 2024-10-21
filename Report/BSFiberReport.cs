@@ -48,7 +48,7 @@ namespace BSFiberConcrete
 
         protected BeamSection m_BeamSection { get; set; }
 
-        public LameUnitConverter _unitConverter;
+        public LameUnitConverter _unitConverter { get; set; }
 
         public string ImageCalc { get; set; }
         

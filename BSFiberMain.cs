@@ -4,6 +4,7 @@ using BSFiberConcrete.CalcGroup2;
 using BSFiberConcrete.Control;
 using BSFiberConcrete.DeformationDiagram;
 using BSFiberConcrete.Lib;
+using BSFiberConcrete.Report;
 using BSFiberConcrete.Section;
 using BSFiberConcrete.UnitsOfMeasurement;
 using BSFiberConcrete.UnitsOfMeasurement.PhysicalQuantities;
@@ -855,6 +856,7 @@ namespace BSFiberConcrete
         /// <exception cref="Exception"></exception>
         private void GetEffortsFromForm(out List<Dictionary<string, double>> _MNQ)
         {
+            /* 21.10.2024
             //_MNQ = new Dictionary<string, double>();
 
             //DataGridViewColumnCollection columns = gridEfforts.Columns;
@@ -874,8 +876,7 @@ namespace BSFiberConcrete
             //_MNQ["Ml"] = (double)num_Ml1_M1.Value;
             //_MNQ["eN"] = (double)num_eN.Value;
             //_MNQ["e0"] = (double)numRandomEccentricity.Value;
-
-
+            */
 
             _MNQ = new List<Dictionary<string, double>>();
 
@@ -885,39 +886,34 @@ namespace BSFiberConcrete
             for (int j = 0; j < row.Count; j++)
             {
                 //bool isZeroValues = true;
-                Dictionary<string, double> tmpEforts = new Dictionary<string, double>();
+                Dictionary<string, double> tmpEfforts = new Dictionary<string, double>();
                 for (int i = 0; i < columns.Count; i++)
                 {
                     string tmpName = columns[i].Name;
                     double value = Convert.ToDouble(gridEfforts.Rows[j].Cells[i].Value);
                     // перевод ед измерения
                     double newValue = _UnitConverter.ConvertEfforts(tmpName, value);
-                    tmpEforts.Add(tmpName, newValue);
+                    tmpEfforts.Add(tmpName, newValue);
                     //if (value != 0)
                     //{ isZeroValues = false; }
                 }
                 // Если все значения 0, то не записываем в список
                 //if (isZeroValues)
                 //{ continue; }
-                tmpEforts["Ml"] = (double)num_Ml1_M1.Value;
-                tmpEforts["eN"] = (double)num_eN.Value;
-                tmpEforts["e0"] = (double)numRandomEccentricity.Value;
+                tmpEfforts["Ml"] = (double)num_Ml1_M1.Value;
+                tmpEfforts["eN"] = (double)num_eN.Value;
+                tmpEfforts["e0"] = (double)numRandomEccentricity.Value;
 
-                _MNQ.Add(tmpEforts);
+                _MNQ.Add(tmpEfforts);
             }
 
             if (_MNQ.Count == 0)
-                throw new Exception("Не заданы усилия");
+            {
+                _MNQ = new List<Dictionary<string, double>>() {new Dictionary<string, double>{ ["My"] = 0, ["Mx"] = 0, ["N"] = 0, ["Qx"] = 0, ["Qy"] = 0, ["Ml"] = 0, ["eN"] = 0, ["e0"] = 0}};
+            }
         }
 
-
-
-        //private void GetEffortsFromFormNew(out List<Dictionary<string, double>> _MNQ)
-        //{
-
-        //}
-
-
+       
         /// <summary>
         ///  Введенные пользователем значения по арматуре
         /// </summary>
@@ -1494,14 +1490,14 @@ namespace BSFiberConcrete
         /// <summary>
         /// "Расчет по прочности нормальных сечений на основе нелинейной деформационной модели"
         /// </summary>        
-        private void CalcNDM(BeamSection _beamSection)
+        private BSCalcResultNDM CalcNDM(BeamSection _beamSection)
         {
             Dictionary<string, double> resQxQy = CalcQxQy();
 
             // данные с формы:
             Dictionary<string, double> _D = DictCalcParams(_beamSection);
             
-            if (!ValidateNDMCalc(_D)) return;
+            if (!ValidateNDMCalc(_D)) return null;
 
             // расчет на MxMyN по НДМ            
             NDMSetup _setup = NDMSetupValuesFromForm();                
@@ -1510,6 +1506,15 @@ namespace BSFiberConcrete
             CalcNDM calcNDM = new CalcNDM(_beamSection) {setup = _setup, D = _D };            
             calcNDM.Run();
 
+            BSCalcResultNDM calcRes = calcNDM.CalcRes;
+            calcRes.ResQxQy = resQxQy;
+            calcRes.ImageStream = m_ImageStream;
+            calcRes.Coeffs = m_Coeffs;
+            calcRes.UnitConverter = _UnitConverter;
+
+            return calcNDM.CalcRes;
+
+            /* 21.10.2024
             // результаты:
             BSCalcResultNDM calcRes = calcNDM.CalcRes;
             if (calcRes != null)
@@ -1524,13 +1529,11 @@ namespace BSFiberConcrete
                 m_CalcResults2Group = calcRes.GetResults2Group();
 
                 calcRes.Deflexion_max = CalculateBeamDeflections(_beamDiagramController,CheckUtilizationFactor());
-
-                ShowMosaic(calcRes);
-
+                
                 CreateReportNDM(calcRes);
-            }            
+            } 
+            */
         }
-
 
         /// <summary>
         /// Расчет по прочности нормальных сечений на основе нелинейной деформационной модели
@@ -1746,45 +1749,7 @@ namespace BSFiberConcrete
             }
         }
 
-        [DisplayName("Расчет по прочности нормальных сечений на основе нелинейной деформационной модели")]
-        private void CreateReportNDM(BSCalcResultNDM calcRes)
-        {
-            try
-            {
-                InitBeamLength(true);
-
-                string reportName = "";
-                try
-                {
-                    MethodBase method = MethodBase.GetCurrentMethod();
-                    DisplayNameAttribute attr = (DisplayNameAttribute)method.GetCustomAttributes(typeof(DisplayNameAttribute), true)[0];
-                    reportName = attr.DisplayName;
-                }
-                catch
-                {
-                    MessageBox.Show("Не задан атрибут DisplayName метода");
-                }
-
-                string pathToHtmlFile = CreateReport(1, m_BeamSection, reportName);
-                
-                BSFiberReport report = new BSFiberReport();                
-                report.ReportName =  reportName;
-                report.BeamSection = m_BeamSection;
-                report.UseReinforcement = true;
-
-                InitReportSections(ref report);
-
-                pathToHtmlFile = report.CreateReport(1);
-               
-
-                System.Diagnostics.Process.Start(pathToHtmlFile);
-            }
-            catch (Exception _e)
-            {
-                MessageBox.Show("Ошибка в отчете " + _e.Message);
-            }
-        }
-
+      
         private bool ValidateNDMCalc(Dictionary<string, double> _D)
         {
             if (m_SectionChart == null || m_SectionChart.m_BeamSection != m_BeamSection)
@@ -1813,30 +1778,31 @@ namespace BSFiberConcrete
             try
             {
                 TriangleNet.Geometry.Point CG = new TriangleNet.Geometry.Point(0, 0);
+                BSCalcResultNDM calcRes = null; 
 
                 if (m_BeamSection == BeamSection.Rect)
                 {
-                    CalcNDM(BeamSection.Rect);
+                    calcRes = CalcNDM(BeamSection.Rect);
                 }
                 else if (BSHelper.IsITL(m_BeamSection))
                 {
-                    CalcNDM(BeamSection.IBeam);
+                    calcRes = CalcNDM(BeamSection.IBeam);
                 }
                 else if (m_BeamSection == BeamSection.Ring)
                 {                    
-                    GenerateMesh(ref CG);                     
-                    CalcNDM(BeamSection.Ring);
+                    GenerateMesh(ref CG);
+                    calcRes = CalcNDM(BeamSection.Ring);
                 }
                 else if (m_BeamSection == BeamSection.Any)
                 {
                     GenerateMesh(ref CG);
-                    CalcNDM(BeamSection.Any);
+                    calcRes = CalcNDM(BeamSection.Any);
                 }
-                else
-                {
-                    // throw new Exception("Тип сечения не поддерживается");
-                    CalcDeformNDM();
-                }
+                                
+                BSReport.RunFromCode(m_BeamSection, calcRes);
+
+                ShowMosaic(calcRes);
+
             }
             catch (Exception _e)
             {
