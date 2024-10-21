@@ -141,10 +141,13 @@ namespace BSFiberConcrete
                 //BeamCalculatorControl beamCalculatorControl = new BeamCalculatorControl(test_Efforts);
 
                 tbLength.Enabled = false;
-                for (int i = 0; i < gridEfforts.ColumnCount; i++)
-                {
-                    gridEfforts[i, 0].Value = "0";
-                }
+
+                gridEfforts.Rows.Clear();
+                gridEfforts.Rows.Add(2);
+                //for (int i = 0; i < gridEfforts.ColumnCount; i++)
+                //{
+                //    gridEfforts[i, 0].Value = "0";
+                //}
                 m_Path2BeamDiagrams = new List<string>() { };
 
                 _beamDiagramController = new ControllerBeamDiagram(m_Path2BeamDiagrams);
@@ -230,14 +233,33 @@ namespace BSFiberConcrete
 
         //Mx My N Qx Qy
         private void InitEffortValues()
-        {           
-            double[] mnq = { m_Iniv["Mx"], m_Iniv["My"], m_Iniv["N"], m_Iniv["Qx"], m_Iniv["Qy"] };
-            gridEfforts.Rows.Add(mnq);
-            for (int i = 0; i < mnq.Length; i++)
-            {
-                gridEfforts.Rows[0].Cells[i].Value = mnq[i];
-            }
+        {
+            List<Efforts> eff = Lib.BSData.LoadEfforts();
 
+            // словарь с назщваниями столбцов и индексами в таблице gridEfforts
+            Dictionary<string, int> columnNameAndIndex = new Dictionary<string, int>();
+            for (int i = 0; gridEfforts.Columns.Count > i; i++)
+            { columnNameAndIndex.Add(gridEfforts.Columns[i].Name, i); }
+
+            // Добавление строк в таблицу gridEfforts
+            gridEfforts.Rows.Clear();
+            gridEfforts.Rows.Add(eff.Count);
+
+            for (int iRow = 0; eff.Count > iRow; iRow++)
+            {
+                for (int iProperty = 0; typeof(Efforts).GetProperties().Count() > iProperty; iProperty++)
+                {
+                    string propertyEffortName = typeof(Efforts).GetProperties()[iProperty].Name;
+                    int indexCol = 0;
+                    if (columnNameAndIndex.TryGetValue(propertyEffortName, out indexCol))
+                    {
+                        double propertyEffortValue = (double)eff[iRow].GetType().GetProperty(propertyEffortName).GetValue(eff[iRow], null);
+                        //dataGridViewRow.Cells[propertyEffortName].Value = propertyEffortValue;
+                        //System.Windows.Forms.DataGridViewCellCollection a = dataGridViewRow.Cells;
+                        gridEfforts.Rows[iRow].Cells[indexCol].Value = propertyEffortValue;
+                    }
+                }
+            }
             num_eN.Value = (decimal)m_Iniv["eN"];
             num_Ml1_M1.Value = (decimal)m_Iniv["Ml"];
         }
@@ -607,8 +629,8 @@ namespace BSFiberConcrete
                 double c_h = bsBeam.Height;
 
                 // Усилия Mx, My - моменты, кг*см , N - сила, кг              
-                GetEffortsFromForm(out Dictionary<string, double> MNQ);
-                BSFiberCalc_Cracking calc_Cracking = new BSFiberCalc_Cracking(MNQ);
+                GetEffortsFromForm(out List<Dictionary<string, double>> MNQ);
+                BSFiberCalc_Cracking calc_Cracking = new BSFiberCalc_Cracking(MNQ[0]);
                 //calc_Cracking.Efforts = MNQ;
                 calc_Cracking.Beam = bsBeam;
                 calc_Cracking.typeOfBeamSection = m_BeamSection;
@@ -844,28 +866,70 @@ namespace BSFiberConcrete
         /// </summary>
         /// <param name="_MNQ"></param>
         /// <exception cref="Exception"></exception>
-        private void GetEffortsFromForm(out Dictionary<string, double> _MNQ)
+        private void GetEffortsFromForm(out List<Dictionary<string, double>> _MNQ)
         {
-            _MNQ = new Dictionary<string, double>();
+            //_MNQ = new Dictionary<string, double>();
+
+            //DataGridViewColumnCollection columns = gridEfforts.Columns;
+
+            //for (int i = 0; i < columns.Count; i++)
+            //{
+            //    string tmpName = columns[i].Name;
+            //    double value = Convert.ToDouble(gridEfforts.Rows[0].Cells[i].Value);
+
+            //    double newValue = _UnitConverter.ConvertEfforts(tmpName, value);
+            //    _MNQ.Add(tmpName, newValue);
+            //}
+
+            //if (_MNQ.Count == 0)
+            //    throw new Exception("Не заданы усилия");
+
+            //_MNQ["Ml"] = (double)num_Ml1_M1.Value;
+            //_MNQ["eN"] = (double)num_eN.Value;
+            //_MNQ["e0"] = (double)numRandomEccentricity.Value;
+
+
+
+            _MNQ = new List<Dictionary<string, double>>();
 
             DataGridViewColumnCollection columns = gridEfforts.Columns;
+            DataGridViewRowCollection row = gridEfforts.Rows;
 
-            for (int i = 0; i < columns.Count; i++)
+            for (int j = 0; j < row.Count; j++)
             {
-                string tmpName = columns[i].Name;
-                double value = Convert.ToDouble(gridEfforts.Rows[0].Cells[i].Value);
+                //bool isZeroValues = true;
+                Dictionary<string, double> tmpEforts = new Dictionary<string, double>();
+                for (int i = 0; i < columns.Count; i++)
+                {
+                    string tmpName = columns[i].Name;
+                    double value = Convert.ToDouble(gridEfforts.Rows[j].Cells[i].Value);
+                    // перевод ед измерения
+                    double newValue = _UnitConverter.ConvertEfforts(tmpName, value);
+                    tmpEforts.Add(tmpName, newValue);
+                    //if (value != 0)
+                    //{ isZeroValues = false; }
+                }
+                // Если все значения 0, то не записываем в список
+                //if (isZeroValues)
+                //{ continue; }
+                tmpEforts["Ml"] = (double)num_Ml1_M1.Value;
+                tmpEforts["eN"] = (double)num_eN.Value;
+                tmpEforts["e0"] = (double)numRandomEccentricity.Value;
 
-                double newValue = _UnitConverter.ConvertEfforts(tmpName, value);
-                _MNQ.Add(tmpName, newValue);
+                _MNQ.Add(tmpEforts);
             }
 
             if (_MNQ.Count == 0)
                 throw new Exception("Не заданы усилия");
-
-            _MNQ["Ml"] = (double)num_Ml1_M1.Value;
-            _MNQ["eN"] = (double)num_eN.Value;
-            _MNQ["e0"] = (double)numRandomEccentricity.Value;
         }
+
+
+
+        //private void GetEffortsFromFormNew(out List<Dictionary<string, double>> _MNQ)
+        //{
+
+        //}
+
 
         /// <summary>
         ///  Введенные пользователем значения по арматуре
@@ -932,7 +996,7 @@ namespace BSFiberConcrete
 
             fiberCalc.MatFiber = m_MatFiber;
 
-            GetEffortsFromForm(out Dictionary<string, double> MNQ);
+            GetEffortsFromForm(out List<Dictionary<string, double>> MNQ);
 
             fiberCalc.BetonType = BSQuery.BetonTypeFind(comboBetonType.SelectedIndex);
 
@@ -961,7 +1025,7 @@ namespace BSFiberConcrete
             fiberCalc.GetSize(sz);
 
             // передаем усилия и связанные с ними велечины
-            fiberCalc.SetEfforts(MNQ);
+            fiberCalc.SetEfforts(MNQ[0]);
 
             bool _N_out = false;
             if (fiberCalc.h / 2 < fiberCalc.Get_e_tot) _N_out = true;
@@ -1102,9 +1166,9 @@ namespace BSFiberConcrete
 
             RecalRandomEccentricity_e0(); 
 
-            GetEffortsFromForm(out Dictionary<string, double> _MNQ);
+            GetEffortsFromForm(out List<Dictionary<string, double>> _MNQ);
 
-            (double _M, double _N, double _Qy, double _Qx ) = (_MNQ["My"], _MNQ["N"], _MNQ["Qy"], _MNQ["Qx"]);
+            (double _M, double _N, double _Qy, double _Qx ) = (_MNQ[0]["My"], _MNQ[0]["N"], _MNQ[0]["Qy"], _MNQ[0]["Qx"]);
             if (_M < 0 || _N < 0)
             {
                 MessageBox.Show("Расчет по методу статического равновесия не реализован для отрицательных значений M и N.\n " +
@@ -1147,7 +1211,7 @@ namespace BSFiberConcrete
         private Dictionary<string, double> DictCalcParams(BeamSection _beamSection)
         {
             // Усилия Mx, My - моменты, кг*см , N - сила, кг              
-            GetEffortsFromForm(out Dictionary<string, double> MNQ);
+            GetEffortsFromForm(out List<Dictionary<string, double>> MNQ);
 
             BSMatFiber mf = new BSMatFiber((double)numE_beton.Value, numYft.Value, numYb.Value, numYb1.Value, numYb2.Value, numYb3.Value, numYb5.Value);
             mf.Rfbn = (double)numRfb_n.Value;
@@ -1161,11 +1225,11 @@ namespace BSFiberConcrete
             Dictionary<string, double> D = new Dictionary<string, double>()
             {
                 // enforces
-                ["N"] = -MNQ["N"],
-                ["My"] = MNQ["My"],
-                ["Mz"] = MNQ["Mx"],
-                ["Qx"] = MNQ["Qx"],
-                ["Qy"] = MNQ["Qy"],
+                ["N"] = -MNQ[0]["N"],
+                ["My"] = MNQ[0]["My"],
+                ["Mz"] = MNQ[0]["Mx"],
+                ["Qx"] = MNQ[0]["Qx"],
+                ["Qy"] = MNQ[0]["Qy"],
                 //
                 //length
                 ["lgth"] = lgth,
@@ -1408,16 +1472,16 @@ namespace BSFiberConcrete
 
             RecalRandomEccentricity_e0();
 
-            GetEffortsFromForm(out Dictionary<string, double> _MNQ);
+            GetEffortsFromForm(out List<Dictionary<string, double>> _MNQ);
 
-            if (_MNQ["Qx"] == 0 && _MNQ["Qy"] == 0) 
+            if (_MNQ[0]["Qx"] == 0 && _MNQ[0]["Qy"] == 0) 
                 return null;
-            else if (_MNQ["Qx"] != 0 && num_s_w_X.Value <= 0) 
+            else if (_MNQ[0]["Qx"] != 0 && num_s_w_X.Value <= 0) 
             {
                 MessageBox.Show("Задайте шаг арматуры по X", "Расчет на Qx", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return null;
             } 
-            else if (_MNQ["Qy"] != 0 && num_s_w_Y.Value <= 0) 
+            else if (_MNQ[0]["Qy"] != 0 && num_s_w_Y.Value <= 0) 
             {
                 MessageBox.Show("Задайте шаг арматуры по Y", "Расчет на Qy", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return null;
@@ -1430,7 +1494,7 @@ namespace BSFiberConcrete
 
             InitTRebar(out double[] t_r_Y);
 
-            Dictionary<string, double> resQxQy = FiberCalculate_Shear(_MNQ, sz, t_r_X, t_r_Y);
+            Dictionary<string, double> resQxQy = FiberCalculate_Shear(_MNQ[0], sz, t_r_X, t_r_Y);
 
             return resQxQy;            
         }
@@ -1518,10 +1582,10 @@ namespace BSFiberConcrete
             List<BSRod> Rods = new List<BSRod>();
 
             // Усилия Mx, My - моменты, кг*см , N - сила, кг              
-            GetEffortsFromForm(out Dictionary<string, double> MNQ);
-            double c_Mx = MNQ["Mx"];
-            double c_My = MNQ["My"];
-            double c_N = MNQ["N"];
+            GetEffortsFromForm(out List<Dictionary<string, double>> MNQ);
+            double c_Mx = MNQ[0]["Mx"];
+            double c_My = MNQ[0]["My"];
+            double c_N = MNQ[0]["N"];
 
             // сечение балки балки, см 
             double[] beam_sizes = BeamSizes(c_Length);
@@ -1793,11 +1857,16 @@ namespace BSFiberConcrete
         {
             try
             {
-                GetEffortsFromForm(out Dictionary<string, double> _MNQ);
+                GetEffortsFromForm(out List<Dictionary<string, double>> _MNQ);
+                List<Efforts> effortsFromForm = new List<Efforts>();
+                for (int i = 0; _MNQ.Count > i; i++)
+                {
+                    Efforts ef = new Efforts() { Id = i, Mx = _MNQ[i]["Mx"], My = _MNQ[i]["My"], N = _MNQ[i]["N"], Qx = _MNQ[i]["Qx"], Qy = _MNQ[i]["Qy"] };
+                    effortsFromForm.Add(ef);
+                }
+                Lib.BSData.ClearEfforts();
 
-                Efforts ef = new Efforts() { Id = 1, Mx = _MNQ["Mx"], My = _MNQ["My"], N = _MNQ["N"], Qx = _MNQ["Qx"], Qy = _MNQ["Qy"] };
-
-                Lib.BSData.SaveEfforts(ef);
+                Lib.BSData.SaveEfforts(effortsFromForm);
             }
             catch (Exception _ex)
             {
@@ -2383,9 +2452,15 @@ namespace BSFiberConcrete
 
                 BSData.UpdateBeamSectionGeometry(m_InitBeamSectionsGeometry);
 
-                GetEffortsFromForm(out Dictionary<string, double> _MNQ);
-
-                Lib.BSData.SaveEfforts(new Efforts() { Id = 1, Mx = _MNQ["Mx"], My = _MNQ["My"], N = _MNQ["N"], Qx = _MNQ["Qx"], Qy = _MNQ["Qy"]});
+                GetEffortsFromForm(out List<Dictionary<string, double>> _MNQ);
+                List<Efforts> effortsFromForm = new List<Efforts>();
+                for (int i = 0; _MNQ.Count > i; i++)
+                {
+                    Efforts ef = new Efforts() { Id = i, Mx = _MNQ[i]["Mx"], My = _MNQ[i]["My"], N = _MNQ[i]["N"], Qx = _MNQ[i]["Qx"], Qy = _MNQ[i]["Qy"] };
+                    effortsFromForm.Add(ef);
+                }
+                Lib.BSData.ClearEfforts();
+                Lib.BSData.SaveEfforts(effortsFromForm);
 
                 NDMSetupValuesFromForm();                
 

@@ -327,7 +327,8 @@ namespace BSFiberConcrete.Lib
             {
                 using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
                 {
-                    var output = cnn.Query<Efforts>("select * from Efforts where id = 1", new DynamicParameters());
+                    //var output = cnn.Query<Efforts>("select * from Efforts where id = 1", new DynamicParameters());
+                    var output = cnn.Query<Efforts>("select * from Efforts", new DynamicParameters());
                     return output.ToList();
                 }
             }
@@ -353,6 +354,54 @@ namespace BSFiberConcrete.Lib
                 }
             }
             catch(Exception _e)
+            {
+                MessageBox.Show(_e.Message);
+            }
+        }
+
+        // сохранить данные в бд по усилиям
+        public static void SaveEfforts(List<Efforts> _efforts)
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    cnn.Open();
+                    using (var tr = cnn.BeginTransaction())
+                    {
+                        for (int i = 0; _efforts.Count > i; i++)
+                        {
+                            Efforts tmpEfforts = _efforts[i];
+                            //int cnt = cnn.Execute($"INSERT into Efforts set Mx = @Mx, My = @My, N = @N, Qx = @Qx, Qy = @Qy", tmpEfforts, tr);
+                            int cnt = cnn.Execute("insert into Efforts (Id, Mx, Mx, My, N, Qx, Qy) values (@Id, @Mx, @Mx, @My, @N, @Qx, @Qy)", tmpEfforts, tr);
+                        }
+                        tr.Commit();
+                    }
+                }
+            }
+            catch (Exception _e)
+            {
+                MessageBox.Show(_e.Message);
+            }
+        }
+
+
+        // удалить содержимое таблицы
+        public static void ClearEfforts()
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    cnn.Open();
+                    using (var tr = cnn.BeginTransaction())
+                    {
+                        int cnt = cnn.Execute("DELETE FROM Efforts");
+                        tr.Commit();
+                    }
+                }
+            }
+            catch (Exception _e)
             {
                 MessageBox.Show(_e.Message);
             }

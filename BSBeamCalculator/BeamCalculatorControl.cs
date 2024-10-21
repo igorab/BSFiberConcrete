@@ -158,16 +158,23 @@ namespace BSBeamCalculator
 
                 if (_beamEfforts != null)
                 {
-                    double maxValueM;
-                    if (Math.Abs(result.maxM) >= Math.Abs(result.minM))
-                    { maxValueM = result.maxM; }
-                    else { maxValueM = result.minM; }
+                    //double maxValueM;
+                    //if (Math.Abs(result.maxM) >= Math.Abs(result.minM))
+                    //{ maxValueM = result.maxM; }
+                    //else { maxValueM = result.minM; }
+
                     for (int i = 0; i < _beamEfforts.ColumnCount; i++)
                     {
                         if (_beamEfforts.Columns[i].Name == "My")
-                        { _beamEfforts[i, 0].Value = Math.Round(maxValueM, n).ToString(); }
+                        { 
+                            _beamEfforts[i, 0].Value = Math.Round(result.maxM, n).ToString();
+                            _beamEfforts[i, 1].Value = Math.Round(result.minM, n).ToString();
+                        }
                         else if (_beamEfforts.Columns[i].Name == "Q")
-                        { _beamEfforts[i, 0].Value = Math.Round(result.maxAbsQ, n).ToString(); }
+                        { 
+                            _beamEfforts[i, 0].Value = Math.Round(result.maxAbsQ, n).ToString();
+                            _beamEfforts[i, 1].Value = Math.Round(result.maxAbsQ, n).ToString();
+                        }
                     }
                 }
             }

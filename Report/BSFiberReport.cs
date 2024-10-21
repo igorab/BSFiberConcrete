@@ -271,7 +271,8 @@ namespace BSFiberConcrete
                     }
                     else if (Math.Abs(_pair.Value) < 0.00001)
                     {
-                        w.WriteLine($"<td width={bv} align=center colspan=2>{_pair.Value.ToString("E")} </td>");
+                        string bgColor = ColorForUtilizationFactor(_pair);
+                        w.WriteLine($"<td width={bv} align=center colspan=2 {bgColor}>{_pair.Value.ToString("E")} </td>");
                         w.WriteLine($"<td width={bv} align=center colspan=2>{UConv(_pair.Key, _pair.Value)} </td>");
                     }
                     else
