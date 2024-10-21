@@ -10,13 +10,11 @@ namespace BSFiberConcrete
     /// </summary>
     public class BSFiberCalc_MNQ_Rect : BSFiberCalc_MNQ
     {
-        private string m_ImgCalc;
-        private Dictionary<string, double> m_Result;
+        private string m_ImgCalc;        
 
         public BSFiberCalc_MNQ_Rect()
         {
-            m_Beam = new BSBeam_Rect();
-            m_Result = new Dictionary<string, double>();
+            m_Beam = new BSBeam_Rect();            
         }
 
         /// <summary>
@@ -130,9 +128,8 @@ namespace BSFiberConcrete
 
         public override Dictionary<string, double> Results()
         {
-            Dictionary<string, double> dictRes;
             
-            dictRes =  new Dictionary<string, double>() 
+            Dictionary<string, double>  dictRes =  new Dictionary<string, double>() 
             {
                 { DN(typeof(BSFiberCalc_MNQ), "M_ult"), M_ult },
                 { DN(typeof(BSFiberCalc_MNQ), "UtilRate_My"), UtilRate_My },
@@ -144,7 +141,6 @@ namespace BSFiberConcrete
                 { DN(typeof(BSFiberCalc_MNQ), "UtilRate_Qx"), UtilRate_Qx },
             };
             
-
             //var xres =  new Dictionary<string, double>() 
             //{ 
             //    { "M_ult", M_ult }, { "Q_ult", Q_ult }, { "N_ult", N_ult } 
