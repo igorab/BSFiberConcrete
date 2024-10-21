@@ -7,9 +7,15 @@ using System.Reflection;
 namespace BSFiberConcrete
 {    
     [DisplayName("Расчет элементов на действие сил и моментов")]
+    ///
+    /// Расчеты на действие продольной силы
+    /// Расчеты по полосе между наклонными сечениями на дейстиве M и Q
+    ///
     public class BSFiberCalc_MNQ : IBSFiberCalculation
     {
         public List<string> Msg;
+
+        public Dictionary<string, double> CalcResults => Results();
 
         protected string m_ImgCalc { get; set; }
 

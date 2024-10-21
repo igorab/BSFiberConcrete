@@ -30,7 +30,8 @@ namespace BSFiberConcrete
             m_FiberCalc = _fiberCalc;
             m_Messages = _fiberCalc.Msg;
             m_Efforts = new Dictionary<string, double> (_fiberCalc.m_Efforts);
-            
+            ImageCalc = _fiberCalc.ImageCalc();
+
             GetPropertiesAttr();
 
             InitFromAttr();
