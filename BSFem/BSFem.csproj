@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="netDxf" Version="2022.11.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BSCalcLib\BSCalcLib.csproj" />
   </ItemGroup>
 

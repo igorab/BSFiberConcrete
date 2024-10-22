@@ -2786,5 +2786,14 @@ namespace BSFiberConcrete
                 btnEffortsDelRow.Enabled = false;
             }
         }
+
+        private void btnOpenCalcFile_Click(object sender, EventArgs e)
+        {
+            DialogResult res = openFileDialog.ShowDialog(this);
+
+            if (res == DialogResult.OK) 
+            { 
+            }            
+        }
     }
 }

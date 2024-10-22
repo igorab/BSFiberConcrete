@@ -116,5 +116,32 @@ namespace BSFiberConcrete
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void btnSaveCalc_Click(object sender, EventArgs e)
+        {
+            DialogResult res = saveFileDialog.ShowDialog();
+
+            if (res == DialogResult.OK) 
+            {
+                SaveFile2Json();
+            }            
+        }
+
+        private void SaveFile2Json()
+        {
+            try
+            {
+                
+            }
+            catch
+            {
+                throw new NotImplementedException();
+            }            
+        }
     }
 }

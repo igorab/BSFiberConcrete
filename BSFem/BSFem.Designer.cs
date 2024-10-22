@@ -33,11 +33,13 @@
             btnPoly = new Button();
             btnSegment = new Button();
             btnMesh = new Button();
+            btnDxf = new Button();
+            openFileDialog = new OpenFileDialog();
             SuspendLayout();
             // 
             // btnCalculate
             // 
-            btnCalculate.Location = new Point(9, 12);
+            btnCalculate.Location = new Point(421, 283);
             btnCalculate.Name = "btnCalculate";
             btnCalculate.Size = new Size(75, 23);
             btnCalculate.TabIndex = 0;
@@ -55,9 +57,9 @@
             // 
             // btnPoly
             // 
-            btnPoly.Location = new Point(411, 90);
+            btnPoly.Location = new Point(421, 90);
             btnPoly.Name = "btnPoly";
-            btnPoly.Size = new Size(96, 23);
+            btnPoly.Size = new Size(86, 23);
             btnPoly.TabIndex = 2;
             btnPoly.Text = "Контур";
             btnPoly.UseVisualStyleBackColor = true;
@@ -65,9 +67,9 @@
             // 
             // btnSegment
             // 
-            btnSegment.Location = new Point(411, 154);
+            btnSegment.Location = new Point(421, 154);
             btnSegment.Name = "btnSegment";
-            btnSegment.Size = new Size(96, 23);
+            btnSegment.Size = new Size(86, 23);
             btnSegment.TabIndex = 3;
             btnSegment.Text = "Сегмент";
             btnSegment.UseVisualStyleBackColor = true;
@@ -83,11 +85,26 @@
             btnMesh.UseVisualStyleBackColor = true;
             btnMesh.Click += btnMesh_Click;
             // 
+            // btnDxf
+            // 
+            btnDxf.Location = new Point(421, 38);
+            btnDxf.Name = "btnDxf";
+            btnDxf.Size = new Size(86, 23);
+            btnDxf.TabIndex = 5;
+            btnDxf.Text = ".dxf";
+            btnDxf.UseVisualStyleBackColor = true;
+            btnDxf.Click += btnDxf_Click;
+            // 
+            // openFileDialog
+            // 
+            openFileDialog.FileName = "openFileDialog1";
+            // 
             // BSFem
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(680, 334);
+            Controls.Add(btnDxf);
             Controls.Add(btnMesh);
             Controls.Add(btnSegment);
             Controls.Add(btnPoly);
@@ -106,5 +123,7 @@
         private Button btnPoly;
         private Button btnSegment;
         private Button btnMesh;
+        private Button btnDxf;
+        private OpenFileDialog openFileDialog;
     }
 }
