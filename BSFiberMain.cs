@@ -15,9 +15,11 @@ using System.Data;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 
@@ -2756,6 +2758,33 @@ namespace BSFiberConcrete
                 }
             }
             return true;
+        }
+
+        private void btnEffortsAddRow_Click(object sender, EventArgs e)
+        {
+            gridEfforts.Rows.Add();
+        }
+
+        private void btnEffortsDelRow_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow selectedRow in gridEfforts.SelectedRows)
+            {
+                gridEfforts.Rows.Remove(selectedRow);
+            }
+
+        }
+
+        private void gridEfforts_SelectionChanged(object sender, EventArgs e)
+        {
+            DataGridViewSelectedRowCollection selectedRow = gridEfforts.SelectedRows;
+            if (selectedRow.Count > 0)
+            {
+                btnEffortsDelRow.Enabled = true;
+            }
+            else
+            {
+                btnEffortsDelRow.Enabled = false;
+            }
         }
     }
 }
