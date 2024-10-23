@@ -206,6 +206,32 @@ namespace BSFiberConcrete
                 w.WriteLine("<br>");
             }
 
+            if (m_Path2BeamDiagrams != null && m_Path2BeamDiagrams.Count > 0)
+            {
+                // добавление картинок с эпюрами в отчет
+                
+                w.WriteLine("<Table border=1 bordercolor = darkblue>");
+                foreach (string pathToBeamDiagram in m_Path2BeamDiagrams)
+                {
+                    w.WriteLine("<tr>");
+                    w.WriteLine("<td>");
+                    w.WriteLine($"<img src =\"{pathToBeamDiagram}\">");
+                    w.WriteLine("</td>");
+                    w.WriteLine("</tr>");
+                }
+                w.WriteLine("</Table>");
+                w.WriteLine("<br>");
+
+            }
+
+        }
+
+
+        /// <summary>
+        /// Нагрузки
+        /// </summary>        
+        protected virtual void ReportEfforts(StreamWriter w)
+        {
             if (m_Efforts != null)
             {
                 w.WriteLine("<Table border=1 bordercolor = darkblue>");
@@ -222,31 +248,12 @@ namespace BSFiberConcrete
                     {
                         w.WriteLine($"<td width={bv} align=center>{newValue + " " + nameCustomUnitMeasure} </td>");
                     }
-                    
+
                     w.WriteLine("</tr>");
                 }
                 w.WriteLine("</Table>");
                 w.WriteLine("<br>");
             }
-
-            if (m_Path2BeamDiagrams != null && m_Path2BeamDiagrams.Count > 0)
-            {
-                // добавленеи картинок с эпюрами в отчет
-                
-                w.WriteLine("<Table border=1 bordercolor = darkblue>");
-                foreach (string pathToBeamDiagram in m_Path2BeamDiagrams)
-                {
-                    w.WriteLine("<tr>");
-                    w.WriteLine("<td>");
-                    w.WriteLine($"<img src =\"{pathToBeamDiagram}\">");
-                    w.WriteLine("</td>");
-                    w.WriteLine("</tr>");
-                }
-                w.WriteLine("</Table>");
-                w.WriteLine("<br>");
-
-            }
-
         }
 
         protected virtual void ReportResult(StreamWriter w)
@@ -425,6 +432,8 @@ namespace BSFiberConcrete
 
                         ReportBody(w);
 
+                        ReportEfforts(w);
+                        
                         ReportResult(w);
 
                         Footer(w);
@@ -440,6 +449,50 @@ namespace BSFiberConcrete
             }
 
             return pathToHtmlFile;
+        }
+
+
+        /// <summary>
+        /// Формирует  Header ReportBody и для MultiReport
+        /// </summary>
+        /// <param name="pathToFile"></param>
+        /// <returns></returns>
+        public void HeaderForMultiReport(string pathToFile)
+        {
+            try
+            {
+                using (StreamWriter w = new StreamWriter(pathToFile, true, Encoding.UTF8))
+                {
+                    Header(w);
+                    ReportBody(w);
+                }
+            }
+            catch (Exception _e)
+            {
+                MessageBox.Show("Ошибка при формировании отчета: " + _e.Message); ;
+            }
+        }
+
+        /// <summary>
+        /// Формирует  ReportEfforts ReportResult и Footer для MultiReport
+        /// </summary>
+        /// <param name="pathToFile"></param>
+        /// <returns></returns>
+        public void BodyForMultiReport(string pathToFile)
+        {
+            try
+            {
+                using (StreamWriter w = new StreamWriter(pathToFile, true, Encoding.UTF8))
+                {
+                    ReportEfforts(w);
+                    ReportResult(w);
+                    Footer(w);
+                }
+            }
+            catch (Exception _e)
+            {
+                MessageBox.Show("Ошибка при формировании отчета: " + _e.Message); ;
+            }
         }
 
 

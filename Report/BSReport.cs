@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Remoting.Messaging;
@@ -27,6 +28,57 @@ namespace BSFiberConcrete.Report
             bSReport.CalcRes = calcRes;
             bSReport.CreateReportNDM();
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static void RunReport(BeamSection m_BeamSection, List<BSCalcResultNDM> calcResults)
+        {
+            //string reportName = "";
+            //try
+            //{
+            //    MethodBase method = MethodBase.GetCurrentMethod();
+            //    DisplayNameAttribute attr = (DisplayNameAttribute)method.GetCustomAttributes(typeof(DisplayNameAttribute), true)[0];
+            //    reportName = attr.DisplayName;
+            //}
+            //catch
+            //{
+            //    MessageBox.Show("Не задан атрибут DisplayName метода");
+            //}
+
+            string reportName = "Расчет по прочности нормальных сечений на основе нелинейной деформационной модели";
+
+
+            string path2file = "FiberCalculationMultiReport.htm";
+            File.CreateText(path2file).Dispose();
+
+            // Создаем единую часть отчета для всех расчетов
+            BSReport bSReport = new BSReport(m_BeamSection);
+            bSReport.CalcRes = calcResults[0];
+            string pathToHtmlFile = bSReport.CreateHeaderMultiReport(path2file, m_BeamSection, reportName);
+
+
+            for (int i = 0; calcResults.Count > i; i++)
+            {
+                using (StreamWriter w = new StreamWriter(path2file, true, Encoding.UTF8))
+                {
+                    w.WriteLine($"<H2>Результат расчета по комбинациям загружений: {i+1}</H2>");
+                }
+                bSReport = new BSReport(m_BeamSection);
+                bSReport.CalcRes = calcResults[i];
+                pathToHtmlFile = bSReport.CreateBodyMultiReport(path2file, m_BeamSection, reportName);
+            }
+
+            System.Diagnostics.Process.Start(path2file);
+            //catch (Exception _e)
+            //{
+            //    MessageBox.Show("Ошибка в отчете " + _e.Message);
+            //}
+
+
+
+}
+
 
         public BSReport(BeamSection _beamSection)
         {
@@ -69,6 +121,61 @@ namespace BSFiberConcrete.Report
                 InitReportSections(ref report);
 
                 path = report.CreateReport(_fileId);
+                return path;
+            }
+            catch (Exception _e)
+            {
+                throw _e;
+            }
+        }
+
+
+        private string CreateHeaderMultiReport(string pathToFile,
+                                    BeamSection _BeamSection,
+                                    string _reportName = "",
+                                    bool _useReinforcement = false)
+        {
+            try
+            {
+                string path = "";
+                BSFiberReport report = new BSFiberReport();
+
+                if (_reportName != "")
+                    report.ReportName = _reportName;
+
+                report.BeamSection = _BeamSection;
+                report.UseReinforcement = _useReinforcement;
+
+                InitReportSections(ref report);
+
+                report.HeaderForMultiReport(pathToFile);
+                return path;
+            }
+            catch (Exception _e)
+            {
+                throw _e;
+            }
+        }
+
+        private string CreateBodyMultiReport(string pathToFile,
+                                    BeamSection _BeamSection,
+                                    string _reportName = "",
+                                    bool _useReinforcement = false)
+        {
+            try
+            {
+                string path = "";
+                BSFiberReport report = new BSFiberReport();
+
+                if (_reportName != "")
+                    report.ReportName = _reportName;
+
+                report.BeamSection = _BeamSection;
+                report.UseReinforcement = _useReinforcement;
+
+                InitReportSections(ref report);
+
+                report.BodyForMultiReport(pathToFile);
                 return path;
             }
             catch (Exception _e)

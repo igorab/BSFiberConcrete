@@ -8,6 +8,7 @@ using BSFiberConcrete.Report;
 using BSFiberConcrete.Section;
 using BSFiberConcrete.UnitsOfMeasurement;
 using BSFiberConcrete.UnitsOfMeasurement.PhysicalQuantities;
+using ScottPlot.Colormaps;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -54,6 +55,11 @@ namespace BSFiberConcrete
         /// Нагрузки на балки
         /// </summary>
         private Dictionary<string, double> m_Efforts;
+        /// <summary>
+        /// 
+        /// </summary>
+        private Dictionary<string, double> m_EfortsForCalc;
+
         /// <summary>
         /// Параметры ФИбробетона
         /// </summary>
@@ -144,6 +150,10 @@ namespace BSFiberConcrete
 
                 gridEfforts.Rows.Clear();
                 gridEfforts.Rows.Add(2);
+                gridEfforts.Columns["Mx"].Visible = false;
+                gridEfforts.Columns["Qx"].Visible = false;
+                gridEfforts.Columns["N"].Visible = false;
+
                 //for (int i = 0; i < gridEfforts.ColumnCount; i++)
                 //{
                 //    gridEfforts[i, 0].Value = "0";
@@ -629,8 +639,9 @@ namespace BSFiberConcrete
                 double c_h = bsBeam.Height;
 
                 // Усилия Mx, My - моменты, кг*см , N - сила, кг              
-                GetEffortsFromForm(out List<Dictionary<string, double>> MNQ);
-                BSFiberCalc_Cracking calc_Cracking = new BSFiberCalc_Cracking(MNQ[0]);
+                //GetEffortsFromForm(out List<Dictionary<string, double>> MNQ);
+                Dictionary<string, double> MNQ = GetEffortsForCalc();
+                BSFiberCalc_Cracking calc_Cracking = new BSFiberCalc_Cracking(MNQ);
                 //calc_Cracking.Efforts = MNQ;
                 calc_Cracking.Beam = bsBeam;
                 calc_Cracking.typeOfBeamSection = m_BeamSection;
@@ -887,21 +898,30 @@ namespace BSFiberConcrete
 
             for (int j = 0; j < row.Count; j++)
             {
-                //bool isZeroValues = true;
+                bool isZeroValues = true;
                 Dictionary<string, double> tmpEfforts = new Dictionary<string, double>();
                 for (int i = 0; i < columns.Count; i++)
                 {
                     string tmpName = columns[i].Name;
+
+                    if (!columns[i].Visible)
+                    { 
+                        tmpEfforts.Add(tmpName, 0);
+                        continue;
+                    }
+                    
                     double value = Convert.ToDouble(gridEfforts.Rows[j].Cells[i].Value);
+                    if ((value != 0))
+                    { isZeroValues = false; }
+
                     // перевод ед измерения
                     double newValue = _UnitConverter.ConvertEfforts(tmpName, value);
                     tmpEfforts.Add(tmpName, newValue);
-                    //if (value != 0)
-                    //{ isZeroValues = false; }
+
                 }
                 // Если все значения 0, то не записываем в список
-                //if (isZeroValues)
-                //{ continue; }
+                if (isZeroValues)
+                { continue; }
                 tmpEfforts["Ml"] = (double)num_Ml1_M1.Value;
                 tmpEfforts["eN"] = (double)num_eN.Value;
                 tmpEfforts["e0"] = (double)numRandomEccentricity.Value;
@@ -911,8 +931,27 @@ namespace BSFiberConcrete
 
             if (_MNQ.Count == 0)
             {
-                _MNQ = new List<Dictionary<string, double>>() {new Dictionary<string, double>{ ["My"] = 0, ["Mx"] = 0, ["N"] = 0, ["Qx"] = 0, ["Qy"] = 0, ["Ml"] = 0, ["eN"] = 0, ["e0"] = 0}};
+                //_MNQ = new List<Dictionary<string, double>>() {new Dictionary<string, double>{ ["My"] = 0, ["Mx"] = 0, ["N"] = 0, ["Qx"] = 0, ["Qy"] = 0, ["Ml"] = 0, ["eN"] = 0, ["e0"] = 0}};
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        private Dictionary<string, double> GetEffortsForCalc()
+        {
+
+            if (m_EfortsForCalc == null)
+            {
+                GetEffortsFromForm(out List<Dictionary<string, double>> _MNQ);
+                if (_MNQ.Count>0)
+                    return _MNQ[0];
+                return new Dictionary<string, double>();
+            }
+
+            return m_EfortsForCalc;
+
         }
 
        
@@ -981,7 +1020,8 @@ namespace BSFiberConcrete
 
             fiberCalc.MatFiber = m_MatFiber;
 
-            GetEffortsFromForm(out List<Dictionary<string, double>> MNQ);
+            //GetEffortsFromForm(out List<Dictionary<string, double>> MNQ);
+            Dictionary<string, double> MNQ = GetEffortsForCalc();
 
             fiberCalc.BetonType = BSQuery.BetonTypeFind(comboBetonType.SelectedIndex);
 
@@ -1010,7 +1050,7 @@ namespace BSFiberConcrete
             fiberCalc.GetSize(sz);
 
             // передаем усилия и связанные с ними велечины
-            fiberCalc.SetEfforts(MNQ[0]);
+            fiberCalc.SetEfforts(MNQ);
 
             bool _N_out = false;
             if (fiberCalc.h / 2 < fiberCalc.Get_e_tot) _N_out = true;
@@ -1154,11 +1194,18 @@ namespace BSFiberConcrete
             // Данные, введенные пользователем
             SetFiberMaterialProperties();
 
-            RecalRandomEccentricity_e0(); 
+            RecalRandomEccentricity_e0();
 
-            GetEffortsFromForm(out List<Dictionary<string, double>> _MNQ);
+            //GetEffortsFromForm(out List<Dictionary<string, double>> _MNQ);
+            Dictionary<string, double> _MNQ = GetEffortsForCalc();
 
-            (double _M, double _N, double _Qy, double _Qx ) = (_MNQ[0]["My"], _MNQ[0]["N"], _MNQ[0]["Qy"], _MNQ[0]["Qx"]);
+            if (_MNQ.Count == 0)
+            {
+                MessageBox.Show("Необходимо задать нагрузки");
+                return;
+            }
+
+            (double _M, double _N, double _Qy, double _Qx ) = (_MNQ["My"], _MNQ["N"], _MNQ["Qy"], _MNQ["Qx"]);
             if (_M < 0 || _N < 0)
             {
                 MessageBox.Show("Расчет по методу статического равновесия не реализован для отрицательных значений M и N.\n " +
@@ -1201,7 +1248,9 @@ namespace BSFiberConcrete
         private Dictionary<string, double> DictCalcParams(BeamSection _beamSection)
         {
             // Усилия Mx, My - моменты, кг*см , N - сила, кг              
-            GetEffortsFromForm(out List<Dictionary<string, double>> MNQ);
+            //GetEffortsFromForm(out List<Dictionary<string, double>> MNQ);
+
+            Dictionary<string, double> MNQ = GetEffortsForCalc();
 
             BSMatFiber mf = new BSMatFiber((double)numE_beton.Value, numYft.Value, numYb.Value, numYb1.Value, numYb2.Value, numYb3.Value, numYb5.Value);
             mf.Rfbn = (double)numRfb_n.Value;
@@ -1215,11 +1264,11 @@ namespace BSFiberConcrete
             Dictionary<string, double> D = new Dictionary<string, double>()
             {
                 // enforces
-                ["N"] = -MNQ[0]["N"],
-                ["My"] = MNQ[0]["My"],
-                ["Mz"] = MNQ[0]["Mx"],
-                ["Qx"] = MNQ[0]["Qx"],
-                ["Qy"] = MNQ[0]["Qy"],
+                ["N"] = -MNQ["N"],
+                ["My"] = MNQ["My"],
+                ["Mz"] = MNQ["Mx"],
+                ["Qx"] = MNQ["Qx"],
+                ["Qy"] = MNQ["Qy"],
                 //
                 //length
                 ["lgth"] = lgth,
@@ -1462,16 +1511,18 @@ namespace BSFiberConcrete
 
             RecalRandomEccentricity_e0();
 
-            GetEffortsFromForm(out List<Dictionary<string, double>> _MNQ);
+            //GetEffortsFromForm(out List<Dictionary<string, double>> _MNQ);
+            Dictionary<string, double> _MNQ = GetEffortsForCalc();
 
-            if (_MNQ[0]["Qx"] == 0 && _MNQ[0]["Qy"] == 0) 
+
+            if (_MNQ["Qx"] == 0 && _MNQ["Qy"] == 0) 
                 return null;
-            else if (_MNQ[0]["Qx"] != 0 && num_s_w_X.Value <= 0) 
+            else if (_MNQ["Qx"] != 0 && num_s_w_X.Value <= 0) 
             {
                 MessageBox.Show("Задайте шаг арматуры по X", "Расчет на Qx", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return null;
             } 
-            else if (_MNQ[0]["Qy"] != 0 && num_s_w_Y.Value <= 0) 
+            else if (_MNQ["Qy"] != 0 && num_s_w_Y.Value <= 0) 
             {
                 MessageBox.Show("Задайте шаг арматуры по Y", "Расчет на Qy", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return null;
@@ -1484,7 +1535,7 @@ namespace BSFiberConcrete
 
             InitTRebar(out double[] t_r_Y);
 
-            Dictionary<string, double> resQxQy = FiberCalculate_Shear(_MNQ[0], sz, t_r_X, t_r_Y);
+            Dictionary<string, double> resQxQy = FiberCalculate_Shear(_MNQ, sz, t_r_X, t_r_Y);
 
             return resQxQy;            
         }
@@ -1497,9 +1548,7 @@ namespace BSFiberConcrete
             Dictionary<string, double> resQxQy = CalcQxQy();
 
             // данные с формы:
-            Dictionary<string, double> _D = DictCalcParams(_beamSection);
-            
-            if (!ValidateNDMCalc(_D)) return null;
+            Dictionary<string, double> _D = DictCalcParams(_beamSection);          
 
             // расчет на MxMyN по НДМ            
             NDMSetup _setup = NDMSetupValuesFromForm();                
@@ -1579,10 +1628,12 @@ namespace BSFiberConcrete
             List<BSRod> Rods = new List<BSRod>();
 
             // Усилия Mx, My - моменты, кг*см , N - сила, кг              
-            GetEffortsFromForm(out List<Dictionary<string, double>> MNQ);
-            double c_Mx = MNQ[0]["Mx"];
-            double c_My = MNQ[0]["My"];
-            double c_N = MNQ[0]["N"];
+            //GetEffortsFromForm(out List<Dictionary<string, double>> MNQ);
+            Dictionary<string, double> MNQ = GetEffortsForCalc();
+
+            double c_Mx = MNQ["Mx"];
+            double c_My = MNQ["My"];
+            double c_N = MNQ["N"];
 
             // сечение балки балки, см 
             double[] beam_sizes = BeamSizes(c_Length);
@@ -1772,6 +1823,58 @@ namespace BSFiberConcrete
             return true;
         }
 
+        private bool ValidateNDMCalc(List<Dictionary<string, double>> _D)
+        {
+            string message = "";
+            if (m_SectionChart == null || m_SectionChart.m_BeamSection != m_BeamSection)
+            {
+                //MessageBox.Show("Нажмите кнопку Сечение и задайте диаметры и расстановку стержней арматуры.",
+                //    "Расчет по НДМ",
+                //    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //return false;
+                message = message + "Нажмите кнопку Сечение и задайте диаметры и расстановку стержней арматуры.\n";
+            }
+
+            if (_D.Count == 0)
+            {
+                //MessageBox.Show("Требуется задать моменты Mx My или силу N или поперечные силы Qx Qy ", "Расчет по НДМ",
+                //    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //return false;
+                message = message + "Требуется задать моменты Mx My или силу N или поперечные силы Qx Qy. \n";
+            }
+
+            for (int i = 0; _D.Count > i; i++)
+            {
+                Dictionary<string, double> MNQ = _D[i];
+
+                if (MNQ["Qx"] != 0 && num_s_w_X.Value <= 0)
+                {
+                    //MessageBox.Show("Задайте шаг арматуры по X", "Расчет на Qx", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    message = message + "Задайте шаг арматуры по X.\n";
+                }
+                else if (MNQ["Qy"] != 0 && num_s_w_Y.Value <= 0)
+                {
+                    //MessageBox.Show("Задайте шаг арматуры по Y", "Расчет на Qy", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    message = message + "Задайте шаг арматуры по Y.\n";
+
+                }
+
+            }
+
+
+
+
+
+            if (message != "")
+            {
+                MessageBox.Show(message, "Расчет по НДМ",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            return true;
+        }
+
         /// <summary>
         /// Расчет по НДМ            
         /// </summary>        
@@ -1779,31 +1882,58 @@ namespace BSFiberConcrete
         {                        
             try
             {
-                TriangleNet.Geometry.Point CG = new TriangleNet.Geometry.Point(0, 0);
-                BSCalcResultNDM calcRes = null; 
+                List<BSCalcResultNDM> calcResults = new List<BSCalcResultNDM>();
+                List<Dictionary<string, double>> _MNQ = new List<Dictionary<string, double>>();
+                GetEffortsFromForm(out _MNQ);
 
-                if (m_BeamSection == BeamSection.Rect)
-                {
-                    calcRes = CalcNDM(BeamSection.Rect);
-                }
-                else if (BSHelper.IsITL(m_BeamSection))
-                {
-                    calcRes = CalcNDM(BeamSection.IBeam);
-                }
-                else if (m_BeamSection == BeamSection.Ring)
-                {                    
-                    GenerateMesh(ref CG);
-                    calcRes = CalcNDM(BeamSection.Ring);
-                }
-                else if (m_BeamSection == BeamSection.Any)
-                {
-                    GenerateMesh(ref CG);
-                    calcRes = CalcNDM(BeamSection.Any);
-                }
-                                
-                BSReport.RunFromCode(m_BeamSection, calcRes);
 
-                ShowMosaic(calcRes);
+                if (!ValidateNDMCalc(_MNQ))
+                { return; }
+
+
+                for (int i = 0; _MNQ.Count > i; i++)
+                {
+                    
+                    m_EfortsForCalc = _MNQ[i];
+
+                    TriangleNet.Geometry.Point CG = new TriangleNet.Geometry.Point(0, 0);
+                    BSCalcResultNDM calcRes = null;
+
+                    if (m_BeamSection == BeamSection.Rect)
+                    {
+                        calcRes = CalcNDM(BeamSection.Rect);
+                    }
+                    else if (BSHelper.IsITL(m_BeamSection))
+                    {
+                        calcRes = CalcNDM(BeamSection.IBeam);
+                    }
+                    else if (m_BeamSection == BeamSection.Ring)
+                    {
+                        GenerateMesh(ref CG);
+                        calcRes = CalcNDM(BeamSection.Ring);
+                    }
+                    else if (m_BeamSection == BeamSection.Any)
+                    {
+                        GenerateMesh(ref CG);
+                        calcRes = CalcNDM(BeamSection.Any);
+                    }
+
+
+                    if (calcRes != null)
+                    {
+                        calcResults.Add(calcRes);
+                    }
+
+                }
+                calcResults[0].Path2BeamDiagrams = m_Path2BeamDiagrams;
+
+                calcResults[0].Deflexion_max = CalculateBeamDeflections(_beamDiagramController, CheckUtilizationFactor(calcResults));
+                //BSReport.RunFromCode(m_BeamSection, calcResults[0]);
+
+                BSReport.RunReport(m_BeamSection, calcResults);
+
+
+                ShowMosaic(calcResults[0]);
 
             }
             catch (Exception _e)
@@ -1883,7 +2013,7 @@ namespace BSFiberConcrete
             try
             {                
                 FormParamsSaveData();
-
+                
                 Dictionary<string, double> SZ = new Dictionary<string, double>();
                 double[] sz = BeamSizes();
                 Dictionary<string, double> ef = null;
@@ -2743,17 +2873,33 @@ namespace BSFiberConcrete
         /// Проверить не превышение коэффициентов использования
         /// </summary>
         /// <returns></returns>
-        private bool CheckUtilizationFactor()
+        private bool CheckUtilizationFactor(List<BSCalcResultNDM> calcResults)
         {
-
             // Проходимо по всем парам из  m_CalcResults, если есть хоть одно значение превышающее 1 ( или -1), выдает false
-            foreach (KeyValuePair<string, double> item in m_CalcResults)
+            
+
+            Type type = typeof(BSCalcResultNDM);
+            PropertyInfo[] properties = type.GetProperties();
+
+            foreach (BSCalcResultNDM calcRes in calcResults)
             {
-                if (item.Key.Contains("Коэффициент использования"))
+                foreach (PropertyInfo property in properties)
                 {
-                    if (item.Value > 1d || item.Value < -1d)
+                    DisplayNameAttribute DN = type.GetProperty(property.Name).GetCustomAttribute<DisplayNameAttribute>();
+                    if (DN == null)
+                    { continue; }
+
+                    string displayName = DN.DisplayName;
+
+                    if (!displayName.Contains("Коэффициент использования"))
+                    { continue; }
+
+                    object propertyValue = property.GetValue(calcRes);
+                    double value = 0;
+                    if (double.TryParse(propertyValue.ToString(), out value))
                     {
-                        return false;
+                        if (value >= 1 || value <= -1)
+                        { return false; }
                     }
                 }
             }
