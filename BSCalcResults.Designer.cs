@@ -31,10 +31,10 @@
             this.lvResults = new System.Windows.Forms.ListView();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.btnClose = new System.Windows.Forms.Button();
+            this.btnSaveCalc = new System.Windows.Forms.Button();
             this.lvParams = new System.Windows.Forms.ListView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.btnSaveCalc = new System.Windows.Forms.Button();
-            this.btnClose = new System.Windows.Forms.Button();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.tabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -75,9 +75,32 @@
             this.tabPage1.Text = "Параметры";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // btnClose
+            // 
+            this.btnClose.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnClose.Location = new System.Drawing.Point(722, 406);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(96, 33);
+            this.btnClose.TabIndex = 3;
+            this.btnClose.Text = "Закрыть";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
+            // btnSaveCalc
+            // 
+            this.btnSaveCalc.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnSaveCalc.Location = new System.Drawing.Point(612, 406);
+            this.btnSaveCalc.Name = "btnSaveCalc";
+            this.btnSaveCalc.Size = new System.Drawing.Size(104, 33);
+            this.btnSaveCalc.TabIndex = 2;
+            this.btnSaveCalc.Text = "Сохранить";
+            this.btnSaveCalc.UseVisualStyleBackColor = true;
+            this.btnSaveCalc.Click += new System.EventHandler(this.btnSaveCalc_Click);
+            // 
             // lvParams
             // 
-            this.lvParams.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.lvParams.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lvParams.HideSelection = false;
             this.lvParams.Location = new System.Drawing.Point(3, 3);
@@ -96,26 +119,6 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Результаты";
             this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // btnSaveCalc
-            // 
-            this.btnSaveCalc.Location = new System.Drawing.Point(612, 406);
-            this.btnSaveCalc.Name = "btnSaveCalc";
-            this.btnSaveCalc.Size = new System.Drawing.Size(104, 33);
-            this.btnSaveCalc.TabIndex = 2;
-            this.btnSaveCalc.Text = "Сохранить";
-            this.btnSaveCalc.UseVisualStyleBackColor = true;
-            this.btnSaveCalc.Click += new System.EventHandler(this.btnSaveCalc_Click);
-            // 
-            // btnClose
-            // 
-            this.btnClose.Location = new System.Drawing.Point(722, 406);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(96, 33);
-            this.btnClose.TabIndex = 3;
-            this.btnClose.Text = "Закрыть";
-            this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // BSCalcResults
             // 
