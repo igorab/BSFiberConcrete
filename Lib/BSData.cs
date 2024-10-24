@@ -2,7 +2,6 @@
 using System.Data;
 using System;
 using System.Configuration;
-
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -360,7 +359,7 @@ namespace BSFiberConcrete.Lib
         }
 
         // сохранить данные в бд по усилиям
-        public static void SaveEfforts(List<Efforts> _efforts)
+        public static void SaveEfforts(List<Efforts> _efforts, bool _clear = true)
         {
             try
             {
@@ -369,10 +368,15 @@ namespace BSFiberConcrete.Lib
                     cnn.Open();
                     using (var tr = cnn.BeginTransaction())
                     {
+                        if (_clear)
+                        {
+                            cnn.Execute("DELETE FROM Efforts");
+                        }    
+
                         for (int i = 0; _efforts.Count > i; i++)
                         {
                             Efforts tmpEfforts = _efforts[i];
-                            //int cnt = cnn.Execute($"INSERT into Efforts set Mx = @Mx, My = @My, N = @N, Qx = @Qx, Qy = @Qy", tmpEfforts, tr);
+                            
                             int cnt = cnn.Execute("insert into Efforts (Id, Mx, Mx, My, N, Qx, Qy) values (@Id, @Mx, @Mx, @My, @N, @Qx, @Qy)", tmpEfforts, tr);
                         }
                         tr.Commit();
@@ -435,8 +439,6 @@ namespace BSFiberConcrete.Lib
             }
         }
 
-
-
         public static List<FiberConcreteClass> LoadFiberConcreteClass()
         {
             try
@@ -453,8 +455,6 @@ namespace BSFiberConcrete.Lib
             }
         }
 
-
-
         public static List<RFibKor> LoadRFibKn()
         {
             try
@@ -470,7 +470,6 @@ namespace BSFiberConcrete.Lib
                 return new List<RFibKor>();
             }
         }
-
 
         public static List<Fiber_K> LoadFiber_Kor()
         {

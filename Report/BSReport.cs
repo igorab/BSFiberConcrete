@@ -65,7 +65,9 @@ namespace BSFiberConcrete.Report
         }
         
         private void InitReportSections(ref BSFiberReport report)
-        {            
+        {
+            if (CalcRes == null) return;
+
             report.Beam = CalcRes.Beam;
             report.Coeffs = CalcRes.Coeffs;
             report.Efforts = CalcRes.Efforts;

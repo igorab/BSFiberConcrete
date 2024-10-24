@@ -1,23 +1,27 @@
-﻿using System;
+﻿//using Microsoft.Win32;
+using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SaveFileDialog = System.Windows.Forms.SaveFileDialog;
 
 namespace BSFiberConcrete
 {
+    /// <summary>
+    ///  форма -данные для расчета и результаты
+    /// </summary>
     public partial class BSCalcResults : Form
-    {
-        public Dictionary<string, double> CalcUnits { get; private set; }
-
-        public Dictionary<string, double> CalcParams { get; set; }
-        public Dictionary<string, double> CalcResults { get; set; }
-
+    {        
+        public Dictionary<string, double> CalcParams {private get; set; }
+        public Dictionary<string, double> CalcResults {private get; set; }
 
         public BSCalcResults()
         {
@@ -92,8 +96,7 @@ namespace BSFiberConcrete
                 }
             }
            
-
-            listView.Columns.Add("Параметр", 500, HorizontalAlignment.Left);
+            listView.Columns.Add("Параметр", 200, HorizontalAlignment.Left);
             listView.Columns.Add("Значение", 200, HorizontalAlignment.Left);
 
             //Add the items to the ListView.
@@ -124,24 +127,31 @@ namespace BSFiberConcrete
 
         private void btnSaveCalc_Click(object sender, EventArgs e)
         {
-            DialogResult res = saveFileDialog.ShowDialog();
+            Stream myStream;
+            SaveFileDialog saveFileDlg = new SaveFileDialog();
 
-            if (res == DialogResult.OK) 
-            {
-                SaveFile2Json();
-            }            
-        }
+            saveFileDlg.Filter = "json files (*.json)|*.json";
+            saveFileDlg.FilterIndex = 2;
+            saveFileDlg.RestoreDirectory = true;
 
-        private void SaveFile2Json()
-        {
             try
             {
-                
+                if (saveFileDlg.ShowDialog() == DialogResult.OK)
+                {
+                    if ((myStream = saveFileDlg.OpenFile()) != null)
+                    {
+                        BSFiberLoadData loadData   = new BSFiberLoadData();
+                        loadData.FibInitCalcParams = CalcParams;
+                        loadData.SaveInitSectionsToJson((FileStream)myStream);
+                        // Code to write the stream goes here.
+                        myStream.Close();
+                    }
+                }
             }
-            catch
+            catch (Exception _e)
             {
-                throw new NotImplementedException();
-            }            
-        }
+                MessageBox.Show(_e.Message);
+            }
+        }        
     }
 }
