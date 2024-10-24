@@ -2894,18 +2894,13 @@ namespace BSFiberConcrete
             cmbEffectiveLengthFactor.Text = _D["coeflgth"].ToString();
             checkBoxRebar.Checked = false;
 
-            /*
-            // beton
-            comboBetonType.Text = _D["BT"];
-            cmbFib_i.Text = _D["BTi"];
+            comboBetonType.SelectedIndex = int.Parse(_D["BT"].ToString());
+            cmbFib_i.SelectedIndex = Convert.ToInt32(_D["BTi"].ToString());
             // классы
-            cmbBetonClass.Text = _D["Bft3n"];
-            cmbBftn.Text       = _D["Bftn"];
-            cmbBfn.Text        = _D["Bfn"];
-            //
-            cmbWetAir.Text = _D["humi"];
-            //cmbWetAir.Text = _D["humi"];
-            */
+            cmbBetonClass.SelectedIndex = Convert.ToInt32(_D["Bft3n"].ToString());
+            cmbBftn.SelectedIndex = Convert.ToInt32(_D["Bftn"].ToString());
+            cmbBfn.SelectedIndex = Convert.ToInt32(_D["Bfn"].ToString());
+            cmbWetAir.SelectedIndex = Convert.ToInt32(_D["Humi"].ToString());
 
             // factors
             numYft.Value = decimal.Parse(_D["Yft"].ToString());
