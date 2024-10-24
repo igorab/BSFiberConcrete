@@ -91,15 +91,15 @@ namespace BSFiberConcrete
         //  var values = JsonSerializer.Deserialize<Dictionary<string, object>>(json);
         /// </summary>
         /// <returns></returns>
-        public Dictionary<string, string> ReadInitFromJson(string filePath)
+        public Dictionary<string, object> ReadInitFromJson(string filePath)
         {
             string jsonfile = !string.IsNullOrEmpty(filePath) ? filePath : Path.Combine(Environment.CurrentDirectory, @"Templates\BSInit.json");
 
-            var keyValuePairs = new Dictionary<string, string>();            
+            var keyValuePairs = new Dictionary<string, object>();            
 
             using (FileStream fs = new FileStream(jsonfile, FileMode.OpenOrCreate))
             {
-                keyValuePairs = JsonSerializer.Deserialize<Dictionary<string, string>>(fs);
+                keyValuePairs = JsonSerializer.Deserialize<Dictionary<string, object>>(fs);
             }
             
             return keyValuePairs;

@@ -15,25 +15,23 @@ using System.Data;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Diagnostics;
 using System.Drawing;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
-
 
 namespace BSFiberConcrete
 {
+    /// <summary>
+    /// Форма: Фибробетон
+    /// </summary>
     public partial class BSFiberMain : Form
     {
         private DataTable m_Table { get; set; }
         public CalcType CalcType { get; set; }
 
         private Dictionary<string, double> m_Iniv;
-
         private BSFiberCalculation BSFibCalc { get; set; }
-
         private BSFiberLoadData m_BSLoadData { get; set; }
         //арматура
         private List<Rebar> m_Rebar { get; set; }
@@ -41,8 +39,7 @@ namespace BSFiberConcrete
         private BSMatFiber m_MatFiber { get; set; }
         private List<Elements> FiberConcrete { get; set; }
         private List<Beton> m_Beton { get; set; }
-
-        private List<RebarDiameters> m_RebarDiameters;
+        private List<RebarDiameters> m_RebarDiameters { get; set; }
 
         // Список, в котором хранится актуальные данные геометрии сечений
         private List<InitBeamSectionGeometry> m_InitBeamSectionsGeometry;
@@ -88,7 +85,8 @@ namespace BSFiberConcrete
         //Изображение рассчитываемого сечения
         private BSSectionChart m_SectionChart { get; set; }
 
-        private MemoryStream m_ImageStream;
+        // изображение сечения на форме picBeton
+        private MemoryStream m_ImageStream { get; set; }
 
         private LameUnitConverter _UnitConverter;
 
@@ -240,7 +238,9 @@ namespace BSFiberConcrete
             num_a1.Value = (decimal)dbRebar.a1;
         }
 
-        //Mx My N Qx Qy
+        /// <summary>
+        /// Mx My N Qx Qy
+        /// </summary>
         private void InitEffortValues()
         {
             List<Efforts> eff = Lib.BSData.LoadEfforts();
@@ -302,14 +302,12 @@ namespace BSFiberConcrete
                 InitToolTips();
                
                 m_RebarDiameters = BSData.LoadRebarDiameters();                
-                m_Rebar = BSData.LoadRebar();
+                m_Rebar          = BSData.LoadRebar();
+                FiberConcrete    = BSData.LoadFiberConcreteTable();
 
-                dataGridSection.DataSource = m_Table;
-                
+                dataGridSection.DataSource = m_Table;                
                 flowLayoutPanelRebar.Enabled = true;
-
-                FiberConcrete = BSData.LoadFiberConcreteTable();
-
+                
                 cmbFib_i.SelectedIndex = 0;
                 comboBetonType.SelectedIndex = 0;
                 cmbRebarClass.SelectedItem = "A400";
@@ -458,7 +456,6 @@ namespace BSFiberConcrete
 
             return (lgth, coeflgth);
         }
-
 
         /// <summary>
         /// Расчетная длина балки 
@@ -867,32 +864,10 @@ namespace BSFiberConcrete
         /// <summary>
         ///  Получить данные по усилиям с формы
         /// </summary>
-        /// <param name="_MNQ"></param>
+        /// <param name="_MNQ">список строк с значениями усилий</param>
         /// <exception cref="Exception"></exception>
         private void GetEffortsFromForm(out List<Dictionary<string, double>> _MNQ)
-        {
-            /* 21.10.2024
-            //_MNQ = new Dictionary<string, double>();
-
-            //DataGridViewColumnCollection columns = gridEfforts.Columns;
-
-            //for (int i = 0; i < columns.Count; i++)
-            //{
-            //    string tmpName = columns[i].Name;
-            //    double value = Convert.ToDouble(gridEfforts.Rows[0].Cells[i].Value);
-
-            //    double newValue = _UnitConverter.ConvertEfforts(tmpName, value);
-            //    _MNQ.Add(tmpName, newValue);
-            //}
-
-            //if (_MNQ.Count == 0)
-            //    throw new Exception("Не заданы усилия");
-
-            //_MNQ["Ml"] = (double)num_Ml1_M1.Value;
-            //_MNQ["eN"] = (double)num_eN.Value;
-            //_MNQ["e0"] = (double)numRandomEccentricity.Value;
-            */
-
+        {            
             _MNQ = new List<Dictionary<string, double>>();
 
             DataGridViewColumnCollection columns = gridEfforts.Columns;
@@ -927,7 +902,6 @@ namespace BSFiberConcrete
                 _MNQ = new List<Dictionary<string, double>>() {new Dictionary<string, double>{ ["My"] = 0, ["Mx"] = 0, ["N"] = 0, ["Qx"] = 0, ["Qy"] = 0, ["Ml"] = 0, ["eN"] = 0, ["e0"] = 0}};
             }
         }
-
        
         /// <summary>
         ///  Введенные пользователем значения по арматуре
@@ -962,17 +936,14 @@ namespace BSFiberConcrete
             // для расчета по НДМ - через форму задания сечения
             _Rebar.As = (double)numAs.Value;
             _Rebar.As1 = (double)numAs1.Value;
-
             // расстояния до ц.т.
             _Rebar.a = (double)num_a.Value;
             _Rebar.a1 = (double)num_a1.Value;
-
             // модули упругости арматуры
             // продольной
             _Rebar.Es = (double)numEs.Value;
             // поперечной
             _Rebar.Esw = (double)numEsw.Value;
-
             // Шаг поперечной арматуры
             _Rebar.Sw_X = (double) num_s_w_X.Value;
             _Rebar.Sw_Y = (double)num_s_w_Y.Value;
@@ -1013,25 +984,20 @@ namespace BSFiberConcrete
             double[] prms = m_BSLoadData.Params;
             InitUserParams(prms);
 
-            // передаем коэффициенты Yft, Yb, Yb1, Yb2, Yb3, Yb5, B
+            // коэффициенты Yft, Yb, Yb1, Yb2, Yb3, Yb5, B
             fiberCalc.SetParams(prms);
-
-            double beamLngth = InitBeamLength(true); // BSHelper.ToDouble(tbLength.Text);
-
+            // длина сечение
+            double beamLngth = InitBeamLength(true); 
             double[] sz = BeamSizes(beamLngth);
 
             fiberCalc.GetSize(sz);
-
             // передаем усилия и связанные с ними велечины
             fiberCalc.SetEfforts(MNQ[0]);
+            // сила вне сечения
+            fiberCalc.N_Out = fiberCalc.h / 2 < fiberCalc.Get_e_tot;
 
-            bool _N_out = false;
-            if (fiberCalc.h / 2 < fiberCalc.Get_e_tot) _N_out = true;
-            fiberCalc.N_Out = _N_out;
-
-            fiberCalc.Calculate();
-
-            fiberCalc.Msg.Add("Расчет успешно выполнен!");
+            if (fiberCalc.Calculate())
+                fiberCalc.Msg.Add("Расчет успешно выполнен!");
 
             m_CalcResults = fiberCalc.CalcResults;
         }
@@ -1204,7 +1170,6 @@ namespace BSFiberConcrete
             BSFactors bsFactors = new BSFactors();
             bsFactors.Show();
         }
-
        
         /// <summary>
         ///  данные с формы
@@ -1294,6 +1259,13 @@ namespace BSFiberConcrete
                 ["esc2"] = 0,
                 ["est2"] = 0,
                 ["es_ult"] = (double)numEps_s_ult.Value,
+                // коэффициенты надежности
+                ["Yft"] = (double)numYft.Value,
+                ["Yb"]  = (double)numYb.Value,
+                ["Yb1"] = (double)numYb1.Value,
+                ["Yb2"] = (double)numYb2.Value,
+                ["Yb3"] = (double)numYb3.Value,
+                ["Yb5"] = (double)numYb5.Value
             };
 
             double[] beam_sizes = BeamSizes();
@@ -1332,31 +1304,7 @@ namespace BSFiberConcrete
 
             return D;
         }
-
-        /// <summary>
-        ///  Расчет балки по прогибам
-        /// </summary>
-        /// <param name="_My">Изгибающие моменты относительно оси Y</param>
-        /// <returns>кривизны в плосткости XOZ</returns>
-        private List<double> CalcNDM_My(List<double>  _My)
-        {
-            Dictionary<string, double> dictParams = DictCalcParams(m_BeamSection);
-            NDMSetup ndmSetup = NDMSetupValuesFromForm();
-            List<double> l_Kxz = new List<double>();
-
-            foreach (double my in _My)
-            {
-                CalcNDM calcNDM = new CalcNDM(m_BeamSection) { setup = ndmSetup, D = dictParams };
-                Dictionary<string, double> res = calcNDM.RunMy(my);
-
-                if (res != null)
-                    l_Kxz.Add(res["Kz"]);
-            }
-
-            return l_Kxz;
-
-        }
-
+       
         /// <summary>
         ///  Расчет жесткости сечения для списка моментов
         /// </summary>
@@ -1379,9 +1327,7 @@ namespace BSFiberConcrete
 
             return bendingStiffness;
         }
-
         
-
         /// <summary>
         /// расчет прогибов, построение графика прогибов для балки
         /// </summary>
@@ -1935,6 +1881,9 @@ namespace BSFiberConcrete
         {
             BSCalcResults bSCalcResults = new BSCalcResults();
             bSCalcResults.CalcParams = DictCalcParams(m_BeamSection);
+
+
+
             bSCalcResults.CalcResults = m_CalcResults;
             bSCalcResults.Show();
         }
@@ -2752,29 +2701,7 @@ namespace BSFiberConcrete
 
             sectionChart.Show();
         }
-
-
-        /// <summary>
-        /// Проверить не превышение коэффициентов использования
-        /// </summary>
-        /// <returns></returns>
-        private bool CheckUtilizationFactor()
-        {
-
-            // Проходимо по всем парам из  m_CalcResults, если есть хоть одно значение превышающее 1 ( или -1), выдает false
-            foreach (KeyValuePair<string, double> item in m_CalcResults)
-            {
-                if (item.Key.Contains("Коэффициент использования"))
-                {
-                    if (item.Value > 1d || item.Value < -1d)
-                    {
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
-
+        
         private void btnEffortsAddRow_Click(object sender, EventArgs e)
         {
             gridEfforts.Rows.Add();
@@ -2786,7 +2713,6 @@ namespace BSFiberConcrete
             {
                 gridEfforts.Rows.Remove(selectedRow);
             }
-
         }
 
         private void gridEfforts_SelectionChanged(object sender, EventArgs e)
@@ -2802,14 +2728,14 @@ namespace BSFiberConcrete
             }
         }
 
-
-        private void InitControlValuesFromUser(Dictionary<string, string> _D)
+        private void InitControlValuesFromUser(Dictionary<string, object> _D)
         {
             // element
-            tbLength.Text = _D["lgth"];
-            cmbEffectiveLengthFactor.Text = _D["coeflgth"];
+            tbLength.Text = _D["lgth"].ToString();
+            cmbEffectiveLengthFactor.Text = _D["coeflgth"].ToString();
             checkBoxRebar.Checked = false;
 
+            /*
             // beton
             comboBetonType.Text = _D["BT"];
             cmbFib_i.Text = _D["BTi"];
@@ -2820,22 +2746,19 @@ namespace BSFiberConcrete
             //
             cmbWetAir.Text = _D["humi"];
             //cmbWetAir.Text = _D["humi"];
+            */
 
             // factors
-            numYft.Value = decimal.Parse(_D["Yft"]);
-            numYb.Value  = decimal.Parse(_D["Yb"]);
-            numYb1.Value = decimal.Parse(_D["Yb1"]);
-            numYb2.Value = decimal.Parse(_D["Yb2"]);
-            numYb3.Value = decimal.Parse(_D["Yb3"]);
-            numYb5.Value = decimal.Parse(_D["Yb5"]);
+            numYft.Value = decimal.Parse(_D["Yft"].ToString());
+            numYb.Value  = decimal.Parse(_D["Yb"].ToString());
+            numYb1.Value = decimal.Parse(_D["Yb1"].ToString());
+            numYb2.Value = decimal.Parse(_D["Yb2"].ToString());
+            numYb3.Value = decimal.Parse(_D["Yb3"].ToString());
+            numYb5.Value = decimal.Parse(_D["Yb5"].ToString());
         }
 
-
         private void btnOpenCalcFile_Click(object sender, EventArgs e)
-        {
-            string fileContent = string.Empty;
-            string filePath = string.Empty;
-
+        {            
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
                 openFileDialog.InitialDirectory = "c:\\";
@@ -2846,23 +2769,14 @@ namespace BSFiberConcrete
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     //Get the path of specified file
-                    filePath = openFileDialog.FileName;
+                    string filePath = openFileDialog.FileName;
 
                     BSFiberLoadData loadData = new BSFiberLoadData();
                     var DValues = loadData.ReadInitFromJson(filePath);
 
-                    InitControlValuesFromUser(DValues);
-
-                    //Read the contents of the file into a stream
-                    //Stream fileStream = openFileDialog.OpenFile();
-                    //using (StreamReader reader = new StreamReader(fileStream))
-                    //{
-                    //    fileContent = reader.ReadToEnd();                        
-                    //}
+                    InitControlValuesFromUser(DValues);                   
                 }
-            }
-
-            MessageBox.Show(fileContent, "File Content at path: " + filePath, MessageBoxButtons.OK);            
+            }            
         }
     }
 }

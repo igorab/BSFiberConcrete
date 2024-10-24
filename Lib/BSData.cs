@@ -2,7 +2,6 @@
 using System.Data;
 using System;
 using System.Configuration;
-
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -440,8 +439,6 @@ namespace BSFiberConcrete.Lib
             }
         }
 
-
-
         public static List<FiberConcreteClass> LoadFiberConcreteClass()
         {
             try
@@ -458,8 +455,6 @@ namespace BSFiberConcrete.Lib
             }
         }
 
-
-
         public static List<RFibKor> LoadRFibKn()
         {
             try
@@ -475,7 +470,6 @@ namespace BSFiberConcrete.Lib
                 return new List<RFibKor>();
             }
         }
-
 
         public static List<Fiber_K> LoadFiber_Kor()
         {
