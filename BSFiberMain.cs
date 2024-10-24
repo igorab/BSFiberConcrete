@@ -1030,7 +1030,7 @@ namespace BSFiberConcrete
             fiberCalc.GetSize(sz);
             fiberCalc.SetEfforts(MNQ);
             // передаем усилия и связанные с ними велечины
-            fiberCalc.SetEfforts(MNQ[0]);
+            fiberCalc.SetEfforts(MNQ);
             // сила вне сечения
             fiberCalc.N_Out = fiberCalc.h / 2 < fiberCalc.Get_e_tot;
 
