@@ -56,9 +56,9 @@ namespace BSFiberConcrete
         /// </summary>
         private Dictionary<string, double> m_Efforts;
         /// <summary>
-        /// 
+        /// Содержит в себе комбинацию загружений для расчета 
         /// </summary>
-        private Dictionary<string, double> m_EfortsForCalc;
+        private Dictionary<string, double> m_EffortsForCalc;
 
         /// <summary>
         /// Параметры ФИбробетона
@@ -936,22 +936,18 @@ namespace BSFiberConcrete
         }
 
         /// <summary>
-        /// 
+        /// Получить нагрузки для расчета
         /// </summary>
         /// <returns></returns>
         private Dictionary<string, double> GetEffortsForCalc()
         {
+            if (m_EffortsForCalc != null)
+            { return m_EffortsForCalc; }
 
-            if (m_EfortsForCalc == null)
-            {
-                GetEffortsFromForm(out List<Dictionary<string, double>> _MNQ);
-                if (_MNQ.Count>0)
-                    return _MNQ[0];
-                return new Dictionary<string, double>();
-            }
-
-            return m_EfortsForCalc;
-
+            GetEffortsFromForm(out List<Dictionary<string, double>> _MNQ);
+            if (_MNQ.Count>0)
+                return _MNQ[0];
+            return new Dictionary<string, double>();
         }
 
        
@@ -1823,6 +1819,12 @@ namespace BSFiberConcrete
             return true;
         }
 
+
+        /// <summary>
+        /// Валидация данных перед проведением расчета по деф. модели
+        /// </summary>
+        /// <param name="_D"> нагнрузки</param>
+        /// <returns></returns>
         private bool ValidateNDMCalc(List<Dictionary<string, double>> _D)
         {
             string message = "";
@@ -1856,14 +1858,8 @@ namespace BSFiberConcrete
                 {
                     //MessageBox.Show("Задайте шаг арматуры по Y", "Расчет на Qy", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     message = message + "Задайте шаг арматуры по Y.\n";
-
                 }
-
             }
-
-
-
-
 
             if (message != "")
             {
@@ -1871,9 +1867,9 @@ namespace BSFiberConcrete
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
-
             return true;
         }
+
 
         /// <summary>
         /// Расчет по НДМ            
@@ -1886,15 +1882,12 @@ namespace BSFiberConcrete
                 List<Dictionary<string, double>> _MNQ = new List<Dictionary<string, double>>();
                 GetEffortsFromForm(out _MNQ);
 
-
                 if (!ValidateNDMCalc(_MNQ))
                 { return; }
 
-
-                for (int i = 0; _MNQ.Count > i; i++)
+                foreach(Dictionary<string, double> effort in _MNQ)
                 {
-                    
-                    m_EfortsForCalc = _MNQ[i];
+                    m_EffortsForCalc = effort;
 
                     TriangleNet.Geometry.Point CG = new TriangleNet.Geometry.Point(0, 0);
                     BSCalcResultNDM calcRes = null;
@@ -1918,20 +1911,16 @@ namespace BSFiberConcrete
                         calcRes = CalcNDM(BeamSection.Any);
                     }
 
-
                     if (calcRes != null)
                     {
                         calcResults.Add(calcRes);
                     }
-
                 }
+
                 calcResults[0].Path2BeamDiagrams = m_Path2BeamDiagrams;
-
                 calcResults[0].Deflexion_max = CalculateBeamDeflections(_beamDiagramController, CheckUtilizationFactor(calcResults));
-                //BSReport.RunFromCode(m_BeamSection, calcResults[0]);
-
+                // формирование отчета
                 BSReport.RunReport(m_BeamSection, calcResults);
-
 
                 ShowMosaic(calcResults[0]);
 
