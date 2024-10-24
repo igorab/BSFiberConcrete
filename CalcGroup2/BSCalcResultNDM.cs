@@ -439,7 +439,7 @@ namespace BSFiberConcrete
         /// </summary>
         public Dictionary<string, double> GetResults1Group()
         {
-            //             
+            Res1Group = new Dictionary<string, double>();
             Res1Group.Add("<b>--------Изгиб:--------</b>", double.NaN);
             AddToResult("eps_0", eps_0);
             AddToResult("rx", rx);
@@ -521,7 +521,8 @@ namespace BSFiberConcrete
         ///  Результаты расчета по 2 группе предельных состояний
         /// </summary>
         public Dictionary<string, double> GetResults2Group()
-        {                        
+        {
+            Res2Group = new Dictionary<string, double>();
             Res2Group.Add("<b>--------Изгиб:--------</b>", double.NaN);
             AddToResult("Kx_crc", Kx_crc, BSFiberLib.CG2, false);            
             AddToResult("Ky_crc", Ky_crc, BSFiberLib.CG2, false);

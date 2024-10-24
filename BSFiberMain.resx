@@ -117,6 +117,41 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <metadata name="Mx.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="My.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="N.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="Qx.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="Qy.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btnEffortsDelRow.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAU
+        VQAAFFUB+VSVgAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAADESURBVDhPhZNL
+        DoIhEIPnMD6XGu+g8fi6Ube68X0BjbYGzDAp0ORb/PPTBmgwaAmeYAvGHHQ0AhtAz4qDF/gk7mAOapqB
+        G8jr6bW9G7RCopkcgA0BTf5HDFHmB/gfmYtVyARwkTIvQCEVcgHnMJPmLBXiaZqzuO0jiOYTmIKueOZa
+        AMObUrftie0UUuYr4EX6mQyp9cwzc9vxYouQAej1rNrhN9+F7dIgU6tKhdBrbzfo9RxD6P09yfycuzVB
+        rDk9Z1t/Ack3hy9sy+iiAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="btnEffortsAddRow.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wQAADsEBuJFr7QAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAACZSURBVDhPpZNL
+        CgJBDERzi1EYvZi4k/Ez11K8k8roTbSedCAgLcYueJuiUwmhY1/Ui4u4igVGVnvxLIwYWe2EBxwwstoK
+        D2CatJoDVsID1hg1dWIj6Bg5Cg84FS9CzUzYJPxhlruwRzCyUPseYxAsKsLY/vBcvAg1c1HVz0usiUV5
+        AB3Tag5o/sp09YC/jokT5pxvYonxKbMXUuNOLv2LthsAAAAASUVORK5CYII=
+</value>
+  </data>
   <metadata name="imageList.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>287, 17</value>
   </metadata>
