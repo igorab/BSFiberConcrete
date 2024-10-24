@@ -1179,7 +1179,8 @@ namespace BSFiberConcrete
         private Dictionary<string, double> DictCalcParams(BeamSection _beamSection)
         {
             // Усилия Mx, My - моменты, кг*см , N - сила, кг              
-            GetEffortsFromForm(out List<Dictionary<string, double>> MNQ);
+            GetEffortsFromForm(out List<Dictionary<string, double>> lstMNQ);
+            var MNQ = lstMNQ[0];
 
             BSMatFiber mf = new BSMatFiber((double)numE_beton.Value, numYft.Value, numYb.Value, numYb1.Value, numYb2.Value, numYb3.Value, numYb5.Value);
             mf.Rfbn = (double)numRfb_n.Value;
@@ -1192,12 +1193,12 @@ namespace BSFiberConcrete
 
             Dictionary<string, double> D = new Dictionary<string, double>()
             {
-                // enforces
-                ["N"] = -MNQ[0]["N"],
-                ["My"] = MNQ[0]["My"],
-                ["Mz"] = MNQ[0]["Mx"],
-                ["Qx"] = MNQ[0]["Qx"],
-                ["Qy"] = MNQ[0]["Qy"],
+                // efforts
+                ["N"] = -MNQ["N"],
+                ["My"] = MNQ["My"],
+                ["Mz"] = MNQ["Mx"],
+                ["Qx"] = MNQ["Qx"],
+                ["Qy"] = MNQ["Qy"],
                 //
                 //length
                 ["lgth"] = lgth,
@@ -1236,18 +1237,17 @@ namespace BSFiberConcrete
                 ["Rbt2"] = mf.Rfbt2,
                 ["Rbt3"] = mf.Rfbt3,
                 // - деформации
-                // сжатие
+                // сжатие compression
                 ["ebc0"] = 0,
                 ["ebc2"] = 0.0035d,
                 ["eb_ult"] = (double)numEps_fb_ult.Value,
-
-                // растяжение
+                // растяжение stretching
                 ["ebt0"] = 0,
                 ["ebt1"] = 0,
                 ["ebt2"] = 0,
                 ["ebt3"] = 0,
                 ["ebt_ult"] = (double)numEps_fbt_ult.Value,
-                // арматура steel                
+                // арматура steel rods, rebar                
                 ["Es0"] = (double)numEs.Value,
                 // нормативные 
                 ["Rscn"] = (double)(numRscn.Value),
@@ -1259,13 +1259,21 @@ namespace BSFiberConcrete
                 ["esc2"] = 0,
                 ["est2"] = 0,
                 ["es_ult"] = (double)numEps_s_ult.Value,
-                // коэффициенты надежности
+                // коэффициенты надежности (factors)
                 ["Yft"] = (double)numYft.Value,
                 ["Yb"]  = (double)numYb.Value,
                 ["Yb1"] = (double)numYb1.Value,
                 ["Yb2"] = (double)numYb2.Value,
                 ["Yb3"] = (double)numYb3.Value,
-                ["Yb5"] = (double)numYb5.Value
+                ["Yb5"] = (double)numYb5.Value,
+                // other params
+                ["UseRebar"] = Convert.ToInt32(checkBoxRebar.Checked),
+                ["BT"] = comboBetonType.SelectedIndex,
+                ["BTi"] = comboBetonType.SelectedIndex,
+                ["Bft3n"] = cmbBetonClass.SelectedIndex,
+                ["Bftn"] = cmbBftn.SelectedIndex,                
+                ["Bfn"] = cmbBfn.SelectedIndex,
+                ["Humi"] = cmbWetAir.SelectedIndex,
             };
 
             double[] beam_sizes = BeamSizes();
@@ -2735,19 +2743,15 @@ namespace BSFiberConcrete
             cmbEffectiveLengthFactor.Text = _D["coeflgth"].ToString();
             checkBoxRebar.Checked = false;
 
-            /*
             // beton
-            comboBetonType.Text = _D["BT"];
-            cmbFib_i.Text = _D["BTi"];
+            comboBetonType.SelectedIndex = int.Parse(_D["BT"].ToString());
+            cmbFib_i.SelectedIndex       = Convert.ToInt32(_D["BTi"].ToString());
             // классы
-            cmbBetonClass.Text = _D["Bft3n"];
-            cmbBftn.Text       = _D["Bftn"];
-            cmbBfn.Text        = _D["Bfn"];
-            //
-            cmbWetAir.Text = _D["humi"];
-            //cmbWetAir.Text = _D["humi"];
-            */
-
+            cmbBetonClass.SelectedIndex = Convert.ToInt32(_D["Bft3n"].ToString());
+            cmbBftn.SelectedIndex       = Convert.ToInt32(_D["Bftn"].ToString());
+            cmbBfn.SelectedIndex        = Convert.ToInt32(_D["Bfn"].ToString());            
+            cmbWetAir.SelectedIndex     = Convert.ToInt32(_D["Humi"].ToString());
+            
             // factors
             numYft.Value = decimal.Parse(_D["Yft"].ToString());
             numYb.Value  = decimal.Parse(_D["Yb"].ToString());
