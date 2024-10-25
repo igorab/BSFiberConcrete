@@ -156,7 +156,7 @@ namespace BSFiberConcrete
                 gridEfforts.Rows.Clear();
                 gridEfforts.Rows.Add(2);
                 gridEfforts.Columns["Mx"].Visible = false;
-                gridEfforts.Columns["Qx"].Visible = false;
+                gridEfforts.Columns["Qy"].Visible = false;
                 gridEfforts.Columns["N"].Visible = false;
 
                 //for (int i = 0; i < gridEfforts.ColumnCount; i++)
@@ -1413,7 +1413,7 @@ namespace BSFiberConcrete
             double deflexionMax = beamController.CalculateDeflectionDiagram(X, valueMomentInX, valuesStiffnesOnSection);
 
             // график прогибов по формулам
-            beamController.CalculateDeflectionDiagramByFormula(X, valuesStiffnesOnSection);
+            //beamController.CalculateDeflectionDiagramByFormula(X, valuesStiffnesOnSection);
 
             if (deflexionMax == 0)
                 return double.NaN;
@@ -1791,34 +1791,35 @@ namespace BSFiberConcrete
             string message = "";
             if (m_SectionChart == null || m_SectionChart.m_BeamSection != m_BeamSection)
             {
-                //MessageBox.Show("Нажмите кнопку Сечение и задайте диаметры и расстановку стержней арматуры.",
-                //    "Расчет по НДМ",
-                //    MessageBoxButtons.OK, MessageBoxIcon.Information);
-                //return false;
                 message = message + "Нажмите кнопку Сечение и задайте диаметры и расстановку стержней арматуры.\n";
             }
 
             if (_D.Count == 0)
             {
-                //MessageBox.Show("Требуется задать моменты Mx My или силу N или поперечные силы Qx Qy ", "Расчет по НДМ",
-                //    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                //return false;
                 message = message + "Требуется задать моменты Mx My или силу N или поперечные силы Qx Qy. \n";
             }
-
+            
+            bool messageIsWritten_Qx = true;
+            bool messageIsWritten_Qy = true;
             for (int i = 0; _D.Count > i; i++)
             {
                 Dictionary<string, double> MNQ = _D[i];
 
                 if (MNQ["Qx"] != 0 && num_s_w_X.Value <= 0)
                 {
-                    //MessageBox.Show("Задайте шаг арматуры по X", "Расчет на Qx", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    message = message + "Задайте шаг арматуры по X.\n";
+                    if (messageIsWritten_Qx)
+                    {
+                        message = message + "Задайте шаг арматуры по X.\n";
+                        messageIsWritten_Qx = false;
+                    }
                 }
                 else if (MNQ["Qy"] != 0 && num_s_w_Y.Value <= 0)
                 {
-                    //MessageBox.Show("Задайте шаг арматуры по Y", "Расчет на Qy", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    message = message + "Задайте шаг арматуры по Y.\n";
+                    if (messageIsWritten_Qy)
+                    { 
+                        message = message + "Задайте шаг арматуры по Y.\n";
+                        messageIsWritten_Qy = false;
+                    }
                 }
             }
 
