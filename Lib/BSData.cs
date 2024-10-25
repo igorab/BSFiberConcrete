@@ -2,7 +2,6 @@
 using System.Data;
 using System;
 using System.Configuration;
-
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -327,7 +326,8 @@ namespace BSFiberConcrete.Lib
             {
                 using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
                 {
-                    var output = cnn.Query<Efforts>("select * from Efforts where id = 1", new DynamicParameters());
+                    //var output = cnn.Query<Efforts>("select * from Efforts where id = 1", new DynamicParameters());
+                    var output = cnn.Query<Efforts>("select * from Efforts", new DynamicParameters());
                     return output.ToList();
                 }
             }
@@ -353,6 +353,59 @@ namespace BSFiberConcrete.Lib
                 }
             }
             catch(Exception _e)
+            {
+                MessageBox.Show(_e.Message);
+            }
+        }
+
+        // сохранить данные в бд по усилиям
+        public static void SaveEfforts(List<Efforts> _efforts, bool _clear = true)
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    cnn.Open();
+                    using (var tr = cnn.BeginTransaction())
+                    {
+                        if (_clear)
+                        {
+                            cnn.Execute("DELETE FROM Efforts");
+                        }    
+
+                        for (int i = 0; _efforts.Count > i; i++)
+                        {
+                            Efforts tmpEfforts = _efforts[i];
+                            
+                            int cnt = cnn.Execute("insert into Efforts (Id, Mx, Mx, My, N, Qx, Qy) values (@Id, @Mx, @Mx, @My, @N, @Qx, @Qy)", tmpEfforts, tr);
+                        }
+                        tr.Commit();
+                    }
+                }
+            }
+            catch (Exception _e)
+            {
+                MessageBox.Show(_e.Message);
+            }
+        }
+
+
+        // удалить содержимое таблицы
+        public static void ClearEfforts()
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    cnn.Open();
+                    using (var tr = cnn.BeginTransaction())
+                    {
+                        int cnt = cnn.Execute("DELETE FROM Efforts");
+                        tr.Commit();
+                    }
+                }
+            }
+            catch (Exception _e)
             {
                 MessageBox.Show(_e.Message);
             }
@@ -386,8 +439,6 @@ namespace BSFiberConcrete.Lib
             }
         }
 
-
-
         public static List<FiberConcreteClass> LoadFiberConcreteClass()
         {
             try
@@ -404,8 +455,6 @@ namespace BSFiberConcrete.Lib
             }
         }
 
-
-
         public static List<RFibKor> LoadRFibKn()
         {
             try
@@ -421,7 +470,6 @@ namespace BSFiberConcrete.Lib
                 return new List<RFibKor>();
             }
         }
-
 
         public static List<Fiber_K> LoadFiber_Kor()
         {

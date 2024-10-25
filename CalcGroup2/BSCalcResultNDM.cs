@@ -1,10 +1,12 @@
 ﻿using BSFiberConcrete.CalcGroup2;
 using BSFiberConcrete.DeformationDiagram;
+using BSFiberConcrete.UnitsOfMeasurement;
 using MathNet.Numerics.Integration;
 using OpenTK.Graphics.OpenGL;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -267,6 +269,11 @@ namespace BSFiberConcrete
         /// На действие поперечных сил
         /// </summary>
         public Dictionary<string, double> ResQxQy { get; internal set; }
+        public MemoryStream ImageStream { get; internal set; }
+        public List<string> Message { get; internal set; }
+        public List<string> Path2BeamDiagrams { get; internal set; }
+        public Dictionary<string, double> Coeffs { get; internal set; }
+        public LameUnitConverter UnitConverter { get; internal set; }
 
         private double InitBeamLength(double _lgth, double _coeflgth)
         {
@@ -432,7 +439,7 @@ namespace BSFiberConcrete
         /// </summary>
         public Dictionary<string, double> GetResults1Group()
         {
-            //             
+            Res1Group = new Dictionary<string, double>();
             Res1Group.Add("<b>--------Изгиб:--------</b>", double.NaN);
             AddToResult("eps_0", eps_0);
             AddToResult("rx", rx);
@@ -514,7 +521,8 @@ namespace BSFiberConcrete
         ///  Результаты расчета по 2 группе предельных состояний
         /// </summary>
         public Dictionary<string, double> GetResults2Group()
-        {                        
+        {
+            Res2Group = new Dictionary<string, double>();
             Res2Group.Add("<b>--------Изгиб:--------</b>", double.NaN);
             AddToResult("Kx_crc", Kx_crc, BSFiberLib.CG2, false);            
             AddToResult("Ky_crc", Ky_crc, BSFiberLib.CG2, false);

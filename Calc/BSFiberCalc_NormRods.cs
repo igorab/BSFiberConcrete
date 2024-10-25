@@ -57,16 +57,21 @@ namespace BSFiberConcrete
         public void SetLTRebar( double[] _MatRod)
         {                        
             int idx = -1;
-            MatRod = new BSMatRod();
-            MatRod.Rs = _MatRod[++idx]; // кг/см2
-            MatRod.Rsc = _MatRod[++idx]; // кг/см2
-            MatRod.As = _MatRod[++idx]; // см2
-            MatRod.As1 = _MatRod[++idx]; // см2
-            MatRod.Es = _MatRod[++idx];
 
-            Rod = new BSRod();
-            Rod.a = _MatRod[++idx];
-            Rod.a1 = _MatRod[++idx];
+            MatRod = new BSMatRod
+            {
+                Rs  = _MatRod[++idx], // кг/см2
+                Rsc = _MatRod[++idx], // кг/см2
+                As  = _MatRod[++idx], // см2
+                As1 = _MatRod[++idx], // см2
+                Es  = _MatRod[++idx]
+            };
+
+            Rod = new BSRod
+            {
+                a  = _MatRod[++idx],
+                a1 = _MatRod[++idx]
+            };
         }
 
         //6.5
@@ -127,8 +132,5 @@ namespace BSFiberConcrete
                     { DN(typeof(BSFibCalc_Rect), "UtilRate"), UtilRate}
             };
         }
-
-
-    }
-    
+    }    
 }

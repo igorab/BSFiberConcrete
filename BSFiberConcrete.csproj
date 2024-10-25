@@ -324,6 +324,7 @@
     <Compile Include="FiberCalcCracking\CalcCrackingForm.Designer.cs">
       <DependentUpon>CalcCrackingForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="FiberCalcMNQ\BSFiberCalc_MyMx.cs" />
     <Compile Include="FiberCalcMNQ\BSFiberCalc_Q.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Inform\Coef\CoefInform.cs">
@@ -644,6 +645,7 @@
     <Content Include="Resources\Incline_Q.PNG">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Report\ClassDiagram1.cd" />
     <None Include="Resources\LocalPunch1.PNG" />
     <Content Include="Resources\LBeam.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
