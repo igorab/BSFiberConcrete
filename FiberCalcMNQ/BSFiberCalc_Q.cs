@@ -13,7 +13,24 @@ namespace BSFiberConcrete
     public class BSFiberCalc_QxQy : BSFiberCalc_MNQ
     {
 
-        protected void Calculate_Qx(double _b, double _h)
+        public static BSFiberCalc_QxQy Construct()
+        {
+            BSFiberCalc_QxQy fiberCalc = new BSFiberCalc_QxQy();
+            
+            return fiberCalc;
+        }
+
+        public override bool Calculate()
+        {
+            Calculate_Qx(0, 0);
+
+            Calculate_Qy(1 ,1);
+
+            return CalculateQxQy(2, 2);            
+        }
+
+
+        protected override void Calculate_Qx(double _b, double _h)
         {
             // Растояние до цента тяжести арматуры растянутой арматуры, см
             double a = Rebar.a;
@@ -127,7 +144,7 @@ namespace BSFiberConcrete
         /// <summary>
         /// Расчет элементов по полосе между наклонными сечениями
         /// </summary>
-        protected void Calculate_Qy(double _b, double _h)
+        protected override void Calculate_Qy(double _b, double _h)
         {
             if (m_Efforts["Qy"] == 0) return;
 
@@ -237,6 +254,10 @@ namespace BSFiberConcrete
                 res = "Проверка по наклонному сечению на действие поперечной силы Qy пройдена";
                 Msg.Add(res);
             }
+        }
+
+        public BSFiberCalc_QxQy()
+        {
         }
 
 

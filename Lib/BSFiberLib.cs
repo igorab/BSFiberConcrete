@@ -22,6 +22,9 @@ namespace BSFiberConcrete
         /// </summary>
         public const int CG2 = 2;
 
+        public const string RebarClassDefault = "A400";
+
+
         /// <summary>
         /// Прочности фибробетона на растяжение
         /// </summary>

@@ -241,9 +241,7 @@ namespace BSFiberConcrete
             {
                 fiberCalc = new BSFiberCalc_MNQ_Ring();
             }
-            else if (BeamSection.IBeam == _BeamSection ||
-                     BeamSection.TBeam == _BeamSection ||
-                     BeamSection.LBeam == _BeamSection)                     
+            else if (BSHelper.IsITL(_BeamSection))                   
             {
                 fiberCalc = new BSFiberCalc_MNQ_IT();
             }
@@ -499,7 +497,7 @@ namespace BSFiberConcrete
         /// <summary>
         /// Расчет элементов по полосе между наклонными сечениями
         /// </summary>
-        protected void Calculate_Qy(double _b, double _h)
+        protected virtual void Calculate_Qy(double _b, double _h)
         {
             if (m_Efforts["Qy"] == 0) return;
 
@@ -614,7 +612,7 @@ namespace BSFiberConcrete
         /// <summary>
         /// Расчет элементов по полосе между наклонными сечениями
         /// </summary>
-        protected void Calculate_Qx(double _b, double _h)
+        protected virtual void Calculate_Qx(double _b, double _h)
         {            
             // Растояние до цента тяжести арматуры растянутой арматуры, см
             double a = Rebar.a; 
@@ -727,7 +725,7 @@ namespace BSFiberConcrete
         /// <summary>
         ///  6.1.30 Расчет элементов по наклонным сечениями на действие моментов My
         /// </summary>
-        protected void Calculate_My(double _b, double _h)
+        protected virtual void Calculate_My(double _b, double _h)
         {
             // Растояние до цента тяжести арматуры растянутой арматуры, см
             double a = Rebar.a;  
