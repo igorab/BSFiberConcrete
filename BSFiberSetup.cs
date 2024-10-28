@@ -111,14 +111,14 @@ namespace BSFiberConcrete
 
             items[++idx] = new ListViewItem("Rsw", idx);
             items[idx].Checked = true;
-            items[idx].SubItems.Add(_rebar.Rsw.ToString());
+            items[idx].SubItems.Add(_rebar.Rsw_X.ToString());
             items[idx].SubItems.Add("Расчетное сопротивление поперечной арматуры");
             items[idx].SubItems.Add("кг/см2");
 
             items[++idx] = new ListViewItem("Asw", idx);
             items[idx].Checked = true;
-            items[idx].SubItems.Add(_rebar.Asw.ToString());
-            items[idx].SubItems.Add("Площадь арматуры");
+            items[idx].SubItems.Add(_rebar.Asw_X.ToString());
+            items[idx].SubItems.Add("Площадь поперечной арматуры арматуры");
             items[idx].SubItems.Add("см2");
 
             items[++idx] = new ListViewItem("s_w", idx);
@@ -235,7 +235,7 @@ namespace BSFiberConcrete
                 lvRebar.Items[0].Text = cmbRebarClass.Text;
                 Rebar rb = BSQuery.RebarFind(cmbRebarClass.Text);
                 lvRebar.Items[1].SubItems[1].Text = Convert.ToString(rb.Rs);
-                lvRebar.Items[3].SubItems[1].Text = Convert.ToString(rb.Rsw);
+                lvRebar.Items[3].SubItems[1].Text = Convert.ToString(rb.Rsw_X);
             }
             catch 
             { 

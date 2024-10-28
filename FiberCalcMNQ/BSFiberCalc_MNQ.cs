@@ -66,7 +66,10 @@ namespace BSFiberConcrete
         [DisplayName("Относительное значение эксцентриситета продольной силы"), Description("Phys")]
         public double delta_e { get; protected set; }
 
-        [DisplayName("Изгибающий момент"), Description("Phys")]
+        [DisplayName("Изгибающий момент Mx"), Description("Phys")]
+        public double Mx { get; protected set; }
+
+        [DisplayName("Изгибающий момент My"), Description("Phys")]
         public double My { get; protected set; }
 
         [DisplayName("Доля постоянной нагрузки в общей нагрузке на элемент"), Description("Phys")]
@@ -172,9 +175,8 @@ namespace BSFiberConcrete
         {
             m_Beam = new BSBeam();
             m_Efforts = new Dictionary<string, double>();
-            Msg = new List<string>();
-            // TODO refactoring
-            fi = 0.9;
+            Msg = new List<string>();            
+            fi = BSFiberLib.Fi;
         }
 
         /// <summary>
@@ -567,7 +569,7 @@ namespace BSFiberConcrete
             }
 
             // усилие в поперечной арматуре на единицу длины элемента
-            double q_sw = (Rebar.Sw_Y != 0) ? Rebar.Rsw_Y * Rebar.Asw / Rebar.Sw_Y : 0; // 6.78 
+            double q_sw = (Rebar.Sw_Y != 0) ? Rebar.Rsw_Y * Rebar.Asw_Y / Rebar.Sw_Y : 0; // 6.78 
 
             // условие учета поперечной арматуры
             if (q_sw < 0.25 * Rfbt * b)
@@ -680,7 +682,7 @@ namespace BSFiberConcrete
             }
 
             // усилие в поперечной арматуре на единицу длины элемента
-            double q_sw = (Rebar.Sw_X !=0) ? Rebar.Rsw * Rebar.Asw / Rebar.Sw_X : 0; // 6.78 
+            double q_sw = (Rebar.Sw_X !=0) ? Rebar.Rsw_X * Rebar.Asw_X / Rebar.Sw_X : 0; // 6.78 
 
             // условие учета поперечной арматуры
             if (q_sw < 0.25 * Rfbt * _b)
@@ -736,9 +738,9 @@ namespace BSFiberConcrete
             // Площадь растянутой арматуры см2
             double As = Rebar.As;
             // Расчетное сопротивление поперечной арматуры  
-            double Rsw = Rebar.Rsw;
+            double Rsw = Rebar.Rsw_X;
             // Площадь арматуры
-            double Asw = Rebar.Asw;
+            double Asw = Rebar.Asw_X;
             // шаг попреречной арматуры
             double sw = Rebar.Sw_X;
             // усилие в поперечной арматуре на единицу длины элемента
@@ -847,7 +849,7 @@ namespace BSFiberConcrete
             (_, _, Yft, Yb, Yb1, Yb2, Yb3, Yb5, B) = (_t[0], _t[1], _t[2], _t[3], _t[4], _t[5], _t[6], _t[7], _t[8]);            
         }
 
-        public virtual void GetSize(double[] _t) {}
+        public virtual void SetSize(double[] _t) {}
 
 
         public double Get_e_tot => m_Fiber.e_tot;
@@ -858,12 +860,11 @@ namespace BSFiberConcrete
         /// <param name="_efforts"></param>
         /// <returns>полный эксцентриситет </returns>
         public void SetEfforts(Dictionary<string, double> _efforts)
-        {
-            double e_tot; // полный эксцентриситет приложения силы
-
+        {            
             m_Efforts = new Dictionary<string, double>(_efforts);
             
             //Момент от действия полной нагрузки
+            Mx = m_Efforts["Mx"];
             My = m_Efforts["My"];
 
             //Продольное усилие кг
@@ -885,18 +886,26 @@ namespace BSFiberConcrete
             // эксцентриситет от момента
             double e_MN = (N != 0) ? My / N : 0;
             e_N += e_MN;
-
-            e_tot = e0 + e_N + e_MN;
-            m_Fiber.e_tot = e_tot;           
+            
+            // полный эксцентриситет приложения силы
+            m_Fiber.e_tot = e0 + e_N + e_MN;
         }
 
         public virtual Dictionary<string, double> Results()
         {
-            return new Dictionary<string, double>() 
-            { 
-                { "Rfb", Rfb }, 
-                { "N_ult", N_ult } 
+            Dictionary<string, double> dictRes = new Dictionary<string, double>()
+            {
+                { DN(typeof(BSFiberCalc_MNQ), "M_ult"), M_ult },
+                { DN(typeof(BSFiberCalc_MNQ), "UtilRate_My"), UtilRate_My },
+
+                { DN(typeof(BSFiberCalc_MNQ), "N_ult"), N_ult },
+                { DN(typeof(BSFiberCalc_MNQ), "UtilRate_N"), UtilRate_N },
+
+                { DN(typeof(BSFiberCalc_MNQ), "Q_ult"), Q_ult },
+                { DN(typeof(BSFiberCalc_MNQ), "UtilRate_Qx"), UtilRate_Qx },
             };
+
+            return dictRes;
         }
     }
 }

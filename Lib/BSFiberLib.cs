@@ -24,6 +24,8 @@ namespace BSFiberConcrete
 
         public const string RebarClassDefault = "A400";
 
+        public const double Fi = 0.9;
+
 
         /// <summary>
         /// Прочности фибробетона на растяжение

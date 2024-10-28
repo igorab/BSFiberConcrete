@@ -12,24 +12,20 @@ namespace BSFiberConcrete
     /// </summary>
     public class BSFiberCalc_QxQy : BSFiberCalc_MNQ
     {
-
-        public static BSFiberCalc_QxQy Construct()
+        public override void SetSize(double[] _t)
         {
-            BSFiberCalc_QxQy fiberCalc = new BSFiberCalc_QxQy();
-            
-            return fiberCalc;
+            (b, h) = (_t[0], _t[1]);
         }
 
         public override bool Calculate()
         {
-            Calculate_Qx(0, 0);
+            Calculate_Qx(b, h);
 
-            Calculate_Qy(1 ,1);
+            Calculate_Qy(h ,b);
 
-            return CalculateQxQy(2, 2);            
+            return CalculateQxQy(b, h);            
         }
-
-
+       
         protected override void Calculate_Qx(double _b, double _h)
         {
             // Растояние до цента тяжести арматуры растянутой арматуры, см
@@ -71,10 +67,17 @@ namespace BSFiberConcrete
                 Qfb_i = 1.5d * Rfbt * _b * h0 * h0 / _c; // 6.76
 
                 // условие на 0.5..2.5
-                if (Qfb_i >= 2.5 * Rfbt * _b * h0)
-                    Qfb_i = 2.5 * Rfbt * _b * h0;
-                else if (Qfb_i <= 0.5 * Rfbt * _b * h0)
-                    Qfb_i = 0.5 * Rfbt * _b * h0;
+                var Qult25 = 2.5 * Rfbt * _b * h0;
+                var Qult05 = 0.5 * Rfbt * _b * h0;
+
+                if (Qfb_i >= Qult25)
+                {
+                    Qfb_i = Qult25;
+                }
+                else if (Qfb_i <= Qult05)
+                {
+                    Qfb_i = Qult05;
+                }
 
                 lstQ_fb.Add(Qfb_i);
             }
@@ -98,7 +101,7 @@ namespace BSFiberConcrete
             }
 
             // усилие в поперечной арматуре на единицу длины элемента
-            double q_sw = (Rebar.Sw_X != 0) ? Rebar.Rsw * Rebar.Asw / Rebar.Sw_X : 0; // 6.78 
+            double q_sw = (Rebar.Sw_X != 0) ? Rebar.Rsw_X * Rebar.Asw_X / Rebar.Sw_X : 0; // 6.78 
 
             // условие учета поперечной арматуры
             if (q_sw < 0.25 * Rfbt * _b)
@@ -139,7 +142,6 @@ namespace BSFiberConcrete
                 Msg.Add(res);
             }
         }
-
 
         /// <summary>
         /// Расчет элементов по полосе между наклонными сечениями
@@ -214,7 +216,7 @@ namespace BSFiberConcrete
             }
 
             // усилие в поперечной арматуре на единицу длины элемента
-            double q_sw = (Rebar.Sw_Y != 0) ? Rebar.Rsw_Y * Rebar.Asw / Rebar.Sw_Y : 0; // 6.78 
+            double q_sw = (Rebar.Sw_Y != 0) ? Rebar.Rsw_Y * Rebar.Asw_Y / Rebar.Sw_Y : 0; // 6.78 
 
             // условие учета поперечной арматуры
             if (q_sw < 0.25 * Rfbt * b)
@@ -260,7 +262,6 @@ namespace BSFiberConcrete
         {
         }
 
-
         /// <summary>
         /// 6.1.27 Расчет изгибаемых элементов по бетонной полосе между наклонными сечениями
         /// </summary>
@@ -279,8 +280,6 @@ namespace BSFiberConcrete
             }
 
             return ok;
-        }
-
-        
+        }        
     }
 }

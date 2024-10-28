@@ -53,9 +53,8 @@ namespace BSFiberConcrete
             //throw new Exception("Расчет не выполнен (нет в СП)");
             return true;
         }
-
        
-        public override void GetSize(double[] _t)
+        public override void SetSize(double[] _t)
         {
             beam.SetSizes(_t);
             base.m_Beam = this.beam;

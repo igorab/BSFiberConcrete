@@ -29,7 +29,7 @@ namespace BSFiberConcrete
             return (N_Out) ? "Rect_N_out.PNG" : "Rect_N.PNG";
         } 
         
-        public override void GetSize(double[] _t)
+        public override void SetSize(double[] _t)
         {
             m_Beam.SetSizes(_t);
             (b, h, LngthCalc0) = (_t[0], _t[1], _t[2]);

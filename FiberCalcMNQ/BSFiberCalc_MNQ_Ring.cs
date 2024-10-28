@@ -26,7 +26,7 @@ namespace BSFiberConcrete
             return base.ImageCalc();
         }
 
-        public override void GetSize(double[] _t)
+        public override void SetSize(double[] _t)
         {
             beam.SetSizes(_t);
             (r1, r2, LngthCalc0) = (_t[0], _t[1], _t[2]);

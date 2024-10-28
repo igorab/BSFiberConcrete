@@ -19,9 +19,9 @@ namespace BSFiberConcrete.FiberCalcMNQ
             // Площадь растянутой арматуры см2
             double As = Rebar.As;
             // Расчетное сопротивление поперечной арматуры  
-            double Rsw = Rebar.Rsw;
+            double Rsw = Rebar.Rsw_X;
             // Площадь арматуры
-            double Asw = Rebar.Asw;
+            double Asw = Rebar.Asw_X;
             // шаг попреречной арматуры
             double sw = Rebar.Sw_X;
             // усилие в поперечной арматуре на единицу длины элемента

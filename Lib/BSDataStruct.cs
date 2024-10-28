@@ -206,10 +206,7 @@ namespace BSFiberConcrete
         public double Rsc { get; set; }
         //Значения модуля упругости арматуры
         public double Es { get; set; }
-
-        //Значения модуля упругости поперечной арматуры
-        public double Esw { get; internal set; }
-
+       
         // Площадь растянутой арматуры
         public double As { get; set; }
         // Площадь сжатой арматуры
@@ -217,9 +214,11 @@ namespace BSFiberConcrete
 
         // Поперечная арматура:
         // Вдоль оси X:
+        //Значения модуля упругости поперечной арматуры
+        public double Esw_X { get; internal set; }
         // Расчетное сопротивление поперечной арматуры растяжению;
-        public double Rsw { get; set; }
-        public double Asw { get; set; }
+        public double Rsw_X { get; set; }
+        public double Asw_X { get; set; }
         /// <summary>
         /// Шаг по оси X
         /// </summary>
@@ -231,6 +230,7 @@ namespace BSFiberConcrete
         public double Sw_Y { get; set; }
         public double Esw_Y { get; set; }
         public double Rsw_Y { get; set; }
+        public double Asw_Y { get; set; }
 
         public TypeYieldStress typeYieldStress { get; set; }
         public double k_s { get; set; }

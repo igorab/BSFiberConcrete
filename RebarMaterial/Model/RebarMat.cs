@@ -260,7 +260,7 @@ namespace BSFiberConcrete
             Rs = _DataRebarType[_indexTypeRebar].Rs;
             Rsc = _DataRebarType[_indexTypeRebar].Rs;
             Rs_ser = _Rs_n;
-            Rsw = _DataRebarType[_indexTypeRebar].Rsw;
+            Rsw = _DataRebarType[_indexTypeRebar].Rsw_X;
             DefineListDiameters();
             SetDiameterIndex(0);
             CalculateHita_1();

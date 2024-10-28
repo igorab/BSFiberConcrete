@@ -584,7 +584,7 @@ namespace BSFiberConcrete
                 InitUserParams(prms);
 
                 BSFibCalc.SetParams(prms);
-                BSFibCalc.GetSize(BeamSizes());
+                BSFibCalc.SetSize(BeamSizes());
                 BSFibCalc.Efforts = new Dictionary<string, double> { { "My", _M } };
 
                 calcOk = BSFibCalc.Calculate();
@@ -956,26 +956,44 @@ namespace BSFiberConcrete
             return new Dictionary<string, double>();
         }
 
-       
         /// <summary>
         ///  Введенные пользователем значения по арматуре
         /// </summary>
         /// <param name="_Rebar">Установлены параметры стержней арматуры </param>
         private Rebar InitRebarFromForm()
         {
-            Rebar _Rebar = new Rebar();
-            
-            _Rebar.As = (double)numAs.Value;
-            _Rebar.As1 = (double)numAs1.Value;
-            _Rebar.a = (double)num_a.Value;
-            _Rebar.a1 = (double)num_a1.Value;
+            // Арматура из настроек формы
+            Rebar _Rebar = new Rebar()
+            {
+                // ПРОДОЛЬНАЯ
+                // модуль упругости
+                Es = (double)numEs.Value,
 
-            _Rebar.Es = (double)numEs.Value;
-            _Rebar.Esw = (double)numEsw.Value;
+                // Площадь
+                // растянутая
+                As  = (double)numAs.Value,
+                // сжатая
+                As1 = (double)numAs1.Value,
+                // расстояние до ц.т.
+                // растянутая
+                a = (double)num_a.Value,
+                // сжатая
+                a1 = (double)num_a1.Value,
+                                
+                // поперечная по X
+                Rsw_X   = (double)numRsw_X.Value,
+                Esw_X   = (double)numEsw_X.Value,
+                Sw_X  = (double)num_s_w_X.Value,
+                Asw_X   = 1,
+                // + шт, диаметр
 
-            _Rebar.Sw_X = (double) num_s_w_X.Value;
-            _Rebar.Esw_Y = (double)numEsw_Y.Value;
-            _Rebar.Rsw_Y = (double)numRsw_Y.Value;
+                // поперечная по Y
+                Rsw_Y = (double)numRsw_Y.Value,
+                Esw_Y = (double)numEsw_Y.Value,                
+                Sw_Y  = (double)num_s_w_Y.Value,
+                Asw_Y = 1,
+                // + шт, диаметр
+            };
 
             return _Rebar;
         }
@@ -997,10 +1015,13 @@ namespace BSFiberConcrete
             // продольной
             _Rebar.Es = (double)numEs.Value;
             // поперечной
-            _Rebar.Esw = (double)numEsw.Value;
-            // Шаг поперечной арматуры
+            _Rebar.Esw_X = (double)numEsw_X.Value;
+            //TODO Шаг поперечной арматуры
             _Rebar.Sw_X = (double) num_s_w_X.Value;
             _Rebar.Sw_Y = (double)num_s_w_Y.Value;
+            // 
+            //_Rebar.Asw_X = 1;
+            //_Rebar.Asw_Y = 1;
         }
 
         /// <summary>
@@ -1045,7 +1066,7 @@ namespace BSFiberConcrete
             double beamLngth = InitBeamLength(true); 
             double[] sz = BeamSizes(beamLngth);
 
-            fiberCalc.GetSize(sz);
+            fiberCalc.SetSize(sz);
             fiberCalc.SetEfforts(MNQ);
             // передаем усилия и связанные с ними велечины
             fiberCalc.SetEfforts(MNQ);
@@ -1100,11 +1121,15 @@ namespace BSFiberConcrete
         ///  Расчет по наклонному сечению на действие Q
         /// </summary>        
         private Dictionary<string, double> FiberCalculate_QxQy(Dictionary<string, double> _MNQ, double[] _sz)
-        {            
-            BSFiberCalc_MNQ fiberCalc = BSFiberCalc_MNQ.Construct(m_BeamSection);
-            //BSFiberCalc_QxQy     fiberCalc = new BSFiberCalc_QxQy();
-            fiberCalc.UseRebar = true;
-            fiberCalc.Shear    = true;
+        {
+            //BSFiberCalc_MNQ fiberCalc = BSFiberCalc_MNQ.Construct(m_BeamSection); fiberCalc.UseRebar = true; fiberCalc.Shear = true;
+
+            BSFiberCalc_QxQy fiberCalc = new BSFiberCalc_QxQy
+            {
+                UseRebar = true,
+                Shear = true
+            };
+
             fiberCalc.InitFiberParams(m_BSLoadData.Fiber);
             fiberCalc.MatFiber  = m_MatFiber;            
             fiberCalc.BetonType = BSQuery.BetonTypeFind(0);            
@@ -1112,13 +1137,17 @@ namespace BSFiberConcrete
             double[] prms = new double[9];
             InitUserParams(prms);            
             fiberCalc.SetParams(prms);                       
-            fiberCalc.GetSize(_sz);
+            fiberCalc.SetSize(_sz);
             // передаем усилия и связанные с ними велечины
-            fiberCalc.SetEfforts(_MNQ);            
+            fiberCalc.SetEfforts(_MNQ);
             // расчет на усилие вне сечения            
-            fiberCalc.N_Out = (fiberCalc.h / 2 < fiberCalc.Get_e_tot);
-            fiberCalc.Calculate();
-            fiberCalc.Msg.Add("Расчет успешно выполнен!");
+            fiberCalc.N_Out = fiberCalc.h / 2.0 < fiberCalc.Get_e_tot;
+
+            bool calcOk = fiberCalc.Calculate();
+            if (calcOk)
+                fiberCalc.Msg.Add("Расчет успешно выполнен!");
+            else
+                fiberCalc.Msg.Add("Расчет по наклонному сечению на действие Q не выполнен!");
 
             Dictionary<string, double> xR = fiberCalc.Results();
 
@@ -1169,7 +1198,7 @@ namespace BSFiberConcrete
         {
             t_rebar = new double[3];
 
-            t_rebar[0] = (double)numRsw.Value;
+            t_rebar[0] = (double)numRsw_X.Value;
             t_rebar[1] = (double)numRsc.Value;
             t_rebar[2] = (double)numEs.Value;
         }
@@ -2125,8 +2154,8 @@ namespace BSFiberConcrete
                 Rebar trb = m_Rebar.Find(match => match.ID == (string) cmbTRebarClass_X.SelectedItem);      
                 if (trb != null)
                 {
-                    numRsw.Value = (decimal)BSHelper.MPA2kgsm2(trb.Rsw);
-                    numEsw.Value = (decimal)BSHelper.MPA2kgsm2(trb.Es);
+                    numRsw_X.Value = (decimal)BSHelper.MPA2kgsm2(trb.Rsw_X);
+                    numEsw_X.Value = (decimal)BSHelper.MPA2kgsm2(trb.Es);
                     num_s_w_X.Value = (decimal)trb.Sw_X;
                 }
             }
@@ -2160,7 +2189,7 @@ namespace BSFiberConcrete
 
         private void numRsw_ValueChanged(object sender, EventArgs e)
         {
-            labelRswMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numRsw.Value));
+            labelRswMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numRsw_X.Value));
         }
 
         private void checkBoxRebar_CheckedChanged(object sender, EventArgs e)
@@ -2801,8 +2830,8 @@ namespace BSFiberConcrete
                 
                 if (trb != null)
                 {
-                    numRsw.Value = (decimal)BSHelper.MPA2kgsm2(trb.Rsw);
-                    numEsw.Value = (decimal)BSHelper.MPA2kgsm2(trb.Es);
+                    numRsw_Y.Value = (decimal)BSHelper.MPA2kgsm2(trb.Rsw_X);
+                    numEsw_Y.Value = (decimal)BSHelper.MPA2kgsm2(trb.Es);
                     num_s_w_Y.Value = (decimal)trb.Sw_Y;
                 }
             }
