@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BSFiberConcrete
+﻿namespace BSFiberConcrete
 {
     // Расчет балки двутаврового сечения на внецентренное сжатие
     public class BSFiberCalc_MNQ_IT : BSFiberCalc_MNQ
@@ -38,8 +32,7 @@ namespace BSFiberConcrete
                 Calculate_My(b, h);
 
                 // Расчет на действие моментов относительно оси X
-                Calculate_Mx();
-
+                Calculate_Mx(h, b);
             }
             else if (UseRebar)
             {
@@ -49,8 +42,7 @@ namespace BSFiberConcrete
             {
                 Calculate_N();
             }
-
-            //throw new Exception("Расчет не выполнен (нет в СП)");
+            
             return true;
         }
        

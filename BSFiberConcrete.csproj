@@ -602,8 +602,6 @@
     <None Include="DeformationDiagram\UserControls\ClassDiagram1.cd" />
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
-    <None Include="Properties\DataSources\BSFiberCalculation.datasource" />
-    <None Include="Properties\DataSources\BSFiberConcrete.BSRFib.FiberCalculator.FiberConcrateCalculator.datasource" />
     <None Include="Properties\DataSources\BSFiberConcrete.Section.BSPoint.datasource" />
     <None Include="Properties\DataSources\BSRod.datasource" />
     <None Include="Properties\DataSources\Deflection_f_aF.datasource" />

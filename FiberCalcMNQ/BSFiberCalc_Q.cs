@@ -28,7 +28,7 @@ namespace BSFiberConcrete
        
         protected override void Calculate_Qx(double _b, double _h)
         {
-            // Растояние до цента тяжести арматуры растянутой арматуры, см
+            // Растояние до цента тяжести растянутой арматуры, см
             double a = Rebar.a;
 
             // рабочая высота сечения по растянутой арматуре

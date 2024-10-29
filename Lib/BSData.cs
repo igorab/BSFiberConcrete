@@ -5,14 +5,8 @@ using System.Configuration;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Dapper;
-using System.Linq.Expressions;
-using MathNet.Numerics;
-using System.Reflection.Emit;
-using System.Security.Cryptography;
 
 namespace BSFiberConcrete.Lib
 {
@@ -233,7 +227,6 @@ namespace BSFiberConcrete.Lib
             }
         }
 
-
         /// <summary>
         /// Коэффициенты
         /// </summary>
@@ -377,7 +370,8 @@ namespace BSFiberConcrete.Lib
                         {
                             Efforts tmpEfforts = _efforts[i];
                             
-                            int cnt = cnn.Execute("insert into Efforts (Id, Mx, Mx, My, N, Qx, Qy) values (@Id, @Mx, @Mx, @My, @N, @Qx, @Qy)", tmpEfforts, tr);
+                            int cnt = cnn.Execute($"insert into Efforts (Id, Mx, Mx, My, N, Qx, Qy) " +
+                                $"values (@Id, @Mx, @Mx, @My, @N, @Qx, @Qy)", tmpEfforts, tr);
                         }
                         tr.Commit();
                     }
@@ -536,7 +530,6 @@ namespace BSFiberConcrete.Lib
             }
         }
 
-
         public static List<FibLab> LoadRFibLab()
         {
             try
@@ -639,7 +632,6 @@ namespace BSFiberConcrete.Lib
             }
         }
 
-
         /// <summary>
         /// Относительные деформации бетона в зависимости от влажности воздуха
         /// </summary>
@@ -733,9 +725,7 @@ namespace BSFiberConcrete.Lib
             {
                 using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
                 {
-                    var output = cnn.Query<InitBeamSectionGeometry>("select * from InitBeamSection", new DynamicParameters());                    
-                    //var outputTest = cnn.Query<BSRod>(string.Format("select * from InitBeamSection where SectionTypeNum = {0}", (int)_SectionType),
-                    //                            new DynamicParameters());
+                    var output = cnn.Query<InitBeamSectionGeometry>("select * from InitBeamSection", new DynamicParameters());                                        
 
                     return output.ToList();
                 }
@@ -757,10 +747,9 @@ namespace BSFiberConcrete.Lib
                     {
                         foreach (InitBeamSectionGeometry bSection in beamSections)
                         {
-                            cnn.Execute("update InitBeamSection set bw = @bw, hw = @hw, bf = @bf, hf = @hf, b1f = @b1f, h1f = @h1f, r1 = @r1, r2 = @r2 where SectionTypeNum = @SectionTypeNum", bSection, tr);
-                            
-                            //cnn.Execute($"delete from InitBeamSection where SectionTypeNum = {(int)bSection.SectionTypeNum}", null, tr);
-                            //int cnt = cnn.Execute("insert into InitBeamSection (SectionTypeNum, SectionTypeStr, bw, hw, bf, hf, b1f, h1f, r1, r2) values (@SectionTypeNum, @SectionTypeStr, @bw, @hw, @bf, @hf, @b1f, @h1f, @r1, @r2)", bSection, tr);
+                            cnn.Execute($"update InitBeamSection set bw = @bw, hw = @hw, bf = @bf, hf = @hf, b1f = @b1f, h1f = @h1f, r1 = @r1, r2 = @r2" +
+                                $" where SectionTypeNum = @SectionTypeNum", bSection, tr);
+                                                        
                         }
                         tr.Commit();
                     }
@@ -905,8 +894,5 @@ namespace BSFiberConcrete.Lib
                 throw new Exception("Не удалось сохранить значения в БД");
             }
         }
-
-
-
     }
 }

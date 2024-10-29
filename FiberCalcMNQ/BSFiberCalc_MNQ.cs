@@ -821,7 +821,7 @@ namespace BSFiberConcrete
         /// <summary>
         ///  6.1.30 Расчет элементов по наклонным сечениями на действие моментов Mx
         /// </summary>
-        protected void Calculate_Mx()
+        protected virtual void Calculate_Mx(double _b, double _h)
         {
             if (m_Efforts["Mx"] == 0) return;
 

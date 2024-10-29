@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BSFiberConcrete.Section
 {
@@ -36,8 +33,6 @@ namespace BSFiberConcrete.Section
             X = _pointF.X;
             Y = _pointF.Y;
         }
-
-
     }
 
     public class BSSection
@@ -90,7 +85,6 @@ namespace BSFiberConcrete.Section
                 new PointF(w/2f-a, a),
             };
         }
-
 
         /// <summary>
         ///  Тавровое сечение - геометрия сечения

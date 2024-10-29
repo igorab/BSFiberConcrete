@@ -91,7 +91,7 @@ namespace BSFiberConcrete
         {
             base.Calculate_My(b, h);
 
-            base.Calculate_Mx();
+            base.Calculate_Mx(h, b);
         }
 
         /// <summary>

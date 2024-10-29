@@ -90,7 +90,8 @@ namespace BSFiberConcrete
         /// выполнить расчет по 1 группе предельных состояний
         ///
         private BSCalcNDM BSCalcGr1(double _coefM = 1.0)
-        {           
+        {
+            Init();
             BSCalcNDM bsCalcGR1 = new BSCalcNDM(GR1, m_BeamSection, setup);
             bsCalcGR1.SetMN(Mx0, My0, N0);
             bsCalcGR1.SetParamsGroup1(D);
