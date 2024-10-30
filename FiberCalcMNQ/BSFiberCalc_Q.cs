@@ -13,6 +13,10 @@ namespace BSFiberConcrete
     /// </summary>
     public class BSFiberCalc_QxQy : BSFiberCalc_MNQ
     {
+        private const string msg1 = "Условие выполнено, шаг удовлетворяет требованию 6.1.28";
+        private const string msg2 = "Условие не выполнено, требуется уменьшить шаг поперечной арматуры";
+        private const string msg3 = "Перерезываюзщая сила превышает предельно допустимую в данном сечении";
+        private const string msg4 = "Проверка по наклонному сечению на действие поперечной силы Qx пройдена";
         public override void SetSize(double[] _t)
         {
             (b, h) = (_t[0], _t[1]);
@@ -32,76 +36,33 @@ namespace BSFiberConcrete
 
             return _Q_ult;
         }
-
-        
+                
         public override bool Calculate()
         {
             if (m_Efforts["Qx"] != 0)
             {
                 double s_w_max, Qx_ult;
-
-                double Q_max = Q_Ult(b, h);
-
+                double Q_max      = Q_Ult(b, h);
                 (s_w_max, Qx_ult) = Calculate_Qx(b, h);
                 
                 UtilRate_Qx = (Qx_ult != 0) ? m_Efforts["Qx"] / Qx_ult : 0;
 
-                string res;
-                if (Rebar.Sw_X <= s_w_max)
-                {
-                    res = "Условие выполнено, шаг удовлетворяет требованию 6.1.28";
-                    Msg.Add(res);
-                }
-                else
-                {
-                    res = "Условие не выполнено, требуется уменьшить шаг поперечной арматуры";
-                    Msg.Add(res);
-                }
-
-                if (Q_max <= Qx_ult)
-                {
-                    res = "Перерезываюзщая сила превышает предельно допустимую в данном сечении";
-                    Msg.Add(res);
-                }
-                else
-                {
-                    res = "Проверка по наклонному сечению на действие поперечной силы Qx пройдена";
-                    Msg.Add(res);
-                }
+                if (Rebar.Sw_X <= s_w_max) Msg.Add(msg1); else Msg.Add(msg2);
+                
+                if (Q_max <= Qx_ult) Msg.Add(msg3); else Msg.Add(msg4);                
             }
 
             if (m_Efforts["Qy"] != 0)
             {
                 double s_w_max, Qy_ult;
-
-                double Q_max = Q_Ult(h, b);
-
+                double Q_max       = Q_Ult(h, b);
                 (s_w_max, Qy_ult)  = Calculate_Qy(h, b);
 
                 UtilRate_Qy = (Qy_ult != 0) ? m_Efforts["Qy"] / Qy_ult : 0;
 
-                string res;
-                if (Rebar.Sw_Y <= s_w_max)
-                {
-                    res = "Условие выполнено, шаг удовлетворяет требованию 6.1.28";
-                    Msg.Add(res);
-                }
-                else
-                {
-                    res = "Условие не выполнено, требуется уменьшить шаг поперечной арматуры";
-                    Msg.Add(res);
-                }
+                if (Rebar.Sw_Y <= s_w_max) Msg.Add(msg1); else Msg.Add(msg2);
 
-                if (Q_max <= Qy_ult)
-                {
-                    res = "Перерезываюзщая сила превышает предельно допустимую в данном сечении";
-                    Msg.Add(res);
-                }
-                else
-                {
-                    res = "Проверка по наклонному сечению на действие поперечной силы Qx пройдена";
-                    Msg.Add(res);
-                }
+                if (Q_max <= Qy_ult) Msg.Add(msg3); else Msg.Add(msg4);
             }
 
             bool ok = ValidateQxQy(b, h);
