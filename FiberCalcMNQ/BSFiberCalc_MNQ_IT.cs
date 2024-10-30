@@ -23,16 +23,10 @@
                 m_ImgCalc = "Incline_Q.PNG";
 
                 // Расчет на действие поперечной силы вдоль оси X
-                Calculate_Qx(b, h);
-
-                // Расчет на действие поперечной силы вдоль оси Y
-                Calculate_Qy(h, b);
-
+                _ = Calculate_Qx(b, h);
+                
                 // Расчет на действие моментов относительно оси Y
-                Calculate_My(b, h);
-
-                // Расчет на действие моментов относительно оси X
-                Calculate_Mx(h, b);
+                _ = Calculate_My(b, h);                
             }
             else if (UseRebar)
             {
