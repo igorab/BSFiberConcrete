@@ -3,7 +3,6 @@
     partial class FormForTest
     {
                                 private System.ComponentModel.IContainer components = null;
-
                                         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -12,10 +11,7 @@
             }
             base.Dispose(disposing);
         }
-
-        #region Windows Form Designer generated code
-
-                                        private void InitializeComponent()
+                                                private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
@@ -187,12 +183,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.num_Force)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_MomentOfForce)).EndInit();
             this.ResumeLayout(false);
-
         }
-
-        #endregion
-
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+                private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;

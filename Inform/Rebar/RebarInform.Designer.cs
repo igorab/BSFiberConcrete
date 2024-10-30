@@ -3,7 +3,6 @@
     partial class RebarInform
     {
                                 private System.ComponentModel.IContainer components = null;
-
                                         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -12,10 +11,7 @@
             }
             base.Dispose(disposing);
         }
-
-        #region Windows Form Designer generated code
-
-                                        private void InitializeComponent()
+                                                private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RebarInform));
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -116,12 +112,8 @@
             this.tabPage3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
-
         }
-
-        #endregion
-
-        private System.Windows.Forms.TabControl tabControl1;
+                private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.Panel panel1;

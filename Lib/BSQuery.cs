@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SQLite;
 using System.Windows.Forms;
-
 namespace BSFiberConcrete.Lib
 {
     public class BSQuery : BSData
@@ -29,7 +28,6 @@ namespace BSFiberConcrete.Lib
                                        
             return bt;
         }
-
         public static List<BetonType> LoadBetonType()
         {
             List<BetonType> bt = new List<BetonType>();
@@ -45,8 +43,6 @@ namespace BSFiberConcrete.Lib
             catch { }
             return bt;
         }
-
-
                                                         public static Beton HeavyBetonTableFind(string _BetonClass, int _betonTypeId = 0)
         {
             Beton bt = new Beton();
@@ -61,11 +57,8 @@ namespace BSFiberConcrete.Lib
                 }
             }
             catch { }
-
             return bt;
         }
-
-
         public static Rebar RebarFind(string _ID)
         {
             Rebar rb = new Rebar();
@@ -80,11 +73,8 @@ namespace BSFiberConcrete.Lib
                 }
             }
             catch { }
-
             return rb;
         }
-
-
         public static RFiber RFiberFind(int _ID)
         {
             RFiber rb = new RFiber();
@@ -99,11 +89,8 @@ namespace BSFiberConcrete.Lib
                 }
             }
             catch { }
-
             return rb;
         }
-
-
         public static List<RFiber> RFiberLoad()
         {
             try
@@ -120,7 +107,6 @@ namespace BSFiberConcrete.Lib
                 return new List<RFiber>();
             }
         }
-
         public static List<FiberType> FiberTypeLoad()
         {
             try
@@ -137,7 +123,6 @@ namespace BSFiberConcrete.Lib
                 return new List<FiberType>();
             }
         }
-
         public static List<FiberKind> FiberKindLoad()
         {
             try
@@ -154,8 +139,6 @@ namespace BSFiberConcrete.Lib
                 return new List<FiberKind>();
             }
         }
-
-
         public static List<FiberGeometry> FiberGeometryLoad()
         {
             try
@@ -172,8 +155,6 @@ namespace BSFiberConcrete.Lib
                 return new List<FiberGeometry>();
             }
         }
-
-
         public static List<FiberLength> FiberLengthLoad()
         {
             try
@@ -190,8 +171,6 @@ namespace BSFiberConcrete.Lib
                 return new List<FiberLength>();
             }
         }
-
-
         public static FaF RFaF_Find(int _Num)
         {
             FaF rb = new FaF();
@@ -206,10 +185,8 @@ namespace BSFiberConcrete.Lib
                 }
             }
             catch { }
-
             return rb;
         }
-
         public static void SaveFaF(List<FaF> _ds)
         {
             try
@@ -239,8 +216,6 @@ namespace BSFiberConcrete.Lib
                 MessageBox.Show(_e.Message);
             }
         }
-
-
         public static FibLab FibLabFind(string _Id)
         {
             FibLab rb = new FibLab();
@@ -255,10 +230,8 @@ namespace BSFiberConcrete.Lib
                 }
             }
             catch { }
-
             return rb;
         }
-
         public static void SaveFibLab(List<FibLab> _ds)
         {
             try
@@ -288,8 +261,6 @@ namespace BSFiberConcrete.Lib
                 MessageBox.Show(_e.Message);
             }
         }
-
-
         public static Deflection_f_aF FibLabDeflectionFind(string _Id)
         {
             Deflection_f_aF rb = new Deflection_f_aF();
@@ -304,11 +275,8 @@ namespace BSFiberConcrete.Lib
                 }
             }
             catch { }
-
             return rb;
         }
-
-
         public static void SaveFibLabDeflection(List<Deflection_f_aF> _ds)
         {
             try
@@ -338,7 +306,6 @@ namespace BSFiberConcrete.Lib
                 MessageBox.Show(_e.Message);
             }
         }
-
         public static List<LocalStress> UpdateLocalPunch(Dictionary<string, double> _ds)
         {
             try
@@ -360,10 +327,8 @@ namespace BSFiberConcrete.Lib
             {
                 MessageBox.Show(_e.Message);
             }
-
             return BSData.LoadLocalPunch();
         }
-
         public static List<LocalStress> UpdateLocalCompression(Dictionary<string, double> _ds)
         {
             try
@@ -385,10 +350,7 @@ namespace BSFiberConcrete.Lib
             {
                 MessageBox.Show(_e.Message);
             }
-
             return BSData.LoadLocalStress();
         }
-
-
     }
 }

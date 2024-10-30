@@ -3,7 +3,6 @@
     partial class DrawBeamSection
     {
                                 private System.ComponentModel.IContainer components = null;
-
                                         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -12,10 +11,7 @@
             }
             base.Dispose(disposing);
         }
-
-        #region Windows Form Designer generated code
-
-                                        private void InitializeComponent()
+                                                private void InitializeComponent()
         {
             this.pnlForPlot = new System.Windows.Forms.Panel();
             this.PanelInfo = new System.Windows.Forms.TableLayoutPanel();
@@ -341,12 +337,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.num_e_st_ult)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_e_s_ult)).EndInit();
             this.ResumeLayout(false);
-
         }
-
-        #endregion
-
-        private System.Windows.Forms.Panel pnlForPlot;
+                private System.Windows.Forms.Panel pnlForPlot;
         private System.Windows.Forms.TableLayoutPanel PanelInfo;
         private System.Windows.Forms.Label labelMax;
         private System.Windows.Forms.Label labelMin;

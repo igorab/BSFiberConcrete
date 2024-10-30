@@ -1,5 +1,4 @@
-﻿
-namespace BSBeamCalculator.Properties {
+﻿namespace BSBeamCalculator.Properties {
     using System;
     
     

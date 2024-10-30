@@ -6,61 +6,44 @@ using System.Linq;
 using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace BSFiberConcrete
 {
     public class BSHelper
     {
         public const double Epsilon = 0.00001d;
-
         public string UnitLength = Units.L;
-
         public static double AreaCircle(double _D) => Math.PI * _D * _D / 4d;
-
         public static double DCircle(double _area) => Math.Sqrt(4 * _area / Math.PI);
-
         public static double mm2sm(double _mm) => _mm * 0.1d;
-
                 public static double Kg2T(double _kg) => _kg * 0.001d;
         public static double kN2Kgs(double? _kN) => _kN * 101.97162129779284d ?? 0;
         public static double Kgs2kN(double _kgs, int _rnd = 0) => (_rnd >0) ? Math.Round(_kgs * 0.00980665d, _rnd) : _kgs * 0.00980665d;        
-
                 public static double Kgsm2Tm(double _kgsm) => _kgsm * 0.00001d;
         public static double kgssm2kNsm(double? _kgssm) => _kgssm * 0.00980665d ?? 0;
         public static double kgssm2Nmm(double? _kgssm) => _kgssm * 98.0665 ?? 0;
         public static double kNsm2kgssm(double? _kNsm) => _kNsm * 101.97162129779284d ?? 0;
         public static double kNm2kgssm(double? _kNm) => _kNm * 10197.16212978d ?? 0;
         public static double Nmm2kgssm(double? _Nmm) => _Nmm * 0.010197162d ?? 0;
-
         
         public static double MPA2kgsm2(double _mpa) => 10.197162d * _mpa ;
         public static double MPA2kgsm2(double? _mpa) => 10.197162d * _mpa ?? 0;
         public static double MPA2kNsm2(double? _mpa) => 0.1d * _mpa ?? 0;
         public static double kNsm2toMPa(double _KNsm2) => 10d * _KNsm2 ;
-
         public static double Kgssm2ToKNsm2(double _kgssm2) => _kgssm2 * 0.00980664999999998d;
         public static double Kgssm2ToKNsm2(double _kgssm2, int _dec) => Math.Round(_kgssm2 * 0.00980664999999998d ,_dec) ;
-
         public static double KNsm2ToKgssm2(double? _KNsm2) => _KNsm2 * 101.97162129779d ?? 0;
-
         public static double Kgsm2MPa(double? _val, int _dec = 2) => Math.Round( 0.098067d * _val ?? 0, _dec);
-
         public static double Dec2Dbl(decimal _val, int _dec=2) => Math.Round( (double)_val, _dec);
-
         public const string Concrete = "Бетон";
         
         public const string FiberConcrete = "Фибробетон";
-
         public const string Rebar = "Арматура"; 
         public const string TwoLineDiagram = "Двухлинейная";
-
         public const string ThreeLineDiagram = "Трехлинейная";
-
         public const string IgnoreHumidity = "Не учитывать";
         
                                 public const string PhysicalYieldStress = "physical";
                                 public const string OffsetYieldStress = "offset";
-
                                                 public static bool IsRectangled(BeamSection _BeamSection)
         {
             return _BeamSection == BeamSection.Rect || 
@@ -68,19 +51,15 @@ namespace BSFiberConcrete
                    _BeamSection == BeamSection.LBeam || 
                    _BeamSection == BeamSection.IBeam;
         }
-
                                                 public static bool IsITL(BeamSection _BeamSection)
         {
             return _BeamSection == BeamSection.TBeam ||
                    _BeamSection == BeamSection.LBeam ||
                    _BeamSection == BeamSection.IBeam;
         }
-
-
         public static string ImgResource(BeamSection _bs, bool _useReinforcement = false)
         {
             string _img = "";
-
             switch (_bs)
             {
                 case BeamSection.Rect:
@@ -105,18 +84,14 @@ namespace BSFiberConcrete
                     _img = "Ring.PNG";
                     break;
             }
-
             
             return _img;
         }
-
-
         public static string EnumDescription(Enum myEnumVariable)
         {
             string desc = myEnumVariable.GetAttributeOfType<DescriptionAttribute>().Description;
             return desc; 
         }
-
         public static double ToDouble(string _txtNum)
         {
             NumberFormatInfo formatter = new NumberFormatInfo { NumberDecimalSeparator = "." };
@@ -133,7 +108,6 @@ namespace BSFiberConcrete
             return d_num;
         }
     }
-
     public static class EnumHelper
     {
                                                                 public static T GetAttributeOfType<T>(this Enum enumVal) where T : System.Attribute
@@ -144,7 +118,6 @@ namespace BSFiberConcrete
             return (attributes.Length > 0) ? (T)attributes[0] : null;
         }
     }
-
     public static class StringExtensions
     {
         private static char open = '[';
@@ -172,6 +145,4 @@ namespace BSFiberConcrete
             return results;
         }
     }
-
-
 }

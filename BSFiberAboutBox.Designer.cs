@@ -3,7 +3,6 @@
     partial class BSFiberAboutBox
     {
                                 private System.ComponentModel.IContainer components = null;
-
                                 protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -12,10 +11,7 @@
             }
             base.Dispose(disposing);
         }
-
-        #region Код, автоматически созданный конструктором форм Windows
-
-                                        private void InitializeComponent()
+                                                private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BSFiberAboutBox));
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
@@ -134,12 +130,8 @@
             this.tableLayoutPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).EndInit();
             this.ResumeLayout(false);
-
         }
-
-        #endregion
-
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
+                private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
         private System.Windows.Forms.PictureBox logoPictureBox;
         private System.Windows.Forms.Label labelProductName;
         private System.Windows.Forms.Label labelVersion;

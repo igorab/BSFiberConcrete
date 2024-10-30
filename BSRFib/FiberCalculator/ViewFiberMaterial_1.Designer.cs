@@ -3,7 +3,6 @@
     partial class ViewFiberMaterial_1
     {
                                 private System.ComponentModel.IContainer components = null;
-
                                         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -12,10 +11,7 @@
             }
             base.Dispose(disposing);
         }
-
-        #region Код, автоматически созданный конструктором компонентов
-
-                                        private void InitializeComponent()
+                                                private void InitializeComponent()
         {
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.label_Hf = new System.Windows.Forms.Label();
@@ -250,11 +246,8 @@
             this.tableLayoutPanel3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
-
-        #endregion
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+                private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label10;

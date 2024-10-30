@@ -9,16 +9,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
 namespace BSFiberConcrete.DeformationDiagram
 {
     public class CalcDeformDiagram
     {
         public string typeMaterial;
         public string typeDiagram;
-
-        #region Характеристики Материала для построения диаграммы деформации на растяжение (фибробетон)
-                                public double Rt_n;
+                                        public double Rt_n;
                                 public double Rt1;
                                 public double Rt2_n;
                                 public double Rt3_n;
@@ -27,62 +24,41 @@ namespace BSFiberConcrete.DeformationDiagram
         public double et1;
         public double et2;
         public double et3;
-        #endregion
-
-        #region Характеристик для построения диаграммы деформации на сжатие (для бетона и фибробетона)
-                                public double R_n;
+                                                public double R_n;
                                 public double R1;
                                 public double E;
                 public double e0;
         public double e1;
         public double e2;
-        # endregion 
-
-
-
-                                private UserControl _deformationsView;
-
+                                        private UserControl _deformationsView;
         private double[] _valuesRelativeDeformation;
-
                                 public double[] deformsArray;
-
-
-
                                         public CalcDeformDiagram(string[] typesDiagram, double[] resists, double[] elasticity)
         {
             
             typeMaterial = typesDiagram[0];
             typeDiagram = typesDiagram[1];
-
             R_n = resists[0];
             Rt_n = resists[1];
             Rt2_n = resists[2];
             Rt3_n = resists[3];
-
             E = elasticity[0];
             Et = elasticity[1];
-
             if (typeMaterial == BSHelper.FiberConcrete)
             {
                                                 _valuesRelativeDeformation = new double[] { 0.003, 0, 0.0035, 0, 0, 0.004, 0.015 };
                 SetValuesRelativeDeformation();
                 _deformationsView = new FiberBetonDeformationView(_valuesRelativeDeformation);
-
                             }
             else if (typeMaterial == BSHelper.Rebar)
             {
                 _valuesRelativeDeformation = new double[] { 0, 0, 0.025};
                 SetValuesRelativeDeformation();
                 _deformationsView = new RebarDeformationView(_valuesRelativeDeformation);
-
             }
-
         }
-
-
                                         public void SetValuesRelativeDeformation()
         {
-
             if (typeMaterial == BSHelper.FiberConcrete)
             {
                                 e0 = _valuesRelativeDeformation[0];
@@ -90,7 +66,6 @@ namespace BSFiberConcrete.DeformationDiagram
                                                 et2 = _valuesRelativeDeformation[5];
                 et3 = _valuesRelativeDeformation[6];
                 FillDiagramsData();
-
                 _valuesRelativeDeformation[1] = e1;
                 _valuesRelativeDeformation[3] = et0;
                 _valuesRelativeDeformation[4] = et1;
@@ -104,8 +79,6 @@ namespace BSFiberConcrete.DeformationDiagram
                 _valuesRelativeDeformation[1] = e1;
             }
         }
-
-
                                 private void FillDiagramsData()
         {
             if (typeMaterial == BSHelper.Concrete || typeMaterial == BSHelper.FiberConcrete)
@@ -115,7 +88,6 @@ namespace BSFiberConcrete.DeformationDiagram
                 else if (typeDiagram == BSHelper.ThreeLineDiagram)
                 { R1 = R_n * 0.6; }
                 e1 = R1 / E;
-
                 et0 = Rt_n / Et;
                 et1 = et0 + 0.0001;
                                             }
@@ -133,11 +105,9 @@ namespace BSFiberConcrete.DeformationDiagram
                 }
                 e1 = R1 / E;
                 et1 = Rt1 / Et;
-
                 e0 = e1 + 0.002;
                 et0 = et1 + 0.002;
                                             }
-
             if (typeMaterial == BSHelper.Concrete)
             {
                 if (typeDiagram == BSHelper.TwoLineDiagram)
@@ -160,8 +130,6 @@ namespace BSFiberConcrete.DeformationDiagram
                 { deformsArray = new double[] { -e2, -e0, -e1, 0, et1, et0, et2 }; }
             }
         }
-
-
                     public double[,] Calculate()
         {
             double[,] result = new double[1, 1];
@@ -187,19 +155,15 @@ namespace BSFiberConcrete.DeformationDiagram
             }    
             return result;
         }
-
-
                                                 public double getResists(double epsilon)
         {
             double res = 0;
-
             if (typeMaterial == BSHelper.Rebar)
             {
                                 if (epsilon > 0)
                 {
                     if (epsilon > et2)
                         return res;
-
                     if (typeDiagram == BSHelper.ThreeLineDiagram)
                     {
                         if (0 < epsilon && epsilon <= et1)
@@ -221,7 +185,6 @@ namespace BSFiberConcrete.DeformationDiagram
                 {
                     if (epsilon < -e2)
                         return res;
-
                     if (typeDiagram == BSHelper.ThreeLineDiagram)
                     {
                         if (epsilon < 0  && -e1 <= epsilon)
@@ -269,7 +232,6 @@ namespace BSFiberConcrete.DeformationDiagram
                 {
                                         if (epsilon < -et3)
                     { return res; }
-
                     if (epsilon < 0 && -et0 <= epsilon)
                     { res = Et * epsilon; }
                     if (epsilon < -et0 && -et1 <= epsilon)
@@ -282,35 +244,22 @@ namespace BSFiberConcrete.DeformationDiagram
                     {
                         res = -Rt2_n * (1 + (1 - Rt3_n / Rt2_n) * (epsilon + et2) / (et3 - et2));
                                             }
-
                 }
             }
-
-
-
-
-
-
                                                                                                                                                                                                                                                                                                                                                 
                                                                                                                                                                                     
-
             return res;
         }
-
-
         public void UpDateUserControll(TableLayoutPanel table)
         {
             table.Controls.Add(_deformationsView, 0, 0);
             _deformationsView.Dock = System.Windows.Forms.DockStyle.Fill;
         }
     }
-
-
     public static class DataForDeformDiagram
     {
                 public static double[] resists;
         public static double[] deforms;
         public static double[] E;
-
     }
 }

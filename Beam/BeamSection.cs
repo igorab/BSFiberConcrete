@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-
 namespace BSFiberConcrete
 {
                 [Flags, Description("Сечение балки")]

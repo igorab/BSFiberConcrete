@@ -3,7 +3,6 @@
     partial class BSBeamCalcView
     {
                                 private System.ComponentModel.IContainer components = null;
-
                                         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -12,10 +11,7 @@
             }
             base.Dispose(disposing);
         }
-
-        #region Windows Form Designer generated code
-
-                                        private void InitializeComponent()
+                                                private void InitializeComponent()
         {
             this.panel = new System.Windows.Forms.Panel();
             this.SuspendLayout();
@@ -33,11 +29,7 @@
             this.Text = "BSBeam";
             this.Load += new System.EventHandler(this.BSBeamCalcView_Load);
             this.ResumeLayout(false);
-
         }
-
-        #endregion
-
-        private System.Windows.Forms.Panel panel;
+                private System.Windows.Forms.Panel panel;
     }
 }

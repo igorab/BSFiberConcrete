@@ -3,7 +3,6 @@
     partial class BSRFibLabGraph
     {
                                 private System.ComponentModel.IContainer components = null;
-
                                         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -12,10 +11,7 @@
             }
             base.Dispose(disposing);
         }
-
-        #region Windows Form Designer generated code
-
-                                        private void InitializeComponent()
+                                                private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
@@ -438,12 +434,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numHsp)).EndInit();
             this.tableLayoutPanel2.ResumeLayout(false);
             this.ResumeLayout(false);
-
         }
-
-        #endregion
-
-        private System.Windows.Forms.DataVisualization.Charting.Chart ChartFaF;
+                private System.Windows.Forms.DataVisualization.Charting.Chart ChartFaF;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelCalcRes;
         private System.Windows.Forms.Label lblF05;

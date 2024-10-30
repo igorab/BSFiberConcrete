@@ -6,7 +6,6 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
 namespace BSFiberConcrete
 {
     partial class BSFiberAboutBox : Form
@@ -21,10 +20,7 @@ namespace BSFiberConcrete
             this.labelCompanyName.Text = AssemblyCompany;
             this.textBoxDescription.Text = AssemblyDescription;
         }
-
-        #region Методы доступа к атрибутам сборки
-
-        public string AssemblyTitle
+                public string AssemblyTitle
         {
             get
             {
@@ -40,7 +36,6 @@ namespace BSFiberConcrete
                 return System.IO.Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().CodeBase);
             }
         }
-
         public string AssemblyVersion
         {
             get
@@ -48,7 +43,6 @@ namespace BSFiberConcrete
                 return Assembly.GetExecutingAssembly().GetName().Version.ToString();
             }
         }
-
         public string AssemblyDescription
         {
             get
@@ -61,7 +55,6 @@ namespace BSFiberConcrete
                 return ((AssemblyDescriptionAttribute)attributes[0]).Description;
             }
         }
-
         public string AssemblyProduct
         {
             get
@@ -74,7 +67,6 @@ namespace BSFiberConcrete
                 return ((AssemblyProductAttribute)attributes[0]).Product;
             }
         }
-
         public string AssemblyCopyright
         {
             get
@@ -87,7 +79,6 @@ namespace BSFiberConcrete
                 return ((AssemblyCopyrightAttribute)attributes[0]).Copyright;
             }
         }
-
         public string AssemblyCompany
         {
             get
@@ -100,16 +91,12 @@ namespace BSFiberConcrete
                 return ((AssemblyCompanyAttribute)attributes[0]).Company;
             }
         }
-        #endregion
-
-        private void okButton_Click(object sender, EventArgs e)
+                private void okButton_Click(object sender, EventArgs e)
         {
             this.Close();
         }
-
         private void BSFiberAboutBox_Load(object sender, EventArgs e)
         {
-
         }
     }
 }

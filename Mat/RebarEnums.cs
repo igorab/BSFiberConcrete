@@ -4,10 +4,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace BSFiberConcrete
 {
-
     [Description("Тип предела текучести")]
     public enum TypeYieldStress
     {

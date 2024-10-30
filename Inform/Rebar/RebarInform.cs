@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
 namespace BSFiberConcrete.Inform.Rebar
 {
     public partial class RebarInform : Form

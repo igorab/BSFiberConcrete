@@ -3,7 +3,6 @@
     partial class BSFactors
     {
                                 private System.ComponentModel.IContainer components = null;
-
                                         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -12,10 +11,7 @@
             }
             base.Dispose(disposing);
         }
-
-        #region Windows Form Designer generated code
-
-                                        private void InitializeComponent()
+                                                private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.gridFactors = new System.Windows.Forms.DataGridView();
@@ -81,12 +77,8 @@
             this.Load += new System.EventHandler(this.BSFactors_Load);
             ((System.ComponentModel.ISupportInitialize)(this.gridFactors)).EndInit();
             this.ResumeLayout(false);
-
         }
-
-        #endregion
-
-        private System.Windows.Forms.DataGridView gridFactors;
+                private System.Windows.Forms.DataGridView gridFactors;
         private System.Windows.Forms.Button btnClose;
         private TestGrid.DataGridViewProgressColumn dataGridViewProgressColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Factor;

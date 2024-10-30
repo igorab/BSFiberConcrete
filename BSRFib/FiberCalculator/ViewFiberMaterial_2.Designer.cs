@@ -3,7 +3,6 @@
     partial class ViewFiberMaterial_2
     {
                                 private System.ComponentModel.IContainer components = null;
-
                                         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -12,10 +11,7 @@
             }
             base.Dispose(disposing);
         }
-
-        #region Код, автоматически созданный конструктором компонентов
-
-                                        private void InitializeComponent()
+                                                private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
             this.cmbFiberMaterialType = new System.Windows.Forms.ComboBox();
@@ -386,12 +382,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.num_l)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
-
-        #endregion
-
-        private System.Windows.Forms.Label label1;
+                private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cmbFiberMaterialType;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.Label label_Hf;

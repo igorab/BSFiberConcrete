@@ -1,11 +1,9 @@
 ﻿using System.Windows.Forms;
-
 namespace BSBeamCalculator
 {
     partial class BeamCalculatorControl
     {
                                 private System.ComponentModel.IContainer components = null;
-
                                         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -14,10 +12,7 @@ namespace BSBeamCalculator
             }
             base.Dispose(disposing);
         }
-
-        #region Код, автоматически созданный конструктором компонентов
-
-                                        private void InitializeComponent()
+                                                private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BeamCalculatorControl));
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
@@ -560,10 +555,8 @@ namespace BSBeamCalculator
             this.tableLayoutPanel6.ResumeLayout(false);
             this.tableLayoutPanel7.ResumeLayout(false);
             this.ResumeLayout(false);
-
         }
-        #endregion
-        private System.Windows.Forms.Button button1;
+                private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.NumericUpDown numericUpDown1;

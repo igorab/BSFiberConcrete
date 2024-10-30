@@ -3,7 +3,6 @@
     partial class BSDeflectionsUlt
     {
                                 private System.ComponentModel.IContainer components = null;
-
                                         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -12,10 +11,7 @@
             }
             base.Dispose(disposing);
         }
-
-        #region Windows Form Designer generated code
-
-                                        private void InitializeComponent()
+                                                private void InitializeComponent()
         {
             this.tabControlDeflection = new System.Windows.Forms.TabControl();
             this.tabPageVertical = new System.Windows.Forms.TabPage();
@@ -75,12 +71,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridVertical)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridHorizontal)).EndInit();
             this.ResumeLayout(false);
-
         }
-
-        #endregion
-
-        private System.Windows.Forms.TabControl tabControlDeflection;
+                private System.Windows.Forms.TabControl tabControlDeflection;
         private System.Windows.Forms.TabPage tabPageVertical;
         private System.Windows.Forms.DataGridView gridVertical;
         private System.Windows.Forms.TabPage tabPageHorizontal;

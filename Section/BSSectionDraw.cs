@@ -8,7 +8,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
 namespace BSFiberConcrete.Section
 {
     public partial class BSSectionDraw : Form
@@ -19,12 +18,10 @@ namespace BSFiberConcrete.Section
         Pen p = new Pen(Color.Black, 4);
         private int N = 20;
         bool drawPoint = false;
-
         public BSSectionDraw()
         {
             InitializeComponent();
         }
-
         private void BSSectionDraw_Load(object sender, EventArgs e)
         {
             this.Width = 900;
@@ -33,7 +30,6 @@ namespace BSFiberConcrete.Section
             g = Graphics.FromImage(bm);
             g.Clear(Color.White);
             pic.Image = bm;
-
             Pen p = new Pen(Color.Red);
             
             for (int i = 0; i < N-1; i++)
@@ -42,12 +38,10 @@ namespace BSFiberConcrete.Section
                 g.DrawLine(p, new Point(0, (pic.Height / N * (i + 1))), new Point(pic.Width, (pic.Height / N * (i + 1))));
             }
         }
-
         private void pic_MouseDown(object sender, MouseEventArgs e)
         {
             int X = pic.Width / N;
             int Y = pic.Height / N;
-
             for (int i = 1; i < N; i++)
             {
                 if (e.X <= (X * i))
@@ -72,12 +66,10 @@ namespace BSFiberConcrete.Section
                 }
             }
         }
-
         private void btnPoint_Click(object sender, EventArgs e)
         {
             drawPoint = !drawPoint;
         }
-
         private void btnSectionGrid_Click(object sender, EventArgs e)
         {
             
@@ -88,6 +80,5 @@ namespace BSFiberConcrete.Section
             BSCalcNDM calcNDM = new BSCalcNDM(1);
             calcNDM.Run();
         }
-
     }
 }

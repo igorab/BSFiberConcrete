@@ -6,7 +6,6 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace BSFiberConcrete
 {
     [DisplayName("Расчет элементов на действие продольной силы")]    
@@ -16,11 +15,9 @@ namespace BSFiberConcrete
         {
             ReportName = typeof(BSFiberReport_N).GetCustomAttribute<DisplayNameAttribute>().DisplayName;
         }
-
         public override void InitFromFiberCalc(BSFiberCalc_MNQ _fiberCalc)
         {
             base.InitFromFiberCalc(_fiberCalc);
-
             m_Efforts = new Dictionary<string, double>()
             {
                 {"My,[кг*см]", m_Efforts["My"]},

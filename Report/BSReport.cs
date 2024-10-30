@@ -9,36 +9,29 @@ using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
 namespace BSFiberConcrete.Report
 {
     public class BSReport
     {
         private BeamSection m_BeamSection;
-
         private Dictionary<string, double> m_Beam;
         
         private LameUnitConverter _UnitConverter;
-
         public BSCalcResultNDM CalcRes { get; set; }
-
         public static void RunFromCode(BeamSection m_BeamSection, BSCalcResultNDM calcRes)
         {
             BSReport bSReport = new BSReport(m_BeamSection);
             bSReport.CalcRes = calcRes;
             bSReport.CreateReportNDM();
         }
-
                                 public static void RunReport(BeamSection m_BeamSection, List<BSCalcResultNDM> calcResults)
         {
             string reportName = "Расчет по прочности нормальных сечений на основе нелинейной деформационной модели";
             string path2file = "FiberCalculationMultiReport.htm";
             File.CreateText(path2file).Dispose();
-
                         BSReport bSReport = new BSReport(m_BeamSection);
             bSReport.CalcRes = calcResults[0];
             string pathToHtmlFile = bSReport.CreateHeaderMultiReport(path2file, m_BeamSection, reportName);
-
             for (int i = 0; calcResults.Count > i; i++)
             {
                 using (StreamWriter w = new StreamWriter(path2file, true, Encoding.UTF8))
@@ -49,11 +42,8 @@ namespace BSFiberConcrete.Report
                 bSReport.CalcRes = calcResults[i];
                 pathToHtmlFile = bSReport.CreateBodyMultiReport(path2file, m_BeamSection, reportName);
             }
-
             System.Diagnostics.Process.Start(path2file);
         }
-
-
         public BSReport(BeamSection _beamSection)
         {
             m_BeamSection = _beamSection;
@@ -63,7 +53,6 @@ namespace BSFiberConcrete.Report
         private void InitReportSections(ref BSFiberReport report)
         {
             if (CalcRes == null) return;
-
             report.Beam = CalcRes.Beam;
             report.Coeffs = CalcRes.Coeffs;
             report.Efforts = CalcRes.Efforts;
@@ -76,7 +65,6 @@ namespace BSFiberConcrete.Report
             report.Path2BeamDiagrams = CalcRes.Path2BeamDiagrams;
             report._unitConverter = CalcRes.UnitConverter;
         }
-
         private string CreateReport(int _fileId,
                                     BeamSection _BeamSection,
                                     string _reportName = "",
@@ -86,15 +74,11 @@ namespace BSFiberConcrete.Report
             {
                 string path = "";
                 BSFiberReport report = new BSFiberReport();
-
                 if (_reportName != "")
                     report.ReportName = _reportName;
-
                 report.BeamSection = _BeamSection;
                 report.UseReinforcement = _useReinforcement;
-
                 InitReportSections(ref report);
-
                 path = report.CreateReport(_fileId);
                 return path;
             }
@@ -103,8 +87,6 @@ namespace BSFiberConcrete.Report
                 throw _e;
             }
         }
-
-
                                                                         private string CreateHeaderMultiReport(string pathToFile,
                                     BeamSection _BeamSection,
                                     string _reportName = "",
@@ -114,15 +96,11 @@ namespace BSFiberConcrete.Report
             {
                 string path = "";
                 BSFiberReport report = new BSFiberReport();
-
                 if (_reportName != "")
                     report.ReportName = _reportName;
-
                 report.BeamSection = _BeamSection;
                 report.UseReinforcement = _useReinforcement;
-
                 InitReportSections(ref report);
-
                 report.HeaderForMultiReport(pathToFile);
                 return path;
             }
@@ -131,8 +109,6 @@ namespace BSFiberConcrete.Report
                 throw _e;
             }
         }
-
-
                                                                         private string CreateBodyMultiReport(string pathToFile,
                                     BeamSection _BeamSection,
                                     string _reportName = "",
@@ -142,15 +118,11 @@ namespace BSFiberConcrete.Report
             {
                 string path = "";
                 BSFiberReport report = new BSFiberReport();
-
                 if (_reportName != "")
                     report.ReportName = _reportName;
-
                 report.BeamSection = _BeamSection;
                 report.UseReinforcement = _useReinforcement;
-
                 InitReportSections(ref report);
-
                 report.BodyForMultiReport(pathToFile);
                 return path;
             }
@@ -159,7 +131,6 @@ namespace BSFiberConcrete.Report
                 throw _e;
             }
         }
-
         [DisplayName("Расчет по прочности нормальных сечений на основе нелинейной деформационной модели")]
         public void CreateReportNDM()
         {
@@ -176,7 +147,6 @@ namespace BSFiberConcrete.Report
                 {
                     MessageBox.Show("Не задан атрибут DisplayName метода");
                 }
-
                 string pathToHtmlFile = CreateReport(1, m_BeamSection, reportName);
                 
                 System.Diagnostics.Process.Start(pathToHtmlFile);

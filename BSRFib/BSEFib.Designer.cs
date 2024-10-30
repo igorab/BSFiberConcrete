@@ -3,7 +3,6 @@
     partial class BSEFib
     {
                                 private System.ComponentModel.IContainer components = null;
-
                                         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -12,10 +11,7 @@
             }
             base.Dispose(disposing);
         }
-
-        #region Windows Form Designer generated code
-
-                                        private void InitializeComponent()
+                                                private void InitializeComponent()
         {
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.labelEb = new System.Windows.Forms.Label();
@@ -164,12 +160,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numMu_fv)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numEfb)).EndInit();
             this.ResumeLayout(false);
-
         }
-
-        #endregion
-
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
+                private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
         private System.Windows.Forms.Label labelEb;
         private System.Windows.Forms.Label labelEf;
         private System.Windows.Forms.Label labelMu_fv;

@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
 namespace BSFiberConcrete
 {
     public partial class CalcCrackingForm : Form
@@ -15,7 +14,6 @@ namespace BSFiberConcrete
         public CalcCrackingForm(DataTable resultTable)
         {
             InitializeComponent();
-
             if (resultTable != null)
             {
                 dataGridView1.DataSource = resultTable;

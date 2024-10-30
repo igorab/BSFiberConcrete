@@ -10,10 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Schema;
-
 namespace BSBeamCalculator
 {
-
     public class BeamDiagram
     {
                                 private double _force;
@@ -21,40 +19,28 @@ namespace BSBeamCalculator
         protected double _endPointForce;
                                 private double _beamLength;
                 public SimpleBeamDiagramCase simpleDiagram;
-
         public BeamDiagram(string supportType, string loadType, double length, double force, double x1, double x2)
         {
-
                                                 
             if (loadType == "Concentrated" && x1 > length)
             { throw new Exception("Пользовательская ошибка. Значение 'Позиция x' не должно превышать 'Длина'."); }
-
             _beamLength = length;
             simpleDiagram = new SimpleBeamDiagramCase(supportType, loadType);
                         _force = force;
             _startPointForce = x1;
                     }
-
-
-
         public DiagramResult CalculateBeamDiagram()
         {
             
                                                                                                 double[][] values_xQ_xM= simpleDiagram.CalculateValuesForDiagram(_beamLength, _startPointForce, _endPointForce, _force);
             DiagramResult result = new DiagramResult(values_xQ_xM);
-
-
             return result;
         }
     }
-
-
-
                         public  class SimpleBeamDiagramCase
     {
                                 public string supportBeamType;
                                 public string loadBeamType;
-
                                 public static List<string> supportBeamTypeValue = new List<string>()
         { 
             "Fixed-No",
@@ -69,11 +55,8 @@ namespace BSBeamCalculator
             "Uniformly-Distributed",
             "Concentrated",
         };
-
                                 public bool IsCalculateBeamDeflection;
                                 public Func<double, double, double> CalculateBeamDeflection;
-
-
         public SimpleBeamDiagramCase(string supportType, string loadType)
         {
             if (supportBeamTypeValue.Contains(supportType) && loadBeamTypeValue.Contains(loadType))
@@ -86,19 +69,16 @@ namespace BSBeamCalculator
                 throw new Exception("Программная ошибка. Неккорректно определены характеристики балки");
             }
         }
-
                                                                                 public double[][] CalculateValuesForDiagram(double length, double c1, double c2, double F)
         {
             double a = c1;
             double b = length - c1;
             double al = a / length;
             double bl = b / length;
-
             double R1 = 0;
             double R2 = 0;
             double M1 = 0;
             double M2 = 0;
-
             switch (supportBeamType)
             {
                 case "Fixed-Fixed":
@@ -108,7 +88,6 @@ namespace BSBeamCalculator
                         R2 = F * (a + 3 * b) * Math.Pow(a, 2) / Math.Pow(length, 3);
                         M1 = F * a * Math.Pow(b, 2) / Math.Pow(length, 2);
                         M2 = F * b * Math.Pow(a, 2) / Math.Pow(length, 2);
-
                         IsCalculateBeamDeflection = false;
                                             }
                     else if (loadBeamType == "Uniformly-Distributed")
@@ -117,11 +96,9 @@ namespace BSBeamCalculator
                         R2 = F * length / 2;
                         M1 = F * Math.Pow(length, 2) / 12;
                         M2 = F * Math.Pow(length, 2) / 12;
-
                         IsCalculateBeamDeflection = false;
                                                                     }
                     break;
-
                 case "Fixed-No":
                     if (loadBeamType == "Concentrated")
                     {
@@ -129,7 +106,6 @@ namespace BSBeamCalculator
                         M1 = F * a;
                         R2 = 0;
                         M2 = 0;
-
                         IsCalculateBeamDeflection = true;
                         CalculateBeamDeflection = (x, D) => 
                         {
@@ -144,7 +120,6 @@ namespace BSBeamCalculator
                         R2 = 0;
                         M1 = F * Math.Pow(length,2) /2;
                         M2 = 0;
-
                         IsCalculateBeamDeflection = true;
                         CalculateBeamDeflection = (x, D) =>
                         {
@@ -153,7 +128,6 @@ namespace BSBeamCalculator
                         };
                     }    
                     break;
-
                 case "No-Fixed":
                     if (loadBeamType == "Concentrated")
                     {
@@ -161,14 +135,12 @@ namespace BSBeamCalculator
                         M1 = 0;
                         R2 = F;
                         M2 = F * b;
-
                         IsCalculateBeamDeflection = true;
                         CalculateBeamDeflection = (x, D) => {
                             double x1 = length - x;
                             if (x1 <= a)
                             { return -F * Math.Pow(x1, 2) / (6 * D) * (3 * a - x1); }
                             return -F * Math.Pow(a, 2) / (6 * D) * (3 * x1 - a);
-
                         };
                     }
                     else if (loadBeamType == "Uniformly-Distributed")
@@ -177,8 +149,6 @@ namespace BSBeamCalculator
                         R2 = F * length;
                         M1 = 0;
                         M2 = F * Math.Pow(length, 2) / 2;
-
-
                         IsCalculateBeamDeflection = true;
                         CalculateBeamDeflection = (x, D) =>
                         {
@@ -188,7 +158,6 @@ namespace BSBeamCalculator
                         };
                     }
                     break;
-
                 case "Fixed-Movable":
                     if (loadBeamType == "Concentrated")
                     {
@@ -196,7 +165,6 @@ namespace BSBeamCalculator
                         R2 = F * Math.Pow(al, 2) * (3 - al) / 2;
                         M1 = F * a * b * (length + b)/(2 * Math.Pow(length, 2));
                         M2 = 0;
-
                         IsCalculateBeamDeflection = false;
                                                                     }
                     else if (loadBeamType == "Uniformly-Distributed")
@@ -205,11 +173,9 @@ namespace BSBeamCalculator
                         R2 = F * length * 3 / 8;
                         M1 = F * Math.Pow(length, 2) / 8;
                         M2 = 0;
-
                         IsCalculateBeamDeflection = false;
                     }
                     break;
-
                 case "Movable-Fixed":
                     if (loadBeamType == "Concentrated")
                     {
@@ -217,7 +183,6 @@ namespace BSBeamCalculator
                         R2 = F * al * (3 - Math.Pow(al, 2)) / 2;
                         M1 = 0;
                         M2 = F * a * b * (length + a) / (2 * Math.Pow(length, 2));
-
                         IsCalculateBeamDeflection = false; 
                                                                     }
                     else if (loadBeamType == "Uniformly-Distributed")
@@ -226,11 +191,9 @@ namespace BSBeamCalculator
                         R2 = F * length * 5 / 8;
                         M1 = 0;
                         M2 = F * Math.Pow(length, 2) / 8;
-
                         IsCalculateBeamDeflection = false;
                     }
                     break;
-
                 case "Pinned-Movable":
                     if (loadBeamType == "Concentrated")
                     {
@@ -238,7 +201,6 @@ namespace BSBeamCalculator
                         R2 = F * c1 / length;
                         M1 = 0;
                         M2 = 0;
-
                         IsCalculateBeamDeflection = true;
                         CalculateBeamDeflection = (x, D) =>
                         { return -F *  b * Math.Pow(length, 2) / (6 * D) * x / length * 
@@ -250,7 +212,6 @@ namespace BSBeamCalculator
                         R2 = F * length / 2;
                         M1 = 0;
                         M2 = 0;
-
                         IsCalculateBeamDeflection = true;
                         CalculateBeamDeflection = (x, D) =>
                         {
@@ -275,8 +236,6 @@ namespace BSBeamCalculator
             else
             { throw new Exception("Программная ошибка. Не предусмотренная нагрузка на балку."); }
         }
-
-
                                                                 public double[][] CalculateSimpleConcentratedLoad(double[] load, double[] len)
         {
             double F = load[0];
@@ -287,16 +246,12 @@ namespace BSBeamCalculator
             double length = len[0];
             double a = len[1];
             double b = len[2];
-
                         double[] xQ = new double[] { 0, 0, a, a, length, length };
                         double[] Q = new double[] { 0, R1, R1, -R2, -R2, 0 };
                         double[] xM = new double[] { 0, 0, a, length, length };
             double[] M = new double[] { 0, M1, M1 - R1 * a, M2, 0 };
-
             return new double[4][] { xQ, Q, xM, M };
         }
-
-
                                                                 public double[][] CalculateSimpDistributedleLoad(double[] load, double[] len)
         {
             double F = load[0];
@@ -307,10 +262,8 @@ namespace BSBeamCalculator
             double length = len[0];
             double a = len[1];
             double b = len[2];
-
                         double[] xQ = new double[] { 0, 0, length, length };
             double[] Q = new double[] { 0, R1, -R2, 0 };
-
                         int n = 102;             int m = n - 2;
             double[] xM = new double[n];
             double[] M = new double[n];
@@ -328,14 +281,5 @@ namespace BSBeamCalculator
             M[M.Length-1] = 0;
             return new double[4][] { xQ, Q, xM, M };
         }
-
-
-
-
-
-
-
-
-
     }
 }

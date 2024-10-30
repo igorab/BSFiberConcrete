@@ -5,14 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
 namespace BSFiberConcrete.BSRFib.FiberCalculator
 {
                     public class FiberCoef_K
     {
-        # region Private Properties
-
-        private List<Fiber_K> _dataFiber_Kor;
+                private List<Fiber_K> _dataFiber_Kor;
         private List<Fiber_K> _dataFiber_Kn;
         private Dictionary<string, double> keyValueBL = new Dictionary<string, double>()
         {
@@ -24,24 +21,13 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
             { "BL_10", 10 },
             { "BL_20", 20 },
             { "BL_21", 21 }
-
         };
-
-
-
-
-
-
                                         private double _h;
                                 private double _b;
                                 private double _lf;
-
                                         private double _Kor;
                                         private double _Kn;
-        #endregion
-
-        #region Fields
-        public double Kor
+                        public double Kor
         {
             get { return _Kor; }
             private set
@@ -57,58 +43,39 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
                 _Kn = value;
             }
         }
-
-
-        #endregion
-
-        public FiberCoef_K(double h, double b, double lf)
+                public FiberCoef_K(double h, double b, double lf)
         {
                         _dataFiber_Kn = BSData.LoadFiber_Kn();
             _dataFiber_Kor = BSData.LoadFiber_Kor();
-
-
             ValidateData();
-
             _h = h;
             _b = b;
             _lf = lf;
-
                         Calculate_Kor();
             Calculate_Kn();
         }
-
                                 private void Calculate_Kn()
         {
             Kn = Math.Round(Calculate_K(_dataFiber_Kn), 3);
         }
-
-
                                 private void Calculate_Kor()
         {
             Kor = Math.Round(Calculate_K(_dataFiber_Kor), 3);
-
         }
-
-
                                         private double Calculate_K(List<Fiber_K> dataFiber_K)
         {
             double result = 0;
-
             double hl = _h / _lf;
             double bl = _b / _lf;
-
             SetSides(ref hl, ref bl);
-
             int? indexHL = null;
             Fiber_K row = new Fiber_K();
-
                         if (hl < dataFiber_K[0].HL)
             { indexHL = 0; }
                         else if (hl > dataFiber_K[dataFiber_K.Count - 2].HL)
             { indexHL = dataFiber_K.Count - 1; }
                         else if (dataFiber_K.FindIndex(x => x.HL == hl) >= 0)
             { indexHL = dataFiber_K.FindIndex(x => x.HL == hl); }
-
             if (indexHL != null)
             { row = dataFiber_K[(int)indexHL]; }
                         else
@@ -132,7 +99,6 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
                     }
                 }
             }
-
             var valuesBL = keyValueBL.Values.ToList();
             int? indexBL = null;
                         if (bl < valuesBL[0])
@@ -141,7 +107,6 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
             { indexBL = valuesBL.Count - 1; }
                         else if (valuesBL.FindIndex(x => x == bl) >= 0)
             { indexBL = valuesBL.FindIndex(x => x == bl); }
-
             if (indexBL != null)
             {
                 string name = keyValueBL.Keys.ToList()[(int)indexBL];
@@ -154,7 +119,6 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
                     if (delta >= 0)
                     {
                         double ro = (bl - valuesBL[i - 1]) / (valuesBL[i] - valuesBL[i - 1]);
-
                         string name0 = keyValueBL.Keys.ToList()[i - 1];
                         string name1 = keyValueBL.Keys.ToList()[i];
                         double k0 = (double)row.GetType().GetProperty(name0).GetValue(row);
@@ -166,44 +130,33 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
             }
             return result;
         }
-
-
                                 public void SetH(double h)
         {
             _h = h;
             Calculate_Kor();
             Calculate_Kn();
         }
-
-
                                 public void SetB(double b)
         {
             _b = b;
             Calculate_Kor();
             Calculate_Kn();
         }
-
-
                                 public void SetLen_f(double l)
         {
             _lf = l;
             Calculate_Kor();
             Calculate_Kn();
         }
-
-
                                                 private void SetSides(ref double hl, ref double bl)
         {
             if (hl > bl)
             {
-
                 double tmpValue = bl;
                 bl = hl;
                 hl = tmpValue;
             }
         }
-
-
         private void ValidateData()
         {
             for (int i = 1; i < keyValueBL.Keys.Count - 1; i++)

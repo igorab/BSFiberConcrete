@@ -8,7 +8,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
 namespace BSFiberConcrete.Setup
 {
     public partial class BSFiberClassSetup : Form
@@ -17,7 +16,6 @@ namespace BSFiberConcrete.Setup
         {
             InitializeComponent();
         }
-
         private void BSFiberSetup_Load(object sender, EventArgs e)
         {
             fiberClassBS.DataSource = BSData.LoadFiberClass();         

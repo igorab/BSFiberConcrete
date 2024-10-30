@@ -4,50 +4,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace BSFiberConcrete.BSRFib.FiberCalculator
 {
-
                 public class FiberMaterial : ViewModelBase
     {
-        # region Privat fields 
-
-                                private List<FiberKind> _DataFiberKind;
+                                        private List<FiberKind> _DataFiberKind;
                                 private List<FiberType> _DataFiberType;
         private List<FiberGeometry> _DataFiberGeometry;
         private List<FiberLength> _DataFiberLength;
-
                                 private List<FiberGeometry> _selectedFiberGeometry;
                                 private List<FiberLength> _selectedFiberLength;
-
                                 private int _indexFiberKind;
                                 private int _indexFiberType;
                                 private int _indexGeomerty;
                                 private int _indexLength;
                                         private bool _customUserData;
-
                                 private double _coef_C;
-
-
-
         private string _FiberName;
         private double _Rf_ser;
         private double _Rf;
         private double _Ef;
                                 private double _Hita_f;
                                 private double _Gamma_fb1;
-
-
         private double _Diameter;
         private double _Square;
         private double _Length;
-        #endregion
-
-
-
-        #region properties
-
-        public double coef_C { get => _coef_C; }
+                        public double coef_C { get => _coef_C; }
         public string FiberName
         {
             get => _FiberName;
@@ -102,8 +84,6 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
                 OnPropertyChanged();
             }
         }
-
-
         public double Diameter
         {
             get => _Diameter;
@@ -131,24 +111,18 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
                 OnPropertyChanged();
             }
         }
-        #endregion
-
-
-        public FiberMaterial()
+                public FiberMaterial()
         {
             _customUserData = false;
             _DataFiberKind = BSQuery.FiberKindLoad();
             _DataFiberType = BSQuery.FiberTypeLoad();
             _DataFiberGeometry = BSQuery.FiberGeometryLoad();
             _DataFiberLength = BSQuery.FiberLengthLoad();
-
-
                         SetIndexFiberKind(0);
             SetIndexFiberGeometry(0);
             SetIndexFiberLength(0);
             SetCoef_C(0);
         }
-
                                         public FiberMaterial(bool customUserData)
         {
             _customUserData = customUserData;
@@ -156,52 +130,38 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
             _DataFiberType = BSQuery.FiberTypeLoad();
             _DataFiberGeometry = BSQuery.FiberGeometryLoad();
             _DataFiberLength = BSQuery.FiberLengthLoad();
-
                         SetIndexFiberType(0, customUserData);
                         Rf = 440;
             Rf_ser = 460;
             Ef = 210000;
             Diameter = 0.3;
             Length = 20;
-
             SetCoef_C(0);
         }
-
-
                                         public void SetIndexFiberKind(int index)
         {
-
             if ((index < 0) || (index > _DataFiberKind.Count - 1))
             {
                 return;
             }
-
             _indexFiberKind = index;
-
             FiberName = _DataFiberKind[_indexFiberKind].Name;
             Rf_ser = _DataFiberKind[_indexFiberKind].Rfser;
             Rf = _DataFiberKind[_indexFiberKind].Rf;
             Ef = _DataFiberKind[_indexFiberKind].Ef;
             
             SetIndexFiberType(_DataFiberKind[index].TypeID);
-
             DefineListFiberGeometry();
-
-
         }
-
-
                                                 public void SetIndexFiberType(int index, bool? customUserData = null)
         {
             if ((index < 0) || (index > _DataFiberType.Count - 1))
             {
                 return;
             }
-
             _indexFiberType = index;
             Hita_f = _DataFiberType[_indexFiberType].Hita_f;
             Gamma_fb1 = _DataFiberType[_indexFiberType].Gamma_fb1;
-
             if (customUserData == null)
             { _customUserData = false; }
             else
@@ -210,37 +170,26 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
                 FiberName = _DataFiberType[_indexFiberType].Name;
             }
         }
-
                                         public void SetIndexFiberGeometry(int index)
         {
-
             if ((index < 0) || index > _selectedFiberGeometry.Count - 1)
             {
                 return;
             }
-
             _indexGeomerty = index;
             Diameter = _selectedFiberGeometry[_indexGeomerty].Diameter;
             Square = _selectedFiberGeometry[_indexGeomerty].Square;
-
             DefineListFiberLength();
         }
-
-
-
                                         public void SetIndexFiberLength(int index)
         {
             if ((index < 0) || index > _selectedFiberLength.Count - 1)
             {
                 return;
             }
-
             _indexLength = index;
             Length = _selectedFiberLength[_indexLength].Length;
-
         }
-
-
                                         public void SetCoef_C(int index)
         {
                         
@@ -249,8 +198,6 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
             else
             { _coef_C = 0.6; }
         }
-
-
                                         public void Set_Rf_ser(double r_f_ser)
         {
             Rf_ser = r_f_ser;
@@ -275,20 +222,15 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         {
             Length = len;
         }
-
-
                                         private void DefineListFiberGeometry()
         {
                         int gomertyIndex = _DataFiberKind[_indexFiberKind].IndexForGeometry;
             _selectedFiberGeometry = _DataFiberGeometry.Where(p => p.GeometryIndex == gomertyIndex).ToList();
-
             if (_selectedFiberGeometry == null)
             {
                 _selectedFiberGeometry = new List<FiberGeometry> { };
             }
         }
-
-
                                 private void DefineListFiberLength()
         {
                         int lengthIndex = _selectedFiberGeometry[_indexGeomerty].IndexForLength;
@@ -298,8 +240,6 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
                 _selectedFiberLength = new List<FiberLength> { };
             }
         }
-
-
                                         public List<string> GetFiberKind()
         {
             List<string> fiberKind = new List<string>();
@@ -307,9 +247,6 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
             { fiberKind.Add(fiberMat.Name); }
             return fiberKind;
         }
-
-
-
                                         public List<string> GetFiberType()
         {
             List<string> fiberType = new List<string>();
@@ -317,8 +254,6 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
             { fiberType.Add(fiberMat.Name); }
             return fiberType;
         }
-
-
                                         public List<string> GetFiberGeometries()
         {
             List<string> fiberGeometries = new List<string>();
@@ -335,8 +270,6 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
                             }
             return fiberGeometries;
         }
-
-
                                         public List<string> GetFiberLengths()
         {
             List<string> fiberLengths = new List<string>();
@@ -346,7 +279,5 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
             }
             return fiberLengths;
         }
-
-
     }
 }

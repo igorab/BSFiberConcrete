@@ -3,7 +3,6 @@
     partial class DeformDiagram
     {
                                 private System.ComponentModel.IContainer components = null;
-
                                         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -12,10 +11,7 @@
             }
             base.Dispose(disposing);
         }
-
-        #region Windows Form Designer generated code
-
-                                        private void InitializeComponent()
+                                                private void InitializeComponent()
         {
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
@@ -88,12 +84,8 @@
             this.tableLayoutPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
             this.ResumeLayout(false);
-
         }
-
-        #endregion
-
-        private System.Windows.Forms.DataVisualization.Charting.Chart chartDeformDiagram;
+                private System.Windows.Forms.DataVisualization.Charting.Chart chartDeformDiagram;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.IO.FileSystemWatcher fileSystemWatcher1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;

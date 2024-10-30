@@ -6,12 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
 namespace BSFiberConcrete
 {
     public class CalcOfLenRebar : ViewModelBase
     {
-
         private RebarMat _Rebar;
         private FiberConcreteMaterial _FiberConcrete;
         public RebarMat Rebar
@@ -24,16 +22,11 @@ namespace BSFiberConcrete
             get { return _FiberConcrete; }
             private set { _FiberConcrete = value; }
         }
-
                                         private double _alpha_1;
-
                 private double _Rbond;
         private double _l0_an;
         private double _lan;
-
-        #region Properties
-
-        public double alpha_1
+                public double alpha_1
         {
             get { return _alpha_1; }
             private set
@@ -69,19 +62,11 @@ namespace BSFiberConcrete
                 OnPropertyChanged();
             }
         }
-        #endregion
-
-
-
-
-
-        public CalcOfLenRebar(RebarMat rebar = null, FiberConcreteMaterial fiberConcrete = null )
+                public CalcOfLenRebar(RebarMat rebar = null, FiberConcreteMaterial fiberConcrete = null )
         {
             if (rebar == null) { Rebar = new RebarMat(); }
             if (fiberConcrete == null) { FiberConcrete = new FiberConcreteMaterial(); }
         }
-
-
         public void SetCoefAlpha_1(int index)
         {
             if (index == 0)             {
@@ -89,33 +74,23 @@ namespace BSFiberConcrete
             }
             else             { _alpha_1 = 0.75; }
         }
-
-
                                 public void Calculate()
         {
-
             Rbond = 0;
             l0_an = 0;
             lan = 0;
-
             Rbond = Rebar.Hita_1 * Rebar.Hita_2 * FiberConcrete.Rfbt;
             l0_an = Math.Round(Rebar.Rs * Rebar.Square / (Rbond * Rebar.us),3);
             lan = Math.Round(alpha_1 * l0_an, 3);
-
         }
-
-
-
         public void GenerateReport()
         {
             try
             {
                 BSRFibLabReport labReport = new BSRFibLabReport();
-
                 labReport.ReportName = "Определенеи длины анкеровки арматуры";
                 labReport.SampleDescr = "";
                 labReport.SampleName = "";
-
                 Dictionary<string, string> InputData = new Dictionary<string, string>()
                 {
                     ["Класс фибробетона по прочности на растяжение"] = FiberConcrete.Bft,
@@ -124,8 +99,6 @@ namespace BSFiberConcrete
                     ["Диаметр арматуры ds [мм] "] = Rebar.Diameter.ToString(),
                     ["Расчетное значения сопротивления арматуры растяжению Rs [МПа] "] = Convert.ToString(Math.Round(Rebar.Rs, 3)),
                 };
-
-
                 Dictionary<string, string> LabItems = new Dictionary<string, string>()
                 {
                     ["П 8.7. Базовая (основная) длина анкеровки l0,an [мм] "] = Convert.ToString(Math.Round(l0_an, 3)),

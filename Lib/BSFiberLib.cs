@@ -7,20 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BSFiberConcrete;
-
 namespace BSFiberConcrete
 {
     public class BSFiberLib
     {
                                 public const int CG1 = 1;
-
                                 public const int CG2 = 2;
-
         public const string RebarClassDefault = "A400";
-
         public const double Fi = 0.9;
-
-
                                 public static List<BSFiberBeton> BetonList => new List<BSFiberBeton>
         {            
             new BSFiberBeton{Id = 100, Name = "B1i", Type = 2, Rfbt3 = 1.0, Rfbn = 7.5 },
@@ -35,12 +29,10 @@ namespace BSFiberConcrete
             new BSFiberBeton{Id = 550, Name = "B5,5i", Type = 2 , Rfbt3 = 5.5, Rfbn = 39.5},
             new BSFiberBeton{Id = 600, Name = "B6i", Type = 2, Rfbt3 = 6.0, Rfbn = 43 }
         };
-
                 public static Dictionary<int, double> Fi_b_cr_75 = new Dictionary<int, double>
         {
             [10] = 2.8, [15] = 2.4, [20] = 2.0, [25] = 1.8, [30] = 1.6, [35] = 1.5, [40] = 1.4, [45] = 1.3, [50] = 1.2, [55] = 1.1, [60] = 1.0
         };
-
                 public static Dictionary<int, double> Fi_b_cr_45_75 = new Dictionary<int, double>
         {
             [10] = 3.9,
@@ -55,7 +47,6 @@ namespace BSFiberConcrete
             [55] = 1.5,
             [60] = 1.4
         };
-
                 public static Dictionary<int, double> Fi_b_cr_40 = new Dictionary<int, double>
         {
             [10] = 5.6,
@@ -70,11 +61,9 @@ namespace BSFiberConcrete
             [55] = 2.2,
             [60] = 2.0
         };
-
                 public static double CalcFi_b_cr(int _airHumidityId, int _betonClassId)
         {
             Dictionary<int, double> DFi = new Dictionary<int, double>();
-
             if (_airHumidityId == 1)
             {
                 DFi = Fi_b_cr_75;
@@ -91,19 +80,15 @@ namespace BSFiberConcrete
             {
                 return 0;
             }
-
             if (_betonClassId >= 10)
             {
                 int bClassId = _betonClassId;
                 if (_betonClassId > 60) bClassId = 60;
-
                 if (DFi.TryGetValue(bClassId, out double fivalue))
                     return fivalue;
             }
-
             return 0;
         }
-
                                 public static Elements PhysElements
         {
             get
@@ -123,7 +108,6 @@ namespace BSFiberConcrete
                 }               
             }
         }
-
                                 public static StrengthFactors StrengthFactors()
         {            
             try
@@ -132,7 +116,6 @@ namespace BSFiberConcrete
                 {
                     string sql = "select * from StrengthFactors where id = 1";
                     IEnumerable<StrengthFactors> rec = cnn.Query<StrengthFactors>(sql, new DynamicParameters());
-
                     StrengthFactors elements = rec?.Count() > 0 ? rec.First() : new StrengthFactors();
                     return elements;
                 }
@@ -142,6 +125,5 @@ namespace BSFiberConcrete
                 return new StrengthFactors { Yft = 1.3, Yb = 1.3, Yb1 = 0.9, Yb2 = 0.9, Yb3 = 0.9, Yb5 = 1 };
             }            
         }
-
     }
 }

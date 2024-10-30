@@ -35,7 +35,6 @@ namespace TestGrid
         {
             return emptyImage;
         }
-
         protected override void Paint(System.Drawing.Graphics g, System.Drawing.Rectangle clipBounds, System.Drawing.Rectangle cellBounds, int rowIndex, DataGridViewElementStates cellState, object value, object formattedValue, string errorText, DataGridViewCellStyle cellStyle, DataGridViewAdvancedBorderStyle advancedBorderStyle, DataGridViewPaintParts paintParts)
         {
             if (Convert.ToInt16(value) == 0 || value==null)
@@ -43,12 +42,9 @@ namespace TestGrid
                 value = 0;
             }
             int progressVal = Convert.ToInt32(value);
-
             float percentage = ((float)progressVal / 100.0f);             Brush backColorBrush = new SolidBrush(cellStyle.BackColor);
             Brush foreColorBrush = new SolidBrush(Color.Black);
-
                         base.Paint(g, clipBounds, cellBounds, rowIndex, cellState, value, formattedValue, errorText, cellStyle, advancedBorderStyle, (paintParts & ~DataGridViewPaintParts.ContentForeground));
-
             if (percentage >= 0.0)
             {
                         g.FillRectangle(new SolidBrush(Color.FromArgb(150, 0, 0)), cellBounds.X + 2, cellBounds.Y + 2, Convert.ToInt32((percentage * cellBounds.Width * 0.8)), cellBounds.Height/1- 10);

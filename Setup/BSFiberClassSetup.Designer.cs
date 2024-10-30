@@ -3,7 +3,6 @@
     partial class BSFiberClassSetup
     {
                                 private System.ComponentModel.IContainer components = null;
-
                                         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -12,10 +11,7 @@
             }
             base.Dispose(disposing);
         }
-
-        #region Windows Form Designer generated code
-
-                                        private void InitializeComponent()
+                                                private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
             this.dataGridFiberClass = new System.Windows.Forms.DataGridView();
@@ -57,12 +53,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridFiberClass)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fiberClassBS)).EndInit();
             this.ResumeLayout(false);
-
         }
-
-        #endregion
-
-        private System.Windows.Forms.DataGridView dataGridFiberClass;
+                private System.Windows.Forms.DataGridView dataGridFiberClass;
         private System.Windows.Forms.BindingSource fiberClassBS;
         private System.Windows.Forms.DataGridViewTextBoxColumn iDDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;

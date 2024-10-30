@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Schema;
-
 namespace BSBeamCalculator
 {
     internal static class BeamCalculatorRun
@@ -18,6 +17,5 @@ namespace BSBeamCalculator
                 Application.Run(new BeamCalculatorForm());
             }
         }
-
     }
 }

@@ -3,7 +3,6 @@
     partial class BSSectionDraw
     {
                                 private System.ComponentModel.IContainer components = null;
-
                                         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -12,10 +11,7 @@
             }
             base.Dispose(disposing);
         }
-
-        #region Windows Form Designer generated code
-
-                                        private void InitializeComponent()
+                                                private void InitializeComponent()
         {
             this.panelTop = new System.Windows.Forms.Panel();
             this.btnPoint = new System.Windows.Forms.Button();
@@ -94,12 +90,8 @@
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pic)).EndInit();
             this.ResumeLayout(false);
-
         }
-
-        #endregion
-
-        private System.Windows.Forms.Panel panelTop;
+                private System.Windows.Forms.Panel panelTop;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.PictureBox pic;
         private System.Windows.Forms.Button btnPoint;

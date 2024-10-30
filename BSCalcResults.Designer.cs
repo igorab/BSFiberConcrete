@@ -3,7 +3,6 @@
     partial class BSCalcResults
     {
                                 private System.ComponentModel.IContainer components = null;
-
                                         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -12,10 +11,7 @@
             }
             base.Dispose(disposing);
         }
-
-        #region Windows Form Designer generated code
-
-                                        private void InitializeComponent()
+                                                private void InitializeComponent()
         {
             this.lvResults = new System.Windows.Forms.ListView();
             this.tabControl = new System.Windows.Forms.TabControl();
@@ -98,12 +94,8 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.ResumeLayout(false);
-
         }
-
-        #endregion
-
-        private System.Windows.Forms.ListView lvResults;
+                private System.Windows.Forms.ListView lvResults;
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;

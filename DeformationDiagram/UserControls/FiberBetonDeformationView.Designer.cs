@@ -3,7 +3,6 @@
     partial class FiberBetonDeformationView
     {
                                 private System.ComponentModel.IContainer components = null;
-
                                         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -12,10 +11,7 @@
             }
             base.Dispose(disposing);
         }
-
-        #region Код, автоматически созданный конструктором компонентов
-
-                                        private void InitializeComponent()
+                                                private void InitializeComponent()
         {
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.numEps_fbt1 = new System.Windows.Forms.NumericUpDown();
@@ -367,12 +363,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numEps_fb0)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numEps_fbt2)).EndInit();
             this.ResumeLayout(false);
-
         }
-
-        #endregion
-
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
+                private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
         private System.Windows.Forms.NumericUpDown numEps_fbt1;
         private System.Windows.Forms.NumericUpDown numEps_fbt0;
         private System.Windows.Forms.Label label28;

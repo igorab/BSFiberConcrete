@@ -3,7 +3,6 @@
     partial class BSFiberSetup
     {
                                 private System.ComponentModel.IContainer components = null;
-
                                         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -12,10 +11,7 @@
             }
             base.Dispose(disposing);
         }
-
-        #region Windows Form Designer generated code
-
-                                        private void InitializeComponent()
+                                                private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("1");
@@ -295,12 +291,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridBeton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bSDataBindingSource)).EndInit();
             this.ResumeLayout(false);
-
         }
-
-        #endregion
-
-        private System.Windows.Forms.DataGridView dataGridElements;
+                private System.Windows.Forms.DataGridView dataGridElements;
         private System.Windows.Forms.Button btnLoad;
         private System.Windows.Forms.TabControl tabFiber;
         private System.Windows.Forms.TabPage tabPageFiber;

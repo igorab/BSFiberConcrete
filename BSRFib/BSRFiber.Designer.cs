@@ -3,7 +3,6 @@
     partial class BSRFiber
     {
                                 private System.ComponentModel.IContainer components = null;
-
                                         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -12,10 +11,7 @@
             }
             base.Dispose(disposing);
         }
-
-        #region Windows Form Designer generated code
-
-                                        private void InitializeComponent()
+                                                private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BSRFiber));
             this.label_h = new System.Windows.Forms.Label();
@@ -369,12 +365,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.num_d_f_red)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_mu_fv)).EndInit();
             this.ResumeLayout(false);
-
         }
-
-        #endregion
-
-        private System.Windows.Forms.Label label_h;
+                private System.Windows.Forms.Label label_h;
         private System.Windows.Forms.Label label_b;
         private System.Windows.Forms.ComboBox cmbEtaf;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;

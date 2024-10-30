@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
 namespace BSFiberConcrete.Calc
 {
     public partial class BSUnitCalculator : Form
@@ -16,13 +15,11 @@ namespace BSFiberConcrete.Calc
         {
             InitializeComponent();
         }
-
         private void numFrom_ValueChanged(object sender, EventArgs e)
         {
             numTo.Value = (decimal) BSHelper.MPA2kgsm2((double?) numFrom.Value);
             numTo2.Value = (decimal)BSHelper.MPA2kNsm2((double?)numFrom.Value);
         }
-
         private void numFromF_ValueChanged(object sender, EventArgs e)
         {
             numToF.Value = (decimal)BSHelper.kN2Kgs((double?)numFromF.Value);
@@ -32,12 +29,10 @@ namespace BSFiberConcrete.Calc
         {
             return (decimal)_tounit((double) _value);
         }
-
         private void numFromM_ValueChanged(object sender, EventArgs e)
         {
             string uFrom = (string)cmbFromM.SelectedItem;
             string uTo = (string)cmbToM.SelectedItem ;
-
             if (uFrom == "кНм")
             {
                 if (uTo == "кг*см")

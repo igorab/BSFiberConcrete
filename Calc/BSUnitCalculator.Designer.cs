@@ -3,7 +3,6 @@
     partial class BSUnitCalculator
     {
                                 private System.ComponentModel.IContainer components = null;
-
                                         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -12,10 +11,7 @@
             }
             base.Dispose(disposing);
         }
-
-        #region Windows Form Designer generated code
-
-                                        private void InitializeComponent()
+                                                private void InitializeComponent()
         {
             this.numFrom = new System.Windows.Forms.NumericUpDown();
             this.numTo = new System.Windows.Forms.NumericUpDown();
@@ -314,12 +310,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numFromM)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numToM)).EndInit();
             this.ResumeLayout(false);
-
         }
-
-        #endregion
-
-        private System.Windows.Forms.NumericUpDown numFrom;
+                private System.Windows.Forms.NumericUpDown numFrom;
         private System.Windows.Forms.NumericUpDown numTo;
         private System.Windows.Forms.Label labelFrom;
         private System.Windows.Forms.Label labelTo;

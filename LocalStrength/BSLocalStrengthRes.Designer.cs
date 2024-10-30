@@ -1,5 +1,4 @@
-﻿
-namespace BSFiberConcrete.LocalStrength {
+﻿namespace BSFiberConcrete.LocalStrength {
     using System;
     
     

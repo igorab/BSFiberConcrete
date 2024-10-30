@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-
 namespace BSFiberConcrete.Section
 {
     public class BSPoint
@@ -9,55 +8,42 @@ namespace BSFiberConcrete.Section
         public int Num { get; set; }
         public float X { get; set; }
         public float Y { get; set; }
-
         public BSPoint()
         {
-
         }
-
         public BSPoint(NdmSection _NdmSection)
         {
             Num = _NdmSection.N;
             X = (float) _NdmSection.X;
             Y = (float) _NdmSection.Y;
         }
-
         public BSPoint(Point _point)
         {
             X = _point.X;
             Y = _point.Y;   
         }
-
         public BSPoint(PointF _pointF)
         {
             X = _pointF.X;
             Y = _pointF.Y;
         }
     }
-
     public class BSSection
     {
         public static float bf, hf, bw, hw, b1f, h1f;
-
                 public static float a; 
-
         static BSSection()
         {
             RodPoints = new List<PointF>();
             a = 4;
         }
-
                                 public static List<PointF> SectionPoints;
-
                                 public static List<PointF> RodPoints;
-
                                         public static void RectangleBeam(double[] _Sz)
         {
             float[] Sz = Array.ConvertAll(_Sz, element => (float)element);
-
             float w = Sz[0];
             float h = Sz[1];
-
             SectionPoints = new List<PointF>()
             {
                 new PointF(-w/2f, 0) ,
@@ -66,7 +52,6 @@ namespace BSFiberConcrete.Section
                 new PointF(-w/2f, h),
                 new PointF(-w/2f, 0)
             };
-
             RodPoints = new List<PointF>()
             {
                 new PointF(-w/2f+a, a),
@@ -74,15 +59,11 @@ namespace BSFiberConcrete.Section
                 new PointF(w/2f-a, a),
             };
         }
-
                                 public static void IBeam(double[] _Sz, out List<PointF> _PointsSection, out PointF _center)
         {
             float[] Sz = Array.ConvertAll(_Sz, element => (float)element);
-
             float bf = Sz[0], hf = Sz[1], bw = Sz[2], hw = Sz[3], b1f = Sz[4], h1f = Sz[5];
-
             _center = new PointF(0, (hf + hw + h1f) / 2f);
-
             _PointsSection = new List<PointF>()
             {
                 new PointF(bf/2f, 0),
@@ -99,7 +80,6 @@ namespace BSFiberConcrete.Section
                 new PointF(-bf/2f, 0),
                 new PointF(bf/2f, 0),
             };
-
             RodPoints = new List<PointF>()
             {
                 new PointF(-bf/2f+a, a),

@@ -3,7 +3,6 @@
     partial class RSRFibDeflection
     {
                                 private System.ComponentModel.IContainer components = null;
-
                                         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -12,10 +11,7 @@
             }
             base.Dispose(disposing);
         }
-
-        #region Windows Form Designer generated code
-
-                                        private void InitializeComponent()
+                                                private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
             this.dataGridDefl = new System.Windows.Forms.DataGridView();
@@ -207,11 +203,8 @@
             this.tableLayoutPanel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.deflectionfaFBindingSource)).EndInit();
             this.ResumeLayout(false);
-
         }
-
-        #endregion
-        private System.Windows.Forms.DataGridView dataGridDefl;
+                private System.Windows.Forms.DataGridView dataGridDefl;
         private System.Windows.Forms.BindingSource deflectionfaFBindingSource;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelDefl;

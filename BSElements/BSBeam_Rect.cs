@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-
 namespace BSFiberConcrete
 {
                 [Description("size")]
@@ -11,16 +10,12 @@ namespace BSFiberConcrete
         public override double h { get; set; }
         [DisplayName("Ширина сечения, [см]")]
         public override double b { get; set; }
-
         [DisplayName("Площадь сечения элемента, [см2]")]
         public override double Area() => b * h;
-
         [DisplayName("Момент инерции прямоугольного сечения")]
         public override double I_s() => b * Math.Pow(h, 3) / 12;
-
         [DisplayName("Расстояние от центра тяжести сечения сталефибробетонного элемента до наиболее растянутого волокна, [см]")]
         public double y_t() => h / 2.0;
-
         public override double Width => b;
         public override double Height => h;
        
@@ -31,7 +26,6 @@ namespace BSFiberConcrete
             Zfb_X = _b / 2.0;
             Z_fb_Y = _h / 2.0;
         }
-
                                         public override Dictionary<string, double> GetDimension()
         {
             Dictionary<string, double> dimensionOfSection = new Dictionary<string, double>()
@@ -41,17 +35,12 @@ namespace BSFiberConcrete
             };
             return dimensionOfSection; 
         }
-
                 public override double Jy() => b * (h * h * h) / 12.0;
-
         public override double Jx() => (b * b * b) * h / 12.0;
-
                 public static double Wx(double _b, double _h) => _b * _h * _h / 6.0;
         public static double Wy(double _b, double _h) => _b * _b * _h / 6.0;
-
                 public override double Sy() => Area() * h / 2;
         public override double Sx() => Area() * b / 2;
-
         public override void SetSizes(double[] _t)
         {
             (b, h, Length) = (_t[0], _t[1], _t[2]);

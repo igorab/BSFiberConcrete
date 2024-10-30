@@ -4,30 +4,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace BSFiberConcrete.BSRFib.FiberCalculator
 {
     public class ConcreteMaterial : ViewModelBase
     {
-
-        #region Privat fields 
-                                private List<Beton> _DateConcreteDB;
+                                        private List<Beton> _DateConcreteDB;
                                 private List<BetonType> _DateConcreteTypeDB;
-
                                 private List<Beton> _DataConcreteOfKind;
                                 private int _indexConcreteClass;
                                 private int _indexConcreteType;
-
         private string _BT;
-
                 private double _Rbn;                private double _Rbtn;                       private double _Rb;                 private double _Rbt;                        private double _Rb_ser;             private double _Rbt_ser;    
         private double _Eb;         
                 private string _nameConcreteType;
-        #endregion
-
-
-        #region Properties
-        public string BT
+                        public string BT
         {
             get { return _BT; }
             private set
@@ -54,7 +44,6 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
                 OnPropertyChanged();
             }
         }
-
         public double Rb
         {
             get { return _Rb; }
@@ -100,7 +89,6 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
                 OnPropertyChanged();
             }
         }
-
         public string NameConcreteType
         {
             get { return _nameConcreteType; }
@@ -110,46 +98,30 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
                 OnPropertyChanged();
             }
         }
-        #endregion
-
-
-
-        public ConcreteMaterial()
+                public ConcreteMaterial()
         {
             _DateConcreteDB = BSData.LoadBetonData();
             _DateConcreteTypeDB = BSQuery.LoadBetonType();
-
-
             _DateConcreteTypeDB = _DateConcreteTypeDB.GetRange(0, 3);
-
-
             SetIndexConcretKind(0);
             SetIndexConcreteClass(0);
         }
-
-
-
                                         public void SetIndexConcretKind(int index)
         {
             if ((index < 0) || index > _DateConcreteTypeDB.Count - 1)
             {
                 return;
             }
-
             _indexConcreteType = index;
             NameConcreteType = _DateConcreteTypeDB[index].Name;
             _DataConcreteOfKind = _DateConcreteDB.Where(p => p.BetonType == index).ToList();
-
         }
-
-
                                         public void SetIndexConcreteClass(int index)
         {
             if ((index < 0) || index > _DataConcreteOfKind.Count - 1)
             {
                 return;
             }
-
             _indexConcreteClass = index;
             BT = _DataConcreteOfKind[_indexConcreteClass].BT;
             Rbn = _DataConcreteOfKind[_indexConcreteClass].Rbn;
@@ -160,8 +132,6 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
             Rbt_ser = _DataConcreteOfKind[_indexConcreteClass].Rbtn;
             Eb = _DataConcreteOfKind[_indexConcreteClass].Eb * 1000;
         }
-
-
                                         public List<string> GetConcreteClass()
         {
             List<string> ConcreteClass = new List<string>();
@@ -169,26 +139,20 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
             {
                 ConcreteClass.Add(Concrete.BT);
             }
-
             return ConcreteClass;
         }
-
                                         public List<string> GetConcreteType()
         {
             List<string> ConcreteType = new List<string>();
-
             foreach (BetonType typeB in _DateConcreteTypeDB)
             {
                 ConcreteType.Add(typeB.Name);
             }
             return ConcreteType;
         }
-
-
                                         public string Evaluate_Cmax(double C_max)
         { 
             string result = null;
-
             switch (_indexConcreteType)
             {
                 case 0 :
@@ -210,8 +174,6 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
                     }
             }
             return result;
-
         }
-
     }
 }

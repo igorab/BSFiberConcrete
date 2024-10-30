@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-
 namespace BSFiberConcrete.CalcGroup2
 {
     public static class BSExtensions
@@ -19,7 +18,6 @@ namespace BSFiberConcrete.CalcGroup2
                     yield return func(e1.Current, e2.Current, e3.Current);
             }
         }
-
                                 public static IEnumerable<TResult> ZipFour<T1, T2, T3, T4, TResult>(
             this IEnumerable<T1> source,
             IEnumerable<T2> second,
@@ -36,7 +34,5 @@ namespace BSFiberConcrete.CalcGroup2
                     yield return func(e1.Current, e2.Current, e3.Current, e4.Current);
             }
         }
-
     }
-
 }

@@ -3,7 +3,6 @@
     partial class BSFiberMain
     {
                                 private System.ComponentModel.IContainer components = null;
-
                                         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -12,10 +11,7 @@
             }
             base.Dispose(disposing);
         }
-
-        #region Код, автоматически созданный конструктором форм Windows
-
-                                        private void InitializeComponent()
+                                                private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BSFiberMain));
@@ -2763,12 +2759,8 @@
             this.flowLayoutPanelArea.ResumeLayout(false);
             this.flowLayoutBtns.ResumeLayout(false);
             this.ResumeLayout(false);
-
         }
-
-        #endregion
-
-        private System.Windows.Forms.TabControl tabFiber;
+                private System.Windows.Forms.TabControl tabFiber;
         private System.Windows.Forms.TabPage tabParams;
         private System.Windows.Forms.TabPage tabConcrete;
         private System.Windows.Forms.TabPage tabStrength;
@@ -2994,4 +2986,3 @@
         private System.Windows.Forms.ComboBox cmbDw_Y;
     }
 }
-

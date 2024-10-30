@@ -9,21 +9,16 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
 namespace BSFiberConcrete.LocalStrength
 {
     public partial class BSLocalStrength : Form
     {
         public BSLocalStrengthCalc StrengthCalc {  get; set; }
         public bool IsShowScheme { get; set; }
-
         private BindingList<LocalStress> Ds;
-
-
         public BSLocalStrength()
         {
             InitializeComponent();
-
             IsShowScheme = true;
         }
        
@@ -31,50 +26,37 @@ namespace BSFiberConcrete.LocalStrength
         {
             StrengthCalc.UseReinforcement = chboxReinforcement.Checked;            
             StrengthCalc.Scheme = cmbScheme.SelectedIndex + 1;
-
             StrengthCalc.RunCalc();
-
             localStressBindingSource.DataSource = new BindingList<LocalStress>(StrengthCalc.GetDS);
-
             chboxReinforcement_CheckedChanged(null, null);
-
         }
-
         private void BSLocalStrength_Load(object sender, EventArgs e)
         {
             Ds = new BindingList<LocalStress> (StrengthCalc.GetDS);
-
             labelHeader.Text = StrengthCalc.SampleDescr();
-
             localStressBindingSource.DataSource = Ds;
-
             chboxReinforcement_CheckedChanged(null, null);
             
             labelScheme.Visible = IsShowScheme;
             cmbScheme.Visible = IsShowScheme;            
         }
-
         private void btnPrintReport_Click(object sender, EventArgs e)
         {
             BSLocalStrengthReport strengthReport = new BSLocalStrengthReport();
             strengthReport.ReportName = StrengthCalc.ReportName();
             strengthReport.SampleName = StrengthCalc.SampleName();
             strengthReport.SampleDescr = StrengthCalc.SampleDescr();
-
             if (localStressBindingSource.DataSource is BindingList<LocalStress>)
             {
                 var ds = (BindingList<LocalStress>)localStressBindingSource.DataSource;
                 strengthReport.DataSource = ds.ToList();
             }
-
             strengthReport.RunReport();
         }
-
         private void btnCloseForm_Click(object sender, EventArgs e)
         {
             this.Close();
         }
-
         private void dataGridLocalStrength_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
         {
             try
@@ -86,10 +68,8 @@ namespace BSFiberConcrete.LocalStrength
             }
             catch
             {
-
             }
         }
-
         private void chboxReinforcement_CheckedChanged(object sender, EventArgs e)
         {
             try

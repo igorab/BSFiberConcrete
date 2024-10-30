@@ -7,21 +7,17 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using Dapper;
-
 namespace BSFiberConcrete.Lib
 {
     public class BSData
     {
         public static string ResourcePath(string _file) => Path.Combine(Environment.CurrentDirectory, "Resources", _file);  
-
         public static string DataPath(string _file)  => Path.Combine(Environment.CurrentDirectory, "Data", _file); 
         
         public static readonly string connectionString = "Data Source =.\\Data\\Fiber.db; Version = 3;";
-
         public static bool Connect()
         {
             bool ok = false;
-
             using (SQLiteConnection connection = new SQLiteConnection(connectionString))
             {
                 connection.Open();
@@ -30,7 +26,6 @@ namespace BSFiberConcrete.Lib
             
             return ok;
         }
-
                                                 public static string  LoadConnectionString(string id = "Default")
         {
             string s = ConfigurationManager.ConnectionStrings[id]?.ConnectionString;
@@ -38,7 +33,6 @@ namespace BSFiberConcrete.Lib
                 s = connectionString;
             return s;
         }
-
                                         public static FormParams LoadFormParams()
         {
             try
@@ -57,10 +51,8 @@ namespace BSFiberConcrete.Lib
                 return new FormParams();
             }
         }
-
                                         public static void UpdateFormParams(FormParams _prms)
         {
-
             try
             {
                 using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
@@ -83,8 +75,6 @@ namespace BSFiberConcrete.Lib
                 MessageBox.Show(_e.Message);
             }
         }
-
-
                                         public static NDMSetup LoadNDMSetup(int Id = 1)
         {
             try
@@ -100,7 +90,6 @@ namespace BSFiberConcrete.Lib
                 return new NDMSetup() {Id = 0, Iters = 1000, M = 20, N = 20, MinAngle = 40, MaxArea = 10, BetonTypeId = 0 };
             }
         }
-
                                 public static void SaveNDMSetup(NDMSetup _ndmSetup)
         {
             try
@@ -116,7 +105,6 @@ namespace BSFiberConcrete.Lib
                             " UseRebar = @UseRebar, RebarType = @RebarType " +
                             " where Id = @Id",
                             _ndmSetup, tr);
-
                         tr.Commit();
                     }
                 }
@@ -126,7 +114,6 @@ namespace BSFiberConcrete.Lib
                 throw new Exception("Не удалось сохранить значения в БД");
             }
         }
-
                                         public static List<string> LoadBetonTypeName()
         {
             try
@@ -142,7 +129,6 @@ namespace BSFiberConcrete.Lib
                 return new List<string>();
             }
         }
-
                                         public static List<FiberBft> LoadFiberBft()
         {
             try
@@ -158,7 +144,6 @@ namespace BSFiberConcrete.Lib
                 return new List<FiberBft>();
             }
         }
-
                                         public static List<Beton> LoadBetonData(int _betonTypeId)
         {
             try
@@ -174,7 +159,6 @@ namespace BSFiberConcrete.Lib
                 return new List<Beton>();
             }
         }
-
                                         public static List<Beton> LoadBetonData()
         {
             try
@@ -190,7 +174,6 @@ namespace BSFiberConcrete.Lib
                 return new List<Beton>();
             }
         }
-
                                         public static List<Coefficients> LoadCoeffs()
         {
             try
@@ -206,7 +189,6 @@ namespace BSFiberConcrete.Lib
                 return new List<Coefficients>();
             }
         }
-
                                         public static List<Rebar> LoadRebar()
         {
             try
@@ -222,7 +204,6 @@ namespace BSFiberConcrete.Lib
                 return new List<Rebar>();
             }
         }
-
                                         public static List<BSRod> LoadBSRod(BeamSection _SectionType)
         {
             try
@@ -239,7 +220,6 @@ namespace BSFiberConcrete.Lib
                 return new List<BSRod>();
             }
         }
-
                                         public static List<NdmSection> LoadNdmSection(string _SectionNum)
         {
             try
@@ -256,7 +236,6 @@ namespace BSFiberConcrete.Lib
                 return new List<NdmSection>();
             }
         }
-
                                         public static List<Efforts> LoadEfforts()
         {
             try
@@ -272,7 +251,6 @@ namespace BSFiberConcrete.Lib
                 return new List<Efforts>();
             }
         }
-
                 public static void SaveEfforts(Efforts _efforts)
         {
             try
@@ -292,7 +270,6 @@ namespace BSFiberConcrete.Lib
                 MessageBox.Show(_e.Message);
             }
         }
-
                 public static void SaveEfforts(List<Efforts> _efforts, bool _clear = true)
         {
             try
@@ -306,7 +283,6 @@ namespace BSFiberConcrete.Lib
                         {
                             cnn.Execute("DELETE FROM Efforts");
                         }    
-
                         for (int i = 0; _efforts.Count > i; i++)
                         {
                             Efforts tmpEfforts = _efforts[i];
@@ -323,8 +299,6 @@ namespace BSFiberConcrete.Lib
                 MessageBox.Show(_e.Message);
             }
         }
-
-
                 public static void ClearEfforts()
         {
             try
@@ -344,8 +318,6 @@ namespace BSFiberConcrete.Lib
                 MessageBox.Show(_e.Message);
             }
         }
-
-
                                         public static List<Elements> LoadFiberConcreteTable(string _iB = "")
         {
             try
@@ -357,7 +329,6 @@ namespace BSFiberConcrete.Lib
                         query = "select * from FiberConcrete";
                     else
                         query = string.Format("select * from FiberConcrete where i_B = '{0}'", _iB);
-
                     IEnumerable<Elements> output = cnn.Query<Elements>(query, new DynamicParameters());
                     return output.ToList();
                 }
@@ -368,7 +339,6 @@ namespace BSFiberConcrete.Lib
                 return new List<Elements>();
             }
         }
-
         public static List<FiberConcreteClass> LoadFiberConcreteClass()
         {
             try
@@ -384,7 +354,6 @@ namespace BSFiberConcrete.Lib
                 return new List<FiberConcreteClass>();
             }
         }
-
         public static List<RFibKor> LoadRFibKn()
         {
             try
@@ -400,7 +369,6 @@ namespace BSFiberConcrete.Lib
                 return new List<RFibKor>();
             }
         }
-
         public static List<Fiber_K> LoadFiber_Kor()
         {
             try
@@ -416,8 +384,6 @@ namespace BSFiberConcrete.Lib
                 return new List<Fiber_K>();
             }
         }
-
-
         public static List<Fiber_K> LoadFiber_Kn()
         {
             try
@@ -433,7 +399,6 @@ namespace BSFiberConcrete.Lib
                 return new List<Fiber_K>();
             }
         }
-
         public static List<RFibKor> LoadRFibKor()
         {
             try
@@ -449,7 +414,6 @@ namespace BSFiberConcrete.Lib
                 return new List<RFibKor>();
             }
         }
-
         public static List<FaF> LoadRChartFaF()
         {
             try
@@ -465,7 +429,6 @@ namespace BSFiberConcrete.Lib
                 return new List<FaF>();
             }
         }
-
         public static List<FibLab> LoadRFibLab()
         {
             try
@@ -481,7 +444,6 @@ namespace BSFiberConcrete.Lib
                 return new List<FibLab>();
             }
         }
-
         public static List<Deflection_f_aF> LoadRDeflection(string _Id)
         {
             string query;
@@ -493,7 +455,6 @@ namespace BSFiberConcrete.Lib
             {
                 query = string.Format("select * from RDeflection where id == '{0}'", _Id);
             }
-
             try
             {
                 using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
@@ -507,7 +468,6 @@ namespace BSFiberConcrete.Lib
                 return new List<Deflection_f_aF>();
             }
         }
-
         public static List<string> LoadBeamDeflection()
         {
             string query;
@@ -527,7 +487,6 @@ namespace BSFiberConcrete.Lib
                 return new List<string>();
             }
         }
-
                                         public static List<LocalStress> LoadLocalStress()
         {
             try
@@ -543,7 +502,6 @@ namespace BSFiberConcrete.Lib
                 return new List<LocalStress>();
             }
         }
-
                                         public static List<LocalStress> LoadLocalPunch()
         {
             try
@@ -559,7 +517,6 @@ namespace BSFiberConcrete.Lib
                 return new List<LocalStress>();
             }
         }
-
                                         public static List<EpsilonFromAirHumidity> LoadBetonEpsilonFromAirHumidity()
         {
             try
@@ -575,7 +532,6 @@ namespace BSFiberConcrete.Lib
                 return new List<EpsilonFromAirHumidity>();
             }
         }
-
                                                 public static void SaveRods(List<BSRod>  _ds, BeamSection  _BeamSection)
         {
             try
@@ -586,7 +542,6 @@ namespace BSFiberConcrete.Lib
                     using (var tr = cnn.BeginTransaction())
                     {
                         cnn.Execute(string.Format("delete from BSRod where SectionType = {0}", (int)_BeamSection), null , tr);
-
                         foreach (BSRod rod in _ds)
                         {
                             rod.SectionType = _BeamSection;
@@ -602,7 +557,6 @@ namespace BSFiberConcrete.Lib
                 throw ;
             }
         }
-
                                                 public static void SaveSection(List<NdmSection> _ds, string _SectionNum)
         {
             try
@@ -613,11 +567,9 @@ namespace BSFiberConcrete.Lib
                     using (var tr = cnn.BeginTransaction())
                     {
                         cnn.Execute(string.Format("delete from NdmSection where Num = '{0}'", _SectionNum), null, tr);
-
                         foreach (var sec in _ds)
                         {                            
                             int cnt = cnn.Execute("insert into NdmSection (X, Y, N, Num) values (@X, @Y, @N, @Num)", sec, tr);
-
                         }
                         tr.Commit();
                     }
@@ -628,7 +580,6 @@ namespace BSFiberConcrete.Lib
                 throw;
             }
         }
-
                                         public static List<InitBeamSectionGeometry> LoadBeamSectionGeometry(BeamSection _SectionType)
         {
             try
@@ -636,7 +587,6 @@ namespace BSFiberConcrete.Lib
                 using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
                 {
                     var output = cnn.Query<InitBeamSectionGeometry>("select * from InitBeamSection", new DynamicParameters());                                        
-
                     return output.ToList();
                 }
             }
@@ -645,7 +595,6 @@ namespace BSFiberConcrete.Lib
                 throw;
             }
         }
-
         public static void UpdateBeamSectionGeometry(List<InitBeamSectionGeometry> beamSections)
         {
             try
@@ -670,7 +619,6 @@ namespace BSFiberConcrete.Lib
                 throw;
             }
         }
-
         public static List<RebarDiameters> LoadRebarDiameters()
         {
             try
@@ -686,7 +634,6 @@ namespace BSFiberConcrete.Lib
                 throw;
             }
         }
-
                                                 public static List<RebarDiameters> DiametersOfTypeRebar(string _ClassRebar)
         {
             List<RebarDiameters> rD = new List<RebarDiameters>();
@@ -705,7 +652,6 @@ namespace BSFiberConcrete.Lib
                 return new List<RebarDiameters>();
             }
         }
-
                                         public static List<FiberClass> LoadFiberClass()
         {
             try
@@ -721,8 +667,6 @@ namespace BSFiberConcrete.Lib
                 return new List<FiberClass>();
             }
         }
-
-
                                 public static NdmCrc LoadNdmCrc()
         {
             try
@@ -730,7 +674,6 @@ namespace BSFiberConcrete.Lib
                 using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
                 {
                     var output = cnn.Query<NdmCrc>("select * from NDMCrc where id = 1", new DynamicParameters());
-
                     if (output != null && output.Count() > 0)
                         return output.ToList()[0];
                     else
@@ -742,7 +685,6 @@ namespace BSFiberConcrete.Lib
                 return new NdmCrc();
             }
         }
-
                                 public static void SaveNdmCrc(NdmCrc _NdmCrc)
         {
             try
@@ -763,7 +705,6 @@ namespace BSFiberConcrete.Lib
                 throw new Exception ("Не удалось сохранить значения в БД");
             }
         }
-
                                 public static void SaveStrengthFactors(StrengthFactors _sFactors)
         {
             try

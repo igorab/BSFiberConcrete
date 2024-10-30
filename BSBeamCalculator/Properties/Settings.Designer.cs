@@ -1,5 +1,4 @@
-﻿
-namespace BSBeamCalculator.Properties {
+﻿namespace BSBeamCalculator.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

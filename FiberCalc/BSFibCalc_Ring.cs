@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-
 namespace BSFiberConcrete
 {
     [DisplayName("Расчет прочности изгибаемого элемента кольцевого сечения")]
@@ -9,23 +8,18 @@ namespace BSFiberConcrete
     {
         [DisplayName("Радиус внутренней грани, см")]
         public double r1 { get; private set; }
-
         [DisplayName("Радиус наружней грани, см")]
         public double r2 { get; private set; }
        
         [DisplayName("Предельный момент сечения, кг*см")]
         public double Mult { get; private set; }
-
         [DisplayName("Коэффициент использования по усилию")]
         public double UtilRate { get; protected set; }
-
         public override void SetParams(double[] _t)
         {
             base.SetParams(_t);
-
                         (Yft, Yb, Yb1, Yb2, Yb3, Yb5) = ( _t[2], _t[3], _t[4], _t[5], _t[6], _t[7]);
         }
-
         public override Dictionary<string, double> GeomParams()
         {
             Dictionary<string, double> geom = base.GeomParams();
@@ -33,12 +27,10 @@ namespace BSFiberConcrete
             geom.Add(DN(typeof(BSFibCalc_Ring), "r2"), r2);
             return geom;
         }
-
         public override void SetSize(double[] _t)
         {
             (r1, r2) = (_t[0], _t[1]);
         }
-
         public override Dictionary<string, double> Results()
         {
             return new Dictionary<string, double>() {
@@ -47,42 +39,30 @@ namespace BSFiberConcrete
                 { DN(typeof(BSFibCalc_Ring), "UtilRate"), UtilRate }
             };
         }
-
         public override bool Validate()
         {
             bool ret = base.Validate();
-
             if (Rfb == 0 || Rfbt3 == 0)
             {
                 Msg.Add("Требуется задать класс фибробетона на осевое сжатие и остаточное растяжение Rfbt3");
                 ret = false;
             }
-
             return ret;
         }
-
                                 public override bool Calculate()
         {
             if (!Validate())
                 return false;
             
                         double tr = r2 - r1;
-
             if (tr < 0)
                 throw new Exception("r2-r1 < 0");
-
                         double rm = (r1 + r2) / 2;
-
                         double Ar = 2 * Math.PI * rm * tr;
-
             double ar = (0.73d * Rfbt3) / (Rfb + 2 * Rfbt3);
-
                         Mult = Ar * (Rfb * Math.Sin(Math.PI * ar) / Math.PI + 0.234d * Rfbt3) * rm;
-
                         UtilRate = (Mult != 0) ? m_Efforts["My"] / Mult : 0;
-
             InfoCheckM(Mult);            
-
             return true;
         }
     }

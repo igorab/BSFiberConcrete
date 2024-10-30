@@ -4,21 +4,16 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace BSFiberConcrete
 {
     public interface IBSFiberCalculation
     {
         void SetParams(double[] _t = null);
-
         void SetSize(double[] _t = null);
-
         Dictionary<string, double> GeomParams();
-
         bool Calculate();
         Dictionary<string, double> Results();
     }
-
     [Description("Тип расчета")]
     public enum CalcType
     {
@@ -31,7 +26,6 @@ namespace BSFiberConcrete
         [Description("Расчет балки")]
         BeamCalc = 3
     }
-
               
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Field | AttributeTargets.Property, Inherited = true)]
     class BSFiberCalculationAttribute : Attribute

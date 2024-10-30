@@ -3,7 +3,6 @@
     partial class ViewFiberConcreteCalc
     {
                                 private System.ComponentModel.IContainer components = null;
-
                                         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -12,10 +11,7 @@
             }
             base.Dispose(disposing);
         }
-
-        #region Windows Form Designer generated code
-
-                                        private void InitializeComponent()
+                                                private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ViewFiberConcreteCalc));
@@ -1167,11 +1163,8 @@
             this.groupBox6.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fiberConcrateCalculatorBindingSource)).EndInit();
             this.ResumeLayout(false);
-
         }
-
-        #endregion
-        private System.Windows.Forms.BindingSource fiberConcrateCalculatorBindingSource;
+                private System.Windows.Forms.BindingSource fiberConcrateCalculatorBindingSource;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Label labelDescr;
         private System.Windows.Forms.PictureBox picFib;

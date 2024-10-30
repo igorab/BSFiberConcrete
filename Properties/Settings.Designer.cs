@@ -1,5 +1,4 @@
-﻿
-namespace BSFiberConcrete.Properties {
+﻿namespace BSFiberConcrete.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

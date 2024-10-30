@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace BSFiberConcrete.FiberCalcMNQ
 {
     public class BSFiberCalc_MyMx : BSFiberCalc_MNQ
@@ -20,7 +19,6 @@ namespace BSFiberConcrete.FiberCalcMNQ
                         double q_sw = (sw != 0) ? Rsw * Asw / sw : 0;
                         if (q_sw < 0.25 * _Rfbt3 * b)
                 q_sw = 0;
-
             double c_min = h0;
             double c_max = 4 * h0;
             double c0_max = 2 * h0;
@@ -35,7 +33,6 @@ namespace BSFiberConcrete.FiberCalcMNQ
             List<double> lst_Q_fbt3 = new List<double>();
             List<double> lst_M_fbt = new List<double>();
             List<double> lst_M_ult = new List<double>();
-
             foreach (double ci in С_x)
             {
                 if (ci > c0_max)
@@ -46,12 +43,9 @@ namespace BSFiberConcrete.FiberCalcMNQ
                 else
                 {
                     Q_sw = q_sw * ci;                     M_sw = 0.5 * Q_sw * ci;                 }
-
                 lst_Q_sw.Add(Q_sw);
                 lst_M_sw.Add(M_sw);
-
                 Q_fbt3 = (ci != 0) ? 1.5d * _Rfbt3 * _b * h0 * h0 / ci : 0;
-
                 if (Q_fbt3 >= 2.5d * _Rfbt3 * _b * h0)
                 {
                     Q_fbt3 = 2.5d * _Rfbt3 * _b * h0;
@@ -60,35 +54,22 @@ namespace BSFiberConcrete.FiberCalcMNQ
                 {
                     Q_fbt3 = 0.5d * _Rfbt3 * _b * h0;
                 }
-
                 M_fbt = 0.5 * Q_fbt3 * ci;
-
                 lst_Q_fbt3.Add(Q_fbt3);
-
                 lst_M_fbt.Add(M_fbt);
-
                                 M_ult = Ms + M_sw + M_fbt; 
                 lst_M_ult.Add(M_ult);
             }
-
             M_ult = (lst_M_ult.Count > 0) ? lst_M_ult.Min() : 0;
-
                         UtilRate_My = (M_ult != 0) ? m_Efforts["My"] / M_ult : 0;
-
         }
-
                                 protected void Calculate_Mx()
         {
             if (m_Efforts["Mx"] == 0) return;
-
                         UtilRate_Mx = (M_ult != 0) ? m_Efforts["Mx"] / M_ult : 0;
         }
-
         protected void CalculateMyMx()
         {
-
         }
-
-
     }
 }

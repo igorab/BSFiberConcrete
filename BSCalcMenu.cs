@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
-
 namespace BSCalcMenu
 {
     public partial class BSCalcMenu : Form
@@ -18,12 +17,10 @@ namespace BSCalcMenu
         {
             InitializeComponent();            
         }
-
         private void btnClose_Click(object sender, EventArgs e)
         {
             Close();
         }
-
         private void btnUnits_Click(object sender, EventArgs e)
         {
             Dictionary<string, string> Units= new Dictionary<string, string>()
@@ -42,104 +39,86 @@ namespace BSCalcMenu
                 ["Удельный вес"] = "кг/см3",
                 ["Разность температур"] = "град Ц",
             };
-
             string txt = "";
             foreach (var u in Units)
             {
                 txt += string.Format("{0}: {1}\t\n", u.Key, u.Value);
             }
-
             MessageBox.Show(txt, "Система единиц измерений в программе", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-
         private void btnStaticEquilibrium_Click(object sender, EventArgs e)
         {            
             BSFiberMain bsFiberMain = new BSFiberMain();
             bsFiberMain.CalcType = CalcType.Static;
             bsFiberMain.Show();
         }
-
         private void btnFiberClass_Click(object sender, EventArgs e)
         {
                                                 FiberConcreteInform fcInforn = new FiberConcreteInform();
             fcInforn.Show();
         }
-
         private void btnRebarClass_Click(object sender, EventArgs e)
         {
                                     
             RebarInform rebarInform = new RebarInform();
             rebarInform.Show();
         }
-
         private void btnCoefY_Click(object sender, EventArgs e)
         {
                                     
             CoefInform  coefInform = new CoefInform();
             coefInform.Show();
         }
-
         private void btnBetonClass_Click(object sender, EventArgs e)
         {
                                     
             ConcreteInform сoncreteInform = new ConcreteInform();
             сoncreteInform.Show();
         }
-
         private void btnNonlinearDeform_Click(object sender, EventArgs e)
         {
             BSFiberMain bsFiberMain = new BSFiberMain();
             bsFiberMain.CalcType = CalcType.Nonlinear;
             bsFiberMain.Show();
         }
-
         private void btnInfo_Click(object sender, EventArgs e)
         {
             BSFiberAboutBox bSFiberAboutBox = new BSFiberAboutBox();
             bSFiberAboutBox.Show();
         }
-
         private void btnGraphAF_Click(object sender, EventArgs e)
         {
             BSRFibLabGraph bSGraph = new BSRFibLabGraph();
             bSGraph.Show();
         }
-
         private void btnBeamCalc_Click(object sender, EventArgs e)
         {
                         
             BSFiberMain bsFiberMain = new BSFiberMain();
             bsFiberMain.CalcType = CalcType.BeamCalc;
             bsFiberMain.Show();
-
         }
-
         private void btnSectionDraw_Click(object sender, EventArgs e)
         {
             BSSectionDraw bSSectionDraw = new BSSectionDraw();
             bSSectionDraw.Show();
         }
-
-
         private void btnRFiberTensileStrength_Click(object sender, EventArgs e)
         {
             RFiberTensileStrength tensileStrength = new RFiberTensileStrength();
             tensileStrength.Show();
         }
-
         private void btnRFbtFiber_Click(object sender, EventArgs e)
         {
                         
             ViewFiberConcreteCalc viewFiberConcreteCalc = new ViewFiberConcreteCalc();
             viewFiberConcreteCalc.Show();
         }
-
         private void btnBeamDeflection_Click(object sender, EventArgs e)
         {
             RSRFibDeflection fibDeflection = new RSRFibDeflection();
             fibDeflection.Show();
         }
-
                                 private void btnLocalCompressionCalc_Click(object sender, EventArgs e)
         {
             BSLocalCompressionCalc compressionCalc = new BSLocalCompressionCalc();
@@ -149,7 +128,6 @@ namespace BSCalcMenu
             localStrength.StrengthCalc = compressionCalc;
             localStrength.Show();                        
         }
-
                                 private void btnPunchCalc_Click(object sender, EventArgs e)
         {
             BSLocalPunchCalc punchCalc = new BSLocalPunchCalc();
@@ -159,17 +137,14 @@ namespace BSCalcMenu
             localStrength.StrengthCalc = punchCalc;            
             localStrength.Show();                        
         }
-
                                                 private void btnEfib_Click(object sender, EventArgs e)
         {
             BSEFib bsEFib = new BSEFib();
             bsEFib.Show();
         }
-
         private void btnUnitCalculator_Click(object sender, EventArgs e)
         {
             BSFiberConcrete.Calc.BSUnitCalculator unitCalculator = new BSUnitCalculator();
-
             unitCalculator.Show();
         }
        
@@ -178,13 +153,11 @@ namespace BSCalcMenu
                                     DeflectionUltimateInform deflectionUltimateInform = new DeflectionUltimateInform();
             deflectionUltimateInform.Show();
         }
-
         private void btnFiberClassSetup_Click(object sender, EventArgs e)
         {        
                                     FiberRebarInform rebarInform = new FiberRebarInform();
             rebarInform.Show();
         }
-
         private void btnCalcOfLenRebar_Click(object sender, EventArgs e)
         {
             ViewCalcOfLenRebar calcOfLenRebar = new ViewCalcOfLenRebar();

@@ -10,7 +10,6 @@ using BSFiberConcrete.Lib;
 using BSCalcLib;
 using System.Diagnostics;
 using BSFiberConcrete.Report;
-
 namespace BSFiberConcrete.Section
 {
                 public partial class BSSectionChart : Form
@@ -20,39 +19,28 @@ namespace BSFiberConcrete.Section
             get { return m_RodPoints; }
             set { m_RodPoints = value; }
         }
-
         const string UserSection = "UserSection";
         public Dictionary<string, double> DictCalcParams { private get; set;}
         public BeamSection m_BeamSection { get; private set; }
                 
                                 public string RebarClass { private get; set; }
-
         public MemoryStream GetImageStream => m_ImageStream;
         
         private MemoryStream m_ImageStream;
-
         private List<RebarDiameters> m_Diameters;
-
                 private List<PointF> m_RodPoints;
-
                 private List<PointF> PointsSection;
-
                 private List<PointF> InnerPoints;
-
         private NDMSetup ndmSetup;
-
         public PointF Center { get; set; }
-
         public float Wdth { set { w = value; } }
         public float Hght { set { h = value; } }
-
         public double[] Sz { get; set; }
         public double NumArea {set { numArea.Value = (decimal) value; } get { return (double) numArea.Value;  } } 
         
         private float w;
         private float h;
         
-
         public BSSectionChart(BeamSection _beamSection )
         {
             InitializeComponent();
@@ -60,29 +48,23 @@ namespace BSFiberConcrete.Section
             Center = new PointF(0, 0);
             ndmSetup = BSData.LoadNDMSetup();            
             m_BeamSection = _beamSection;
-
             InnerPoints = new List<PointF>();            
             w = 0;
             h = 0;
             Sz = new double[]  { 0, 0, 0, 0, 0, 0 };
         }
-
                                 private void InitRods()
         {
             if (m_RodPoints == null)
                 return;
-
             List<BSRod> bsRods =  BSData.LoadBSRod(m_BeamSection);
-
             if (bsRods.Count == 0)
             {
                 foreach (var _rod in m_RodPoints)
                     bsRods.Add(new BSRod() { CG_X = _rod.X, CG_Y = _rod.Y, D = 14.0 } );
             }
-
             RodBS.DataSource = bsRods;
         }
-
         private void InitPoints()
         {
             if (m_BeamSection == BeamSection.Rect)                 
@@ -106,10 +88,8 @@ namespace BSFiberConcrete.Section
             {
                 PointsSection = new List<PointF>();
                 int amountOfEdges = 40;
-
                 double radius =  Sz[1];
                 double inner_radius = Sz[0];
-
                 for (int k = 0; k <= amountOfEdges; k++)
                 {
                                         double x = Center.X + radius * Math.Cos(k * 2 * Math.PI / amountOfEdges);
@@ -131,24 +111,17 @@ namespace BSFiberConcrete.Section
                     BSPoint bsPt = new BSPoint(_pt) ;
                     pointBS.Add(bsPt);                    
                 }
-
                 m_RodPoints = new List<PointF> ();
-
             }
         }
-
         private void InitDataSource()
         {
             if (!string.IsNullOrEmpty(RebarClass))
                 m_Diameters =  BSData.DiametersOfTypeRebar(RebarClass);
-
             InitPoints();
-
             if (ndmSetup.UseRebar)
                 InitRods();
-
             int idx = 0;
-
             if (PointsSection != null)
             {
                 foreach (PointF p in PointsSection)
@@ -159,8 +132,6 @@ namespace BSFiberConcrete.Section
                 }
             }
         }
-
-
         private void DrawFromDatasource(bool _clear = false)
         {
             if (_clear)
@@ -168,63 +139,50 @@ namespace BSFiberConcrete.Section
                 chart.Series[0].Points.Clear();
                 chart.Series[1].Points.Clear();
             }
-
             List<PointF> points = new List<PointF>();
             foreach (BSPoint bsp in pointBS)
             {
                 points.Add(new PointF(bsp.X, bsp.Y));
             }
-
                         List<PointF> rod_points = new List<PointF>();
             double rods_area = 0;
             foreach (BSRod _rod in RodBS)
             {
                 rod_points.Add(new PointF((float)_rod.CG_X, (float)_rod.CG_Y) );
-
                 rods_area += _rod.As;
             }
-
             Series serieSection = chart.Series[0];
             for (int j = 0; j < points.Count; j++)
             {
                 var pt = points[j];
                 serieSection.Points.Add(new DataPoint(pt.X, pt.Y));
             }
-
             Series serieInnerSection = chart.Series[2];
             foreach (var p in InnerPoints)
             {                
                 serieInnerSection.Points.Add(new DataPoint(p.X, p.Y));
             }
-
                         Series serieRods = chart.Series[1];          
             for (int j = 0; j < rod_points.Count; j++)
             {
                 var rod_pt = rod_points[j];
                 serieRods.Points.Add(new DataPoint(rod_pt.X, rod_pt.Y));
-
                             }
             
             numAreaRebar.Value = (decimal) rods_area;
-
             m_ImageStream = new MemoryStream();
             chart.SaveImage(m_ImageStream, ChartImageFormat.Png);
-
         }
-
         private void btnDraw_Click(object sender, EventArgs e)
         {            
             DrawFromDatasource(true);            
         }
-
-
         private void btnAdd_Click(object sender, EventArgs e)
         {
             PointF pt = new PointF(0, 0);
             
             pointBS.Add(new BSPoint(pt) { Num = pointBS.Count+1}) ;
         }
-
         private void btnDel_Click(object sender, EventArgs e)
         {
             try
@@ -235,23 +193,19 @@ namespace BSFiberConcrete.Section
             {
             }
         }
-
                                 private void SaveRods2DB()
         {
             if (RodBS == null || RodBS.List == null || RodBS.List.Count == 0)
                 return;
-
             List<BSRod> bSRods = (List<BSRod>) RodBS.List; 
             
             BSData.SaveRods(bSRods, m_BeamSection);            
         }
-
                                 private void btnSave_Click(object sender, EventArgs e)
         {
             try
             {
                 SaveRods2DB();
-
                 Save2PolyFile();
             }
             catch (Exception _e)
@@ -259,16 +213,13 @@ namespace BSFiberConcrete.Section
                 MessageBox.Show(_e.Message);
             }
         }
-
         
         private void BSSectionChart_Load(object sender, EventArgs e)
         {
             try
             {
                 InitControls();
-
                 InitDataSource();
-
                 DrawFromDatasource();
                
             }
@@ -277,7 +228,6 @@ namespace BSFiberConcrete.Section
                 MessageBox.Show(_e.Message);
             }
         }
-
         private void InitControls()
         {
             if (m_BeamSection == BeamSection.Any)
@@ -291,17 +241,14 @@ namespace BSFiberConcrete.Section
                     cl.ReadOnly = true;
             }
         }
-
         private void Save2PolyFile()
         {
         }
-
         private void BSSectionChart_FormClosed(object sender, FormClosedEventArgs e)
         {
             try
             {
                 SaveRods2DB();
-
                 Save2PolyFile();
             }
             catch (Exception _e)
@@ -309,7 +256,6 @@ namespace BSFiberConcrete.Section
                 MessageBox.Show(_e.Message);
             }
         }
-
                                 private void btnAddRod_Click(object sender, EventArgs e)
         {
             try
@@ -321,8 +267,6 @@ namespace BSFiberConcrete.Section
                 MessageBox.Show(_e.Message);
             }
         }
-
-
                                 private void btnDelRod_Click(object sender, EventArgs e)
         {
             try
@@ -334,17 +278,14 @@ namespace BSFiberConcrete.Section
                 MessageBox.Show(_e.Message);
             }
         }
-
         private void labelRods_MouseMove(object sender, MouseEventArgs e)
         {
             System.Windows.Forms.Cursor.Current = Cursors.Hand;
         }
-
         private void labelRods_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Задайте привязку арматуры - укажите координаты стержней");
         }
-
                                 private void bSRodDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             try
@@ -352,15 +293,12 @@ namespace BSFiberConcrete.Section
                 if (e.RowIndex >= 0)
                 {
                     var d_nom = int.Parse(bSRodDataGridView.Rows[e.RowIndex].Cells["Dnom"].Value?.ToString() ?? "0");
-
                     if (m_Diameters != null)
                     {
                         if (d_nom > 0)
                         {
                             double ar = m_Diameters.Find(_D => _D.Diameter == d_nom).Square;
-
                             double d_fact = BSHelper.DCircle(ar);
-
                             bSRodDataGridView.Rows[e.RowIndex].Cells["D"].Value = Math.Round(d_fact, 2);
                         }
                     }
@@ -373,10 +311,8 @@ namespace BSFiberConcrete.Section
             }
             catch
             {
-
             }           
         }
-
                
         private void btnSaveChart_Click(object sender, EventArgs e)
         {            
@@ -386,11 +322,8 @@ namespace BSFiberConcrete.Section
                 {
                     
                                     }
-
                                 List<NdmSection> bsSec = new List<NdmSection>();
-
                 BindingList<BSPoint> p =(BindingList<BSPoint>)pointBS.List;
-
                 int idxN = 0;
                 foreach (var pt in p)
                 {
@@ -401,7 +334,6 @@ namespace BSFiberConcrete.Section
                     ndmSection.Y = pt.Y;
                     bsSec.Add(ndmSection);
                 }    
-
                 BSData.SaveSection(bsSec, UserSection);
             }
             catch (Exception ex) 
@@ -409,30 +341,24 @@ namespace BSFiberConcrete.Section
                 MessageBox.Show(ex.Message);
             }
         }
-
         private void buttonClose_Click(object sender, EventArgs e)
         {
             Close();
         }
-
                                                 private BSCalcResultNDM CalcNDM_MxMyN()
         {
             Dictionary<string, double> dictParams = DictCalcParams;
                         
             CalcNDM calcNDM = new CalcNDM(m_BeamSection) { setup = ndmSetup, D = dictParams };
             calcNDM.RunGroup1();
-
             return calcNDM.CalcRes;                                    
         }
-
                 private void btnCalc_Click(object sender, EventArgs e)
         {
             try
             {
                 GenerateMesh();
-
                 BSCalcResultNDM calcRes = CalcNDM_MxMyN();
-
                 BSReport.RunFromCode(m_BeamSection, calcRes);
             }
             catch (Exception _ex)
@@ -440,7 +366,6 @@ namespace BSFiberConcrete.Section
                 MessageBox.Show(_ex.Message);
             }            
         }
-
         private void BeamSectionFromPoints(ref List<PointF> _PointsSection, PointF _center)
         {                                              
             BindingList<BSPoint> bspoints = (BindingList<BSPoint>)pointBS.List;           
@@ -451,26 +376,19 @@ namespace BSFiberConcrete.Section
             
             
                                                         }
-
                                                 private string GenerateMesh()
         {
             if (m_BeamSection != BeamSection.Any) return "";
-
             BSMesh.Nx = ndmSetup.N;
             BSMesh.Ny = ndmSetup.M;
             BSMesh.MinAngle = ndmSetup.MinAngle;
             Tri.MinAngle = ndmSetup.MinAngle;
             BSMesh.MaxArea = ndmSetup.MaxArea;
-
             List<PointF> pts = new List<PointF>();
             BeamSectionFromPoints(ref pts, Center);
-
             string pathToSvgFile = Tri.CreateSectionContour(pts, BSMesh.MaxArea);
-
             _ = Tri.CalculationScheme(false);
-
                         int? nTri = Tri.triCGs?.Count();
-
             if (nTri > 0)
             {        
                                 NumArea = Tri.triAreas?.Sum() ?? 0;
@@ -478,7 +396,6 @@ namespace BSFiberConcrete.Section
                         
             return pathToSvgFile;
         }
-
                                 private void btnMesh_Click(object sender, EventArgs e)
         {            
             try

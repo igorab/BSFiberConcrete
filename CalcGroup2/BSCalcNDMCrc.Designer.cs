@@ -3,7 +3,6 @@
     partial class BSCalcNDMCrc
     {
                                 private System.ComponentModel.IContainer components = null;
-
                                         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -12,10 +11,7 @@
             }
             base.Dispose(disposing);
         }
-
-        #region Windows Form Designer generated code
-
-                                        private void InitializeComponent()
+                                                private void InitializeComponent()
         {
             this.tableLayoutPanelCrc = new System.Windows.Forms.TableLayoutPanel();
             this.buttonOk = new System.Windows.Forms.Button();
@@ -187,12 +183,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numFi2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numMju_fv)).EndInit();
             this.ResumeLayout(false);
-
         }
-
-        #endregion
-
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelCrc;
+                private System.Windows.Forms.TableLayoutPanel tableLayoutPanelCrc;
         private System.Windows.Forms.NumericUpDown numFi1;
         private System.Windows.Forms.NumericUpDown numFi3;
         private System.Windows.Forms.NumericUpDown numPsiS;

@@ -12,67 +12,47 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
 namespace BSFiberConcrete
 {
                 public class BSCalcResultNDM
     {
         [DisplayName("Количество итераций, [.]")]
         public double ItersCnt { get; private set; }
-
-        #region 1 группа предельных состояний
-        [DisplayName("Радиус кривизны продольной оси в плоскости действия моментов, Rx, [см]")]
+                [DisplayName("Радиус кривизны продольной оси в плоскости действия моментов, Rx, [см]")]
         public double rx { get; private set; }
-
         [DisplayName("Радиус кривизны продольной оси в плоскости действия моментов, Ry, [см]")]
         public double ry { get; private set; }
-
         [DisplayName("Относительная деформация волокна в Ц.Т. сечения, e0, [.]")]
         public double eps_0 { get; private set; }
-
         [DisplayName("Кривизна 1/Rx, [1/см]")]
         public double Kx { get; private set; }
-
         [DisplayName("Кривизна 1/Ry, [1/см]")]
         public double Ky { get; private set; }
-
         
         [DisplayName("Напряжение в бетоне, [кг/см2]")]
         public double sigmaB { get; private set; }
-
         [DisplayName("Напряжение в арматуре, [кг/см2]")]
         public double sigmaS { get; private set; }
-
         [DisplayName("Максимальная относительная деформация в фибробетоне, [.]")]
         public double e_fb_max { get; private set; }
-
         [DisplayName("---Коэффициент использования по деформации в фибробетоне (растяжение), [СП360 6.1.24]")]
         public double UtilRate_e_fbt { get; private set; }
-
         [DisplayName("Максимальная относительная деформация в арматуре, [.]")]
         public double e_s_max { get; private set; }
-
         [DisplayName("---Коэффициент использования по деформации в арматуре (растяжение), [СП360 6.1.21]")]
         public double UtilRate_e_st { get; private set; }
-
                 [DisplayName("Напряжение в бетоне (сжатие), [кг/см2]")]
         public double sigmaB_p { get; private set; }
-
         [DisplayName("Напряжение в арматуре (сжатие), [кг/см2]")]
         public double sigmaS_p { get; private set; }
-
         [DisplayName("Максимальная относительная деформация в фибробетоне (сжатие) , [.]")]
         public double e_fb_max_p { get; private set; }
-
         [DisplayName("---Коэффициент использования по деформации в фибробетоне (сжатие), [СП360 6.1.25]")]
         public double UtilRate_e_fb_p { get; private set; }
-
         [DisplayName("Максимальная относительная деформация в арматуре (сжатие), [.]")]
         public double e_s_max_p { get; private set; }
-
         [DisplayName("---Коэффициент использования по деформации в арматуре (сжатие), [СП360 6.1.21]")]
         public double UtilRate_e_s_p { get; private set; }
-
         
         [DisplayName("Момент Мx, [кг*см]")]
         public double Mx_calc { get; private set; }
@@ -80,104 +60,65 @@ namespace BSFiberConcrete
         public double My_calc { get; private set; }
         [DisplayName("Сила N, [кг]")]
         public double N_calc { get; private set; }
-
                 public List<double> Sig_B { get; set; }         public List<double> Sig_S { get; set; } 
                 public List<double> Eps_B { get; set; }         public List<double> Eps_S { get; set; } 
-        #endregion
-
-        #region 2 группа предельных состояний
-        [DisplayName("П6.2.13. Момент возникновения трещины, [кг*см]")]
+                        [DisplayName("П6.2.13. Момент возникновения трещины, [кг*см]")]
         public double M_crc { get; set; }
-
         [DisplayName("П6.2.31. Кривизна 1/Rx, [1/см]")]
         public double Kx_crc { get; set; }
-
         [DisplayName("П6.2.31. Кривизна 1/Ry, [1/см]")]
         public double Ky_crc { get; set; }
-
         [DisplayName("П6.2.31. Напряжение в арматуре, [кг/см2]")]
         public double sig_s_crc { get; set; }
-
         [DisplayName("П6.2.31. Ширина раскрытия трещины, [см]")]
         public double a_crc { get; set; }
-        #endregion
-
-        public List<string> Msg { get; set; }
+                public List<string> Msg { get; set; }
         
         private Dictionary<string, double> Res1Group { get; set; }
         private Dictionary<string, double> Res2Group { get; set; }
-
         public List<int> ErrorIdx { get; set; }
-
-        #region Параметры расчета
-
-        [DisplayName("Ширина сечения, b [см]")]
+                [DisplayName("Ширина сечения, b [см]")]
         public double b { get; set; }
-
         [DisplayName("Высота сечения, h [см]")]
         public double h { get; set; }
-
         [DisplayName("Mx [кг*см]")]
         public double Mx { get; set; }
-
         [DisplayName("My [кг*см]")]
         public double My { get; set; }
-
         [DisplayName("N [кг]")]
         public double N { get; set; }
-
         [DisplayName("Qx [кг]")]
         public double Qx { get; set; }
-
         [DisplayName("Qy [кг]")]
         public double Qy { get; set; }
-
         [DisplayName("Модуль упругости фибробетона Eb, [кг/см2]")]
         public double Eb { get; set; }
-
         [DisplayName("Нормативное сопротивление фибробетона на сжатие R,fbn, [кг/см2]")]
         public double Rfbn { get; set; }
-
         [DisplayName("Нормативное сопротивление фибробетона на растяжение R,fbtn, [кг/см2]")]
         public double Rfbtn { get; set; }
-
         [DisplayName("Расчетное сопротивление фибробетона на сжатие R,fbn, [кг/см2]")]
         public double Rfb { get; set; }
-
         [DisplayName("Расчетное сопротивление фибробетона на растяжение R,fbtn, [кг/см2]")]
         public double Rfbt { get; set; }
-
         [DisplayName("Модуль упругости арматуры Es, [кг/см2]")]
         public double Es { get; set; }
-
         [DisplayName("Нормативное сопротивление арматуры R,sn, [кг/см2]")]
         public double Rs { get; set; }
-
         [DisplayName("Количество стержней арматуры, [шт]")]
         public double Rods_qty { get; set; }
-
         [DisplayName("Общая площадь продольной арматуры, [см2]")]
         public double Rods_area { get; set; }
-
         [DisplayName("Максимально допустимая относительная деформация в бетоне, [.]")]
         public double Eps_fb_ult { get; set; }
-
         [DisplayName("Максимально допустимая относительная деформация в бетоне, [.]")]
         public double Eps_fbt_ult { get; set; }
-
         [DisplayName("Максимально допустимая относительная деформация в арматуре, [.]")]
         public double Eps_s_ult { get; set; }
-
         [DisplayName("Максимальный прогиб балки [мм]")]
         public double Deflexion_max { get; set; }
-
-        #endregion
-
-        private Dictionary<string, double> m_Beam;
-
-
+                private Dictionary<string, double> m_Beam;
         private string DN(string _attr) => BSFiberCalculation.DsplN(typeof(BSCalcResultNDM), _attr);
-
         private Dictionary<int, string> DictErrors = new Dictionary<int, string>()
         {
             [-1] = "Достигнута заданная сходимость метода [+]",
@@ -186,8 +127,6 @@ namespace BSFiberConcrete
             [2] = "Достигнуто максимальное число итераций [-]",
             [3] = "Деформации превысили разумный предел [-]"
         };
-
-
                                 public Dictionary<string, double> Efforts
         {
             get
@@ -213,9 +152,7 @@ namespace BSFiberConcrete
                     { DN("Rfbtn"), Rfbtn },
                                         { DN("Rfb"), Rfb },
                     { DN("Rfbt"), Rfbt },
-
                     { DN("Eps_fb_ult"), Eps_fb_ult},
-
                     { DN("Es"),    Es },
                     { DN("Rs"),    Rs },                    
                     { DN("Eps_s_ult"), Eps_s_ult }
@@ -233,22 +170,18 @@ namespace BSFiberConcrete
                 };
             }
         }         
-
         public Dictionary<string, double> GeomParams =>  new Dictionary<string, double>
         {
             { DN("b"), b },
             { DN("h"), h }
         };
-
         public Dictionary<string, double> Beam => m_Beam;
-
                                 public Dictionary<string, double> ResQxQy { get; internal set; }
         public MemoryStream ImageStream { get; internal set; }
         public List<string> Message { get; internal set; }
         public List<string> Path2BeamDiagrams { get; internal set; }
         public Dictionary<string, double> Coeffs { get; internal set; }
         public LameUnitConverter UnitConverter { get; internal set; }
-
         private double InitBeamLength(double _lgth, double _coeflgth)
         {
             m_Beam = new Dictionary<string, double>
@@ -256,16 +189,12 @@ namespace BSFiberConcrete
                 { "Длина элемента, см", _lgth },
                 { "Коэффициет расчетной длины", _coeflgth }
             };
-
             return (_coeflgth != 0) ? _lgth * _coeflgth : _lgth;
         }
-
-
                                         public void InitCalcParams(Dictionary<string, double> _D)
         {
             b  = _D["b"];
             h  = _D["h"];
-
             Mx = _D["Mz"];
             My = _D["My"];
             N =  _D["N"];
@@ -276,11 +205,9 @@ namespace BSFiberConcrete
             Rfbtn = _D["Rbtn"];
                         Rfb   = _D["Rbc"];
             Rfbt  = _D["Rbt"];
-
             Eb    = _D["Eb0"];
             Es    = _D["Es0"];
             Rs    = _D["Rscn"];
-
             Eps_fbt_ult = _D["ebt_ult"];
             Eps_fb_ult  = _D["eb_ult"];
             
@@ -288,66 +215,53 @@ namespace BSFiberConcrete
                 Rods_qty = _D["rods_qty"];
             if (_D.ContainsKey("rods_area"))
                 Rods_area = _D["rods_area"];
-
             if (_D.ContainsKey("lgth") && _D.ContainsKey("coeflgth"))
                 InitBeamLength(_D["lgth"], _D["coeflgth"]);
         }
-
                                         public BSCalcResultNDM(Dictionary<string, double> _D1gr)
         {
                         ItersCnt = _D1gr["ItersCnt"];
-
                         eps_0 = _D1gr["ep0"];
             Ky = _D1gr["Ky"];
             ry = _D1gr["ry"];
             Kx = _D1gr["Kz"];
             rx = _D1gr["rz"];
-
                         sigmaB = BSHelper.KNsm2ToKgssm2(_D1gr["sigB"]);
             sigmaS = BSHelper.KNsm2ToKgssm2(_D1gr["sigS"]);
             e_fb_max = _D1gr["epsB"];
             e_s_max = _D1gr["epsS"];
-
                         sigmaB_p = BSHelper.KNsm2ToKgssm2(_D1gr["sigB_p"]);
             sigmaS_p = BSHelper.KNsm2ToKgssm2(_D1gr["sigS_p"]);
             e_fb_max_p = _D1gr["epsB_p"];
             e_s_max_p = _D1gr["epsS_p"];
-
                         Eps_s_ult = _D1gr["esc0"];
-
                         Mx_calc = BSHelper.KNsm2ToKgssm2(_D1gr["Mx"]);
             My_calc = BSHelper.KNsm2ToKgssm2(_D1gr["My"]);            
             N_calc = BSHelper.kN2Kgs(_D1gr["N"]);
-
                                     UtilRate_e_fb_p = _D1gr["UR_fb_p"];
             UtilRate_e_s_p = _D1gr["UR_s_p"];
                         UtilRate_e_fbt = _D1gr["UR_fb_t"];
             UtilRate_e_st = _D1gr["UR_s_t"];
-
             Msg = new List<string>();
             Res1Group = new Dictionary<string, double>();
             Res2Group = new Dictionary<string, double>();
             ErrorIdx = new List<int>();
         }
-
                                                 public void SetRes2Group(Dictionary<string, double> _D2gr, bool _showM = true, bool _show_a = false)
         {            
                         if (_D2gr.ContainsKey("Ky"))
                 Ky_crc = _D2gr["Ky"];
             if (_D2gr.ContainsKey("Kz"))
                 Kx_crc = _D2gr["Kz"];
-
             if (Rods_qty > 0)
             {
                 if (_showM)
                 {
                                         if (_D2gr.ContainsKey("My_crc"))
                         M_crc = _D2gr["My_crc"];
-
                                         if (_D2gr.ContainsKey("sig_s_crc"))
                         sig_s_crc = _D2gr["sig_s_crc"];
                 }
-
                 if (_show_a)
                 {
                                         if (_D2gr.ContainsKey("a_crc"))
@@ -355,16 +269,13 @@ namespace BSFiberConcrete
                 }
             }
         }
-
         private void AddToResult(string _attr, double _value, int _group = 1, bool _truncate = true)
         {
             Dictionary<string, double> res = (_group == 1) ? Res1Group : Res2Group;
-
             if (_truncate && (Math.Abs(_value) < 10e-15 || Math.Abs(_value) > 10e15))
             {
                 return;
             }
-
             try
             {
                 var KEY = BSFiberCalculation.DsplN(typeof(BSCalcResultNDM), _attr);
@@ -378,8 +289,6 @@ namespace BSFiberConcrete
                 MessageBox.Show(_E.Message);
             }
         }
-
-
                                 public Dictionary<string, double> GetResults1Group()
         {
             Res1Group = new Dictionary<string, double>();
@@ -391,7 +300,6 @@ namespace BSFiberConcrete
             AddToResult("Ky", Ky);
             if (!(Deflexion_max is double.NaN))
                 AddToResult("Deflexion_max", Deflexion_max);
-
                         Res1Group.Add("<b>--------Растяжение:--------</b>", double.NaN);
             AddToResult("sigmaB", sigmaB);            
             AddToResult("e_fb_max", e_fb_max);
@@ -407,13 +315,11 @@ namespace BSFiberConcrete
                         AddToResult("sigmaS_p", sigmaS_p);
             AddToResult("e_s_max_p", e_s_max_p);
             AddToResult("UtilRate_e_s_p", UtilRate_e_s_p);
-
                         Res1Group.Add("<b>--------Проверка по усилиям:-------</b>", double.NaN);
             AddToResult("Mx_calc", Mx_calc);
             AddToResult("My_calc", My_calc);
             AddToResult("N_calc", N_calc);
             AddToResult("ItersCnt", ItersCnt);
-
                         if (ResQxQy != null)
             {                
                 Res1Group.Add("<b>--------Проверка на действие поперечныx сил:-------</b>", double.NaN);
@@ -422,10 +328,8 @@ namespace BSFiberConcrete
                     Res1Group.Add(_resQ.Key, _resQ.Value);                 
                 }
             }
-
             return  Res1Group;
         }
-
                                         public void ResultsMsg1Group(ref List<string> _Message)
         {
             bool res_fb = e_fb_max <= Eps_fb_ult;
@@ -433,47 +337,38 @@ namespace BSFiberConcrete
                 Msg.Add(string.Format("Проверка сечения по фибробетону пройдена. e_fb_max={0} <= e_fb_ult={1} ", Math.Round(e_fb_max, 6), Eps_fb_ult));
             else
                 Msg.Add(string.Format("Не пройдена проверка сечения по фибробетону. e_fb_max={0} <= e_fb_ult={1} ", Math.Round(e_fb_max, 6), Eps_fb_ult));
-
             bool res_s = e_s_max <= Eps_s_ult;
             if (res_s)
                 Msg.Add(string.Format("Проверка сечения по арматуре пройдена. e_s_max={0} <= e_s_ult={1} ", Math.Round(e_s_max, 6), Eps_s_ult));
             else
                 Msg.Add(string.Format("Не пройдена проверка сечения по арматуре. e_s_max={0} <= e_s_ult={1}", Math.Round(e_s_max, 6), Eps_s_ult));
-
             Msg.Add("---Предупреждения:------");
             foreach (int errid in ErrorIdx) 
             {
                 if (DictErrors.TryGetValue(errid, out string _errval))
                     Msg.Add($"{_errval}");
             }
-
             _Message = Msg;
         }
-
                                 public Dictionary<string, double> GetResults2Group()
         {
             Res2Group = new Dictionary<string, double>();
             Res2Group.Add("<b>--------Изгиб:--------</b>", double.NaN);
             AddToResult("Kx_crc", Kx_crc, BSFiberLib.CG2, false);            
             AddToResult("Ky_crc", Ky_crc, BSFiberLib.CG2, false);
-
             Res2Group.Add("<b>--------Усилия:--------</b>", double.NaN);
             AddToResult("M_crc", BSHelper.kNsm2kgssm(M_crc), BSFiberLib.CG2, false);
             AddToResult("sig_s_crc", sig_s_crc, BSFiberLib.CG2, false);
-
             Res2Group.Add("<b>--------Трещины:--------</b>", double.NaN);
             AddToResult("a_crc", a_crc, BSFiberLib.CG2, false);
-
             return Res2Group;
         }
-
         public void InitFromCalcNDM(BSCalcNDM bsCalc1)
         {
             Sig_B = bsCalc1.SigmaBResult;
             Sig_S = bsCalc1.SigmaSResult;
             Eps_B = bsCalc1.EpsilonBResult;
             Eps_S = bsCalc1.EpsilonSResult;
-
             ErrorIdx.Add(bsCalc1.Err);
         }
     }

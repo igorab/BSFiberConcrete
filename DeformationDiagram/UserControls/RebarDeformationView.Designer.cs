@@ -3,7 +3,6 @@
     partial class RebarDeformationView
     {
                                 private System.ComponentModel.IContainer components = null;
-
                                         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -12,10 +11,7 @@
             }
             base.Dispose(disposing);
         }
-
-        #region Код, автоматически созданный конструктором компонентов
-
-                                        private void InitializeComponent()
+                                                private void InitializeComponent()
         {
             this.tableLayoutEpsilonS = new System.Windows.Forms.TableLayoutPanel();
             this.numEps_s_ult = new System.Windows.Forms.NumericUpDown();
@@ -252,12 +248,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numEpsilonS1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numEpsilonS0)).EndInit();
             this.ResumeLayout(false);
-
         }
-
-        #endregion
-
-        private System.Windows.Forms.TableLayoutPanel tableLayoutEpsilonS;
+                private System.Windows.Forms.TableLayoutPanel tableLayoutEpsilonS;
         private System.Windows.Forms.NumericUpDown numEps_s_ult;
         private System.Windows.Forms.NumericUpDown numEpsilonS2;
         private System.Windows.Forms.NumericUpDown numEpsilonS1;
