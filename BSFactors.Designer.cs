@@ -30,13 +30,13 @@
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.gridFactors = new System.Windows.Forms.DataGridView();
-            this.btnClose = new System.Windows.Forms.Button();
-            this.dataGridViewProgressColumn1 = new TestGrid.DataGridViewProgressColumn();
             this.Factor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Descr = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Coeff = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Loading = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Percent = new TestGrid.DataGridViewProgressColumn();
+            this.btnClose = new System.Windows.Forms.Button();
+            this.dataGridViewProgressColumn1 = new TestGrid.DataGridViewProgressColumn();
             ((System.ComponentModel.ISupportInitialize)(this.gridFactors)).BeginInit();
             this.SuspendLayout();
             // 
@@ -52,26 +52,10 @@
             this.Coeff,
             this.Loading,
             this.Percent});
-            this.gridFactors.Location = new System.Drawing.Point(12, 29);
+            this.gridFactors.Location = new System.Drawing.Point(12, 12);
             this.gridFactors.Name = "gridFactors";
-            this.gridFactors.Size = new System.Drawing.Size(722, 312);
+            this.gridFactors.Size = new System.Drawing.Size(569, 274);
             this.gridFactors.TabIndex = 0;
-            // 
-            // btnClose
-            // 
-            this.btnClose.Location = new System.Drawing.Point(650, 387);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(75, 23);
-            this.btnClose.TabIndex = 2;
-            this.btnClose.Text = "Закрыть";
-            this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-            // 
-            // dataGridViewProgressColumn1
-            // 
-            this.dataGridViewProgressColumn1.HeaderText = "Процент";
-            this.dataGridViewProgressColumn1.Name = "dataGridViewProgressColumn1";
-            this.dataGridViewProgressColumn1.ReadOnly = true;
             // 
             // Factor
             // 
@@ -106,13 +90,30 @@
             this.Percent.Name = "Percent";
             this.Percent.ReadOnly = true;
             // 
+            // btnClose
+            // 
+            this.btnClose.Location = new System.Drawing.Point(506, 292);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(75, 23);
+            this.btnClose.TabIndex = 2;
+            this.btnClose.Text = "Закрыть";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
+            // dataGridViewProgressColumn1
+            // 
+            this.dataGridViewProgressColumn1.HeaderText = "Процент";
+            this.dataGridViewProgressColumn1.Name = "dataGridViewProgressColumn1";
+            this.dataGridViewProgressColumn1.ReadOnly = true;
+            // 
             // BSFactors
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(746, 442);
+            this.ClientSize = new System.Drawing.Size(591, 323);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.gridFactors);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "BSFactors";
             this.Text = "Диаграмма факторов";
             this.Load += new System.EventHandler(this.BSFactors_Load);

@@ -521,7 +521,7 @@
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(200, 13);
             this.label18.TabIndex = 20;
-            this.label18.Text = "Минимальное значение длины фбиры";
+            this.label18.Text = "Минимальное значение длины фибры";
             // 
             // label19
             // 

@@ -19,9 +19,7 @@ namespace BSFiberConcrete
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
-            //Application.Run(new BSFiberMain());
-            //Application.Run(new Section.BSSectionDraw());
+            
             Application.Run(new BSCalcMenu.BSCalcMenu());
         }
     }

@@ -1,13 +1,6 @@
 ﻿using BSFiberConcrete.CalcGroup2;
 using BSFiberConcrete.Lib;
-using MathNet.Numerics;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Diagnostics.Eventing.Reader;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BSFiberConcrete
 {
