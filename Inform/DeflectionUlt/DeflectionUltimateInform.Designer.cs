@@ -62,7 +62,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(800, 450);
+            this.tabControl1.Size = new System.Drawing.Size(864, 461);
             this.tabControl1.TabIndex = 2;
             // 
             // tabPage2
@@ -71,7 +71,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(792, 424);
+            this.tabPage2.Size = new System.Drawing.Size(856, 435);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Вертикальные прогибы";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -83,7 +83,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(3, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(786, 418);
+            this.panel2.Size = new System.Drawing.Size(850, 429);
             this.panel2.TabIndex = 0;
             // 
             // pictureBox3
@@ -102,7 +102,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(792, 424);
+            this.tabPage1.Size = new System.Drawing.Size(792, 425);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Горизонтальные прогибы";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -114,7 +114,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(786, 418);
+            this.panel1.Size = new System.Drawing.Size(786, 419);
             this.panel1.TabIndex = 0;
             // 
             // panel3
@@ -124,7 +124,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(786, 418);
+            this.panel3.Size = new System.Drawing.Size(786, 419);
             this.panel3.TabIndex = 0;
             // 
             // pictureBox1
@@ -142,7 +142,7 @@
             this.tabPage3.Controls.Add(this.panel4);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(792, 424);
+            this.tabPage3.Size = new System.Drawing.Size(792, 425);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Горизонтальные прогибы от ветра";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -154,7 +154,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(0, 0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(792, 424);
+            this.panel4.Size = new System.Drawing.Size(792, 425);
             this.panel4.TabIndex = 1;
             // 
             // pictureBox2
@@ -171,9 +171,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(864, 461);
             this.Controls.Add(this.tabControl1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(880, 500);
             this.Name = "DeflectionUltimateInform";
             this.Text = "Предельные прогибы";
             this.tabControl1.ResumeLayout(false);
