@@ -21,21 +21,18 @@ namespace BSFiberConcrete
 
         public static double mm2sm(double _mm) => _mm * 0.1d;
 
-        // конвертор сил
-        public static double Kg2T(double _kg) => _kg * 0.001d;
+                public static double Kg2T(double _kg) => _kg * 0.001d;
         public static double kN2Kgs(double? _kN) => _kN * 101.97162129779284d ?? 0;
         public static double Kgs2kN(double _kgs, int _rnd = 0) => (_rnd >0) ? Math.Round(_kgs * 0.00980665d, _rnd) : _kgs * 0.00980665d;        
 
-        // конвертор моментов
-        public static double Kgsm2Tm(double _kgsm) => _kgsm * 0.00001d;
+                public static double Kgsm2Tm(double _kgsm) => _kgsm * 0.00001d;
         public static double kgssm2kNsm(double? _kgssm) => _kgssm * 0.00980665d ?? 0;
         public static double kgssm2Nmm(double? _kgssm) => _kgssm * 98.0665 ?? 0;
         public static double kNsm2kgssm(double? _kNsm) => _kNsm * 101.97162129779284d ?? 0;
         public static double kNm2kgssm(double? _kNm) => _kNm * 10197.16212978d ?? 0;
         public static double Nmm2kgssm(double? _Nmm) => _Nmm * 0.010197162d ?? 0;
 
-        // конвертор напряжений 
-
+        
         public static double MPA2kgsm2(double _mpa) => 10.197162d * _mpa ;
         public static double MPA2kgsm2(double? _mpa) => 10.197162d * _mpa ?? 0;
         public static double MPA2kNsm2(double? _mpa) => 0.1d * _mpa ?? 0;
@@ -54,29 +51,17 @@ namespace BSFiberConcrete
         
         public const string FiberConcrete = "Фибробетон";
 
-        public const string Rebar = "Арматура"; // TO Do утвердить нейминг константы
-
+        public const string Rebar = "Арматура"; 
         public const string TwoLineDiagram = "Двухлинейная";
 
         public const string ThreeLineDiagram = "Трехлинейная";
 
         public const string IgnoreHumidity = "Не учитывать";
         
-        /// <summary>
-        /// физический предел текучести
-        /// </summary>
-        public const string PhysicalYieldStress = "physical";
-        /// <summary>
-        /// условный предел текучести
-        /// </summary>
-        public const string OffsetYieldStress = "offset";
+                                public const string PhysicalYieldStress = "physical";
+                                public const string OffsetYieldStress = "offset";
 
-        /// <summary>
-        /// Является ли сеченние составленным из прямоугольников
-        /// </summary>
-        /// <param name="_BeamSection">Тип сечения</param>
-        /// <returns></returns>
-        public static bool IsRectangled(BeamSection _BeamSection)
+                                                public static bool IsRectangled(BeamSection _BeamSection)
         {
             return _BeamSection == BeamSection.Rect || 
                    _BeamSection == BeamSection.TBeam || 
@@ -84,12 +69,7 @@ namespace BSFiberConcrete
                    _BeamSection == BeamSection.IBeam;
         }
 
-        /// <summary>
-        /// Является ли сечение тавровым
-        /// </summary>
-        /// <param name="_BeamSection">Тип сечения</param>
-        /// <returns></returns>
-        public static bool IsITL(BeamSection _BeamSection)
+                                                public static bool IsITL(BeamSection _BeamSection)
         {
             return _BeamSection == BeamSection.TBeam ||
                    _BeamSection == BeamSection.LBeam ||
@@ -126,8 +106,7 @@ namespace BSFiberConcrete
                     break;
             }
 
-            //_img = "Rect_N.PNG";
-
+            
             return _img;
         }
 
@@ -157,14 +136,7 @@ namespace BSFiberConcrete
 
     public static class EnumHelper
     {
-        /// <summary>
-        /// Gets an attribute on an enum field value
-        /// </summary>
-        /// <typeparam name="T">The type of the attribute you want to retrieve</typeparam>
-        /// <param name="enumVal">The enum value</param>
-        /// <returns>The attribute of type T that exists on the enum value</returns>
-        /// <example><![CDATA[string desc = myEnumVariable.GetAttributeOfType<DescriptionAttribute>().Description;]]></example>
-        public static T GetAttributeOfType<T>(this Enum enumVal) where T : System.Attribute
+                                                                public static T GetAttributeOfType<T>(this Enum enumVal) where T : System.Attribute
         {
             var type = enumVal.GetType();
             var memInfo = type.GetMember(enumVal.ToString());
@@ -179,26 +151,20 @@ namespace BSFiberConcrete
         private static char close = ']';
         public static string[] Brackets(this string str)
         {
-            //Set up vars
-            StringBuilder[] builders = new StringBuilder[str.Count(x => x == open)];
+                        StringBuilder[] builders = new StringBuilder[str.Count(x => x == open)];
             for (int h = 0; h < builders.Count(); h++)
                 builders[h] = new StringBuilder();
             string[] results = new string[builders.Count()];
             bool[] tracker = new bool[builders.Count()];
             int haveOpen = 0;
-            //loop up string
-            for (int i = 0; i < str.Length; i++)
+                        for (int i = 0; i < str.Length; i++)
             {
-                //if opening bracket
-                if (str[i] == open)
+                                if (str[i] == open)
                     tracker[haveOpen++] = true;
-                //loop over tracker
-                for (int j = 0; j < tracker.Length; j++)
+                                for (int j = 0; j < tracker.Length; j++)
                     if (tracker[j])
-                        //if in this bracket append to the string
-                        builders[j].Append(str[i]);
-                //if closing bracket
-                if (str[i] == close)
+                                                builders[j].Append(str[i]);
+                                if (str[i] == close)
                     tracker[Array.FindLastIndex<bool>(tracker, p => p == true)] = false;
             }
             for (int i = 0; i < builders.Length; i++)

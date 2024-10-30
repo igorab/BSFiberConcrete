@@ -8,8 +8,7 @@ namespace BSFiberConcrete
     [BSFiberCalculation(Descr = "Расчет балки таврового/двутаврового сечения")]
     public class BSFibCalc_IBeam : BSFiberCalculation
     {
-        // размеры:
-        [DisplayName("Ширина нижней полки, bf, [см]")]
+                [DisplayName("Ширина нижней полки, bf, [см]")]
         public double bf { get; protected set; }
         [DisplayName("Высота нижней полки, hf, [см]")]
         public double hf { get; protected set; }
@@ -22,12 +21,10 @@ namespace BSFiberConcrete
         [DisplayName("Высота верхней полки, h1f, [см]")]
         public double h1f { get; protected set; }
 
-        // физ. характеристики бетона
-        [DisplayName("Расчетные значения сопротивления на сжатиие по СП63 кг/см2")]
+                [DisplayName("Расчетные значения сопротивления на сжатиие по СП63 кг/см2")]
         public new double Rfbn { get; protected set; }
                 
-        // Результаты
-        [DisplayName("Высота сжатой зоны, [см]")]
+                [DisplayName("Высота сжатой зоны, [см]")]
         public double x { get; protected set; }
 
         [DisplayName("Предельный момент сечения, [кг*см]")]
@@ -104,8 +101,7 @@ namespace BSFiberConcrete
                 Mult = Rfb * bw * (x - h1f) * (x - 0.5 * h1f) + Rfbt3 * (bw * (hw + h1f - x) + bw * hf * (h - 0.5 * (h1f + hf)));
             };
             
-            // Расчет Тавра            
-            bool cond = Rfbt3 * (bf * hf + bw * hw) < Rfb * b1f * h1f;
+                        bool cond = Rfbt3 * (bf * hf + bw * hw) < Rfb * b1f * h1f;
 
             if (cond)
             {
@@ -116,8 +112,7 @@ namespace BSFiberConcrete
                 calc_b();
             }
 
-            //Коэффициент использования
-            UtilRate = (Mult != 0) ? m_Efforts["My"] / Mult : 0;
+                        UtilRate = (Mult != 0) ? m_Efforts["My"] / Mult : 0;
 
             calcOk = true;
             

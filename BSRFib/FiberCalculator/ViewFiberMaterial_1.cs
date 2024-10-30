@@ -33,14 +33,8 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
 
         private void ViewFiberMaterial_1_Load(object sender, EventArgs e)
         {
-            // Определяем данные для выпадающих списков зависящий от типа фибры
-            cmbFiberMaterial.DataSource = _model.Fiber.GetFiberKind();
-            // (После обновления dataSource вызывается событие SelectedIndexChanged, SelectedIndex = 0 )
-            // Поэтому после обновления dataSource срабатывает такая последовательность вызовов
-            // Обновление       cmbFiberMaterial.DataSource  -> вызов cmbFiberMaterial_SelectedIndexChanged ->  вызов ChangeFiberType ->
-            // -> Обновление    cmbFiber_Geometry.DataSource -> вызов cmbFiber_Geometry_SelectedIndexChanged -> вызов ChangeFiberGeometry ->
-            // -> обновление    cmbFiber_l.DataSource        -> вызов  cmbFiber_l_SelectedIndexChanged       -> вызов ChangeFiberLength 
-        }
+                        cmbFiberMaterial.DataSource = _model.Fiber.GetFiberKind();
+                                                                    }
 
         private void cmbFiberMaterial_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -49,34 +43,18 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         }
 
 
-        /// <summary>
-        /// Изменить тип фбиры. Обновляется выпадающие списки диаметров и длин. Обновляется содержание модели
-        /// </summary>
-        /// <param name="indexFiber">номер типа фибры из выпадающего списка</param>
-        private void ChangeFiberType(int indexFiber)
+                                        private void ChangeFiberType(int indexFiber)
         {
-            _model.Fiber.SetIndexFiberKind(indexFiber); // обновили модель
-            cmbFiber_Geometry.DataSource = _model.Fiber.GetFiberGeometries();  // обновили view
+            _model.Fiber.SetIndexFiberKind(indexFiber);             cmbFiber_Geometry.DataSource = _model.Fiber.GetFiberGeometries();          }
+
+
+                                        private void ChangeFiberGeometry(int indexGeometry)
+        {
+            _model.Fiber.SetIndexFiberGeometry(indexGeometry);                      cmbFiber_l.DataSource = _model.Fiber.GetFiberLengths();     
         }
 
 
-        /// <summary>
-        /// Изменить диметр фибры. Обновить выпадающий список длин. Обновить содержимое моедли
-        /// /// </summary>
-        /// <param name="indexGeometry">номер диаметра из выпадающего списка</param>
-        private void ChangeFiberGeometry(int indexGeometry)
-        {
-            _model.Fiber.SetIndexFiberGeometry(indexGeometry);          // обновили модель
-            cmbFiber_l.DataSource = _model.Fiber.GetFiberLengths();     // обновили view
-
-        }
-
-
-        /// <summary>
-        /// Изменить длину фибры. Обновляется содержание модели
-        /// /// </summary>
-        /// <param name="indexLength">номер длины из выпадающего списка</param>
-        private void ChangeFiberLength(int indexLength)
+                                        private void ChangeFiberLength(int indexLength)
         {
             _model.Fiber.SetIndexFiberLength(indexLength);
             _model.FiberCoef.SetLen_f(_model.Fiber.Length);

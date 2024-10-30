@@ -51,17 +51,7 @@ namespace BSFiberConcrete.UnitsOfMeasurement
 
 
 
-    //[Description("Физические величины")]
-    //public enum PhysicalQuantities
-    //{
-    //    [Description("Длина")]
-    //    Length = 0,
-    //    [Description("Сила")]
-    //    Force = 1,
-    //    [Description("Момент силы")]
-    //    MomentOfForce = 2,
-    //}
-
+                                        
 
     [Description("Единицы длины")]
     public enum LengthUnits

@@ -2,16 +2,9 @@
 {
     partial class BSFiberClassSetup
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
+                                private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
+                                        protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
             {
@@ -22,11 +15,7 @@
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
+                                        private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
             this.dataGridFiberClass = new System.Windows.Forms.DataGridView();
@@ -36,10 +25,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridFiberClass)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fiberClassBS)).BeginInit();
             this.SuspendLayout();
-            // 
-            // dataGridFiberClass
-            // 
-            this.dataGridFiberClass.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+                                                this.dataGridFiberClass.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridFiberClass.AutoGenerateColumns = false;
@@ -52,28 +38,16 @@
             this.dataGridFiberClass.Name = "dataGridFiberClass";
             this.dataGridFiberClass.Size = new System.Drawing.Size(722, 419);
             this.dataGridFiberClass.TabIndex = 0;
-            // 
-            // iDDataGridViewTextBoxColumn
-            // 
-            this.iDDataGridViewTextBoxColumn.DataPropertyName = "ID";
+                                                this.iDDataGridViewTextBoxColumn.DataPropertyName = "ID";
             this.iDDataGridViewTextBoxColumn.HeaderText = "№";
             this.iDDataGridViewTextBoxColumn.Name = "iDDataGridViewTextBoxColumn";
             this.iDDataGridViewTextBoxColumn.Width = 50;
-            // 
-            // nameDataGridViewTextBoxColumn
-            // 
-            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
+                                                this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
             this.nameDataGridViewTextBoxColumn.HeaderText = "Наименование";
             this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
             this.nameDataGridViewTextBoxColumn.Width = 500;
-            // 
-            // fiberClassBS
-            // 
-            this.fiberClassBS.DataSource = typeof(BSFiberConcrete.FiberClass);
-            // 
-            // BSFiberClassSetup
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+                                                this.fiberClassBS.DataSource = typeof(BSFiberConcrete.FiberClass);
+                                                this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(793, 457);
             this.Controls.Add(this.dataGridFiberClass);

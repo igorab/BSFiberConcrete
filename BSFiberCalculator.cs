@@ -6,15 +6,9 @@ using System.Windows.Forms;
 
 namespace BSFiberConcrete
 {
-    /// <summary>
-    /// Расчет балок из фибробетона
-    /// </summary>
-    internal static class BSFiberCalculator
+                internal static class BSFiberCalculator
     {
-        /// <summary>
-        /// Главная точка входа для приложения.
-        /// </summary>
-        [STAThread]
+                                [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();

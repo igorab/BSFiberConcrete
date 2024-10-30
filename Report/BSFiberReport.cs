@@ -16,10 +16,7 @@ using BSFiberConcrete.UnitsOfMeasurement;
 
 namespace BSFiberConcrete
 {
-    /// <summary>
-    /// Построитель отчета
-    /// </summary>
-    public class BSFiberReport
+                public class BSFiberReport
     {
         public string ReportName { get; set; }
         public Dictionary<string, double> Beam { set { m_Beam = value; } }
@@ -62,10 +59,7 @@ namespace BSFiberConcrete
 
         private const int bk = 800, bv = 200;
 
-        /// <summary>
-        ///  Верхняя часть отчета
-        /// </summary>        
-        protected virtual void Header(StreamWriter w)
+                                protected virtual void Header(StreamWriter w)
         {
             w.WriteLine("<html>");
             w.WriteLine($"<H1>{ReportName}</H1>");
@@ -127,17 +121,13 @@ namespace BSFiberConcrete
         private double Rnd(double _v) => Math.Round( _v, 2);
 
 
-        /// <summary>
-        /// double 2 string converter
-        /// </summary>        
-        private string D2SValue(double _value)
+                                private string D2SValue(double _value)
         {
             return _value.ToString();
         }
 
 
-        // Конвертор единиц измерения
-        private string UConv(string _s, double _v)
+                private string UConv(string _s, double _v)
         {            
 
             if (string.IsNullOrEmpty(_s))
@@ -153,10 +143,7 @@ namespace BSFiberConcrete
         }
 
 
-        /// <summary>
-        /// Основная часть отчета
-        /// </summary>        
-        protected virtual void ReportBody(StreamWriter w)
+                                protected virtual void ReportBody(StreamWriter w)
         {
             if (m_PhysParams != null)
             {
@@ -208,8 +195,7 @@ namespace BSFiberConcrete
 
             if (m_Path2BeamDiagrams != null && m_Path2BeamDiagrams.Count > 0)
             {
-                // добавление картинок с эпюрами в отчет
-                
+                                
                 w.WriteLine("<Table border=1 bordercolor = darkblue>");
                 foreach (string pathToBeamDiagram in m_Path2BeamDiagrams)
                 {
@@ -227,10 +213,7 @@ namespace BSFiberConcrete
         }
 
 
-        /// <summary>
-        /// Нагрузки
-        /// </summary>        
-        protected virtual void ReportEfforts(StreamWriter w)
+                                protected virtual void ReportEfforts(StreamWriter w)
         {
             if (m_Efforts != null)
             {
@@ -411,12 +394,7 @@ namespace BSFiberConcrete
             w.WriteLine("</html>");            
         }
 
-        /// <summary>
-        /// Сформировать отчет
-        /// </summary>
-        /// <param name="_fileIdx">Присвоить номер</param>
-        /// <returns>Путь к файлу</returns>
-        public string CreateReport(int _fileIdx = 0)
+                                                public string CreateReport(int _fileIdx = 0)
         {
             string pathToHtmlFile = "";
             string filename = "FiberCalculationReport{0}.htm";
@@ -452,12 +430,7 @@ namespace BSFiberConcrete
         }
 
 
-        /// <summary>
-        /// Формирует  Header ReportBody и для MultiReport
-        /// </summary>
-        /// <param name="pathToFile"></param>
-        /// <returns></returns>
-        public void HeaderForMultiReport(string pathToFile)
+                                                public void HeaderForMultiReport(string pathToFile)
         {
             try
             {
@@ -473,12 +446,7 @@ namespace BSFiberConcrete
             }
         }
 
-        /// <summary>
-        /// Формирует  ReportEfforts ReportResult и Footer для MultiReport
-        /// </summary>
-        /// <param name="pathToFile"></param>
-        /// <returns></returns>
-        public void BodyForMultiReport(string pathToFile)
+                                                public void BodyForMultiReport(string pathToFile)
         {
             try
             {
@@ -496,12 +464,7 @@ namespace BSFiberConcrete
         }
 
 
-        /// <summary>
-        /// Для Коэффициент использования у которых значение превышает 1 или -1 добавляется строчка изменяющая цвет фона таблицы на красный
-        /// </summary>
-        /// <param name="pair"></param>
-        /// <returns></returns>
-        public string ColorForUtilizationFactor(KeyValuePair<string,double> pair)
+                                                public string ColorForUtilizationFactor(KeyValuePair<string,double> pair)
         {
             string bgColor = "";
             if (pair.Key.Contains("Коэффициент использования"))

@@ -11,8 +11,7 @@ namespace BSFiberConcrete
     public class BSFiberReport_MNQ : BSFiberReport
     {
         private BSFiberCalc_MNQ m_FiberCalc;
-        // атрибуты свойств
-        private Dictionary<string, string> m_PropAttr;
+                private Dictionary<string, string> m_PropAttr;
 
         public BSFiberReport_MNQ()
         {
@@ -37,8 +36,7 @@ namespace BSFiberConcrete
             InitFromAttr();
         }
 
-        // получить параметры из свойств (атрибутов)
-        private void GetPropertiesAttr()
+                private void GetPropertiesAttr()
         {
             PropertyInfo[] props = typeof(BSFiberCalc_MNQ).GetProperties();
             foreach (PropertyInfo prop in props)
@@ -99,9 +97,6 @@ namespace BSFiberConcrete
                 }
             }
 
-            /*
-         m_Beam;                  
-            */
         }
     }
     

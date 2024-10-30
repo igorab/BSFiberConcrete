@@ -68,8 +68,7 @@ namespace BSFiberConcrete.BSRFib
 
         public void RunReport()
         {
-            //MakeImageSrcData(FileChart);
-
+            
             string pathToHtmlFile = CreateReport(0);
 
             System.Diagnostics.Process.Start(pathToHtmlFile);
@@ -91,13 +90,7 @@ namespace BSFiberConcrete.BSRFib
                 }
                 </style>");
 
-            //w.WriteLine(@"<style>
-            //   td{
-            //        border: solid 1px silver;
-            //        text-align: center;
-            //    }
-            //    </style>");
-
+                                                                        
             w.WriteLine("</head>");
             w.WriteLine("<body>");
 

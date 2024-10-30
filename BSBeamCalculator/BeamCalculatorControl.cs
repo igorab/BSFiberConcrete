@@ -16,30 +16,15 @@ namespace BSBeamCalculator
     public partial class BeamCalculatorControl : UserControl
     {
 
-        /// <summary>
-        /// TextBox с главной формы. Передается для оперативного изменения значения на главной форме.
-        /// </summary>
-        private TextBox _beamLength;
-        /// <summary>
-        /// DataGridView c главной формы. Передается для удобного и оперативного изменения данных на главной форме
-        /// </summary>
-        private DataGridView _beamEfforts;
+                                private TextBox _beamLength;
+                                private DataGridView _beamEfforts;
 
-        /// <summary>
-        /// Тип защемеления балки
-        /// </summary>
-        private string _typeBeamSuppote;
-        /// <summary>
-        /// Тип нагрузки на балку
-        /// </summary>
-        private string _typeBeamLoad;
+                                private string _typeBeamSuppote;
+                                private string _typeBeamLoad;
 
         private ControllerBeamDiagram _beamDiagramController;
 
-        /// <summary>
-        /// Результаты построения диамгрммы
-        /// </summary>
-        public Dictionary<string, double> effortsModel;
+                                public Dictionary<string, double> effortsModel;
 
 
         public BeamCalculatorControl()
@@ -54,13 +39,7 @@ namespace BSBeamCalculator
 
         }
 
-        /// <summary>
-        ///  Для оперативного обновления данных на главной форме в качестве параметров передаются :
-        /// </summary>
-        /// <param name="len"> длина балки</param>
-        /// <param name="effortsData"> таблица с нагрузками</param>
-        /// /// <param name="path2Diagram"> путь к картинке с диагрммой</param>
-        public BeamCalculatorControl(TextBox len, DataGridView effortsData, ControllerBeamDiagram beamDiagramController)
+                                                        public BeamCalculatorControl(TextBox len, DataGridView effortsData, ControllerBeamDiagram beamDiagramController)
         {
             _beamLength = len;
             _beamEfforts = effortsData;
@@ -91,8 +70,7 @@ namespace BSBeamCalculator
                 if (_beamDiagramController.path2BeamDiagrams != null)
                 { _beamDiagramController.path2BeamDiagrams.Clear(); }
 
-                // собираем данные с формы
-                double lengthBeam = (double)numericUpDown1.Value;
+                                double lengthBeam = (double)numericUpDown1.Value;
                 double force = (double)numericUpDown2.Value;
                 double startPointForce = (double)numericUpDown3.Value;
 
@@ -104,19 +82,12 @@ namespace BSBeamCalculator
                 _beamDiagramController.x2 = 0;
                 _beamDiagramController.resultEfforts = effortsModel;
 
-                // запуск расчета
-                _beamDiagramController.RunCalculation();
+                                _beamDiagramController.RunCalculation();
 
-                // Вывод результатов расчета
-                DiagramResult result = _beamDiagramController.result;
+                                DiagramResult result = _beamDiagramController.result;
 
-                //_beamDiagramController.Test();
-                //string[] names1 = { "Сила", "см", "кг", "BeamDiagramQ" };
-                //chart1 = _beamDiagramController.CreteChart(result.pointM[0].ToList(), result.pointM[1].ToList(), names1);
-
-                //string[] names2 = { "Момент", "см", "кг*см", "BeamDiagramM" };
-                //chart2 = _beamDiagramController.CreteChart(result.pointM[0].ToList(), result.pointM[1].ToList(), names2);
-
+                                                
+                                
                 chart1.Series.Add("Series1");
                 chart1.Series["Series1"].BorderWidth = 4;
                 chart1.ChartAreas[0].AxisX.Minimum = 0;
@@ -158,11 +129,7 @@ namespace BSBeamCalculator
 
                 if (_beamEfforts != null)
                 {
-                    //double maxValueM;
-                    //if (Math.Abs(result.maxM) >= Math.Abs(result.minM))
-                    //{ maxValueM = result.maxM; }
-                    //else { maxValueM = result.minM; }
-
+                                                                                
                     for (int i = 0; i < _beamEfforts.ColumnCount; i++)
                     {
                         if (_beamEfforts.Columns[i].Name == "My")
@@ -183,8 +150,7 @@ namespace BSBeamCalculator
             }
             catch (Exception ex)
             {
-                // обработка исключений
-                string messageToUser = "";
+                                string messageToUser = "";
                 string exceptionMessage = ex.Message;
                 string userErrorMarker = "Пользовательская ошибка. ";
                 if (exceptionMessage.Contains(userErrorMarker))
@@ -218,28 +184,19 @@ namespace BSBeamCalculator
                 }
             }
 
-            //if (effortsModel.ContainsKey("Mmax"))
-            //    effortsModel["Mmax"] = 0;
-            //if (effortsModel.ContainsKey("Mmin"))
-            //    effortsModel["Mmin"] = 0;
-            //if (effortsModel.ContainsKey("Q"))
-            //    effortsModel["Q"] = 0;
-
+                                                                        
 
         }
 
         private void radioButton12_CheckedChanged(object sender, EventArgs e)
         {
-            //numericUpDown4.Enabled = true;
-            numericUpDown3.Enabled = false;
+                        numericUpDown3.Enabled = false;
             _typeBeamLoad = "Uniformly-Distributed";
         }
 
         private void radioButton11_CheckedChanged(object sender, EventArgs e)
         {
-            //numericUpDown4.Enabled = false;
-            //numericUpDown4.Value = 0;
-            numericUpDown3.Enabled = true;
+                                    numericUpDown3.Enabled = true;
             _typeBeamLoad = "Concentrated";
         }
 
@@ -282,21 +239,16 @@ namespace BSBeamCalculator
         {
 
 
-            //radioButton1.Text
+            
 
+                        ToolTip toolTip1 = new ToolTip();
 
-            // Create the ToolTip and associate with the Form container.
-            ToolTip toolTip1 = new ToolTip();
-
-            // Set up the delays for the ToolTip.
-            toolTip1.AutoPopDelay = 5000;
+                        toolTip1.AutoPopDelay = 5000;
             toolTip1.InitialDelay = 1000;
             toolTip1.ReshowDelay = 50;
-            // Force the ToolTip text to be displayed whether or not the form is active.
-            toolTip1.ShowAlways = true;
+                        toolTip1.ShowAlways = true;
 
-            // Set up the ToolTip text for the Button and Checkbox.
-            toolTip1.SetToolTip(this.radioButton1, "Жестко защемленная балка");
+                        toolTip1.SetToolTip(this.radioButton1, "Жестко защемленная балка");
             toolTip1.SetToolTip(this.radioButton2, "Консольная балка");
             toolTip1.SetToolTip(this.radioButton3, "Простая балка");
             toolTip1.SetToolTip(this.radioButton4, "Балка с защемленным и шарнирно опертым концами");

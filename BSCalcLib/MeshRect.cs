@@ -27,24 +27,19 @@ namespace BSCalcLib
 
         public int Rectangle(double _b, double _h, double _y0 = 0, double _z0 = 0)
         {
-            // количество элементов сечения
-            int n = ny * nz;
+                        int n = ny * nz;
             double sy = _b / ny;
             double sz = _h / nz;
-            // площадь 1 элемента
-            double Ab1 = sy * sz;
+                        double Ab1 = sy * sz;
 
-            //заполнить массив площадей элементов            
-            for (int i = 0; i < n; i++)
+                        for (int i = 0; i < n; i++)
                 Ab.Add(Ab1);
 
-            //заполнить массив привязок бетонных эл-в к вспомогательной оси y0            
-            for (int iz = 0; iz < nz; iz++)            
+                        for (int iz = 0; iz < nz; iz++)            
                 for (int iy = 0; iy < ny; iy++)                
                     y0b.Add(iy * sy + sy / 2.0 + _y0);
                             
-            //заполнить массив привязок бетонных эл-в к вспомогательной оси z0            
-            for (int iz = 0; iz < nz; iz++)            
+                        for (int iz = 0; iz < nz; iz++)            
                 for (int iy = 0; iy < ny; iy++)                
                     z0b.Add(iz * sz + sz / 2.0 + _z0);
                             

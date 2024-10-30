@@ -20,18 +20,14 @@ namespace BSFiberConcrete.DeformationDiagram.UserControls
         {
             InitializeComponent();
             
-            // es0 es1 es2 
-            _valuesDeformation = valuesDeformation;
+                        _valuesDeformation = valuesDeformation;
 
             UpdateDisabledNumeric();
         }
 
 
 
-        /// <summary>
-        /// Обновить состояние объектов NumericUpDown со статусом Enabled false
-        /// </summary>
-        public void UpdateDisabledNumeric()
+                                public void UpdateDisabledNumeric()
         {
             numEpsilonS0.Value = (decimal)_valuesDeformation[0];
             numEpsilonS1.Value = (decimal)_valuesDeformation[1];

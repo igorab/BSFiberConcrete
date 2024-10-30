@@ -14,56 +14,24 @@ using System.Xml.Schema;
 
 namespace BSBeamCalculator
 {
-    /// <summary>
-    /// Класс нужен для сбора информации с формы
-    /// и дальнейшей передачи информации в вычислительный класс BeamDiagram
-    /// </summary>
-    public class ControllerBeamDiagram
+                    public class ControllerBeamDiagram
     {
-        /// <summary>
-        /// Длинна балки
-        /// </summary>
-        public double l;
-        /// <summary>
-        /// Тип защемления балки
-        /// </summary>
-        public string support;
-        /// <summary>
-        /// тип нагрузки на балку
-        /// </summary>
-        public string load;
-        /// <summary>
-        /// Значение силы на балку
-        /// </summary>
-        public double f;
-        /// <summary>
-        /// координата приложение силы
-        /// </summary>
-        public double x1;
-        /// <summary>
-        /// конечная координата приложение силы
-        /// (для распределенной нагрузки)
-        /// </summary>
-        public double x2;
-        /// <summary>
-        /// DiagramResult - класс для данных необходимых для построения грфика
-        /// </summary>
-        public DiagramResult result;
+                                public double l;
+                                public string support;
+                                public string load;
+                                public double f;
+                                public double x1;
+                                        public double x2;
+                                public DiagramResult result;
 
         public Dictionary<string, double> resultEfforts;
 
         public BeamDiagram beamDiagram;
 
 
-        /// <summary>
-        /// Путь для сохранения картинки
-        /// </summary>
-        public List<string> path2BeamDiagrams;
+                                public List<string> path2BeamDiagrams;
 
-        /// <summary>
-        /// счетчик картинок
-        /// </summary>
-        private int _numChart = 1;
+                                private int _numChart = 1;
 
         public ControllerBeamDiagram(List<string> path2Diagrams = null )
         {
@@ -75,21 +43,10 @@ namespace BSBeamCalculator
             beamDiagram = new BeamDiagram(support, load, l, f, x1, x2);
             result = beamDiagram.CalculateBeamDiagram();
 
-            //if (resultEfforts.ContainsKey("Mmax"))
-            //    resultEfforts["Mmax"] = result.maxM;
-            //if (resultEfforts.ContainsKey("Mmin"))
-            //    resultEfforts["Mmin"] = result.minM;
-            //if (resultEfforts.ContainsKey("Q"))
-            //    resultEfforts["Q"] = result.maxAbsQ;
-        }
+                                                                                }
 
 
-        /// <summary>
-        /// Получить значение момента в зависимости от координаты
-        /// </summary>
-        /// <param name="x"> значение длины</param>
-        /// <returns></returns>
-        public double GetM(DiagramResult res, double x)
+                                                public double GetM(DiagramResult res, double x)
         {
 
             if (x < 0 && x > l) 
@@ -128,15 +85,11 @@ namespace BSBeamCalculator
 
         public void Test()
         {
-            // Кол- во рассматриваемых участков
-            int n = 20;
-            // всего рассматриваемых точек
-            int m = n + 1 + n;
-            // шаг между точками
-            double delta = l / (2 * n);
+                        int n = 20;
+                        int m = n + 1 + n;
+                        double delta = l / (2 * n);
 
-            //double d = 1;
-            double d = 2d * 1000000d * 520800d;
+                        double d = 2d * 1000000d * 520800d;
 
             List<double> X = new List<double>();
             List<double> M = new List<double>();
@@ -185,9 +138,7 @@ namespace BSBeamCalculator
             DiagramResult res = beamDiagram.CalculateBeamDiagram();
 
 
-            //string[] names = { "Момент", "кг*см", "см", $"BeamDiagramM_Test {index}" };
-            //CreteChart(res.pointM[0].ToList(), res.pointM[1].ToList(), names);
-
+                        
             double sectionLength = X[index + 1] - X[index - 1];
             double u = 0;
 
@@ -198,8 +149,7 @@ namespace BSBeamCalculator
                 double c = M[i+1];
                 if (b == 0)
                 { 
-                    // если значение момента в точке равно 0, исключаем точку из расчета, тк получается некорректное значение жесткости
-                    continue;
+                                        continue;
                 }
                 double a1 = GetM(res, X[i - 1]);
                 double b1 = GetM(res, X[i]);
@@ -214,20 +164,11 @@ namespace BSBeamCalculator
 
 
 
-        /// <summary>
-        /// Разделить балку на участки
-        /// </summary>
-        /// <param name="X"> значения X в точках</param>
-        /// <param name="valueMomentInX">Значения M в точках</param>
-        /// <param name="valuesMomentOnSection">Значения M на середине рассматриваемого участка</param>
-        public void BreakBeamIntoSections(List<double> X, List<double> valueMomentInX, List<double> valuesMomentOnSection)
+                                                        public void BreakBeamIntoSections(List<double> X, List<double> valueMomentInX, List<double> valuesMomentOnSection)
         {
-            // Кол- во рассматриваемых участков
-            int n = 20;
-            // всего точек 
-            int m = n + 1 + n;
-            // шаг между точками
-            double delta = this.l / (2 * n);
+                        int n = 20;
+                        int m = n + 1 + n;
+                        double delta = this.l / (2 * n);
 
             for (int i = 0; m > i; i++)
             {
@@ -243,38 +184,25 @@ namespace BSBeamCalculator
         }
 
 
-        /// <summary>
-        /// Построить график прогибов по расчетным значениям
-        /// </summary>
-        public double  CalculateDeflectionDiagram(List<double> X, List<double> valueMomentInX, List<double> valuesStiffnesOnSection)
+                                public double  CalculateDeflectionDiagram(List<double> X, List<double> valueMomentInX, List<double> valuesStiffnesOnSection)
         {
             double deflexionMax = 0;
-            // график прогибов по расчетным значениям
-            List<double> U = new List<double>();
+                        List<double> U = new List<double>();
             List<double> XForChart = new List<double>();
             for (int i = 1; X.Count > i; i = i + 2)
             {
                 double u = this.CalculateDeflectionAtPoint(valueMomentInX, X, valuesStiffnesOnSection, i);
-                U.Add(u * 10); // перевод из см в мм 
-                XForChart.Add(X[i]);
-                if (deflexionMax > u * 10) // значение прогиба с минусом
-                { deflexionMax = u * 10; }
+                U.Add(u * 10);                 XForChart.Add(X[i]);
+                if (deflexionMax > u * 10)                 { deflexionMax = u * 10; }
             }
             string[] names = { "Прогиб", "см", "мм", "BeamDiagramU" };
             this.CreteChart(XForChart, U, names);
             return deflexionMax;
         }
 
-        /// <summary>
-        /// Построить график прогиба по формуле
-        /// </summary>
-        /// <param name="X"></param>
-        /// <param name="valuesStiffnesOnSection"></param>
-        /// <param name=""></param>
-        public void CalculateDeflectionDiagramByFormula(List<double> X, List<double> valuesStiffnesOnSection)
+                                                        public void CalculateDeflectionDiagramByFormula(List<double> X, List<double> valuesStiffnesOnSection)
         {
-            // график прогибов по формулам
-            if (this.beamDiagram.simpleDiagram.IsCalculateBeamDeflection)
+                        if (this.beamDiagram.simpleDiagram.IsCalculateBeamDeflection)
             {
                 double d = 0;
                 foreach (double Stiffnes in valuesStiffnesOnSection)
@@ -307,8 +235,7 @@ namespace BSBeamCalculator
             string tName = $"Title{numChart}";
             string sName = $"Series{numChart}";
 
-            //names;
-            string textName = names[0];
+                        string textName = names[0];
             string titleX = names[1];
             string titleY = names[2];
             string name2Save = names[3];
@@ -346,17 +273,13 @@ namespace BSBeamCalculator
         }
 
 
-        /// <summary>
-        /// Сохранить картинку c прогибами
-        /// </summary>
-        public void SaveChart(System.Windows.Forms.DataVisualization.Charting.Chart chart, string pictureName)
+                                public void SaveChart(System.Windows.Forms.DataVisualization.Charting.Chart chart, string pictureName)
         {
             if (path2BeamDiagrams != null)
             {
                 string pathToPicture = pictureName + ".png";
                 chart.SaveImage(pathToPicture, System.Windows.Forms.DataVisualization.Charting.ChartImageFormat.Png);
-                // little bit костыльно
-                if (pictureName == "BeamDiagramU")
+                                if (pictureName == "BeamDiagramU")
                 { 
                     if (path2BeamDiagrams.Count > 2)
                     {
@@ -388,16 +311,9 @@ namespace BSBeamCalculator
         public double maxAbsQ;
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="values_xQ_xM">4 мерный вложенный массив
-        /// 0 - значения x для Q, 1 - значения Q; 2 - значения x для M, 3 - значения M  
-        /// </param>
-        public DiagramResult(double[][] values_xQ_xM)
+                                                        public DiagramResult(double[][] values_xQ_xM)
         {
-            //pointQ = new double[,] { values_xQ_xM[0], values_xQ_xM[1] }
-            pointQ = new double[][]{
+                        pointQ = new double[][]{
                 values_xQ_xM[0],
                 values_xQ_xM[1]
             };
@@ -405,9 +321,7 @@ namespace BSBeamCalculator
                 values_xQ_xM[2],
                 values_xQ_xM[3]
             };
-            //maxPointQ = FindeMaxAbsValue(new double[][] { values_xQ_xM[0], values_xQ_xM[1] });
-            //maxPointM= FindeMaxAbsValue(new double[][] { values_xQ_xM[2], values_xQ_xM[3] });
-            List<double> maxAbsPointQ = FindeMaxAbsValue(new double[][] { values_xQ_xM[0], values_xQ_xM[1] });
+                                    List<double> maxAbsPointQ = FindeMaxAbsValue(new double[][] { values_xQ_xM[0], values_xQ_xM[1] });
 
             maxAbsQ = maxAbsPointQ[1];
             maxM = values_xQ_xM[3].Max();
@@ -415,13 +329,7 @@ namespace BSBeamCalculator
 
         }
 
-        /// <summary>
-        /// Функция определяет максимальное (по модолю) значение во втором массиве
-        /// и возвращает пару x_value[i][0] x_value[i][1], i - индекс максимального значения
-        /// </summary>
-        /// <param name="x_value"></param>
-        /// <returns></returns>
-        public static List<double> FindeMaxAbsValue(double[][] x_value)
+                                                        public static List<double> FindeMaxAbsValue(double[][] x_value)
         {
             List<double> maxAbsPoint = new List<double>();
             int indMaxAbs_Value;

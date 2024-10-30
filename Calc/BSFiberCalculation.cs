@@ -82,14 +82,11 @@ namespace BSFiberConcrete
 
         protected Dictionary<string, double> m_Efforts;
 
-        // Расчетные значения сопротивления на сжатиие по B30 СП63
-        public double R_fb() => (Yb != 0) ? Rfbn / Yb * Yb1*Yb2*Yb3*Yb5 : 0;
+                public double R_fb() => (Yb != 0) ? Rfbn / Yb * Yb1*Yb2*Yb3*Yb5 : 0;
 
-        //Расчетное остаточное сопротивление осевому растяжению R_fbt
-        public double R_fbt() => (Yft != 0) ? Rfbtn / Yft * Yb1 * Yb5 : 0;
+                public double R_fbt() => (Yft != 0) ? Rfbtn / Yft * Yb1 * Yb5 : 0;
 
-        //Расчетное остаточное сопротивление осевому растяжению R_fbt3
-        public double R_fbt3() => (Yft != 0) ? Rfbt3n / Yft * Yb1 * Yb5 : 0;
+                public double R_fbt3() => (Yft != 0) ? Rfbt3n / Yft * Yb1 * Yb5 : 0;
 
         public string DN(Type _T, string _property) => _T.GetProperty(_property).GetCustomAttribute<DisplayNameAttribute>().DisplayName;
 
@@ -99,19 +96,12 @@ namespace BSFiberConcrete
         {                                   
         }
 
-        /// <summary>
-        /// Возвращает результаты расчета геометрических характеристик балки
-        /// </summary>
-        /// <returns>Описание геометрии балки</returns>
-        public virtual Dictionary<string, double> GeomParams()
+                                        public virtual Dictionary<string, double> GeomParams()
         {
             return new Dictionary<string, double>() { };
         }
 
-        /// <summary>
-        /// Физические свойства материала
-        /// </summary>        
-        public virtual Dictionary<string, double> PhysicalParameters()
+                                public virtual Dictionary<string, double> PhysicalParameters()
         {
             Dictionary<string, double> phys = new Dictionary<string, double>
             {
@@ -123,11 +113,7 @@ namespace BSFiberConcrete
             return phys;
         }
 
-        /// <summary>
-        /// Принимает характерные размеры сечения
-        /// </summary>
-        /// <param name="_t">Массив - размеры сечения</param>
-        public virtual void SetSize(double[] _t)
+                                        public virtual void SetSize(double[] _t)
         {
         }
 
@@ -153,10 +139,7 @@ namespace BSFiberConcrete
             return new Dictionary<string, double>() {};
         }
                                        
-        /// <summary>
-        /// Информация о результате проверки сечения на действие изгибающего момента
-        /// </summary>                
-        public void InfoCheckM(double _M_ult)
+                                public void InfoCheckM(double _M_ult)
         {
             string info;
 
@@ -170,13 +153,7 @@ namespace BSFiberConcrete
             Msg.Add(info);
         }
                
-        /// <summary>
-        /// Расчет прочности сечения
-        /// </summary>
-        /// <param name="_profile">Профиль сечения</param>
-        /// <param name="_reinforcement">Используется ли арматура</param>
-        /// <returns>Экземпляр класса расчета</returns>
-        public static BSFiberCalculation construct(BeamSection _profile, bool _reinforcement = false)
+                                                        public static BSFiberCalculation construct(BeamSection _profile, bool _reinforcement = false)
         {
             switch (_profile)
             {

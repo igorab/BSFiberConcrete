@@ -3,69 +3,37 @@ using System.Windows.Forms;
 
 namespace BSFiberConcrete
 {
-    /// <summary>
-    ///  Материал стержня арматуры
-    /// </summary>
-    public class BSMatRod : IMaterial, INonlinear
+                public class BSMatRod : IMaterial, INonlinear
     {
         public string Name => "Сталь";
         public double E_young => Es;
 
-        // Класс
-        public string RCls { get; set; }
+                public string RCls { get; set; }
 
-        /// <summary>
-        /// модуль упругости, МПа
-        /// </summary>
-        public double Es { get; set; }
+                                public double Es { get; set; }
 
-        //Нормативное сопротивление растяжению кг/см2
-        public double Rsn { get; set; }
+                public double Rsn { get; set; }
 
-        // Расчетное сопротивление растяжению кг/см2
-        public double Rs { get; set; }
+                public double Rs { get; set; }
 
-        // Расчетное сопротивление растяжению 2 гр, кг/см2
-        public double Rs_ser => Rsn;
+                public double Rs_ser => Rsn;
         
-        // Расчетное сопротивление сжатию кг/см2
-        public double Rsc { get; set; }
+                public double Rsc { get; set; }
 
-        // Расчетное сопротивление сжатию 2 гр, кг/см2
-        public double Rsc_ser => Rsn;
+                public double Rsc_ser => Rsn;
 
-        // Площадь растянутой арматуры
-        public double As { get; set; }
+                public double As { get; set; }
 
-        // Площадь сжатой арматуры
-        public double As1 { get; set; }
-        /// <summary>
-        /// расстояние до центра растянутой арматуры, см
-        /// </summary>
-        public double a_s { get; set; }
-        /// <summary>
-        /// расстояние до центра сжатой арматуры, см
-        /// </summary>
-        public double a_s1 { get; set; }
+                public double As1 { get; set; }
+                                public double a_s { get; set; }
+                                public double a_s1 { get; set; }
 
-        /// <summary>
-        /// Флаг, характеризующий нажатую на форме галочку "Армирование"
-        /// true - галочка нажата
-        /// </summary>
-        public bool Reinforcement { get; set; }
+                                        public bool Reinforcement { get; set; }
 
 
-    /// <summary>
-    /// коэффициент упругости
-    /// </summary>
-    public double Nju_s { get; set; }
+                public double Nju_s { get; set; }
 
-        /// <summary>
-        /// СП 6.1.25
-        /// </summary>
-        /// <param name="diagramType">физический или условный предел текучести </param>
-        /// <returns></returns>
-        public double Eps_s_ult(DeformDiagramType diagramType) 
+                                                public double Eps_s_ult(DeformDiagramType diagramType) 
         { 
             double esult = 0;
 
@@ -81,10 +49,7 @@ namespace BSFiberConcrete
             return esult;
         }
 
-        /// <summary>
-        /// Значения относительных деформаций арматуры для арматуры с физическим пределом текучести СП 63 п.п. 6.2.11
-        /// </summary>        
-        public double epsilon_s() => Es != 0 ? Rs / Es : 0;
+                                public double epsilon_s() => Es != 0 ? Rs / Es : 0;
 
         public double e_s0 { get; set; }
         public double e_s2 { get; set; }
@@ -100,13 +65,7 @@ namespace BSFiberConcrete
         }
 
 
-        /// <summary>
-        /// Диграмма состояния трехлинейная
-        /// </summary>
-        /// <param name="_e_s">отн деформация </param>
-        /// <param name="_res">СП 63.13 6.2.15 </param>
-        /// <returns>Напряжение</returns>
-        public double Eps_StateDiagram3L(double _e_s, out int _res, int _group = 1)
+                                                        public double Eps_StateDiagram3L(double _e_s, out int _res, int _group = 1)
         {
             double rs = Rs;
             _res = 0;
@@ -135,14 +94,7 @@ namespace BSFiberConcrete
             return sigma_s;
         }
 
-        //
-        /// <summary>
-        /// Диаграмма состояния двухлинейная 
-        /// на сжатие и растяжение
-        /// </summary>
-        /// <param name="_e"></param>
-        /// <returns></returns>        
-        public double Eps_StDiagram2L(double _e, out int _res, int _group = 1)
+                                                                public double Eps_StDiagram2L(double _e, out int _res, int _group = 1)
         {
             double sgm = 0;
             double rs = Rs;
@@ -157,8 +109,7 @@ namespace BSFiberConcrete
             {
                 sgm = rs;
             }
-            else if (_e > e_s2) //теоретически это разрыв
-            {
+            else if (_e > e_s2)             {
                 Debug.Assert(true, "Превышен предел прочности (временное сопротивление) ");
                 _res = -1;
                 if (_group == 1)
@@ -172,32 +123,18 @@ namespace BSFiberConcrete
 
 
 
-        /// <summary>
-        /// формула по 6.2.15 из  СП63
-        /// </summary>
-        /// <param name="_Rs"></param>
-        /// <param name="_Es"></param>
-        /// <returns></returns>
-        public static decimal NumEps_s1(decimal _Rs, decimal _Es)
+                                                        public static decimal NumEps_s1(decimal _Rs, decimal _Es)
         {
-            // Для трехлинейной диаграммы деформирования
-            if (_Rs == 0 || _Es == 0)
+                        if (_Rs == 0 || _Es == 0)
                 return 0;
             
             return _Rs * 0.9m  / _Es;
         }
 
 
-        /// <summary>
-        /// формула 6.12 из  СП63
-        /// </summary>
-        /// <param name="_Rs"></param>
-        /// <param name="_Es"></param>
-        /// <returns></returns>
-        public static decimal NumEps_s0(decimal _Rs, decimal _Es)
+                                                        public static decimal NumEps_s0(decimal _Rs, decimal _Es)
         {
-            // Для трехлинейной диаграммы деформирования
-            if (_Rs == 0 || _Es == 0)
+                        if (_Rs == 0 || _Es == 0)
                 return 0;
 
             return NumEps_s1(_Rs, _Es) + 0.002m;

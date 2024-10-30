@@ -11,22 +11,13 @@ using BSFiberConcrete.Lib;
 
 namespace BSFiberConcrete.CalcGroup2
 {
-    /// <summary>
-    ///  Форма задания коэффициентов расчета на раскрытие трещины
-    /// </summary>
-    public partial class BSCalcNDMCrc : Form
+                public partial class BSCalcNDMCrc : Form
     {
         public NdmCrc NdmCrc { get; set; }
 
-        /// <summary>
-        /// Тип арматуры
-        /// </summary>
-        public string RebarType { get; set; }
+                                public string RebarType { get; set; }
         
-        /// <summary>
-        ///  усилие 
-        /// </summary>
-        public double N { get; set; }
+                                public double N { get; set; }
 
         public BSCalcNDMCrc()
         {

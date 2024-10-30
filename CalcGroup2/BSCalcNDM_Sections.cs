@@ -8,28 +8,18 @@ namespace BSFiberConcrete.CalcGroup2
 {
     public partial class BSCalcNDM
     {
-        /// <summary>
-        /// Привязка арматуры 
-        /// (экранные координаты ц.т. стержней привязываем к с.к. сечения балки)
-        /// </summary>
-        public static (List<double>, List<double>, List<double>, double, double) 
+                                        public static (List<double>, List<double>, List<double>, double, double) 
             ReinforcementBinding(BeamSection _BeamSection, double _leftX, double _leftY, bool _useRebar = true)
         {
-            // диаметры
-            List<double> rodD = new List<double>();
-            //привязка по ширине
-            List<double> bY = new List<double>();
-            //привязка по высоте
-            List<double> hX = new List<double>();
-            // количество стержней
-            int d_qty = 0;
-            // площадь арматуры
-            double area_total = 0;
+                        List<double> rodD = new List<double>();
+                        List<double> bY = new List<double>();
+                        List<double> hX = new List<double>();
+                        int d_qty = 0;
+                        double area_total = 0;
 
             if (_useRebar)
             {
-                // значения из БД
-                List<BSRod> _rods = BSData.LoadBSRod(_BeamSection);
+                                List<BSRod> _rods = BSData.LoadBSRod(_BeamSection);
                 d_qty = _rods.Count;
                 foreach (BSRod lr in _rods)
                 {
@@ -47,55 +37,36 @@ namespace BSFiberConcrete.CalcGroup2
             return (rodD, hX, bY, d_qty, area_total);
         }
 
-        /// <summary>
-        /// Массивы координат продольной арматуры
-        /// </summary>        
-        public int InitReinforcement(double _y0 = 0, double _z0 = 0 )
+                                public int InitReinforcement(double _y0 = 0, double _z0 = 0 )
         {                        
-            // заполнить  массив площадей арматуры            
-            foreach (double d in ds)
+                        foreach (double d in ds)
             {
                 As.Add(Math.PI * Math.Pow(d, 2) / 4.0);
             }
-            // координаты стержней
-            for (int l = 0; l < ds.Count; l++)
+                        for (int l = 0; l < ds.Count; l++)
             {
                 y0s[l] += _y0;
                 z0s[l] += _z0;
             }
-            // количество элементов арматуры
-            int m = As.Count;
+                        int m = As.Count;
             return m;
         }
 
-        /// <summary>
-        /// разбить прямоугольное сечение на элементы
-        /// </summary>
-        /// <param name="_b">ширина</param>
-        /// <param name="_h">высота</param>
-        /// <param name="_y0">начало координат</param>
-        /// <param name="_z0">начало координат</param>
-        /// <returns></returns>
-        public int InitRectangleSection(double _b, double _h, double _y0 = 0, double _z0 = 0)
+                                                                        public int InitRectangleSection(double _b, double _h, double _y0 = 0, double _z0 = 0)
         {
-            // количество элементов сечения
-            int n = ny * nz;           
+                        int n = ny * nz;           
             double sy = _b / ny;
             double sz = _h / nz;
-            // площадь 1 элемента
-            double Ab1 = sy * sz;
+                        double Ab1 = sy * sz;
 
-            //заполнить массив площадей элементов            
-            for (int i = 0; i < n; i++)
+                        for (int i = 0; i < n; i++)
                 Ab.Add(Ab1);
 
-            //заполнить массив привязок бетонных эл-в к вспомогательной оси y0            
-            for (int iz = 0; iz < nz; iz++)
+                        for (int iz = 0; iz < nz; iz++)
                 for (int iy = 0; iy < ny; iy++)
                     y0b.Add( iy * sy + sy / 2.0 + _y0);
 
-            //заполнить массив привязок бетонных эл-в к вспомогательной оси z0            
-            for (int iz = 0; iz < nz; iz++)
+                        for (int iz = 0; iz < nz; iz++)
                 for (int iy = 0; iy < ny; iy++)
                     z0b.Add( iz * sz + sz / 2.0 + _z0);
            
@@ -103,8 +74,7 @@ namespace BSFiberConcrete.CalcGroup2
         }
 
 
-        // двутавровое сечение
-        public int InitIBeamSection(double _bf, double _hf, double _bw, double _hw, double _b1f, double _h1f)
+                public int InitIBeamSection(double _bf, double _hf, double _bw, double _hw, double _b1f, double _h1f)
         {
             int n1 = 0, n2 = 0, n3 = 0;
 
@@ -119,27 +89,16 @@ namespace BSFiberConcrete.CalcGroup2
             return n1+n2+n3;
         }
         
-        // кольцевое сечение
-        private int InitRingSection(double _r1, double _R2)
+                private int InitRingSection(double _r1, double _R2)
         {            
             if (r1 >= R2) throw BSBeam_Ring.RadiiError();              
-            /*
-            BSMesh.Center = new TriangleNet.Geometry.Point(0, 0);
-            _ = BSMesh.GenerateRing(_R2, _r1, false);
-            Tri.Mesh = BSMesh.Mesh;
-            */
             List<object> Tr = Tri.CalculationScheme();
-            // площади треугольников
-            var triAreas = Tri.triAreas;
-            // ц.т. треугольников
-            var triCGs = Tri.triCGs;             
-            //заполнить массив площадей элементов            
-            foreach (var _area in triAreas)
+                        var triAreas = Tri.triAreas;
+                        var triCGs = Tri.triCGs;             
+                        foreach (var _area in triAreas)
                 Ab.Add(_area);
 
-            //заполнить массив привязок бетонных эл-в к вспомогательной оси y0            
-            //заполнить массив привязок бетонных эл-в к вспомогательной оси z0            
-            foreach (var triCG in triCGs)
+                                    foreach (var triCG in triCGs)
             {
                 y0b.Add(triCG.X);
                 z0b.Add(triCG.Y);
@@ -148,26 +107,18 @@ namespace BSFiberConcrete.CalcGroup2
             return triAreas.Count; 
         }
 
-        /// <summary>
-        /// произвольное сечение
-        /// </summary>        
-        private int InitAnySection()
+                                private int InitAnySection()
         {
             _ = Tri.CalculationScheme(false);
 
-            // площади треугольников
-            var triAreas = Tri.triAreas;
+                        var triAreas = Tri.triAreas;
 
-            // ц.т. треугольников
-            var triCGs = Tri.triCGs;
+                        var triCGs = Tri.triCGs;
 
-            //заполнить массив площадей элементов            
-            foreach (var _area in triAreas)
+                        foreach (var _area in triAreas)
                 Ab.Add(_area);
 
-            //заполнить массив привязок бетонных эл-в к вспомогательной оси y0            
-            //заполнить массив привязок бетонных эл-в к вспомогательной оси z0            
-            foreach (var triCG in triCGs)
+                                    foreach (var triCG in triCGs)
             {
                 y0b.Add(triCG.X);
                 z0b.Add(triCG.Y);

@@ -16,44 +16,23 @@ using TriangleNet.Topology;
 
 namespace BSFiberConcrete
 {
-    /// <summary>
-    /// Класс для отрисовки элементов связанных с сеткой сечения балки.
-    /// Для отрисовки используется NuGet ScottPlot
-    /// </summary>
-    public class MeshDraw
+                    public class MeshDraw
     {        
         private FormsPlot _formsPlot;
                 
-        // шаг сетки
-        private int Ny; // горизонтальная ось
-        private int Nz; // вертикальная ось
-        internal double e_st_ult;
+                private int Ny;         private int Nz;         internal double e_st_ult;
         internal double e_s_ult;
 
         public int MosaicMode { private get; set; }
 
-        /// верхняя граница
-        public double UltMax {private get; set; }
-        /// нижняя граница
-        public double UltMin {private get; set; }
-        /// <summary>
-        /// предел по арматуре
-        /// </summary>
-        public double Rs_Ult { private get; set; }
+                public double UltMax {private get; set; }
+                public double UltMin {private get; set; }
+                                public double Rs_Ult { private get; set; }
 
-        /// <summary>
-        /// Сечение
-        /// </summary>
-        public List<double> Values_B { private get; set; }
-        /// <summary>
-        /// Значения для стержней арматуры
-        /// </summary>
-        public List<double> Values_S { private get; set; }
+                                public List<double> Values_B { private get; set; }
+                                public List<double> Values_S { private get; set; }
 
-        /// <summary>
-        /// Сетки из треугольников
-        /// </summary>
-        public Mesh TriangleMesh  {  get; private set; }
+                                public Mesh TriangleMesh  {  get; private set; }
 
         public MeshDraw(Mesh _triangleMesh)
         {
@@ -66,10 +45,7 @@ namespace BSFiberConcrete
             Nz = _Nz;
         }
 
-        /// <summary>
-        /// Отрисовка объекта FormsPlot на WinForm'е
-        /// </summary>
-        public void ShowMesh()
+                                public void ShowMesh()
         {
             if (_formsPlot == null)
                 return;
@@ -90,10 +66,7 @@ namespace BSFiberConcrete
             drawBS.Show();                
         }
 
-        /// <summary>
-        /// сохранение объекта FormsPlot на картинке
-        /// </summary>
-        public void SaveToPNG(string fullPath = null)
+                                public void SaveToPNG(string fullPath = null)
         {
             if (_formsPlot == null)
                 return;
@@ -104,14 +77,10 @@ namespace BSFiberConcrete
         }
 
 
-        /// <summary>
-        /// Формирование объекта FormsPlot с сеткой из TriangleMesh
-        /// </summary>
-        public FormsPlot CreatePlot()
+                                public FormsPlot CreatePlot()
         {
             FormsPlot formsPlt = new FormsPlot() { Dock = DockStyle.Fill };
-            formsPlt.Plot.Axes.SquareUnits(); // 
-            Random r = new Random();
+            formsPlt.Plot.Axes.SquareUnits();             Random r = new Random();
             foreach (Triangle tr in TriangleMesh.Triangles)
             {
                 int randValue = r.Next(0, 10);
@@ -123,33 +92,18 @@ namespace BSFiberConcrete
                 }
                 ScottPlot.Plottables.Polygon tmpPolygon = formsPlt.Plot.Add.Polygon(points);
 
-                //tmpPolygon.LineColor = ScottPlot.Colors.White;
-                //if (randValue > 7)
-                //    tmpPolygon.FillColor = ScottPlot.Colors.Red;
-                //else if (randValue < 4)
-                //    tmpPolygon.FillColor = ScottPlot.Colors.Blue;
-                //else
-                //    tmpPolygon.FillColor = ScottPlot.Colors.Green;
-            }
+                                                                                                                            }
             _formsPlot = formsPlt;
             return formsPlt;
         }
 
-        /// <summary>
-        /// Треугольные полигоны закрвашиваются цветом в соответсии с maxTension и minTension
-        /// </summary>
-        /// <param name="_tension"> Значения напряжений для треугольников в соответсвии с TriangleMesh.Triangles</param>
-        /// <param name="_maxTension">Предельное значение напряжения</param>
-        /// <param name="_minTension">Предельное значение напряжения</param>
-        /// <returns></returns>
-        public FormsPlot PaintSectionMesh()
+                                                                public FormsPlot PaintSectionMesh()
         {
             FormsPlot formsPlt = new FormsPlot() { Dock = DockStyle.Fill };
 
             for ( int i = 0; i < TriangleMesh.Triangles.Count; i++)
             {
-                // отрисовка гемеотри треугольника
-                Triangle tr = TriangleMesh.Triangles.ToArray()[i];
+                                Triangle tr = TriangleMesh.Triangles.ToArray()[i];
 
                 ScottPlot.Coordinates[] points = new ScottPlot.Coordinates[3];
 
@@ -181,13 +135,7 @@ namespace BSFiberConcrete
             return formsPlt;
         }
                 
-        /// <summary>
-        ///  Покрытие прямоугольниками
-        /// </summary>
-        /// <param name="sz"></param>
-        /// <param name="_bs"></param>
-        /// <returns></returns>
-        public FormsPlot CreateRectanglePlot(double[] sz, BeamSection _bs)
+                                                        public FormsPlot CreateRectanglePlot(double[] sz, BeamSection _bs)
         {            
             var msh = new BSCalcLib.MeshRect(Ny, Nz);
 

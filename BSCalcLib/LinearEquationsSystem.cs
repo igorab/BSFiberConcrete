@@ -42,8 +42,7 @@ namespace BSCalcLib
             return m_pMatrix[_j].dFreeCell;
         }
 
-        // Fill the matrix and the free vector by zeros.
-        public void SetZero()
+                public void SetZero()
         {
             for (int i = 0; i < m_N; ++i)
             {
@@ -53,18 +52,13 @@ namespace BSCalcLib
             }
         }
 
-        // Implement Gauss' method.
-        // Call of the function destroys data in the matrix and in the free vector and constructs data for Solution().
-        // Return false on error; you may call GetErrorIndex() to determine index of the equation linearly dependent from equations located above it in the system.
-        public bool Solve(double _dMinValue = 1e-20)
+                                public bool Solve(double _dMinValue = 1e-20)
         {
             m_nErrorIndex = m_N;
 
-            // The first pass: convert the matrix to upper triangle one.
-            for (int k = 0; k < m_N; ++k)
+                        for (int k = 0; k < m_N; ++k)
             {
-                // Find max element in the k-th column.
-                double dMaxValue = 0;
+                                double dMaxValue = 0;
                 int nMaxIndex = k;
                 for (int j = k; j < m_N; ++j)
                 {
@@ -78,18 +72,14 @@ namespace BSCalcLib
 
                 if (Math.Abs(dMaxValue) < Math.Abs(_dMinValue))
                 {
-                    // Report about degeneration error.
-                    m_nErrorIndex = m_pMatrix[nMaxIndex].nIndex;
+                                        m_nErrorIndex = m_pMatrix[nMaxIndex].nIndex;
                     return false;
                 }
 
                 if (nMaxIndex != k)
                     SwapRows(nMaxIndex, k);
 
-                // Now, Matrix(k,k) is max cell in k-th right bottom submatrix.
-                // Make first column of this submatrix zero (except first element).
-                // NOTE: all the cells are untouched indeed as they will not make influence on the further calculations.
-                for (int j = k + 1; j < m_N; ++j)
+                                                                for (int j = k + 1; j < m_N; ++j)
                 {
                     double a = GetMatrixCell(k, j) / dMaxValue;
                     for (int i = k + 1; i < m_N; ++i)
@@ -98,8 +88,7 @@ namespace BSCalcLib
                 }
             }
 
-            // The second pass (backward).
-            for (int k = m_N - 1; k >= 0; --k)
+                        for (int k = m_N - 1; k >= 0; --k)
             {
                 for (int i = k + 1; i < m_N; ++i)
                     m_pMatrix[k].dFreeCell -= GetFreeVector(i) * GetMatrixCell(i, k);
@@ -109,13 +98,10 @@ namespace BSCalcLib
             return true;
         }
 
-        // Solutions are in the free vector.
-        public double Solution(int _i) { return GetFreeVector(_i); }
-        // Return index of first encountered degenerating equation.
-        public int ErrorIndex { get { return m_nErrorIndex; } }
+                public double Solution(int _i) { return GetFreeVector(_i); }
+                public int ErrorIndex { get { return m_nErrorIndex; } }
 
-        // The dimension of the system.
-        private int m_N;
+                private int m_N;
         public int N { get { return m_N; } }
 
         private class Row

@@ -11,44 +11,18 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
     {
 
         #region Privat fields 
-        /// <summary>
-        /// Данные по бетону из бд
-        /// </summary>
-        private List<Beton> _DateConcreteDB;
-        /// <summary>
-        /// Данные по Типу бетона
-        /// </summary>
-        private List<BetonType> _DateConcreteTypeDB;
+                                private List<Beton> _DateConcreteDB;
+                                private List<BetonType> _DateConcreteTypeDB;
 
-        /// <summary>
-        /// Характеристика бетона для указанного ТИПА 
-        /// </summary>
-        private List<Beton> _DataConcreteOfKind;
-        /// <summary>
-        /// Индек класса бетона из таблицы _DataConcreteOfKind
-        /// </summary>
-        private int _indexConcreteClass;
-        /// <summary>
-        /// Индекс Типа бетона (тяжелый, мелкозернистый A)
-        /// </summary>
-        private int _indexConcreteType;
+                                private List<Beton> _DataConcreteOfKind;
+                                private int _indexConcreteClass;
+                                private int _indexConcreteType;
 
         private string _BT;
 
-        // нормативные значения
-        private double _Rbn;        // МПа
-        private double _Rbtn;       // МПа
-        // Расчетные значения по первой группе предельных состояний
-        private double _Rb;         // МПа
-        private double _Rbt;        // МПа
-        // Расчетные значения по второй группе предельных состояний
-        private double _Rb_ser;     // МПа
-        private double _Rbt_ser;    // МПа
-
-        private double _Eb;         // МПа
-
-        // название типа бетона (тяжелый мелкозернистый и тп)
-        private string _nameConcreteType;
+                private double _Rbn;                private double _Rbtn;                       private double _Rb;                 private double _Rbt;                        private double _Rb_ser;             private double _Rbt_ser;    
+        private double _Eb;         
+                private string _nameConcreteType;
         #endregion
 
 
@@ -155,11 +129,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
 
 
 
-        /// <summary>
-        /// установить вид бетона
-        /// </summary>
-        /// <param name="index"> значения 1 - 4 </param>
-        public void SetIndexConcretKind(int index)
+                                        public void SetIndexConcretKind(int index)
         {
             if ((index < 0) || index > _DateConcreteTypeDB.Count - 1)
             {
@@ -173,11 +143,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         }
 
 
-        /// <summary>
-        /// Установить индекс бетона из списка _DateConcreteDB
-        /// </summary>
-        /// <param name="index"></param>
-        public void SetIndexConcreteClass(int index)
+                                        public void SetIndexConcreteClass(int index)
         {
             if ((index < 0) || index > _DataConcreteOfKind.Count - 1)
             {
@@ -196,11 +162,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         }
 
 
-        /// <summary>
-        /// Получить список Классов бетона
-        /// </summary>
-        /// <returns></returns>
-        public List<string> GetConcreteClass()
+                                        public List<string> GetConcreteClass()
         {
             List<string> ConcreteClass = new List<string>();
             foreach (Beton Concrete in _DataConcreteOfKind)
@@ -211,11 +173,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
             return ConcreteClass;
         }
 
-        /// <summary>
-        /// Получить список Типов бетона
-        /// </summary>
-        /// <returns></returns>
-        public List<string> GetConcreteType()
+                                        public List<string> GetConcreteType()
         {
             List<string> ConcreteType = new List<string>();
 
@@ -227,11 +185,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         }
 
 
-        /// <summary>
-        /// Оценить C_max, и вернуть предупреждение при необходимости
-        /// </summary>
-        /// <returns></returns>
-        public string Evaluate_Cmax(double C_max)
+                                        public string Evaluate_Cmax(double C_max)
         { 
             string result = null;
 

@@ -36,16 +36,7 @@ namespace BSFiberConcrete
 
                 dataGridBeton.DataSource = BSData.LoadBetonData(0);
 
-                //using (var streamreader = new StreamReader(BSFiberLoadData.FiberConcretePath))
-                //{
-                //    CultureInfo culture = CultureInfo.InvariantCulture;
-                //    IReaderConfiguration config = new CsvConfiguration(culture) { Delimiter = ";" };
-                //    using (var csv = new CsvReader(streamreader, culture))
-                //    {
-                //        records = csv.GetRecords<Elements>().ToList();
-                //    }
-                //}
-            }
+                                                                                                                                                            }
             catch (CsvHelper.HeaderValidationException)
             {
                 MessageBox.Show("Неверный формат файла");
@@ -56,16 +47,6 @@ namespace BSFiberConcrete
             }
             finally
             {
-                /*
-                if (BeamSection == BeamSection.Ring) 
-                {
-                    Records.Add(BSFiberLib.PhysElements);
-                }
-                else
-                    Records.Add(BSFiberLib.PhysElements);
-
-                dataGridElements.DataSource = Records;                
-                */
             }
         }
       
@@ -73,25 +54,16 @@ namespace BSFiberConcrete
         {
             ListView listView = _listView;
             
-            // Set the view to show details.
-            listView.View = View.Details;
-            // Allow the user to edit item text.
-            listView.LabelEdit = true;
-            // Allow the user to rearrange columns.
-            listView.AllowColumnReorder = true;
-            // Display check boxes.
-            listView.CheckBoxes = true;
-            // Select the item and subitems when selection is made.
-            listView.FullRowSelect = true;
-            // Display grid lines.
-            listView.GridLines = true;
-            // Sort the items in the list in ascending order.
-            //listView.Sorting = SortOrder.Ascending;
-
+                        listView.View = View.Details;
+                        listView.LabelEdit = true;
+                        listView.AllowColumnReorder = true;
+                        listView.CheckBoxes = true;
+                        listView.FullRowSelect = true;
+                        listView.GridLines = true;
+                        
             ListViewItem[] items = new ListViewItem[9];
             int idx = -1;
-            // Create items and sets of subitems for each item.
-            items[++idx] = new ListViewItem("Cls", idx);
+                        items[++idx] = new ListViewItem("Cls", idx);
             items[idx].Checked = true;
             items[idx].SubItems.Add("");
             items[idx].SubItems.Add("Класс арматуры");
@@ -145,16 +117,12 @@ namespace BSFiberConcrete
             items[idx].SubItems.Add("Влияние длительности действия нагрузки");
             items[idx].SubItems.Add("");
 
-            // idx == 9
-            // Create columns for the items and subitems.
-            // Width of -2 indicates auto-size.
-            listView.Columns.Add("Параметр", 100, HorizontalAlignment.Left);
+                                                listView.Columns.Add("Параметр", 100, HorizontalAlignment.Left);
             listView.Columns.Add("Значение", 100, HorizontalAlignment.Left);
             listView.Columns.Add("Описание", -2, HorizontalAlignment.Left);
             listView.Columns.Add("Ед. изм.", 100, HorizontalAlignment.Center);
 
-            //Add the items to the ListView.
-            listView.Items.AddRange(items);
+                        listView.Items.AddRange(items);
         }
 
         private void BSFiberSetup_Load(object sender, EventArgs e)

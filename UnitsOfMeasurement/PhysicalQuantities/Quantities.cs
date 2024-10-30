@@ -4,19 +4,10 @@ using System.Collections.Generic;
 
 namespace BSFiberConcrete.UnitsOfMeasurement.PhysicalQuantities
 {
-    /// <summary>
-    /// класс описывающий ед изм длины
-    /// </summary>
-    public class LengthMeasurement
+                public class LengthMeasurement
     {
-        /// <summary>
-        /// Установленные пользователем ед изм
-        /// </summary>
-        private LengthUnits _customUnit;
-        /// <summary>
-        /// Ед изм Установленные в модели
-        /// </summary>
-        private LengthUnits _modelUnit;
+                                private LengthUnits _customUnit;
+                                private LengthUnits _modelUnit;
 
         public LengthUnits CustomUnit
         { 
@@ -32,10 +23,7 @@ namespace BSFiberConcrete.UnitsOfMeasurement.PhysicalQuantities
         }
 
 
-        /// <summary>
-        /// Список с названиями ед измерения из LengthUnits (Description)
-        /// </summary>
-        public static List<string> ListOfName
+                                public static List<string> ListOfName
         { 
             get 
             {
@@ -47,23 +35,13 @@ namespace BSFiberConcrete.UnitsOfMeasurement.PhysicalQuantities
                 }
                 return tmpList;
             }
-            //private set { _listOfLength = value; }
-        }
+                    }
 
-        /// <summary>
-        /// Список значений из LengthUnits
-        /// </summary>
-        public static List<LengthUnits> ListOfValue
+                                public static List<LengthUnits> ListOfValue
         {
             get
             {
-                //List<int> tmpListOld = new List<int>();
-                //foreach (var tmp in (LengthUnits[])Enum.GetValues(typeof(LengthUnits)))
-                //{
-                //    string res = Extensions.GetDescription(tmp);
-                //    tmpListOld.Add(1);
-                //}
-
+                                                                                                
                 List<LengthUnits> tmpList = new List<LengthUnits>();
                 foreach (var tmp in (LengthUnits[])Enum.GetValues(typeof(LengthUnits)))
                 {
@@ -81,11 +59,7 @@ namespace BSFiberConcrete.UnitsOfMeasurement.PhysicalQuantities
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="modelUnitOfMeasurement">Ед измерения модели, в которую будут конвертироваться значения перед расчетом</param>
-        public LengthMeasurement(LengthUnits modelUnitOfMeasurement)
+                                        public LengthMeasurement(LengthUnits modelUnitOfMeasurement)
         {
             _customUnit = 0;
             _modelUnit = modelUnitOfMeasurement;
@@ -115,14 +89,7 @@ namespace BSFiberConcrete.UnitsOfMeasurement.PhysicalQuantities
         }
 
 
-        /// <summary>
-        /// Универсальная функция для перевода из одной ед изм в другую
-        /// </summary>
-        /// <param name="inputUnit">текущая ед измерения значения value</param>
-        /// <param name="outputUnit">ед измерения в которую будет осуществлен перевод</param>
-        /// <param name="value">значение</param>
-        /// <returns></returns>
-        public static double ConvertValue(LengthUnits inputUnit, LengthUnits outputUnit, double value)
+                                                                public static double ConvertValue(LengthUnits inputUnit, LengthUnits outputUnit, double value)
         {
             if (inputUnit == outputUnit)
             { return value; }
@@ -158,33 +125,16 @@ namespace BSFiberConcrete.UnitsOfMeasurement.PhysicalQuantities
             return res;
         }
 
-        //public static void GetNameFromEnum(LengthUnits enumValue)
-        //{
+                
+
+                                        
+            }
 
 
-        //    foreach (var tmp in (LengthUnits[])Enum.GetValues(typeof(LengthUnits)))
-        //    {
-        //        string res = Extensions.GetDescription(tmp);
-        //        tmpList.Add(res);
-        //    }
-
-        //}
-    }
-
-
-    /// <summary>
-    /// Единицы измерения Силы
-    /// </summary>
-    public class ForceMeasurement
+                public class ForceMeasurement
     {
-        /// <summary>
-        /// Установленные пользователем ед изм
-        /// </summary>
-        private ForceUnits _customUnit;
-        /// <summary>
-        /// Ед изм Установленные в модели
-        /// </summary>
-        private ForceUnits _modelUnit;
+                                private ForceUnits _customUnit;
+                                private ForceUnits _modelUnit;
 
 
         public ForceUnits CustomUnit
@@ -216,10 +166,7 @@ namespace BSFiberConcrete.UnitsOfMeasurement.PhysicalQuantities
             }
         }
 
-        /// <summary>
-        /// Список значений из ForceUnits
-        /// </summary>
-        public static List<ForceUnits> ListOfValue
+                                public static List<ForceUnits> ListOfValue
         {
             get
             {
@@ -239,11 +186,7 @@ namespace BSFiberConcrete.UnitsOfMeasurement.PhysicalQuantities
             _modelUnit = 0;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="modelUnitOfMeasurement">Ед измерения модели, в которую будут конвертироваться значения перед расчетом</param>
-        public ForceMeasurement(ForceUnits modelUnitOfMeasurement)
+                                        public ForceMeasurement(ForceUnits modelUnitOfMeasurement)
         {
             _customUnit = 0;
             _modelUnit = modelUnitOfMeasurement;
@@ -279,14 +222,7 @@ namespace BSFiberConcrete.UnitsOfMeasurement.PhysicalQuantities
         }
 
 
-        /// <summary>
-        /// Универсальная функция для перевода из одной ед изм в другую
-        /// </summary>
-        /// <param name="inputUnit">текущая ед измерения значения value</param>
-        /// <param name="outputUnit">ед измерения в которую будет осуществлен перевод</param>
-        /// <param name="value">значение</param>
-        /// <returns></returns>
-        public static double ConvertValue(ForceUnits inputUnit, ForceUnits outputUnit, double value)
+                                                                public static double ConvertValue(ForceUnits inputUnit, ForceUnits outputUnit, double value)
         {
             if (inputUnit == outputUnit)
             { return value; }
@@ -341,23 +277,14 @@ namespace BSFiberConcrete.UnitsOfMeasurement.PhysicalQuantities
 
 
 
-    /// <summary>
-    /// Единицы измерения Момента силы
-    /// </summary>
-    public class MomentOfForceMeasurement
+                public class MomentOfForceMeasurement
     {
 
         private ForceMeasurement _forceMeasure;
         private LengthMeasurement _lengthMeasure;
 
-        /// <summary>
-        /// Установленные пользователем ед изм
-        /// </summary>
-        private MomentOfForceUnits _customUnit;
-        /// <summary>
-        /// Ед изм Установленные в модели
-        /// </summary>
-        private MomentOfForceUnits _modelUnit;
+                                private MomentOfForceUnits _customUnit;
+                                private MomentOfForceUnits _modelUnit;
 
 
         public MomentOfForceUnits CustomUnit
@@ -386,10 +313,7 @@ namespace BSFiberConcrete.UnitsOfMeasurement.PhysicalQuantities
             }
         }
 
-        /// <summary>
-        /// Список значений из MomentOfForceUnits
-        /// </summary>
-        public static List<MomentOfForceUnits> ListOfValue
+                                public static List<MomentOfForceUnits> ListOfValue
         {
             get
             {
@@ -412,11 +336,7 @@ namespace BSFiberConcrete.UnitsOfMeasurement.PhysicalQuantities
             _lengthMeasure = new LengthMeasurement();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="modelUnitOfMeasurement">Ед измерения модели, в которую будут конвертироваться значения перед расчетом</param>
-        public MomentOfForceMeasurement(MomentOfForceUnits modelUnitOfMeasurement)
+                                        public MomentOfForceMeasurement(MomentOfForceUnits modelUnitOfMeasurement)
         {
             _customUnit = 0;
             _modelUnit = modelUnitOfMeasurement;
@@ -441,14 +361,7 @@ namespace BSFiberConcrete.UnitsOfMeasurement.PhysicalQuantities
         }
 
 
-        /// <summary>
-        /// Универсальная функция для перевода из одной ед изм в другую
-        /// </summary>
-        /// <param name="inputUnit">текущая ед измерения значения value</param>
-        /// <param name="outputUnit">ед измерения в которую будет осуществлен перевод</param>
-        /// <param name="value">значение</param>
-        /// <returns></returns>
-        private double ConvertValue(MomentOfForceUnits inputUnit, MomentOfForceUnits outputUnit, double value)
+                                                                private double ConvertValue(MomentOfForceUnits inputUnit, MomentOfForceUnits outputUnit, double value)
         {
             string inputStr = Extensions.GetDescription(inputUnit);
             string[] inputUnitArray = inputStr.Split('*');

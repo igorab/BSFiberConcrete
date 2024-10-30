@@ -2,16 +2,9 @@
 {
     partial class BSCalcNDMCrc
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
+                                private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
+                                        protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
             {
@@ -22,11 +15,7 @@
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
+                                        private void InitializeComponent()
         {
             this.tableLayoutPanelCrc = new System.Windows.Forms.TableLayoutPanel();
             this.buttonOk = new System.Windows.Forms.Button();
@@ -47,10 +36,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numFi2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numMju_fv)).BeginInit();
             this.SuspendLayout();
-            // 
-            // tableLayoutPanelCrc
-            // 
-            this.tableLayoutPanelCrc.ColumnCount = 3;
+                                                this.tableLayoutPanelCrc.ColumnCount = 3;
             this.tableLayoutPanelCrc.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 31.70732F));
             this.tableLayoutPanelCrc.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 68.29268F));
             this.tableLayoutPanelCrc.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 56F));
@@ -79,10 +65,7 @@
             this.tableLayoutPanelCrc.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanelCrc.Size = new System.Drawing.Size(253, 193);
             this.tableLayoutPanelCrc.TabIndex = 0;
-            // 
-            // buttonOk
-            // 
-            this.buttonOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+                                                this.buttonOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonOk.Location = new System.Drawing.Point(118, 153);
             this.buttonOk.Name = "buttonOk";
             this.buttonOk.Size = new System.Drawing.Size(75, 23);
@@ -90,10 +73,7 @@
             this.buttonOk.Text = "OK";
             this.buttonOk.UseVisualStyleBackColor = true;
             this.buttonOk.Click += new System.EventHandler(this.buttonOk_Click);
-            // 
-            // linkMju_fv
-            // 
-            this.linkMju_fv.Anchor = System.Windows.Forms.AnchorStyles.Right;
+                                                this.linkMju_fv.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.linkMju_fv.AutoSize = true;
             this.linkMju_fv.Location = new System.Drawing.Point(28, 130);
             this.linkMju_fv.Name = "linkMju_fv";
@@ -102,10 +82,7 @@
             this.linkMju_fv.TabStop = true;
             this.linkMju_fv.Text = "μ fv :";
             this.linkMju_fv.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkMju_fv_LinkClicked);
-            // 
-            // numFi1
-            // 
-            this.numFi1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+                                                this.numFi1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.numFi1.DecimalPlaces = 2;
             this.numFi1.Location = new System.Drawing.Point(65, 23);
             this.numFi1.Name = "numFi1";
@@ -116,10 +93,7 @@
             0,
             0,
             65536});
-            // 
-            // numFi3
-            // 
-            this.numFi3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+                                                this.numFi3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.numFi3.DecimalPlaces = 2;
             this.numFi3.Location = new System.Drawing.Point(65, 75);
             this.numFi3.Name = "numFi3";
@@ -130,10 +104,7 @@
             0,
             0,
             65536});
-            // 
-            // numPsiS
-            // 
-            this.numPsiS.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+                                                this.numPsiS.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.numPsiS.DecimalPlaces = 2;
             this.numPsiS.Location = new System.Drawing.Point(65, 101);
             this.numPsiS.Name = "numPsiS";
@@ -144,10 +115,7 @@
             0,
             0,
             0});
-            // 
-            // linkFi3
-            // 
-            this.linkFi3.Anchor = System.Windows.Forms.AnchorStyles.Right;
+                                                this.linkFi3.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.linkFi3.AutoSize = true;
             this.linkFi3.Location = new System.Drawing.Point(32, 78);
             this.linkFi3.Name = "linkFi3";
@@ -155,10 +123,7 @@
             this.linkFi3.TabIndex = 4;
             this.linkFi3.TabStop = true;
             this.linkFi3.Text = "φ3 :";
-            // 
-            // linkPsiS
-            // 
-            this.linkPsiS.Anchor = System.Windows.Forms.AnchorStyles.Right;
+                                                this.linkPsiS.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.linkPsiS.AutoSize = true;
             this.linkPsiS.Location = new System.Drawing.Point(30, 104);
             this.linkPsiS.Name = "linkPsiS";
@@ -167,10 +132,7 @@
             this.linkPsiS.TabStop = true;
             this.linkPsiS.Text = "ψ s :";
             this.linkPsiS.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkPsiS_LinkClicked);
-            // 
-            // linkFi1
-            // 
-            this.linkFi1.Anchor = System.Windows.Forms.AnchorStyles.Right;
+                                                this.linkFi1.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.linkFi1.AutoSize = true;
             this.linkFi1.Location = new System.Drawing.Point(32, 26);
             this.linkFi1.Name = "linkFi1";
@@ -179,10 +141,7 @@
             this.linkFi1.TabStop = true;
             this.linkFi1.Text = "φ1 :";
             this.linkFi1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkFi1_LinkClicked);
-            // 
-            // linkFi2
-            // 
-            this.linkFi2.Anchor = System.Windows.Forms.AnchorStyles.Right;
+                                                this.linkFi2.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.linkFi2.AutoSize = true;
             this.linkFi2.Location = new System.Drawing.Point(32, 52);
             this.linkFi2.Name = "linkFi2";
@@ -190,10 +149,7 @@
             this.linkFi2.TabIndex = 6;
             this.linkFi2.TabStop = true;
             this.linkFi2.Text = "φ2 :";
-            // 
-            // numFi2
-            // 
-            this.numFi2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+                                                this.numFi2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.numFi2.DecimalPlaces = 2;
             this.numFi2.Location = new System.Drawing.Point(65, 49);
             this.numFi2.Name = "numFi2";
@@ -204,10 +160,7 @@
             0,
             0,
             65536});
-            // 
-            // numMju_fv
-            // 
-            this.numMju_fv.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+                                                this.numMju_fv.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.numMju_fv.DecimalPlaces = 2;
             this.numMju_fv.Location = new System.Drawing.Point(65, 127);
             this.numMju_fv.Name = "numMju_fv";
@@ -218,10 +171,7 @@
             0,
             0,
             0});
-            // 
-            // BSCalcNDMCrc
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+                                                this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(253, 193);
             this.Controls.Add(this.tableLayoutPanelCrc);

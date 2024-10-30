@@ -9,10 +9,7 @@ namespace BSBeamCalculator
 {
     internal static class BeamCalculatorRun
     {
-        /// <summary>
-        /// Главная точка входа для приложения.
-        /// </summary>
-        [STAThread]
+                                [STAThread]
         static void Main()
         {
             {

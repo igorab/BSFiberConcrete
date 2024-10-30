@@ -2,16 +2,9 @@
 {
     partial class BSRFibLabGraph
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
+                                private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
+                                        protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
             {
@@ -22,11 +15,7 @@
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
+                                        private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
@@ -83,10 +72,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numHsp)).BeginInit();
             this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // ChartFaF
-            // 
-            chartArea1.Name = "ChartArea1";
+                                                chartArea1.Name = "ChartArea1";
             this.ChartFaF.ChartAreas.Add(chartArea1);
             this.ChartFaF.DataSource = this.faFBindingSource;
             this.ChartFaF.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -109,14 +95,8 @@
             title1.Name = "aF";
             title1.Text = "Нагрузка-перемещение внешних граней надреза";
             this.ChartFaF.Titles.Add(title1);
-            // 
-            // faFBindingSource
-            // 
-            this.faFBindingSource.DataSource = typeof(BSFiberConcrete.FaF);
-            // 
-            // tableLayoutPanel
-            // 
-            this.tableLayoutPanel.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
+                                                this.faFBindingSource.DataSource = typeof(BSFiberConcrete.FaF);
+                                                this.tableLayoutPanel.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.tableLayoutPanel.ColumnCount = 2;
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.67253F));
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 66.32748F));
@@ -138,10 +118,7 @@
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 22F));
             this.tableLayoutPanel.Size = new System.Drawing.Size(1081, 635);
             this.tableLayoutPanel.TabIndex = 1;
-            // 
-            // tableLayoutPanelCalcRes
-            // 
-            this.tableLayoutPanelCalcRes.ColumnCount = 2;
+                                                this.tableLayoutPanelCalcRes.ColumnCount = 2;
             this.tableLayoutPanelCalcRes.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30.18868F));
             this.tableLayoutPanelCalcRes.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 69.81132F));
             this.tableLayoutPanelCalcRes.Controls.Add(this.lblF05, 0, 0);
@@ -158,40 +135,28 @@
             this.tableLayoutPanelCalcRes.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanelCalcRes.Size = new System.Drawing.Size(318, 91);
             this.tableLayoutPanelCalcRes.TabIndex = 1;
-            // 
-            // lblF05
-            // 
-            this.lblF05.Anchor = System.Windows.Forms.AnchorStyles.Right;
+                                                this.lblF05.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.lblF05.AutoSize = true;
             this.lblF05.Location = new System.Drawing.Point(45, 7);
             this.lblF05.Name = "lblF05";
             this.lblF05.Size = new System.Drawing.Size(48, 13);
             this.lblF05.TabIndex = 0;
             this.lblF05.Text = "F 0,5, Н:";
-            // 
-            // lblF25
-            // 
-            this.lblF25.Anchor = System.Windows.Forms.AnchorStyles.Right;
+                                                this.lblF25.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.lblF25.AutoSize = true;
             this.lblF25.Location = new System.Drawing.Point(45, 35);
             this.lblF25.Name = "lblF25";
             this.lblF25.Size = new System.Drawing.Size(48, 13);
             this.lblF25.TabIndex = 1;
             this.lblF25.Text = "F 2,5, Н:";
-            // 
-            // lblFeL
-            // 
-            this.lblFeL.Anchor = System.Windows.Forms.AnchorStyles.Right;
+                                                this.lblFeL.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.lblFeL.AutoSize = true;
             this.lblFeL.Location = new System.Drawing.Point(52, 67);
             this.lblFeL.Name = "lblFeL";
             this.lblFeL.Size = new System.Drawing.Size(41, 13);
             this.lblFeL.TabIndex = 2;
             this.lblFeL.Text = "F el, Н:";
-            // 
-            // numF05
-            // 
-            this.numF05.Anchor = System.Windows.Forms.AnchorStyles.Left;
+                                                this.numF05.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numF05.DecimalPlaces = 4;
             this.numF05.Location = new System.Drawing.Point(99, 4);
             this.numF05.Maximum = new decimal(new int[] {
@@ -202,10 +167,7 @@
             this.numF05.Name = "numF05";
             this.numF05.Size = new System.Drawing.Size(120, 20);
             this.numF05.TabIndex = 3;
-            // 
-            // numF25
-            // 
-            this.numF25.Anchor = System.Windows.Forms.AnchorStyles.Left;
+                                                this.numF25.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numF25.DecimalPlaces = 4;
             this.numF25.Location = new System.Drawing.Point(99, 32);
             this.numF25.Maximum = new decimal(new int[] {
@@ -216,10 +178,7 @@
             this.numF25.Name = "numF25";
             this.numF25.Size = new System.Drawing.Size(120, 20);
             this.numF25.TabIndex = 4;
-            // 
-            // numFel
-            // 
-            this.numFel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+                                                this.numFel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numFel.DecimalPlaces = 4;
             this.numFel.Location = new System.Drawing.Point(99, 63);
             this.numFel.Maximum = new decimal(new int[] {
@@ -230,10 +189,7 @@
             this.numFel.Name = "numFel";
             this.numFel.Size = new System.Drawing.Size(120, 20);
             this.numFel.TabIndex = 5;
-            // 
-            // gridFaF
-            // 
-            this.gridFaF.AutoGenerateColumns = false;
+                                                this.gridFaF.AutoGenerateColumns = false;
             this.gridFaF.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridFaF.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.numDataGridViewTextBoxColumn,
@@ -245,30 +201,18 @@
             this.gridFaF.Name = "gridFaF";
             this.gridFaF.Size = new System.Drawing.Size(356, 403);
             this.gridFaF.TabIndex = 3;
-            // 
-            // numDataGridViewTextBoxColumn
-            // 
-            this.numDataGridViewTextBoxColumn.DataPropertyName = "Num";
+                                                this.numDataGridViewTextBoxColumn.DataPropertyName = "Num";
             this.numDataGridViewTextBoxColumn.HeaderText = "№";
             this.numDataGridViewTextBoxColumn.Name = "numDataGridViewTextBoxColumn";
             this.numDataGridViewTextBoxColumn.ToolTipText = "Номер измерения";
             this.numDataGridViewTextBoxColumn.Width = 50;
-            // 
-            // aFDataGridViewTextBoxColumn
-            // 
-            this.aFDataGridViewTextBoxColumn.DataPropertyName = "aF";
+                                                this.aFDataGridViewTextBoxColumn.DataPropertyName = "aF";
             this.aFDataGridViewTextBoxColumn.HeaderText = "aF, мм";
             this.aFDataGridViewTextBoxColumn.Name = "aFDataGridViewTextBoxColumn";
-            // 
-            // fDataGridViewTextBoxColumn
-            // 
-            this.fDataGridViewTextBoxColumn.DataPropertyName = "F";
+                                                this.fDataGridViewTextBoxColumn.DataPropertyName = "F";
             this.fDataGridViewTextBoxColumn.HeaderText = "F, Н";
             this.fDataGridViewTextBoxColumn.Name = "fDataGridViewTextBoxColumn";
-            // 
-            // tableLayoutPanelGrid
-            // 
-            this.tableLayoutPanelGrid.ColumnCount = 6;
+                                                this.tableLayoutPanelGrid.ColumnCount = 6;
             this.tableLayoutPanelGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 49F));
             this.tableLayoutPanelGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 63.05732F));
             this.tableLayoutPanelGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 36.94268F));
@@ -287,10 +231,7 @@
             this.tableLayoutPanelGrid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanelGrid.Size = new System.Drawing.Size(356, 48);
             this.tableLayoutPanelGrid.TabIndex = 6;
-            // 
-            // btnDSAdd
-            // 
-            this.btnDSAdd.Anchor = System.Windows.Forms.AnchorStyles.Right;
+                                                this.btnDSAdd.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnDSAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnDSAdd.Location = new System.Drawing.Point(316, 7);
             this.btnDSAdd.Name = "btnDSAdd";
@@ -299,10 +240,7 @@
             this.btnDSAdd.Text = "+";
             this.btnDSAdd.UseVisualStyleBackColor = true;
             this.btnDSAdd.Click += new System.EventHandler(this.btnDSAdd_Click);
-            // 
-            // btnDSSave
-            // 
-            this.btnDSSave.Anchor = System.Windows.Forms.AnchorStyles.Right;
+                                                this.btnDSSave.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnDSSave.Image = ((System.Drawing.Image)(resources.GetObject("btnDSSave.Image")));
             this.btnDSSave.Location = new System.Drawing.Point(115, 6);
             this.btnDSSave.Name = "btnDSSave";
@@ -310,10 +248,7 @@
             this.btnDSSave.TabIndex = 5;
             this.btnDSSave.UseVisualStyleBackColor = true;
             this.btnDSSave.Click += new System.EventHandler(this.btnDSSave_Click);
-            // 
-            // btnDSOpen
-            // 
-            this.btnDSOpen.Anchor = System.Windows.Forms.AnchorStyles.Right;
+                                                this.btnDSOpen.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnDSOpen.Image = ((System.Drawing.Image)(resources.GetObject("btnDSOpen.Image")));
             this.btnDSOpen.Location = new System.Drawing.Point(71, 6);
             this.btnDSOpen.Name = "btnDSOpen";
@@ -321,10 +256,7 @@
             this.btnDSOpen.TabIndex = 6;
             this.btnDSOpen.UseVisualStyleBackColor = true;
             this.btnDSOpen.Click += new System.EventHandler(this.btnDSOpen_Click);
-            // 
-            // btnDSSave2File
-            // 
-            this.btnDSSave2File.Anchor = System.Windows.Forms.AnchorStyles.Right;
+                                                this.btnDSSave2File.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnDSSave2File.Image = ((System.Drawing.Image)(resources.GetObject("btnDSSave2File.Image")));
             this.btnDSSave2File.Location = new System.Drawing.Point(160, 6);
             this.btnDSSave2File.Name = "btnDSSave2File";
@@ -332,10 +264,7 @@
             this.btnDSSave2File.TabIndex = 7;
             this.btnDSSave2File.UseVisualStyleBackColor = true;
             this.btnDSSave2File.Click += new System.EventHandler(this.btnDSSave2File_Click);
-            // 
-            // btnDSDel
-            // 
-            this.btnDSDel.Anchor = System.Windows.Forms.AnchorStyles.Right;
+                                                this.btnDSDel.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnDSDel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnDSDel.Location = new System.Drawing.Point(219, 7);
             this.btnDSDel.Name = "btnDSDel";
@@ -344,20 +273,14 @@
             this.btnDSDel.Text = "-";
             this.btnDSDel.UseVisualStyleBackColor = true;
             this.btnDSDel.Click += new System.EventHandler(this.btnDSDel_Click);
-            // 
-            // labelBarSample
-            // 
-            this.labelBarSample.Anchor = System.Windows.Forms.AnchorStyles.Right;
+                                                this.labelBarSample.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelBarSample.AutoSize = true;
             this.labelBarSample.Location = new System.Drawing.Point(258, 17);
             this.labelBarSample.Name = "labelBarSample";
             this.labelBarSample.Size = new System.Drawing.Size(102, 13);
             this.labelBarSample.TabIndex = 7;
             this.labelBarSample.Text = "Описание образца";
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+                                                this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.ColumnCount = 7;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80F));
@@ -380,29 +303,20 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(710, 40);
             this.tableLayoutPanel1.TabIndex = 9;
-            // 
-            // txtBarSample
-            // 
-            this.txtBarSample.Anchor = System.Windows.Forms.AnchorStyles.Left;
+                                                this.txtBarSample.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.txtBarSample.Location = new System.Drawing.Point(3, 10);
             this.txtBarSample.Name = "txtBarSample";
             this.txtBarSample.Size = new System.Drawing.Size(198, 20);
             this.txtBarSample.TabIndex = 8;
             this.txtBarSample.Text = "Образец 1";
-            // 
-            // labelL
-            // 
-            this.labelL.Anchor = System.Windows.Forms.AnchorStyles.Right;
+                                                this.labelL.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelL.AutoSize = true;
             this.labelL.Location = new System.Drawing.Point(217, 13);
             this.labelL.Name = "labelL";
             this.labelL.Size = new System.Drawing.Size(35, 13);
             this.labelL.TabIndex = 9;
             this.labelL.Text = "L, мм";
-            // 
-            // numL
-            // 
-            this.numL.Anchor = System.Windows.Forms.AnchorStyles.Left;
+                                                this.numL.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numL.DecimalPlaces = 2;
             this.numL.Location = new System.Drawing.Point(258, 10);
             this.numL.Maximum = new decimal(new int[] {
@@ -418,10 +332,7 @@
             0,
             0,
             0});
-            // 
-            // numB
-            // 
-            this.numB.Anchor = System.Windows.Forms.AnchorStyles.Left;
+                                                this.numB.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numB.DecimalPlaces = 2;
             this.numB.Location = new System.Drawing.Point(408, 10);
             this.numB.Maximum = new decimal(new int[] {
@@ -437,30 +348,21 @@
             0,
             0,
             0});
-            // 
-            // labelB
-            // 
-            this.labelB.Anchor = System.Windows.Forms.AnchorStyles.Right;
+                                                this.labelB.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelB.AutoSize = true;
             this.labelB.Location = new System.Drawing.Point(367, 13);
             this.labelB.Name = "labelB";
             this.labelB.Size = new System.Drawing.Size(35, 13);
             this.labelB.TabIndex = 12;
             this.labelB.Text = "b, мм";
-            // 
-            // labelHsp
-            // 
-            this.labelHsp.Anchor = System.Windows.Forms.AnchorStyles.Right;
+                                                this.labelHsp.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelHsp.AutoSize = true;
             this.labelHsp.Location = new System.Drawing.Point(521, 13);
             this.labelHsp.Name = "labelHsp";
             this.labelHsp.Size = new System.Drawing.Size(49, 13);
             this.labelHsp.TabIndex = 13;
             this.labelHsp.Text = "h sp, мм";
-            // 
-            // numHsp
-            // 
-            this.numHsp.Anchor = System.Windows.Forms.AnchorStyles.Left;
+                                                this.numHsp.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numHsp.DecimalPlaces = 2;
             this.numHsp.Location = new System.Drawing.Point(576, 10);
             this.numHsp.Maximum = new decimal(new int[] {
@@ -476,10 +378,7 @@
             0,
             0,
             0});
-            // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+                                                this.tableLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel2.ColumnCount = 2;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -492,10 +391,7 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(710, 48);
             this.tableLayoutPanel2.TabIndex = 10;
-            // 
-            // btnPrint
-            // 
-            this.btnPrint.Anchor = System.Windows.Forms.AnchorStyles.Right;
+                                                this.btnPrint.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnPrint.Image = ((System.Drawing.Image)(resources.GetObject("btnPrint.Image")));
             this.btnPrint.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnPrint.Location = new System.Drawing.Point(607, 9);
@@ -505,10 +401,7 @@
             this.btnPrint.Text = "Отчет";
             this.btnPrint.UseVisualStyleBackColor = true;
             this.btnPrint.Click += new System.EventHandler(this.btnPrint_Click);
-            // 
-            // btnDrawChart
-            // 
-            this.btnDrawChart.Anchor = System.Windows.Forms.AnchorStyles.Right;
+                                                this.btnDrawChart.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnDrawChart.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnDrawChart.BackgroundImage")));
             this.btnDrawChart.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.btnDrawChart.Location = new System.Drawing.Point(252, 10);
@@ -519,14 +412,8 @@
             this.btnDrawChart.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnDrawChart.UseVisualStyleBackColor = true;
             this.btnDrawChart.Click += new System.EventHandler(this.btnDrawChart_Click);
-            // 
-            // openFileDialog
-            // 
-            this.openFileDialog.FileName = "FaF";
-            // 
-            // BSRFibLabGraph
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+                                                this.openFileDialog.FileName = "FaF";
+                                                this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1081, 635);
             this.Controls.Add(this.tableLayoutPanel);

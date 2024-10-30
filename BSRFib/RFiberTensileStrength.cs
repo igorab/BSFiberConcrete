@@ -76,8 +76,7 @@ namespace BSFiberConcrete.BSRFib
         {
             if (MessageBox.Show("Удалить расчет?") == DialogResult.OK)
             {
-                // TODO Delete Calc
-            }
+                            }
         }
 
         private void tableLayoutPanel3_Paint(object sender, PaintEventArgs e)

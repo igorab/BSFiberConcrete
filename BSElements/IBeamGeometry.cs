@@ -10,8 +10,7 @@ namespace BSFiberConcrete
     {
         double Area();
 
-        // section moment of inertia
-        double W_s();
+                double W_s();
 
         double Jy();
         double Jx();
@@ -20,10 +19,6 @@ namespace BSFiberConcrete
 
         double h { get; set; }
 
-        /// <summary>
-        /// Получить Габаритные размеры
-        /// </summary>
-        /// <returns></returns>
-        Dictionary<string, double> GetDimension();
+                                        Dictionary<string, double> GetDimension();
     }
 }

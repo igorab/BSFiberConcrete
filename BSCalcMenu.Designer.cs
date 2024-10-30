@@ -2,16 +2,9 @@
 {
     partial class BSCalcMenu
     {
-        /// <summary>
-        /// Обязательная переменная конструктора.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
+                                private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Освободить все используемые ресурсы.
-        /// </summary>
-        /// <param name="disposing">истинно, если управляемый ресурс должен быть удален; иначе ложно.</param>
-        protected override void Dispose(bool disposing)
+                                        protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
             {
@@ -22,11 +15,7 @@
 
         #region Код, автоматически созданный конструктором форм Windows
 
-        /// <summary>
-        /// Требуемый метод для поддержки конструктора — не изменяйте 
-        /// содержимое этого метода с помощью редактора кода.
-        /// </summary>
-        private void InitializeComponent()
+                                        private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BSCalcMenu));
@@ -74,10 +63,7 @@
             this.flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).BeginInit();
             this.SuspendLayout();
-            // 
-            // tableLayoutPanelMain
-            // 
-            this.tableLayoutPanelMain.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
+                                                this.tableLayoutPanelMain.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.tableLayoutPanelMain.ColumnCount = 3;
             this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.57915F));
             this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.42085F));
@@ -103,10 +89,7 @@
             this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
             this.tableLayoutPanelMain.Size = new System.Drawing.Size(855, 446);
             this.tableLayoutPanelMain.TabIndex = 0;
-            // 
-            // btnUnitCalculator
-            // 
-            this.btnUnitCalculator.ImageKey = "CM.png";
+                                                this.btnUnitCalculator.ImageKey = "CM.png";
             this.btnUnitCalculator.ImageList = this.imageList;
             this.btnUnitCalculator.Location = new System.Drawing.Point(4, 418);
             this.btnUnitCalculator.Name = "btnUnitCalculator";
@@ -114,10 +97,7 @@
             this.btnUnitCalculator.TabIndex = 10;
             this.btnUnitCalculator.UseVisualStyleBackColor = true;
             this.btnUnitCalculator.Click += new System.EventHandler(this.btnUnitCalculator_Click);
-            // 
-            // imageList
-            // 
-            this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
+                                                this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
             this.imageList.TransparentColor = System.Drawing.Color.Transparent;
             this.imageList.Images.SetKeyName(0, "CM.png");
             this.imageList.Images.SetKeyName(1, "Command.png");
@@ -136,10 +116,7 @@
             this.imageList.Images.SetKeyName(14, "TIMClasses.png");
             this.imageList.Images.SetKeyName(15, "Transmute.png");
             this.imageList.Images.SetKeyName(16, "ViewMap.png");
-            // 
-            // tableLayoutPanelLocalStrength
-            // 
-            this.tableLayoutPanelLocalStrength.Anchor = System.Windows.Forms.AnchorStyles.Left;
+                                                this.tableLayoutPanelLocalStrength.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.tableLayoutPanelLocalStrength.ColumnCount = 1;
             this.tableLayoutPanelLocalStrength.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanelLocalStrength.Controls.Add(this.btnPunchCalc, 0, 1);
@@ -165,10 +142,7 @@
             this.tableLayoutPanelLocalStrength.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 42F));
             this.tableLayoutPanelLocalStrength.Size = new System.Drawing.Size(257, 332);
             this.tableLayoutPanelLocalStrength.TabIndex = 7;
-            // 
-            // btnLocalCompressionCalc
-            // 
-            this.btnLocalCompressionCalc.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+                                                this.btnLocalCompressionCalc.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnLocalCompressionCalc.Location = new System.Drawing.Point(3, 3);
             this.btnLocalCompressionCalc.Name = "btnLocalCompressionCalc";
             this.btnLocalCompressionCalc.Size = new System.Drawing.Size(251, 37);
@@ -176,10 +150,7 @@
             this.btnLocalCompressionCalc.Text = "Местное сжатие";
             this.btnLocalCompressionCalc.UseVisualStyleBackColor = true;
             this.btnLocalCompressionCalc.Click += new System.EventHandler(this.btnLocalCompressionCalc_Click);
-            // 
-            // btnPunchCalc
-            // 
-            this.btnPunchCalc.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+                                                this.btnPunchCalc.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnPunchCalc.Location = new System.Drawing.Point(3, 46);
             this.btnPunchCalc.Name = "btnPunchCalc";
             this.btnPunchCalc.Size = new System.Drawing.Size(251, 36);
@@ -187,30 +158,21 @@
             this.btnPunchCalc.Text = "Продавливание";
             this.btnPunchCalc.UseVisualStyleBackColor = true;
             this.btnPunchCalc.Click += new System.EventHandler(this.btnPunchCalc_Click);
-            // 
-            // label3
-            // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+                                                this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(3, 88);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(48, 13);
             this.label3.TabIndex = 2;
             this.label3.Text = "Подбор:";
-            // 
-            // labelLab
-            // 
-            this.labelLab.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+                                                this.labelLab.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.labelLab.AutoSize = true;
             this.labelLab.Location = new System.Drawing.Point(3, 191);
             this.labelLab.Name = "labelLab";
             this.labelLab.Size = new System.Drawing.Size(77, 13);
             this.labelLab.TabIndex = 3;
             this.labelLab.Text = "Лаборатория:";
-            // 
-            // btnRFbtFiber
-            // 
-            this.btnRFbtFiber.Dock = System.Windows.Forms.DockStyle.Fill;
+                                                this.btnRFbtFiber.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnRFbtFiber.Location = new System.Drawing.Point(3, 104);
             this.btnRFbtFiber.Name = "btnRFbtFiber";
             this.btnRFbtFiber.Size = new System.Drawing.Size(251, 37);
@@ -218,10 +180,7 @@
             this.btnRFbtFiber.Text = "Rfbt3; Rfb с учетом фибры";
             this.btnRFbtFiber.UseVisualStyleBackColor = true;
             this.btnRFbtFiber.Click += new System.EventHandler(this.btnRFbtFiber_Click);
-            // 
-            // btnGraphAF
-            // 
-            this.btnGraphAF.Dock = System.Windows.Forms.DockStyle.Fill;
+                                                this.btnGraphAF.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnGraphAF.Location = new System.Drawing.Point(3, 207);
             this.btnGraphAF.Name = "btnGraphAF";
             this.btnGraphAF.Size = new System.Drawing.Size(251, 37);
@@ -229,10 +188,7 @@
             this.btnGraphAF.Text = "График \"нагрузка - перемещение\" aF";
             this.btnGraphAF.UseVisualStyleBackColor = true;
             this.btnGraphAF.Click += new System.EventHandler(this.btnGraphAF_Click);
-            // 
-            // btnRFiberTensileStrength
-            // 
-            this.btnRFiberTensileStrength.Dock = System.Windows.Forms.DockStyle.Fill;
+                                                this.btnRFiberTensileStrength.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnRFiberTensileStrength.Location = new System.Drawing.Point(3, 250);
             this.btnRFiberTensileStrength.Name = "btnRFiberTensileStrength";
             this.btnRFiberTensileStrength.Size = new System.Drawing.Size(251, 35);
@@ -240,10 +196,7 @@
             this.btnRFiberTensileStrength.Text = "Определение прочности на растяжение";
             this.btnRFiberTensileStrength.UseVisualStyleBackColor = true;
             this.btnRFiberTensileStrength.Click += new System.EventHandler(this.btnRFiberTensileStrength_Click);
-            // 
-            // btnBeamDeflection
-            // 
-            this.btnBeamDeflection.Dock = System.Windows.Forms.DockStyle.Fill;
+                                                this.btnBeamDeflection.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnBeamDeflection.Location = new System.Drawing.Point(3, 291);
             this.btnBeamDeflection.Name = "btnBeamDeflection";
             this.btnBeamDeflection.Size = new System.Drawing.Size(251, 38);
@@ -251,10 +204,7 @@
             this.btnBeamDeflection.Text = "Зависимость aF- f прогибов";
             this.btnBeamDeflection.UseVisualStyleBackColor = true;
             this.btnBeamDeflection.Click += new System.EventHandler(this.btnBeamDeflection_Click);
-            // 
-            // btnEfib
-            // 
-            this.btnEfib.Dock = System.Windows.Forms.DockStyle.Fill;
+                                                this.btnEfib.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnEfib.Location = new System.Drawing.Point(3, 147);
             this.btnEfib.Name = "btnEfib";
             this.btnEfib.Size = new System.Drawing.Size(251, 37);
@@ -262,50 +212,35 @@
             this.btnEfib.Text = "Модуль упругости";
             this.btnEfib.UseVisualStyleBackColor = true;
             this.btnEfib.Click += new System.EventHandler(this.btnEfib_Click);
-            // 
-            // lblInfo
-            // 
-            this.lblInfo.Anchor = System.Windows.Forms.AnchorStyles.Left;
+                                                this.lblInfo.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblInfo.AutoSize = true;
             this.lblInfo.Location = new System.Drawing.Point(4, 6);
             this.lblInfo.Name = "lblInfo";
             this.lblInfo.Size = new System.Drawing.Size(76, 13);
             this.lblInfo.TabIndex = 0;
             this.lblInfo.Text = "Информация:";
-            // 
-            // lblExpertise
-            // 
-            this.lblExpertise.Anchor = System.Windows.Forms.AnchorStyles.Left;
+                                                this.lblExpertise.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblExpertise.AutoSize = true;
             this.lblExpertise.Location = new System.Drawing.Point(265, 6);
             this.lblExpertise.Name = "lblExpertise";
             this.lblExpertise.Size = new System.Drawing.Size(70, 13);
             this.lblExpertise.TabIndex = 1;
             this.lblExpertise.Text = "Экспертиза:";
-            // 
-            // lblLocalStrength
-            // 
-            this.lblLocalStrength.Anchor = System.Windows.Forms.AnchorStyles.Left;
+                                                this.lblLocalStrength.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblLocalStrength.AutoSize = true;
             this.lblLocalStrength.Location = new System.Drawing.Point(520, 6);
             this.lblLocalStrength.Name = "lblLocalStrength";
             this.lblLocalStrength.Size = new System.Drawing.Size(109, 13);
             this.lblLocalStrength.TabIndex = 2;
             this.lblLocalStrength.Text = "Местная прочность:";
-            // 
-            // btnUnits
-            // 
-            this.btnUnits.Location = new System.Drawing.Point(265, 387);
+                                                this.btnUnits.Location = new System.Drawing.Point(265, 387);
             this.btnUnits.Name = "btnUnits";
             this.btnUnits.Size = new System.Drawing.Size(109, 24);
             this.btnUnits.TabIndex = 4;
             this.btnUnits.Text = "Ед изм";
             this.btnUnits.UseVisualStyleBackColor = true;
             this.btnUnits.Click += new System.EventHandler(this.btnUnits_Click);
-            // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.ColumnCount = 1;
+                                                this.tableLayoutPanel2.ColumnCount = 1;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.Controls.Add(this.btnFiberClass, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.btnRebarClass, 0, 1);
@@ -324,10 +259,7 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(254, 332);
             this.tableLayoutPanel2.TabIndex = 5;
-            // 
-            // btnFiberClass
-            // 
-            this.btnFiberClass.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+                                                this.btnFiberClass.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnFiberClass.Location = new System.Drawing.Point(3, 3);
             this.btnFiberClass.Name = "btnFiberClass";
             this.btnFiberClass.Size = new System.Drawing.Size(248, 49);
@@ -335,10 +267,7 @@
             this.btnFiberClass.Text = "Класс фибробетона";
             this.btnFiberClass.UseVisualStyleBackColor = true;
             this.btnFiberClass.Click += new System.EventHandler(this.btnFiberClass_Click);
-            // 
-            // btnRebarClass
-            // 
-            this.btnRebarClass.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+                                                this.btnRebarClass.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnRebarClass.Location = new System.Drawing.Point(3, 58);
             this.btnRebarClass.Name = "btnRebarClass";
             this.btnRebarClass.Size = new System.Drawing.Size(248, 49);
@@ -346,10 +275,7 @@
             this.btnRebarClass.Text = "Класс арматуры";
             this.btnRebarClass.UseVisualStyleBackColor = true;
             this.btnRebarClass.Click += new System.EventHandler(this.btnRebarClass_Click);
-            // 
-            // btnDeflectionsUlt
-            // 
-            this.btnDeflectionsUlt.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+                                                this.btnDeflectionsUlt.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnDeflectionsUlt.Location = new System.Drawing.Point(3, 223);
             this.btnDeflectionsUlt.Name = "btnDeflectionsUlt";
             this.btnDeflectionsUlt.Size = new System.Drawing.Size(248, 49);
@@ -357,10 +283,7 @@
             this.btnDeflectionsUlt.Text = "Предельные прогибы";
             this.btnDeflectionsUlt.UseVisualStyleBackColor = true;
             this.btnDeflectionsUlt.Click += new System.EventHandler(this.btnDeflectionsUlt_Click);
-            // 
-            // btnFiberClassSetup
-            // 
-            this.btnFiberClassSetup.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+                                                this.btnFiberClassSetup.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnFiberClassSetup.Location = new System.Drawing.Point(3, 278);
             this.btnFiberClassSetup.Name = "btnFiberClassSetup";
             this.btnFiberClassSetup.Size = new System.Drawing.Size(248, 51);
@@ -368,10 +291,7 @@
             this.btnFiberClassSetup.Text = "Класс фибры";
             this.btnFiberClassSetup.UseVisualStyleBackColor = true;
             this.btnFiberClassSetup.Click += new System.EventHandler(this.btnFiberClassSetup_Click);
-            // 
-            // btnBetonClass
-            // 
-            this.btnBetonClass.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+                                                this.btnBetonClass.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnBetonClass.Location = new System.Drawing.Point(3, 168);
             this.btnBetonClass.Name = "btnBetonClass";
             this.btnBetonClass.Size = new System.Drawing.Size(248, 49);
@@ -379,10 +299,7 @@
             this.btnBetonClass.Text = "Класс бетона-матрицы";
             this.btnBetonClass.UseVisualStyleBackColor = true;
             this.btnBetonClass.Click += new System.EventHandler(this.btnBetonClass_Click);
-            // 
-            // btnCoefY
-            // 
-            this.btnCoefY.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+                                                this.btnCoefY.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnCoefY.Location = new System.Drawing.Point(3, 113);
             this.btnCoefY.Name = "btnCoefY";
             this.btnCoefY.Size = new System.Drawing.Size(248, 49);
@@ -390,10 +307,7 @@
             this.btnCoefY.Text = "Коэффициенты условий работы";
             this.btnCoefY.UseVisualStyleBackColor = true;
             this.btnCoefY.Click += new System.EventHandler(this.btnCoefY_Click);
-            // 
-            // tableLayoutPanel3
-            // 
-            this.tableLayoutPanel3.ColumnCount = 1;
+                                                this.tableLayoutPanel3.ColumnCount = 1;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.Controls.Add(this.btnCalcOfLenRebar, 0, 5);
             this.tableLayoutPanel3.Controls.Add(this.btnStaticEquilibrium, 0, 1);
@@ -411,10 +325,7 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66833F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(248, 332);
             this.tableLayoutPanel3.TabIndex = 6;
-            // 
-            // btnCalcOfLenRebar
-            // 
-            this.btnCalcOfLenRebar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+                                                this.btnCalcOfLenRebar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnCalcOfLenRebar.Location = new System.Drawing.Point(3, 276);
             this.btnCalcOfLenRebar.Name = "btnCalcOfLenRebar";
             this.btnCalcOfLenRebar.Size = new System.Drawing.Size(242, 52);
@@ -422,10 +333,7 @@
             this.btnCalcOfLenRebar.Text = "Анкеровка арматуры";
             this.btnCalcOfLenRebar.UseVisualStyleBackColor = true;
             this.btnCalcOfLenRebar.Click += new System.EventHandler(this.btnCalcOfLenRebar_Click);
-            // 
-            // btnStaticEquilibrium
-            // 
-            this.btnStaticEquilibrium.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+                                                this.btnStaticEquilibrium.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnStaticEquilibrium.Location = new System.Drawing.Point(3, 58);
             this.btnStaticEquilibrium.Name = "btnStaticEquilibrium";
             this.btnStaticEquilibrium.Size = new System.Drawing.Size(242, 48);
@@ -433,10 +341,7 @@
             this.btnStaticEquilibrium.Text = "Статическое равновесие";
             this.btnStaticEquilibrium.UseVisualStyleBackColor = true;
             this.btnStaticEquilibrium.Click += new System.EventHandler(this.btnStaticEquilibrium_Click);
-            // 
-            // btnNonlinearDeform
-            // 
-            this.btnNonlinearDeform.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+                                                this.btnNonlinearDeform.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnNonlinearDeform.Location = new System.Drawing.Point(3, 113);
             this.btnNonlinearDeform.Name = "btnNonlinearDeform";
             this.btnNonlinearDeform.Size = new System.Drawing.Size(242, 49);
@@ -444,10 +349,7 @@
             this.btnNonlinearDeform.Text = "Нелинейная деформационная модель";
             this.btnNonlinearDeform.UseVisualStyleBackColor = true;
             this.btnNonlinearDeform.Click += new System.EventHandler(this.btnNonlinearDeform_Click);
-            // 
-            // btnBeamCalc
-            // 
-            this.btnBeamCalc.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+                                                this.btnBeamCalc.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnBeamCalc.Location = new System.Drawing.Point(3, 168);
             this.btnBeamCalc.Name = "btnBeamCalc";
             this.btnBeamCalc.Size = new System.Drawing.Size(242, 49);
@@ -455,20 +357,14 @@
             this.btnBeamCalc.Text = "Экспертиза балки";
             this.btnBeamCalc.UseVisualStyleBackColor = true;
             this.btnBeamCalc.Click += new System.EventHandler(this.btnBeamCalc_Click);
-            // 
-            // labelSectionStrength
-            // 
-            this.labelSectionStrength.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+                                                this.labelSectionStrength.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.labelSectionStrength.AutoSize = true;
             this.labelSectionStrength.Location = new System.Drawing.Point(3, 14);
             this.labelSectionStrength.Name = "labelSectionStrength";
             this.labelSectionStrength.Size = new System.Drawing.Size(242, 26);
             this.labelSectionStrength.TabIndex = 5;
             this.labelSectionStrength.Text = "Сопротивление сталефибробетонных сечений:";
-            // 
-            // btnClose
-            // 
-            this.btnClose.Dock = System.Windows.Forms.DockStyle.Left;
+                                                this.btnClose.Dock = System.Windows.Forms.DockStyle.Left;
             this.btnClose.Location = new System.Drawing.Point(520, 387);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(120, 24);
@@ -476,20 +372,14 @@
             this.btnClose.Text = "Закрыть";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-            // 
-            // labelVer
-            // 
-            this.labelVer.Anchor = System.Windows.Forms.AnchorStyles.Left;
+                                                this.labelVer.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelVer.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelVer.Location = new System.Drawing.Point(4, 392);
             this.labelVer.Name = "labelVer";
             this.labelVer.Size = new System.Drawing.Size(65, 13);
             this.labelVer.TabIndex = 2;
             this.labelVer.Text = " Версия 1.0";
-            // 
-            // btnInfo
-            // 
-            this.btnInfo.ImageKey = "Info.png";
+                                                this.btnInfo.ImageKey = "Info.png";
             this.btnInfo.ImageList = this.imageList;
             this.btnInfo.Location = new System.Drawing.Point(265, 418);
             this.btnInfo.Name = "btnInfo";
@@ -497,10 +387,7 @@
             this.btnInfo.TabIndex = 8;
             this.btnInfo.UseVisualStyleBackColor = true;
             this.btnInfo.Click += new System.EventHandler(this.btnInfo_Click);
-            // 
-            // btnSectionDraw
-            // 
-            this.btnSectionDraw.ImageKey = "Icons.png";
+                                                this.btnSectionDraw.ImageKey = "Icons.png";
             this.btnSectionDraw.ImageList = this.imageList;
             this.btnSectionDraw.Location = new System.Drawing.Point(520, 418);
             this.btnSectionDraw.Name = "btnSectionDraw";
@@ -509,28 +396,19 @@
             this.btnSectionDraw.UseVisualStyleBackColor = true;
             this.btnSectionDraw.Visible = false;
             this.btnSectionDraw.Click += new System.EventHandler(this.btnSectionDraw_Click);
-            // 
-            // flowLayoutPanel1
-            // 
-            this.flowLayoutPanel1.Controls.Add(this.pictureBoxLogo);
+                                                this.flowLayoutPanel1.Controls.Add(this.pictureBoxLogo);
             this.flowLayoutPanel1.Controls.Add(this.labelInfo);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(2, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(858, 78);
             this.flowLayoutPanel1.TabIndex = 1;
-            // 
-            // pictureBoxLogo
-            // 
-            this.pictureBoxLogo.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxLogo.Image")));
+                                                this.pictureBoxLogo.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxLogo.Image")));
             this.pictureBoxLogo.Location = new System.Drawing.Point(3, 3);
             this.pictureBoxLogo.Name = "pictureBoxLogo";
             this.pictureBoxLogo.Size = new System.Drawing.Size(365, 69);
             this.pictureBoxLogo.TabIndex = 0;
             this.pictureBoxLogo.TabStop = false;
-            // 
-            // labelInfo
-            // 
-            this.labelInfo.Anchor = System.Windows.Forms.AnchorStyles.Left;
+                                                this.labelInfo.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelInfo.AutoSize = true;
             this.labelInfo.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.labelInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -539,10 +417,7 @@
             this.labelInfo.Size = new System.Drawing.Size(438, 18);
             this.labelInfo.TabIndex = 1;
             this.labelInfo.Text = "Расчет элементов сталефибробетонных конструкций.";
-            // 
-            // BSCalcMenu
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+                                                this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(865, 535);

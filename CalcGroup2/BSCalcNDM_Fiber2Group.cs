@@ -2,17 +2,9 @@
 
 namespace BSFiberConcrete.CalcGroup2
 {
-    /// <summary>
-    /// Расчет по 2 группе предельных состояний
-    /// </summary>
-    public partial class BSCalcNDM
+                public partial class BSCalcNDM
     {
-        /// <summary>
-        /// Диаграмма деформирования арматуры (двухлинейная) 
-        /// </summary>
-        /// <param name="_e">деформация</param>
-        /// <returns>Напряжение</returns>
-        private double Diagr_S(double _e)
+                                                private double Diagr_S(double _e)
         {
             double s = 0;
             esc0 = Rsc / Es0;            
@@ -54,12 +46,7 @@ namespace BSFiberConcrete.CalcGroup2
             return s;
         }
 
-        /// <summary>
-        /// Диаграмма деформирования обычного бетона (трехлинейная) 
-        /// </summary>
-        /// <param name="_e">деформация</param>
-        /// <returns>напряжение</returns>
-        private double Diagr_Beton(double _e)
+                                                private double Diagr_Beton(double _e)
         {
             double s = 0;
             double sc1 = 0.6 * Rbc;
@@ -72,8 +59,7 @@ namespace BSFiberConcrete.CalcGroup2
 
             bool rip = false;
 
-            //DODO ?
-            if (_e > efbt2)
+                        if (_e > efbt2)
             {
                 if (rip)
                     s = 0;
@@ -111,14 +97,7 @@ namespace BSFiberConcrete.CalcGroup2
             return s;
         }
 
-        /// <summary>
-        /// Диаграмма деформирования фибробетона (трехлинейная) 
-        /// СП360 5.2.9
-        /// </summary>
-        /// <param name="_e">деформация</param>
-        /// <param name="_beton">использовать диаграмму обычного бетона</param>
-        /// <returns>напряжение</returns>
-        private double Diagr_FB(double _e)
+                                                                private double Diagr_FB(double _e)
         {
             double s = 0;
 
@@ -132,13 +111,11 @@ namespace BSFiberConcrete.CalcGroup2
             double sc1 = 0.6 * Rbc;
             double ebc1 = sc1 / Eb0;
 
-            // Растяжение - по СП 360
-            efbt0 = Rfbt / Ebt;
+                        efbt0 = Rfbt / Ebt;
             efbt1 = efbt0 + 0.0001;            
             efbt3 = 0.02 - 0.0125 * (Rfbt3 / Rfbt2 - 0.5);
 
-            // сжатие: ПО СП 63 6.1.20 (как для обычного бетона)           
-            if (_e < -ebc2)
+                        if (_e < -ebc2)
             {
                 if (rip)
                     s = 0;
@@ -157,8 +134,7 @@ namespace BSFiberConcrete.CalcGroup2
             {
                 s = _e * Eb0;
             }
-            // растяжение
-            else if (0 <= _e && _e <= efbt0)
+                        else if (0 <= _e && _e <= efbt0)
             {
                 s = _e * Ebt;
             }
@@ -185,11 +161,7 @@ namespace BSFiberConcrete.CalcGroup2
             return s;
         }
 
-        /// <summary>
-        /// коэффициент для напряжения арматуры для элементов с трещинами в растянутой зоне
-        /// </summary>
-        /// <returns></returns>
-        private double Psi_s(double _e_s)
+                                        private double Psi_s(double _e_s)
         {
             if (_e_s == 0 || GroupLSD == BSFiberLib.CG1) return 1;
 
@@ -198,8 +170,7 @@ namespace BSFiberConcrete.CalcGroup2
         }
 
 
-        // секущий модуль
-        private double EV_Sec(double _sigma, double _e, double _E0)
+                private double EV_Sec(double _sigma, double _e, double _E0)
         {
             double E_Sec;
 
@@ -221,12 +192,7 @@ namespace BSFiberConcrete.CalcGroup2
             return E_Sec;
         }
 
-        /// <summary>
-        /// 6.2.16 значение базового расстояния между трещинами
-        /// </summary>
-        /// <param name="_ds_nom">номинальный диаметр арматуры</param>
-        /// <returns>Расстояние между трещинами</returns>
-        private double L_s(double _ds_nom)
+                                                private double L_s(double _ds_nom)
         {
             if (NdmCrc.mu_fv == 0) return 0;
             
@@ -238,8 +204,7 @@ namespace BSFiberConcrete.CalcGroup2
             return res;
         }
 
-        // СП360 6.2.14
-        private double A_crc(double _sig_s, double _ls)
+                private double A_crc(double _sig_s, double _ls)
         {
             if (_sig_s == 0 || _ls == 0) 
                 return 0; 

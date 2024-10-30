@@ -13,11 +13,9 @@ namespace BSFiberConcrete.LocalStrength
         protected List<LocalStress> m_DS;
         public List<LocalStress> GetDS => m_DS;
 
-        // исходные значения
-        private  Dictionary<string, double> Ds;
+                private  Dictionary<string, double> Ds;
 
-        // рассчитанные значения
-        public Dictionary<string, double> Dc;
+                public Dictionary<string, double> Dc;
 
         public int Scheme { set; get; }
         public bool UseReinforcement { set; get; }
@@ -78,11 +76,7 @@ namespace BSFiberConcrete.LocalStrength
             return true;
         }
 
-        /// <summary>
-        /// Обновить введенные в таблицу данные
-        /// </summary>
-        /// <param name="_Ds"></param>
-        public virtual void UpdateInputData(Dictionary<string, double> _Ds)
+                                        public virtual void UpdateInputData(Dictionary<string, double> _Ds)
         {
 
         }

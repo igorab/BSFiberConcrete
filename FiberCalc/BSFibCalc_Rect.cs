@@ -8,8 +8,7 @@ namespace BSFiberConcrete
     [DisplayName("Расчет прочности изгибаемого элемента прямоугольного сечения")]
     public class BSFibCalc_Rect : BSFiberCalculation
     {
-        //размеры, см
-        [DisplayName("Высота сечения, [см]")]
+                [DisplayName("Высота сечения, [см]")]
         public double h { get; private set; }
         [DisplayName("Ширина сечения, [см]")]
         public double b { get; private set; }
@@ -24,15 +23,9 @@ namespace BSFiberConcrete
         [DisplayName("Коэффициент использования по усилию")]
         public double UtilRate { get; protected set; }
 
-        /// <summary>
-        /// Коэффициенты надежности, применяемые в расчете
-        /// </summary>
-        public override Dictionary<string, double> Coeffs => new Dictionary<string, double>() { { "Yft", Yft }, { "Yb1", Yb1 }, { "Yb5", Yb5 } };
+                                public override Dictionary<string, double> Coeffs => new Dictionary<string, double>() { { "Yft", Yft }, { "Yb1", Yb1 }, { "Yb5", Yb5 } };
 
-        /// <summary>
-        /// Геометрия сечения
-        /// </summary>        
-        public override Dictionary<string, double> GeomParams()
+                                public override Dictionary<string, double> GeomParams()
         {
             Dictionary<string, double> geom = base.GeomParams();
             geom.Add(DN(typeof(BSFibCalc_Rect), "b"), b);
@@ -40,10 +33,7 @@ namespace BSFiberConcrete
             return geom;
         }
 
-        /// <summary>
-        /// результаты расчета
-        /// </summary>        
-        public override Dictionary<string, double> Results()
+                                public override Dictionary<string, double> Results()
         {
             return new Dictionary<string, double>() {
                     { DN(typeof(BSFibCalc_Rect), "Wpl"), Wpl},
@@ -68,8 +58,7 @@ namespace BSFiberConcrete
         {
             base.SetParams(_t);
 
-            // need refactoring
-            ( Yft, Yb, Yb1, Yb2, Yb3, Yb5) = (_t[2], _t[3], _t[4], _t[5], _t[6], _t[7]);
+                        ( Yft, Yb, Yb1, Yb2, Yb3, Yb5) = (_t[2], _t[3], _t[4], _t[5], _t[6], _t[7]);
         }
 
         public override void SetSize(double[] _t)
@@ -104,13 +93,9 @@ namespace BSFiberConcrete
             return ret;
         }
 
-        /// <summary>
-        /// Коэффициент использования
-        /// </summary>
-        protected void UtilRateCalc()
+                                protected void UtilRateCalc()
         {
-            //Коэффициент использования
-            UtilRate = (Mult != 0) ? m_Efforts["My"] / Mult : 0;
+                        UtilRate = (Mult != 0) ? m_Efforts["My"] / Mult : 0;
         }
 
         public override bool Calculate()
@@ -118,14 +103,11 @@ namespace BSFiberConcrete
             if (!Validate())            
                 return false;
                         
-            // Изменение 1 к СП 360
-            cGamma = Gamma(MatFiber.B);
+                        cGamma = Gamma(MatFiber.B);
 
-            //Упругопластический момент сопротивления  Ф.(6.3)
-            Wpl = BSBeam_Rect.Wx(b, h) * cGamma;
+                        Wpl = BSBeam_Rect.Wx(b, h) * cGamma;
 
-            //Значение предельного момента сечения для изгибаемых сталефибробетонных элементов определяют по формуле (6.3) (кг*см)
-            Mult = Rfbt * Wpl;
+                        Mult = Rfbt * Wpl;
             
             UtilRateCalc();
 

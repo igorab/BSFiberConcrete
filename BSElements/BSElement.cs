@@ -1,47 +1,25 @@
 ﻿namespace BSFiberConcrete
 {
-    /// <summary>
-    /// Элемент сечения балки
-    /// </summary>
-    public class BSElement
+                public class BSElement
     {
-        // Номер
-        public int Num;
+                public int Num;
 
-        /// <summary>
-        /// Координата X центра тяжести
-        /// </summary>
-        public double Z_X { get; }
+                                public double Z_X { get; }
 
-        /// <summary>
-        /// Координата Y ц.т.
-        /// </summary>
-        public double Z_Y { get; }
+                                public double Z_Y { get; }
 
-        /// <summary>
-        /// Площадь элемента
-        /// </summary>
-        public double Area { get; set; }
+                                public double Area { get; set; }
 
-        /// <summary>
-        /// Границы
-        /// </summary>
-        public double A { get; set; }
+                                public double A { get; set; }
         public double B { get; set; }
 
-        /// <summary>
-        /// Border Area
-        /// </summary>
-        public double Ab { get => AreaAB(); }
+                                public double Ab { get => AreaAB(); }
 
-        // напряжение на уровне Ц.Т.
-        public double Sigma { get; set; }
+                public double Sigma { get; set; }
 
-        // модуль упругости
-        public double E { get; set; }
+                public double E { get; set; }
 
-        // относительная деформация
-        public double Epsilon { get; set; }
+                public double Epsilon { get; set; }
 
         public double Nu { get => calcNu(); }
 

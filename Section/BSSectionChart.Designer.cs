@@ -2,16 +2,9 @@
 {
     partial class BSSectionChart
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
+                                private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
+                                        protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
             {
@@ -22,11 +15,7 @@
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
+                                        private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
@@ -87,10 +76,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pointBS)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RodBS)).BeginInit();
             this.SuspendLayout();
-            // 
-            // tableLayoutPanel
-            // 
-            this.tableLayoutPanel.ColumnCount = 4;
+                                                this.tableLayoutPanel.ColumnCount = 4;
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65F));
@@ -113,10 +99,7 @@
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 104F));
             this.tableLayoutPanel.Size = new System.Drawing.Size(1104, 717);
             this.tableLayoutPanel.TabIndex = 0;
-            // 
-            // tableLayoutPanelSection
-            // 
-            this.tableLayoutPanelSection.ColumnCount = 2;
+                                                this.tableLayoutPanelSection.ColumnCount = 2;
             this.tableLayoutPanelSection.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanelSection.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanelSection.Controls.Add(this.btnDel, 1, 0);
@@ -128,10 +111,7 @@
             this.tableLayoutPanelSection.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanelSection.Size = new System.Drawing.Size(104, 99);
             this.tableLayoutPanelSection.TabIndex = 5;
-            // 
-            // btnDel
-            // 
-            this.btnDel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+                                                this.btnDel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnDel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnDel.Location = new System.Drawing.Point(55, 3);
@@ -142,10 +122,7 @@
             this.btnDel.UseVisualStyleBackColor = true;
             this.btnDel.Visible = false;
             this.btnDel.Click += new System.EventHandler(this.btnDel_Click);
-            // 
-            // btnAdd
-            // 
-            this.btnAdd.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+                                                this.btnAdd.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnAdd.Location = new System.Drawing.Point(3, 3);
@@ -156,10 +133,7 @@
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Visible = false;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
-            // 
-            // chart
-            // 
-            this.chart.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+                                                this.chart.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
             this.chart.BorderlineWidth = 3;
             chartArea1.AxisX.Title = "X, см";
             chartArea1.AxisY.Title = "Y, см";
@@ -196,10 +170,7 @@
             title1.Name = "TitleX";
             title1.Text = "Геометрия сечения и распололжение арматуры";
             this.chart.Titles.Add(title1);
-            // 
-            // dataGrid
-            // 
-            this.dataGrid.AllowUserToAddRows = false;
+                                                this.dataGrid.AllowUserToAddRows = false;
             this.dataGrid.AllowUserToDeleteRows = false;
             this.dataGrid.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -215,20 +186,14 @@
             this.dataGrid.RowHeadersVisible = false;
             this.dataGrid.Size = new System.Drawing.Size(104, 577);
             this.dataGrid.TabIndex = 2;
-            // 
-            // labelSection
-            // 
-            this.labelSection.Anchor = System.Windows.Forms.AnchorStyles.Left;
+                                                this.labelSection.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelSection.AutoSize = true;
             this.labelSection.Location = new System.Drawing.Point(3, 8);
             this.labelSection.Name = "labelSection";
             this.labelSection.Size = new System.Drawing.Size(49, 13);
             this.labelSection.TabIndex = 6;
             this.labelSection.Text = "Сечение";
-            // 
-            // labelRods
-            // 
-            this.labelRods.Anchor = System.Windows.Forms.AnchorStyles.Left;
+                                                this.labelRods.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelRods.AutoSize = true;
             this.labelRods.ForeColor = System.Drawing.Color.Blue;
             this.labelRods.Location = new System.Drawing.Point(113, 8);
@@ -238,10 +203,7 @@
             this.labelRods.Text = "Армирование";
             this.labelRods.Click += new System.EventHandler(this.labelRods_Click);
             this.labelRods.MouseMove += new System.Windows.Forms.MouseEventHandler(this.labelRods_MouseMove);
-            // 
-            // bSRodDataGridView
-            // 
-            this.bSRodDataGridView.AllowUserToAddRows = false;
+                                                this.bSRodDataGridView.AllowUserToAddRows = false;
             this.bSRodDataGridView.AllowUserToDeleteRows = false;
             this.bSRodDataGridView.AllowUserToResizeRows = false;
             this.bSRodDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -262,10 +224,7 @@
             this.bSRodDataGridView.TabIndex = 7;
             this.bSRodDataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.bSRodDataGridView_CellValueChanged);
             this.bSRodDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.bSRodDataGridView_CellValueChanged);
-            // 
-            // Dnom
-            // 
-            this.Dnom.DataPropertyName = "Dnom";
+                                                this.Dnom.DataPropertyName = "Dnom";
             this.Dnom.HeaderText = "D, ном, мм";
             this.Dnom.Items.AddRange(new object[] {
             "0",
@@ -288,10 +247,7 @@
             this.Dnom.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.Dnom.ToolTipText = "Номинальный диаметр";
             this.Dnom.Width = 50;
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 6;
+                                                this.tableLayoutPanel1.ColumnCount = 6;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40.44944F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 59.55056F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 42F));
@@ -310,20 +266,14 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(544, 23);
             this.tableLayoutPanel1.TabIndex = 8;
-            // 
-            // labelArea
-            // 
-            this.labelArea.Anchor = System.Windows.Forms.AnchorStyles.Right;
+                                                this.labelArea.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelArea.AutoSize = true;
             this.labelArea.Location = new System.Drawing.Point(15, 5);
             this.labelArea.Name = "labelArea";
             this.labelArea.Size = new System.Drawing.Size(54, 13);
             this.labelArea.TabIndex = 0;
             this.labelArea.Text = "Площадь";
-            // 
-            // numArea
-            // 
-            this.numArea.AccessibleName = "NumArea";
+                                                this.numArea.AccessibleName = "NumArea";
             this.numArea.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numArea.DecimalPlaces = 4;
             this.numArea.Location = new System.Drawing.Point(75, 3);
@@ -335,40 +285,28 @@
             this.numArea.Name = "numArea";
             this.numArea.Size = new System.Drawing.Size(100, 20);
             this.numArea.TabIndex = 1;
-            // 
-            // labelAreaUnits
-            // 
-            this.labelAreaUnits.Anchor = System.Windows.Forms.AnchorStyles.Left;
+                                                this.labelAreaUnits.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelAreaUnits.AutoSize = true;
             this.labelAreaUnits.Location = new System.Drawing.Point(181, 5);
             this.labelAreaUnits.Name = "labelAreaUnits";
             this.labelAreaUnits.Size = new System.Drawing.Size(27, 13);
             this.labelAreaUnits.TabIndex = 2;
             this.labelAreaUnits.Text = "см2";
-            // 
-            // label1
-            // 
-            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Right;
+                                                this.label1.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(229, 5);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(107, 13);
             this.label1.TabIndex = 3;
             this.label1.Text = "Площадь арматуры";
-            // 
-            // labelAreaRebarUnits
-            // 
-            this.labelAreaRebarUnits.Anchor = System.Windows.Forms.AnchorStyles.Left;
+                                                this.labelAreaRebarUnits.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelAreaRebarUnits.AutoSize = true;
             this.labelAreaRebarUnits.Location = new System.Drawing.Point(460, 5);
             this.labelAreaRebarUnits.Name = "labelAreaRebarUnits";
             this.labelAreaRebarUnits.Size = new System.Drawing.Size(27, 13);
             this.labelAreaRebarUnits.TabIndex = 4;
             this.labelAreaRebarUnits.Text = "см2";
-            // 
-            // numAreaRebar
-            // 
-            this.numAreaRebar.AccessibleName = "NumArea";
+                                                this.numAreaRebar.AccessibleName = "NumArea";
             this.numAreaRebar.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numAreaRebar.DecimalPlaces = 4;
             this.numAreaRebar.Location = new System.Drawing.Point(342, 3);
@@ -380,10 +318,7 @@
             this.numAreaRebar.Name = "numAreaRebar";
             this.numAreaRebar.Size = new System.Drawing.Size(109, 20);
             this.numAreaRebar.TabIndex = 5;
-            // 
-            // tableLayoutButtonRods
-            // 
-            this.tableLayoutButtonRods.ColumnCount = 4;
+                                                this.tableLayoutButtonRods.ColumnCount = 4;
             this.tableLayoutButtonRods.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutButtonRods.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutButtonRods.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
@@ -399,10 +334,7 @@
             this.tableLayoutButtonRods.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutButtonRods.Size = new System.Drawing.Size(214, 99);
             this.tableLayoutButtonRods.TabIndex = 9;
-            // 
-            // btnDelRod
-            // 
-            this.btnDelRod.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+                                                this.btnDelRod.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnDelRod.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnDelRod.Location = new System.Drawing.Point(109, 3);
@@ -412,10 +344,7 @@
             this.btnDelRod.Text = "-";
             this.btnDelRod.UseVisualStyleBackColor = true;
             this.btnDelRod.Click += new System.EventHandler(this.btnDelRod_Click);
-            // 
-            // btnAddRod
-            // 
-            this.btnAddRod.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+                                                this.btnAddRod.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAddRod.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnAddRod.Location = new System.Drawing.Point(56, 3);
@@ -425,10 +354,7 @@
             this.btnAddRod.Text = "+";
             this.btnAddRod.UseVisualStyleBackColor = true;
             this.btnAddRod.Click += new System.EventHandler(this.btnAddRod_Click);
-            // 
-            // btnSave
-            // 
-            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+                                                this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnSave.Location = new System.Drawing.Point(3, 3);
@@ -438,10 +364,7 @@
             this.btnSave.Text = "s";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            // 
-            // tableLayoutPanelChart
-            // 
-            this.tableLayoutPanelChart.ColumnCount = 3;
+                                                this.tableLayoutPanelChart.ColumnCount = 3;
             this.tableLayoutPanelChart.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.53381F));
             this.tableLayoutPanelChart.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.46619F));
             this.tableLayoutPanelChart.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 514F));
@@ -458,30 +381,21 @@
             this.tableLayoutPanelChart.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanelChart.Size = new System.Drawing.Size(711, 99);
             this.tableLayoutPanelChart.TabIndex = 10;
-            // 
-            // btnDraw
-            // 
-            this.btnDraw.Location = new System.Drawing.Point(3, 3);
+                                                this.btnDraw.Location = new System.Drawing.Point(3, 3);
             this.btnDraw.Name = "btnDraw";
             this.btnDraw.Size = new System.Drawing.Size(93, 38);
             this.btnDraw.TabIndex = 1;
             this.btnDraw.Text = "Построить сечение";
             this.btnDraw.UseVisualStyleBackColor = true;
             this.btnDraw.Click += new System.EventHandler(this.btnDraw_Click);
-            // 
-            // btnSaveChart
-            // 
-            this.btnSaveChart.Location = new System.Drawing.Point(102, 3);
+                                                this.btnSaveChart.Location = new System.Drawing.Point(102, 3);
             this.btnSaveChart.Name = "btnSaveChart";
             this.btnSaveChart.Size = new System.Drawing.Size(91, 38);
             this.btnSaveChart.TabIndex = 2;
             this.btnSaveChart.Text = "Сохранить";
             this.btnSaveChart.UseVisualStyleBackColor = true;
             this.btnSaveChart.Click += new System.EventHandler(this.btnSaveChart_Click);
-            // 
-            // buttonClose
-            // 
-            this.buttonClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+                                                this.buttonClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonClose.Location = new System.Drawing.Point(628, 52);
             this.buttonClose.Name = "buttonClose";
             this.buttonClose.Size = new System.Drawing.Size(80, 38);
@@ -489,67 +403,43 @@
             this.buttonClose.Text = "Закрыть";
             this.buttonClose.UseVisualStyleBackColor = true;
             this.buttonClose.Click += new System.EventHandler(this.buttonClose_Click);
-            // 
-            // btnCalc
-            // 
-            this.btnCalc.Location = new System.Drawing.Point(102, 52);
+                                                this.btnCalc.Location = new System.Drawing.Point(102, 52);
             this.btnCalc.Name = "btnCalc";
             this.btnCalc.Size = new System.Drawing.Size(91, 38);
             this.btnCalc.TabIndex = 4;
             this.btnCalc.Text = "Рассчитать";
             this.btnCalc.UseVisualStyleBackColor = true;
             this.btnCalc.Click += new System.EventHandler(this.btnCalc_Click);
-            // 
-            // btnMesh
-            // 
-            this.btnMesh.Location = new System.Drawing.Point(3, 52);
+                                                this.btnMesh.Location = new System.Drawing.Point(3, 52);
             this.btnMesh.Name = "btnMesh";
             this.btnMesh.Size = new System.Drawing.Size(93, 38);
             this.btnMesh.TabIndex = 5;
             this.btnMesh.Text = "Сетка";
             this.btnMesh.UseVisualStyleBackColor = true;
             this.btnMesh.Click += new System.EventHandler(this.btnMesh_Click);
-            // 
-            // numDataGridViewTextBoxColumn
-            // 
-            this.numDataGridViewTextBoxColumn.DataPropertyName = "Num";
+                                                this.numDataGridViewTextBoxColumn.DataPropertyName = "Num";
             this.numDataGridViewTextBoxColumn.HeaderText = "N";
             this.numDataGridViewTextBoxColumn.Name = "numDataGridViewTextBoxColumn";
             this.numDataGridViewTextBoxColumn.ToolTipText = "Номер узла";
             this.numDataGridViewTextBoxColumn.Width = 20;
-            // 
-            // xDataGridViewTextBoxColumn
-            // 
-            this.xDataGridViewTextBoxColumn.DataPropertyName = "X";
+                                                this.xDataGridViewTextBoxColumn.DataPropertyName = "X";
             this.xDataGridViewTextBoxColumn.HeaderText = "X";
             this.xDataGridViewTextBoxColumn.Name = "xDataGridViewTextBoxColumn";
             this.xDataGridViewTextBoxColumn.ToolTipText = "X, см";
             this.xDataGridViewTextBoxColumn.Width = 30;
-            // 
-            // yDataGridViewTextBoxColumn
-            // 
-            this.yDataGridViewTextBoxColumn.DataPropertyName = "Y";
+                                                this.yDataGridViewTextBoxColumn.DataPropertyName = "Y";
             this.yDataGridViewTextBoxColumn.HeaderText = "Y";
             this.yDataGridViewTextBoxColumn.Name = "yDataGridViewTextBoxColumn";
             this.yDataGridViewTextBoxColumn.ToolTipText = "Y, см";
             this.yDataGridViewTextBoxColumn.Width = 30;
-            // 
-            // pointBS
-            // 
-            this.pointBS.DataSource = typeof(BSFiberConcrete.Section.BSPoint);
-            // 
-            // Id
-            // 
-            this.Id.DataPropertyName = "Id";
+                                                this.pointBS.DataSource = typeof(BSFiberConcrete.Section.BSPoint);
+                                                this.Id.DataPropertyName = "Id";
             this.Id.HeaderText = "Id";
             this.Id.Name = "Id";
             this.Id.ToolTipText = "Номер стержня";
             this.Id.Visible = false;
             this.Id.Width = 20;
-            // 
-            // X
-            // 
-            this.X.DataPropertyName = "CG_X";
+                                                this.X.DataPropertyName = "CG_X";
             dataGridViewCellStyle1.Format = "N2";
             dataGridViewCellStyle1.NullValue = "0";
             this.X.DefaultCellStyle = dataGridViewCellStyle1;
@@ -557,10 +447,7 @@
             this.X.Name = "X";
             this.X.ToolTipText = "X, по ширине сечения, см";
             this.X.Width = 50;
-            // 
-            // Y
-            // 
-            this.Y.DataPropertyName = "CG_Y";
+                                                this.Y.DataPropertyName = "CG_Y";
             dataGridViewCellStyle2.Format = "N2";
             dataGridViewCellStyle2.NullValue = "0";
             this.Y.DefaultCellStyle = dataGridViewCellStyle2;
@@ -568,10 +455,7 @@
             this.Y.Name = "Y";
             this.Y.ToolTipText = "Y, по высоте сечения, см";
             this.Y.Width = 50;
-            // 
-            // D
-            // 
-            this.D.DataPropertyName = "D";
+                                                this.D.DataPropertyName = "D";
             dataGridViewCellStyle3.Format = "N2";
             dataGridViewCellStyle3.NullValue = "0";
             this.D.DefaultCellStyle = dataGridViewCellStyle3;
@@ -579,14 +463,8 @@
             this.D.Name = "D";
             this.D.ToolTipText = "Диаметр, см";
             this.D.Width = 30;
-            // 
-            // RodBS
-            // 
-            this.RodBS.DataSource = typeof(BSFiberConcrete.BSRod);
-            // 
-            // BSSectionChart
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+                                                this.RodBS.DataSource = typeof(BSFiberConcrete.BSRod);
+                                                this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1104, 717);
             this.Controls.Add(this.tableLayoutPanel);

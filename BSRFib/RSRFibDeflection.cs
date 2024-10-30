@@ -52,8 +52,7 @@ namespace BSFiberConcrete.BSRFib
 
             Dsf_aF.Add(f_AF);
 
-            //deflectionfaFBindingSource.DataSource = Dsf_aF;
-            dataGridDefl.Refresh();
+                        dataGridDefl.Refresh();
         }
 
         private void cmbBeams_SelectedIndexChanged(object sender, EventArgs e)

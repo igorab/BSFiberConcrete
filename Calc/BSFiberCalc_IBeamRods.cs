@@ -8,20 +8,13 @@ using System.Threading.Tasks;
 
 namespace BSFiberConcrete
 {
-    /// <summary>
-    /// Двутавровое сечение с арматурой
-    /// </summary>
-    public class BSFiberCalc_IBeamRods : BSFibCalc_IBeam
+                public class BSFiberCalc_IBeamRods : BSFibCalc_IBeam
     {
-        // продольная арматура
-        private double[] m_LRebar;
-        // поперечная арматура
-        private double[] m_TRebar;
+                private double[] m_LRebar;
+                private double[] m_TRebar;
 
-        // Материал стержня
-        private BSMatRod MatRod;
-        // Стержни (итого)
-        private BSRod Rod;
+                private BSMatRod MatRod;
+                private BSRod Rod;
 
         public double[] LRebar { get => m_LRebar; set => m_LRebar = value; }
         public double[] TRebar { get => m_TRebar; set => m_TRebar = value; }
@@ -36,35 +29,25 @@ namespace BSFiberConcrete
         {            
             int idx = -1;
             MatRod = new BSMatRod();
-            MatRod.Rs = _MatRod[++idx]; // кг/см2
-            MatRod.Rsc = _MatRod[++idx]; // кг/см2
-            MatRod.As = _MatRod[++idx]; // см2
-            MatRod.As1 = _MatRod[++idx]; // см2
-            MatRod.Es = _MatRod[++idx];
+            MatRod.Rs = _MatRod[++idx];             MatRod.Rsc = _MatRod[++idx];             MatRod.As = _MatRod[++idx];             MatRod.As1 = _MatRod[++idx];             MatRod.Es = _MatRod[++idx];
 
             Rod = new BSRod();
             Rod.a = _MatRod[++idx];
             Rod.a1 = _MatRod[++idx];
         }
         
-        /// <summary>
-        /// высота сжатой зоны 
-        /// </summary>        
-        protected double Calc_x()
+                                protected double Calc_x()
         {
             double res_x = (MatRod.Rs * MatRod.As + Rfbt3 * (b1f * h1f + bw * hw + bf * hf) - MatRod.Rsc * MatRod.As1) / (b1f * (Rfbt3 + Rfb));
 
             return res_x;
         }
 
-        // для изгибаемых сталефибробетонных элементов таврового и двутаврового сечений с
-        // полкой в сжатой зоне определяют
-        public (double, double) Calc_Mult( double _h0, double _h, double _a, double _a1)
+                        public (double, double) Calc_Mult( double _h0, double _h, double _a, double _a1)
         {
             double res_Mult;
             double condition = -1;
-            double _x; // высота сжатой зоны
-
+            double _x; 
             _x = Calc_x();
 
             bool checkOK;
@@ -72,8 +55,7 @@ namespace BSFiberConcrete
 
             double dzeta = Dzeta(_x, _h0);
 
-            //граничная относительная высота сжатой зоны
-            double dzeta_R = Dzeta_R();
+                        double dzeta_R = Dzeta_R();
 
             checkOK = dzeta <= dzeta_R;
 
@@ -91,8 +73,7 @@ namespace BSFiberConcrete
             
             condition = (MatRod.Rs * MatRod.As + Rfbt3 * (bf * hf + bw * hw)) - (MatRod.Rsc * MatRod.As1 + Rfb * b1f * h1f);
 
-            // расчет по случаю А
-            if (condition <= 0)
+                        if (condition <= 0)
             {                
                 res_Mult = Rfb * b1f * _x * (_h0 - 0.5 * _x) - 
                            Rfbt3 * (bf * hf * (0.5 * hf - _a)  + bw * hw * (0.5 * hw + hf -_a) +  b1f * (h1f - _x) * (_h0 - 0.5 * (h1f + _x))) +
@@ -100,8 +81,7 @@ namespace BSFiberConcrete
 
                 
             }
-            else // Расчет по случаю Б
-            {
+            else             {
 
                 _x = (MatRod.Rs * MatRod.As + Rfbt3 * (b1f * h1f + bw * hw + bf * hf) - Rfb * h1f * (b1f - bw) - MatRod.Rsc * MatRod.As1) / (bw * (Rfbt3 + Rfb)) ;
 
@@ -114,13 +94,9 @@ namespace BSFiberConcrete
             return (res_Mult, _x);
         }
 
-        /// <summary>
-        /// расчет прочности двутавра с рабочей арматурой
-        /// </summary>
-        public override bool Calculate()
+                                public override bool Calculate()
         {
-            //string info;
-            
+                        
             Calc_Pre();
 
             (Mult, x) = Calc_Mult(_h0: h - Rod.a, _h: h, _a: Rod.a, _a1: Rod.a1);

@@ -13,10 +13,7 @@ using BSFiberConcrete.Report;
 
 namespace BSFiberConcrete.Section
 {
-    /// <summary>
-    /// Отрисовать сечение, назначить арматуру
-    /// </summary>
-    public partial class BSSectionChart : Form
+                public partial class BSSectionChart : Form
     {
         public List<PointF> RodPoints
         {
@@ -28,10 +25,7 @@ namespace BSFiberConcrete.Section
         public Dictionary<string, double> DictCalcParams { private get; set;}
         public BeamSection m_BeamSection { get; private set; }
                 
-        /// <summary>
-        /// Класс используемой арматуры
-        /// </summary>
-        public string RebarClass { private get; set; }
+                                public string RebarClass { private get; set; }
 
         public MemoryStream GetImageStream => m_ImageStream;
         
@@ -39,14 +33,11 @@ namespace BSFiberConcrete.Section
 
         private List<RebarDiameters> m_Diameters;
 
-        // Точки на диаграмме для отрисовки стержней арматуры  
-        private List<PointF> m_RodPoints;
+                private List<PointF> m_RodPoints;
 
-        // Точки на диаграмме, для отрисовки сечения        
-        private List<PointF> PointsSection;
+                private List<PointF> PointsSection;
 
-        // точки на диаграмме для отображения отверстия в сечении
-        private List<PointF> InnerPoints;
+                private List<PointF> InnerPoints;
 
         private NDMSetup ndmSetup;
 
@@ -76,10 +67,7 @@ namespace BSFiberConcrete.Section
             Sz = new double[]  { 0, 0, 0, 0, 0, 0 };
         }
 
-        /// <summary>
-        /// Стержни арматуры
-        /// </summary>
-        private void InitRods()
+                                private void InitRods()
         {
             if (m_RodPoints == null)
                 return;
@@ -124,16 +112,13 @@ namespace BSFiberConcrete.Section
 
                 for (int k = 0; k <= amountOfEdges; k++)
                 {
-                    // внешняя граница
-                    double x = Center.X + radius * Math.Cos(k * 2 * Math.PI / amountOfEdges);
+                                        double x = Center.X + radius * Math.Cos(k * 2 * Math.PI / amountOfEdges);
                     double y = Center.Y + radius * Math.Sin(k * 2 * Math.PI / amountOfEdges);
                     PointsSection.Add(new PointF((float)x, (float)y));
-                    // отверстие
-                    x = Center.X + inner_radius * Math.Cos(k * 2 * Math.PI / amountOfEdges);
+                                        x = Center.X + inner_radius * Math.Cos(k * 2 * Math.PI / amountOfEdges);
                     y = Center.Y + inner_radius * Math.Sin(k * 2 * Math.PI / amountOfEdges);
                     InnerPoints.Add(new PointF((float)x, (float)y));
-                    // арматура
-                    m_RodPoints = new List<PointF>() { new PointF(0, -(h - 4)) };
+                                        m_RodPoints = new List<PointF>() { new PointF(0, -(h - 4)) };
                 }
             }
             else if (m_BeamSection == BeamSection.Any)
@@ -190,8 +175,7 @@ namespace BSFiberConcrete.Section
                 points.Add(new PointF(bsp.X, bsp.Y));
             }
 
-            // арматура
-            List<PointF> rod_points = new List<PointF>();
+                        List<PointF> rod_points = new List<PointF>();
             double rods_area = 0;
             foreach (BSRod _rod in RodBS)
             {
@@ -213,15 +197,13 @@ namespace BSFiberConcrete.Section
                 serieInnerSection.Points.Add(new DataPoint(p.X, p.Y));
             }
 
-            // арматурные стержни
-            Series serieRods = chart.Series[1];          
+                        Series serieRods = chart.Series[1];          
             for (int j = 0; j < rod_points.Count; j++)
             {
                 var rod_pt = rod_points[j];
                 serieRods.Points.Add(new DataPoint(rod_pt.X, rod_pt.Y));
 
-                //rod_pt.
-            }
+                            }
             
             numAreaRebar.Value = (decimal) rods_area;
 
@@ -254,10 +236,7 @@ namespace BSFiberConcrete.Section
             }
         }
 
-        /// <summary>
-        /// сохранить привязку стержней в БД
-        /// </summary>
-        private void SaveRods2DB()
+                                private void SaveRods2DB()
         {
             if (RodBS == null || RodBS.List == null || RodBS.List.Count == 0)
                 return;
@@ -267,10 +246,7 @@ namespace BSFiberConcrete.Section
             BSData.SaveRods(bSRods, m_BeamSection);            
         }
 
-        /// <summary>
-        ///  Сохранить координаты в БД
-        /// </summary>        
-        private void btnSave_Click(object sender, EventArgs e)
+                                private void btnSave_Click(object sender, EventArgs e)
         {
             try
             {
@@ -318,37 +294,6 @@ namespace BSFiberConcrete.Section
 
         private void Save2PolyFile()
         {
-            /*
-             * TODO save to .poly file
-             * 
-             * # A box with a hole: eight points, no attributes, one boundary marker.
-                8 2 0 1
-                # Outer box
-                  1   0.0 0.0   1
-                  2   3.0 0.0   1
-                  3   3.0 3.0   1
-                  4   0.0 3.0   1
-                # Inner square
-                  5   1.0 1.0   2
-                  6   2.0 1.0   2
-                  7   2.0 2.0   2
-                  8   1.0 2.0   2
-                # Eight segments with boundary markers.
-                8 1
-                # Outer box
-                  1   1 2   1
-                  2   2 3   1
-                  3   3 4   1
-                  4   4 1   1
-                # Inner square
-                  5   5 6   2
-                  6   6 7   2
-                  7   7 8   2
-                  8   8 5   2
-                # One hole in the middle of the inner square.
-                1
-                  1   1.5 1.5
-             */
         }
 
         private void BSSectionChart_FormClosed(object sender, FormClosedEventArgs e)
@@ -365,10 +310,7 @@ namespace BSFiberConcrete.Section
             }
         }
 
-        /// <summary>
-        /// Добавить стержень
-        /// </summary>        
-        private void btnAddRod_Click(object sender, EventArgs e)
+                                private void btnAddRod_Click(object sender, EventArgs e)
         {
             try
             {
@@ -381,10 +323,7 @@ namespace BSFiberConcrete.Section
         }
 
 
-        /// <summary>
-        /// Удалить стержень
-        /// </summary>        
-        private void btnDelRod_Click(object sender, EventArgs e)
+                                private void btnDelRod_Click(object sender, EventArgs e)
         {
             try
             {
@@ -406,10 +345,7 @@ namespace BSFiberConcrete.Section
             MessageBox.Show("Задайте привязку арматуры - укажите координаты стержней");
         }
 
-        /// <summary>
-        /// по номинальному диаметру заполнить фактический
-        /// </summary>        
-        private void bSRodDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+                                private void bSRodDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             try
             {
@@ -448,13 +384,10 @@ namespace BSFiberConcrete.Section
             {
                 if (RodBS == null || RodBS.List == null || RodBS.List.Count == 0)
                 {
-                    //List<BSRod> bSRods = (List<BSRod>)RodBS.List;
+                    
+                                    }
 
-                    //BSData.SaveRods(bSRods, BSBeamSection);
-                }
-
-                // TODO доделать
-                List<NdmSection> bsSec = new List<NdmSection>();
+                                List<NdmSection> bsSec = new List<NdmSection>();
 
                 BindingList<BSPoint> p =(BindingList<BSPoint>)pointBS.List;
 
@@ -482,12 +415,7 @@ namespace BSFiberConcrete.Section
             Close();
         }
 
-        /// <summary>
-        /// Расчет сечения по НДМ
-        /// </summary>
-        /// <param name="_My"></param>
-        /// <returns></returns>
-        private BSCalcResultNDM CalcNDM_MxMyN()
+                                                private BSCalcResultNDM CalcNDM_MxMyN()
         {
             Dictionary<string, double> dictParams = DictCalcParams;
                         
@@ -497,8 +425,7 @@ namespace BSFiberConcrete.Section
             return calcNDM.CalcRes;                                    
         }
 
-        // Запустить расчет
-        private void btnCalc_Click(object sender, EventArgs e)
+                private void btnCalc_Click(object sender, EventArgs e)
         {
             try
             {
@@ -522,20 +449,10 @@ namespace BSFiberConcrete.Section
                 _PointsSection.Add(new PointF(pt.X, pt.Y));
             }
             
-            //RodPoints = new List<PointF>();
+            
+                                                        }
 
-            //foreach (BSPoint rod in RodBS)
-            //{
-            //    RodPoints.Add(new PointF(rod.X, rod.Y));
-            //}            
-        }
-
-        /// <summary>
-        /// Сгенерировать сетеку сечения
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        private string GenerateMesh()
+                                                private string GenerateMesh()
         {
             if (m_BeamSection != BeamSection.Any) return "";
 
@@ -552,22 +469,17 @@ namespace BSFiberConcrete.Section
 
             _ = Tri.CalculationScheme(false);
 
-            // центры тяжести треугольников
-            int? nTri = Tri.triCGs?.Count();
+                        int? nTri = Tri.triCGs?.Count();
 
             if (nTri > 0)
             {        
-                // площади треугольников
-                NumArea = Tri.triAreas?.Sum() ?? 0;
+                                NumArea = Tri.triAreas?.Sum() ?? 0;
             }
                         
             return pathToSvgFile;
         }
 
-        /// <summary>
-        /// сетка
-        /// </summary>        
-        private void btnMesh_Click(object sender, EventArgs e)
+                                private void btnMesh_Click(object sender, EventArgs e)
         {            
             try
             {

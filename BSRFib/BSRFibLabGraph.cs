@@ -43,10 +43,7 @@ namespace BSFiberConcrete
             
         }
 
-        /// <summary>
-        /// В ходе испытаний для каждого образца строят графики «F – aF»
-        /// </summary>        
-        void InitChart()
+                                void InitChart()
         {
             Series series = this.ChartFaF.Series["AFSerie"]; 
             series.ChartType = SeriesChartType.Spline;
@@ -54,11 +51,7 @@ namespace BSFiberConcrete
             ChartFaF.DataSource = Qds;
             ChartFaF.DataBind();
 
-            //foreach (var item in q)
-            //{
-            //    series.Points.AddXY(item.aF, item.F);
-            //}                       
-        }
+                                                        }
 
         private FibLab CalcF()
         {
@@ -90,8 +83,7 @@ namespace BSFiberConcrete
 
             FibLab flab = CalcF();
 
-            // сохранить результаты
-            BSQuery.SaveFibLab(new List<FibLab> { flab });
+                        BSQuery.SaveFibLab(new List<FibLab> { flab });
         }
 
         
@@ -160,26 +152,16 @@ namespace BSFiberConcrete
             }            
         }
       
-        /// <summary>
-        ///  Сохранить данные измерений в файл
-        /// </summary>        
-        private void btnDSSave2File_Click(object sender, EventArgs e)
+                                private void btnDSSave2File_Click(object sender, EventArgs e)
         {            
             SaveFileDialog dlg = new SaveFileDialog();
-            dlg.FileName = "Document"; // Default file name
-            dlg.DefaultExt = ".txt"; // Default file extension
-            dlg.Filter = "Text documents (.txt)|*.txt"; // Filter files by extension
+            dlg.FileName = "Document";             dlg.DefaultExt = ".txt";             dlg.Filter = "Text documents (.txt)|*.txt"; 
+                        DialogResult result = dlg.ShowDialog();
 
-            // Show save file dialog box
-            DialogResult result = dlg.ShowDialog();
-
-            // Process save file dialog box results
-            if (result == DialogResult.OK)
+                        if (result == DialogResult.OK)
             {
-                // Save document
-                string path = dlg.FileName;
-                //string path = Path.Combine(Environment.CurrentDirectory, "");
-
+                                string path = dlg.FileName;
+                
                 List<FaF> fibFaF = new List<FaF>(Qds);
                 
                 using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
@@ -223,8 +205,7 @@ namespace BSFiberConcrete
 
             labReport.LabResults = LabResults;
 
-            //string chartimage = "";
-            MemoryStream chartimage = new MemoryStream();
+                        MemoryStream chartimage = new MemoryStream();
 
             ChartFaF.SaveImage(chartimage, ChartImageFormat.Png);
 

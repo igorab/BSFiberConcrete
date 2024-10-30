@@ -58,11 +58,7 @@ namespace BSFiberConcrete
         }
 
 
-        /// <summary>
-        /// Установить индекс класса прочности фибробетона на растяжение
-        /// </summary>
-        /// <param name="index"></param>
-        public void Set_Bft(int index)
+                                        public void Set_Bft(int index)
         {
             if ((index < 0) || index > _fiberConcreteClass.Count - 1)
             {
@@ -76,11 +72,7 @@ namespace BSFiberConcrete
 
         }
 
-        /// <summary>
-        /// Получить список всех классов фибробетона по прочности на растяжение
-        /// </summary>
-        /// <returns></returns>
-        public List<string> Get_Bft()
+                                        public List<string> Get_Bft()
         { 
             List<string> result = new List<string>();
             foreach (FiberConcreteClass fc in _fiberConcreteClass)

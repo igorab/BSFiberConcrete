@@ -4,10 +4,7 @@ using System.ComponentModel;
 
 namespace BSFiberConcrete
 {
-    /// <summary>
-    /// Кольцо
-    /// </summary>
-    [Description("size")]
+                [Description("size")]
     public class BSBeam_Ring : BSBeam
     {
         [DisplayName("Радиус внутренней грани, [см]")]
@@ -17,7 +14,7 @@ namespace BSFiberConcrete
         public double r2 { get; set; }
 
         [DisplayName("Радиус срединной поверхности стенки кольцевого элемента")]
-        public double r_m { get { return (r1 + r2) / 2d; } /*private set { r_m = value; }*/ }
+        public double r_m { get { return (r1 + r2) / 2d; } }
 
         [DisplayName("толщина стенки кольца, см")]
         public double t_r { get => r2 - r1; }
@@ -27,8 +24,7 @@ namespace BSFiberConcrete
 
         public double A_s => 9.04;
 
-        // TODO выяснить алгоритм
-        public double r_s => 36;
+                public double r_s => 36;
 
         public override double Width => r2;
         public override double Height => r2;
@@ -43,11 +39,9 @@ namespace BSFiberConcrete
             return area;
         }
 
-        // диаметр наружней грани
-        public double D { get => 2 * r2; }
+                public double D { get => 2 * r2; }
 
-        // диаметр внутренней грани
-        public double d { get => 2 * r1; }
+                public double d { get => 2 * r1; }
 
         public double alfa => d / D;
 
@@ -74,23 +68,17 @@ namespace BSFiberConcrete
             return wx;
         }
 
-        //Момент инерции тонкого кольца РТ СП
-        public override double I_s()
+                public override double I_s()
         {
             double i_s = A_s * Math.Pow(2 * r_s, 2) / 8d;
             return i_s;
         }
 
-        // статические моменты относительно осей
-        public override double Sy() => Area() * r2;
+                public override double Sy() => Area() * r2;
         public override double Sx() => Sy();
 
 
-        /// <summary>
-        /// Возращает габаритные размеры сечения
-        /// </summary>
-        /// <returns></returns>
-        public override Dictionary<string, double> GetDimension()
+                                        public override Dictionary<string, double> GetDimension()
         {
             Dictionary<string, double> dimensionOfSection = new Dictionary<string, double>()
             {

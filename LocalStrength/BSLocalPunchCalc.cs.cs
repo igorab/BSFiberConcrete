@@ -9,63 +9,34 @@ using System.Threading.Tasks;
 
 namespace BSFiberConcrete.LocalStrength
 {
-    /// <summary>
-    /// Расчет на продавливание
-    /// </summary>
-    public class BSLocalPunchCalc : BSLocalStrengthCalc
+                public class BSLocalPunchCalc : BSLocalStrengthCalc
     {
-        // Ширина приложения нагрузки (см)        
-        protected double h0;
-        // Рабочая высота плиты по x(см)
-        protected double h0x;
-        //Рабочая высота плиты по y(см)
-        protected double h0y;
+                protected double h0;
+                protected double h0x;
+                protected double h0y;
         protected double u;
         protected double Afb;
         protected double Ffb_ult;
 
 
-        // Усилия:
-        // сила продавливания
-        protected double F;
-        // Изгибающий момент по X кг*см
-        protected double Mx; // кг*см
-        // Изгибающий момент по Y кг*см
-        protected double My; // кг*см
-
-        // Расчет на действия усилий:
-        // Момент сопротивления расчетного контура сталефибробетона при продавливании вокруг X
-        protected double Wfbx;
-        // Момент сопротивления расчетного контура сталефибробетона при продавливании вокруг Y
-        protected double Wfby;
-        //Предельный изгибающий момент
-        protected double Mfb_x_ult;
-        //Предельный изгибающий момент
-        protected double Mfb_y_ult;
-        //Коэффициент использования
-        protected double FMxMy_uc;
+                        protected double F;
+                protected double Mx;                 protected double My; 
+                        protected double Wfbx;
+                protected double Wfby;
+                protected double Mfb_x_ult;
+                protected double Mfb_y_ult;
+                protected double FMxMy_uc;
 
 
-        // Арматура:
-        // Расчетное сопротивление арматуры на продавливание СП63 (кг/см2) таб.6.15
-        protected double Rsw;
-        // площадь сечения поперечной арматуры с шагом sw, расположенная в пределах
-        // расстояния 0,5h0 по обе стороны от контура расчетного поперечного сечения по периметру контура расчетного поперечного сечения
-        protected double Asw;
-        //шаг поперечной арматуры
-        protected double sw;
-        //усилие в поперечной арматуре на единицу длины контура расчетного поперечного сечения
-        protected double q_sw;
-        //Предельное усилие,воспринимаемое поперечной арматурой при продавливании
-        protected double Fsw_ult;
-        //Предельное усилие, воспринимаемое сталефибробетоном и арматурой
-        protected double Fult;
-        // Длина расчетного контура №2
-        protected double a;
-        // Ширина расчетного контура №2
-        protected double b;
-        // Коэфициент использования
-        protected double util_coeff;
+                        protected double Rsw;
+                        protected double Asw;
+                protected double sw;
+                protected double q_sw;
+                protected double Fsw_ult;
+                protected double Fult;
+                protected double a;
+                protected double b;
+                protected double util_coeff;
 
         public BSLocalPunchCalc()
         {
@@ -85,15 +56,12 @@ namespace BSFiberConcrete.LocalStrength
             Dictionary<string, double> D = new Dictionary<string, double>();
             foreach (var item in m_DS) D[item.VarName] = item.Value;
 
-            // Усилия:
-            (F, Mx, My) = (D["F"], D["Mx"], D["My"]);
+                        (F, Mx, My) = (D["F"], D["Mx"], D["My"]);
 
-            // Бетон:
-            (a1, a2, h0x, h0y, Rfbtn, Yft, Yb1, Yb5, Rfbt, h0, u, Afb, Ffb_ult) =
+                        (a1, a2, h0x, h0y, Rfbtn, Yft, Yb1, Yb5, Rfbt, h0, u, Afb, Ffb_ult) =
                 (D["a1"], D["a2"], D["h0x"], D["h0y"], D["Rfbtn"], D["Yft"], D["Yb1"], D["Yb5"], D["Rfbt"], D["h0"], D["u"], D["Afb"], D["Ffbult"]);
 
-            // Арматура:            
-            (Rsw, Asw, sw, q_sw, Fsw_ult, Fult, a, b, util_coeff) = (D["Rsw"], D["Asw"], D["sw"], D["q_sw"], D["Fsw_ult"], D["Fult"], D["a"], D["b"], D["util_coeff"]);
+                        (Rsw, Asw, sw, q_sw, Fsw_ult, Fult, a, b, util_coeff) = (D["Rsw"], D["Asw"], D["sw"], D["q_sw"], D["Fsw_ult"], D["Fult"], D["a"], D["b"], D["util_coeff"]);
         }
 
         public override string ReportName()
@@ -140,22 +108,16 @@ namespace BSFiberConcrete.LocalStrength
 
         private void RunBetonCalc()
         {
-            // Приведенная рабочая высота сечения
-            h0 = 0.5 * (h0x + h0y);
+                        h0 = 0.5 * (h0x + h0y);
 
-            // длина расчетного контура №1
-            double _a = a1 + h0;
-            // ширина расчетного контура №1
-            double _b = a2 + h0;
+                        double _a = a1 + h0;
+                        double _b = a2 + h0;
 
-            // Периметр контура расчетного поперечного сечения
-            u = 2 * _a + 2 * _b;
+                        u = 2 * _a + 2 * _b;
 
-            // Площадь расчетного поперечного сечения (см2) по ф.(6.92)
-            Afb = u * h0;
+                        Afb = u * h0;
 
-            // Предельное усилие, воспринимаемое сталефибробетоном. (кг)
-            Ffb_ult = Rfbt * Afb;
+                        Ffb_ult = Rfbt * Afb;
 
             if (F != 0 || Mx != 0 || My != 0)
             {
@@ -182,15 +144,11 @@ namespace BSFiberConcrete.LocalStrength
                                 
                 if (UseReinforcement)
                 {
-                    // расчет с поперечной арматурой
-                    // проводится по контуру 1 и 2
-                    ReinforcementCalc();
+                                                            ReinforcementCalc();
                 }
                 else
                 {
-                    // расчет без арматуры
-                    // проводится по конутуру 1
-                    RunBetonCalc();
+                                                            RunBetonCalc();
                 }
 
                 DCalcResult();
@@ -207,8 +165,7 @@ namespace BSFiberConcrete.LocalStrength
         }
 
                 
-        // расчет элементов на продавливание при действии сосредоточенных сил и моментов без арматуры
-        public bool RunCalcFM()
+                public bool RunCalcFM()
         {
             double Lx = a2 + h0;
             double Ly = a1 + h0;
@@ -219,17 +176,13 @@ namespace BSFiberConcrete.LocalStrength
             double x_max = Lx / 2;
             double y_max = Ly / 2;
 
-            // Момент сопротивления расчетного контура сталефибробетона при продавливании вокруг X
-            Wfbx = Ifbx / y_max;
+                        Wfbx = Ifbx / y_max;
 
-            // Момент сопротивления расчетного контура сталефибробетона при продавливании вокруг Y
-            Wfby = Ifby / x_max;
+                        Wfby = Ifby / x_max;
 
-            //Предельный изгибающий момент
-            Mfb_x_ult = Rfbt * Wfbx * h0;
+                        Mfb_x_ult = Rfbt * Wfbx * h0;
 
-            //Предельный изгибающий момент
-            Mfb_y_ult = Rfbt * Wfby * h0;
+                        Mfb_y_ult = Rfbt * Wfby * h0;
 
             FMxMy_uc = F / Ffb_ult + Mx / Mfb_x_ult + My / Mfb_y_ult;
 
@@ -237,40 +190,27 @@ namespace BSFiberConcrete.LocalStrength
         }
 
 
-        // расчет элементов на продавливание при действии сосредоточенной силы с арматурой
-        public override bool ReinforcementCalc()
+                public override bool ReinforcementCalc()
         {
-            // Длина расчетного контура №2
-            double ca2 = a1 + 4 * h0;
-            // Ширина расчетного контура №2
-            double cb2 = a2 + 4 * h0;
+                        double ca2 = a1 + 4 * h0;
+                        double cb2 = a2 + 4 * h0;
 
-            // Периметр контура расчетного поперечного сечения(см)
-            u = 2 * ca2 + 2 * cb2;
+                        u = 2 * ca2 + 2 * cb2;
 
-            // Площадь расчетного поперечного сечения(см)
-            Afb = u * h0;
+                        Afb = u * h0;
 
-            // Предельное усилие, воспринимаемое сталефибробетоном по второму контуру. (кг)
-            Ffb_ult = Rfbt * Afb;
+                        Ffb_ult = Rfbt * Afb;
 
             Fult = Ffb_ult + Fsw_ult;
 
-            // Коэфициент использования
-            util_coeff = F / Ffb_ult;
+                        util_coeff = F / Ffb_ult;
 
-            //TODO на продавливание с мотементами и с арматурой
-            //if (Mx != 0  || My != 0)
-            //{
-            //    RunReinforcementCalcFM();
-            //}
-
+                                                            
             return true;
         }
 
 
-        // расчет элементов на продавливание при действии сосредоточенных сил и моментов c арматурой
-        public bool RunReinforcementCalcFM()
+                public bool RunReinforcementCalcFM()
         {
             double Lx = a2 + h0;
             double Ly = a1 + h0;
@@ -281,17 +221,13 @@ namespace BSFiberConcrete.LocalStrength
             double x_max = Lx / 2;
             double y_max = Ly / 2;
 
-            // Момент сопротивления расчетного контура сталефибробетона при продавливании вокруг X
-            Wfbx = Ifbx / y_max;
+                        Wfbx = Ifbx / y_max;
 
-            // Момент сопротивления расчетного контура сталефибробетона при продавливании вокруг Y
-            Wfby = Ifby / x_max;
+                        Wfby = Ifby / x_max;
 
-            //Предельный изгибающий момент
-            Mfb_x_ult = Rfbt * Wfbx * h0;
+                        Mfb_x_ult = Rfbt * Wfbx * h0;
 
-            //Предельный изгибающий момент
-            Mfb_y_ult = Rfbt * Wfby * h0;
+                        Mfb_y_ult = Rfbt * Wfby * h0;
 
             FMxMy_uc = F / Ffb_ult + Mx / Mfb_x_ult + My / Mfb_y_ult;
 

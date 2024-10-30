@@ -7,35 +7,19 @@ using MathNet.Numerics;
 
 namespace BSFiberConcrete.BSRFib
 {
-    /// <summary>
-    /// Определение остаточной прочности сталефибробетона на растяжение
-    /// </summary>
-    public class BSRFibLabTensile
+                public class BSRFibLabTensile
     {
-        /// <summary>
-        /// длина пролета, см
-        /// </summary>
-        public double L { get; set; }
+                                public double L { get; set; }
 
-        /// <summary>
-        /// ширина образца, см
-        /// </summary>
-        public double b { get; set; }
+                                public double b { get; set; }
 
-        /// <summary>
-        /// расстояние между вершиной надреза и верхней гранью образца, cм;
-        /// </summary>
-        public double h_sp { get; set; }
+                                public double h_sp { get; set; }
 
-        // коэффициенты учета неупругих деформаций в
-        // сталефибробетоне растянутой зоны образца
-        private double k_F05;
+                        private double k_F05;
         private double k_F25;        
 
-        // см
-        public double a_F05 { get; }
-        // см
-        public double a_F25 { get; }
+                public double a_F05 { get; }
+                public double a_F25 { get; }
 
         public List<FaF> DsFaF
         {
@@ -50,25 +34,15 @@ namespace BSFiberConcrete.BSRFib
 
         public BSRFibLabTensile()
         {
-            // коэффициенты учета неупругих деформаций в сталефибробетоне растянутой зоны образца >>
-            k_F05 = 0.4;
+                        k_F05 = 0.4;
             k_F25 = 0.34;            
-            // <<
+            
+
+            a_F05 = 0.05;             a_F25 = 2.5; 
+            h_sp = 125;         }
 
 
-            a_F05 = 0.05; // mm
-            a_F25 = 2.5; // mm
-
-            h_sp = 125; //mm
-        }
-
-
-        /// <summary>
-        ///  получение значения F по линейной интерполяции
-        /// </summary>
-        /// <param name="_a">искомый аргумент</param>
-        /// <returns>Значение функции </returns>
-        public double LinearFit(double _a)
+                                                public double LinearFit(double _a)
         {            
             var r_from = dsFaF.First();
             var r_to = dsFaF.Last();

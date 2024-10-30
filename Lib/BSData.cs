@@ -31,12 +31,7 @@ namespace BSFiberConcrete.Lib
             return ok;
         }
 
-        /// <summary>
-        /// Подключение к БД
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns>Строка подключения</returns>
-        public static string  LoadConnectionString(string id = "Default")
+                                                public static string  LoadConnectionString(string id = "Default")
         {
             string s = ConfigurationManager.ConnectionStrings[id]?.ConnectionString;
             if (string.IsNullOrEmpty(s))
@@ -44,11 +39,7 @@ namespace BSFiberConcrete.Lib
             return s;
         }
 
-        /// <summary>
-        /// Данные формы
-        /// </summary>
-        /// <returns>Список</returns>
-        public static FormParams LoadFormParams()
+                                        public static FormParams LoadFormParams()
         {
             try
             {
@@ -67,11 +58,7 @@ namespace BSFiberConcrete.Lib
             }
         }
 
-        /// <summary>
-        ///  Сохранить введенные пользователем значения с формы
-        /// </summary>
-        /// <param name="_prms"></param>
-        public static void UpdateFormParams(FormParams _prms)
+                                        public static void UpdateFormParams(FormParams _prms)
         {
 
             try
@@ -98,11 +85,7 @@ namespace BSFiberConcrete.Lib
         }
 
 
-        /// <summary>
-        /// Параметры расчета по НДМ
-        /// </summary>
-        /// <returns>Список</returns>
-        public static NDMSetup LoadNDMSetup(int Id = 1)
+                                        public static NDMSetup LoadNDMSetup(int Id = 1)
         {
             try
             {
@@ -118,10 +101,7 @@ namespace BSFiberConcrete.Lib
             }
         }
 
-        /// <summary>
-        /// Сохранить параметры расчета по НДМ
-        /// </summary>        
-        public static void SaveNDMSetup(NDMSetup _ndmSetup)
+                                public static void SaveNDMSetup(NDMSetup _ndmSetup)
         {
             try
             {
@@ -147,11 +127,7 @@ namespace BSFiberConcrete.Lib
             }
         }
 
-        /// <summary>
-        /// Наименования типов бетона
-        /// </summary>
-        /// <returns>Список</returns>
-        public static List<string> LoadBetonTypeName()
+                                        public static List<string> LoadBetonTypeName()
         {
             try
             {
@@ -167,11 +143,7 @@ namespace BSFiberConcrete.Lib
             }
         }
 
-        /// <summary>
-        /// Классы бетона по сопротивлению на растяжение Bft 
-        /// </summary>
-        /// <returns>Список</returns>
-        public static List<FiberBft> LoadFiberBft()
+                                        public static List<FiberBft> LoadFiberBft()
         {
             try
             {
@@ -187,11 +159,7 @@ namespace BSFiberConcrete.Lib
             }
         }
 
-        /// <summary>
-        /// Загрузка бетона по типу
-        /// </summary>
-        /// <returns>Список</returns>
-        public static List<Beton> LoadBetonData(int _betonTypeId)
+                                        public static List<Beton> LoadBetonData(int _betonTypeId)
         {
             try
             {
@@ -207,11 +175,7 @@ namespace BSFiberConcrete.Lib
             }
         }
 
-        /// <summary>
-        /// Загрузка бетона
-        /// </summary>
-        /// <returns>Список</returns>
-        public static List<Beton> LoadBetonData()
+                                        public static List<Beton> LoadBetonData()
         {
             try
             {
@@ -227,11 +191,7 @@ namespace BSFiberConcrete.Lib
             }
         }
 
-        /// <summary>
-        /// Коэффициенты
-        /// </summary>
-        /// <returns>Список</returns>
-        public static List<Coefficients> LoadCoeffs()
+                                        public static List<Coefficients> LoadCoeffs()
         {
             try
             {
@@ -247,11 +207,7 @@ namespace BSFiberConcrete.Lib
             }
         }
 
-        /// <summary>
-        /// Тип арматуры
-        /// </summary>
-        /// <returns></returns>
-        public static List<Rebar> LoadRebar()
+                                        public static List<Rebar> LoadRebar()
         {
             try
             {
@@ -267,11 +223,7 @@ namespace BSFiberConcrete.Lib
             }
         }
 
-        /// <summary>
-        /// Армирование
-        /// </summary>
-        /// <returns></returns>
-        public static List<BSRod> LoadBSRod(BeamSection _SectionType)
+                                        public static List<BSRod> LoadBSRod(BeamSection _SectionType)
         {
             try
             {
@@ -288,11 +240,7 @@ namespace BSFiberConcrete.Lib
             }
         }
 
-        /// <summary>
-        /// Сечение произвольной формы для расчета по НДМ
-        /// </summary>
-        /// <returns></returns>
-        public static List<NdmSection> LoadNdmSection(string _SectionNum)
+                                        public static List<NdmSection> LoadNdmSection(string _SectionNum)
         {
             try
             {
@@ -309,18 +257,13 @@ namespace BSFiberConcrete.Lib
             }
         }
 
-        /// <summary>
-        /// Усилия 
-        /// </summary>
-        /// <returns>Список</returns>
-        public static List<Efforts> LoadEfforts()
+                                        public static List<Efforts> LoadEfforts()
         {
             try
             {
                 using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
                 {
-                    //var output = cnn.Query<Efforts>("select * from Efforts where id = 1", new DynamicParameters());
-                    var output = cnn.Query<Efforts>("select * from Efforts", new DynamicParameters());
+                                        var output = cnn.Query<Efforts>("select * from Efforts", new DynamicParameters());
                     return output.ToList();
                 }
             }
@@ -330,8 +273,7 @@ namespace BSFiberConcrete.Lib
             }
         }
 
-        // сохранить данные в бд по усилиям
-        public static void SaveEfforts(Efforts _efforts)
+                public static void SaveEfforts(Efforts _efforts)
         {
             try
             {
@@ -351,8 +293,7 @@ namespace BSFiberConcrete.Lib
             }
         }
 
-        // сохранить данные в бд по усилиям
-        public static void SaveEfforts(List<Efforts> _efforts, bool _clear = true)
+                public static void SaveEfforts(List<Efforts> _efforts, bool _clear = true)
         {
             try
             {
@@ -384,8 +325,7 @@ namespace BSFiberConcrete.Lib
         }
 
 
-        // удалить содержимое таблицы
-        public static void ClearEfforts()
+                public static void ClearEfforts()
         {
             try
             {
@@ -406,11 +346,7 @@ namespace BSFiberConcrete.Lib
         }
 
 
-        /// <summary>
-        /// Данные по фибробетону из БД
-        /// </summary>
-        /// <returns></returns>
-        public static List<Elements> LoadFiberConcreteTable(string _iB = "")
+                                        public static List<Elements> LoadFiberConcreteTable(string _iB = "")
         {
             try
             {
@@ -592,11 +528,7 @@ namespace BSFiberConcrete.Lib
             }
         }
 
-        /// <summary>
-        /// Местные нагрузки LocalStress = LocalCompression 
-        /// </summary>
-        /// <returns>Данные и расчет </returns>
-        public static List<LocalStress> LoadLocalStress()
+                                        public static List<LocalStress> LoadLocalStress()
         {
             try
             {
@@ -612,11 +544,7 @@ namespace BSFiberConcrete.Lib
             }
         }
 
-        /// <summary>
-        /// Местные нагрузки
-        /// </summary>
-        /// <returns>Данные и расчет </returns>
-        public static List<LocalStress> LoadLocalPunch()
+                                        public static List<LocalStress> LoadLocalPunch()
         {
             try
             {
@@ -632,11 +560,7 @@ namespace BSFiberConcrete.Lib
             }
         }
 
-        /// <summary>
-        /// Относительные деформации бетона в зависимости от влажности воздуха
-        /// </summary>
-        /// <returns>Список</returns>
-        public static List<EpsilonFromAirHumidity> LoadBetonEpsilonFromAirHumidity()
+                                        public static List<EpsilonFromAirHumidity> LoadBetonEpsilonFromAirHumidity()
         {
             try
             {
@@ -652,12 +576,7 @@ namespace BSFiberConcrete.Lib
             }
         }
 
-        /// <summary>
-        ///  сохранить расстановку стержней
-        /// </summary>
-        /// <param name="_ds"></param>
-        /// <param name="_BeamSection"></param>
-        public static void SaveRods(List<BSRod>  _ds, BeamSection  _BeamSection)
+                                                public static void SaveRods(List<BSRod>  _ds, BeamSection  _BeamSection)
         {
             try
             {
@@ -684,12 +603,7 @@ namespace BSFiberConcrete.Lib
             }
         }
 
-        /// <summary>
-        ///  сохранить точки сечения
-        /// </summary>
-        /// <param name="_ds"></param>
-        /// <param name="_SectionNum"></param>
-        public static void SaveSection(List<NdmSection> _ds, string _SectionNum)
+                                                public static void SaveSection(List<NdmSection> _ds, string _SectionNum)
         {
             try
             {
@@ -715,11 +629,7 @@ namespace BSFiberConcrete.Lib
             }
         }
 
-        /// <summary>
-        /// Загружается геометрия сечений
-        /// </summary>
-        /// <returns>Список</returns>
-        public static List<InitBeamSectionGeometry> LoadBeamSectionGeometry(BeamSection _SectionType)
+                                        public static List<InitBeamSectionGeometry> LoadBeamSectionGeometry(BeamSection _SectionType)
         {
             try
             {
@@ -777,12 +687,7 @@ namespace BSFiberConcrete.Lib
             }
         }
 
-        /// <summary>
-        /// Выборка арматуры
-        /// </summary>
-        /// <param name="_ClassRebar">Класс арматуры</param>
-        /// <returns>Список - номинальные диаметры и площади сечения арматуры</returns>
-        public static List<RebarDiameters> DiametersOfTypeRebar(string _ClassRebar)
+                                                public static List<RebarDiameters> DiametersOfTypeRebar(string _ClassRebar)
         {
             List<RebarDiameters> rD = new List<RebarDiameters>();
             try
@@ -801,11 +706,7 @@ namespace BSFiberConcrete.Lib
             }
         }
 
-        /// <summary>
-        /// Класс фибры
-        /// </summary>
-        /// <returns></returns>
-        public static List<FiberClass> LoadFiberClass()
+                                        public static List<FiberClass> LoadFiberClass()
         {
             try
             {
@@ -822,10 +723,7 @@ namespace BSFiberConcrete.Lib
         }
 
 
-        /// <summary>
-        /// Параметры расчета на раскрытие трещины
-        /// </summary>        
-        public static NdmCrc LoadNdmCrc()
+                                public static NdmCrc LoadNdmCrc()
         {
             try
             {
@@ -845,10 +743,7 @@ namespace BSFiberConcrete.Lib
             }
         }
 
-        /// <summary>
-        /// Сохранить коэффициенты расчета на раскрытие трещины
-        /// </summary>        
-        public static void SaveNdmCrc(NdmCrc _NdmCrc)
+                                public static void SaveNdmCrc(NdmCrc _NdmCrc)
         {
             try
             {
@@ -869,10 +764,7 @@ namespace BSFiberConcrete.Lib
             }
         }
 
-        /// <summary>
-        /// Сохранить коэффициенты расчета на раскрытие трещины
-        /// </summary>        
-        public static void SaveStrengthFactors(StrengthFactors _sFactors)
+                                public static void SaveStrengthFactors(StrengthFactors _sFactors)
         {
             try
             {

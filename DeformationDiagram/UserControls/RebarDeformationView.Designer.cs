@@ -2,16 +2,9 @@
 {
     partial class RebarDeformationView
     {
-        /// <summary> 
-        /// Обязательная переменная конструктора.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
+                                private System.ComponentModel.IContainer components = null;
 
-        /// <summary> 
-        /// Освободить все используемые ресурсы.
-        /// </summary>
-        /// <param name="disposing">истинно, если управляемый ресурс должен быть удален; иначе ложно.</param>
-        protected override void Dispose(bool disposing)
+                                        protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
             {
@@ -22,11 +15,7 @@
 
         #region Код, автоматически созданный конструктором компонентов
 
-        /// <summary> 
-        /// Требуемый метод для поддержки конструктора — не изменяйте 
-        /// содержимое этого метода с помощью редактора кода.
-        /// </summary>
-        private void InitializeComponent()
+                                        private void InitializeComponent()
         {
             this.tableLayoutEpsilonS = new System.Windows.Forms.TableLayoutPanel();
             this.numEps_s_ult = new System.Windows.Forms.NumericUpDown();
@@ -48,10 +37,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numEpsilonS1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numEpsilonS0)).BeginInit();
             this.SuspendLayout();
-            // 
-            // tableLayoutEpsilonS
-            // 
-            this.tableLayoutEpsilonS.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
+                                                this.tableLayoutEpsilonS.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.tableLayoutEpsilonS.ColumnCount = 2;
             this.tableLayoutEpsilonS.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 29.74359F));
             this.tableLayoutEpsilonS.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70.25641F));
@@ -81,10 +67,7 @@
             this.tableLayoutEpsilonS.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
             this.tableLayoutEpsilonS.Size = new System.Drawing.Size(192, 276);
             this.tableLayoutEpsilonS.TabIndex = 11;
-            // 
-            // numEps_s_ult
-            // 
-            this.numEps_s_ult.Anchor = System.Windows.Forms.AnchorStyles.Left;
+                                                this.numEps_s_ult.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numEps_s_ult.DecimalPlaces = 8;
             this.numEps_s_ult.Enabled = false;
             this.numEps_s_ult.Increment = new decimal(new int[] {
@@ -106,10 +89,7 @@
             this.numEps_s_ult.Name = "numEps_s_ult";
             this.numEps_s_ult.Size = new System.Drawing.Size(120, 20);
             this.numEps_s_ult.TabIndex = 16;
-            // 
-            // label33
-            // 
-            this.label33.Anchor = System.Windows.Forms.AnchorStyles.Left;
+                                                this.label33.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label33.AutoSize = true;
             this.label33.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label33.Location = new System.Drawing.Point(61, 45);
@@ -117,10 +97,7 @@
             this.label33.Size = new System.Drawing.Size(46, 13);
             this.label33.TabIndex = 20;
             this.label33.Text = "предел:";
-            // 
-            // labelReinforcementDeformType
-            // 
-            this.labelReinforcementDeformType.Anchor = System.Windows.Forms.AnchorStyles.Right;
+                                                this.labelReinforcementDeformType.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelReinforcementDeformType.AutoSize = true;
             this.labelReinforcementDeformType.Cursor = System.Windows.Forms.Cursors.Default;
             this.labelReinforcementDeformType.Location = new System.Drawing.Point(28, 250);
@@ -130,10 +107,7 @@
             this.labelReinforcementDeformType.Text = "Тип";
             this.labelReinforcementDeformType.UseMnemonic = false;
             this.labelReinforcementDeformType.Visible = false;
-            // 
-            // labelReinforcementDeform
-            // 
-            this.labelReinforcementDeform.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+                                                this.labelReinforcementDeform.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.labelReinforcementDeform.AutoSize = true;
             this.labelReinforcementDeform.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelReinforcementDeform.Location = new System.Drawing.Point(61, 11);
@@ -141,10 +115,7 @@
             this.labelReinforcementDeform.Size = new System.Drawing.Size(127, 13);
             this.labelReinforcementDeform.TabIndex = 17;
             this.labelReinforcementDeform.Text = "Арматура:";
-            // 
-            // labelTypeDDRebar
-            // 
-            this.labelTypeDDRebar.Anchor = System.Windows.Forms.AnchorStyles.Left;
+                                                this.labelTypeDDRebar.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelTypeDDRebar.AutoSize = true;
             this.labelTypeDDRebar.Location = new System.Drawing.Point(61, 250);
             this.labelTypeDDRebar.Name = "labelTypeDDRebar";
@@ -152,30 +123,21 @@
             this.labelTypeDDRebar.TabIndex = 19;
             this.labelTypeDDRebar.Text = "Не определено";
             this.labelTypeDDRebar.Visible = false;
-            // 
-            // labelEpsilonsult
-            // 
-            this.labelEpsilonsult.Anchor = System.Windows.Forms.AnchorStyles.Right;
+                                                this.labelEpsilonsult.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelEpsilonsult.AutoSize = true;
             this.labelEpsilonsult.Location = new System.Drawing.Point(16, 79);
             this.labelEpsilonsult.Name = "labelEpsilonsult";
             this.labelEpsilonsult.Size = new System.Drawing.Size(38, 13);
             this.labelEpsilonsult.TabIndex = 15;
             this.labelEpsilonsult.Text = "ε, s ult";
-            // 
-            // labelEpsilonS2
-            // 
-            this.labelEpsilonS2.Anchor = System.Windows.Forms.AnchorStyles.Right;
+                                                this.labelEpsilonS2.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelEpsilonS2.AutoSize = true;
             this.labelEpsilonS2.Location = new System.Drawing.Point(22, 215);
             this.labelEpsilonS2.Name = "labelEpsilonS2";
             this.labelEpsilonS2.Size = new System.Drawing.Size(32, 13);
             this.labelEpsilonS2.TabIndex = 14;
             this.labelEpsilonS2.Text = "ε, S2";
-            // 
-            // numEpsilonS2
-            // 
-            this.numEpsilonS2.Anchor = System.Windows.Forms.AnchorStyles.Left;
+                                                this.numEpsilonS2.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numEpsilonS2.DecimalPlaces = 8;
             this.numEpsilonS2.Increment = new decimal(new int[] {
             1,
@@ -202,20 +164,14 @@
             0,
             196608});
             this.numEpsilonS2.ValueChanged += new System.EventHandler(this.numEpsilonS2_ValueChanged);
-            // 
-            // labelEpsilonS1
-            // 
-            this.labelEpsilonS1.Anchor = System.Windows.Forms.AnchorStyles.Right;
+                                                this.labelEpsilonS1.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelEpsilonS1.AutoSize = true;
             this.labelEpsilonS1.Location = new System.Drawing.Point(22, 181);
             this.labelEpsilonS1.Name = "labelEpsilonS1";
             this.labelEpsilonS1.Size = new System.Drawing.Size(32, 13);
             this.labelEpsilonS1.TabIndex = 13;
             this.labelEpsilonS1.Text = "ε, S1";
-            // 
-            // numEpsilonS1
-            // 
-            this.numEpsilonS1.Anchor = System.Windows.Forms.AnchorStyles.Left;
+                                                this.numEpsilonS1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numEpsilonS1.DecimalPlaces = 8;
             this.numEpsilonS1.Enabled = false;
             this.numEpsilonS1.Increment = new decimal(new int[] {
@@ -242,20 +198,14 @@
             0,
             0,
             196608});
-            // 
-            // labelEpsilonS0
-            // 
-            this.labelEpsilonS0.Anchor = System.Windows.Forms.AnchorStyles.Right;
+                                                this.labelEpsilonS0.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelEpsilonS0.AutoSize = true;
             this.labelEpsilonS0.Location = new System.Drawing.Point(22, 147);
             this.labelEpsilonS0.Name = "labelEpsilonS0";
             this.labelEpsilonS0.Size = new System.Drawing.Size(32, 13);
             this.labelEpsilonS0.TabIndex = 12;
             this.labelEpsilonS0.Text = "ε, S0";
-            // 
-            // label34
-            // 
-            this.label34.Anchor = System.Windows.Forms.AnchorStyles.Left;
+                                                this.label34.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label34.AutoSize = true;
             this.label34.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label34.Location = new System.Drawing.Point(61, 113);
@@ -263,10 +213,7 @@
             this.label34.Size = new System.Drawing.Size(81, 13);
             this.label34.TabIndex = 21;
             this.label34.Text = "раст / сжатие:";
-            // 
-            // numEpsilonS0
-            // 
-            this.numEpsilonS0.Anchor = System.Windows.Forms.AnchorStyles.Left;
+                                                this.numEpsilonS0.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numEpsilonS0.DecimalPlaces = 8;
             this.numEpsilonS0.Enabled = false;
             this.numEpsilonS0.Increment = new decimal(new int[] {
@@ -293,10 +240,7 @@
             0,
             0,
             327680});
-            // 
-            // RebarDeformationView
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+                                                this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tableLayoutEpsilonS);
             this.Name = "RebarDeformationView";

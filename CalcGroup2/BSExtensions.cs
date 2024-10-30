@@ -5,10 +5,7 @@ namespace BSFiberConcrete.CalcGroup2
 {
     public static class BSExtensions
     {
-        /// <summary>
-        /// Расширение стандартной функции Zip для 3-х коллекций
-        /// </summary>        
-        public static IEnumerable<TResult> ZipThree<T1, T2, T3, TResult>(
+                                public static IEnumerable<TResult> ZipThree<T1, T2, T3, TResult>(
             this IEnumerable<T1> source,
             IEnumerable<T2> second,
             IEnumerable<T3> third,
@@ -23,10 +20,7 @@ namespace BSFiberConcrete.CalcGroup2
             }
         }
 
-        /// <summary>
-        /// Расширение стандартной функции Zip для 4-х коллекций
-        /// </summary>        
-        public static IEnumerable<TResult> ZipFour<T1, T2, T3, T4, TResult>(
+                                public static IEnumerable<TResult> ZipFour<T1, T2, T3, T4, TResult>(
             this IEnumerable<T1> source,
             IEnumerable<T2> second,
             IEnumerable<T3> third,

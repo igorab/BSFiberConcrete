@@ -5,40 +5,22 @@ using System.Threading.Tasks;
 
 namespace BSFiberConcrete
 {
-    /// <summary>
-    /// Свойства фибробетона
-    /// Расчет по нелинейной деформационной модели
-    /// </summary>
-    public class BSMatFiber : IMaterial, INonlinear
+                    public class BSMatFiber : IMaterial, INonlinear
     {
         public string Name => "Фибробетон";
         public double E_young => Efb;
 
-        // Начальный модуль упругости бетона-матрицы B30 СП63
-        public double Eb { get => Efb; }
+                public double Eb { get => Efb; }
 
-        //Модуль упругости на растяжение
-        public double Efbt { get; set; }
+                public double Efbt { get; set; }
 
-        /// <summary>
-        /// Начальный модуль упругости
-        /// </summary>
-        public double Efb { get; set; }
+                                public double Efb { get; set; }
 
-        /// <summary>
-        /// Коэффициент упругости
-        /// </summary>
-        public double Nu_fb { get; set; }
+                                public double Nu_fb { get; set; }
 
-        /// <summary>
-        ///  предельное значение относительной деформации фибробетона при сжатии
-        /// </summary>
-        public double Eps_fb_ult { get; set; }
+                                public double Eps_fb_ult { get; set; }
 
-        /// <summary>
-        ///  предельное значение относительной деформации фибробетона при растяжении
-        /// </summary>
-        public double Eps_fbt_ult { get; set; }
+                                public double Eps_fbt_ult { get; set; }
 
         public  double Yft, Yb, Yb1, Yb2, Yb3, Yb5;
 
@@ -47,15 +29,11 @@ namespace BSFiberConcrete
         public double Eps_fbt2 { get; set; }
         public double Eps_fbt3 { get; set; }
 
-        //Расчетные значения сопротивления фибробетона растяжению
-        private double m_Rfbt;
+                private double m_Rfbt;
         private double m_Rfbt2;
         private double m_Rfbt3;
 
-        /// <summary>
-        /// Инициализация данными с формы
-        /// </summary>        
-        public BSMatFiber(double _Efb, decimal _Yft, decimal _Yb, decimal _Yb1, decimal _Yb2, decimal _Yb3, decimal _Yb5)
+                                public BSMatFiber(double _Efb, decimal _Yft, decimal _Yb, decimal _Yb1, decimal _Yb2, decimal _Yb3, decimal _Yb5)
         {
             Efb =  _Efb;
             Yft = (double) _Yft; 
@@ -66,8 +44,7 @@ namespace BSFiberConcrete
             Yb5 = (double) _Yb5;
         }
 
-        // Класс бетона
-        public string BTCls { get; set; }
+                public string BTCls { get; set; }
 
         [DisplayName("Числовая характеристика класса фибробетона по прочности на осевое сжатие")]
         public double B { get; set; }
@@ -115,41 +92,26 @@ namespace BSFiberConcrete
         public double e_b1_red { get; set; }
         public double e_b1 { get; set; }
 
-        // Расчетные значения сопротивления на сжатиие по B30 СП63
-        public double R_fb_calc() => (Yb != 0) ? Rfbn / Yb * Yb1 * Yb2 * Yb3 * Yb5 : 0;
+                public double R_fb_calc() => (Yb != 0) ? Rfbn / Yb * Yb1 * Yb2 * Yb3 * Yb5 : 0;
 
-        //Расчетное остаточное сопротивление осевому растяжению R_fbt
-        public double R_fbt_calc() => (Yft != 0) ? Rfbtn / Yft * Yb1 * Yb5 : 0;
+                public double R_fbt_calc() => (Yft != 0) ? Rfbtn / Yft * Yb1 * Yb5 : 0;
 
-        //Расчетное остаточное сопротивление осевому растяжению R_fbt2
-        public double R_fbt2_calc() => (Yft != 0) ? Rfbt2n / Yft * Yb1 * Yb5 : 0;
+                public double R_fbt2_calc() => (Yft != 0) ? Rfbt2n / Yft * Yb1 * Yb5 : 0;
 
-        //Расчетное остаточное сопротивление осевому растяжению R_fbt3
-        public double R_fbt3_calc() => (Yft != 0) ? Rfbt3n / Yft * Yb1 * Yb5 : 0;
+                public double R_fbt3_calc() => (Yft != 0) ? Rfbt3n / Yft * Yb1 * Yb5 : 0;
 
-        // относительные деформации сжатого сталефибробетона при напряжениях R/b,
-        // принимаемые по указаниям СП 63.13330 как для обычного бетона
-        public double e_b2 { get; set; }
+                        public double e_b2 { get; set; }
 
         public double Eb_red { get => (e_b1 != 0) ? R_fb / e_b1 : 0; }
 
-        // коэффициент приведения арматуры к фибробетону Пособие к СП 52-102-2004 п.п.2.33
-        public double alfa(double _Es) => _Es / Efb;
+                public double alfa(double _Es) => _Es / Efb;
 
 
-        //характеристика сжатой зоны сталефибробетона, принимаемая для
-        // сталефибробетона из тяжелого бетона классов до В60 включительно равной 0,8
-        public double Omega => (B<=60) ? 0.8 : 0.9;
+                        public double Omega => (B<=60) ? 0.8 : 0.9;
 
-        // предельная относительная деформация бетона при растяжении
-        public const double Ebt0 = 0.0001;
+                public const double Ebt0 = 0.0001;
 
-        /// <summary>
-        /// Диаграмма состояния растяжения-сжатия фибробетона, в обозначениях СП360 
-        /// </summary>
-        /// <param name="_eps">Деформация</param>
-        /// <returns>Напряжение</returns>       
-        public double Eps_StateDiagram3L(double _eps, out int _res, int _group = 1 )
+                                                public double Eps_StateDiagram3L(double _eps, out int _res, int _group = 1 )
         {
             _res = 0;
             if (Efb == 0 || Rfbt == 0 || Rfbt2 == 0 || Rfbt3 == 0)
@@ -194,27 +156,17 @@ namespace BSFiberConcrete
 
             };
             
-            // Знаки НЕ соответствуют диаграмме деформирования фибробетона в СП360
-            if (_eps > 0) // растягивающие напряжения:  
-            {
+                        if (_eps > 0)             {
                 sigma = TensileStrength();
             }
-            else // сжимающие напряжения   
-            {                
+            else             {                
                 sigma = 0;
             }
 
             return sigma;
         }
 
-        /// <summary>
-        /// Диаграмма деформирования двухлинейная
-        /// на сжатие, как для бетона
-        /// знак + для деформаций сжатия - для растяжения (такая диаграмма в СП 63)
-        /// </summary>
-        /// <param name="_e">Деформация</param>
-        /// <returns>Напряжение</returns>        
-        public double Eps_StDiagram2L(double _e, out int _res, int _group = 1)
+                                                                public double Eps_StDiagram2L(double _e, out int _res, int _group = 1)
         {
             double sgm = 0;
             _res = 0;
@@ -229,8 +181,7 @@ namespace BSFiberConcrete
             {
                 sgm = R_fb;
             }
-            else if (_e < 0) // растяжение
-            {
+            else if (_e < 0)             {
                 if (_group == 1)
                 {
                     sgm = 0;
@@ -239,16 +190,14 @@ namespace BSFiberConcrete
                 {
                     sgm = Rfbt_ser;
 
-                    // условие образование трещины
-                    if (Math.Abs(_e) > Ebt0)
+                                        if (Math.Abs(_e) > Ebt0)
                     {
                         _res = 2;
                     }
                 }
 
             }
-            else if (_e >= e_b2) // уточнить такую ситуацию
-            {
+            else if (_e >= e_b2)             {
                 Debug.Assert(true, "Превышен предел прочности (временное сопротивление) ");
 
                 sgm = 0; 
@@ -257,28 +206,15 @@ namespace BSFiberConcrete
             return sgm;
         }
 
-        /// <summary>
-        /// формула 5.6 из СП360
-        /// </summary>
-        /// <param name="_Rfbt2"></param>
-        /// <param name="_Rfbt3"></param>
-        /// <returns></returns>
-        public static double NumEps_fbt3(double _Rfbt2, double _Rfbt3)
+                                                        public static double NumEps_fbt3(double _Rfbt2, double _Rfbt3)
         {
             if (_Rfbt2 == 0 || _Rfbt3 == 0)
                 return 0;
-            // важно, чтобы _Rfbt3 / _Rfbt2 < 2
-            double res =  0.02 - 0.0125 * (_Rfbt3 / _Rfbt2 - 0.5);
+                        double res =  0.02 - 0.0125 * (_Rfbt3 / _Rfbt2 - 0.5);
             return res;
         }
 
-        /// <summary>
-        /// из пункта 6.1.20 СП63
-        /// </summary>
-        /// <param name="_Rfb"></param>
-        /// <param name="_Efb"></param>
-        /// <returns></returns>
-        public static decimal NumEps_fb1(decimal _Rfb, decimal _Efb)
+                                                        public static decimal NumEps_fb1(decimal _Rfb, decimal _Efb)
         {
             if (_Rfb == 0 || _Efb == 0)
                 return 0;
@@ -288,13 +224,7 @@ namespace BSFiberConcrete
         }
 
 
-        /// <summary>
-        /// Формула 5.6 СП360
-        /// </summary>
-        /// <param name="_Rfbt"></param>
-        /// <param name="_Efb"></param>
-        /// <returns></returns>
-        public static decimal NumEps_fbt0(decimal _Rfbt, decimal _Efb)
+                                                        public static decimal NumEps_fbt0(decimal _Rfbt, decimal _Efb)
         {
             if (_Rfbt == 0 || _Efb == 0)
                 return 0;

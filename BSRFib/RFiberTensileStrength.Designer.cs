@@ -2,16 +2,9 @@
 {
     partial class RFiberTensileStrength
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
+                                private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
+                                        protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
             {
@@ -22,11 +15,7 @@
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
+                                        private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -64,10 +53,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numRFbtn)).BeginInit();
             this.tableLayoutPanel3.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // dataGridFFF
-            // 
-            this.dataGridFFF.AutoGenerateColumns = false;
+                                                this.dataGridFFF.AutoGenerateColumns = false;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -91,62 +77,35 @@
             this.dataGridFFF.Name = "dataGridFFF";
             this.dataGridFFF.Size = new System.Drawing.Size(663, 488);
             this.dataGridFFF.TabIndex = 0;
-            // 
-            // idDataGridViewTextBoxColumn
-            // 
-            this.idDataGridViewTextBoxColumn.DataPropertyName = "Id";
+                                                this.idDataGridViewTextBoxColumn.DataPropertyName = "Id";
             this.idDataGridViewTextBoxColumn.HeaderText = "Id";
             this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
-            // 
-            // L
-            // 
-            this.L.DataPropertyName = "L";
+                                                this.L.DataPropertyName = "L";
             this.L.HeaderText = "L, мм";
             this.L.Name = "L";
             this.L.ToolTipText = "Длина";
             this.L.Width = 50;
-            // 
-            // B
-            // 
-            this.B.DataPropertyName = "B";
+                                                this.B.DataPropertyName = "B";
             this.B.HeaderText = "B, мм";
             this.B.Name = "B";
             this.B.ToolTipText = "Ширина";
             this.B.Width = 50;
-            // 
-            // H_sp
-            // 
-            this.H_sp.DataPropertyName = "H_sp";
+                                                this.H_sp.DataPropertyName = "H_sp";
             this.H_sp.HeaderText = "H_sp, мм ";
             this.H_sp.Name = "H_sp";
             this.H_sp.ToolTipText = "Расстояние между вершиной надреза и верхней гранью образца";
             this.H_sp.Width = 50;
-            // 
-            // felDataGridViewTextBoxColumn
-            // 
-            this.felDataGridViewTextBoxColumn.DataPropertyName = "Fel";
+                                                this.felDataGridViewTextBoxColumn.DataPropertyName = "Fel";
             this.felDataGridViewTextBoxColumn.HeaderText = "F el, Н";
             this.felDataGridViewTextBoxColumn.Name = "felDataGridViewTextBoxColumn";
-            // 
-            // f05DataGridViewTextBoxColumn
-            // 
-            this.f05DataGridViewTextBoxColumn.DataPropertyName = "F05";
+                                                this.f05DataGridViewTextBoxColumn.DataPropertyName = "F05";
             this.f05DataGridViewTextBoxColumn.HeaderText = "F 0.5, Н";
             this.f05DataGridViewTextBoxColumn.Name = "f05DataGridViewTextBoxColumn";
-            // 
-            // f25DataGridViewTextBoxColumn
-            // 
-            this.f25DataGridViewTextBoxColumn.DataPropertyName = "F25";
+                                                this.f25DataGridViewTextBoxColumn.DataPropertyName = "F25";
             this.f25DataGridViewTextBoxColumn.HeaderText = "F 2.5, Н ";
             this.f25DataGridViewTextBoxColumn.Name = "f25DataGridViewTextBoxColumn";
-            // 
-            // fibLabBindingSource
-            // 
-            this.fibLabBindingSource.DataSource = typeof(BSFiberConcrete.FibLab);
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 2;
+                                                this.fibLabBindingSource.DataSource = typeof(BSFiberConcrete.FibLab);
+                                                this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 66.90752F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.09249F));
             this.tableLayoutPanel1.Controls.Add(this.dataGridFFF, 0, 0);
@@ -160,10 +119,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 82F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1000, 576);
             this.tableLayoutPanel1.TabIndex = 1;
-            // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+                                                this.tableLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel2.ColumnCount = 2;
@@ -189,40 +145,28 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 168F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(325, 488);
             this.tableLayoutPanel2.TabIndex = 1;
-            // 
-            // labelRfbt2n
-            // 
-            this.labelRfbt2n.Anchor = System.Windows.Forms.AnchorStyles.Right;
+                                                this.labelRfbt2n.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelRfbt2n.AutoSize = true;
             this.labelRfbt2n.Location = new System.Drawing.Point(11, 48);
             this.labelRfbt2n.Name = "labelRfbt2n";
             this.labelRfbt2n.Size = new System.Drawing.Size(48, 13);
             this.labelRfbt2n.TabIndex = 0;
             this.labelRfbt2n.Text = "R fbt2, n";
-            // 
-            // labelRfbt3n
-            // 
-            this.labelRfbt3n.Anchor = System.Windows.Forms.AnchorStyles.Right;
+                                                this.labelRfbt3n.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelRfbt3n.AutoSize = true;
             this.labelRfbt3n.Location = new System.Drawing.Point(11, 96);
             this.labelRfbt3n.Name = "labelRfbt3n";
             this.labelRfbt3n.Size = new System.Drawing.Size(48, 13);
             this.labelRfbt3n.TabIndex = 1;
             this.labelRfbt3n.Text = "R fbt3, n";
-            // 
-            // labelRFbtn
-            // 
-            this.labelRFbtn.Anchor = System.Windows.Forms.AnchorStyles.Right;
+                                                this.labelRFbtn.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelRFbtn.AutoSize = true;
             this.labelRFbtn.Location = new System.Drawing.Point(17, 151);
             this.labelRFbtn.Name = "labelRFbtn";
             this.labelRFbtn.Size = new System.Drawing.Size(42, 13);
             this.labelRFbtn.TabIndex = 2;
             this.labelRFbtn.Text = "R fbt, n";
-            // 
-            // pictureBoxBeamLab
-            // 
-            this.pictureBoxBeamLab.Dock = System.Windows.Forms.DockStyle.Fill;
+                                                this.pictureBoxBeamLab.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBoxBeamLab.Image = global::BSFiberConcrete.Properties.Resources.BeamLab;
             this.pictureBoxBeamLab.Location = new System.Drawing.Point(65, 322);
             this.pictureBoxBeamLab.Name = "pictureBoxBeamLab";
@@ -230,10 +174,7 @@
             this.pictureBoxBeamLab.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBoxBeamLab.TabIndex = 3;
             this.pictureBoxBeamLab.TabStop = false;
-            // 
-            // numRfbt2n
-            // 
-            this.numRfbt2n.Anchor = System.Windows.Forms.AnchorStyles.Left;
+                                                this.numRfbt2n.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numRfbt2n.DecimalPlaces = 4;
             this.numRfbt2n.Location = new System.Drawing.Point(65, 45);
             this.numRfbt2n.Maximum = new decimal(new int[] {
@@ -249,10 +190,7 @@
             this.numRfbt2n.Name = "numRfbt2n";
             this.numRfbt2n.Size = new System.Drawing.Size(120, 20);
             this.numRfbt2n.TabIndex = 3;
-            // 
-            // numRfbt3n
-            // 
-            this.numRfbt3n.Anchor = System.Windows.Forms.AnchorStyles.Left;
+                                                this.numRfbt3n.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numRfbt3n.DecimalPlaces = 4;
             this.numRfbt3n.Location = new System.Drawing.Point(65, 92);
             this.numRfbt3n.Maximum = new decimal(new int[] {
@@ -268,10 +206,7 @@
             this.numRfbt3n.Name = "numRfbt3n";
             this.numRfbt3n.Size = new System.Drawing.Size(120, 20);
             this.numRfbt3n.TabIndex = 4;
-            // 
-            // numRFbtn
-            // 
-            this.numRFbtn.Anchor = System.Windows.Forms.AnchorStyles.Left;
+                                                this.numRFbtn.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numRFbtn.DecimalPlaces = 4;
             this.numRFbtn.Location = new System.Drawing.Point(65, 147);
             this.numRFbtn.Maximum = new decimal(new int[] {
@@ -287,20 +222,14 @@
             this.numRFbtn.Name = "numRFbtn";
             this.numRFbtn.Size = new System.Drawing.Size(120, 20);
             this.numRFbtn.TabIndex = 5;
-            // 
-            // labelCalc
-            // 
-            this.labelCalc.Anchor = System.Windows.Forms.AnchorStyles.Left;
+                                                this.labelCalc.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelCalc.AutoSize = true;
             this.labelCalc.Location = new System.Drawing.Point(65, 17);
             this.labelCalc.Name = "labelCalc";
             this.labelCalc.Size = new System.Drawing.Size(45, 13);
             this.labelCalc.TabIndex = 6;
             this.labelCalc.Text = "Расчет:";
-            // 
-            // tableLayoutPanel3
-            // 
-            this.tableLayoutPanel3.ColumnCount = 2;
+                                                this.tableLayoutPanel3.ColumnCount = 2;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.Controls.Add(this.btnDelCalc, 0, 1);
@@ -315,10 +244,7 @@
             this.tableLayoutPanel3.Size = new System.Drawing.Size(663, 76);
             this.tableLayoutPanel3.TabIndex = 2;
             this.tableLayoutPanel3.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel3_Paint);
-            // 
-            // btnCalculate
-            // 
-            this.btnCalculate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+                                                this.btnCalculate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCalculate.Image = ((System.Drawing.Image)(resources.GetObject("btnCalculate.Image")));
             this.btnCalculate.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnCalculate.Location = new System.Drawing.Point(235, 3);
@@ -328,10 +254,7 @@
             this.btnCalculate.Text = "Рассчитать";
             this.btnCalculate.UseVisualStyleBackColor = true;
             this.btnCalculate.Click += new System.EventHandler(this.btnCalculate_Click);
-            // 
-            // btnReport
-            // 
-            this.btnReport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+                                                this.btnReport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnReport.Image = ((System.Drawing.Image)(resources.GetObject("btnReport.Image")));
             this.btnReport.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnReport.Location = new System.Drawing.Point(567, 3);
@@ -341,10 +264,7 @@
             this.btnReport.Text = "Отчет";
             this.btnReport.UseVisualStyleBackColor = true;
             this.btnReport.Click += new System.EventHandler(this.btnReport_Click);
-            // 
-            // btnDelCalc
-            // 
-            this.btnDelCalc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+                                                this.btnDelCalc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnDelCalc.Image = ((System.Drawing.Image)(resources.GetObject("btnDelCalc.Image")));
             this.btnDelCalc.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnDelCalc.Location = new System.Drawing.Point(235, 41);
@@ -354,10 +274,7 @@
             this.btnDelCalc.Text = "Удалить";
             this.btnDelCalc.UseVisualStyleBackColor = true;
             this.btnDelCalc.Click += new System.EventHandler(this.btnDelCalc_Click);
-            // 
-            // RFiberTensileStrength
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+                                                this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1000, 576);
             this.Controls.Add(this.tableLayoutPanel1);

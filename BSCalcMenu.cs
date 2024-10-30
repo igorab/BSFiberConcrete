@@ -61,39 +61,27 @@ namespace BSCalcMenu
 
         private void btnFiberClass_Click(object sender, EventArgs e)
         {
-            //BSFiberSetup bsFiberSetup = new BSFiberSetup();
-            //bsFiberSetup.TabPageIdx = 0;
-            //bsFiberSetup.Show();                                                                                                        
-            FiberConcreteInform fcInforn = new FiberConcreteInform();
+                                                FiberConcreteInform fcInforn = new FiberConcreteInform();
             fcInforn.Show();
         }
 
         private void btnRebarClass_Click(object sender, EventArgs e)
         {
-            //BSFiberSetup bsFiberSetup = new BSFiberSetup();
-            //bsFiberSetup.TabPageIdx = 1;
-            //bsFiberSetup.Show();
-
+                                    
             RebarInform rebarInform = new RebarInform();
             rebarInform.Show();
         }
 
         private void btnCoefY_Click(object sender, EventArgs e)
         {
-            //BSFiberSetup bsFiberSetup = new BSFiberSetup();
-            //bsFiberSetup.TabPageIdx = 2;
-            //bsFiberSetup.Show();
-
+                                    
             CoefInform  coefInform = new CoefInform();
             coefInform.Show();
         }
 
         private void btnBetonClass_Click(object sender, EventArgs e)
         {
-            //BSFiberSetup bsFiberSetup = new BSFiberSetup();
-            //bsFiberSetup.TabPageIdx = 3;
-            //bsFiberSetup.Show();
-
+                                    
             ConcreteInform сoncreteInform = new ConcreteInform();
             сoncreteInform.Show();
         }
@@ -119,9 +107,7 @@ namespace BSCalcMenu
 
         private void btnBeamCalc_Click(object sender, EventArgs e)
         {
-            //BeamCalculatorForm beamCalculator = new BeamCalculatorForm();
-            //beamCalculator.Show();
-
+                        
             BSFiberMain bsFiberMain = new BSFiberMain();
             bsFiberMain.CalcType = CalcType.BeamCalc;
             bsFiberMain.Show();
@@ -143,9 +129,7 @@ namespace BSCalcMenu
 
         private void btnRFbtFiber_Click(object sender, EventArgs e)
         {
-            //BSRFiber bSRFiber = new BSRFiber();
-            //bSRFiber.Show();
-
+                        
             ViewFiberConcreteCalc viewFiberConcreteCalc = new ViewFiberConcreteCalc();
             viewFiberConcreteCalc.Show();
         }
@@ -156,10 +140,7 @@ namespace BSCalcMenu
             fibDeflection.Show();
         }
 
-        /// <summary>
-        /// Расчет на местное сжатие
-        /// </summary>        
-        private void btnLocalCompressionCalc_Click(object sender, EventArgs e)
+                                private void btnLocalCompressionCalc_Click(object sender, EventArgs e)
         {
             BSLocalCompressionCalc compressionCalc = new BSLocalCompressionCalc();
             compressionCalc.InitDataSource();
@@ -169,10 +150,7 @@ namespace BSCalcMenu
             localStrength.Show();                        
         }
 
-        /// <summary>
-        /// Расчет на продавливание
-        /// </summary>        
-        private void btnPunchCalc_Click(object sender, EventArgs e)
+                                private void btnPunchCalc_Click(object sender, EventArgs e)
         {
             BSLocalPunchCalc punchCalc = new BSLocalPunchCalc();
             punchCalc.InitDataSource();            
@@ -182,12 +160,7 @@ namespace BSCalcMenu
             localStrength.Show();                        
         }
 
-        /// <summary>
-        /// 5.2.8 Основные деформационные характеристики сталефибробетона
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnEfib_Click(object sender, EventArgs e)
+                                                private void btnEfib_Click(object sender, EventArgs e)
         {
             BSEFib bsEFib = new BSEFib();
             bsEFib.Show();
@@ -202,17 +175,13 @@ namespace BSCalcMenu
        
         private void btnDeflectionsUlt_Click(object sender, EventArgs e)
         {
-            //BSDeflectionsUlt deflectionsUlt = new BSDeflectionsUlt();
-            //deflectionsUlt.Show();
-            DeflectionUltimateInform deflectionUltimateInform = new DeflectionUltimateInform();
+                                    DeflectionUltimateInform deflectionUltimateInform = new DeflectionUltimateInform();
             deflectionUltimateInform.Show();
         }
 
         private void btnFiberClassSetup_Click(object sender, EventArgs e)
         {        
-            //BSFiberClassSetup fiberClassSetup = new BSFiberClassSetup();
-            //fiberClassSetup.Show();
-            FiberRebarInform rebarInform = new FiberRebarInform();
+                                    FiberRebarInform rebarInform = new FiberRebarInform();
             rebarInform.Show();
         }
 

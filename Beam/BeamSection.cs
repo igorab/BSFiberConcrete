@@ -3,41 +3,20 @@ using System.ComponentModel;
 
 namespace BSFiberConcrete
 {
-    /// <summary>
-    /// Сечение балки
-    /// </summary>
-    [Flags, Description("Сечение балки")]
+                [Flags, Description("Сечение балки")]
     public enum BeamSection
     {
-        /// <summary>
-        /// Произвольное сечение
-        /// </summary>
-        [Description("Cечение произвольное")]
+                                [Description("Cечение произвольное")]
         Any = 0,
-        /// <summary>
-        /// Тавр с верхней полкой
-        /// </summary>
-        [Description("Тавровое сечение")]
+                                [Description("Тавровое сечение")]
         TBeam = 1,
-        /// <summary>
-        /// Двутавр
-        /// </summary>
-        [Description("Двутавровое сечение")]
+                                [Description("Двутавровое сечение")]
         IBeam = 2,
-        /// <summary>
-        /// Кольцо
-        /// </summary>
-        [Description("Кольцевое сечение")]
+                                [Description("Кольцевое сечение")]
         Ring = 3,
-        /// <summary>
-        /// Прямоугольник
-        /// </summary>
-        [Description("Прямоугольное сечение")]
+                                [Description("Прямоугольное сечение")]
         Rect = 4,
-        /// <summary>
-        /// Тавр с нижней полкой
-        /// </summary>
-        [Description("Тавр нижняя полка")]
+                                [Description("Тавр нижняя полка")]
         LBeam = 5
     }
 }

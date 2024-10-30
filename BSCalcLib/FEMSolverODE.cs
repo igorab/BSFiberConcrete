@@ -7,11 +7,7 @@ using System.Threading.Tasks;
 namespace BSCalcLib
 {
 
-    /// <summary>
-    /// Finite element method
-    /// Solution of an ODE
-    /// </summary>
-
+                
     public class FEMSolverODE
     {
         public List<double> X 
@@ -24,23 +20,17 @@ namespace BSCalcLib
             } 
         }
   
-        // total number of nodes
-        private static int NPoints;
-        // total number of elements
-        private static int NElem;
-        // x-coordinate of node I
-        private double[] m_X = new double[NPoints];
+                private static int NPoints;
+                private static int NElem;
+                private double[] m_X = new double[NPoints];
 
         private const int ElPoints = 2;
 
-        // the M-N-th element of the element X matrix, M and N being node identifiers
-        double[,] STE = new double[ElPoints, ElPoints];
+                double[,] STE = new double[ElPoints, ElPoints];
 
-        // the I-J element of the assembled system K matrix
-        double[,] ST = new double[NPoints, NPoints];
+                double[,] ST = new double[NPoints, NPoints];
 
-        //  Right-hand side matrix in the system matrix equasion
-        double[] RHS = new double[NPoints];
+                double[] RHS = new double[NPoints];
 
 
         static FEMSolverODE()
@@ -49,8 +39,7 @@ namespace BSCalcLib
             NElem = NPoints-1;
         }
 
-        //The system K matrix and the Right-hand side matrix are initilized to Zero
-        private void InitToZeros()
+                private void InitToZeros()
         {
             for (int i = 0; i < NPoints; i++) 
             {
@@ -63,8 +52,7 @@ namespace BSCalcLib
             }
         }
 
-        // the element K Matrices atr obtained and assembled for all elements and the system k matrix is obtained
-        private void InitSTMatrix()
+                private void InitSTMatrix()
         {
             for (int i = 0; i < NElem; i++)
             {
@@ -82,8 +70,7 @@ namespace BSCalcLib
             }
         }
 
-        // the Dirichlet boundary conditions are inserted in the right-hand side matrix and the system k matrix is corrected
-        private void InitBC()
+                private void InitBC()
         {
             List<int> bounds = new List<int>() {0, NPoints-1 } ;
 

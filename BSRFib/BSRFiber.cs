@@ -12,11 +12,7 @@ using System.Windows.Forms;
 
 namespace BSFiberConcrete
 {
-    /// <summary>
-    /// Определение сопротивлений сталефибробетона растяжению и сжатию с учетом
-    /// влияния фибрового армирования
-    /// </summary>
-    public partial class BSRFiber : Form
+                    public partial class BSRFiber : Form
     {
         private double h = 60, b = 80, l_f = 25;
 

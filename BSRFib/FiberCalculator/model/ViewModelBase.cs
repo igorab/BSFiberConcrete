@@ -10,23 +10,16 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
 {
     public interface IViewModel
     {
-        // Should raise property changed events upon internal properties updating.
-        void OnPropertyChanged(string prop);
+                void OnPropertyChanged(string prop);
     }
 
 
-    /// <summary>
-    /// Base/Parent of all ViewModel type classes.
-    /// </summary>
-    public abstract class ViewModelBase : IViewModel, INotifyPropertyChanged
+                public abstract class ViewModelBase : IViewModel, INotifyPropertyChanged
     {
         #region INotifyPropertyChanged Implementation
         public event PropertyChangedEventHandler PropertyChanged;
 
-        /// <summary>
-        /// Notifies listeners of a change to the supplied proerty
-        /// </summary>
-        public void OnPropertyChanged([CallerMemberName] string prop = "")
+                                public void OnPropertyChanged([CallerMemberName] string prop = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }

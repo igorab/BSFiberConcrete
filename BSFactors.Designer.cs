@@ -2,16 +2,9 @@
 {
     partial class BSFactors
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
+                                private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
+                                        protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
             {
@@ -22,11 +15,7 @@
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
+                                        private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.gridFactors = new System.Windows.Forms.DataGridView();
@@ -39,10 +28,7 @@
             this.dataGridViewProgressColumn1 = new TestGrid.DataGridViewProgressColumn();
             ((System.ComponentModel.ISupportInitialize)(this.gridFactors)).BeginInit();
             this.SuspendLayout();
-            // 
-            // gridFactors
-            // 
-            this.gridFactors.AllowUserToAddRows = false;
+                                                this.gridFactors.AllowUserToAddRows = false;
             this.gridFactors.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gridFactors.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -56,59 +42,35 @@
             this.gridFactors.Name = "gridFactors";
             this.gridFactors.Size = new System.Drawing.Size(569, 274);
             this.gridFactors.TabIndex = 0;
-            // 
-            // Factor
-            // 
-            this.Factor.DataPropertyName = "Factor";
+                                                this.Factor.DataPropertyName = "Factor";
             this.Factor.HeaderText = "Фактор (проверка)";
             this.Factor.Name = "Factor";
-            // 
-            // Descr
-            // 
-            this.Descr.HeaderText = "Описание";
+                                                this.Descr.HeaderText = "Описание";
             this.Descr.Name = "Descr";
-            // 
-            // Coeff
-            // 
-            dataGridViewCellStyle1.Format = "N2";
+                                                dataGridViewCellStyle1.Format = "N2";
             dataGridViewCellStyle1.NullValue = "0";
             this.Coeff.DefaultCellStyle = dataGridViewCellStyle1;
             this.Coeff.HeaderText = "Коэффициент";
             this.Coeff.Name = "Coeff";
-            // 
-            // Loading
-            // 
-            this.Loading.HeaderText = "Загружение";
+                                                this.Loading.HeaderText = "Загружение";
             this.Loading.Name = "Loading";
             this.Loading.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Loading.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // Percent
-            // 
-            this.Percent.DataPropertyName = "Percent";
+                                                this.Percent.DataPropertyName = "Percent";
             this.Percent.HeaderText = "Процент";
             this.Percent.Name = "Percent";
             this.Percent.ReadOnly = true;
-            // 
-            // btnClose
-            // 
-            this.btnClose.Location = new System.Drawing.Point(506, 292);
+                                                this.btnClose.Location = new System.Drawing.Point(506, 292);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 2;
             this.btnClose.Text = "Закрыть";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-            // 
-            // dataGridViewProgressColumn1
-            // 
-            this.dataGridViewProgressColumn1.HeaderText = "Процент";
+                                                this.dataGridViewProgressColumn1.HeaderText = "Процент";
             this.dataGridViewProgressColumn1.Name = "dataGridViewProgressColumn1";
             this.dataGridViewProgressColumn1.ReadOnly = true;
-            // 
-            // BSFactors
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+                                                this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(591, 323);
             this.Controls.Add(this.btnClose);

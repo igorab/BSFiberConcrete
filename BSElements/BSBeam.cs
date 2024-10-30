@@ -6,22 +6,16 @@ using System.Reflection;
 
 namespace BSFiberConcrete
 {
-    /// <summary>
-    /// Балка
-    /// </summary>
-    public class BSBeam : IBeamGeometry
+                public class BSBeam : IBeamGeometry
     {
-        // количество стержней арматуры
-        public int RodsQty { get { return (Rods != null) ? Rods.Count : 0; } set { RodsQty = value; } }
+                public int RodsQty { get { return (Rods != null) ? Rods.Count : 0; } set { RodsQty = value; } }
         public List<BSRod> Rods { get; set; }
 
         public BSMatRod MatRod { get { return Rods?.First().MatRod; } }
 
-        // Материал балки (фибробетон, переделать на универсальный)
-        public BSMatFiber Mat { get; set; }
+                public BSMatFiber Mat { get; set; }
 
-        // Координаты Ц.Т.
-        public double Zfb_X { get; set; }
+                public double Zfb_X { get; set; }
         public double Z_fb_Y { get; set; }
 
         public virtual double h { get; set; }
@@ -32,11 +26,7 @@ namespace BSFiberConcrete
         public virtual double Width { get; }
         public virtual double Height { get; }
 
-        /// <summary>
-        /// Центр тяжести сечения
-        /// </summary>
-        /// <returns>X, Y</returns>
-        public virtual (double, double) CG() => (Width / 2.0, Height / 2.0);
+                                        public virtual (double, double) CG() => (Width / 2.0, Height / 2.0);
 
 
         [DisplayName("Площадь армирования, см2")]
@@ -71,11 +61,7 @@ namespace BSFiberConcrete
             return 0;
         }
 
-        /// <summary>
-        /// Метода возращает Высоту и Ширину для всех сечений 
-        /// </summary>
-        /// <returns></returns>
-        public virtual Dictionary<string, double> GetDimension()
+                                        public virtual Dictionary<string, double> GetDimension()
         {
             Dictionary<string, double> dimensionOfSection = new Dictionary<string, double>()
             {
@@ -86,19 +72,11 @@ namespace BSFiberConcrete
         }
 
 
-        /// <summary>
-        /// Статический момент относительно оси oY
-        /// </summary>
-        /// <returns></returns>
-        public virtual double Sy()
+                                        public virtual double Sy()
         {
             return 0;
         }
-        /// <summary>
-        /// Статический момент относительно оси oX
-        /// </summary>
-        /// <returns></returns>
-        public virtual double Sx()
+                                        public virtual double Sx()
         {
             return 0;
         }
@@ -113,16 +91,7 @@ namespace BSFiberConcrete
 
         public virtual void SetSizes(double[] _t) { }
 
-        /// <summary>
-        /// Нормальные напряжения в сечении
-        /// </summary>
-        /// <param name="_N">кг</param>
-        /// <param name="_Mx">кг*см</param>
-        /// <param name="_My">кг*см</param>
-        /// <param name="_X">см</param>
-        /// <param name="_Y">см</param>
-        /// <returns>кг/см2</returns>       
-        public double Sigma_Z(double _N, double _Mx, double _My, double _X, double _Y)
+                                                                                public double Sigma_Z(double _N, double _Mx, double _My, double _X, double _Y)
         {
             double _Jx = Jx();
             double _Jy = Jy();
@@ -135,12 +104,7 @@ namespace BSFiberConcrete
             return sgm_z;
         }
 
-        /// <summary>
-        /// Создать экземпляр балки
-        /// </summary>
-        /// <param name="_BeamSection">Тип сечения</param>
-        /// <returns>Балка</returns>
-        public static BSBeam construct(BeamSection _BeamSection)
+                                                public static BSBeam construct(BeamSection _BeamSection)
         {
             switch (_BeamSection)
             {

@@ -22,14 +22,7 @@ namespace BSFiberConcrete.DeformationDiagram.UserControls
             
             _valuesDeformation = valuesDeformation;
 
-            //e0
-            //e1
-            //e2 
-            //et0
-            //et1
-            //et2 
-            //et3 
-            numEps_fb0.Value = (decimal)_valuesDeformation[0];
+                                                                                                numEps_fb0.Value = (decimal)_valuesDeformation[0];
             numEps_fb2.Value = (decimal)_valuesDeformation[2];
             numEps_fbt2.Value = (decimal)_valuesDeformation[5];
             numEps_fbt3.Value = (decimal)_valuesDeformation[6];
@@ -38,10 +31,7 @@ namespace BSFiberConcrete.DeformationDiagram.UserControls
         }
 
 
-        /// <summary>
-        /// Обновить состояние объектов NumericUpDown со статусом Enabled false
-        /// </summary>
-        public void UpdateDisabledNumeric()
+                                public void UpdateDisabledNumeric()
         {
             numEps_fb1.Value = (decimal)_valuesDeformation[1];
             numEps_fbt0.Value = (decimal)_valuesDeformation[3];

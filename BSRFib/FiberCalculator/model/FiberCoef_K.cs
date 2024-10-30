@@ -8,11 +8,7 @@ using System.Windows.Forms;
 
 namespace BSFiberConcrete.BSRFib.FiberCalculator
 {
-    /// <summary>
-    /// Класс для определение коэф Кor и Kn 
-    /// ()
-    /// </summary>
-    public class FiberCoef_K
+                    public class FiberCoef_K
     {
         # region Private Properties
 
@@ -36,30 +32,12 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
 
 
 
-        // геометрия сечения
-        /// <summary>
-        /// Меньший размер сечения 
-        /// </summary>
-        private double _h;
-        /// <summary>
-        /// Больший размер сечения
-        /// </summary>
-        private double _b;
-        /// <summary>
-        /// длина фибры
-        /// </summary>
-        private double _lf;
+                                        private double _h;
+                                private double _b;
+                                private double _lf;
 
-        /// <summary>
-        /// kor – коэффициент ориентации, учитывающий ориентацию фибр в объеме элемента в зависимости 
-        /// от соотношения размеров сечения элемента и длины фибры. СП 360
-        /// </summary>
-        private double _Kor;
-        /// <summary>
-        /// kn – коэффициент, учитывающий работу фибр в сечении перпендикулярном 
-        /// направлению внешнего сжимающего усилия. СП 360
-        /// </summary>
-        private double _Kn;
+                                        private double _Kor;
+                                        private double _Kn;
         #endregion
 
         #region Fields
@@ -85,8 +63,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
 
         public FiberCoef_K(double h, double b, double lf)
         {
-            // Определить данные из бд
-            _dataFiber_Kn = BSData.LoadFiber_Kn();
+                        _dataFiber_Kn = BSData.LoadFiber_Kn();
             _dataFiber_Kor = BSData.LoadFiber_Kor();
 
 
@@ -96,35 +73,24 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
             _b = b;
             _lf = lf;
 
-            // Определить состояние экземпляра
-            Calculate_Kor();
+                        Calculate_Kor();
             Calculate_Kn();
         }
 
-        /// <summary>
-        /// Расcчитать Kn 
-        /// </summary>
-        private void Calculate_Kn()
+                                private void Calculate_Kn()
         {
             Kn = Math.Round(Calculate_K(_dataFiber_Kn), 3);
         }
 
 
-        /// <summary>
-        /// рассчитать Kor
-        /// </summary>
-        private void Calculate_Kor()
+                                private void Calculate_Kor()
         {
             Kor = Math.Round(Calculate_K(_dataFiber_Kor), 3);
 
         }
 
 
-        /// <summary>
-        /// Расcчитать Kn или Kor в зависимсости от hl и bl
-        /// </summary>
-        /// <param name="dataFiber_K"> Данные из базы</param>
-        private double Calculate_K(List<Fiber_K> dataFiber_K)
+                                        private double Calculate_K(List<Fiber_K> dataFiber_K)
         {
             double result = 0;
 
@@ -136,20 +102,16 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
             int? indexHL = null;
             Fiber_K row = new Fiber_K();
 
-            // Проверить минимальное значение
-            if (hl < dataFiber_K[0].HL)
+                        if (hl < dataFiber_K[0].HL)
             { indexHL = 0; }
-            // Проверить максимальное значение
-            else if (hl > dataFiber_K[dataFiber_K.Count - 2].HL)
+                        else if (hl > dataFiber_K[dataFiber_K.Count - 2].HL)
             { indexHL = dataFiber_K.Count - 1; }
-            // Проверить попадание в колонку
-            else if (dataFiber_K.FindIndex(x => x.HL == hl) >= 0)
+                        else if (dataFiber_K.FindIndex(x => x.HL == hl) >= 0)
             { indexHL = dataFiber_K.FindIndex(x => x.HL == hl); }
 
             if (indexHL != null)
             { row = dataFiber_K[(int)indexHL]; }
-            // выполнить интерполяцию
-            else
+                        else
             {
                 for (int i = 1; i < dataFiber_K.Count - 1; i++)
                 {
@@ -173,14 +135,11 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
 
             var valuesBL = keyValueBL.Values.ToList();
             int? indexBL = null;
-            // Проверить минимальное значение
-            if (bl < valuesBL[0])
+                        if (bl < valuesBL[0])
             { indexBL = 0; }
-            // Проверить максимальное значение
-            else if (bl > valuesBL[valuesBL.Count - 2])
+                        else if (bl > valuesBL[valuesBL.Count - 2])
             { indexBL = valuesBL.Count - 1; }
-            // Проверить попадание в колонку
-            else if (valuesBL.FindIndex(x => x == bl) >= 0)
+                        else if (valuesBL.FindIndex(x => x == bl) >= 0)
             { indexBL = valuesBL.FindIndex(x => x == bl); }
 
             if (indexBL != null)
@@ -188,8 +147,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
                 string name = keyValueBL.Keys.ToList()[(int)indexBL];
                 result = (double)row.GetType().GetProperty(name).GetValue(row);
             }
-            else // выполнить интерполяцию
-            {
+            else             {
                 for (int i = 1; i < valuesBL.Count - 1; i++)
                 {
                     double delta = valuesBL[i] - bl;
@@ -210,10 +168,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         }
 
 
-        /// <summary>
-        /// Установить ширину сечения
-        /// </summary>
-        public void SetH(double h)
+                                public void SetH(double h)
         {
             _h = h;
             Calculate_Kor();
@@ -221,10 +176,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         }
 
 
-        /// <summary>
-        /// Установить ширину сечения
-        /// </summary>
-        public void SetB(double b)
+                                public void SetB(double b)
         {
             _b = b;
             Calculate_Kor();
@@ -232,10 +184,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         }
 
 
-        /// <summary>
-        /// Установить длину фибры
-        /// </summary>
-        public void SetLen_f(double l)
+                                public void SetLen_f(double l)
         {
             _lf = l;
             Calculate_Kor();
@@ -243,12 +192,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         }
 
 
-        /// <summary>
-        /// установить стороны, bl >= hl 
-        /// </summary>
-        /// <param name="h"> высота сечения</param>
-        /// <param name="b"> ширина сечения</param>
-        private void SetSides(ref double hl, ref double bl)
+                                                private void SetSides(ref double hl, ref double bl)
         {
             if (hl > bl)
             {
@@ -265,8 +209,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
             for (int i = 1; i < keyValueBL.Keys.Count - 1; i++)
             {
                 string name = keyValueBL.Keys.ToList()[i];
-                //System.Reflection.PropertyInfo prop = _dataFiber_Kn[0].GetType().GetProperty(name);
-                System.Reflection.PropertyInfo prop = typeof(Fiber_K).GetProperty(name);
+                                System.Reflection.PropertyInfo prop = typeof(Fiber_K).GetProperty(name);
                 if (prop == null)
                 {
                     MessageBox.Show("Ошибка Загрузки исходных данных");

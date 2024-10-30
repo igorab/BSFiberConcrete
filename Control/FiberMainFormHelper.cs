@@ -11,23 +11,11 @@ namespace BSFiberConcrete.Control
 {
     public class FiberMainFormHelper
     {
-        /// <summary>
-        /// список названий свойств класса "InitBeamSectionGeometry", используемых для отображения в таблице dataGridSelection
-        /// </summary>
-        public static List<string> colNamesSectionGeometry = new List<string>() { "b", "h", "bw", "hw", "bf", "hf", "b1f", "h1f", "r1", "r2" };
-        /// <summary>
-        /// Константа для добавления в название столбцов dataGridSelection
-        /// </summary>
-        public const string postfixColNameSectionGeometry = ", см";
+                                public static List<string> colNamesSectionGeometry = new List<string>() { "b", "h", "bw", "hw", "bf", "hf", "b1f", "h1f", "r1", "r2" };
+                                public const string postfixColNameSectionGeometry = ", см";
 
 
-        /// <summary>
-        /// Метод возвращает индекс из списка beamSectionsGeometry соответсвующий beamSectionType
-        /// </summary>
-        /// <param name="beamSectionsGeometry"></param>
-        /// <param name="beamSectionType"></param>
-        /// <returns></returns>
-        public static int IndexOfSectionGeometry(List<InitBeamSectionGeometry> beamSectionsGeometry, BeamSection beamSectionType)
+                                                        public static int IndexOfSectionGeometry(List<InitBeamSectionGeometry> beamSectionsGeometry, BeamSection beamSectionType)
         {
             int indexOfLiest = -1;
             for (int i = 0; i < beamSectionsGeometry.Count; i++)
@@ -41,13 +29,7 @@ namespace BSFiberConcrete.Control
             return indexOfLiest;
         }
 
-        /// <summary>
-        /// Создается объект типа DataTable из beamSectionsGeometry в соответсвии с beamSectionType
-        /// </summary>
-        /// <param name="beamSectionsGeometry"></param>
-        /// <param name="beamSectionType">тип BeamSection, определяющий инедкс  beamSectionsGeometry </param>
-        /// <returns></returns>
-        public static DataTable GetTableFromBeamSections(List<InitBeamSectionGeometry> beamSectionsGeometry, BeamSection beamSectionType)
+                                                        public static DataTable GetTableFromBeamSections(List<InitBeamSectionGeometry> beamSectionsGeometry, BeamSection beamSectionType)
         {
             int index = IndexOfSectionGeometry(beamSectionsGeometry, beamSectionType);
             InitBeamSectionGeometry SectionGeomet = beamSectionsGeometry[index];
@@ -55,9 +37,7 @@ namespace BSFiberConcrete.Control
             DataTable sectionGeometryTable = new DataTable();
             DataRow row = sectionGeometryTable.NewRow();
 
-            // список значений, используемых для отображения
-            //colNamesSectionGeometry;
-            foreach (PropertyInfo property in typeof(InitBeamSectionGeometry).GetProperties())
+                                    foreach (PropertyInfo property in typeof(InitBeamSectionGeometry).GetProperties())
             {
                 string pName = property.Name;
                 if (colNamesSectionGeometry.Contains(pName))
@@ -65,8 +45,7 @@ namespace BSFiberConcrete.Control
                     if (property.GetValue(SectionGeomet) == null)
                     { continue; }
 
-                    string tmpColName = pName + postfixColNameSectionGeometry; // добавление размерности в НАИМЕНОВАНИЕ столбца
-                    sectionGeometryTable.Columns.Add(tmpColName, typeof(double));
+                    string tmpColName = pName + postfixColNameSectionGeometry;                     sectionGeometryTable.Columns.Add(tmpColName, typeof(double));
                     row[tmpColName] = (double)property.GetValue(SectionGeomet);
                 }
             }
@@ -74,30 +53,11 @@ namespace BSFiberConcrete.Control
             sectionGeometryTable.Rows.Add(row);
             return sectionGeometryTable;
 
-            // если использовать Field, а не Property
-            //foreach (FieldInfo field in typeof(InitBeamSectionGeometry).GetFields())
-            //{
-            //    string fName = field.Name;
-            //    if (colNamesSectionGeometry.Contains(fName))
-            //    {
-            //        if (field.GetValue(SectionGeomet) == null)
-            //        { continue; }
-
-            //        string tmpColName = fName + postfixColNameSectionGeometry;
-            //        sectionGeometryTable.Columns.Add(tmpColName, typeof(double));
-            //        row[tmpColName] = (double)field.GetValue(SectionGeomet);
-            //    }
-            //}
-
+                                                                                                
+                                                            
         }
 
-        /// <summary>
-        /// из dataGridSection.DataSource формируется объект InitBeamSectionGeometry
-        /// </summary>
-        /// <param name="gridSectionTable"></param>
-        /// <param name="beamSectionType"></param>
-        /// <returns></returns>
-        public static InitBeamSectionGeometry CreateBeamSectionsGeometry(DataTable gridSectionTable, BeamSection beamSectionType)
+                                                        public static InitBeamSectionGeometry CreateBeamSectionsGeometry(DataTable gridSectionTable, BeamSection beamSectionType)
         {
             DataColumnCollection tableColumn = gridSectionTable.Columns;
             DataRowCollection tableRow = gridSectionTable.Rows;
@@ -105,9 +65,7 @@ namespace BSFiberConcrete.Control
             
             InitBeamSectionGeometry beamSectionGeometry = new InitBeamSectionGeometry();
             beamSectionGeometry.SectionTypeNum = beamSectionType;
-            // 0_o
-            // найти бы более человечный способ вытаскивать Description из BeamSection...
-            DescriptionAttribute description = typeof(BeamSection).GetField(beamSectionType.ToString()).GetCustomAttribute(typeof(DescriptionAttribute), false) as DescriptionAttribute;
+                                    DescriptionAttribute description = typeof(BeamSection).GetField(beamSectionType.ToString()).GetCustomAttribute(typeof(DescriptionAttribute), false) as DescriptionAttribute;
             beamSectionGeometry.SectionTypeStr = description.Description;
 
             foreach (PropertyInfo property in typeof(InitBeamSectionGeometry).GetProperties())

@@ -4,14 +4,10 @@ using System.ComponentModel;
 
 namespace BSFiberConcrete
 {
-    /// <summary>
-    /// Прямоугольник
-    /// </summary>
-    [Description("size")]
+                [Description("size")]
     public class BSBeam_Rect : BSBeam
     {
-        //размеры, см
-        [DisplayName("Высота сечения, [см]")]
+                [DisplayName("Высота сечения, [см]")]
         public override double h { get; set; }
         [DisplayName("Ширина сечения, [см]")]
         public override double b { get; set; }
@@ -36,11 +32,7 @@ namespace BSFiberConcrete
             Z_fb_Y = _h / 2.0;
         }
 
-        /// <summary>
-        /// Возращает габаритные размеры сечения
-        /// </summary>
-        /// <returns></returns>
-        public override Dictionary<string, double> GetDimension()
+                                        public override Dictionary<string, double> GetDimension()
         {
             Dictionary<string, double> dimensionOfSection = new Dictionary<string, double>()
             {
@@ -50,17 +42,14 @@ namespace BSFiberConcrete
             return dimensionOfSection; 
         }
 
-        // Моменты инерции сечения
-        public override double Jy() => b * (h * h * h) / 12.0;
+                public override double Jy() => b * (h * h * h) / 12.0;
 
         public override double Jx() => (b * b * b) * h / 12.0;
 
-        //   Моменты сопротивления сечения
-        public static double Wx(double _b, double _h) => _b * _h * _h / 6.0;
+                public static double Wx(double _b, double _h) => _b * _h * _h / 6.0;
         public static double Wy(double _b, double _h) => _b * _b * _h / 6.0;
 
-        // статические моменты относительно осей
-        public override double Sy() => Area() * h / 2;
+                public override double Sy() => Area() * h / 2;
         public override double Sx() => Area() * b / 2;
 
         public override void SetSizes(double[] _t)

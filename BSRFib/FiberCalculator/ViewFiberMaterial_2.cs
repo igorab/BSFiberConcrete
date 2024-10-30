@@ -20,15 +20,12 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator.model
             InitializeComponent();
             _model = model;
 
-            //_model.Fiber.
-
-            // Костыли, тк не получается ввести нижние ограничения на форму
-            num_d.Minimum = 0.1m;
+            
+                        num_d.Minimum = 0.1m;
             num_S.Minimum = 0.1m;
             num_l.Minimum = 0.1m;
 
-            // устанавливаем привязку полей
-            lab_Hf.DataBindings.Add(new Binding("Text", _model.Fiber, "Hita_f", true, DataSourceUpdateMode.OnPropertyChanged));
+                        lab_Hf.DataBindings.Add(new Binding("Text", _model.Fiber, "Hita_f", true, DataSourceUpdateMode.OnPropertyChanged));
             lab_Gamma_fb1.DataBindings.Add(new Binding("Text", _model.Fiber, "Gamma_fb1", true, DataSourceUpdateMode.OnPropertyChanged));
         }
 
@@ -53,8 +50,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator.model
         {
             bool condition = checkBox1.Checked;
 
-            // внести данные в модель
-
+            
             if (condition)
             {
                 _model.Fiber.Set_Diameter(0);
@@ -73,8 +69,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator.model
         private void cmbFiberMaterialType_SelectedIndexChanged(object sender, EventArgs e)
         {
             int indexSelected = cmbFiberMaterialType.SelectedIndex;
-            //изменить модель
-            _model.Fiber.SetIndexFiberType(indexSelected,true);
+                        _model.Fiber.SetIndexFiberType(indexSelected,true);
         }
 
         private void num_Rf_ser_ValueChanged(object sender, EventArgs e)

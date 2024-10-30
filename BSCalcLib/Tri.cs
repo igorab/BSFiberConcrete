@@ -20,10 +20,7 @@ namespace BSCalcLib
         public static List<double> triAreas;
         public static List<Point> triCGs;
 
-        /// <summary>
-        /// смещение начала координат
-        /// </summary>
-        public static Point Oxy { get; set; } 
+                                public static Point Oxy { get; set; } 
 
         public static Mesh Mesh { get; set; }
 
@@ -36,11 +33,7 @@ namespace BSCalcLib
             FilePath = Path.Combine(Environment.CurrentDirectory, "Templates");
         }
 
-        /// <summary>
-        /// Расчетная схема сечения
-        /// </summary>
-        /// <returns>ц.т. треугольников и их площади</returns>
-        public static List<object> CalculationScheme(bool bOxy = true)
+                                        public static List<object> CalculationScheme(bool bOxy = true)
         {            
             List<object> result = new List<object> { new object() };
             if (Mesh is null) return result;
@@ -64,8 +57,7 @@ namespace BSCalcLib
                 Vertex v1 = tri.GetVertex(1);
                 Vertex v2 = tri.GetVertex(2);
 
-                // ц.т. треугольника - смещение начала координат
-                double cg_X;
+                                double cg_X;
                 double cg_Y;
 
                 if (bOxy)
@@ -79,8 +71,7 @@ namespace BSCalcLib
                     cg_Y =  (v0.Y + v1.Y + v2.Y) / 3.0;
                 }
 
-                // Центр тяжести треугольника
-                Point triCG = new Point() 
+                                Point triCG = new Point() 
                 {
                     ID = triIdx,  
                     X = cg_X, 
@@ -118,12 +109,7 @@ namespace BSCalcLib
         }
 
 
-        /// <summary>
-        /// Сформировать контур сечения
-        /// </summary>
-        /// <param name="_points">координаты точек</param>
-        /// <returns>Путь к файлу</returns>
-        public static string CreateSectionContour(List<System.Drawing.PointF> _points, double _MaxArea)
+                                                public static string CreateSectionContour(List<System.Drawing.PointF> _points, double _MaxArea)
         {
             if (_points.Count == 0) return "";
 
@@ -134,8 +120,7 @@ namespace BSCalcLib
             QualityOptions quality = new QualityOptions()
             {
                 MinimumAngle = MinAngle
-                //,VariableArea = false
-            };
+                            };
             quality.UseLegacyRefinement = true;
             quality.MaximumAngle = 180;
             if (_MaxArea > 0)
@@ -146,13 +131,10 @@ namespace BSCalcLib
             var statistic = new Statistic();
             statistic.Update(Mesh, 1);
 
-            // Refine by setting a custom maximum area constraint.
-            
+                        
             Mesh.Refine(quality);
             
-            //var smoother = new SimpleSmoother();
-            //smoother.Smooth(Mesh, 5);
-            string svgPath = Path.Combine(FilePath, "IBeam.svg");
+                                    string svgPath = Path.Combine(FilePath, "IBeam.svg");
 
             SvgImage.Save(Mesh, svgPath, 800);
 
@@ -163,19 +145,15 @@ namespace BSCalcLib
         }
     }
 
-    //Polygon
-
-    // Creating a polygon
-
-    // Using contours
-    public class TriPoly : Tri
+    
+    
+        public class TriPoly : Tri
     {
         public static void Example()
         {
             var p = new Polygon();
 
-            // Add the outer box contour with boundary marker 1.
-            p.Add(new Contour(new Vertex[4]
+                        p.Add(new Contour(new Vertex[4]
             {
                 new Vertex(0.0, 0.0, 1),
                 new Vertex(3.0, 0.0, 1),
@@ -183,20 +161,17 @@ namespace BSCalcLib
                 new Vertex(0.0, 3.0, 1)
             }, 1));
 
-            // Add the inner box contour with boundary marker 2.
-            p.Add(new Contour(new Vertex[4]
+                        p.Add(new Contour(new Vertex[4]
             {
                 new Vertex(1.0, 1.0, 2),
                 new Vertex(2.0, 1.0, 2),
                 new Vertex(2.0, 2.0, 2),
                 new Vertex(1.0, 2.0, 2)
                 }, 2)
-            , new Point(1.5, 1.5)); // Make it a hole.
-        }
+            , new Point(1.5, 1.5));         }
     }
 
-    // Using segments
-    public class TriSegment : Tri
+        public class TriSegment : Tri
     {
         public static void Example()
         {
@@ -210,8 +185,7 @@ namespace BSCalcLib
                 new Vertex(0.0, 3.0, 1)
             };
 
-            // Add segments of the outer box.
-            p.Add(new Segment(v[0], v[1], 1), 0);
+                        p.Add(new Segment(v[0], v[1], 1), 0);
             p.Add(new Segment(v[1], v[2], 1), 0);
             p.Add(new Segment(v[2], v[3], 1), 0);
             p.Add(new Segment(v[3], v[0], 1), 0);
@@ -224,14 +198,12 @@ namespace BSCalcLib
                 new Vertex(1.0, 2.0, 2)
             };
 
-            // Add segments of the inner box.
-            p.Add(new Segment(v[0], v[1], 2), 0);
+                        p.Add(new Segment(v[0], v[1], 2), 0);
             p.Add(new Segment(v[1], v[2], 2), 0);
             p.Add(new Segment(v[2], v[3], 2), 0);
             p.Add(new Segment(v[3], v[0], 2), 0);
 
-            // Add the hole.
-            p.Holes.Add(new Point(1.5, 1.5));
+                        p.Holes.Add(new Point(1.5, 1.5));
         }
     }
 }

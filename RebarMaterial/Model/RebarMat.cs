@@ -24,79 +24,30 @@ namespace BSFiberConcrete
         };
 
 
-        /// <summary>
-        /// Список классов арматуры
-        /// </summary>
-        private List<Rebar> _DataRebarType;
-        /// <summary>
-        /// Полный список всех диаметров армату 
-        /// </summary>
-        private List<RebarDiameters> _DataRebarDiameters;
+                                private List<Rebar> _DataRebarType;
+                                private List<RebarDiameters> _DataRebarDiameters;
 
-        /// <summary>
-        /// Список диаметров для указанного класса арматуры
-        /// </summary>
-        private List<RebarDiameters> _selectedDiameters;
+                                private List<RebarDiameters> _selectedDiameters;
 
 
-        /// <summary>
-        /// Индекс арматуры из табдлицы _DataRebarType
-        /// </summary>
-        private int _indexTypeRebar;
-        /// <summary>
-        /// Индекс диаметра из _selectedDiameters
-        /// </summary>
-        private int _indexRebarDiameter;
+                                private int _indexTypeRebar;
+                                private int _indexRebarDiameter;
 
         # region private fields
-        /// <summary>
-        /// Тип арматуры
-        /// </summary>
-        private string _typeRebar;
-        /// <summary>
-        /// нормативное значение сопротивления растяжению
-        /// </summary>
-        private double _Rs_n;
-        /// <summary>
-        /// Расчетные значения сопротивления арматуры растяжению
-        /// </summary>
-        private double _Rs;
-        /// <summary>
-        /// расчетные значения сопротивления арматуры сжатию
-        /// </summary>
-        private double _Rsc;
+                                private string _typeRebar;
+                                private double _Rs_n;
+                                private double _Rs;
+                                private double _Rsc;
 
-        /// <summary>
-        /// расчетные значения сопротивления растяжению для предельных состояний второй группы
-        /// </summary>
-        private double _Rs_ser;
-        /// <summary>
-        /// расчетные значения сопротивления поперечной арматуры растяжению
-        /// для предельных состояний первой группы,
-        /// </summary>
-        private double _Rsw;
+                                private double _Rs_ser;
+                                        private double _Rsw;
 
-        /// <summary>
-        /// Диаметр арматуры
-        /// </summary>
-        private double _Diameter;
-        /// <summary>
-        /// Площадь арматуры
-        /// </summary>
-        private double _Square;
-        /// <summary>
-        /// периметр сечения арматуры
-        /// </summary>
-        private double _us;
+                                private double _Diameter;
+                                private double _Square;
+                                private double _us;
 
-        /// <summary>
-        /// коэффициент, учитывающий влияние вида поверхности арматуры
-        /// </summary>
-        private double _Hita_1;
-        /// <summary>
-        /// коэффициент, учитывающий влияние размера диаметра арматуры
-        /// </summary>
-        private double _Hita_2;
+                                private double _Hita_1;
+                                private double _Hita_2;
 
         private List<string> _Diameters;
 
@@ -243,11 +194,7 @@ namespace BSFiberConcrete
 
 
 
-        /// <summary>
-        /// Установить индекс класса арматуры
-        /// </summary>
-        /// <param name="indexType"></param>
-        public void SetTypeIndex(int indexType)
+                                        public void SetTypeIndex(int indexType)
         {
             if ((indexType < 0) || indexType > _DataRebarType.Count - 1)
             {
@@ -266,11 +213,7 @@ namespace BSFiberConcrete
             CalculateHita_1();
         }
 
-        /// <summary>
-        /// Установить индекс диаметра из таблицы _selectedDiameters
-        /// </summary>
-        /// <param name="index"></param>
-        public void SetDiameterIndex(int index)
+                                        public void SetDiameterIndex(int index)
         {
             if ((index < 0) || index > _selectedDiameters.Count - 1)
             {
@@ -278,8 +221,7 @@ namespace BSFiberConcrete
             }
             _indexRebarDiameter = index;
             Diameter = _selectedDiameters[index].Diameter;
-            Square = _selectedDiameters[index].Square * 100;// перевод из см в мм 
-            us = 2 * Math.PI * Diameter / 2;
+            Square = _selectedDiameters[index].Square * 100;            us = 2 * Math.PI * Diameter / 2;
             CalculateHita_2();
         }
 
@@ -287,9 +229,7 @@ namespace BSFiberConcrete
 
         private void DefineListDiameters()
         {
-            // Индекс для Подобра геометрии (диаметра)
-            //int gomertyIndex = _DataFiberKind[_indexFiberKind].IndexForGeometry;
-
+                        
             Diameters.Clear();
 
 
@@ -325,11 +265,7 @@ namespace BSFiberConcrete
 
 
 
-        /// <summary>
-        /// Получить Список Классов Арматуры
-        /// </summary>
-        /// <returns></returns>
-        public List<string> GetRebarTypes()
+                                        public List<string> GetRebarTypes()
         { 
             List<string> result = new List<string>();
             foreach (Rebar rebarRow in _DataRebarType)
@@ -340,11 +276,7 @@ namespace BSFiberConcrete
         }
 
 
-        /// <summary>
-        /// Получить список диаметров соответсвующих классу арматуры
-        /// </summary>
-        /// <returns></returns>
-        public List<string> GetDiameters()
+                                        public List<string> GetDiameters()
         {
             List<string> result = new List<string>();
             foreach (RebarDiameters rebarDiameterRow in _selectedDiameters)

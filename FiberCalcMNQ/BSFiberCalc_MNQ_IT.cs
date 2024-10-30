@@ -1,7 +1,6 @@
 ﻿namespace BSFiberConcrete
 {
-    // Расчет балки двутаврового сечения на внецентренное сжатие
-    public class BSFiberCalc_MNQ_IT : BSFiberCalc_MNQ
+        public class BSFiberCalc_MNQ_IT : BSFiberCalc_MNQ
     {
         public BSBeam_IT beam { get; set; }
 
@@ -22,17 +21,13 @@
             {
                 m_ImgCalc = "Incline_Q.PNG";
 
-                // Расчет на действие поперечной силы вдоль оси X
-                Calculate_Qx(b, h);
+                                Calculate_Qx(b, h);
 
-                // Расчет на действие поперечной силы вдоль оси Y
-                Calculate_Qy(h, b);
+                                Calculate_Qy(h, b);
 
-                // Расчет на действие моментов относительно оси Y
-                Calculate_My(b, h);
+                                Calculate_My(b, h);
 
-                // Расчет на действие моментов относительно оси X
-                Calculate_Mx(h, b);
+                                Calculate_Mx(h, b);
             }
             else if (UseRebar)
             {

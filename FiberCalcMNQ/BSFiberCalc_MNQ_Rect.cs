@@ -5,10 +5,7 @@ using System.Linq;
 
 namespace BSFiberConcrete
 {
-    /// <summary>
-    /// Прямоугольная балка
-    /// </summary>
-    public class BSFiberCalc_MNQ_Rect : BSFiberCalc_MNQ
+                public class BSFiberCalc_MNQ_Rect : BSFiberCalc_MNQ
     {
         private string m_ImgCalc;        
 
@@ -17,11 +14,7 @@ namespace BSFiberConcrete
             m_Beam = new BSBeam_Rect();            
         }
 
-        /// <summary>
-        /// Вернуть изрображение расчетной схемы
-        /// </summary>
-        /// <returns></returns>
-        public override string ImageCalc()
+                                        public override string ImageCalc()
         {
             if (!string.IsNullOrEmpty(m_ImgCalc))
                 return m_ImgCalc;
@@ -41,41 +34,25 @@ namespace BSFiberConcrete
             y_t = m_Beam.y_t;
         }
 
-        /// <summary>
-        /// Расчет внецентренно сжатых элементов (6.1.13)
-        /// </summary>
-        protected new void Calculate_N()
+                                protected new void Calculate_N()
         {
             N_In = true;
             base.Calculate_N();            
         }
 
-        /// <summary>
-        /// Расчет внецентренно сжатых сталефибробетонных
-        /// элементов прямоугольного сечения с рабочей арматурой
-        /// </summary>
-        protected new void Calculate_N_Rods()
+                                        protected new void Calculate_N_Rods()
         {
             m_ImgCalc = "Rect_Rods_N_out.PNG";
 
             base.Calculate_N_Rods();            
         }
 
-        /// <summary>
-        /// Расчет внецентренно сжатых сталефибробетонных элементов без рабочей арматуры при
-        /// расположении продольной сжимающей силы за пределами поперечного сечения элемента и внецентренно сжатых сталефибробетонных элементов без рабочей арматуры при расположении продольной
-        /// сжимающей силы в пределах поперечного сечения элемента, в которых по условиям эксплуатации не
-        /// допускается образование трещин
-        /// </summary>
-        private new void Calculate_N_Out()
+                                                        private new void Calculate_N_Out()
         {
             base.Calculate_N_Out();            
         }
 
-        /// <summary>
-        /// Расчет элементов по полосе между наклонными сечениями
-        /// </summary>
-        private void CalculateQ()
+                                private void CalculateQ()
         {
             m_ImgCalc = "Incline_Q.PNG";
 
@@ -84,28 +61,20 @@ namespace BSFiberConcrete
             base.Calculate_Qy(h, b);
         }
        
-        /// <summary>
-        ///  Расчет элементов по наклонным сечениям на действие моментов
-        /// </summary>
-        private void CalculateM()
+                                private void CalculateM()
         {
             base.Calculate_My(b, h);
 
             base.Calculate_Mx(h, b);
         }
 
-        /// <summary>
-        ///  Вычислить
-        /// </summary>
-        public override bool Calculate()
+                                public override bool Calculate()
         {            
             if (Shear)
             {                
-                // Расчет на действие поперечной силы
-                CalculateQ();
+                                CalculateQ();
 
-                // Расчет на действие моментов
-                CalculateM();
+                                CalculateM();
             }
             else if (UseRebar)
             {
@@ -141,11 +110,7 @@ namespace BSFiberConcrete
                 { DN(typeof(BSFiberCalc_MNQ), "UtilRate_Qx"), UtilRate_Qx },
             };
             
-            //var xres =  new Dictionary<string, double>() 
-            //{ 
-            //    { "M_ult", M_ult }, { "Q_ult", Q_ult }, { "N_ult", N_ult } 
-            //};
-
+                                                
             return dictRes;
         }
     }

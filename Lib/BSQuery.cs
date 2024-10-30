@@ -12,12 +12,7 @@ namespace BSFiberConcrete.Lib
 {
     public class BSQuery : BSData
     {
-        /// <summary>
-        /// Поиск по типу бетона
-        /// </summary>
-        /// <param name="_Id"></param>
-        /// <returns>Тяжелый, мелкозернистый, легкий </returns>
-        public static BetonType BetonTypeFind(int _Id = 0)
+                                                public static BetonType BetonTypeFind(int _Id = 0)
         {
             BetonType bt = new BetonType();
             try
@@ -52,13 +47,7 @@ namespace BSFiberConcrete.Lib
         }
 
 
-        /// <summary>
-        /// Найти строку из таблицы ТЯЖЕЛОГО бетона
-        /// </summary>
-        /// <param name="_BetonClass">Класс бетона</param>
-        /// /// <param name="_betonTypeId">"Тип: тяжелый, мелкозернистый А, Б"</param>
-        /// <returns></returns>
-        public static Beton HeavyBetonTableFind(string _BetonClass, int _betonTypeId = 0)
+                                                        public static Beton HeavyBetonTableFind(string _BetonClass, int _betonTypeId = 0)
         {
             Beton bt = new Beton();
             try

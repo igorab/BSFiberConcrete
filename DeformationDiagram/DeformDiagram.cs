@@ -17,7 +17,6 @@ using System.Windows.Forms.DataVisualization.Charting;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 
-//using namespace BSFiberConcrete;
 
 namespace BSFiberConcrete.DeformationDiagram
 {
@@ -37,9 +36,7 @@ namespace BSFiberConcrete.DeformationDiagram
 
 
 
-            //FiberBetonDeformationView fbtnDeformationView = new FiberBetonDeformationView();
-            //this.tableLayoutPanel1.Controls.Add(fbtnDeformationView, 0, 0);
-
+                        
 
 
             DrowDiagram();
@@ -48,31 +45,7 @@ namespace BSFiberConcrete.DeformationDiagram
 
 
 
-            //double testEpsilon = calculation.deformsArray[calculation.deformsArray.Length - 2] +
-            //    (calculation.deformsArray[calculation.deformsArray.Length - 1] - calculation.deformsArray[calculation.deformsArray.Length - 2]) / 2; 
-            //chartDeformDiagram.Series.Add("Point");
-            //chartDeformDiagram.Series["Point"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            //chartDeformDiagram.Series["Point"].Points.AddXY(testEpsilon, calculation.getResists(testEpsilon));
-            //chartDeformDiagram.Series["Point"].MarkerSize = 10;
-            //double maxValueX = (double)result[0, result.Length/2-1];
-            //chartDeformDiagram.ChartAreas[0].AxisX.Minimum = -maxValueX / 10;
-            //chartDeformDiagram.ChartAreas[0].AxisX.Maximum = maxValueX + maxValueX / 10;
-            //double maxValueY = (double)result[1, result.Length / 2 - 1];
-            //chartDeformDiagram.ChartAreas[0].AxisY.Minimum = -maxValueY / 10;
-            //chartDeformDiagram.ChartAreas[0].AxisY.Maximum = maxValueY + maxValueY / 10;
-            //chartDeformDiagram.Series.Add("Ordinate");
-            //chartDeformDiagram.Series["Ordinate"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            //chartDeformDiagram.Series["Ordinate"].Color = System.Drawing.Color.Blue;
-            //chartDeformDiagram.Series["Ordinate"].BorderWidth = 2;
-            //chartDeformDiagram.Series["Ordinate"].Points.AddXY(0, -maxValueY / 10);
-            //chartDeformDiagram.Series["Ordinate"].Points.AddXY(0, maxValueY + maxValueY / 10);
-            //chartDeformDiagram.Series.Add("Abscissa");
-            //chartDeformDiagram.Series["Abscissa"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            //chartDeformDiagram.Series["Abscissa"].Color = System.Drawing.Color.Blue;
-            //chartDeformDiagram.Series["Abscissa"].BorderWidth = 2;
-            //chartDeformDiagram.Series["Abscissa"].Points.AddXY(-maxValueX / 10, 0);
-            //chartDeformDiagram.Series["Abscissa"].Points.AddXY(maxValueX + maxValueX / 10, 0);
-
+                                                                                                                                                                                                                                                                                                
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -84,11 +57,7 @@ namespace BSFiberConcrete.DeformationDiagram
         private void DrowDiagram()
         {
 
-            // 1. определяем состояние параметра typeMaterial
-            // 2. выбираем userControl для отрисовки
-            // 3. Обновляем состояние DataForDeformDiagram
-            // 4. выполнить расчет
-
+                                                
             chartDeformDiagram.Series.Clear();
 
             chartDeformDiagram.Series.Add("Series1");
@@ -112,12 +81,9 @@ namespace BSFiberConcrete.DeformationDiagram
                 ((System.Drawing.FontStyle)(System.Drawing.FontStyle.Bold)), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             chartDeformDiagram.Series["Series1"].ToolTip = "ε = #VALX, σ = #VALY";
 
-            //chartDeformDiagram.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
-            //chartDeformDiagram.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
-            chartDeformDiagram.ChartAreas[0].AxisX.Crossing = 0;
+                                    chartDeformDiagram.ChartAreas[0].AxisX.Crossing = 0;
             chartDeformDiagram.ChartAreas[0].AxisY.Crossing = 0;
-            //chartDeformDiagram.ChartAreas[0].AxisX.Enabled = AxisEnabled.False;
-
+            
             Font axisFont = new System.Drawing.Font("Microsoft Sans Serif", 12F,
     ((System.Drawing.FontStyle)(System.Drawing.FontStyle.Bold)), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             chartDeformDiagram.ChartAreas[0].AxisX.Title = "ε";

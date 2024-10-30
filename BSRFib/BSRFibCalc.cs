@@ -18,24 +18,18 @@ namespace BSFiberConcrete.BSRFib
         private double Rf_ser;
         private double Rb_ser;
 
-        // коэффициент условий работы, принимаемый равным 1,0 для фибры из слябов;
-        // 1,1 – для фибры из листа и фибры из проволоки
-        public double gamma_fb1 { get; set; }
+                        public double gamma_fb1 { get; set; }
         public double gamma_fb2 { get; set; }
 
         public double Rb { get; set; }
 
-        //коэффициент, учитывающий анкеровку фибры
-        public double eta_f { get; set; }
+                public double eta_f { get; set; }
         public double l_f { get; set; }
 
-        // коэффициент фибрового армирования по объему
-        public double mu_fv { get; set; }
+                public double mu_fv { get; set; }
 
         private double k_or;
-        //коэффициент, учитывающий работу фибр в сечении, перпендикулярном
-        // направлению внешнего сжимающего усилия, и принимаемый по таблице В.2;
-        private double k_n;
+                        private double k_n;
 
         private List<RFibKor> Kor;
         private List<RFibKor> Kn;
@@ -71,8 +65,7 @@ namespace BSFiberConcrete.BSRFib
             gamma_fb2 = 1.1;
         }
 
-        // площадь номинального поперечного сечения фибры, определяемая по ее номинальным размерам        
-        public double S_f => h * b;
+                public double S_f => h * b;
 
         public double d_f_red
         {
@@ -89,8 +82,7 @@ namespace BSFiberConcrete.BSRFib
 
         public double L => k_n * k_n * mu_fv * Rf / Rb;
 
-        // коэффициент эффективности косвенного армирования фибрами, вычисляемый по формуле
-        public double fi_f => (5.0 + L) / (1 + 4.5 * L);
+                public double fi_f => (5.0 + L) / (1 + 4.5 * L);
 
         public RFiber RFiber 
         { 
@@ -175,8 +167,7 @@ namespace BSFiberConcrete.BSRFib
 
         public double Run(out Dictionary<string, double> Res)
         {            
-            // B8
-            double Rfb = Rb + (k_n * k_n * fi_f * mu_fv * Rf);
+                        double Rfb = Rb + (k_n * k_n * fi_f * mu_fv * Rf);
             double x = h / l_f;
             double y = b / l_f;
 
@@ -187,19 +178,11 @@ namespace BSFiberConcrete.BSRFib
 
             if (L_f_an < l_f / 2)
             {
-                //
-                //сопротивление растяжению сталефибробетона исчерпывается из-за
-                //обрыва некоторого числа фибр и выдергивания остальных, что определяется условием
-                //
-                Rfbt3 = gamma_fb1 * (K_T * k_or * k_or * mu_fv * Rf * (1 - L_f_an / l_f) + 0.1 * Rb * (0.8 - Math.Sqrt(2 * mu_fv - 0.005)));
+                                                                                Rfbt3 = gamma_fb1 * (K_T * k_or * k_or * mu_fv * Rf * (1 - L_f_an / l_f) + 0.1 * Rb * (0.8 - Math.Sqrt(2 * mu_fv - 0.005)));
             }
             else
             {
-                //
-                //сопротивление растяжению сталефибробетона исчерпывается из-за
-                //выдергивания из бетона условно всех фибр, что определяется условием
-                //
-                Rfbt3 =  gamma_fb2 * Rb * (K_T * k_or * k_or * mu_fv * l_f / (8 * eta_f * m_D_f_red) + 0.08 - 0.5 * mu_fv);
+                                                                                Rfbt3 =  gamma_fb2 * Rb * (K_T * k_or * k_or * mu_fv * l_f / (8 * eta_f * m_D_f_red) + 0.08 - 0.5 * mu_fv);
             }
 
             double mu_fa = mu_fv * k_or * k_or;

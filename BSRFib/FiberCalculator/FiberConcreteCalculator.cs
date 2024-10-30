@@ -16,10 +16,7 @@ using ScottPlot.Hatches;
 
 namespace BSFiberConcrete.BSRFib.FiberCalculator
 {
-    /// <summary>
-    /// Класс для определения характеристик фибробетона по параметрам фибры
-    /// </summary>
-    public class FiberConcreteCalculator : ViewModelBase
+                public class FiberConcreteCalculator : ViewModelBase
     {
         private FiberMaterial _fiber;
 
@@ -34,9 +31,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         public FiberCoef_K FiberCoef{ get => _fiberCoef; }
 
 
-        //private BSMatConcrete _beton;
-        //private Beton _beton
-
+                
         private double _h;
         private double _b;
         private double _mu_fv;
@@ -214,35 +209,25 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         public FiberConcreteCalculator()
         {
 
-            // Определить класс FiberMaterial
-            _fiber = new FiberMaterial();
-            // Определить класс Бетон
-            _beton = new ConcreteMaterial();
-            // Определяем коэффициенты фибры
-            double h = 100;
+                        _fiber = new FiberMaterial();
+                        _beton = new ConcreteMaterial();
+                        double h = 100;
             double b = 200;
             _fiberCoef = new FiberCoef_K(h,b, _fiber.Length);
 
             _msgToReport = new List<string>();
-            // Определить класс 
-            // определить тип нагрузки для 
-
+                        
         }
 
         public FiberConcreteCalculator(double h, double b)
         {
 
-            // Определить класс FiberMaterial
-            _fiber = new FiberMaterial();
-            // Определить класс Бетон
-            _beton = new ConcreteMaterial();
-            // Определяем коэффициенты фибры
-            _fiberCoef = new FiberCoef_K(h, b, _fiber.Length);
+                        _fiber = new FiberMaterial();
+                        _beton = new ConcreteMaterial();
+                        _fiberCoef = new FiberCoef_K(h, b, _fiber.Length);
 
             _msgToReport = new List<string>();
-            // Определить класс 
-            // определить тип нагрузки для 
-
+                        
         }
 
 
@@ -266,10 +251,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         }
 
 
-        /// <summary>
-        /// Производится расчет характеристик фибры
-        /// </summary>
-        public void Calculate()
+                                public void Calculate()
         {
 
             Kor = FiberCoef.Kor;
@@ -282,42 +264,26 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
                 d_f_red = 1.13 * Math.Sqrt(Fiber.Square);
 
             double mu_fv;
-            // Коэф для расчета R_fbt3
-            double Kt;
-            // Коэф эффективного косвенного армирования фибрами
-            double fi_f;
+                        double Kt;
+                        double fi_f;
 
 
-            // Длина заделки фибры в бетоне
-            l_f_an = 0;
-            // минимальное значение коэффициента фибрового армирования
-            mu_fv_min = 0;
-            // минимальная площадь сечения элемента
-            A_min = 0;
-            // Максимальный размер зерен крупного заполнителя
-            C_max = 0;
-            // минимальное значение длины фибры
-            l_f_min = 0;
-            // Сопротивление растяжения стальфибробетона  
-            R_fbt3 = 0;
-            // Сопротилвение сжатия стальфибробетона
-            R_fbt3_n = 0;
-            // Сопротивление сжатия стальфибробетона
-            R_fb = 0;
-            // Коэф фибрового рамирования по площади
-            // Для растянутой зоны
-            mu_fa = 0;
-            // Для сжатой зоны
-            mu_1_fa = 0;
-            // Модуль упругости
-            E_fb = 0;
+                        l_f_an = 0;
+                        mu_fv_min = 0;
+                        A_min = 0;
+                        C_max = 0;
+                        l_f_min = 0;
+                        R_fbt3 = 0;
+                        R_fbt3_n = 0;
+                        R_fb = 0;
+                                    mu_fa = 0;
+                        mu_1_fa = 0;
+                        E_fb = 0;
             G_fb = 0;
             message = null;
             _msgToReport = new List<string>();
-            //lab_Kor.DataBindings.Add(new Binding("Text", _model.FiberCoef, "Kor", true, DataSourc
-
-            // мм
-            l_f_an = Fiber.Hita_f * d_f_red * Fiber.Rf_ser / Beton.Rb_ser;
+            
+                        l_f_an = Fiber.Hita_f * d_f_red * Fiber.Rf_ser / Beton.Rb_ser;
             if (l_f_an >= Fiber.Length)
             {
                 message = "Расчетное значение \"Длина заделки фибры в бетоне\" не должно превышать значение \"Длина фибры\".";
@@ -331,17 +297,11 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
                 message = "Невозможно расcчитать характеристики сталефибробетона с указанными параметрами";
                 _msgToReport.Add(message);
                 return;
-                //    if 
-                //}
-                //{
-                //    message = "Значене длины заделки фибры в бетоне ";
-                //    return;
-            }
+                                                                                            }
 
             mu_fv_min = 1.5 * Fiber.coef_C * Beton.Rbt / (Fiber.Rf * Math.Pow(FiberCoef.Kor, 2) *
                 (1 - 30 / Fiber.Rf - l_f_an / Fiber.Length));
-            // сравнить mu_fv_min с верхней границей диапазона 
-            if (mu_fv_min > 0.02)
+                        if (mu_fv_min > 0.02)
             {
                 message = "Расчетная величина \"Минимаьное значение коэф. фибрового армирования\" не должно превышать 0.002.";
                 _msgToReport.Add(message);
@@ -349,8 +309,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
             }
 
 
-            // мм
-            C_max = 5.3 * Math.Pow(d_f_red * d_f_red * Fiber.Length / (100 * mu_fv_min), 1.0 / 3);
+                        C_max = 5.3 * Math.Pow(d_f_red * d_f_red * Fiber.Length / (100 * mu_fv_min), 1.0 / 3);
             string msg = Beton.Evaluate_Cmax(C_max);
             if (msg != null)
             {
@@ -359,19 +318,15 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
             }
 
 
-            // мм
-            l_f_min = 2.5 * C_max;
-            // сравнить длину фибры с минимальным значением
-            if (l_f_min > Fiber.Length)
+                        l_f_min = 2.5 * C_max;
+                        if (l_f_min > Fiber.Length)
             {
                 message = "Расчетная величина \"Минимальное значение длины фибры\" не должно превышать значение \"Длина фибры\".";
                 _msgToReport.Add(message);
                 return;
             }
 
-            // назначение расчетного коэф фибрового армирования
-            //  если mu_fv = 0 выполнять расчет по минимальному значению
-            if (_mu_fv == 0)
+                                    if (_mu_fv == 0)
             { 
                 mu_fv = mu_fv_min; 
             }
@@ -386,8 +341,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
                 }
 
             }
-            // сравнить mu_fv с верхней нижней диапазона 
-            if (mu_fv < 0.005)
+                        if (mu_fv < 0.005)
             {
                 message = "Значение Коэф. фибрового армирования должно быть больше 0.005.";
                 _msgToReport.Add(message);
@@ -405,8 +359,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
 
 
             Kt = Math.Sqrt(1 - (1.2 - 80 * mu_fv) * (1.2 - 80 * mu_fv));
-            // разветвление расчета на длва случая, исходя из условия 
-            if (l_f_an < Fiber.Length / 2)
+                        if (l_f_an < Fiber.Length / 2)
             {
                 
 
@@ -414,8 +367,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
                     * mu_fv * Fiber.Rf * (1 - l_f_an / Fiber.Length) + 0.1 * Beton.Rb
                     * (0.8 - Math.Sqrt(2 * mu_fv - 0.005)));
             }
-            else // l_f_an >= Fiber.Length / 2
-            {
+            else             {
                 R_fbt3 = Fiber.Gamma_fb1 * Beton.Rb * (Kt * Math.Pow(FiberCoef.Kor, 2)
                     * mu_fv * Fiber.Length / (8 * Fiber.Hita_f * d_f_red) + 0.08 - 0.5 * mu_fv);
             }

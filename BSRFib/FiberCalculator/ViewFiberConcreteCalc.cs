@@ -16,10 +16,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
 
         private FiberConcreteCalculator _model;
 
-        /// <summary>
-        /// ячейка таблицы tableForFiberMaterial для добавления ViewFiberMaterial
-        /// </summary>
-        private TableLayoutPanelCellPosition _cellPositionForFiberMaterila;
+                                private TableLayoutPanelCellPosition _cellPositionForFiberMaterila;
 
 
         public ViewFiberConcreteCalc(FiberConcreteCalculator model = null)
@@ -32,8 +29,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
 
             InitializeComponent();
             
-            // устанавливаем привязку полей
-
+            
 
             lab_Rb.DataBindings.Add(new Binding("Text", _model.Beton, "Rb", true, DataSourceUpdateMode.OnPropertyChanged));
             lab_Rb_ser.DataBindings.Add(new Binding("Text", _model.Beton, "Rb_ser", true, DataSourceUpdateMode.OnPropertyChanged));
@@ -61,23 +57,18 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
 
         private void ViewFiberConcreteCalc_Load(object sender, EventArgs e)
         {
-            // сечение
-            num_b.Value = 100m;
+                        num_b.Value = 100m;
             num_h.Value = 200m;
 
-            // коэф фибрового армирования
-            numMu_fv.Value = 0.015m;
+                        numMu_fv.Value = 0.015m;
             _model.SetMu_fv((double)numMu_fv.Value);
             cBox_MuMin.Checked = false;
 
-            // характеристики бетона
-            cmbConcreteType.DataSource = _model.Beton.GetConcreteType();
+                        cmbConcreteType.DataSource = _model.Beton.GetConcreteType();
 
-            // установка значения коэф
-            rbElement_C_1.Checked = true;
+                        rbElement_C_1.Checked = true;
 
-            // выбор формы для управления параметрами фибры
-            rbFiberMaterila_1.Checked = true;
+                        rbFiberMaterila_1.Checked = true;
         }
 
 
@@ -134,8 +125,7 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
         private void cmbConcreteType_SelectedIndexChanged(object sender, EventArgs e)
         {
             int indexConcrete = cmbConcreteType.SelectedIndex;
-            // из-за смещения индекса первого элемента таблицы (индексация не с нуля а с единицы)
-            _model.Beton.SetIndexConcretKind(indexConcrete);
+                        _model.Beton.SetIndexConcretKind(indexConcrete);
             cmbConcrete.DataSource = _model.Beton.GetConcreteClass();
         }
 

@@ -25,14 +25,9 @@ namespace BSFiberConcrete
             private set { _FiberConcrete = value; }
         }
 
-        /// <summary>
-        /// коэффициент, учитывающий влияние на длину анкеровки напряженного состояния
-        /// бетона и арматуры и конструктивного решения элемента в зоне анкеровки
-        /// </summary>
-        private double _alpha_1;
+                                        private double _alpha_1;
 
-        // расчетные параметры
-        private double _Rbond;
+                private double _Rbond;
         private double _l0_an;
         private double _lan;
 
@@ -89,19 +84,14 @@ namespace BSFiberConcrete
 
         public void SetCoefAlpha_1(int index)
         {
-            if (index == 0) // стержень растянут
-            {
+            if (index == 0)             {
                 _alpha_1 = 1;
             }
-            else // стержень сжат
-            { _alpha_1 = 0.75; }
+            else             { _alpha_1 = 0.75; }
         }
 
 
-        /// <summary>
-        /// Расчет длины анкеровки
-        /// </summary>
-        public void Calculate()
+                                public void Calculate()
         {
 
             Rbond = 0;
@@ -143,8 +133,7 @@ namespace BSFiberConcrete
                 };
                 labReport.InputData = InputData;
                 labReport.LabItems = LabItems;
-                //labReport.ReportMessage = _msgToReport;
-                labReport.RunReport();
+                                labReport.RunReport();
             }
             catch (Exception _ex)
             {

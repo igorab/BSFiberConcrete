@@ -3,10 +3,7 @@ using System.ComponentModel;
 
 namespace BSFiberConcrete
 {       
-    /// <summary>
-    ///  Свойства обычного бетона
-    /// </summary>
-    public class BSMatConcrete : IMaterial, INonlinear
+                public class BSMatConcrete : IMaterial, INonlinear
     {
         public string Name => "Бетон";
         public string BT { get; set; }
@@ -23,8 +20,7 @@ namespace BSFiberConcrete
         public double e_b1;
         public double e_b2;
 
-        // Диаграмма состояния
-        public  double Eps_StateDiagram3L(double e_b, out int _res, int _group = 1)
+                public  double Eps_StateDiagram3L(double e_b, out int _res, int _group = 1)
         {
             double sigma_b = Rb;
             double sigma_b1 = 0.6 * Rb;

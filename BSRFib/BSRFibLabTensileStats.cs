@@ -19,11 +19,9 @@ namespace BSFiberConcrete.BSRFib
         public double RFbtn  { get; set; }
 
 
-        // Значения прочности с учетом неупругих свойтв стале фибро бетона ф.(Б.1) Н/мм2
-        private List<double> RF05s;
+                private List<double> RF05s;
 
-        // Значения прочности с учетом неупругих свойтв стале фибро бетона ф.(Б.2) H/мм2
-        private List<double> RF25s;
+                private List<double> RF25s;
 
         private List<double> RFels;
 
@@ -33,16 +31,12 @@ namespace BSFiberConcrete.BSRFib
             tensile = new BSRFibLabTensile() ;
 
             RF05s = new List<double>();
-            // Значения прочности с учетом неупругих свойтв стале фибро бетона ф.(Б.2) H/мм2
-            RF25s = new List<double>();
+                        RF25s = new List<double>();
             RFels = new List<double>();
 
         }
 
-        /// <summary>
-        /// Нормативные значения остаточной прочности сталефибробетона на растяжение
-        /// </summary>
-        public void Calculate()
+                                public void Calculate()
         {
             Rfbt2n = 0;
             Rfbt3n = 0;
@@ -58,20 +52,16 @@ namespace BSFiberConcrete.BSRFib
                 RFels.Add(tensile.R_Fel(lab.Fel));
             }
 
-            // средние значения остаточной прочности сталефибробетона на растяжение
-            var rF05m = Statistics.Mean(RF05s);                        
-            // Cреднеквадратичные отклонения
-            var S_F05m = Statistics.StandardDeviation(RF05s);                        
+                        var rF05m = Statistics.Mean(RF05s);                        
+                        var S_F05m = Statistics.StandardDeviation(RF05s);                        
 
             if (!double.IsNaN(S_F05m) && rF05m != 0)
             {
-                // Коэффициенты вариации
-                double nu_F05m = Math.Sqrt(S_F05m) / rF05m;
+                                double nu_F05m = Math.Sqrt(S_F05m) / rF05m;
                 Rfbt2n = rF05m * (1 - 1.64 * nu_F05m);
             }
 
-            // средние значения остаточной прочности сталефибробетона на растяжение
-            var rF25m = Statistics.Mean(RF25s);
+                        var rF25m = Statistics.Mean(RF25s);
             var S_F25m = Statistics.StandardDeviation(RF25s);
 
             if (!double.IsNaN(S_F25m) && rF25m != 0)

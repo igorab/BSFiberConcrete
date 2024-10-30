@@ -8,14 +8,10 @@ using System.Windows.Forms;
 
 namespace BSFiberConcrete
 {
-    /// <summary>
-    /// Тавровое-Двутавровое сечение
-    /// </summary>
-    [Description("size")]
+                [Description("size")]
     public class BSBeam_IT : BSBeam
     {
-        // размеры:
-        [DisplayName("Ширина нижней полки, bf, [см]")]
+                [DisplayName("Ширина нижней полки, bf, [см]")]
         public double bf { get; protected set; }
         [DisplayName("Высота нижней полки, hf, [см]")]
         public double hf { get; protected set; }
@@ -31,13 +27,9 @@ namespace BSFiberConcrete
         public override double Width => Math.Max(bf, bw);
         public override double Height => hf + hw + h1f;
 
-        // Центр тяжести сечения
-        public override (double, double) CG() => (Width / 2.0, Height / 2.0);
+                public override (double, double) CG() => (Width / 2.0, Height / 2.0);
 
-        /// <summary>
-        ///  В обозначениях справочника проектировщика стр 357
-        /// </summary>
-        public double B => bf;
+                                public double B => bf;
         public double c_h => hf;
         public override double b => bw;
         public double c_b => b1f;
@@ -72,10 +64,7 @@ namespace BSFiberConcrete
 
         public override double Jy()
         {
-            // момент инерции нижнего прямоугольника относительно центральной системы координат
-            // Формула вида: Iy1 = Iy + delataY^2 * A,
-            // Iy - ОСЕВОЙ момент инерции фигуры;   delataY - осевое смещение;  A - площадь фигуры
-            double I_1 = b1f * Math.Pow(h1f,3) / 12 + Math.Pow(hw / 2 + h1f / 2, 2) * b1f * h1f;
+                                                double I_1 = b1f * Math.Pow(h1f,3) / 12 + Math.Pow(hw / 2 + h1f / 2, 2) * b1f * h1f;
             double I_2 = bw * Math.Pow(hw,3) / 12;
             double I_3 = bf * Math.Pow(hf,3) / 12 + Math.Pow(hw / 2 + hf / 2, 2) * bf * hf;
             return I_1 + I_2 + I_3;
@@ -89,11 +78,7 @@ namespace BSFiberConcrete
         }
 
 
-        /// <summary>
-        /// Возращает габаритные размеры сечения
-        /// </summary>
-        /// <returns></returns>
-        public override Dictionary<string, double> GetDimension()
+                                        public override Dictionary<string, double> GetDimension()
         {
             Dictionary<string, double> dimensionOfSection = new Dictionary<string, double>()
             {
@@ -107,10 +92,8 @@ namespace BSFiberConcrete
             return dimensionOfSection;
         }
 
-        // статические моменты относительно осей 
-        public override double Sy() => hf * bf * hf / 2 + hw * bw * (hf + hw / 2) + h1f * b1f * (Height - h1f / 2);
-        public override double Sx() => (hf * bf + hw * bw + h1f * b1f) * Width / 2; // не на 100% уверен в формуле
-
+                public override double Sy() => hf * bf * hf / 2 + hw * bw * (hf + hw / 2) + h1f * b1f * (Height - h1f / 2);
+        public override double Sx() => (hf * bf + hw * bw + h1f * b1f) * Width / 2; 
 
         public static Exception SizeError(string _txt)
         {

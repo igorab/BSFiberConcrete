@@ -19,14 +19,9 @@ namespace BSFiberConcrete.Beam
 
         private void BSBeamCalcView_Load(object sender, EventArgs e)
         {
-            //Graphics g = panel.CreateGraphics();
-
-            //Pen pen = new Pen(Color.Black, 3);
-            //Rectangle r = new Rectangle(0, 0, 1000, 100);
-            //g.DrawRectangle(pen, r);
-
-            //g.Dispose();
-
+            
+                                    
+            
         }
 
         private void panel_Paint(object sender, PaintEventArgs e)
@@ -34,8 +29,7 @@ namespace BSFiberConcrete.Beam
             Panel p = sender as Panel;
             Graphics g = e.Graphics;
 
-            //g.FillRectangle(new SolidBrush(Color.FromArgb(0, Color.Black)), p.DisplayRectangle);
-
+            
             Pen pen = new Pen(Color.Black, 3);
             Rectangle r = new Rectangle(10, panel.Height/2, panel.Width-20, 10);
             g.DrawRectangle(pen, r);

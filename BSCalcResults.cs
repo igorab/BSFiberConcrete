@@ -1,5 +1,4 @@
-﻿//using Microsoft.Win32;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,10 +14,7 @@ using SaveFileDialog = System.Windows.Forms.SaveFileDialog;
 
 namespace BSFiberConcrete
 {
-    /// <summary>
-    ///  форма -данные для расчета и результаты
-    /// </summary>
-    public partial class BSCalcResults : Form
+                public partial class BSCalcResults : Form
     {        
         public Dictionary<string, double> CalcParams {private get; set; }
         public Dictionary<string, double> CalcResults {private get; set; }
@@ -38,11 +34,9 @@ namespace BSFiberConcrete
             listView.View = View.Details;
             listView.LabelEdit = true;            
             listView.AllowColumnReorder = true;            
-            //listView.CheckBoxes = true;            
-            listView.FullRowSelect = true;
+                        listView.FullRowSelect = true;
             listView.GridLines = true;            
-            //listView.Sorting = SortOrder.Ascending;
-            
+                        
             if (CalcResults != null)
             {
                 items = new ListViewItem[CalcResults.Count];
@@ -63,8 +57,7 @@ namespace BSFiberConcrete
             listView.Columns.Add("Параметр", 500, HorizontalAlignment.Left);
             listView.Columns.Add("Значение", 200, HorizontalAlignment.Left);
 
-            //Add the items to the ListView.
-            listView.Items.AddRange(items);
+                        listView.Items.AddRange(items);
         }
 
         private void CreateParamsListView(ListView _listView)
@@ -75,11 +68,9 @@ namespace BSFiberConcrete
             listView.View = View.Details;
             listView.LabelEdit = true;
             listView.AllowColumnReorder = true;
-            //listView.CheckBoxes = true;
-            listView.FullRowSelect = true;
+                        listView.FullRowSelect = true;
             listView.GridLines = true;
-            //listView.Sorting = SortOrder.Ascending;
-
+            
             if (CalcParams != null)
             {
                 items = new ListViewItem[CalcParams.Count];
@@ -99,8 +90,7 @@ namespace BSFiberConcrete
             listView.Columns.Add("Параметр", 200, HorizontalAlignment.Left);
             listView.Columns.Add("Значение", 200, HorizontalAlignment.Left);
 
-            //Add the items to the ListView.
-            listView.Items.AddRange(items);
+                        listView.Items.AddRange(items);
         }
 
 
@@ -143,8 +133,7 @@ namespace BSFiberConcrete
                         BSFiberLoadData loadData   = new BSFiberLoadData();
                         loadData.FibInitCalcParams = CalcParams;
                         loadData.SaveInitSectionsToJson((FileStream)myStream);
-                        // Code to write the stream goes here.
-                        myStream.Close();
+                                                myStream.Close();
                     }
                 }
             }

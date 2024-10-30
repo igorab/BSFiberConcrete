@@ -39,8 +39,7 @@ namespace BSFiberConcrete.Section
     {
         public static float bf, hf, bw, hw, b1f, h1f;
 
-        // Защитный слой
-        public static float a; 
+                public static float a; 
 
         static BSSection()
         {
@@ -48,21 +47,11 @@ namespace BSFiberConcrete.Section
             a = 4;
         }
 
-        /// <summary>
-        /// Геометрия сечения
-        /// </summary>
-        public static List<PointF> SectionPoints;
+                                public static List<PointF> SectionPoints;
 
-        /// <summary>
-        /// Расстановка стержней
-        /// </summary>
-        public static List<PointF> RodPoints;
+                                public static List<PointF> RodPoints;
 
-        /// <summary>
-        /// Прямоугольное сечение
-        /// </summary>
-        /// <param name="_Sz">размеры</param>
-        public static void RectangleBeam(double[] _Sz)
+                                        public static void RectangleBeam(double[] _Sz)
         {
             float[] Sz = Array.ConvertAll(_Sz, element => (float)element);
 
@@ -86,10 +75,7 @@ namespace BSFiberConcrete.Section
             };
         }
 
-        /// <summary>
-        ///  Тавровое сечение - геометрия сечения
-        /// </summary>        
-        public static void IBeam(double[] _Sz, out List<PointF> _PointsSection, out PointF _center)
+                                public static void IBeam(double[] _Sz, out List<PointF> _PointsSection, out PointF _center)
         {
             float[] Sz = Array.ConvertAll(_Sz, element => (float)element);
 
