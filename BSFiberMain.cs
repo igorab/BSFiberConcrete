@@ -951,8 +951,8 @@ namespace BSFiberConcrete
 
             if (_MNQ.Count > 0)
                 return _MNQ[0];
-
-            return new Dictionary<string, double>();
+            
+            return new Dictionary<string, double>() { ["My"] = 0, ["Mx"] = 0, ["N"] = 0, ["Qx"] = 0, ["Qy"] = 0, ["Ml"] = 0, ["eN"] = 0, ["e0"] = 0 };
         }
 
         /// <summary>
@@ -1395,9 +1395,24 @@ namespace BSFiberConcrete
             D["b"] = b;
             D["h"] = h;
 
+           
             return D;
         }
-       
+
+        /// <summary>
+        /// Сохранение параметров, введенных пользователем
+        /// </summary>
+        /// <param name="_D"></param>
+        private void DictFormUserParams( Dictionary<string, double> _D)
+        {
+            _D["BT"]    = comboBetonType.SelectedIndex;
+            _D["BTi"]   = cmbFib_i.SelectedIndex;
+            _D["Bft3n"] = cmbBetonClass.SelectedIndex;
+            _D["Bftn"]  = cmbBftn.SelectedIndex;
+            _D["Bfn"]   = cmbBfn.SelectedIndex;
+            _D["Humi"]  = cmbWetAir.SelectedIndex;
+        }
+
         /// <summary>
         ///  Расчет жесткости сечения для списка моментов
         /// </summary>
@@ -1980,35 +1995,7 @@ namespace BSFiberConcrete
             {                
                 FormParamsSaveData();
 
-                BSData.UpdateBeamSectionGeometry(m_InitBeamSectionsGeometry);
-
-                /* TODO 23.10.2024
-                Dictionary<string, double> SZ = new Dictionary<string, double>();
-                double[] sz = BeamSizes();
-                Dictionary<string, double> ef = null;
-
-                if (m_BeamSection == BeamSection.Rect)
-                {
-                    ef = new Dictionary<string, double> {
-                        ["b"] = sz[0], ["h"] = sz[1]
-                    };
-                }
-                else if (m_BeamSection == BeamSection.IBeam || m_BeamSection == BeamSection.TBeam || m_BeamSection == BeamSection.LBeam)
-                {
-                    ef = new Dictionary<string, double> {
-                        ["bf"] = sz[0], ["hf"] = sz[1], ["bw"] = sz[2], ["hw"] = sz[3], ["b1f"] = sz[4], ["h1f"] = sz[5]
-                    };
-                }
-                else if (m_BeamSection == BeamSection.Ring)
-                {
-                    ef = new Dictionary<string, double> {
-                        ["r1"] = sz[0], ["r2"] = sz[1]
-                    };
-                }
-
-                if (ef != null)
-                    m_BSLoadData.SaveInitSectionsToJson(ef);
-                */
+                BSData.UpdateBeamSectionGeometry(m_InitBeamSectionsGeometry);                
             }
             catch (Exception _e)
             {
@@ -2020,10 +2007,11 @@ namespace BSFiberConcrete
         private void btnCalcResults_Click(object sender, EventArgs e)
         {
             BSCalcResults bSCalcResults = new BSCalcResults();
-            bSCalcResults.CalcParams = DictCalcParams(m_BeamSection);
+            var dCalcParams = DictCalcParams(m_BeamSection);
 
+            DictFormUserParams(dCalcParams);
 
-
+            bSCalcResults.CalcParams  = dCalcParams;
             bSCalcResults.CalcResults = m_CalcResults;
             bSCalcResults.Show();
         }
@@ -2909,28 +2897,47 @@ namespace BSFiberConcrete
             }
         }
 
+        /// <summary>
+        /// пользовательские данные из файла
+        /// </summary>
+        /// <param name="_D"></param>
         private void InitControlValuesFromUser(Dictionary<string, object> _D)
         {
             // element
-            tbLength.Text = _D["lgth"].ToString();
-            cmbEffectiveLengthFactor.Text = _D["coeflgth"].ToString();
-            checkBoxRebar.Checked = false;
+            if (_D.ContainsKey("lgth"))
+                tbLength.Text                 = _D["lgth"].ToString();
+            if (_D.ContainsKey("coeflgth"))
+                cmbEffectiveLengthFactor.Text = _D["coeflgth"].ToString();
+            if (_D.ContainsKey("UseRebar"))
+                checkBoxRebar.Checked         = false; // доделать
+            if (_D.ContainsKey("BT"))
+                comboBetonType.SelectedIndex = int.Parse(_D["BT"].ToString());
+            if (_D.ContainsKey("BTi"))
+                cmbFib_i.SelectedIndex       = Convert.ToInt32(_D["BTi"].ToString());
 
-            comboBetonType.SelectedIndex = int.Parse(_D["BT"].ToString());
-            cmbFib_i.SelectedIndex = Convert.ToInt32(_D["BTi"].ToString());
             // классы
-            cmbBetonClass.SelectedIndex = Convert.ToInt32(_D["Bft3n"].ToString());
-            cmbBftn.SelectedIndex = Convert.ToInt32(_D["Bftn"].ToString());
-            cmbBfn.SelectedIndex = Convert.ToInt32(_D["Bfn"].ToString());
-            cmbWetAir.SelectedIndex = Convert.ToInt32(_D["Humi"].ToString());
+            if (_D.ContainsKey("Bft3n"))
+                cmbBetonClass.SelectedIndex = Convert.ToInt32(_D["Bft3n"].ToString());
+            if (_D.ContainsKey("Bftn"))
+                cmbBftn.SelectedIndex       = Convert.ToInt32(_D["Bftn"].ToString());
+            if (_D.ContainsKey("Bfn"))
+                cmbBfn.SelectedIndex        = Convert.ToInt32(_D["Bfn"].ToString());
+            if (_D.ContainsKey("Humi"))
+                cmbWetAir.SelectedIndex     = Convert.ToInt32(_D["Humi"].ToString());
 
             // factors
-            numYft.Value = decimal.Parse(_D["Yft"].ToString());
-            numYb.Value  = decimal.Parse(_D["Yb"].ToString());
-            numYb1.Value = decimal.Parse(_D["Yb1"].ToString());
-            numYb2.Value = decimal.Parse(_D["Yb2"].ToString());
-            numYb3.Value = decimal.Parse(_D["Yb3"].ToString());
-            numYb5.Value = decimal.Parse(_D["Yb5"].ToString());
+            if (_D.ContainsKey("Yft"))
+                numYft.Value = decimal.Parse(_D["Yft"].ToString());
+            if (_D.ContainsKey("Yb"))
+                numYb.Value  = decimal.Parse(_D["Yb"].ToString());
+            if (_D.ContainsKey("Yb1"))
+                numYb1.Value = decimal.Parse(_D["Yb1"].ToString());
+            if (_D.ContainsKey("Yb2"))
+                numYb2.Value = decimal.Parse(_D["Yb2"].ToString());
+            if (_D.ContainsKey("Yb3"))
+                numYb3.Value = decimal.Parse(_D["Yb3"].ToString());
+            if (_D.ContainsKey("Yb5"))
+                numYb5.Value = decimal.Parse(_D["Yb5"].ToString());
         }
 
         private void btnOpenCalcFile_Click(object sender, EventArgs e)
