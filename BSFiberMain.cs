@@ -930,10 +930,10 @@ namespace BSFiberConcrete
                 }                
             }
 
-            if (_MNQ.Count == 0)
-            {
-                //_MNQ = new List<Dictionary<string, double>>() {new Dictionary<string, double>{ ["My"] = 0, ["Mx"] = 0, ["N"] = 0, ["Qx"] = 0, ["Qy"] = 0, ["Ml"] = 0, ["eN"] = 0, ["e0"] = 0}};
-            }
+            //if (_MNQ.Count == 0)
+            //{
+            //    //_MNQ = new List<Dictionary<string, double>>() {new Dictionary<string, double>{ ["My"] = 0, ["Mx"] = 0, ["N"] = 0, ["Qx"] = 0, ["Qy"] = 0, ["Ml"] = 0, ["eN"] = 0, ["e0"] = 0}};
+            //}
         }
 
         /// <summary>
@@ -951,8 +951,8 @@ namespace BSFiberConcrete
 
             if (_MNQ.Count > 0)
                 return _MNQ[0];
-            
-            return new Dictionary<string, double>() { ["My"] = 0, ["Mx"] = 0, ["N"] = 0, ["Qx"] = 0, ["Qy"] = 0, ["Ml"] = 0, ["eN"] = 0, ["e0"] = 0 };
+
+            return new Dictionary<string, double>() { };// ["My"] = 0, ["Mx"] = 0, ["N"] = 0, ["Qx"] = 0, ["Qy"] = 0, ["Ml"] = 0, ["eN"] = 0, ["e0"] = 0 };
         }
 
         /// <summary>
@@ -1219,41 +1219,42 @@ namespace BSFiberConcrete
 
             RecalRandomEccentricity_e0();
 
-            //GetEffortsFromForm(out List<Dictionary<string, double>> _MNQ);
-            Dictionary<string, double> _MNQ = GetEffortsForCalc();
+            GetEffortsFromForm(out List<Dictionary<string, double>> lstMNQ);
 
-            if (_MNQ.Count == 0)
+            //Dictionary<string, double> _MNQ = GetEffortsForCalc();
+
+            if (lstMNQ.Count == 0)
             {
                 MessageBox.Show("Необходимо задать нагрузки");
                 return;
             }
 
-            (double _M, double _N, double _Qy, double _Qx ) = (_MNQ["My"], _MNQ["N"], _MNQ["Qy"], _MNQ["Qx"]);
-            if (_M < 0 || _N < 0)
+            foreach (Dictionary<string, double> _MNQ in lstMNQ)
             {
-                MessageBox.Show("Расчет по методу статического равновесия не реализован для отрицательных значений M и N.\n " +
-                                "Воспользуйтесь расчетом по методу НДМ");
-                return;
-            }
-            
-            if (_M != 0 && _N == 0)
-            {
-                FiberCalculate_M(_M);
-            }
-            else if (_N != 0)
-            {
-                FiberCalculate_N();
-            }
+                (double _M, double _N, double _Qx) = (_MNQ["My"], _MNQ["N"], _MNQ["Qx"]);
 
-            if (_Qx != 0)
-            {
-                FiberCalculate_Shear();
-            }
+                if (_M < 0 || _N < 0)
+                {
+                    MessageBox.Show("Расчет по методу статического равновесия не реализован для отрицательных значений M и N.\n " +
+                                    "Воспользуйтесь расчетом по методу НДМ");
+                    return;
+                }
 
-            if (_Qy != 0)
-            {
-                // Применяется только в расчете по НДМ
+                if (_M != 0 && _N == 0)
+                {
+                    FiberCalculate_M(_M);
+                }
+                else if (_N != 0)
+                {
+                    FiberCalculate_N();
+                }
+
+                if (_Qx != 0)
+                {
+                    FiberCalculate_Shear();
+                }
             }
+        
         }
 
         private void btnFactors_Click(object sender, EventArgs e)
@@ -1268,15 +1269,12 @@ namespace BSFiberConcrete
         /// <param name="_beamSection">Тип сечения </param>
         /// <returns>словарь данных</returns>
         private Dictionary<string, double> DictCalcParams(BeamSection _beamSection)
-        {
-            // Усилия Mx, My - моменты, кг*см , N - сила, кг              
-            //GetEffortsFromForm(out List<Dictionary<string, double>> MNQ);
-
+        {            
             Dictionary<string, double> MNQ = GetEffortsForCalc();
-
+            
             BSMatFiber mf = new BSMatFiber((double)numE_beton.Value, numYft.Value, numYb.Value, numYb1.Value, numYb2.Value, numYb3.Value, numYb5.Value);
-            mf.Rfbn = (double)numRfb_n.Value;
-            mf.Rfbtn = (double)numRfbt_n.Value;
+            mf.Rfbn   = (double)numRfb_n.Value;
+            mf.Rfbtn  = (double)numRfbt_n.Value;
             mf.Rfbt2n = (double)numRfbt2n.Value;
             mf.Rfbt3n = (double)numRfbt3n.Value;
 
@@ -1286,24 +1284,24 @@ namespace BSFiberConcrete
             Dictionary<string, double> D = new Dictionary<string, double>()
             {
                 // enforces
-                ["N"] = -MNQ["N"],
-                ["My"] = MNQ["My"],
-                ["Mz"] = MNQ["Mx"],
-                ["Qx"] = MNQ["Qx"],
-                ["Qy"] = MNQ["Qy"],
+                ["N"]  = MNQ.ContainsKey("N")  ?  -MNQ["N"]: 0,
+                ["My"] = MNQ.ContainsKey("My") ?  MNQ["My"]: 0,
+                ["Mz"] = MNQ.ContainsKey("Mz") ?  MNQ["Mz"]: 0,
+                ["Qx"] = MNQ.ContainsKey("Qx") ?  MNQ["Qx"]: 0,
+                ["Qy"] = MNQ.ContainsKey("Qy") ?  MNQ["Qy"]: 0,
                 //
                 //length
-                ["lgth"] = lgth,
+                ["lgth"]     = lgth,
                 ["coeflgth"] = coeflgth,
                 //
                 //section size
                 ["b"] = 0,
                 ["h"] = 0,
 
-                ["bf"] = 0,
-                ["hf"] = 0,
-                ["bw"] = 0,
-                ["hw"] = 0,
+                ["bf"]  = 0,
+                ["hf"]  = 0,
+                ["bw"]  = 0,
+                ["hw"]  = 0,
                 ["b1f"] = 0,
                 ["h1f"] = 0,
 
@@ -1394,7 +1392,6 @@ namespace BSFiberConcrete
 
             D["b"] = b;
             D["h"] = h;
-
            
             return D;
         }
