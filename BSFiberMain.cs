@@ -1836,7 +1836,7 @@ namespace BSFiberConcrete
             
             bool messageIsWritten_Qx = true;
             bool messageIsWritten_Qy = true;
-            for (int i = 0; _D.Count > i; i++)
+            foreach (var _mnqD in _lstD)
             {
                 Dictionary<string, double> MNQ = _mnqD;
 
