@@ -293,26 +293,28 @@ namespace BSFiberConcrete
         /// <param name="_D"></param>
         public void InitCalcParams(Dictionary<string, double> _D)
         {
-            b = _D["b"];
-            h = _D["h"];
+            b  = _D["b"];
+            h  = _D["h"];
 
             Mx = _D["Mz"];
             My = _D["My"];
-            N = _D["N"];
-
-            Eb = _D["Eb0"];
+            N =  _D["N"];
+            Qx = _D["Qx"];
+            Qy = _D["Qy"];
+            
             // норм
-            Rfbn = _D["Rbcn"];
+            Rfbn  = _D["Rbcn"];
             Rfbtn = _D["Rbtn"];
             // расч
-            Rfb = _D["Rbc"];
-            Rfbt = _D["Rbt"];
+            Rfb   = _D["Rbc"];
+            Rfbt  = _D["Rbt"];
 
-            Es = _D["Es0"];
-            Rs = _D["Rscn"];
+            Eb    = _D["Eb0"];
+            Es    = _D["Es0"];
+            Rs    = _D["Rscn"];
 
             Eps_fbt_ult = _D["ebt_ult"];
-            Eps_fb_ult = _D["eb_ult"];
+            Eps_fb_ult  = _D["eb_ult"];
             //Eps_s_ult = _D["es_ult"];
 
             if (_D.ContainsKey("rods_qty"))
@@ -322,7 +324,6 @@ namespace BSFiberConcrete
 
             if (_D.ContainsKey("lgth") && _D.ContainsKey("coeflgth"))
                 InitBeamLength(_D["lgth"], _D["coeflgth"]);
-
         }
 
         /// <summary>

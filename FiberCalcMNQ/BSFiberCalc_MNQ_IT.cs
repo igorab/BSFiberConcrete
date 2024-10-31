@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BSFiberConcrete
+﻿namespace BSFiberConcrete
 {
     // Расчет балки двутаврового сечения на внецентренное сжатие
     public class BSFiberCalc_MNQ_IT : BSFiberCalc_MNQ
@@ -29,17 +23,10 @@ namespace BSFiberConcrete
                 m_ImgCalc = "Incline_Q.PNG";
 
                 // Расчет на действие поперечной силы вдоль оси X
-                Calculate_Qx(b, h);
-
-                // Расчет на действие поперечной силы вдоль оси Y
-                Calculate_Qy(h, b);
-
+                _ = Calculate_Qx(b, h);
+                
                 // Расчет на действие моментов относительно оси Y
-                Calculate_My(b, h);
-
-                // Расчет на действие моментов относительно оси X
-                Calculate_Mx();
-
+                _ = Calculate_My(b, h);                
             }
             else if (UseRebar)
             {
@@ -49,13 +36,11 @@ namespace BSFiberConcrete
             {
                 Calculate_N();
             }
-
-            //throw new Exception("Расчет не выполнен (нет в СП)");
+            
             return true;
         }
-
        
-        public override void GetSize(double[] _t)
+        public override void SetSize(double[] _t)
         {
             beam.SetSizes(_t);
             base.m_Beam = this.beam;

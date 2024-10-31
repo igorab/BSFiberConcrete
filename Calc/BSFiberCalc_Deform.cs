@@ -222,7 +222,7 @@ namespace BSFiberConcrete
         }
 
 
-        public void GetSize(double[] _t = null)
+        public void SetSize(double[] _t = null)
         {                                   
             // цикл по элементам
             foreach (var elem in m_BElem)
@@ -627,7 +627,7 @@ namespace BSFiberConcrete
             
             InitVectors(qty_I, qty_J);
            
-            GetSize();
+            SetSize();
 
             InitElementParams();
             

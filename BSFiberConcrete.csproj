@@ -602,8 +602,6 @@
     <None Include="DeformationDiagram\UserControls\ClassDiagram1.cd" />
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
-    <None Include="Properties\DataSources\BSFiberCalculation.datasource" />
-    <None Include="Properties\DataSources\BSFiberConcrete.BSRFib.FiberCalculator.FiberConcrateCalculator.datasource" />
     <None Include="Properties\DataSources\BSFiberConcrete.Section.BSPoint.datasource" />
     <None Include="Properties\DataSources\BSRod.datasource" />
     <None Include="Properties\DataSources\Deflection_f_aF.datasource" />
@@ -707,10 +705,6 @@
     <ProjectReference Include="BSBeamCalculator\BSBeamCalculator.csproj">
       <Project>{95fcdef9-d035-4d3d-b7aa-fc523917d607}</Project>
       <Name>BSBeamCalculator</Name>
-    </ProjectReference>
-    <ProjectReference Include="BSBeamCalc\BSBeamCalc.csproj">
-      <Project>{61cf8666-2b4d-09e9-0ac7-4131f588c8ed}</Project>
-      <Name>BSBeamCalc</Name>
     </ProjectReference>
     <ProjectReference Include="BSCalcLib\BSCalcLib.csproj">
       <Project>{368408f1-6648-4b55-9853-85a86dd47a2f}</Project>

@@ -72,7 +72,7 @@ namespace BSFiberConcrete
             ( Yft, Yb, Yb1, Yb2, Yb3, Yb5) = (_t[2], _t[3], _t[4], _t[5], _t[6], _t[7]);
         }
 
-        public override void GetSize(double[] _t)
+        public override void SetSize(double[] _t)
         {
             (b, h) = (_t[0], _t[1]);
         }

@@ -127,7 +127,7 @@ namespace BSFiberConcrete
         /// Принимает характерные размеры сечения
         /// </summary>
         /// <param name="_t">Массив - размеры сечения</param>
-        public virtual void GetSize(double[] _t)
+        public virtual void SetSize(double[] _t)
         {
         }
 

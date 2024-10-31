@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static CBAnsDes.Member;
+
 
 namespace BSFiberConcrete
 {
@@ -260,7 +260,7 @@ namespace BSFiberConcrete
             Rs = _DataRebarType[_indexTypeRebar].Rs;
             Rsc = _DataRebarType[_indexTypeRebar].Rs;
             Rs_ser = _Rs_n;
-            Rsw = _DataRebarType[_indexTypeRebar].Rsw;
+            Rsw = _DataRebarType[_indexTypeRebar].Rsw_X;
             DefineListDiameters();
             SetDiameterIndex(0);
             CalculateHita_1();

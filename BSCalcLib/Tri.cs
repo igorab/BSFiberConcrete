@@ -1,22 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 using TriangleNet;
-
-
-//using System.G
 using TriangleNet.Geometry;
 using TriangleNet.IO;
 using TriangleNet.Meshing;
-using TriangleNet.Meshing.Algorithm;
 using TriangleNet.Rendering.Text;
-using TriangleNet.Smoothing;
 using TriangleNet.Tools;
 using TriangleNet.Topology;
 

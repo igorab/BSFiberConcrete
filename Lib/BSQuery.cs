@@ -17,7 +17,7 @@ namespace BSFiberConcrete.Lib
         /// </summary>
         /// <param name="_Id"></param>
         /// <returns>Тяжелый, мелкозернистый, легкий </returns>
-        public static BetonType BetonTypeFind(int _Id)
+        public static BetonType BetonTypeFind(int _Id = 0)
         {
             BetonType bt = new BetonType();
             try

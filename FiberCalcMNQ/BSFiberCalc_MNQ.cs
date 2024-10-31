@@ -66,7 +66,10 @@ namespace BSFiberConcrete
         [DisplayName("Относительное значение эксцентриситета продольной силы"), Description("Phys")]
         public double delta_e { get; protected set; }
 
-        [DisplayName("Изгибающий момент"), Description("Phys")]
+        [DisplayName("Изгибающий момент Mx"), Description("Phys")]
+        public double Mx { get; protected set; }
+
+        [DisplayName("Изгибающий момент My"), Description("Phys")]
         public double My { get; protected set; }
 
         [DisplayName("Доля постоянной нагрузки в общей нагрузке на элемент"), Description("Phys")]
@@ -172,9 +175,8 @@ namespace BSFiberConcrete
         {
             m_Beam = new BSBeam();
             m_Efforts = new Dictionary<string, double>();
-            Msg = new List<string>();
-            // TODO refactoring
-            fi = 0.9;
+            Msg = new List<string>();            
+            fi = BSFiberLib.Fi;
         }
 
         /// <summary>
@@ -241,9 +243,7 @@ namespace BSFiberConcrete
             {
                 fiberCalc = new BSFiberCalc_MNQ_Ring();
             }
-            else if (BeamSection.IBeam == _BeamSection ||
-                     BeamSection.TBeam == _BeamSection ||
-                     BeamSection.LBeam == _BeamSection)                     
+            else if (BSHelper.IsITL(_BeamSection))                   
             {
                 fiberCalc = new BSFiberCalc_MNQ_IT();
             }
@@ -499,122 +499,15 @@ namespace BSFiberConcrete
         /// <summary>
         /// Расчет элементов по полосе между наклонными сечениями
         /// </summary>
-        protected void Calculate_Qy(double _b, double _h)
+        protected virtual (double, double) Calculate_Qy(double _b, double _h)
         {
-            if (m_Efforts["Qy"] == 0) return;
-
-            // Растояние до цента тяжести арматуры растянутой арматуры, см
-            double a = Rebar.a;
-
-            // рабочая высота сечения по растянутой арматуре
-            double h0 = _h - a;
-
-            // Расчетные значения сопротивления  на сжатиие по B30 СП63
-            Rfb = R_fb();
-
-            // Предельная перерезывающая сила по полосе между наклонными сечениями
-            double _Q_ult = 0.3 * Rfb * b * h0; // (6.74)
-
-            // Расчет элементов по наклонным сечениям на действие поперечных сил
-            // Минимальная длина проекции(см)
-            double c_min = h0;
-            // Максимальная длина проекции(см)
-            double c_max = 4 * h0;
-            double dC = 1;
-            // ?? Минимальная длина проекции для формулы
-            double c0_max = 2 * h0;
-
-            List<double> lst_C = new List<double>();
-            InitC(ref lst_C, c_min, c_max, dC);
-
-            // Расчетное сопротивление сталефибробетона осевому растяжению
-            double Rfbt = Rfbtn / Yft * Yb1 * Yb5;
-
-            // поперечная сила, воспр сталефибробетоном
-            double Qfb_i;
-
-            List<double> lstQ_fb = new List<double>();
-
-            foreach (double _c in lst_C)
-            {
-                if (_c == 0) continue;
-
-                Qfb_i = 1.5d * Rfbt * b * h0 * h0 / _c; // 6.76
-
-                // условие на 0.5..2.5
-                if (Qfb_i >= 2.5 * Rfbt * b * h0)
-                    Qfb_i = 2.5 * Rfbt * b * h0;
-                else if (Qfb_i <= 0.5 * Rfbt * b * h0)
-                    Qfb_i = 0.5 * Rfbt * b * h0;
-
-                lstQ_fb.Add(Qfb_i);
-            }
-
-            // Qfb - максимальная поперечная сила, воспринимаемая сталефибробетоном в наклонном сечении
-            double Qfb = (lstQ_fb.Count > 0) ? lstQ_fb.Max() : 0;
-
-            // Максимальный шаг поперечной арматуры см
-            double s_w_max = (Qy > 0) ? Rfbt * b * h0 * h0 / Qy : 0;
-
-            string res;
-            if (Rebar.Sw_Y <= s_w_max)
-            {
-                res = "Условие выполнено, шаг удовлетворяет требованию 6.1.28";
-                Msg.Add(res);
-            }
-            else
-            {
-                res = "Условие не выполнено, требуется уменьшить шаг поперечной арматуры";
-                Msg.Add(res);
-            }
-
-            // усилие в поперечной арматуре на единицу длины элемента
-            double q_sw = (Rebar.Sw_Y != 0) ? Rebar.Rsw_Y * Rebar.Asw / Rebar.Sw_Y : 0; // 6.78 
-
-            // условие учета поперечной арматуры
-            if (q_sw < 0.25 * Rfbt * b)
-                q_sw = 0;
-
-            // поперечная сила, воспринимаемая поперечной арматурой в наклонном сечении
-            double Qsw = 0;
-            List<double> lst_Qsw = new List<double>();
-            foreach (double _c in lst_C)
-            {
-                if (_c > c0_max)
-                    Qsw = 0.75 * q_sw * c0_max;
-                else
-                    Qsw = 0.75 * q_sw * _c;  // 6.77
-
-                lst_Qsw.Add(Qsw);
-            }
-
-            List<double> lst_Q_ult = new List<double>();
-            for (int i = 0; i < lst_Qsw.Count; i++)
-            {
-                lst_Q_ult.Add(lstQ_fb[i] + lst_Qsw[i]);
-            }
-
-            Q_ult = Qfb + Qsw; // 6.75
-
-            //Коэффициент использования
-            UtilRate_Qy = (Q_ult != 0) ? m_Efforts["Qy"] / Q_ult : 0;
-            
-            if (_Q_ult <= Q_ult)
-            {
-                res = "Поперечная сила превышает предельно допустимую в данном сечении";
-                Msg.Add(res);
-            }
-            else
-            {
-                res = "Проверка по наклонному сечению на действие поперечной силы Qy пройдена";
-                Msg.Add(res);
-            }
+            return (0, 0);
         }
 
         /// <summary>
         /// Расчет элементов по полосе между наклонными сечениями
         /// </summary>
-        protected void Calculate_Qx(double _b, double _h)
+        protected virtual (double, double) Calculate_Qx(double _b, double _h)
         {            
             // Растояние до цента тяжести арматуры растянутой арматуры, см
             double a = Rebar.a; 
@@ -682,7 +575,7 @@ namespace BSFiberConcrete
             }
 
             // усилие в поперечной арматуре на единицу длины элемента
-            double q_sw = (Rebar.Sw_X !=0) ? Rebar.Rsw * Rebar.Asw / Rebar.Sw_X : 0; // 6.78 
+            double q_sw = (Rebar.Sw_X !=0) ? Rebar.Rsw_X * Rebar.Asw_X / Rebar.Sw_X : 0; // 6.78 
 
             // условие учета поперечной арматуры
             if (q_sw < 0.25 * Rfbt * _b)
@@ -722,12 +615,14 @@ namespace BSFiberConcrete
                 res = "Проверка по наклонному сечению на действие поперечной силы Qx пройдена";
                 Msg.Add(res);
             }
+
+            return (s_w_max, Q_ult);
         }
 
         /// <summary>
         ///  6.1.30 Расчет элементов по наклонным сечениями на действие моментов My
         /// </summary>
-        protected void Calculate_My(double _b, double _h)
+        protected virtual (double, double) Calculate_My(double _b, double _h)
         {
             // Растояние до цента тяжести арматуры растянутой арматуры, см
             double a = Rebar.a;  
@@ -738,9 +633,9 @@ namespace BSFiberConcrete
             // Площадь растянутой арматуры см2
             double As = Rebar.As;
             // Расчетное сопротивление поперечной арматуры  
-            double Rsw = Rebar.Rsw;
+            double Rsw = Rebar.Rsw_X;
             // Площадь арматуры
-            double Asw = Rebar.Asw;
+            double Asw = Rebar.Asw_X;
             // шаг попреречной арматуры
             double sw = Rebar.Sw_X;
             // усилие в поперечной арматуре на единицу длины элемента
@@ -815,18 +710,16 @@ namespace BSFiberConcrete
 
             //Коэффициент использования
             UtilRate_My = (M_ult != 0) ? m_Efforts["My"] / M_ult : 0;
-           
+
+            return (M_ult, UtilRate_My);           
         }
 
         /// <summary>
         ///  6.1.30 Расчет элементов по наклонным сечениями на действие моментов Mx
         /// </summary>
-        protected void Calculate_Mx()
+        protected virtual (double, double) Calculate_Mx(double _b, double _h)
         {
-            if (m_Efforts["Mx"] == 0) return;
-
-            //Коэффициент использования
-            UtilRate_Mx = (M_ult != 0) ? m_Efforts["Mx"] / M_ult : 0;
+            return (0, 0);
         }
 
         public virtual bool Calculate() 
@@ -849,7 +742,7 @@ namespace BSFiberConcrete
             (_, _, Yft, Yb, Yb1, Yb2, Yb3, Yb5, B) = (_t[0], _t[1], _t[2], _t[3], _t[4], _t[5], _t[6], _t[7], _t[8]);            
         }
 
-        public virtual void GetSize(double[] _t) {}
+        public virtual void SetSize(double[] _t) {}
 
 
         public double Get_e_tot => m_Fiber.e_tot;
@@ -860,12 +753,11 @@ namespace BSFiberConcrete
         /// <param name="_efforts"></param>
         /// <returns>полный эксцентриситет </returns>
         public void SetEfforts(Dictionary<string, double> _efforts)
-        {
-            double e_tot; // полный эксцентриситет приложения силы
-
+        {            
             m_Efforts = new Dictionary<string, double>(_efforts);
             
             //Момент от действия полной нагрузки
+            Mx = m_Efforts["Mx"];
             My = m_Efforts["My"];
 
             //Продольное усилие кг
@@ -887,18 +779,26 @@ namespace BSFiberConcrete
             // эксцентриситет от момента
             double e_MN = (N != 0) ? My / N : 0;
             e_N += e_MN;
-
-            e_tot = e0 + e_N + e_MN;
-            m_Fiber.e_tot = e_tot;           
+            
+            // полный эксцентриситет приложения силы
+            m_Fiber.e_tot = e0 + e_N + e_MN;
         }
 
         public virtual Dictionary<string, double> Results()
         {
-            return new Dictionary<string, double>() 
-            { 
-                { "Rfb", Rfb }, 
-                { "N_ult", N_ult } 
+            Dictionary<string, double> dictRes = new Dictionary<string, double>()
+            {
+                { DN(typeof(BSFiberCalc_MNQ), "M_ult"), M_ult },
+                { DN(typeof(BSFiberCalc_MNQ), "UtilRate_My"), UtilRate_My },
+
+                { DN(typeof(BSFiberCalc_MNQ), "N_ult"), N_ult },
+                { DN(typeof(BSFiberCalc_MNQ), "UtilRate_N"), UtilRate_N },
+
+                { DN(typeof(BSFiberCalc_MNQ), "Q_ult"), Q_ult },
+                { DN(typeof(BSFiberCalc_MNQ), "UtilRate_Qx"), UtilRate_Qx },
             };
+
+            return dictRes;
         }
     }
 }

@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BSCalcLib
 {
@@ -85,7 +81,5 @@ namespace BSCalcLib
 
             return n1 + n2 + n3;
         }
-
-
     }
 }

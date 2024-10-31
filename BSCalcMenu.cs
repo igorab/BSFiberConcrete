@@ -1,27 +1,14 @@
-﻿using BSBeamCalculator;
-using BSFiberConcrete;
-using BSFiberConcrete.Beam;
+﻿using BSFiberConcrete;
 using BSFiberConcrete.BSRFib;
 using BSFiberConcrete.BSRFib.FiberCalculator;
 using BSFiberConcrete.Calc;
 using BSFiberConcrete.Inform.Rebar;
 using BSFiberConcrete.LocalStrength;
 using BSFiberConcrete.Section;
-using BSFiberConcrete.Setup;
-using CBAnsDes;
-using CBAnsDes.My;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
-
 
 namespace BSCalcMenu
 {
@@ -29,10 +16,7 @@ namespace BSCalcMenu
     {
         public BSCalcMenu()
         {
-            InitializeComponent();
-
-
-            btnBeamDefl.Visible = false;
+            InitializeComponent();            
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -79,9 +63,7 @@ namespace BSCalcMenu
         {
             //BSFiberSetup bsFiberSetup = new BSFiberSetup();
             //bsFiberSetup.TabPageIdx = 0;
-            //bsFiberSetup.Show();
-                                                                                                        
-
+            //bsFiberSetup.Show();                                                                                                        
             FiberConcreteInform fcInforn = new FiberConcreteInform();
             fcInforn.Show();
         }
@@ -217,38 +199,11 @@ namespace BSCalcMenu
 
             unitCalculator.Show();
         }
-
-        [STAThread]
-        public static void CreateBeamAnalysis()
-        {
-            Application.EnableVisualStyles();
-            //Application.SetCompatibleTextRenderingDefault(false);
-            //CBAnsDes.My.MyApplication.Main(new string[] { });
-            //MyProject.Application.Run(new string[] { });
-
-            CBAnsDes.My.MyApplication appl  = new MyApplication();
-
-            CBAnsDes.MDIMain mDIMain = new MDIMain();
-
-            //appl.DoCreateMainForm(mDIMain);            
-            mDIMain.ShowDialog();
-        }
-
-
-        private void btnBeamDefl_Click(object sender, EventArgs e)
-        {
-
-            //CreateBeamAnalysis();
-
-            Process.Start("CBAnsDes.exe");
-        }
-
+       
         private void btnDeflectionsUlt_Click(object sender, EventArgs e)
         {
             //BSDeflectionsUlt deflectionsUlt = new BSDeflectionsUlt();
             //deflectionsUlt.Show();
-
-
             DeflectionUltimateInform deflectionUltimateInform = new DeflectionUltimateInform();
             deflectionUltimateInform.Show();
         }
@@ -257,10 +212,8 @@ namespace BSCalcMenu
         {        
             //BSFiberClassSetup fiberClassSetup = new BSFiberClassSetup();
             //fiberClassSetup.Show();
-
             FiberRebarInform rebarInform = new FiberRebarInform();
             rebarInform.Show();
-
         }
 
         private void btnCalcOfLenRebar_Click(object sender, EventArgs e)

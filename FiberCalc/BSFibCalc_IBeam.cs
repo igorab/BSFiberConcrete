@@ -57,7 +57,7 @@ namespace BSFiberConcrete
             return geom;
         }
 
-        public override void GetSize(double[] _t)
+        public override void SetSize(double[] _t)
         {
             (bf, hf, bw, hw, b1f, h1f) = (_t[0], _t[1], _t[2], _t[3], _t[4], _t[5]);
         }
