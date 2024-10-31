@@ -170,7 +170,7 @@ namespace BSBeamCalculator
                             _beamEfforts[i, 0].Value = Math.Round(result.maxM, n).ToString();
                             _beamEfforts[i, 1].Value = Math.Round(result.minM, n).ToString();
                         }
-                        else if (_beamEfforts.Columns[i].Name == "Q")
+                        else if (_beamEfforts.Columns[i].Name == "Qx")
                         { 
                             if ((result.maxM != 0) || (result.maxM == 0 && result.minM == 0))
                                 _beamEfforts[i, 0].Value = Math.Round(result.maxAbsQ, n).ToString();
