@@ -155,7 +155,7 @@ namespace BSFiberConcrete
                 gridEfforts.Rows.Clear();
                 gridEfforts.Rows.Add(2);
                 gridEfforts.Columns["Mx"].Visible = false;
-                gridEfforts.Columns["Qx"].Visible = false;
+                gridEfforts.Columns["Qy"].Visible = false;
                 gridEfforts.Columns["N"].Visible = false;
 
                 //for (int i = 0; i < gridEfforts.ColumnCount; i++)
@@ -1479,7 +1479,7 @@ namespace BSFiberConcrete
             double deflexionMax = beamController.CalculateDeflectionDiagram(X, valueMomentInX, valuesStiffnesOnSection);
 
             // график прогибов по формулам
-            beamController.CalculateDeflectionDiagramByFormula(X, valuesStiffnesOnSection);
+            //beamController.CalculateDeflectionDiagramByFormula(X, valuesStiffnesOnSection);
 
             if (deflexionMax == 0)
                 return double.NaN;
@@ -1841,18 +1841,28 @@ namespace BSFiberConcrete
             {             
                 message += "Требуется задать моменты Mx My или силу N или поперечные силы Qx Qy. \n";
             }
-
+            
+            bool messageIsWritten_Qx = true;
+            bool messageIsWritten_Qy = true;
             foreach (var _mnqD in _lstD)
             {
                 Dictionary<string, double> MNQ = _mnqD;
 
                 if (MNQ["Qx"] != 0 && num_s_w_X.Value <= 0)
-                {                    
-                    message += "Задайте шаг арматуры по X.\n";
+                {
+                    if (messageIsWritten_Qx)
+                    {
+                        message = message + "Задайте шаг арматуры по X.\n";
+                        messageIsWritten_Qx = false;
+                    }
                 }
                 else if (MNQ["Qy"] != 0 && num_s_w_Y.Value <= 0)
-                {                    
-                    message += "Задайте шаг арматуры по Y.\n";
+                {
+                    if (messageIsWritten_Qy)
+                    { 
+                        message = message + "Задайте шаг арматуры по Y.\n";
+                        messageIsWritten_Qy = false;
+                    }
                 }
             }
 

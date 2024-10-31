@@ -282,6 +282,10 @@ namespace BSBeamCalculator
                     if (double.IsNaN(Stiffnes)) { continue; }
                     d = (d + Stiffnes) / 2;
                 }
+
+                if (d == 0)
+                { return; }
+
                 List<double> simpleU = new List<double>();
                 List<double> XForChart = new List<double>();
                 for (int i = 1; X.Count > i; i = i + 2)
