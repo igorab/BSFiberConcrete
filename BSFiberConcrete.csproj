@@ -423,6 +423,7 @@
       <DependentUpon>ViewCalcOfLenRebar.cs</DependentUpon>
     </Compile>
     <Compile Include="Report\BSFiberReport.cs" />
+    <Compile Include="Report\BSFiberReport_M.cs" />
     <Compile Include="Report\BSFiberReport_MNQ.cs" />
     <Compile Include="BSFiberSetup.cs">
       <SubType>Form</SubType>
@@ -643,7 +644,6 @@
     <Content Include="Resources\Incline_Q.PNG">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Report\ClassDiagram1.cd" />
     <None Include="Resources\LocalPunch1.PNG" />
     <Content Include="Resources\LBeam.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

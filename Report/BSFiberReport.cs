@@ -223,9 +223,7 @@ namespace BSFiberConcrete
                 w.WriteLine("<br>");
 
             }
-
         }
-
 
         /// <summary>
         /// Нагрузки
@@ -239,11 +237,11 @@ namespace BSFiberConcrete
                 foreach (var _pair in m_Efforts)
                 {
                     // Костыль для ограничения выводимых в отчет нагрузок при выполнении расчета "Экспертиза балки"
-                    if (m_Path2BeamDiagrams != null || m_Path2BeamDiagrams.Count == 0)
+                    //if (m_Path2BeamDiagrams != null || m_Path2BeamDiagrams.Count == 0)
+                    if (m_Path2BeamDiagrams != null && m_Path2BeamDiagrams.Count != 0)
                     {
                         bool isWhat = _pair.Key.Contains("Mx") || _pair.Key.Contains("My") || _pair.Key.Contains("Qx");
-                        if (!isWhat)
-                        { continue; }
+                        if (!isWhat) continue;
                     }
 
                     w.WriteLine("<tr>");
