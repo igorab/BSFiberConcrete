@@ -48,30 +48,27 @@ namespace BSFiberConcrete.Section
         // точки на диаграмме для отображения отверстия в сечении
         private List<PointF> InnerPoints;
 
-        private NDMSetup ndmSetup;
+        private readonly NDMSetup NdmSetup;
 
         public PointF Center { get; set; }
 
-        public float Wdth { set { w = value; } }
+        public float Wdth { private get; set; }
         public float Hght { set { h = value; } }
 
         public double[] Sz { get; set; }
-        public double NumArea {set { numArea.Value = (decimal) value; } get { return (double) numArea.Value;  } } 
+        public double NumArea { set { numArea.Value = (decimal)value; } get { return (double)numArea.Value; } }
         
-        private float w;
         private float h;
         
-
         public BSSectionChart(BeamSection _beamSection )
         {
             InitializeComponent();
             
             Center = new PointF(0, 0);
-            ndmSetup = BSData.LoadNDMSetup();            
+            NdmSetup = BSData.LoadNDMSetup();            
             m_BeamSection = _beamSection;
 
-            InnerPoints = new List<PointF>();            
-            w = 0;
+            InnerPoints = new List<PointF>();                        
             h = 0;
             Sz = new double[]  { 0, 0, 0, 0, 0, 0 };
         }
@@ -159,7 +156,7 @@ namespace BSFiberConcrete.Section
 
             InitPoints();
 
-            if (ndmSetup.UseRebar)
+            if (NdmSetup.UseRebar)
                 InitRods();
 
             int idx = 0;
@@ -176,8 +173,16 @@ namespace BSFiberConcrete.Section
         }
 
 
+        /// <summary>
+        /// построить сечение
+        /// </summary>
+        /// <param name="_clear"></param>
         private void DrawFromDatasource(bool _clear = false)
         {
+            if (chart.Series.Count < 4)
+                throw new Exception("Необходимо создать 4 ряда диаграммы");
+
+
             if (_clear)
             {
                 chart.Series[0].Points.Clear();
@@ -219,22 +224,27 @@ namespace BSFiberConcrete.Section
             {
                 var rod_pt = rod_points[j];
                 serieRods.Points.Add(new DataPoint(rod_pt.X, rod_pt.Y));
-
-                //rod_pt.
             }
-            
+
+            // поперечная арматура
+            Series serieTRebar = chart.Series[3];
+
+            for (int j = 0; j < rod_points.Count; j++)
+            {
+                var rod_pt = rod_points[j];
+                serieTRebar.Points.Add(new DataPoint(rod_pt.X, rod_pt.Y));
+            }
+
             numAreaRebar.Value = (decimal) rods_area;
 
             m_ImageStream = new MemoryStream();
             chart.SaveImage(m_ImageStream, ChartImageFormat.Png);
-
         }
 
         private void btnDraw_Click(object sender, EventArgs e)
         {            
             DrawFromDatasource(true);            
         }
-
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
@@ -491,7 +501,7 @@ namespace BSFiberConcrete.Section
         {
             Dictionary<string, double> dictParams = DictCalcParams;
                         
-            CalcNDM calcNDM = new CalcNDM(m_BeamSection) { setup = ndmSetup, D = dictParams };
+            CalcNDM calcNDM = new CalcNDM(m_BeamSection) { setup = NdmSetup, D = dictParams };
             calcNDM.RunGroup1();
 
             return calcNDM.CalcRes;                                    
@@ -539,11 +549,11 @@ namespace BSFiberConcrete.Section
         {
             if (m_BeamSection != BeamSection.Any) return "";
 
-            BSMesh.Nx = ndmSetup.N;
-            BSMesh.Ny = ndmSetup.M;
-            BSMesh.MinAngle = ndmSetup.MinAngle;
-            Tri.MinAngle = ndmSetup.MinAngle;
-            BSMesh.MaxArea = ndmSetup.MaxArea;
+            BSMesh.Nx = NdmSetup.N;
+            BSMesh.Ny = NdmSetup.M;
+            BSMesh.MinAngle = NdmSetup.MinAngle;
+            Tri.MinAngle = NdmSetup.MinAngle;
+            BSMesh.MaxArea = NdmSetup.MaxArea;
 
             List<PointF> pts = new List<PointF>();
             BeamSectionFromPoints(ref pts, Center);
