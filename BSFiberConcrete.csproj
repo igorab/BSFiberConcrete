@@ -423,6 +423,7 @@
       <DependentUpon>ViewCalcOfLenRebar.cs</DependentUpon>
     </Compile>
     <Compile Include="Report\BSFiberReport.cs" />
+    <Compile Include="Report\BSFiberReportData.cs" />
     <Compile Include="Report\BSFiberReport_M.cs" />
     <Compile Include="Report\BSFiberReport_MNQ.cs" />
     <Compile Include="BSFiberSetup.cs">

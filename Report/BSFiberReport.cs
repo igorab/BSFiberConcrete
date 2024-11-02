@@ -52,7 +52,7 @@ namespace BSFiberConcrete
 
         public string ImageCalc { get; set; }
         
-        public MemoryStream ImageStream { private get; set; }
+        public MemoryStream ImageStream {  get; set; }
 
         public BSFiberReport()
         {

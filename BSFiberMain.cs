@@ -592,10 +592,12 @@ namespace BSFiberConcrete
         /// <summary>
         /// Расчет прочности сечения на действие момента
         /// </summary>        
-        private BSFiberCalculation FiberCalculate_M(double _M = 0)
+        private BSFiberReportData FiberCalculate_M(double _M = 0)
         {
             bool useReinforcement = checkBoxRebar.Checked;
             bool calcOk;
+            BSFiberReportData reportData = new BSFiberReportData();
+
             try
             {
                 BSFibCalc = BSFiberCalculation.construct(m_BeamSection, useReinforcement);
@@ -610,22 +612,15 @@ namespace BSFiberConcrete
                 BSFibCalc.Efforts = new Dictionary<string, double> { { "My", _M } };
 
                 calcOk = BSFibCalc.Calculate();
-                if (calcOk)
-                {
-                    m_PhysParams = BSFibCalc.PhysParams;
-                    m_Coeffs = BSFibCalc.Coeffs;
-                    m_Efforts = BSFibCalc.Efforts;
-                    m_GeomParams = BSFibCalc.GeomParams();
-                    m_CalcResults = BSFibCalc.Results();
-                    m_Message = BSFibCalc.Msg;
-                    //TODO need refactoring - параметры с описанием
-                    m_PhysParams = BSFibCalc.PhysicalParameters();
-                }
-
+                if (calcOk)                
+                    reportData.InitFromBSFiberCalculation(BSFibCalc, _UnitConverter);                   
+                
                 // запуск расчет по второй группе предельных состояний
-                FiberCalculate_Cracking();
+                var  FibCalcGR2 = FiberCalculate_Cracking();
+                reportData.m_Messages.AddRange(FibCalcGR2.Msg);
+                reportData.m_CalcResults2Group = FibCalcGR2.Results();
 
-                return BSFibCalc;
+                return reportData;
             }
             catch (Exception _e)
             {
@@ -639,23 +634,18 @@ namespace BSFiberConcrete
         /// 1) Расчет предельного момента образования трещин
         /// 2) Расчет ширины раскрытия трещины
         /// </summary>        
-        private bool FiberCalculate_Cracking()
+        private BSFiberCalc_Cracking FiberCalculate_Cracking()
         {
             bool calcOk;
             try
-            {                
-                double[] beam_sizes = BeamSizes();
-
+            {                                
                 BSBeam   bsBeam = BSBeam.construct(m_BeamSection);
-
-                bsBeam.SetSizes(beam_sizes);
-
-                double c_b = bsBeam.Width;
-                double c_h = bsBeam.Height;
-
+                
+                bsBeam.SetSizes(BeamSizes());
+                
                 Dictionary<string, double> MNQ = GetEffortsForCalc();
 
-                BSFiberCalc_Cracking       calc_Cracking = new BSFiberCalc_Cracking(MNQ)
+                BSFiberCalc_Cracking  calc_Cracking = new BSFiberCalc_Cracking(MNQ)
                 {
                     Beam = bsBeam,
                     typeOfBeamSection = m_BeamSection
@@ -679,20 +669,23 @@ namespace BSFiberConcrete
                 
                 calc_Cracking.MatFiber = m_MatFiber;
                 calc_Cracking.SetParams(new double[] { 10, 1 });                
+
                 calcOk = calc_Cracking.Calculate();
                 
                 if (m_Message == null) m_Message = new List<string>();
                 m_Message.AddRange(calc_Cracking.Msg);
 
-                m_CalcResults2Group = calc_Cracking.Results();
+                if (calcOk)
+                    m_CalcResults2Group = calc_Cracking.Results();
+
+                return calc_Cracking;
             }
             catch (Exception _e)
-            {
-                calcOk = false;
+            {                
                 MessageBox.Show("Ошибка в расчете: " + _e.Message);
             }
 
-            return calcOk;
+            return null;
         }
 
         private void InitReportSections(ref BSFiberReport report)
@@ -1209,7 +1202,7 @@ namespace BSFiberConcrete
                 return;
             }
 
-            List<BSFiberCalculation> calcResults = new List<BSFiberCalculation>();
+            List<BSFiberReportData> calcResults = new List<BSFiberReportData>();
 
             int iRep = 0;
             foreach (Dictionary<string, double> _MNQ in lstMNQ)
@@ -1225,7 +1218,7 @@ namespace BSFiberConcrete
 
                 if (_M != 0 && _N == 0)
                 {
-                    BSFiberCalculation FibCalc = FiberCalculate_M(_M);
+                    var  FibCalc = FiberCalculate_M(_M);
                     calcResults.Add(FibCalc);                       
                 }
                 else if (_N != 0)
@@ -1241,7 +1234,7 @@ namespace BSFiberConcrete
                 }
             }
 
-            BSFiberReport_M.RunMultiReport(ref iRep, calcResults,  _UnitConverter);
+            BSFiberReport_M.RunMultiReport(ref iRep, calcResults);
             
         }
 
