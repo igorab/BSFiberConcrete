@@ -21,9 +21,11 @@ namespace BSFiberConcrete
         [DisplayName("Коэффициент, учитывающий неупругие свойства фибробетона растянутой зоны")]
         public double cGamma { get; protected set; }
 
-        [DisplayName("Коэффициент использования по усилию")]
+        [DisplayName("Коэффициент использования по усилию, [СП 360 П6.1.7 П6.1.8]")]
         public double UtilRate { get; protected set; }
 
+        public override BeamSection BeamSectionType() => BeamSection.Rect;
+        
         /// <summary>
         /// Коэффициенты надежности, применяемые в расчете
         /// </summary>

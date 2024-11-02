@@ -592,7 +592,7 @@ namespace BSFiberConcrete
         /// <summary>
         /// Расчет прочности сечения на действие момента
         /// </summary>        
-        private BSFiberCalculation FiberCalculate_M(double _M = 0, int _irep = 1)
+        private BSFiberCalculation FiberCalculate_M(double _M = 0)
         {
             bool useReinforcement = checkBoxRebar.Checked;
             bool calcOk;
@@ -643,44 +643,36 @@ namespace BSFiberConcrete
         {
             bool calcOk;
             try
-            {
-                // диаграмма:
-                // арматура                                
-                double cEs = (double)numEs.Value; // кг/см2
-                
-                double c_As = (double)numAs.Value;
-                double c_As1 = (double)numAs1.Value;
-                double c_a_s = (double)num_a.Value;
-                double c_a_s1 = (double)num_a1.Value;
-
-                bool reinforcement = checkBoxRebar.Checked;
-
-                // сечение балки балки, см 
+            {                
                 double[] beam_sizes = BeamSizes();
-                var bsBeam = BSBeam.construct(m_BeamSection);
+
+                BSBeam   bsBeam = BSBeam.construct(m_BeamSection);
+
                 bsBeam.SetSizes(beam_sizes);
 
                 double c_b = bsBeam.Width;
                 double c_h = bsBeam.Height;
-                
+
                 Dictionary<string, double> MNQ = GetEffortsForCalc();
 
-                BSFiberCalc_Cracking calc_Cracking = new BSFiberCalc_Cracking(MNQ);                
-                calc_Cracking.Beam              = bsBeam;
-                calc_Cracking.typeOfBeamSection = m_BeamSection;
+                BSFiberCalc_Cracking       calc_Cracking = new BSFiberCalc_Cracking(MNQ)
+                {
+                    Beam = bsBeam,
+                    typeOfBeamSection = m_BeamSection
+                };
 
                 // задать тип арматуры
-                calc_Cracking.MatRebar = new BSMatRod(cEs)
+                calc_Cracking.MatRebar = new BSMatRod((double)numEs.Value)
                 {
-                    RCls = cmbRebarClass.Text,
-                    Rs = (double)numRs.Value,
-                    e_s0 = 0,
-                    e_s2 = 0,
-                    As = c_As,
-                    As1 = c_As1,
-                    a_s = c_a_s,
-                    a_s1 = c_a_s1,
-                    Reinforcement = reinforcement
+                    RCls  = cmbRebarClass.Text,
+                    Rs    = (double)numRs.Value,
+                    e_s0  = 0,
+                    e_s2  = 0,
+                    As    = (double)numAs.Value,
+                    As1   = (double)numAs1.Value,
+                    a_s   = (double)num_a.Value,
+                    a_s1  = (double)num_a1.Value,
+                    Reinforcement = checkBoxRebar.Checked
                 };
 
                 SetFiberMaterialProperties();
@@ -1217,6 +1209,8 @@ namespace BSFiberConcrete
                 return;
             }
 
+            List<BSFiberCalculation> calcResults = new List<BSFiberCalculation>();
+
             int iRep = 0;
             foreach (Dictionary<string, double> _MNQ in lstMNQ)
             {
@@ -1226,36 +1220,29 @@ namespace BSFiberConcrete
                 {
                     MessageBox.Show("Расчет по методу статического равновесия не реализован для отрицательных значений M и N.\n " +
                                     "Воспользуйтесь расчетом по методу НДМ");
-                    return;
+                    continue;
                 }
 
                 if (_M != 0 && _N == 0)
                 {
-                    BSFiberCalculation FibCalc = FiberCalculate_M(_M, ++iRep);
-
-                    BSFiberReport_M fiberReport_M = new BSFiberReport_M()
-                    {
-                        BSFibCalc = FibCalc,
-                        UnitConverter = _UnitConverter,
-                        BeamSection = m_BeamSection,
-                        Msg = FibCalc.Msg
-                    };
-                    fiberReport_M.RunReport(true, iRep);                    
+                    BSFiberCalculation FibCalc = FiberCalculate_M(_M);
+                    calcResults.Add(FibCalc);                       
                 }
                 else if (_N != 0)
                 {
                     BSFiberCalc_MNQ fiberCalc = FiberCalculate_N();
-
                     FiberReport_N(fiberCalc, ++iRep);
                 }
 
                 if (_Qx != 0)
                 {
                     var fiberCalc = FiberCalculate_Shear(++iRep);
-
                     FiberReport_Shear(fiberCalc, ++iRep);
                 }
-            }        
+            }
+
+            BSFiberReport_M.RunMultiReport(ref iRep, calcResults,  _UnitConverter);
+            
         }
 
         private void btnFactors_Click(object sender, EventArgs e)

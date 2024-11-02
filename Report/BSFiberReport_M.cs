@@ -11,30 +11,49 @@ namespace BSFiberConcrete
 {
     public class BSFiberReport_M
     {
-        public BeamSection BeamSection;
-        public IEnumerable<string> Msg;
+        private BeamSection m_BeamSection;
+        private IEnumerable<string> m_Msg;
+        private BSFiberCalculation m_FibCalc;
 
-        public BSFiberCalculation BSFibCalc { get; set; }
+        public BSFiberCalculation BSFibCalc {             
+            set { m_FibCalc = value;
+                  m_BeamSection = value.BeamSectionType();
+                  m_Msg = value.Msg; } 
+        }
         public bool UseRebar { get; private set; }
         public LameUnitConverter UnitConverter { get; set; }
+
+        public static void RunMultiReport(ref int iRep, List<BSFiberCalculation> _calcResults, LameUnitConverter _UnitConverter)
+        {
+            foreach (BSFiberCalculation _FibCalc in _calcResults)
+            {
+                BSFiberReport_M fiberReport_M = new BSFiberReport_M
+                {
+                    UnitConverter = _UnitConverter,
+                    BSFibCalc = _FibCalc
+                };
+
+                fiberReport_M.RunReport(true, ++iRep);
+            }
+        }
 
         public void RunReport(bool calcOk, int _irep = 1)
         {
             try
             {
-                if (BSFibCalc == null)
+                if (m_FibCalc == null)
                     throw new Exception("Не выполнен расчет");
 
                 if (calcOk)
                 {
-                    string pathToHtmlFile = CreateReport(_irep, BeamSection, _useReinforcement: UseRebar);
+                    string pathToHtmlFile = CreateReport(_irep, m_BeamSection, _useReinforcement: UseRebar);
 
                     System.Diagnostics.Process.Start(pathToHtmlFile);
                 }
                 else
                 {
                     string errMsg = "";
-                    foreach (string ms in Msg) errMsg += ms + ";\t\n";
+                    foreach (string ms in m_Msg) errMsg += ms + ";\t\n";
 
                     MessageBox.Show(errMsg);
                 }
@@ -47,18 +66,18 @@ namespace BSFiberConcrete
 
         private void InitReportSections(ref BSFiberReport report)
         {           
-            report.Beam = null;
-            report.Coeffs = BSFibCalc.Coeffs; 
-            report.Efforts = BSFibCalc.Efforts; 
-            report.GeomParams = BSFibCalc.GeomParams(); 
-            report.PhysParams = BSFibCalc.PhysicalParameters();
-            report.Reinforcement = null;
-            report.CalcResults = BSFibCalc.Results();
+            report.Beam       = null;
+            report.Coeffs     = m_FibCalc.Coeffs; 
+            report.Efforts    = m_FibCalc.Efforts; 
+            report.GeomParams = m_FibCalc.GeomParams(); 
+            report.PhysParams = m_FibCalc.PhysicalParameters();
+            report.Reinforcement     = null;
+            report.CalcResults       = m_FibCalc.Results();
             report.CalcResults2Group = null;
-            report.ImageStream = null;
-            report.Messages = BSFibCalc.Msg;
+            report.ImageStream       = null;
+            report.Messages          = m_FibCalc.Msg;
             report.Path2BeamDiagrams = null;
-            report._unitConverter = UnitConverter;
+            report._unitConverter    = UnitConverter;
         }
 
         /// <summary>

@@ -33,7 +33,7 @@ namespace BSFiberConcrete
         [DisplayName("Предельный момент сечения, [кг*см]")]
         public double Mult { get; protected set; }
 
-        [DisplayName("Коэффициент использования по усилию")]
+        [DisplayName("Коэффициент использования по усилию, [СП 360 П6.1.9]")]
         public double UtilRate { get; protected set; }
 
         private double h;
@@ -45,6 +45,8 @@ namespace BSFiberConcrete
             ( Yft, Yb, Yb1, Yb2, Yb3, Yb5) = (_t[2], _t[3], _t[4], _t[5], _t[6], _t[7]);
         }
 
+        public override BeamSection BeamSectionType() => BeamSection.IBeam;
+        
         public override Dictionary<string, double> GeomParams()
         {
             Dictionary<string, double> geom = base.GeomParams();

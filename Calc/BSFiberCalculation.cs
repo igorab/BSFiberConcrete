@@ -31,8 +31,7 @@ namespace BSFiberConcrete
 
         [DisplayName("Расчетные значения сопротивления  на сжатиие по B30 СП63, [кг/см2]")]
         public double Rfb { get => R_fb(); }
-       
-                       
+                              
         public double Gamma(double _B) => 1.73 - 0.005 * (_B - 15);
         
         protected double Omega { get => MatFiber.Omega; }
@@ -47,9 +46,9 @@ namespace BSFiberConcrete
         protected double Yb5;
 
         [BSFiberCalculation(Name = "Площадь сжатой зоны бетона")]
-        private double Ab;
+        private readonly double Ab;
         [BSFiberCalculation(Name = "случайный эксцентриситет, принимаемый по СП 63.13330")]
-        private double e0;
+        private readonly double e0;
 
         public virtual Dictionary<string, double> Coeffs {
             get {
@@ -170,6 +169,17 @@ namespace BSFiberConcrete
             Msg.Add(info);
         }
                
+        public virtual BeamSection BeamSectionType()
+        {
+            return BeamSection.Any;
+        }
+
+        public virtual bool  UseRebar()
+        {
+            return false;
+        }
+
+
         /// <summary>
         /// Расчет прочности сечения
         /// </summary>
