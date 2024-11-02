@@ -95,7 +95,9 @@ namespace BSFiberConcrete
 
         private LameUnitConverter _UnitConverter;
 
-        private ControllerBeamDiagram _beamDiagramController;
+        //private ControllerBeamDiagram _beamDiagramController;
+        private BeamCalculatorViewModel _beamCalcVM;
+
 
         /// <summary>
         /// конструктор
@@ -162,10 +164,13 @@ namespace BSFiberConcrete
                 //{
                 //    gridEfforts[i, 0].Value = "0";
                 //}
-                m_Path2BeamDiagrams = new List<string>() { };
 
-                _beamDiagramController = new ControllerBeamDiagram(m_Path2BeamDiagrams);
-                BeamCalculatorControl beamCalculatorControl = new BeamCalculatorControl(tbLength, gridEfforts, _beamDiagramController);
+                m_Path2BeamDiagrams = new List<string>() { };
+                //_beamDiagramController = new ControllerBeamDiagram(m_Path2BeamDiagrams);
+                //BeamCalculatorControl beamCalculatorControl = new BeamCalculatorControl(tbLength, gridEfforts, _beamDiagramController);
+
+                _beamCalcVM = new BeamCalculatorViewModel(tbLength, gridEfforts, m_Path2BeamDiagrams);
+                BeamCalculatorControl beamCalculatorControl = new BeamCalculatorControl(_beamCalcVM);
                 tabPBeam.Controls.Add(beamCalculatorControl);
             }
         }
@@ -1436,13 +1441,16 @@ namespace BSFiberConcrete
         /// <summary>
         /// расчет прогибов, построение графика прогибов для балки
         /// </summary>
-        /// <param name="beamController"></param>
+        /// <param name="_beamCalcVM"></param>
         /// <param name="isUtilizationFactor"> флаг, определяющий превышение коэф использования; false - превышает, true - коэф в норме</param>
         /// <returns></returns>
-        private double CalculateBeamDeflections(ControllerBeamDiagram beamController, bool isUtilizationFactor)
+        private double CalculateBeamDeflections(bool isUtilizationFactor)
         {
+
+            //TODO
             // выполнять расчет только в случае, если ранее были сохранены 
-            if (beamController == null || beamController.path2BeamDiagrams.Count == 0)
+            //if (_beamCalcVM == null || _beamCalcVM.path2BeamDiagrams.Count == 0)
+            if (_beamCalcVM == null)
             { 
                 return double.NaN;
             }
@@ -1459,7 +1467,7 @@ namespace BSFiberConcrete
             // Значения на середине рассматриваемого участка
             List<double> valuesMomentOnSection = new List<double>();
             //List<double> valuesStiffnesOnSection = new List<double>();
-            beamController.BreakBeamIntoSections(X, valueMomentInX, valuesMomentOnSection);
+            _beamCalcVM.BeamDiagramModel.BreakBeamIntoSections(X, valueMomentInX, valuesMomentOnSection);
 
             if (valuesMomentOnSection.Count == 0) { return double.NaN; }
 
@@ -1468,10 +1476,7 @@ namespace BSFiberConcrete
             //List<double> valuesСurvatureOnSection = CalcNDM_My(valuesMomentOnSection);
 
             // график прогиба по расчетным значениям
-            double deflexionMax = beamController.CalculateDeflectionDiagram(X, valueMomentInX, valuesStiffnesOnSection);
-
-            // график прогибов по формулам
-            //beamController.CalculateDeflectionDiagramByFormula(X, valuesStiffnesOnSection);
+            double deflexionMax = _beamCalcVM.BeamDiagramModel.CalculateDeflectionDiagram(X, valueMomentInX, valuesStiffnesOnSection);
 
             if (deflexionMax == 0)
                 return double.NaN;
@@ -1916,7 +1921,7 @@ namespace BSFiberConcrete
                 if (calcResults.Count > 0)
                 {
                     calcResults[0].Path2BeamDiagrams = m_Path2BeamDiagrams;
-                    calcResults[0].Deflexion_max = CalculateBeamDeflections(_beamDiagramController, CheckUtilizationFactor(calcResults));
+                    calcResults[0].Deflexion_max = CalculateBeamDeflections(CheckUtilizationFactor(calcResults));
                 }
 
                 // формирование отчета
