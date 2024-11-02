@@ -1,0 +1,57 @@
+visual studio 2019
+NoComment (Скрыть комментарии через расширение)
+https://marketplace.visualstudio.com/items?itemName=3dGrabber.NoComment
+
+vs 2019
+HideShow Comments
+https://marketplace.visualstudio.com/items?itemName=3dGrabber.HideShowComments
+
+vs 2019
+comments remover
+https://marketplace.visualstudio.com/items?itemName=kipattab.CommentsRemover
+
+vs 2019
+Collapse Comments (свернуть развернуть комментарии)
+https://marketplace.visualstudio.com/items?itemName=MattLaceyLtd.CollapseComments
+
+vs 22
+Comment Remover; меню правка -> comments -> remove (не удалось удалить комментарии из нескольких файлов)
+https://marketplace.visualstudio.com/items?itemName=MadsKristensen.CommentRemover
+
+stacjOverFlow
+https://stackoverflow.com/questions/10812932/turn-solution-into-a-pdf-or-doc-file
+
+Удалить комментарии из всего решения
+//			\/\/.*\n
+/* some comment */	\/\*.*\*\/
+/* */			\/\*(.*?\n?)*\*\/
+найти все "enter" 	^.\n
+https://stackoverflow.com/questions/47888782/remove-comments-from-all-files-in-a-solution
+
+vs
+vsCodePrint 
+https://marketplace.visualstudio.com/items?itemName=StarPrintTools.VScodePrint2017-PrintSourceCodeInColor
+
+
+
+
+vs code
+Remove Comments	(Remove All Single Line Comments) (не удалось удалить комментарии из нескольких файлов)
+https://marketplace.visualstudio.com/items?itemName=plibither8.remove-comments
+
+vs code
+code2pdf
+https://marketplace.visualstudio.com/items?itemName=readbysearch.code2pdf
+
+vs code
+Print Кнопка Print, или пкм по файлу (файлам) Папке, Предварительный просмотр
+https://marketplace.visualstudio.com/items?itemName=pdconsec.vscode-print
+
+vs code
+CodeToHTML
+https://marketplace.visualstudio.com/items?itemName=Aniny.codetohtml
+
+
+
+
+
