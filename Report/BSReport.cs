@@ -74,7 +74,7 @@ namespace BSFiberConcrete.Report
             report.GeomParams = CalcRes.GeomParams;
             report.PhysParams = CalcRes.PhysParams; //m_PhysParams;
             report.Reinforcement = CalcRes.Reinforcement;
-            report.CalcResults = CalcRes.GetResults1Group();
+            report.CalcResults1Group = CalcRes.GetResults1Group();
             report.CalcResults2Group = CalcRes.GetResults2Group();
             report.ImageStream = CalcRes.ImageStream;
             report.Messages = CalcRes.Message;

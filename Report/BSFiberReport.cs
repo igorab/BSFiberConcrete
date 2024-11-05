@@ -27,7 +27,7 @@ namespace BSFiberConcrete
         public Dictionary<string, double> Efforts { set { m_Efforts = value; } }
         public Dictionary<string, double> PhysParams { set { m_PhysParams = value; } }
         public Dictionary<string, double> GeomParams { set { m_GeomParams = value; } }
-        public Dictionary<string, double> CalcResults { set { m_CalcResults = value; } }
+        public Dictionary<string, double> CalcResults1Group { set { m_CalcResults1Group = value; } }
         public Dictionary<string, double> CalcResults2Group { set { m_CalcResults2Group = value; } }
         public Dictionary<string, double> Reinforcement { set { m_Reinforcement = value; } }
         public List<string> Messages { set { m_Messages = value; }}
@@ -40,7 +40,7 @@ namespace BSFiberConcrete
         protected Dictionary<string, double> m_Efforts;
         protected Dictionary<string, double> m_PhysParams;
         protected Dictionary<string, double> m_GeomParams;
-        protected Dictionary<string, double> m_CalcResults;
+        protected Dictionary<string, double> m_CalcResults1Group;
         protected Dictionary<string, double> m_CalcResults2Group;
         protected Dictionary<string, double> m_Reinforcement;
         protected List<string> m_Messages;
@@ -266,12 +266,12 @@ namespace BSFiberConcrete
             w.WriteLine("<H2>Расчет:</H2>");
             if (m_CalcResults2Group != null)
                 w.WriteLine("<H3>Расчет по 1-й группе предельных состояний:</H3>");
-            if (m_CalcResults != null)
+            if (m_CalcResults1Group != null)
             {                
                 w.WriteLine("<Table border=1 bordercolor = darkblue>");
                 w.WriteLine("<tr>");
 
-                foreach (var _pair in m_CalcResults)
+                foreach (var _pair in m_CalcResults1Group)
                 {                    
                     w.WriteLine("<tr>");
                     w.WriteLine($"<td width={bk}>{_pair.Key}</td>");

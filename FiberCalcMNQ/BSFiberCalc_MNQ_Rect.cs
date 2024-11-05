@@ -17,6 +17,8 @@ namespace BSFiberConcrete
             m_Beam = new BSBeam_Rect();            
         }
 
+        public override BeamSection BeamSectionType() => BeamSection.Rect;
+
         /// <summary>
         /// Вернуть изрображение расчетной схемы
         /// </summary>

@@ -12,6 +12,8 @@ namespace BSFiberConcrete
         private string m_ImgCalc;
         public BSBeam_Ring beam { get; set; }
 
+        public override BeamSection BeamSectionType() => BeamSection.Ring;
+
         public BSFiberCalc_MNQ_Ring()
         {
             this.beam = new BSBeam_Ring();

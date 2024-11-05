@@ -577,7 +577,7 @@ namespace BSFiberConcrete
 
             report.InitFromFiberCalc(fiberCalc);
             // результат расчета по первой группе предельных состояний
-            report.CalcResults = fiberCalc.CalcResults;
+            report.CalcResults1Group = fiberCalc.CalcResults;
             // результат расчета по второй группе предельных состояний
             report.CalcResults2Group = m_CalcResults2Group;
 
@@ -696,7 +696,7 @@ namespace BSFiberConcrete
             report.GeomParams = m_GeomParams;
             report.PhysParams = m_PhysParams;
             report.Reinforcement = m_Reinforcement;
-            report.CalcResults = m_CalcResults;
+            report.CalcResults1Group = m_CalcResults;
             report.CalcResults2Group = m_CalcResults2Group;
             report.ImageStream = m_ImageStream;
             report.Messages = m_Message;
@@ -1008,76 +1008,62 @@ namespace BSFiberConcrete
             //_Rebar.Asw_Y = 1;
         }
 
+       
         /// <summary>
-        /// Усилия
-        /// </summary>
-        /// <param name="fiberCalc"></param>
-        /// <param name="_rebar">Армирование</param>
-        /// <param name="_fissurre">Расчет на трещиностойкость</param>
-        private void FiberCalc_MNQ(out BSFiberCalc_MNQ fiberCalc, bool _useRebar = false, bool _shear = false)
-        {
-            m_Message = new List<string>();
-
-            fiberCalc = BSFiberCalc_MNQ.Construct(m_BeamSection);
-            fiberCalc.UseRebar = _useRebar;
-            fiberCalc.Shear = _shear;
-
-            fiberCalc.InitFiberParams(m_BSLoadData.Fiber);
-
-            fiberCalc.MatFiber = m_MatFiber;
-
-            //GetEffortsFromForm(out List<Dictionary<string, double>> MNQ);
-            Dictionary<string, double> MNQ = GetEffortsForCalc();
-
-            fiberCalc.BetonType = BSQuery.BetonTypeFind(comboBetonType.SelectedIndex);
-
-            if (_shear || _useRebar)
-            {
-                Rebar rebar = (Rebar)m_BSLoadData.Rebar.Clone(); // из глобальных параметров                
-                //  введено пользователем
-                InitRebarValues(ref rebar);
-
-                // Армирование
-                fiberCalc.Rebar = rebar;
-
-                InitTRebar(out double[] t_r);                
-            }
-
-            double[] prms = m_BSLoadData.Params;
-            InitUserParams(prms);
-
-            // коэффициенты Yft, Yb, Yb1, Yb2, Yb3, Yb5, B
-            fiberCalc.SetParams(prms);
-            // длина сечение
-            double beamLngth = InitBeamLength(true); 
-            double[] sz = BeamSizes(beamLngth);
-
-            fiberCalc.SetSize(sz);
-            fiberCalc.SetEfforts(MNQ);
-            // передаем усилия и связанные с ними велечины
-            fiberCalc.SetEfforts(MNQ);
-            // сила вне сечения
-            fiberCalc.N_Out = fiberCalc.h / 2 < fiberCalc.Get_e_tot;
-
-            if (fiberCalc.Calculate())
-                fiberCalc.Msg.Add("Расчет успешно выполнен!");
-
-            m_CalcResults = fiberCalc.CalcResults;
-        }
-
-        /// <summary>
-        ///  Расчет по наклонному сечению на действие силы N
+        ///  Расчет сечения на действие силы N
         ///  (Внецентренное сжатие)
         /// </summary>        
-        private BSFiberCalc_MNQ FiberCalculate_N()
+        private BSFiberCalc_MNQ FiberCalculate_N(Dictionary<string, double> _MNQ)
         {
-            BSFiberCalc_MNQ fiberCalc = new BSFiberCalc_MNQ();
+            BSFiberCalc_MNQ fiberCalc = BSFiberCalc_MNQ.Construct(m_BeamSection);
+            fiberCalc.UseRebar = checkBoxRebar.Checked;
+            fiberCalc.Shear = false;
+
             try
-            {                
-                // расчет по первой группе предельных состояний
-                FiberCalc_MNQ(out fiberCalc, checkBoxRebar.Checked);
+            {                                                             
+                fiberCalc.InitFiberParams(m_BSLoadData.Fiber);
+
+                fiberCalc.MatFiber = m_MatFiber;
+                                
+                fiberCalc.BetonType = BSQuery.BetonTypeFind(comboBetonType.SelectedIndex);
+
+                if (fiberCalc.UseRebar)
+                {
+                    Rebar rebar = (Rebar)m_BSLoadData.Rebar.Clone(); 
+                                                                     
+                    InitRebarValues(ref rebar);
+
+                    // Армирование
+                    fiberCalc.Rebar = rebar;
+
+                    InitTRebar(out double[] t_r);
+                }
+
+                double[] prms = m_BSLoadData.Params;
+                InitUserParams(prms);
+                
+                fiberCalc.SetParams(prms); // коэффициенты Yft, Yb, Yb1, Yb2, Yb3, Yb5, B
+
+                double[] sz = BeamSizes(InitBeamLength(true));
+
+                fiberCalc.SetSize(sz);
+                
+                // передаем усилия и связанные с ними велечины
+                fiberCalc.SetEfforts(_MNQ);
+                // сила вне сечения
+                fiberCalc.N_Out = fiberCalc.h / 2 < fiberCalc.Get_e_tot;
+
+                if (fiberCalc.Calculate())
+                    fiberCalc.Msg.Add("Расчет успешно выполнен!");
+
+                m_CalcResults = fiberCalc.CalcResults;
+
                 // расчет по второй группе предельных состояний
-                FiberCalculate_Cracking();
+                var calcResults2Group = FiberCalculate_Cracking();
+
+                //reportData.InitFromBSFiberCalcMNQ(fiberCalc);
+                //reportData.m_CalcResults2Group = calcResults2Group.Results();
+
             }
             catch (Exception _ex)
             {
@@ -1128,11 +1114,14 @@ namespace BSFiberConcrete
             return xR;
         }
 
+        /// <summary>
+        /// Отчет на действие Q
+        /// </summary>        
         private void FiberReport_Shear(BSFiberCalc_MNQ fiberCalc, int _irep)
         {
             BSFiberReport_MNQ report = new BSFiberReport_MNQ()
             {
-                BeamSection = m_BeamSection,
+                BeamSection = fiberCalc.BeamSectionType(),
                 ImageCalc = fiberCalc.ImageCalc(),
                 Messages = m_Message,
                 _unitConverter = _UnitConverter
@@ -1140,7 +1129,7 @@ namespace BSFiberConcrete
 
             report.InitFromFiberCalc(fiberCalc);
             // результаты расчета по 1 гр пред состояний
-            report.CalcResults = fiberCalc.CalcResults;
+            report.CalcResults1Group = fiberCalc.CalcResults;
             // для расчета по второй группе пред состояний
             report.CalcResults2Group = m_CalcResults2Group;
             
@@ -1152,14 +1141,46 @@ namespace BSFiberConcrete
         /// <summary>
         ///  Расчет по наклонному сечению на действие Q
         /// </summary>        
-        private BSFiberCalc_MNQ FiberCalculate_Shear(int _irep = 3)
+        private BSFiberCalc_MNQ FiberCalculate_Q(Dictionary<string, double> MNQ)
         {
-            BSFiberCalc_MNQ fiberCalc = new BSFiberCalc_MNQ();
-
+            BSFiberCalc_MNQ fiberCalc = BSFiberCalc_MNQ.Construct(m_BeamSection);
+            
             try
             {                
                 // Расчет по первой группе предельных состояний
-                FiberCalc_MNQ(out fiberCalc, true, _shear: true);
+                //FiberCalc_MNQ(out fiberCalc, true, _shear: true);
+
+                fiberCalc.UseRebar = true;
+                fiberCalc.Shear    = true;
+
+                fiberCalc.InitFiberParams(m_BSLoadData.Fiber);
+
+                fiberCalc.MatFiber = m_MatFiber;                                
+
+                fiberCalc.BetonType = BSQuery.BetonTypeFind(comboBetonType.SelectedIndex);
+                
+                Rebar rebar = (Rebar)m_BSLoadData.Rebar.Clone();                                                                  
+                InitRebarValues(ref rebar);
+                // Армирование
+                fiberCalc.Rebar = rebar;
+                                
+                double[] prms = m_BSLoadData.Params;
+                InitUserParams(prms);
+                
+                fiberCalc.SetParams(prms); // коэффициенты Yft, Yb, Yb1, Yb2, Yb3, Yb5, B
+                                
+                double[] sz = BeamSizes(InitBeamLength(true));
+                fiberCalc.SetSize(sz);
+                fiberCalc.SetEfforts(MNQ);
+                // передаем усилия и связанные с ними велечины
+                fiberCalc.SetEfforts(MNQ);
+                // сила вне сечения
+                fiberCalc.N_Out = fiberCalc.h / 2 < fiberCalc.Get_e_tot;
+
+                if (fiberCalc.Calculate())
+                    fiberCalc.Msg.Add("Расчет успешно выполнен!");
+
+                m_CalcResults = fiberCalc.CalcResults;
 
                 // Расчет по второй группе предельных состояний
                 FiberCalculate_Cracking();
@@ -1202,7 +1223,8 @@ namespace BSFiberConcrete
                 return;
             }
 
-            List<BSFiberReportData> calcResults = new List<BSFiberReportData>();
+            List<BSFiberReportData> calcResults_M = new List<BSFiberReportData>();
+            List<BSFiberReport_N> calcResults_N = new List<BSFiberReport_N>();
 
             int iRep = 0;
             foreach (Dictionary<string, double> _MNQ in lstMNQ)
@@ -1216,26 +1238,46 @@ namespace BSFiberConcrete
                     continue;
                 }
 
-                if (_M != 0 && _N == 0)
-                {
-                    var  FibCalc = FiberCalculate_M(_M);
-                    calcResults.Add(FibCalc);                       
-                }
-                else if (_N != 0)
-                {
-                    BSFiberCalc_MNQ fiberCalc = FiberCalculate_N();
-                    FiberReport_N(fiberCalc, ++iRep);
-                }
-
+                // Расчет на действие поперечных сил     
                 if (_Qx != 0)
                 {
-                    var fiberCalc = FiberCalculate_Shear(++iRep);
-                    FiberReport_Shear(fiberCalc, ++iRep);
+                    // учитывает расчет по накл полосе надействие момента
+                    BSFiberCalc_MNQ fiberCalc_Q = FiberCalculate_Q(_MNQ);
+
+                    FiberReport_Shear(fiberCalc_Q, ++iRep);
+                    //
                 }
+
+                // расчет на действие сжимающей силы (учитывает заданный изгибающий момент + момент от эксцентриситета N )
+                if (_N != 0)
+                {
+                    BSFiberCalc_MNQ fiberCalc_N = FiberCalculate_N(_MNQ);
+
+                    BSFiberReport_N report = new BSFiberReport_N() { _unitConverter = _UnitConverter };
+                    report.InitFromFiberCalc(fiberCalc_N);
+
+                    // расчет по второй группе предельных состояний
+                    var calcResults2Group = FiberCalculate_Cracking();
+                    report.CalcResults2Group = calcResults2Group.Results();
+
+                    calcResults_N.Add(report);
+                }
+
+                // расчет на чистый изгиб
+                if (_M != 0 && _N == 0)
+                {
+                    BSFiberReportData FibCalc = FiberCalculate_M(_M);
+                    calcResults_M.Add(FibCalc);                       
+
+                    // добавить расчет на проверку по наклонному сечению
+
+                }                
             }
 
-            BSFiberReport_M.RunMultiReport(ref iRep, calcResults);
-            
+            BSFiberReport_M.RunMultiReport(ref iRep, calcResults_M);
+
+            BSFiberReport_N.RunMultiReport(ref iRep, calcResults_N);
+
         }
 
         private void btnFactors_Click(object sender, EventArgs e)
@@ -1998,7 +2040,8 @@ namespace BSFiberConcrete
             var dCalcParams = DictCalcParams(m_BeamSection);
 
             DictFormUserParams(dCalcParams);
-            
+
+            bSCalcResults.CalcParams = dCalcParams;
             bSCalcResults.CalcResults = m_CalcResults;
             bSCalcResults.Show();
         }

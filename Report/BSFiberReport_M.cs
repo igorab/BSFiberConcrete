@@ -1,10 +1,6 @@
-﻿using BSFiberConcrete.BSRFib;
-using BSFiberConcrete.UnitsOfMeasurement;
+﻿using BSFiberConcrete.UnitsOfMeasurement;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace BSFiberConcrete
@@ -72,7 +68,7 @@ namespace BSFiberConcrete
             report.GeomParams        = m_ReportData.m_GeomParams; 
             report.PhysParams        = m_ReportData.m_PhysParams;
             report.Reinforcement     = m_ReportData.m_Reinforcement;
-            report.CalcResults       = m_ReportData.m_CalcResults;
+            report.CalcResults1Group       = m_ReportData.m_CalcResults1Group;
             report.CalcResults2Group = m_ReportData.m_CalcResults2Group;
             report.ImageStream       = m_ReportData.ImageStream;
             report.Messages          = m_ReportData.m_Messages;
