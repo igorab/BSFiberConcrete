@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="BSBeamCalculator.DiagramResult">
-    <Position X="10.25" Y="6.25" Width="1.5" />
+    <Position X="10.75" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AgAAAACAAAAAAAAAAAAAAAAAAABAAAAAAAAAAgAAQAA=</HashCode>
       <FileName>controller\BeamDiagram.cs</FileName>
@@ -10,26 +10,26 @@
   <Class Name="BSBeamCalculator.BeamCalculatorViewModel">
     <Position X="4" Y="0.5" Width="3" />
     <TypeIdentifier>
-      <HashCode>kEAAAUAAAAgAABAIBCAAIEAAABAJAlAAEAAAACIIAgA=</HashCode>
+      <HashCode>kAAAAUAAAAAAABAIACAAIEAAABAJAkAAEAAAACIIAgA=</HashCode>
       <FileName>ViewModel\BeamCalculatorViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BSBeamCalculator.BeamCalculatorControl">
     <Position X="1" Y="1" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>vwAAAlCQAjEACRQQIAGAAwAC4AAQACBAwGgAAQAAgSA=</HashCode>
+      <HashCode>vwAAAlAQAjEACRQQIAGAAwAC4AAQACBAwGgAAQAAgSI=</HashCode>
       <FileName>BeamCalculatorControl.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BSBeamCalculator.BeamDiagram">
     <Position X="7.25" Y="3.75" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>AAAACICgAAABAEAABCAAAACAAAEBAACQBAACCRAIAgA=</HashCode>
+      <HashCode>AAAACIAgAAABAEAABAAAAACAAAEAAACQBAACARAIAgA=</HashCode>
       <FileName>controller\BeamDiagram.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BSBeamCalculator.SimpleBeamDiagramCase">
-    <Position X="12" Y="3.5" Width="1.5" />
+    <Position X="12.25" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAYAAAAAAgAAAAIABgQAABAAAAAgAAAAAAAAAAAAA=</HashCode>
       <FileName>model\SimpleBeamDiagramCase.cs</FileName>

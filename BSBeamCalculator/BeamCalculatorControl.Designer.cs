@@ -147,7 +147,6 @@ namespace BSBeamCalculator
             0,
             0,
             0});
-            this.numBeamLen.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             // 
             // label1
             // 
@@ -275,7 +274,7 @@ namespace BSBeamCalculator
             this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox4.Location = new System.Drawing.Point(3, 3);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(247, 212);
+            this.groupBox4.Size = new System.Drawing.Size(235, 212);
             this.groupBox4.TabIndex = 0;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Характеристика нагрузки";
@@ -311,7 +310,7 @@ namespace BSBeamCalculator
             this.numLenX.Size = new System.Drawing.Size(65, 20);
             this.numLenX.TabIndex = 4;
             this.numLenX.Value = new decimal(new int[] {
-            2,
+            5,
             0,
             0,
             0});
@@ -358,7 +357,7 @@ namespace BSBeamCalculator
             this.numForce.Size = new System.Drawing.Size(65, 20);
             this.numForce.TabIndex = 3;
             this.numForce.Value = new decimal(new int[] {
-            500,
+            10,
             0,
             0,
             0});
@@ -384,7 +383,7 @@ namespace BSBeamCalculator
             // btnCalculate
             // 
             this.btnCalculate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCalculate.Location = new System.Drawing.Point(80, 87);
+            this.btnCalculate.Location = new System.Drawing.Point(92, 171);
             this.btnCalculate.Name = "btnCalculate";
             this.btnCalculate.Size = new System.Drawing.Size(75, 23);
             this.btnCalculate.TabIndex = 1;
@@ -395,13 +394,14 @@ namespace BSBeamCalculator
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(80, 129);
+            this.button2.Enabled = false;
+            this.button2.Location = new System.Drawing.Point(92, 129);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 3;
             this.button2.Text = "Сбросить";
             this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.button2.Visible = false;
             // 
             // tableLayoutPanel4
             // 
@@ -428,16 +428,16 @@ namespace BSBeamCalculator
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(152, 78);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(164, 78);
             this.tableLayoutPanel4.TabIndex = 2;
             // 
             // label_Mmax
             // 
             this.label_Mmax.AutoSize = true;
             this.label_Mmax.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label_Mmax.Location = new System.Drawing.Point(48, 0);
+            this.label_Mmax.Location = new System.Drawing.Point(52, 0);
             this.label_Mmax.Name = "label_Mmax";
-            this.label_Mmax.Size = new System.Drawing.Size(54, 26);
+            this.label_Mmax.Size = new System.Drawing.Size(59, 26);
             this.label_Mmax.TabIndex = 4;
             this.label_Mmax.Text = "0";
             this.label_Mmax.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -448,7 +448,7 @@ namespace BSBeamCalculator
             this.label7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label7.Location = new System.Drawing.Point(3, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(39, 26);
+            this.label7.Size = new System.Drawing.Size(43, 26);
             this.label7.TabIndex = 3;
             this.label7.Text = "M max";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -459,7 +459,7 @@ namespace BSBeamCalculator
             this.label8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label8.Location = new System.Drawing.Point(3, 26);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(39, 26);
+            this.label8.Size = new System.Drawing.Size(43, 26);
             this.label8.TabIndex = 2;
             this.label8.Text = "M min ";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -468,9 +468,9 @@ namespace BSBeamCalculator
             // 
             this.label13.AutoSize = true;
             this.label13.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label13.Location = new System.Drawing.Point(108, 26);
+            this.label13.Location = new System.Drawing.Point(117, 26);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(41, 26);
+            this.label13.Size = new System.Drawing.Size(44, 26);
             this.label13.TabIndex = 7;
             this.label13.Text = "кг*см";
             this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -479,9 +479,9 @@ namespace BSBeamCalculator
             // 
             this.label_Mmin.AutoSize = true;
             this.label_Mmin.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label_Mmin.Location = new System.Drawing.Point(48, 26);
+            this.label_Mmin.Location = new System.Drawing.Point(52, 26);
             this.label_Mmin.Name = "label_Mmin";
-            this.label_Mmin.Size = new System.Drawing.Size(54, 26);
+            this.label_Mmin.Size = new System.Drawing.Size(59, 26);
             this.label_Mmin.TabIndex = 6;
             this.label_Mmin.Text = "0";
             this.label_Mmin.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -490,9 +490,9 @@ namespace BSBeamCalculator
             // 
             this.label11.AutoSize = true;
             this.label11.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label11.Location = new System.Drawing.Point(108, 0);
+            this.label11.Location = new System.Drawing.Point(117, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(41, 26);
+            this.label11.Size = new System.Drawing.Size(44, 26);
             this.label11.TabIndex = 5;
             this.label11.Text = "кг*см";
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -503,7 +503,7 @@ namespace BSBeamCalculator
             this.label17.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label17.Location = new System.Drawing.Point(3, 52);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(39, 26);
+            this.label17.Size = new System.Drawing.Size(43, 26);
             this.label17.TabIndex = 8;
             this.label17.Text = "Q max";
             this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -512,9 +512,9 @@ namespace BSBeamCalculator
             // 
             this.label_Qmax.AutoSize = true;
             this.label_Qmax.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label_Qmax.Location = new System.Drawing.Point(48, 52);
+            this.label_Qmax.Location = new System.Drawing.Point(52, 52);
             this.label_Qmax.Name = "label_Qmax";
-            this.label_Qmax.Size = new System.Drawing.Size(54, 26);
+            this.label_Qmax.Size = new System.Drawing.Size(59, 26);
             this.label_Qmax.TabIndex = 9;
             this.label_Qmax.Text = "0";
             this.label_Qmax.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -523,9 +523,9 @@ namespace BSBeamCalculator
             // 
             this.label19.AutoSize = true;
             this.label19.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label19.Location = new System.Drawing.Point(108, 52);
+            this.label19.Location = new System.Drawing.Point(117, 52);
             this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(41, 26);
+            this.label19.Size = new System.Drawing.Size(44, 26);
             this.label19.TabIndex = 10;
             this.label19.Text = "кг";
             this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -584,8 +584,8 @@ namespace BSBeamCalculator
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60.68548F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 39.31452F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 58.03357F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 41.96643F));
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel6, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.groupBox4, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -602,17 +602,17 @@ namespace BSBeamCalculator
             this.tableLayoutPanel6.ColumnCount = 1;
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel6.Controls.Add(this.tableLayoutPanel4, 0, 0);
-            this.tableLayoutPanel6.Controls.Add(this.btnCalculate, 0, 1);
+            this.tableLayoutPanel6.Controls.Add(this.btnCalculate, 0, 3);
             this.tableLayoutPanel6.Controls.Add(this.button2, 0, 2);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel6.Location = new System.Drawing.Point(256, 3);
+            this.tableLayoutPanel6.Location = new System.Drawing.Point(244, 3);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 4;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(158, 212);
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(170, 212);
             this.tableLayoutPanel6.TabIndex = 1;
             // 
             // tableLayoutPanel7

@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using Dapper;
+using Microsoft.Data.Sqlite;
 
 namespace BSFiberConcrete.Lib
 {
@@ -310,6 +311,60 @@ namespace BSFiberConcrete.Lib
         }
 
         /// <summary>
+        /// сохранить данные для формы "расчет балки"
+        /// </summary>
+        /// <param name="values"></param>
+        public static void SaveForBeamDiagram(InitForBeamDiagram values)
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    cnn.Open();
+                    using (var tr = cnn.BeginTransaction())
+                    {
+                        cnn.Execute("DELETE FROM InitForBeamDiagram");
+
+                        int cnt = cnn.Execute($"insert into InitForBeamDiagram (Force, LengthX) " +
+                            $"values (@Force, @LengthX)", values, tr);
+
+                        tr.Commit();
+                    }
+                }
+            }
+            catch (Exception _e)
+            {
+                MessageBox.Show(_e.Message);
+            }
+        }
+
+        /// <summary>
+        /// Данные по фибробетону из БД
+        /// </summary>
+        /// <returns></returns>
+        public static InitForBeamDiagram LoadForBeamDiagram()
+        {
+            try
+            {
+                string query = string.Format("select * from InitForBeamDiagram");
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    IEnumerable<InitForBeamDiagram> output = cnn.Query<InitForBeamDiagram>(query, new DynamicParameters());
+                    List<InitForBeamDiagram> res = output.ToList();
+                    if (res.Count == 0)
+                    { return null; }
+
+                    return res[0];
+                }
+            }
+            catch (Exception _e)
+            {
+                MessageBox.Show(_e.Message);
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Усилия 
         /// </summary>
         /// <returns>Список</returns>
@@ -350,6 +405,8 @@ namespace BSFiberConcrete.Lib
                 MessageBox.Show(_e.Message);
             }
         }
+
+
 
         // сохранить данные в бд по усилиям
         public static void SaveEfforts(List<Efforts> _efforts, bool _clear = true)

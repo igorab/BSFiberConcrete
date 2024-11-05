@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace BSBeamCalculator
 {
     /// <summary>
-    ///  Клас определяет формулу для построения эпюры моментов и сил бакли
+    ///  Класc определяет формулу для построения эпюры моментов и сил балки
     ///  в зависимости от защемления и типа нагрузки
     ///  дословный перевод: ПРОСТОЙ СЛУЧАЙ ДИАГРАММЫ БАЛКИ
     /// </summary>
@@ -35,7 +35,7 @@ namespace BSBeamCalculator
             "Pinned-Movable"
         };
         /// <summary>
-        /// Расссматриваемые типы нагрузок на балку
+        /// Рассматриваемые типы нагрузок на балку
         /// </summary>
         public static List<string> loadBeamTypeValue = new List<string>()
         {
@@ -48,7 +48,7 @@ namespace BSBeamCalculator
         /// </summary>
         public bool IsCalculateBeamDeflection;
         /// <summary>
-        /// Расчитать прогиб балки по ее длине
+        /// Рассчитать прогиб балки по ее длине (по формуле)
         /// </summary>
         public Func<double, double, double> CalculateBeamDeflection;
 
@@ -79,8 +79,19 @@ namespace BSBeamCalculator
         {
             double a = c1;
             double b = length - c1;
-            double al = a / length;
-            double bl = b / length;
+
+            double al;
+            double bl;
+            if (length <= 0)
+            {
+                al = 0;
+                bl = 0;
+            }
+            else
+            {
+                al = a / length;
+                bl = b / length;
+            }
 
             double R1 = 0;
             double R2 = 0;

@@ -70,25 +70,22 @@ namespace BSBeamCalculator
         {
             List<Chart> forceChart = new List<Chart>();
 
+            if (path2BeamDiagrams != null)
+            { path2BeamDiagrams.Clear(); }
+
             SimpleBeamDiagramCase simpleDiagram = new SimpleBeamDiagramCase(supportType, loadType);
             double[][] values_xQ_xM = simpleDiagram.CalculateValuesForDiagram(l, x1, 0, f);
             result = new DiagramResult(values_xQ_xM);
 
             string[] names1 = { "Сила", "см", "кг", "BeamDiagramQ" };
-            Chart Q = CreteChart2(result.pointQ[0].ToList(), result.pointQ[1].ToList(), names1, System.Drawing.Color.Blue);
+            Chart Q = CreteChart(result.pointQ[0].ToList(), result.pointQ[1].ToList(), names1, System.Drawing.Color.Blue);
             string[] names2 = { "Момент", "см", "кг*см", "BeamDiagramM" };
-            Chart M = CreteChart2(result.pointM[0].ToList(), result.pointM[1].ToList(), names2, System.Drawing.Color.Red);
+            Chart M = CreteChart(result.pointM[0].ToList(), result.pointM[1].ToList(), names2, System.Drawing.Color.Red);
             forceChart.Add(M);
             forceChart.Add(Q);
 
             return forceChart;
 
-        }
-
-
-        private static SimpleBeamDiagramCase CreateSimpleBeamDiagramCase(string supportType, string loadType)
-        { 
-         return new SimpleBeamDiagramCase(supportType, loadType);
         }
 
 
@@ -216,7 +213,8 @@ namespace BSBeamCalculator
                 { deflexionMax = u * 10; }
             }
             string[] names = { "Прогиб", "см", "мм", "BeamDiagramU" };
-            this.CreteChart(XForChart, U, names);
+            //this.CreteChart(XForChart, U, names);
+            this.CreteChart(XForChart, U, names, System.Drawing.Color.Green);
             return deflexionMax;
         }
 
@@ -224,86 +222,48 @@ namespace BSBeamCalculator
         /// Построить график прогиба по формуле
         /// </summary>
         /// <param name="X"></param>
-        /// <param name="valuesStiffnesOnSection"></param>
+        /// <param name="valuesStiffnessOnSection"></param>
         /// <param name=""></param>
-        public void CalculateDeflectionDiagramByFormula(List<double> X, List<double> valuesStiffnesOnSection)
+        public void CalculateDeflectionDiagramByFormula(List<double> X, List<double> valuesStiffnessOnSection)
         {
-            //// график прогибов по формулам
-            //if (this.beamDiagram.simpleDiagram.IsCalculateBeamDeflection)
-            //{
-            //    double d = 0;
-            //    foreach (double Stiffnes in valuesStiffnesOnSection)
-            //    {
-            //        if (double.IsNaN(Stiffnes)) { continue; }
-            //        d = (d + Stiffnes) / 2;
-            //    }
+            // график прогибов по формулам
 
-            //    if (d == 0)
-            //    { return; }
+            SimpleBeamDiagramCase tmpSimpleBeamDiagram = new SimpleBeamDiagramCase(supportType, loadType);
 
-            //    List<double> simpleU = new List<double>();
-            //    List<double> XForChart = new List<double>();
-            //    for (int i = 1; X.Count > i; i = i + 2)
-            //    {
-            //        XForChart.Add(X[i]);
-            //        double tmpU = this.beamDiagram.simpleDiagram.CalculateBeamDeflection(X[i], d) * 10;
-            //        simpleU.Add(tmpU);
-            //    }
-            //    this.CreteChart(XForChart, simpleU, new string[] { "Прогиб по формуле", "cм", "мм", "SimpleBeamDiagramU" });
-            //}
-        }
+            if (tmpSimpleBeamDiagram.IsCalculateBeamDeflection)
+            {
+                double d = 0;
+                foreach (double Stiffness in valuesStiffnessOnSection)
+                {
+                    if (double.IsNaN(Stiffness)) { continue; }
+                    d = (d + Stiffness) / 2;
+                }
 
-        public void Test()
-        {
-            //// Кол- во рассматриваемых участков
-            //int n = 20;
-            //// всего рассматриваемых точек
-            //int m = n + 1 + n;
-            //// шаг между точками
-            //double delta = l / (2 * n);
+                if (d == 0)
+                { return; }
 
-            ////double d = 1;
-            //double d = 2d * 1000000d * 520800d;
-
-            //List<double> X = new List<double>();
-            //List<double> M = new List<double>();
-            //List<double> D = new List<double>();
-
-            //for (int i = 0; m > i; i++)
-            //{
-            //    double tmpX = delta * i;
-            //    double tmpM = GetM(result, tmpX);
-            //    X.Add(tmpX);
-            //    M.Add(tmpM);
-
-            //    if (i > 0 && i % 2 != 0)
-            //    { D.Add(d); }
-            //}
-
-            //List<double> XForChart = new List<double>();
-            //List<double> U = new List<double>();
-            //for (int i = 1; m > i; i = i + 2)
-            //{
-            //    double u = CalculateDeflectionAtPoint(M, X, D, i);
-            //    XForChart.Add(X[i]);
-            //    U.Add(u);
-            //}
-
-            //string[] names = { "Прогиб", "см", "см", "BeamDiagramUTest" };
-            //CreteChart(XForChart, U, names);
-
-
-            //if (beamDiagram.simpleDiagram.IsCalculateBeamDeflection)
-            //{
-            //    List<double> simpleU = new List<double>();
-            //    for (int i = 1; m > i; i = i + 2)
-            //    { simpleU.Add(beamDiagram.simpleDiagram.CalculateBeamDeflection(X[i], d)); }
-            //    CreteChart(XForChart, simpleU, new string[] { "Прогиб", "см", "см", "SimpleBeamDiagramU" });
-            //}
+                List<double> simpleU = new List<double>();
+                List<double> XForChart = new List<double>();
+                for (int i = 1; X.Count > i; i = i + 2)
+                {
+                    XForChart.Add(X[i]);
+                    double tmpU = tmpSimpleBeamDiagram.CalculateBeamDeflection(X[i], d) * 10;
+                    simpleU.Add(tmpU);
+                }
+                CreteChart(XForChart, simpleU, new string[] { "Прогиб по формуле", "cм", "мм", "SimpleBeamDiagramU" }, System.Drawing.Color.Green);
+            }
         }
 
 
-        public Chart CreteChart2(List<double> valueX, List<double> valueY, string[] names, Color color)
+        /// <summary>
+        /// Создать объект chart
+        /// </summary>
+        /// <param name="valueX"></param>
+        /// <param name="valueY"></param>
+        /// <param name="names"></param>
+        /// <param name="color"></param>
+        /// <returns></returns>
+        public Chart CreteChart(List<double> valueX, List<double> valueY, string[] names, Color color)
         {
             System.Windows.Forms.DataVisualization.Charting.Chart chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
@@ -356,60 +316,9 @@ namespace BSBeamCalculator
             return chart;
         }
 
-        public void CreteChart(List<double> valueX, List<double> valueY, string[] names)
-        {
-            System.Windows.Forms.DataVisualization.Charting.Chart chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Title title = new System.Windows.Forms.DataVisualization.Charting.Title();
-
-            string numChart = _numChart.ToString();
-
-            string CAName = $"ChartArea{numChart}";
-            string cName = $"chart{numChart}";
-            string tName = $"Title{numChart}";
-            string sName = $"Series{numChart}";
-
-            //names;
-            string textName = names[0];
-            string titleX = names[1];
-            string titleY = names[2];
-            string name2Save = names[3];
-
-            chartArea.Name = CAName;
-            chart.Name = cName;
-            chart.Text = cName;
-
-            title.Name = tName;
-            title.Text = textName;
-
-            chart.ChartAreas.Add(chartArea);
-            chart.Dock = System.Windows.Forms.DockStyle.Fill;
-            chart.Location = new System.Drawing.Point(3, 3);
-            chart.Size = new System.Drawing.Size(664, 217);
-            chart.TabIndex = 0;
-            chart.Titles.Add(title);
-
-            chart.Series.Add(sName);
-            chart.Series[sName].BorderWidth = 4;
-            chart.ChartAreas[0].AxisX.Minimum = 0;
-            chart.ChartAreas[0].AxisX.Maximum = l;
-            chart.Series[sName].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            for (int i = 0; i < valueX.Count; i++)
-            {  chart.Series[sName].Points.AddXY(valueX[i], valueY[i]); }
-
-            Font axisFont = new System.Drawing.Font("Microsoft Sans Serif", 8F,
-                ((System.Drawing.FontStyle)(System.Drawing.FontStyle.Bold)), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            chart.ChartAreas[0].AxisX.Title = titleX;
-            chart.ChartAreas[0].AxisX.TitleFont = axisFont;
-            chart.ChartAreas[0].AxisY.Title = titleY;
-            chart.ChartAreas[0].AxisY.TitleFont = axisFont;
-
-            SaveChart(chart, name2Save);
-        }
-
 
         /// <summary>
-        /// Сохранить картинку c прогибами
+        /// Сохранить диаграмму
         /// </summary>
         public void SaveChart(System.Windows.Forms.DataVisualization.Charting.Chart chart, string pictureName)
         {
@@ -434,6 +343,8 @@ namespace BSBeamCalculator
                         return;
                     }
                 }
+
+
                 path2BeamDiagrams.Add(pathToPicture);
             }
             _numChart++;
@@ -477,7 +388,7 @@ namespace BSBeamCalculator
         }
 
         /// <summary>
-        /// Функция определяет максимальное (по модолю) значение во втором массиве
+        /// Функция определяет максимальное (по модулю) значение во втором массиве
         /// и возвращает пару x_value[i][0] x_value[i][1], i - индекс максимального значения
         /// </summary>
         /// <param name="x_value"></param>
