@@ -20,6 +20,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
+using TriangleNet.Topology.DCEL;
 
 namespace BSFiberConcrete
 {
@@ -96,7 +97,9 @@ namespace BSFiberConcrete
 
         private LameUnitConverter _UnitConverter;
 
-        private ControllerBeamDiagram _beamDiagramController;
+        //private ControllerBeamDiagram _beamDiagramController;
+        private BeamCalculatorViewModel _beamCalcVM;
+
 
         /// <summary>
         /// конструктор
@@ -105,7 +108,6 @@ namespace BSFiberConcrete
         {
             InitializeComponent();
 
-            m_Path2BeamDiagrams = new List<string>();
             m_Beam = new Dictionary<string, double>();
             m_Table = new DataTable();
 
@@ -147,10 +149,6 @@ namespace BSFiberConcrete
 
                 btnStaticEqCalc.Visible = false;
                 btnCalc_Deform.Visible = true;
-
-                //gridEfforts
-                //BeamCalculatorControl beamCalculatorControl = new BeamCalculatorControl(test_Efforts);
-
                 tbLength.Enabled = false;
 
                 gridEfforts.Rows.Clear();
@@ -158,15 +156,23 @@ namespace BSFiberConcrete
                 gridEfforts.Columns["Mx"].Visible = false;
                 gridEfforts.Columns["Qy"].Visible = false;
                 gridEfforts.Columns["N"].Visible = false;
-
                 //for (int i = 0; i < gridEfforts.ColumnCount; i++)
                 //{
                 //    gridEfforts[i, 0].Value = "0";
                 //}
+
+
                 m_Path2BeamDiagrams = new List<string>() { };
 
-                _beamDiagramController = new ControllerBeamDiagram(m_Path2BeamDiagrams);
-                BeamCalculatorControl beamCalculatorControl = new BeamCalculatorControl(tbLength, gridEfforts, _beamDiagramController);
+
+                InitForBeamDiagram savedValues = BSData.LoadForBeamDiagram();
+                List<double> initValues;
+                if (savedValues != null)
+                { initValues = new List<double>() { savedValues.LengthX, savedValues.Force }; }
+                else { initValues = new List<double>() { 0, 0 }; }
+                
+                _beamCalcVM = new BeamCalculatorViewModel(tbLength, gridEfforts, m_Path2BeamDiagrams, initValues);
+                BeamCalculatorControl beamCalculatorControl = new BeamCalculatorControl(_beamCalcVM);
                 tabPBeam.Controls.Add(beamCalculatorControl);
             }
         }
@@ -1440,6 +1446,21 @@ namespace BSFiberConcrete
             _D["Humi"]  = cmbWetAir.SelectedIndex;
         }
 
+
+        /// <summary>
+        /// Сохранение Параметров, для формы BeamDiagram
+        /// </summary>
+        /// <param name="_D"></param>
+        private void DictFormBeamDiagram(Dictionary<string, double> _D)
+        {
+            if (_beamCalcVM == null)
+            { return; }
+
+            _D["Force"] = _beamCalcVM.Force;
+            _D["LenX"] = _beamCalcVM.LengthX;
+        }
+
+
         /// <summary>
         ///  Расчет жесткости сечения для списка моментов
         /// </summary>
@@ -1466,13 +1487,16 @@ namespace BSFiberConcrete
         /// <summary>
         /// расчет прогибов, построение графика прогибов для балки
         /// </summary>
-        /// <param name="beamController"></param>
+        /// <param name="_beamCalcVM"></param>
         /// <param name="isUtilizationFactor"> флаг, определяющий превышение коэф использования; false - превышает, true - коэф в норме</param>
         /// <returns></returns>
-        private double CalculateBeamDeflections(ControllerBeamDiagram beamController, bool isUtilizationFactor)
+        private double CalculateBeamDeflections(bool isUtilizationFactor)
         {
+
+            //TODO
             // выполнять расчет только в случае, если ранее были сохранены 
-            if (beamController == null || beamController.path2BeamDiagrams.Count == 0)
+            //if (_beamCalcVM == null || _beamCalcVM.path2BeamDiagrams.Count == 0)
+            if (_beamCalcVM == null)
             { 
                 return double.NaN;
             }
@@ -1489,7 +1513,7 @@ namespace BSFiberConcrete
             // Значения на середине рассматриваемого участка
             List<double> valuesMomentOnSection = new List<double>();
             //List<double> valuesStiffnesOnSection = new List<double>();
-            beamController.BreakBeamIntoSections(X, valueMomentInX, valuesMomentOnSection);
+            _beamCalcVM.BeamDiagramModel.BreakBeamIntoSections(X, valueMomentInX, valuesMomentOnSection);
 
             if (valuesMomentOnSection.Count == 0) { return double.NaN; }
 
@@ -1498,10 +1522,7 @@ namespace BSFiberConcrete
             //List<double> valuesСurvatureOnSection = CalcNDM_My(valuesMomentOnSection);
 
             // график прогиба по расчетным значениям
-            double deflexionMax = beamController.CalculateDeflectionDiagram(X, valueMomentInX, valuesStiffnesOnSection);
-
-            // график прогибов по формулам
-            //beamController.CalculateDeflectionDiagramByFormula(X, valuesStiffnesOnSection);
+            double deflexionMax = _beamCalcVM.BeamDiagramModel.CalculateDeflectionDiagram(X, valueMomentInX, valuesStiffnesOnSection);
 
             if (deflexionMax == 0)
                 return double.NaN;
@@ -1546,6 +1567,25 @@ namespace BSFiberConcrete
             
             return ndmSetup;
         }
+
+
+        /// <summary>
+        /// Сохранить данные для формы BeamDiagram
+        /// </summary>
+        private void SaveValuesForBeamDiagram()
+        {
+            if (_beamCalcVM == null)
+            { return; }
+
+            InitForBeamDiagram dataToSave = new InitForBeamDiagram()
+            {
+                Force = _beamCalcVM.Force,
+                LengthX = _beamCalcVM.LengthX
+            };
+
+            BSData.SaveForBeamDiagram(dataToSave);
+        }
+
 
         /// <summary>
         /// Расчет на действие поперечных сил
@@ -1946,7 +1986,7 @@ namespace BSFiberConcrete
                 if (calcResults.Count > 0)
                 {
                     calcResults[0].Path2BeamDiagrams = m_Path2BeamDiagrams;
-                    calcResults[0].Deflexion_max = CalculateBeamDeflections(_beamDiagramController, CheckUtilizationFactor(calcResults));
+                    calcResults[0].Deflexion_max = CalculateBeamDeflections(CheckUtilizationFactor(calcResults));
                 }
 
                 // формирование отчета
@@ -2047,6 +2087,7 @@ namespace BSFiberConcrete
             var dCalcParams = DictCalcParams(m_BeamSection);
 
             DictFormUserParams(dCalcParams);
+            DictFormBeamDiagram(dCalcParams);
 
             bSCalcResults.CalcParams = dCalcParams;
             bSCalcResults.CalcResults = m_CalcResults;
@@ -2551,10 +2592,12 @@ namespace BSFiberConcrete
                     Efforts ef = new Efforts() { Id = ++i, Mx = _MNQ["Mx"], My = _MNQ["My"], N = _MNQ["N"], Qx = _MNQ["Qx"], Qy = _MNQ["Qy"] };
                     effortsFromForm.Add(ef);
                 }
-                
                 Lib.BSData.SaveEfforts(effortsFromForm);
 
-                NDMSetupValuesFromForm();                
+                NDMSetupValuesFromForm();
+
+                SaveValuesForBeamDiagram();
+
             }
             catch (Exception _e)
             {
@@ -2740,7 +2783,7 @@ namespace BSFiberConcrete
 
         private void picEffortsSign_Click(object sender, EventArgs e)
         {
-            MessageBox.Show($"Центр координат находтится в приведенном центре тяжести сечения. X0Y - плоскость сечения, Z - вдоль оси сечения \n " +
+            MessageBox.Show($"Центр координат находится в приведенном центре тяжести сечения. X0Y - плоскость сечения, Z - вдоль оси сечения \n " +
                             $"Задавать знаки усилий следует: \n" +
                             $"N > 0 - сжатие \n; My > 0 - растягивает нижние волокна \n;" +
                             $"Qx > 0 вращает правую отсеченную часть по часовой стрелке ", "Система координат", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -2975,6 +3018,15 @@ namespace BSFiberConcrete
                 numYb3.Value = decimal.Parse(_D["Yb3"].ToString());
             if (_D.ContainsKey("Yb5"))
                 numYb5.Value = decimal.Parse(_D["Yb5"].ToString());
+
+            // BeamDiagram
+            if (_beamCalcVM != null)
+            {
+                if (_D.ContainsKey("Force"))
+                    _beamCalcVM.Force = double.Parse(_D["Force"].ToString());
+                if (_D.ContainsKey("LenX"))
+                    _beamCalcVM.LengthX = double.Parse(_D["LenX"].ToString());
+            }
         }
 
         private void btnOpenCalcFile_Click(object sender, EventArgs e)
@@ -2998,7 +3050,7 @@ namespace BSFiberConcrete
                 }
             }            
         }
-
+ 
         private void BSFiberMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             SaveUserValuesFromFiberMainForm();

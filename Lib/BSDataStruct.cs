@@ -417,6 +417,15 @@ namespace BSFiberConcrete
     }
 
     /// <summary>
+    /// данные, для формы расчет балки
+    /// </summary>
+    public class InitForBeamDiagram
+    {
+        public double Force { get; set; }
+        public double LengthX { get; set; }
+    }
+
+    /// <summary>
     /// Коэффициенты
     /// </summary>
     public class Coefficients
