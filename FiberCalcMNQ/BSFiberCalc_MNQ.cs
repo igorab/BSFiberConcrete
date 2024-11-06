@@ -800,5 +800,10 @@ namespace BSFiberConcrete
 
             return dictRes;
         }
+
+        public virtual BeamSection BeamSectionType()
+        {
+            return BeamSection.Any;
+        }
     }
 }

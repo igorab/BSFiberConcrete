@@ -16,9 +16,11 @@ namespace BSFiberConcrete
         [DisplayName("Предельный момент сечения, кг*см")]
         public double Mult { get; private set; }
 
-        [DisplayName("Коэффициент использования по усилию")]
+        [DisplayName("Коэффициент использования по усилию, [СП 360 П6.1.10]")]
         public double UtilRate { get; protected set; }
 
+        public override BeamSection BeamSectionType() => BeamSection.Ring;
+        
         public override void SetParams(double[] _t)
         {
             base.SetParams(_t);

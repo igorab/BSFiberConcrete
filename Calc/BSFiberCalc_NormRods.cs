@@ -33,6 +33,10 @@ namespace BSFiberConcrete
             }
         }
 
+        public override BeamSection BeamSectionType() => BeamSection.Rect;
+
+        public override bool UseRebar() => true;
+
         public override Dictionary<string, double> PhysicalParameters()
         {
             Dictionary<string, double> phys = new Dictionary<string, double>

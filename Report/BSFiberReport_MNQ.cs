@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BSFiberConcrete.UnitsOfMeasurement;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -13,14 +14,14 @@ namespace BSFiberConcrete
         private BSFiberCalc_MNQ m_FiberCalc;
         // атрибуты свойств
         private Dictionary<string, string> m_PropAttr;
-
+       
         public BSFiberReport_MNQ()
         {
             m_PropAttr = new Dictionary<string, string>();
             m_GeomParams = new Dictionary<string, double>();
             m_Coeffs = new Dictionary<string, double>();
             m_PhysParams = new Dictionary<string, double>();
-            m_CalcResults = new Dictionary<string, double>();
+            m_CalcResults1Group = new Dictionary<string, double>();
 
             ReportName = typeof(BSFiberCalc_MNQ).GetCustomAttribute<DisplayNameAttribute>().DisplayName;
         }
@@ -28,6 +29,7 @@ namespace BSFiberConcrete
         public virtual void InitFromFiberCalc(BSFiberCalc_MNQ _fiberCalc)
         {
             m_FiberCalc = _fiberCalc;
+            m_BeamSection = m_FiberCalc.BeamSectionType();            
             m_Messages = _fiberCalc.Msg;
             m_Efforts = new Dictionary<string, double> (_fiberCalc.m_Efforts);
             ImageCalc = _fiberCalc.ImageCalc();
@@ -90,7 +92,7 @@ namespace BSFiberConcrete
                             m_PhysParams.Add(attrValue, _d) ;
                             break;
                         case "Res":
-                            m_CalcResults.Add(attrValue, _d);
+                            m_CalcResults1Group.Add(attrValue, _d);
                             break;
                         case "Beam":
                             m_Beam.Add(attrValue, _d);

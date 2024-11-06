@@ -5,6 +5,8 @@
     {
         public BSBeam_IT beam { get; set; }
 
+        public override BeamSection BeamSectionType() => BeamSection.IBeam;
+        
         public BSFiberCalc_MNQ_IT()
         {
             this.beam = new BSBeam_IT();
