@@ -240,6 +240,12 @@ namespace BSBeamCalculator
         {
             if (TypeBeamLoad == "Concentrated" && LengthX > BeamLength)
             { throw new Exception("Пользовательская ошибка. Значение 'Позиция x' не должно превышать 'Длина'."); }
+            
+            if (_beamEfforts != null)
+            {
+                _beamEfforts.Rows.Clear();
+                _beamEfforts.Rows.Add(2);
+            }
 
             BeamDiagramModel.supportType = TypeBeamSupport;
             BeamDiagramModel.f = Force;
