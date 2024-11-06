@@ -46,13 +46,13 @@ namespace BSFiberConcrete
         public double Efb { get; protected set; }
         
         [DisplayName("Нормативное сопротивление осевому сжатию, [кг/см2]"), Description("Phys")]
-        public double Rfbn { get => MatFiber.Rfbn; }
+        public double Rfbn { get => MatFiber?.Rfbn ?? 0; }
         
         [DisplayName("Нормативное сопротивление осевому растяжению, [кг/см2]"), Description("Phys")]
-        public double Rfbtn { get => MatFiber.Rfbtn; }
+        public double Rfbtn { get => MatFiber?.Rfbtn ?? 0; }
         
         [DisplayName("Нормативное остаточное сопротивления осевому растяжению, [кг/см2]"), Description("Phys")]
-        public double Rfbt3n { get => MatFiber.Rfbt3n; }
+        public double Rfbt3n { get => MatFiber?.Rfbt3n ?? 0; }
 
         [DisplayName("Продольное усилие, [кг]"), Description("Phys")]
         public double N { get; protected set; }
@@ -231,6 +231,11 @@ namespace BSFiberConcrete
 
         public double K_b(double _fi1, double _delta_e) => 0.15 / (_fi1 * (0.3d + _delta_e));
 
+        /// <summary>
+        /// Конструктор класса
+        /// </summary>
+        /// <param name="_BeamSection">Тип сечения</param>
+        /// <returns></returns>        
         public static BSFiberCalc_MNQ Construct(BeamSection _BeamSection)
         {
             BSFiberCalc_MNQ fiberCalc;
@@ -259,15 +264,14 @@ namespace BSFiberConcrete
         ///  получить значения из настроек по умолчанию (Из json - файла)
         /// </summary>
         /// <param name="_fiber"></param>
-        public void InitFiberParams(Fiber _fiber)
+        public void InitFiberFromLoadData(Fiber _fiber)
         {
             m_Fiber = (Fiber)_fiber.Clone();
 
-            Ef = m_Fiber.Ef;
-            Eb = m_Fiber.Eb;
+            Ef    = m_Fiber.Ef;
             mu_fv = m_Fiber.mu_fv;
-
-            Efb = m_Fiber.Efib != 0 ? m_Fiber.Efib :  m_Fiber.Efb;
+            Eb    = m_Fiber.Eb;            
+            Efb   = m_Fiber.Efib != 0 ? m_Fiber.Efib :  m_Fiber.Efb;
         } 
                 
         /// <summary>
@@ -619,25 +623,31 @@ namespace BSFiberConcrete
             return (s_w_max, Q_ult);
         }
 
+        public (double, double) Calculate_Mc()
+        {
+            return Calculate_Mc(b, h);
+        }
+
+
         /// <summary>
         ///  6.1.30 Расчет элементов по наклонным сечениями на действие моментов My
         /// </summary>
-        protected virtual (double, double) Calculate_My(double _b, double _h)
+        public virtual (double, double) Calculate_Mc(double _b, double _h)
         {
             // Растояние до цента тяжести арматуры растянутой арматуры, см
-            double a = Rebar.a;  
+            double a = Rebar?.a ?? 0;
             // рабочая высота сечения по растянутой арматуре
             double h0 = _h - a;
             // Нормативное остаточное сопротивления осевому растяжению кг/см2
             double _Rfbt3 = R_fbt3();
             // Площадь растянутой арматуры см2
-            double As = Rebar.As;
+            double As = Rebar?.As ?? 0;
             // Расчетное сопротивление поперечной арматуры  
-            double Rsw = Rebar.Rsw_X;
+            double Rsw = Rebar?.Rsw_X ?? 0;
             // Площадь арматуры
-            double Asw = Rebar.Asw_X;
+            double Asw = Rebar?.Asw_X ?? 0;
             // шаг попреречной арматуры
-            double sw = Rebar.Sw_X;
+            double sw = Rebar?.Sw_X ?? 0;
             // усилие в поперечной арматуре на единицу длины элемента
             double q_sw = (sw !=0) ? Rsw * Asw / sw : 0;
             // условие учета поперечной арматуры
@@ -651,10 +661,9 @@ namespace BSFiberConcrete
             InitC(ref С_x, c_min, c_max, 1);
             double Q_sw,
                    M_sw; // момент, воспр поперечной арматурой
-            double M_fbt = 0; // момент, воспр сталефибробетоном
             double Q_fbt3 = (c_min!=0) ? 1.5d * _Rfbt3 * _b * h0 * h0 / c_min : 0;
             // усилие в продольной растянутой арматуре
-            double N_s = Rebar.Rs * Rebar.As;
+            double N_s = Rebar?.Rs??0 * Rebar?.As??0;
             // плечо внутренней пары сил
             double z_S = 0.9 * h0;
             // момент, воспринимаемый продольной арматурой, пересекающей наклонное сечение, относительно противоположного конца наклонного сечения
@@ -694,7 +703,7 @@ namespace BSFiberConcrete
                     Q_fbt3 = 0.5d * _Rfbt3 * _b * h0;
                 }
 
-                M_fbt = 0.5 * Q_fbt3 * ci;
+                double M_fbt = 0.5 * Q_fbt3 * ci;
 
                 lst_Q_fbt3.Add(Q_fbt3);
 
@@ -781,7 +790,8 @@ namespace BSFiberConcrete
             e_N += e_MN;
             
             // полный эксцентриситет приложения силы
-            m_Fiber.e_tot = e0 + e_N + e_MN;
+            if (m_Fiber != null)
+                m_Fiber.e_tot = e0 + e_N + e_MN ;
         }
 
         public virtual Dictionary<string, double> Results()

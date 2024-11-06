@@ -169,7 +169,7 @@ namespace BSFiberConcrete
                 Calculate_Qx(b, h);
 
                 // Расчет на действие моментов
-                Calculate_My(b, h);
+                Calculate_Mc(b, h);
             }
             else if (UseRebar)
             {

@@ -91,7 +91,7 @@ namespace BSFiberConcrete
         /// </summary>
         private void CalculateM()
         {
-            base.Calculate_My(b, h);
+            base.Calculate_Mc(b, h);
 
             base.Calculate_Mx(h, b);
         }

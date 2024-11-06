@@ -28,7 +28,7 @@
                 _ = Calculate_Qx(b, h);
                 
                 // Расчет на действие моментов относительно оси Y
-                _ = Calculate_My(b, h);                
+                _ = Calculate_Mc(b, h);                
             }
             else if (UseRebar)
             {
