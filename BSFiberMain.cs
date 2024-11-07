@@ -1054,7 +1054,8 @@ namespace BSFiberConcrete
                 // передаем усилия и связанные с ними велечины
                 fiberCalc.SetEfforts(_MNQ);
                 // сила вне сечения
-                fiberCalc.N_Out = fiberCalc.h / 2 < fiberCalc.Get_e_tot;
+                
+                fiberCalc.SetN_Out();
 
                 if (fiberCalc.Calculate())
                     fiberCalc.Msg.Add("Расчет успешно выполнен!");
@@ -1250,7 +1251,7 @@ namespace BSFiberConcrete
                     // расчет на чистый изгиб
                     BSFiberReportData FibCalc_M = FiberCalculate_M(_M, prms);
                     
-                    // расчет по наклонной полосе на действие момента
+                    // расчет по наклонной полосе на действие момента [6.1.7]
                     BSFiberCalc_MNQ fiberCalc_Mc = BSFiberCalc_MNQ.Construct(m_BeamSection);
                     fiberCalc_Mc.MatFiber = m_MatFiber;
                     //fiberCalc_Mc.Rebar    = rebar;
@@ -1262,20 +1263,44 @@ namespace BSFiberConcrete
                     (double Mc_ult, double UtilRate_Mc) = fiberCalc_Mc.Calculate_Mc();
 
                     FibCalc_M.m_CalcResults1Group.Add("Момент по наклонному сечению", Mc_ult);
-                    FibCalc_M.m_CalcResults1Group.Add("Коэфф исп момента по накл сечению []", UtilRate_Mc);
+                    FibCalc_M.m_CalcResults1Group.Add("Коэфф исп момента по накл сечению [6.1.30]", UtilRate_Mc);
 
                     calcResults_M.Add(FibCalc_M);
-                }
-
-
-                // Расчет на действие поперечных сил     
-                if (_Qx != 0)
+                }                
+                else if (_N != 0 && _Qx == 0)
                 {
+                    // расчет на действие сжимающей силы (учитывает заданный изгибающий момент + момент от эксцентриситета N )
+                    //BSFiberCalc_MNQ fiberCalc_N = FiberCalculate_N(_MNQ);
+                    BSFiberCalc_MNQ fiberCalc_N = BSFiberCalc_MNQ.Construct(m_BeamSection);
+
+                    fiberCalc_N.MatFiber = m_MatFiber;
+                    //fiberCalc_N.Rebar    = rebar;
+                    fiberCalc_N.SetFiberFromLoadData(fiber);
+                    fiberCalc_N.SetSize(sz);
+                    fiberCalc_N.SetParams(prms);
+                    fiberCalc_N.SetEfforts(_MNQ);
+                    fiberCalc_N.SetN_Out();
+
+                    (double Qc_ult, double UtilRate_Qc) = fiberCalc_N.Calculate_Nz();
+                   
+                    BSFiberReport_N report = new BSFiberReport_N() { _unitConverter = _UnitConverter };
+                    report.InitFromFiberCalc(fiberCalc_N);
+
+                    // расчет по второй группе предельных состояний
+                    var calcResults2Group = FiberCalculate_Cracking();
+                    report.CalcResults2Group = calcResults2Group.Results();
+
+                    calcResults_N.Add(report);
+                }                
+                else if (_Qx != 0)
+                {
+                    // Расчет на действие поперечных сил     
+
                     // учитывает расчет по накл полосе надействие момента
                     //BSFiberCalc_MNQ fiberCalc_Q = FiberCalculate_Qc(_MNQ, sz, prms);
 
                     BSFiberCalc_MNQ fiberCalc_Qc = BSFiberCalc_MNQ.Construct(m_BeamSection);
-
+                    
                     fiberCalc_Qc.MatFiber = m_MatFiber;
                     //fiberCalc_Mc.Rebar    = rebar;
                     fiberCalc_Qc.SetFiberFromLoadData(fiber);
@@ -1285,26 +1310,14 @@ namespace BSFiberConcrete
 
                     (double Qc_ult, double UtilRate_Qc) = fiberCalc_Qc.Calculate_Qcx();
 
+                    if (_N > 0)
+                    {
+                        (double N_ult, double UtilRate_N) = fiberCalc_Qc.Calculate_Nz();
+                    }
+
                     FiberReport_Shear(fiberCalc_Qc, ++iRep);
                     //
-                }
-
-                // расчет на действие сжимающей силы (учитывает заданный изгибающий момент + момент от эксцентриситета N )
-                if (_N != 0)
-                {
-                    BSFiberCalc_MNQ fiberCalc_N = FiberCalculate_N(_MNQ);
-
-                    BSFiberReport_N report = new BSFiberReport_N() { _unitConverter = _UnitConverter };
-                    report.InitFromFiberCalc(fiberCalc_N);
-
-                    // расчет по второй группе предельных состояний
-                    var calcResults2Group = FiberCalculate_Cracking();
-                    report.CalcResults2Group = calcResults2Group.Results();
-
-                    calcResults_N.Add(report);
-                }
-
-                
+                }                                
             }
 
             BSFiberReport_M.RunMultiReport(ref iRep, calcResults_M);

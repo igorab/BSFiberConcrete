@@ -288,7 +288,7 @@ namespace BSFiberConcrete
             Msg.Add(info);            
         }
 
-        protected void Calculate_N()
+        public void Calculate_N()
         {
             //Коэффициент, учитывающий влияние длительности действия нагрузки, определяют по формуле (6.27)
             fi1 = Fi1();
@@ -339,7 +339,7 @@ namespace BSFiberConcrete
         /// сжимающей силы в пределах поперечного сечения элемента, в которых по условиям эксплуатации не
         /// допускается образование трещин
         /// </summary>
-        protected void Calculate_N_Out()
+        public void Calculate_N_Out()
         {
             //Коэффициент, учитывающий влияние длительности действия нагрузки (6.27)
             fi1 = (Ml1toM1 <=1) ? 1 + Ml1toM1 : 2.0;
@@ -407,7 +407,7 @@ namespace BSFiberConcrete
         /// Расчет внецентренно сжатых сталефибробетонных
         /// элементов прямоугольного сечения с рабочей арматурой
         /// </summary>
-        protected void Calculate_N_Rods()
+        public void Calculate_N_Rods()
         {                        
             string info;
 
@@ -483,11 +483,7 @@ namespace BSFiberConcrete
             else
                 info = "Прочность не обеспечена";
 
-            Msg.Add(info);
-            //
-            //M_ult = BSHelper.Kg2T(M_ult);
-            //N_ult = BSHelper.Kg2T(N_ult);
-            //
+            Msg.Add(info);            
         }
 
         protected void InitC(ref List<double> _lst, double _from, double _to, double _dx)
@@ -629,12 +625,41 @@ namespace BSFiberConcrete
         }
 
 
+        /// <summary>
+        /// проверка  на действие сжимающей силы
+        /// </summary>
+        /// <returns></returns>
+        public (double, double) Calculate_Nz()
+        {
+            if (N_Out)
+            {
+                Calculate_N_Out();
+            }
+            else
+            {
+                if (UseRebar)
+                    Calculate_N_Rods();
+                else
+                    Calculate_N();
+            }
+            
+            return (N_ult, UtilRate_N);
+        }
+
+
+        /// <summary>
+        /// проверка по полосе накл сечения на Q
+        /// </summary>
+        /// <returns></returns>
         public (double, double) Calculate_Qcx()
         {
             return Calculate_Qcx(b, h);
         }
 
-
+        /// <summary>
+        /// проверка по полосе накл сечения на M
+        /// </summary>
+        /// <returns></returns>
         public (double, double) Calculate_Mc()
         {
             return Calculate_Mc(b, h);
@@ -826,6 +851,14 @@ namespace BSFiberConcrete
         public virtual BeamSection BeamSectionType()
         {
             return BeamSection.Any;
+        }
+
+        /// <summary>
+        /// сила вне сечения
+        /// </summary>
+        public void SetN_Out()
+        {
+            N_Out = h / 2.0 < Get_e_tot; 
         }
     }
 }
