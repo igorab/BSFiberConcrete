@@ -79,6 +79,8 @@ namespace BSFiberConcrete.Report
             report.ImageStream = CalcRes.ImageStream;
             report.Messages = CalcRes.Message;
             report.Path2BeamDiagrams = CalcRes.Path2BeamDiagrams;
+            report.PictureToReport = CalcRes.PictureForReport;
+
             report._unitConverter = CalcRes.UnitConverter;
         }
 

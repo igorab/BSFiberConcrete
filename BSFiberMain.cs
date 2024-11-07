@@ -1531,6 +1531,47 @@ namespace BSFiberConcrete
         }
 
 
+
+        /// <summary>
+        /// Создать картинки для отчета
+        /// </summary>
+        public List<string> CreatePictureForReport()
+        {
+            List<string> pathToPictures = new List<string>();
+            string pathToPicture;
+            
+            
+            // Диаграмма деформирования
+            if (true)
+            {
+                // собрать данные
+                DataForDeformDiagram data = ValuesForDeformDiagram();
+                // определить vm
+                CalcDeformDiagram calculateDiagram = new CalcDeformDiagram(data.typesDiagram, data.resists, data.elasticity);
+                calculateDiagram.CreteChart(out pathToPicture);
+                pathToPictures.Add(pathToPicture);
+            }
+
+            // 
+            if (false)
+            {
+                // собрать данные
+                DataForDeformDiagram data = ValuesForDeformDiagram();
+                // определить vm
+                CalcDeformDiagram calculateDiagram = new CalcDeformDiagram(data.typesDiagram, data.resists, data.elasticity);
+                calculateDiagram.CreteChart(out pathToPicture);
+                pathToPictures.Add(pathToPicture);
+            }
+
+
+
+
+
+
+            return pathToPictures;
+        }
+
+
         /// <summary>
         /// Данные с формы
         /// </summary>
@@ -1988,6 +2029,9 @@ namespace BSFiberConcrete
                     calcResults[0].Path2BeamDiagrams = m_Path2BeamDiagrams;
                     calcResults[0].Deflexion_max = CalculateBeamDeflections(CheckUtilizationFactor(calcResults));
                 }
+
+                calcResults[0].PictureForReport = CreatePictureForReport();
+
 
                 // формирование отчета
                 BSReport.RunReport(m_BeamSection, calcResults);
@@ -2472,10 +2516,25 @@ namespace BSFiberConcrete
             }
         }
         
+
+        /// <summary>
+        /// Построить диаграмму деформирования
+        /// </summary>
         private void btnCalcDeformDiagram_Click(object sender, EventArgs e)
         {
-            string typeDiagram = cmbDeformDiagram.Text;
+            // собрать данные
+            DataForDeformDiagram data = ValuesForDeformDiagram();
+            // определить vm
+            CalcDeformDiagram calculateDiagram = new CalcDeformDiagram(data.typesDiagram, data.resists, data.elasticity);
+            // форма
+            DeformDiagram deformDiagram = new DeformDiagram(calculateDiagram);
+            deformDiagram.Show();
+        }
 
+
+        private DataForDeformDiagram ValuesForDeformDiagram()
+        {
+            string typeDiagram = cmbDeformDiagram.Text;
             string typeMaterial = cmbTypeMaterial.Text;
 
             // сжатие
@@ -2539,24 +2598,11 @@ namespace BSFiberConcrete
                 throw new Exception("Выбрано значение материала, выходящее за предел предопределенных значений.");
             }
 
-            //DataForDeformDiagram.typesDiagram = new string[] { typeMaterial, typeDiagram };
-            
-            string[] typesDiagram = new string[] { typeMaterial, typeDiagram };
-            double[] resists = new double[] { R_n, Rt_n, Rt2_n, Rt3_n };
-            double[] elasticity = new double[] { E, Et };
-
-            DataForDeformDiagram.resists = new double[] { R_n, Rt_n, Rt2_n, Rt3_n };
-            //DataForDeformDiagram.deforms = new double[] { e0, e2, et0, et2, et3 };
-            DataForDeformDiagram.E = new double[] { E, Et };
-
-            // Присваиваем значение на форму
-
-            CalcDeformDiagram calculateDiagram = new CalcDeformDiagram(typesDiagram, resists, elasticity);
-
-
-
-            DeformDiagram deformDiagram = new DeformDiagram(calculateDiagram);
-            deformDiagram.Show();
+            DataForDeformDiagram data = new DataForDeformDiagram();
+            data.typesDiagram = new string[] { typeMaterial, typeDiagram };
+            data.resists = new double[] { R_n, Rt_n, Rt2_n, Rt3_n };
+            data.elasticity = new double[] { E, Et };
+            return data;
         }
        
         /// <summary>

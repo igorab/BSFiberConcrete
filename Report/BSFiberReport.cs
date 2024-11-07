@@ -32,6 +32,8 @@ namespace BSFiberConcrete
         public Dictionary<string, double> Reinforcement { set { m_Reinforcement = value; } }
         public List<string> Messages { set { m_Messages = value; }}
         public List<string> Path2BeamDiagrams { set { m_Path2BeamDiagrams = value; } }
+        public List<string> PictureToReport { set { m_PictureToReport = value; } }
+
         public BeamSection BeamSection { set { m_BeamSection = value; } }
         public bool UseReinforcement { get; set; }
 
@@ -45,6 +47,8 @@ namespace BSFiberConcrete
         protected Dictionary<string, double> m_Reinforcement;
         protected List<string> m_Messages;
         protected List<string> m_Path2BeamDiagrams;
+        protected List<string> m_PictureToReport;
+
 
         protected BeamSection m_BeamSection { get; set; }
 
@@ -212,6 +216,23 @@ namespace BSFiberConcrete
                 
                 w.WriteLine("<Table border=1 bordercolor = darkblue>");
                 foreach (string pathToBeamDiagram in m_Path2BeamDiagrams)
+                {
+                    w.WriteLine("<tr>");
+                    w.WriteLine("<td>");
+                    w.WriteLine($"<img src =\"{pathToBeamDiagram}\">");
+                    w.WriteLine("</td>");
+                    w.WriteLine("</tr>");
+                }
+                w.WriteLine("</Table>");
+                w.WriteLine("<br>");
+
+            }
+
+            if (m_PictureToReport != null && m_PictureToReport.Count > 0)
+            {
+                // добавление картинок в отчет
+                w.WriteLine("<Table border=1 bordercolor = darkblue>");
+                foreach (string pathToBeamDiagram in m_PictureToReport)
                 {
                     w.WriteLine("<tr>");
                     w.WriteLine("<td>");
