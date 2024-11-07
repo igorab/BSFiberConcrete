@@ -264,14 +264,14 @@ namespace BSFiberConcrete
         ///  получить значения из настроек по умолчанию (Из json - файла)
         /// </summary>
         /// <param name="_fiber"></param>
-        public void InitFiberFromLoadData(Fiber _fiber)
+        public void SetFiberFromLoadData(Fiber _fiber)
         {
             m_Fiber = (Fiber)_fiber.Clone();
 
-            Ef    = m_Fiber.Ef;
-            mu_fv = m_Fiber.mu_fv;
-            Eb    = m_Fiber.Eb;            
-            Efb   = m_Fiber.Efib != 0 ? m_Fiber.Efib :  m_Fiber.Efb;
+            Ef    = _fiber.Ef;
+            mu_fv = _fiber.mu_fv;
+            Eb    = _fiber.Eb;            
+            Efb   = _fiber.E_fbt != 0 ? _fiber.E_fbt : _fiber.Efb;
         } 
                 
         /// <summary>
@@ -511,10 +511,10 @@ namespace BSFiberConcrete
         /// <summary>
         /// Расчет элементов по полосе между наклонными сечениями
         /// </summary>
-        protected virtual (double, double) Calculate_Qx(double _b, double _h)
+        public virtual (double, double) Calculate_Qcx(double _b, double _h)
         {            
             // Растояние до цента тяжести арматуры растянутой арматуры, см
-            double a = Rebar.a; 
+            double a = Rebar?.a ?? 0; 
 
             // рабочая высота сечения по растянутой арматуре
             double h0 = _h - a;
@@ -567,37 +567,42 @@ namespace BSFiberConcrete
             double s_w_max = (Qx > 0) ? Rfbt * _b * h0 * h0 / Qx : 0;
 
             string res;
-            if (Rebar.Sw_X <= s_w_max)
-            {
-                res = "Условие выполнено, шаг удовлетворяет требованию 6.1.28";
-                Msg.Add(res);
-            }
-            else
-            {
-                res = "Условие не выполнено, требуется уменьшить шаг поперечной арматуры";
-                Msg.Add(res);
-            }
-
-            // усилие в поперечной арматуре на единицу длины элемента
-            double q_sw = (Rebar.Sw_X !=0) ? Rebar.Rsw_X * Rebar.Asw_X / Rebar.Sw_X : 0; // 6.78 
-
-            // условие учета поперечной арматуры
-            if (q_sw < 0.25 * Rfbt * _b)
-                q_sw = 0;
-
             // поперечная сила, воспринимаемая поперечной арматурой в наклонном сечении
             double Qsw = 0;
             List<double> lst_Qsw = new List<double>();
-            foreach (double _c in lst_C)
+
+            if (Rebar != null)
             {
-                if (_c > c0_max)
-                    Qsw = 0.75 * q_sw * c0_max;
+                if (Rebar.Sw_X <= s_w_max)
+                {
+                    res = "Условие выполнено, шаг удовлетворяет требованию 6.1.28";
+                    Msg.Add(res);
+                }
                 else
-                    Qsw = 0.75 * q_sw * _c;  // 6.77
+                {
+                    res = "Условие не выполнено, требуется уменьшить шаг поперечной арматуры";
+                    Msg.Add(res);
+                }
 
-                lst_Qsw.Add(Qsw);
+                // усилие в поперечной арматуре на единицу длины элемента
+                double q_sw = (Rebar.Sw_X != 0) ? Rebar.Rsw_X * Rebar.Asw_X / Rebar.Sw_X : 0; // 6.78 
+
+                // условие учета поперечной арматуры
+                if (q_sw < 0.25 * Rfbt * _b)
+                    q_sw = 0;
+                
+                foreach (double _c in lst_C)
+                {
+                    if (_c > c0_max)
+                        Qsw = 0.75 * q_sw * c0_max;
+                    else
+                        Qsw = 0.75 * q_sw * _c;  // 6.77
+
+                    lst_Qsw.Add(Qsw);
+                }
+
             }
-
+                                    
             List<double> lst_Q_ult = new List<double>();
             for (int i = 0; i < lst_Qsw.Count; i++)
             {
@@ -622,6 +627,13 @@ namespace BSFiberConcrete
 
             return (s_w_max, Q_ult);
         }
+
+
+        public (double, double) Calculate_Qcx()
+        {
+            return Calculate_Qcx(b, h);
+        }
+
 
         public (double, double) Calculate_Mc()
         {

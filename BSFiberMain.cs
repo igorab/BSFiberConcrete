@@ -555,14 +555,14 @@ namespace BSFiberConcrete
 
             // Растяжение Rfbt
             //FiberBft fbt = (FiberBft)cmbBftn.SelectedItem;
-            m_BSLoadData.Fiber.Efib = (double)numE_fiber.Value;
+            m_BSLoadData.Fiber.E_fbt = (double)numE_fbt.Value;
 
             // сжатие:
             m_MatFiber.B = fb.B;
             m_MatFiber.Rfbn = (double) numRfb_n.Value;
 
             // модуль упругости
-            m_MatFiber.Efb = (double)numE_fiber.Value;
+            m_MatFiber.Efb = (double)numE_fbt.Value;
 
             // растяжение:            
             m_MatFiber.Rfbtn = (double)numRfbt_n.Value; // кг/см2           
@@ -570,7 +570,7 @@ namespace BSFiberConcrete
             m_MatFiber.Rfbt3n = (double)numRfbt3n.Value; // кг/см2
 
             // модуль упругости
-            m_MatFiber.Efbt = (double)numE_fiber.Value;
+            m_MatFiber.Efbt = (double)numE_fbt.Value;
         }
        
         private void FiberReport_N(BSFiberCalc_MNQ fiberCalc,  int _irep = 1)
@@ -1024,7 +1024,7 @@ namespace BSFiberConcrete
 
             try
             {                                                             
-                fiberCalc.InitFiberFromLoadData(m_BSLoadData.Fiber);
+                fiberCalc.SetFiberFromLoadData(m_BSLoadData.Fiber);
 
                 fiberCalc.MatFiber = m_MatFiber;
                                 
@@ -1087,7 +1087,7 @@ namespace BSFiberConcrete
                 Shear = true
             };
 
-            fiberCalc.InitFiberFromLoadData(m_BSLoadData.Fiber);
+            fiberCalc.SetFiberFromLoadData(m_BSLoadData.Fiber);
 
             fiberCalc.MatFiber  = m_MatFiber;           
             
@@ -1147,13 +1147,12 @@ namespace BSFiberConcrete
         private BSFiberCalc_MNQ FiberCalculate_Qc(Dictionary<string, double> _MNQ, double[] _sz, double[] _prms)
         {
             BSFiberCalc_MNQ fiberCalc = BSFiberCalc_MNQ.Construct(m_BeamSection);
-            
-            try
-            {                                
-                fiberCalc.UseRebar = true;
-                fiberCalc.Shear    = true;
+            fiberCalc.UseRebar = true;
+            fiberCalc.Shear    = true;
 
-                fiberCalc.InitFiberFromLoadData(m_BSLoadData.Fiber);
+            try
+            {                                                
+                fiberCalc.SetFiberFromLoadData(m_BSLoadData.Fiber);
 
                 fiberCalc.MatFiber = m_MatFiber;                                
                 fiberCalc.BetonType = BSQuery.BetonTypeFind(comboBetonType.SelectedIndex);
@@ -1220,6 +1219,15 @@ namespace BSFiberConcrete
                 return;
             }
 
+            Fiber fiber = new Fiber(m_BSLoadData.Fiber) { 
+                Ef = (double) numEfiber.Value, Eb = (double)numE_beton.Value, E_fbt = (double)numE_fbt.Value, mu_fv = (double)numMu_fv.Value 
+            }; 
+
+            // проверка на модули упругости!
+
+            Rebar rebar = (Rebar)m_BSLoadData.Rebar.Clone();
+            InitRebarValues(ref rebar);
+
             List<BSFiberReportData> calcResults_M = new List<BSFiberReportData>();
             List<BSFiberReport_N> calcResults_N = new List<BSFiberReport_N>();
 
@@ -1245,7 +1253,8 @@ namespace BSFiberConcrete
                     // расчет по наклонной полосе на действие момента
                     BSFiberCalc_MNQ fiberCalc_Mc = BSFiberCalc_MNQ.Construct(m_BeamSection);
                     fiberCalc_Mc.MatFiber = m_MatFiber;
-                    fiberCalc_Mc.InitFiberFromLoadData(m_BSLoadData.Fiber);
+                    //fiberCalc_Mc.Rebar    = rebar;
+                    fiberCalc_Mc.SetFiberFromLoadData(fiber);
                     fiberCalc_Mc.SetSize(sz);
                     fiberCalc_Mc.SetParams(prms);
                     fiberCalc_Mc.SetEfforts(_MNQ);
@@ -1263,9 +1272,20 @@ namespace BSFiberConcrete
                 if (_Qx != 0)
                 {
                     // учитывает расчет по накл полосе надействие момента
-                    BSFiberCalc_MNQ fiberCalc_Q = FiberCalculate_Qc(_MNQ, sz, prms);
+                    //BSFiberCalc_MNQ fiberCalc_Q = FiberCalculate_Qc(_MNQ, sz, prms);
 
-                    FiberReport_Shear(fiberCalc_Q, ++iRep);
+                    BSFiberCalc_MNQ fiberCalc_Qc = BSFiberCalc_MNQ.Construct(m_BeamSection);
+
+                    fiberCalc_Qc.MatFiber = m_MatFiber;
+                    //fiberCalc_Mc.Rebar    = rebar;
+                    fiberCalc_Qc.SetFiberFromLoadData(fiber);
+                    fiberCalc_Qc.SetSize(sz);
+                    fiberCalc_Qc.SetParams(prms);
+                    fiberCalc_Qc.SetEfforts(_MNQ);
+
+                    (double Qc_ult, double UtilRate_Qc) = fiberCalc_Qc.Calculate_Qcx();
+
+                    FiberReport_Shear(fiberCalc_Qc, ++iRep);
                     //
                 }
 
@@ -1350,7 +1370,7 @@ namespace BSFiberConcrete
 
                 // beton
                 ["Eb0"] = (double)numE_beton.Value, // сжатие
-                ["Ebt"] = (double)numE_fiber.Value, // растяжение
+                ["Ebt"] = (double)numE_fbt.Value, // растяжение
 
                 // - нормативные
                 ["Rbcn"] = (double)(numRfb_n.Value),
@@ -2040,7 +2060,7 @@ namespace BSFiberConcrete
                 Bfn = cmbBfn.Text,
                 Bftn = cmbBftn.Text,
                 Eb = numE_beton.Value.ToString(),
-                Efbt = numE_fiber.Value.ToString(),
+                Efbt = numE_fbt.Value.ToString(),
                 Rs = Convert.ToString(cmbRebarClass.SelectedItem),
                 Rsw = Convert.ToString(cmbTRebarClass_X.SelectedItem),
                 Area_s = (double)numAs.Value,
@@ -2505,7 +2525,7 @@ namespace BSFiberConcrete
             {
                 // Характеристики по сжатию такие же как у бетона
                 R_n = (double)numRfb_n.Value;       // Rb_n 
-                E = (double)numE_fiber.Value;           //Eb
+                E = (double)numE_fbt.Value;           //Eb
                 // Характеристики по растяжению
                 Rt_n = (double)numRfbt_n.Value;     // Rfbt_n
                 Rt2_n = (double)numRfbt2n.Value;    // Rfbt2_n
@@ -2630,7 +2650,7 @@ namespace BSFiberConcrete
         // модуль упругости для фибробетона на растяжение
         private void numE_fiber_ValueChanged(object sender, EventArgs e)
         {
-            numE_beton.Value = numE_fiber.Value;
+            //numE_beton.Value = numE_fiber.Value;
         }
 
         /// <summary>
@@ -2761,8 +2781,8 @@ namespace BSFiberConcrete
         private void lbE_fb_info_Click(object sender, EventArgs e)
         {
             MessageBox.Show($"Модуль упругости на растяжение \n" +
-                $"{BSHelper.Kgsm2MPa((double)numE_fiber.Value)} МПа \n" +
-                $"{BSHelper.Kgssm2ToKNsm2((double)numE_fiber.Value, 2)} КН/см2 \n", 
+                $"{BSHelper.Kgsm2MPa((double)numE_fbt.Value)} МПа \n" +
+                $"{BSHelper.Kgssm2ToKNsm2((double)numE_fbt.Value, 2)} КН/см2 \n", 
                 "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
@@ -3054,6 +3074,26 @@ namespace BSFiberConcrete
         private void BSFiberMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             SaveUserValuesFromFiberMainForm();
+        }
+
+        private void E_fb_value(decimal _Eb, decimal _Ef, decimal _mu_fv)
+        {
+            numE_fbt.Value = (decimal)BSFiberLib.E_fb((double) _Eb, (double) _Ef, (double) _mu_fv);
+        }
+        
+        private void numE_beton_ValueChanged(object sender, EventArgs e)
+        {
+            E_fb_value(numE_beton.Value, numEfiber.Value, numMu_fv.Value);
+        }
+
+        private void numMu_fv_ValueChanged(object sender, EventArgs e)
+        {
+            E_fb_value(numE_beton.Value, numEfiber.Value, numMu_fv.Value);
+        }
+
+        private void numEf_ValueChanged(object sender, EventArgs e)
+        {
+            E_fb_value(numE_beton.Value, numEfiber.Value, numMu_fv.Value);
         }
     }
 }
