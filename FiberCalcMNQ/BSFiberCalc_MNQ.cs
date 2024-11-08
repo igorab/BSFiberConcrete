@@ -124,7 +124,7 @@ namespace BSFiberConcrete
         /// <summary>
         /// Свойства арматуры: продольная/поперечная
         /// </summary>
-        public Rebar Rebar {get; set;}
+        public Rebar Rebar {protected get; set;}
         public bool UseRebar { get; set; }
 
         /// <summary>
@@ -408,7 +408,9 @@ namespace BSFiberConcrete
         /// элементов прямоугольного сечения с рабочей арматурой
         /// </summary>
         public void Calculate_N_Rods()
-        {                        
+        {
+            if (Rebar == null) return;
+
             string info;
 
             // Расчетное остаточное остаточного сопротивления осевому растяжению
@@ -432,7 +434,7 @@ namespace BSFiberConcrete
             //Значения относительных деформаций арматуры для арматуры с физическим пределом текучести СП 63 п.п. 6.2.11
             double eps = Rebar.Epsilon_s;
 
-            double dz_R = Rebar.Dzeta_R(BetonType.Omega, BetonType.Eps_fb2);
+            double dz_R = Rebar.Dzeta_R(BetonType?.Omega??0, BetonType?.Eps_fb2??0);
 
             double x_denom = (Rfb + Rfbt3) * b + 2 * Rebar.Rs * Rebar.As / (h0 * (1 - dz_R));
 

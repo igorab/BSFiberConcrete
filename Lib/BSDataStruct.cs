@@ -291,7 +291,7 @@ namespace BSFiberConcrete
             }
         }
         
-        public double Dzeta_R(double omega, double eps_fb2) => omega / (1 + Epsilon_s / eps_fb2);
+        public double Dzeta_R(double omega, double eps_fb2) => (eps_fb2!=0) ?omega / (1 + Epsilon_s / eps_fb2)  :0 ;
 
         public object Clone()
         {
