@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BSFiberConcrete.UnitsOfMeasurement;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -667,7 +668,6 @@ namespace BSFiberConcrete
             return Calculate_Mc(b, h);
         }
 
-
         /// <summary>
         ///  6.1.30 Расчет элементов по наклонным сечениями на действие моментов My
         /// </summary>
@@ -795,6 +795,9 @@ namespace BSFiberConcrete
 
         public double Get_e_tot => m_Fiber.e_tot;
 
+        public LameUnitConverter UnitConverter { get; internal set; }
+        public Dictionary<string, double> CalcResults2Group { get; internal set; }
+
         /// <summary>
         /// 
         /// </summary>
@@ -849,6 +852,18 @@ namespace BSFiberConcrete
 
             return dictRes;
         }
+
+        public Dictionary<string, double> Results_Mc()
+        {
+            Dictionary<string, double> dictRes = new Dictionary<string, double>()
+            {
+                { DN(typeof(BSFiberCalc_MNQ), "M_ult"), M_ult },
+                { DN(typeof(BSFiberCalc_MNQ), "UtilRate_My"), UtilRate_My },                
+            };
+
+            return dictRes;
+        }
+
 
         public virtual BeamSection BeamSectionType()
         {

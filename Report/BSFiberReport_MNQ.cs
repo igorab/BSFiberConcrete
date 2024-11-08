@@ -14,7 +14,32 @@ namespace BSFiberConcrete
         private BSFiberCalc_MNQ m_FiberCalc;
         // атрибуты свойств
         private Dictionary<string, string> m_PropAttr;
-       
+
+        /// <summary>
+        /// Отчет на действие Q по наклонной полосе 
+        /// </summary>        
+        public static void FiberReport_Qc(BSFiberCalc_MNQ fiberCalc, int _irep)
+        {
+            BSFiberReport_MNQ report = new BSFiberReport_MNQ()
+            {
+                BeamSection    = fiberCalc.BeamSectionType(),
+                ImageCalc      = fiberCalc.ImageCalc(),
+                Messages       = fiberCalc.Msg,
+                _unitConverter = fiberCalc.UnitConverter
+            };
+
+            report.InitFromFiberCalc(fiberCalc);
+            // результаты расчета по 1 гр пред состояний
+            report.CalcResults1Group = fiberCalc.CalcResults;
+            // для расчета по второй группе пред состояний
+            report.CalcResults2Group = fiberCalc.CalcResults2Group;
+
+            string pathToHtmlFile = report.CreateReport(_irep);
+
+            System.Diagnostics.Process.Start(pathToHtmlFile);
+        }
+
+
         public BSFiberReport_MNQ()
         {
             m_PropAttr = new Dictionary<string, string>();
