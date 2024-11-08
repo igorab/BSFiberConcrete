@@ -93,14 +93,17 @@ namespace BSFiberConcrete
         /// <summary>
         /// сохранение объекта FormsPlot на картинке
         /// </summary>
-        public void SaveToPNG(string fullPath = null)
+        public void SaveToPNG(string title = null, string fullPath = null)
         {
             if (_formsPlot == null)
                 return;
+
+            if (title != null)
+                _formsPlot.Plot.Title(title);
             if (fullPath == null)
                 _formsPlot.Plot.SavePng("beamSectionMesh.png",600,600);
             else 
-                _formsPlot.Plot.SavePng(fullPath, 600, 600);
+                _formsPlot.Plot.SavePng(fullPath, 500, 500);
         }
 
 

@@ -8,6 +8,7 @@ using BSFiberConcrete.Report;
 using BSFiberConcrete.Section;
 using BSFiberConcrete.UnitsOfMeasurement;
 using BSFiberConcrete.UnitsOfMeasurement.PhysicalQuantities;
+using SQLitePCL;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -1533,13 +1534,12 @@ namespace BSFiberConcrete
 
 
         /// <summary>
-        /// Создать картинки для отчета
+        /// Создать картинки для отчета заглавной части отчета
         /// </summary>
-        public List<string> CreatePictureForReport()
+        public List<string> CreatePictureForHeaderReport()
         {
             List<string> pathToPictures = new List<string>();
             string pathToPicture;
-            
             
             // Диаграмма деформирования
             if (true)
@@ -1552,25 +1552,48 @@ namespace BSFiberConcrete
                 pathToPictures.Add(pathToPicture);
             }
 
-            // 
-            if (false)
-            {
-                // собрать данные
-                DataForDeformDiagram data = ValuesForDeformDiagram();
-                // определить vm
-                CalcDeformDiagram calculateDiagram = new CalcDeformDiagram(data.typesDiagram, data.resists, data.elasticity);
-                calculateDiagram.CreteChart(out pathToPicture);
-                pathToPictures.Add(pathToPicture);
-            }
-
-
-
-
-
-
             return pathToPictures;
         }
 
+
+        public void CreatePictureForBodyReport(List<BSCalcResultNDM> calcResultsNDM)
+        {
+            for(int i = 0; calcResultsNDM.Count > i; i++)
+            {
+                BSCalcResultNDM calcResNDM = calcResultsNDM[i];
+
+                List<string> pathToPictures = new List<string>();
+                string pathToPicture;
+                // изополя сечения по деформации
+                if (true)
+                {
+                    string pictureName = $"beamSectionMeshDeform{i}";
+                    pathToPicture = Directory.GetCurrentDirectory() + "\\" + pictureName + ".png";
+                    MeshDraw mDraw = CreateMosaic(1, calcResNDM.Eps_B, calcResNDM.Eps_S, (double)numEps_fbt_ult.Value, -(double)numEps_fb_ult.Value, calcResNDM.Rs);
+                    mDraw.SaveToPNG("Деформации", pathToPicture);
+
+                    pathToPictures.Add(pathToPicture);
+                }
+
+                // изополя сечения по напряжению
+                if (true)
+                {
+                    string pictureName = $"beamSectionMeshStress{i}";
+                    pathToPicture = Directory.GetCurrentDirectory() + "\\" + pictureName + ".png";
+                    MeshDraw mDraw = CreateMosaic(2, calcResNDM.Sig_B, calcResNDM.Sig_S, calcResNDM.Rfbt, BSHelper.kgssm2kNsm(calcResNDM.Rfb), BSHelper.kgssm2kNsm(calcResNDM.Rs));
+                    mDraw.SaveToPNG("Напряжения", pathToPicture);
+
+                    pathToPictures.Add(pathToPicture);
+                }
+
+                if (pathToPictures.Count > 0)
+                {
+                    calcResNDM.PictureForBodyReport = pathToPictures;
+                }
+            }
+
+
+        }
 
         /// <summary>
         /// Данные с формы
@@ -2030,14 +2053,18 @@ namespace BSFiberConcrete
                     calcResults[0].Deflexion_max = CalculateBeamDeflections(CheckUtilizationFactor(calcResults));
                 }
 
-                calcResults[0].PictureForReport = CreatePictureForReport();
+                calcResults[0].PictureForHeaderReport = CreatePictureForHeaderReport();
+
+                CreatePictureForBodyReport(calcResults);
 
 
                 // формирование отчета
                 BSReport.RunReport(m_BeamSection, calcResults);
 
                 if (calcResults.Count > 0)
+                {
                     ShowMosaic(calcResults[0]);
+                }
 
             }
             catch (Exception _e)
@@ -2320,35 +2347,55 @@ namespace BSFiberConcrete
             m_ImageStream = m_SectionChart.GetImageStream;
         }
 
+
+        /// <summary>
+        /// По результатам расчета Создать поверхность MeshDraw с разбитыми на элементы участками
+        /// </summary>
+        /// <param name="_CalcResNDM"></param>
         private void ShowMosaic(BSCalcResultNDM _CalcResNDM)
         {
             int mode = comboMosaic.SelectedIndex;
+            MeshDraw mDraw = null;
 
             if (mode == 1)
             {
-                ShowMosaic(mode, _CalcResNDM.Eps_B, _CalcResNDM.Eps_S, (double)numEps_fbt_ult.Value, -(double)numEps_fb_ult.Value, _CalcResNDM.Rs);
+                //ShowMosaic(mode, _CalcResNDM.Eps_B, _CalcResNDM.Eps_S, (double)numEps_fbt_ult.Value, -(double)numEps_fb_ult.Value, _CalcResNDM.Rs);
+                mDraw = CreateMosaic(mode, _CalcResNDM.Eps_B, _CalcResNDM.Eps_S, (double)numEps_fbt_ult.Value, -(double)numEps_fb_ult.Value, _CalcResNDM.Rs);
             }
             else if (mode == 2)
             {
-                ShowMosaic(mode, _CalcResNDM.Sig_B, _CalcResNDM.Sig_S,  _CalcResNDM.Rfbt, BSHelper.kgssm2kNsm(_CalcResNDM.Rfb), BSHelper.kgssm2kNsm(_CalcResNDM.Rs));
+                //ShowMosaic(mode, _CalcResNDM.Sig_B, _CalcResNDM.Sig_S,  _CalcResNDM.Rfbt, BSHelper.kgssm2kNsm(_CalcResNDM.Rfb), BSHelper.kgssm2kNsm(_CalcResNDM.Rs));
+                mDraw = CreateMosaic(mode, _CalcResNDM.Sig_B, _CalcResNDM.Sig_S, _CalcResNDM.Rfbt, BSHelper.kgssm2kNsm(_CalcResNDM.Rfb), BSHelper.kgssm2kNsm(_CalcResNDM.Rs));
             }
             else if (mode == 3)
             {
-                ShowMosaic(mode, _CalcResNDM.Eps_B, _CalcResNDM.Eps_S);
+                //ShowMosaic(mode, _CalcResNDM.Eps_B, _CalcResNDM.Eps_S);
+                mDraw = CreateMosaic(mode, _CalcResNDM.Eps_B, _CalcResNDM.Eps_S);
             }
             else if (mode == 4)
             {
-                ShowMosaic(mode, _CalcResNDM.Sig_B, _CalcResNDM.Sig_S);
+                //ShowMosaic(mode, _CalcResNDM.Sig_B, _CalcResNDM.Sig_S);
+                mDraw = CreateMosaic(mode, _CalcResNDM.Sig_B, _CalcResNDM.Sig_S);
             }
+
+            if (mDraw != null)
+                mDraw.ShowMesh();
         }
+
+
+
+
+
+
+
 
         /// <summary>
         ///  Разбиение сечения на конечные элементы
         /// </summary>
         /// <param name="_valuesB">значения для бетона</param>
         /// <param name="_valuesB">значения для арматуры</param>
-        private void ShowMosaic(int _Mode = 0,
-                                List<double> _valuesB = null, 
+        private MeshDraw CreateMosaic(int _Mode = 0,
+                                List<double> _valuesB = null,
                                 List<double> _valuesS = null,
                                 double _ultMax = 0,
                                 double _ultMin = 0,
@@ -2356,7 +2403,7 @@ namespace BSFiberConcrete
                                 double _e_st_ult = 0,
                                 double _e_s_ult = 0)
         {
-            MeshDraw mDraw;
+            MeshDraw mDraw = null;
 
             double[] sz = BeamSizes();
 
@@ -2368,16 +2415,15 @@ namespace BSFiberConcrete
                 mDraw.UltMin = _ultMin;
                 mDraw.Rs_Ult = _ultRs;
                 mDraw.e_st_ult = _e_st_ult;
-                mDraw.e_s_ult  = _e_s_ult;
+                mDraw.e_s_ult = _e_s_ult;
                 mDraw.Values_B = _valuesB;
                 mDraw.Values_S = _valuesS;
                 mDraw.CreateRectanglePlot(sz, m_BeamSection);
-                mDraw.ShowMesh();
             }
-            else if (m_BeamSection == BeamSection.Ring )
+            else if (m_BeamSection == BeamSection.Ring)
             {
                 TriangleNet.Geometry.Point cg = new TriangleNet.Geometry.Point();
-                _= GenerateMesh(ref cg);
+                _ = GenerateMesh(ref cg);
 
                 mDraw = new MeshDraw(Tri.Mesh);
                 mDraw.MosaicMode = _Mode;
@@ -2389,7 +2435,6 @@ namespace BSFiberConcrete
                 mDraw.Values_B = _valuesB;
                 mDraw.Values_S = _valuesS;
                 mDraw.PaintSectionMesh();
-                mDraw.ShowMesh();                
             }
             else if (m_BeamSection == BeamSection.Any) //заданное пользователем сечение
             {
@@ -2406,14 +2451,19 @@ namespace BSFiberConcrete
                 mDraw.Values_B = _valuesB;
                 mDraw.Values_S = _valuesS;
                 mDraw.PaintSectionMesh();
-                mDraw.ShowMesh();
             }
+
+            return mDraw;
         }
 
-        /// <summary>
-        /// Покрыть сечение сеткой
-        /// </summary>
-        private string GenerateMesh(ref TriangleNet.Geometry.Point _CG)
+
+
+
+
+            /// <summary>
+            /// Покрыть сечение сеткой
+            /// </summary>
+            private string GenerateMesh(ref TriangleNet.Geometry.Point _CG)
         {
             string pathToSvgFile;
             double[] sz = BeamWidtHeight(out double b, out double h, out double area);
@@ -2776,7 +2826,8 @@ namespace BSFiberConcrete
         {
             try
             {
-                ShowMosaic(comboMosaic.SelectedIndex);
+                MeshDraw mDraw = CreateMosaic(comboMosaic.SelectedIndex);
+                mDraw.ShowMesh();
             }
             catch (Exception _e)
             {

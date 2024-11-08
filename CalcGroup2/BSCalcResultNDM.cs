@@ -272,7 +272,9 @@ namespace BSFiberConcrete
         public MemoryStream ImageStream { get; internal set; }
         public List<string> Message { get; internal set; }
         public List<string> Path2BeamDiagrams { get; internal set; }
-        public List<string> PictureForReport { get; internal set; }
+        public List<string> PictureForHeaderReport { get; internal set; }
+        public List<string> PictureForBodyReport { get; internal set; }
+
 
         public Dictionary<string, double> Coeffs { get; internal set; }
         public LameUnitConverter UnitConverter { get; internal set; }
