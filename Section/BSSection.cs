@@ -62,27 +62,29 @@ namespace BSFiberConcrete.Section
         /// Прямоугольное сечение
         /// </summary>
         /// <param name="_Sz">размеры</param>
-        public static void RectangleBeam(double[] _Sz)
+        public static void RectangleBeam(double[] _Sz, out PointF _origin)
         {
             float[] Sz = Array.ConvertAll(_Sz, element => (float)element);
 
             float w = Sz[0];
             float h = Sz[1];
 
+            _origin = new PointF(-w /2.0f, 0);
+
             SectionPoints = new List<PointF>()
             {
-                new PointF(-w/2f, 0) ,
-                new PointF( w/2f, 0),
-                new PointF(w/2f, h),
-                new PointF(-w/2f, h),
-                new PointF(-w/2f, 0)
+                new PointF(-w/2.0f, 0) ,
+                new PointF( w/2.0f, 0),
+                new PointF(w/2.0f, h),
+                new PointF(-w/2.0f, h),
+                new PointF(-w/2.0f, 0)
             };
 
             RodPoints = new List<PointF>()
             {
-                new PointF(-w/2f+a, a),
+                new PointF(-w/2.0f+a, a),
                 new PointF(0, a) ,
-                new PointF(w/2f-a, a),
+                new PointF(w/2.0f-a, a),
             };
         }
 

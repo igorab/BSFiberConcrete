@@ -191,6 +191,7 @@
             series3.Name = "сечение";
             series4.ChartArea = "ChartArea";
             series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series4.Color = System.Drawing.Color.Green;
             series4.Legend = "Legend";
             series4.Name = "Поперечное арм";
             this.chart.Series.Add(series1);
@@ -450,7 +451,7 @@
             this.tableLayoutPanelChart.ColumnCount = 3;
             this.tableLayoutPanelChart.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.53381F));
             this.tableLayoutPanelChart.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.46619F));
-            this.tableLayoutPanelChart.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 522F));
+            this.tableLayoutPanelChart.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 536F));
             this.tableLayoutPanelChart.Controls.Add(this.btnDraw, 0, 0);
             this.tableLayoutPanelChart.Controls.Add(this.btnSaveChart, 1, 0);
             this.tableLayoutPanelChart.Controls.Add(this.buttonClose, 2, 1);
@@ -469,7 +470,7 @@
             // 
             this.btnDraw.Location = new System.Drawing.Point(3, 3);
             this.btnDraw.Name = "btnDraw";
-            this.btnDraw.Size = new System.Drawing.Size(89, 38);
+            this.btnDraw.Size = new System.Drawing.Size(82, 38);
             this.btnDraw.TabIndex = 1;
             this.btnDraw.Text = "Построить сечение";
             this.btnDraw.UseVisualStyleBackColor = true;
@@ -477,9 +478,9 @@
             // 
             // btnSaveChart
             // 
-            this.btnSaveChart.Location = new System.Drawing.Point(98, 3);
+            this.btnSaveChart.Location = new System.Drawing.Point(91, 3);
             this.btnSaveChart.Name = "btnSaveChart";
-            this.btnSaveChart.Size = new System.Drawing.Size(87, 38);
+            this.btnSaveChart.Size = new System.Drawing.Size(80, 38);
             this.btnSaveChart.TabIndex = 2;
             this.btnSaveChart.Text = "Сохранить";
             this.btnSaveChart.UseVisualStyleBackColor = true;
@@ -498,9 +499,9 @@
             // 
             // btnCalc
             // 
-            this.btnCalc.Location = new System.Drawing.Point(98, 52);
+            this.btnCalc.Location = new System.Drawing.Point(91, 52);
             this.btnCalc.Name = "btnCalc";
-            this.btnCalc.Size = new System.Drawing.Size(87, 38);
+            this.btnCalc.Size = new System.Drawing.Size(80, 38);
             this.btnCalc.TabIndex = 4;
             this.btnCalc.Text = "Рассчитать";
             this.btnCalc.UseVisualStyleBackColor = true;
@@ -510,7 +511,7 @@
             // 
             this.btnMesh.Location = new System.Drawing.Point(3, 52);
             this.btnMesh.Name = "btnMesh";
-            this.btnMesh.Size = new System.Drawing.Size(89, 38);
+            this.btnMesh.Size = new System.Drawing.Size(82, 38);
             this.btnMesh.TabIndex = 5;
             this.btnMesh.Text = "Сетка";
             this.btnMesh.UseVisualStyleBackColor = true;

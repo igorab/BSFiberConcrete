@@ -2185,8 +2185,9 @@ namespace BSFiberConcrete
             m_SectionChart.Wdth = (float)b;
             m_SectionChart.Hght = (float)h;
             m_SectionChart.Sz = sz;
-            m_SectionChart.NumArea = _area;           
-            m_SectionChart.ShowDialog();// .Show();
+            m_SectionChart.NumArea = _area;
+            m_SectionChart.a_t_Nx = (int) numN_w_X.Value;
+            m_SectionChart.ShowDialog(); //.Show();
 
             m_ImageStream = m_SectionChart.GetImageStream;
         }
@@ -2233,7 +2234,7 @@ namespace BSFiberConcrete
 
             if (BSHelper.IsRectangled(m_BeamSection))
             {
-                mDraw = new MeshDraw((int)numMeshNX.Value, (int)numMeshNX.Value);
+                mDraw = new MeshDraw((int)numMeshNX.Value, (int)numMeshNY.Value);
                 mDraw.MosaicMode = _Mode;
                 mDraw.UltMax = _ultMax;
                 mDraw.UltMin = _ultMin;
