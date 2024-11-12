@@ -45,9 +45,6 @@ namespace BSFiberConcrete.DeformationDiagram
             DrowDiagram();
 
 
-
-
-
             //double testEpsilon = calculation.deformsArray[calculation.deformsArray.Length - 2] +
             //    (calculation.deformsArray[calculation.deformsArray.Length - 1] - calculation.deformsArray[calculation.deformsArray.Length - 2]) / 2; 
             //chartDeformDiagram.Series.Add("Point");
@@ -83,7 +80,6 @@ namespace BSFiberConcrete.DeformationDiagram
 
         private void DrowDiagram()
         {
-
             // 1. определяем состояние параметра typeMaterial
             // 2. выбираем userControl для отрисовки
             // 3. Обновляем состояние DataForDeformDiagram
@@ -95,6 +91,7 @@ namespace BSFiberConcrete.DeformationDiagram
             chartDeformDiagram.Series["Series1"].BorderWidth = 4;
             chartDeformDiagram.Series["Series1"].Color = System.Drawing.Color.Red;
             chartDeformDiagram.Series["Series1"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+
             chartDeformDiagram.Titles["Title1"].Text = _viewModel.typeMaterial + ". Диаграмма " + _viewModel.typeDiagram + ".";
 
             for (int i = 0; i < _viewModel.deformsArray.Length; i++)
@@ -112,8 +109,8 @@ namespace BSFiberConcrete.DeformationDiagram
                 ((System.Drawing.FontStyle)(System.Drawing.FontStyle.Bold)), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             chartDeformDiagram.Series["Series1"].ToolTip = "ε = #VALX, σ = #VALY";
 
-            //chartDeformDiagram.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
-            //chartDeformDiagram.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
+            chartDeformDiagram.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
+            chartDeformDiagram.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
             chartDeformDiagram.ChartAreas[0].AxisX.Crossing = 0;
             chartDeformDiagram.ChartAreas[0].AxisY.Crossing = 0;
             //chartDeformDiagram.ChartAreas[0].AxisX.Enabled = AxisEnabled.False;
@@ -124,7 +121,6 @@ namespace BSFiberConcrete.DeformationDiagram
             chartDeformDiagram.ChartAreas[0].AxisX.TitleFont = axisFont;
             chartDeformDiagram.ChartAreas[0].AxisY.Title = "σ, кг/см2";
             chartDeformDiagram.ChartAreas[0].AxisY.TitleFont = axisFont;
-
 
         }
     }

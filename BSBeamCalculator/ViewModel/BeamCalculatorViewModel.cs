@@ -50,11 +50,8 @@ namespace BSBeamCalculator
         private double _M_min;
         private double _Q_max;
 
-        //private System.Windows.Forms.DataVisualization.Charting.Chart _ForceChart;
-        //private System.Windows.Forms.DataVisualization.Charting.Chart _MomentChart;
-
-
         #region 
+
 
         public string TypeBeamSupport
         {
@@ -74,9 +71,7 @@ namespace BSBeamCalculator
         public double Force
         {
             get
-            {
-                return _Force;
-            }
+            { return _Force; }
             set
             {
                 _Force = value;
@@ -152,43 +147,15 @@ namespace BSBeamCalculator
             }
         }
 
-        //public System.Windows.Forms.DataVisualization.Charting.Chart ForceChart
-        //{
-        //    get
-        //    {
-        //        return _ForceChart;
-        //    }
-        //    set
-        //    {
-        //        _ForceChart = value;
-        //        OnPropertyChanged();
-        //    }
-        //}
-
-        //public System.Windows.Forms.DataVisualization.Charting.Chart MomentChart
-        //{
-        //    get
-        //    {
-        //        return _MomentChart;
-        //    }
-        //    set
-        //    {
-        //        _MomentChart = value;
-        //        OnPropertyChanged();
-        //    }
-        //}
-
-
-
-
         #endregion
 
-        public BeamCalculatorViewModel(TextBox beamLength, DataGridView beamEfforts, List<string> m_Path2BeamDiagrams, List<double> savedValues)
+
+        public BeamCalculatorViewModel(TextBox beamLength, DataGridView beamEfforts, List<double> savedValues)
         {
             _beamLength = beamLength;
             _beamEfforts = beamEfforts;
             SetProperty(savedValues);
-            BeamDiagramModel = new BeamDiagram(m_Path2BeamDiagrams);
+            BeamDiagramModel = new BeamDiagram();
         }
 
         public BeamCalculatorViewModel()
@@ -199,7 +166,6 @@ namespace BSBeamCalculator
             SetProperty(new List<double> {0, 0 });
             BeamDiagramModel = new BeamDiagram();
         }
-
 
 
         private void SetProperty(List<double> savedValues)

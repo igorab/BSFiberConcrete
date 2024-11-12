@@ -8,6 +8,7 @@ using BSFiberConcrete.Report;
 using BSFiberConcrete.Section;
 using BSFiberConcrete.UnitsOfMeasurement;
 using BSFiberConcrete.UnitsOfMeasurement.PhysicalQuantities;
+using SQLitePCL;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,6 +21,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 using TriangleNet.Topology.DCEL;
 
 namespace BSFiberConcrete
@@ -172,7 +174,7 @@ namespace BSFiberConcrete
                 { initValues = new List<double>() { savedValues.LengthX, savedValues.Force }; }
                 else { initValues = new List<double>() { 0, 0 }; }
                 
-                _beamCalcVM = new BeamCalculatorViewModel(tbLength, gridEfforts, m_Path2BeamDiagrams, initValues);
+                _beamCalcVM = new BeamCalculatorViewModel(tbLength, gridEfforts, initValues);
                 BeamCalculatorControl beamCalculatorControl = new BeamCalculatorControl(_beamCalcVM);
                 tabPBeam.Controls.Add(beamCalculatorControl);
             }
@@ -704,7 +706,6 @@ namespace BSFiberConcrete
             report.CalcResults2Group = m_CalcResults2Group;
             report.ImageStream = m_ImageStream;
             report.Messages = m_Message;
-            report.Path2BeamDiagrams = m_Path2BeamDiagrams;
             report._unitConverter = _UnitConverter;
         }
 
@@ -1446,6 +1447,94 @@ namespace BSFiberConcrete
         }
 
 
+
+        /// <summary>
+        /// Создать картинки для отчета заглавной части отчета
+        /// </summary>
+        public void CreatePictureForHeaderReport(List<BSCalcResultNDM> calcResults)
+        {
+            List<string> pathToPictures = new List<string>();
+            string pathToPicture;
+
+            // балка
+            if (_beamCalcVM != null)
+            {
+                // эпюра силы
+                if (true)
+                {
+                    pathToPicture = _beamCalcVM.BeamDiagramModel.SaveChart(_beamCalcVM.BeamDiagramModel.diagramQ, "DiagramQ");
+                    pathToPictures.Add(pathToPicture);
+                }
+                // эпюра момента
+                if (true)
+                {
+                    pathToPicture = _beamCalcVM.BeamDiagramModel.SaveChart(_beamCalcVM.BeamDiagramModel.diagramM, "DiagramM");
+                    pathToPictures.Add(pathToPicture);
+                }
+                // эпюра прогиба
+                if (true)
+                {
+                    calcResults[0].Deflexion_max = CalculateBeamDeflections(CheckUtilizationFactor(calcResults));
+                    pathToPicture = _beamCalcVM.BeamDiagramModel.SaveChart(_beamCalcVM.BeamDiagramModel.diagramU, "DiagramU");
+                    pathToPictures.Add(pathToPicture);
+                }
+            }
+
+            // Диаграмма деформирования
+            if (true)
+            {
+                // собрать данные
+                DataForDeformDiagram data = ValuesForDeformDiagram();
+                // определить vm
+                CalcDeformDiagram calculateDiagram = new CalcDeformDiagram(data.typesDiagram, data.resists, data.elasticity);
+                Chart deformDiagram = calculateDiagram.CreteChart();
+                pathToPicture = CalcDeformDiagram.SaveChart(deformDiagram);
+                pathToPictures.Add(pathToPicture);
+            }
+            calcResults[0].PictureForHeaderReport = pathToPictures;
+
+        }
+
+
+        public void CreatePictureForBodyReport(List<BSCalcResultNDM> calcResultsNDM)
+        {
+            for(int i = 0; calcResultsNDM.Count > i; i++)
+            {
+                BSCalcResultNDM calcResNDM = calcResultsNDM[i];
+
+                List<string> pathToPictures = new List<string>();
+                string pathToPicture;
+                // изополя сечения по деформации
+                if (true)
+                {
+                    string pictureName = $"beamSectionMeshDeform{i}";
+                    pathToPicture = Directory.GetCurrentDirectory() + "\\" + pictureName + ".png";
+                    MeshDraw mDraw = CreateMosaic(1, calcResNDM.Eps_B, calcResNDM.Eps_S, (double)numEps_fbt_ult.Value, -(double)numEps_fb_ult.Value, calcResNDM.Rs);
+                    mDraw.SaveToPNG("Деформации", pathToPicture);
+
+                    pathToPictures.Add(pathToPicture);
+                }
+
+                // изополя сечения по напряжению
+                if (true)
+                {
+                    string pictureName = $"beamSectionMeshStress{i}";
+                    pathToPicture = Directory.GetCurrentDirectory() + "\\" + pictureName + ".png";
+                    MeshDraw mDraw = CreateMosaic(2, calcResNDM.Sig_B, calcResNDM.Sig_S, calcResNDM.Rfbt, BSHelper.kgssm2kNsm(calcResNDM.Rfb), BSHelper.kgssm2kNsm(calcResNDM.Rs));
+                    mDraw.SaveToPNG("Напряжения", pathToPicture);
+
+                    pathToPictures.Add(pathToPicture);
+                }
+
+                if (pathToPictures.Count > 0)
+                {
+                    calcResNDM.PictureForBodyReport = pathToPictures;
+                }
+            }
+
+
+        }
+
         /// <summary>
         /// Данные с формы
         /// </summary>
@@ -1898,17 +1987,11 @@ namespace BSFiberConcrete
                     }
                 }
 
-                if (calcResults.Count > 0)
-                {
-                    calcResults[0].Path2BeamDiagrams = m_Path2BeamDiagrams;
-                    calcResults[0].Deflexion_max = CalculateBeamDeflections(CheckUtilizationFactor(calcResults));
-                }
+                CreatePictureForHeaderReport(calcResults);
+                CreatePictureForBodyReport(calcResults);
 
                 // формирование отчета
                 BSReport.RunReport(m_BeamSection, calcResults);
-
-                if (calcResults.Count > 0)
-                    ShowMosaic(calcResults[0]);
 
             }
             catch (Exception _e)
@@ -2191,35 +2274,55 @@ namespace BSFiberConcrete
             m_ImageStream = m_SectionChart.GetImageStream;
         }
 
+
+        /// <summary>
+        /// По результатам расчета Создать поверхность MeshDraw с разбитыми на элементы участками
+        /// </summary>
+        /// <param name="_CalcResNDM"></param>
         private void ShowMosaic(BSCalcResultNDM _CalcResNDM)
         {
             int mode = comboMosaic.SelectedIndex;
+            MeshDraw mDraw = null;
 
             if (mode == 1)
             {
-                ShowMosaic(mode, _CalcResNDM.Eps_B, _CalcResNDM.Eps_S, (double)numEps_fbt_ult.Value, -(double)numEps_fb_ult.Value, _CalcResNDM.Rs);
+                //ShowMosaic(mode, _CalcResNDM.Eps_B, _CalcResNDM.Eps_S, (double)numEps_fbt_ult.Value, -(double)numEps_fb_ult.Value, _CalcResNDM.Rs);
+                mDraw = CreateMosaic(mode, _CalcResNDM.Eps_B, _CalcResNDM.Eps_S, (double)numEps_fbt_ult.Value, -(double)numEps_fb_ult.Value, _CalcResNDM.Rs);
             }
             else if (mode == 2)
             {
-                ShowMosaic(mode, _CalcResNDM.Sig_B, _CalcResNDM.Sig_S,  _CalcResNDM.Rfbt, BSHelper.kgssm2kNsm(_CalcResNDM.Rfb), BSHelper.kgssm2kNsm(_CalcResNDM.Rs));
+                //ShowMosaic(mode, _CalcResNDM.Sig_B, _CalcResNDM.Sig_S,  _CalcResNDM.Rfbt, BSHelper.kgssm2kNsm(_CalcResNDM.Rfb), BSHelper.kgssm2kNsm(_CalcResNDM.Rs));
+                mDraw = CreateMosaic(mode, _CalcResNDM.Sig_B, _CalcResNDM.Sig_S, _CalcResNDM.Rfbt, BSHelper.kgssm2kNsm(_CalcResNDM.Rfb), BSHelper.kgssm2kNsm(_CalcResNDM.Rs));
             }
             else if (mode == 3)
             {
-                ShowMosaic(mode, _CalcResNDM.Eps_B, _CalcResNDM.Eps_S);
+                //ShowMosaic(mode, _CalcResNDM.Eps_B, _CalcResNDM.Eps_S);
+                mDraw = CreateMosaic(mode, _CalcResNDM.Eps_B, _CalcResNDM.Eps_S);
             }
             else if (mode == 4)
             {
-                ShowMosaic(mode, _CalcResNDM.Sig_B, _CalcResNDM.Sig_S);
+                //ShowMosaic(mode, _CalcResNDM.Sig_B, _CalcResNDM.Sig_S);
+                mDraw = CreateMosaic(mode, _CalcResNDM.Sig_B, _CalcResNDM.Sig_S);
             }
+
+            if (mDraw != null)
+                mDraw.ShowMesh();
         }
+
+
+
+
+
+
+
 
         /// <summary>
         ///  Разбиение сечения на конечные элементы
         /// </summary>
         /// <param name="_valuesB">значения для бетона</param>
         /// <param name="_valuesB">значения для арматуры</param>
-        private void ShowMosaic(int _Mode = 0,
-                                List<double> _valuesB = null, 
+        private MeshDraw CreateMosaic(int _Mode = 0,
+                                List<double> _valuesB = null,
                                 List<double> _valuesS = null,
                                 double _ultMax = 0,
                                 double _ultMin = 0,
@@ -2227,7 +2330,7 @@ namespace BSFiberConcrete
                                 double _e_st_ult = 0,
                                 double _e_s_ult = 0)
         {
-            MeshDraw mDraw;
+            MeshDraw mDraw = null;
 
             double[] sz = BeamSizes();
 
@@ -2239,16 +2342,15 @@ namespace BSFiberConcrete
                 mDraw.UltMin = _ultMin;
                 mDraw.Rs_Ult = _ultRs;
                 mDraw.e_st_ult = _e_st_ult;
-                mDraw.e_s_ult  = _e_s_ult;
+                mDraw.e_s_ult = _e_s_ult;
                 mDraw.Values_B = _valuesB;
                 mDraw.Values_S = _valuesS;
                 mDraw.CreateRectanglePlot(sz, m_BeamSection);
-                mDraw.ShowMesh();
             }
-            else if (m_BeamSection == BeamSection.Ring )
+            else if (m_BeamSection == BeamSection.Ring)
             {
                 TriangleNet.Geometry.Point cg = new TriangleNet.Geometry.Point();
-                _= GenerateMesh(ref cg);
+                _ = GenerateMesh(ref cg);
 
                 mDraw = new MeshDraw(Tri.Mesh);
                 mDraw.MosaicMode = _Mode;
@@ -2260,7 +2362,6 @@ namespace BSFiberConcrete
                 mDraw.Values_B = _valuesB;
                 mDraw.Values_S = _valuesS;
                 mDraw.PaintSectionMesh();
-                mDraw.ShowMesh();                
             }
             else if (m_BeamSection == BeamSection.Any) //заданное пользователем сечение
             {
@@ -2277,14 +2378,19 @@ namespace BSFiberConcrete
                 mDraw.Values_B = _valuesB;
                 mDraw.Values_S = _valuesS;
                 mDraw.PaintSectionMesh();
-                mDraw.ShowMesh();
             }
+
+            return mDraw;
         }
 
-        /// <summary>
-        /// Покрыть сечение сеткой
-        /// </summary>
-        private string GenerateMesh(ref TriangleNet.Geometry.Point _CG)
+
+
+
+
+            /// <summary>
+            /// Покрыть сечение сеткой
+            /// </summary>
+            private string GenerateMesh(ref TriangleNet.Geometry.Point _CG)
         {
             string pathToSvgFile;
             double[] sz = BeamWidtHeight(out double b, out double h, out double area);
@@ -2387,10 +2493,25 @@ namespace BSFiberConcrete
             }
         }
         
+
+        /// <summary>
+        /// Построить диаграмму деформирования
+        /// </summary>
         private void btnCalcDeformDiagram_Click(object sender, EventArgs e)
         {
-            string typeDiagram = cmbDeformDiagram.Text;
+            // собрать данные
+            DataForDeformDiagram data = ValuesForDeformDiagram();
+            // определить vm
+            CalcDeformDiagram calculateDiagram = new CalcDeformDiagram(data.typesDiagram, data.resists, data.elasticity);
+            // форма
+            DeformDiagram deformDiagram = new DeformDiagram(calculateDiagram);
+            deformDiagram.Show();
+        }
 
+
+        private DataForDeformDiagram ValuesForDeformDiagram()
+        {
+            string typeDiagram = cmbDeformDiagram.Text;
             string typeMaterial = cmbTypeMaterial.Text;
 
             // сжатие
@@ -2454,24 +2575,11 @@ namespace BSFiberConcrete
                 throw new Exception("Выбрано значение материала, выходящее за предел предопределенных значений.");
             }
 
-            //DataForDeformDiagram.typesDiagram = new string[] { typeMaterial, typeDiagram };
-            
-            string[] typesDiagram = new string[] { typeMaterial, typeDiagram };
-            double[] resists = new double[] { R_n, Rt_n, Rt2_n, Rt3_n };
-            double[] elasticity = new double[] { E, Et };
-
-            DataForDeformDiagram.resists = new double[] { R_n, Rt_n, Rt2_n, Rt3_n };
-            //DataForDeformDiagram.deforms = new double[] { e0, e2, et0, et2, et3 };
-            DataForDeformDiagram.E = new double[] { E, Et };
-
-            // Присваиваем значение на форму
-
-            CalcDeformDiagram calculateDiagram = new CalcDeformDiagram(typesDiagram, resists, elasticity);
-
-
-
-            DeformDiagram deformDiagram = new DeformDiagram(calculateDiagram);
-            deformDiagram.Show();
+            DataForDeformDiagram data = new DataForDeformDiagram();
+            data.typesDiagram = new string[] { typeMaterial, typeDiagram };
+            data.resists = new double[] { R_n, Rt_n, Rt2_n, Rt3_n };
+            data.elasticity = new double[] { E, Et };
+            return data;
         }
        
         /// <summary>
@@ -2610,42 +2718,58 @@ namespace BSFiberConcrete
             MessageBox.Show("Yb5 - коэффициент условий работы, учитывающий влияние попереременного замораживания и оттаивания, а также отрицательных температур", "Информация");
         }
 
-       
         private void label38_MouseMove(object sender, MouseEventArgs e)
         {
-            Cursor.Current = Cursors.Hand;            
+            System.Windows.Forms.Cursor.Current = Cursors.Hand;
         }
-       
+
         private void label37_MouseMove(object sender, MouseEventArgs e)
         {
-            Cursor.Current = Cursors.Hand;
+            System.Windows.Forms.Cursor.Current = Cursors.Hand;
         }
-                
+
         private void label36_MouseMove(object sender, MouseEventArgs e)
         {
-            Cursor.Current = Cursors.Hand;
+            System.Windows.Forms.Cursor.Current = Cursors.Hand;
         }
-    
+
         private void label35_MouseMove(object sender, MouseEventArgs e)
         {
-            Cursor.Current = Cursors.Hand;
+            System.Windows.Forms.Cursor.Current = Cursors.Hand;
         }
-    
+
         private void label13_MouseMove(object sender, MouseEventArgs e)
         {
-            Cursor.Current = Cursors.Hand;
+            System.Windows.Forms.Cursor.Current = Cursors.Hand;
         }
 
         private void label12_MouseMove(object sender, MouseEventArgs e)
         {
-            Cursor.Current = Cursors.Hand;
+            System.Windows.Forms.Cursor.Current = Cursors.Hand;
         }
+
+        private void lbE_beton_info_MouseMove(object sender, MouseEventArgs e)
+        {
+            System.Windows.Forms.Cursor.Current = Cursors.Hand;
+        }
+
+        private void lbE_fb_info_MouseMove(object sender, MouseEventArgs e)
+        {
+            System.Windows.Forms.Cursor.Current = Cursors.Hand;
+        }
+
+        private void picEffortsSign_MouseMove(object sender, MouseEventArgs e)
+        {
+            System.Windows.Forms.Cursor.Current = Cursors.Hand;
+        }
+
 
         private void btnMosaic_Click(object sender, EventArgs e)
         {
             try
             {
-                ShowMosaic(comboMosaic.SelectedIndex);
+                MeshDraw mDraw = CreateMosaic(comboMosaic.SelectedIndex);
+                mDraw.ShowMesh();
             }
             catch (Exception _e)
             {
@@ -2681,20 +2805,7 @@ namespace BSFiberConcrete
                 "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void lbE_beton_info_MouseMove(object sender, MouseEventArgs e)
-        {
-            Cursor.Current = Cursors.Hand;
-        }
 
-        private void lbE_fb_info_MouseMove(object sender, MouseEventArgs e)
-        {
-            Cursor.Current = Cursors.Hand;
-        }
-                
-        private void picEffortsSign_MouseMove(object sender, MouseEventArgs e)
-        {
-            Cursor.Current = Cursors.Hand; 
-        }
 
         private void picEffortsSign_Click(object sender, EventArgs e)
         {
