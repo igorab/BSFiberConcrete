@@ -21,6 +21,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 using TriangleNet.Topology.DCEL;
 
 namespace BSFiberConcrete
@@ -172,7 +173,7 @@ namespace BSFiberConcrete
                 { initValues = new List<double>() { savedValues.LengthX, savedValues.Force }; }
                 else { initValues = new List<double>() { 0, 0 }; }
                 
-                _beamCalcVM = new BeamCalculatorViewModel(tbLength, gridEfforts, m_Path2BeamDiagrams, initValues);
+                _beamCalcVM = new BeamCalculatorViewModel(tbLength, gridEfforts, initValues);
                 BeamCalculatorControl beamCalculatorControl = new BeamCalculatorControl(_beamCalcVM);
                 tabPBeam.Controls.Add(beamCalculatorControl);
             }
@@ -704,7 +705,6 @@ namespace BSFiberConcrete
             report.CalcResults2Group = m_CalcResults2Group;
             report.ImageStream = m_ImageStream;
             report.Messages = m_Message;
-            report.Path2BeamDiagrams = m_Path2BeamDiagrams;
             report._unitConverter = _UnitConverter;
         }
 
@@ -1536,11 +1536,35 @@ namespace BSFiberConcrete
         /// <summary>
         /// Создать картинки для отчета заглавной части отчета
         /// </summary>
-        public List<string> CreatePictureForHeaderReport()
+        public void CreatePictureForHeaderReport(List<BSCalcResultNDM> calcResults)
         {
             List<string> pathToPictures = new List<string>();
             string pathToPicture;
-            
+
+            // балка
+            if (_beamCalcVM != null)
+            {
+                // эпюра силы
+                if (true)
+                {
+                    pathToPicture = _beamCalcVM.BeamDiagramModel.SaveChart(_beamCalcVM.BeamDiagramModel.diagramQ, "DiagramQ");
+                    pathToPictures.Add(pathToPicture);
+                }
+                // эпюра момента
+                if (true)
+                {
+                    pathToPicture = _beamCalcVM.BeamDiagramModel.SaveChart(_beamCalcVM.BeamDiagramModel.diagramM, "DiagramM");
+                    pathToPictures.Add(pathToPicture);
+                }
+                // эпюра прогиба
+                if (true)
+                {
+                    calcResults[0].Deflexion_max = CalculateBeamDeflections(CheckUtilizationFactor(calcResults));
+                    pathToPicture = _beamCalcVM.BeamDiagramModel.SaveChart(_beamCalcVM.BeamDiagramModel.diagramU, "DiagramU");
+                    pathToPictures.Add(pathToPicture);
+                }
+            }
+
             // Диаграмма деформирования
             if (true)
             {
@@ -1548,11 +1572,12 @@ namespace BSFiberConcrete
                 DataForDeformDiagram data = ValuesForDeformDiagram();
                 // определить vm
                 CalcDeformDiagram calculateDiagram = new CalcDeformDiagram(data.typesDiagram, data.resists, data.elasticity);
-                calculateDiagram.CreteChart(out pathToPicture);
+                Chart deformDiagram = calculateDiagram.CreteChart();
+                pathToPicture = CalcDeformDiagram.SaveChart(deformDiagram);
                 pathToPictures.Add(pathToPicture);
             }
+            calcResults[0].PictureForHeaderReport = pathToPictures;
 
-            return pathToPictures;
         }
 
 
@@ -2047,24 +2072,11 @@ namespace BSFiberConcrete
                     }
                 }
 
-                if (calcResults.Count > 0)
-                {
-                    calcResults[0].Path2BeamDiagrams = m_Path2BeamDiagrams;
-                    calcResults[0].Deflexion_max = CalculateBeamDeflections(CheckUtilizationFactor(calcResults));
-                }
-
-                calcResults[0].PictureForHeaderReport = CreatePictureForHeaderReport();
-
+                CreatePictureForHeaderReport(calcResults);
                 CreatePictureForBodyReport(calcResults);
-
 
                 // формирование отчета
                 BSReport.RunReport(m_BeamSection, calcResults);
-
-                if (calcResults.Count > 0)
-                {
-                    ShowMosaic(calcResults[0]);
-                }
 
             }
             catch (Exception _e)
@@ -2791,36 +2803,51 @@ namespace BSFiberConcrete
             MessageBox.Show("Yb5 - коэффициент условий работы, учитывающий влияние попереременного замораживания и оттаивания, а также отрицательных температур", "Информация");
         }
 
-       
         private void label38_MouseMove(object sender, MouseEventArgs e)
         {
-            Cursor.Current = Cursors.Hand;            
+            System.Windows.Forms.Cursor.Current = Cursors.Hand;
         }
-       
+
         private void label37_MouseMove(object sender, MouseEventArgs e)
         {
-            Cursor.Current = Cursors.Hand;
+            System.Windows.Forms.Cursor.Current = Cursors.Hand;
         }
-                
+
         private void label36_MouseMove(object sender, MouseEventArgs e)
         {
-            Cursor.Current = Cursors.Hand;
+            System.Windows.Forms.Cursor.Current = Cursors.Hand;
         }
-    
+
         private void label35_MouseMove(object sender, MouseEventArgs e)
         {
-            Cursor.Current = Cursors.Hand;
+            System.Windows.Forms.Cursor.Current = Cursors.Hand;
         }
-    
+
         private void label13_MouseMove(object sender, MouseEventArgs e)
         {
-            Cursor.Current = Cursors.Hand;
+            System.Windows.Forms.Cursor.Current = Cursors.Hand;
         }
 
         private void label12_MouseMove(object sender, MouseEventArgs e)
         {
-            Cursor.Current = Cursors.Hand;
+            System.Windows.Forms.Cursor.Current = Cursors.Hand;
         }
+
+        private void lbE_beton_info_MouseMove(object sender, MouseEventArgs e)
+        {
+            System.Windows.Forms.Cursor.Current = Cursors.Hand;
+        }
+
+        private void lbE_fb_info_MouseMove(object sender, MouseEventArgs e)
+        {
+            System.Windows.Forms.Cursor.Current = Cursors.Hand;
+        }
+
+        private void picEffortsSign_MouseMove(object sender, MouseEventArgs e)
+        {
+            System.Windows.Forms.Cursor.Current = Cursors.Hand;
+        }
+
 
         private void btnMosaic_Click(object sender, EventArgs e)
         {
@@ -2863,20 +2890,7 @@ namespace BSFiberConcrete
                 "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void lbE_beton_info_MouseMove(object sender, MouseEventArgs e)
-        {
-            Cursor.Current = Cursors.Hand;
-        }
 
-        private void lbE_fb_info_MouseMove(object sender, MouseEventArgs e)
-        {
-            Cursor.Current = Cursors.Hand;
-        }
-                
-        private void picEffortsSign_MouseMove(object sender, MouseEventArgs e)
-        {
-            Cursor.Current = Cursors.Hand; 
-        }
 
         private void picEffortsSign_Click(object sender, EventArgs e)
         {

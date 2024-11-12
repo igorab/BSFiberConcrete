@@ -271,7 +271,6 @@ namespace BSFiberConcrete
         public Dictionary<string, double> ResQxQy { get; internal set; }
         public MemoryStream ImageStream { get; internal set; }
         public List<string> Message { get; internal set; }
-        public List<string> Path2BeamDiagrams { get; internal set; }
         public List<string> PictureForHeaderReport { get; internal set; }
         public List<string> PictureForBodyReport { get; internal set; }
 

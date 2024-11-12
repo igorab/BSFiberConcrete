@@ -31,7 +31,6 @@ namespace BSFiberConcrete
         public Dictionary<string, double> CalcResults2Group { set { m_CalcResults2Group = value; } }
         public Dictionary<string, double> Reinforcement { set { m_Reinforcement = value; } }
         public List<string> Messages { set { m_Messages = value; }}
-        public List<string> Path2BeamDiagrams { set { m_Path2BeamDiagrams = value; } }
         public List<string> PictureToHeadReport { set { m_PictureToHeadReport = value; } }
         public List<string> PictureToBodyReport { set { m_PictureToBodyReport = value; } }
 
@@ -384,11 +383,6 @@ namespace BSFiberConcrete
                 w.WriteLine("</Table>");
                 w.WriteLine("<br>");
             }
-
-
-
-
-
         }
 
         

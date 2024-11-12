@@ -359,58 +359,6 @@ namespace BSFiberConcrete.DeformationDiagram
 
                 }
             }
-
-
-
-
-
-
-            //if (epsilon > 0)
-            //{
-            //    if (epsilon > eb2)
-            //    { return res; }
-            //    if (typeDiagram == BSHelper.ThreeLineDiagram)
-            //    {
-            //        if (0 < epsilon && epsilon <= eb1)
-            //        { res = Eb * epsilon; }
-            //        else if (eb1 < epsilon && epsilon <= eb0)
-            //        {
-            //            //res = ((1 - 0.6) * (epsilon - eb1) / (eb0 - eb1) + 0.6) * Rb_n;
-            //            res = (Rb1 + (Rb_n - Rb1) * (epsilon - eb1) / (eb0 - eb1));
-            //        }
-            //        else if (eb0 < epsilon && epsilon <= eb2)
-            //        { res = Rb_n; }
-            //    }
-            //    else if (typeDiagram == BSHelper.TwoLineDiagram)
-            //    {
-            //        if (0 < epsilon && epsilon <= eb1)
-            //        { res = Eb * epsilon; }
-            //        else if (eb1 < epsilon && epsilon <= eb2)
-            //        { res = Rb_n; }
-            //    }
-            //}
-            //else if (epsilon < 0 && typeMaterial == BSHelper.FiberConcrete)
-            //{
-            //    if (epsilon < -efbt3)
-            //    { return res; }
-
-            //    if (epsilon < 0 && -efbt0 <= epsilon)
-            //    { res = Efb * epsilon; }
-            //    if (epsilon < -efbt0 && -efbt1 <= epsilon)
-            //    { res = - Rfbt_n; }
-            //    else if (epsilon < -efbt1 && -efbt2 <= epsilon)
-            //    {
-            //        res = - Rfbt_n * (1 + (1 - Rfbt2_n / Rfbt_n) * (epsilon - efbt1) / (efbt2 - efbt1));
-            //        //res = Rfbt2_n * (1 - (1 - Rfbt_n / Rfbt2_n) * (epsilon + efbt2) / (efbt1 + efbt2));    
-            //    }
-            //    else if (epsilon < -efbt2 && -efbt3 <= epsilon)
-            //    {
-            //        res = - Rfbt2_n * (1 + (1- Rfbt3_n / Rfbt2_n) * (epsilon + efbt2) / (efbt3 - efbt2));
-            //        //res = (Rfbt3_n + (Rfbt3_n - Rfbt2_n) * (epsilon + efbt3) / (efbt2 - efbt3));  
-            //    }
-            //}
-
-
             return res;
         }
 
@@ -460,7 +408,7 @@ namespace BSFiberConcrete.DeformationDiagram
         /// </summary>
         /// <param name="pathToSave"></param>
         /// <returns></returns>
-        public Chart CreteChart(out string pathToSave)
+        public Chart CreteChart()
         {
             System.Windows.Forms.DataVisualization.Charting.Chart chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
@@ -519,10 +467,6 @@ namespace BSFiberConcrete.DeformationDiagram
             chart.ChartAreas[0].AxisY.Title = "σ, кг/см2";
             chart.ChartAreas[0].AxisY.TitleFont = axisFont;
             chart.Series[sName].Color = System.Drawing.Color.Red;
-
-
-
-            pathToSave = SaveChart(chart, name2Save);
             return chart;
         }
 
@@ -531,12 +475,14 @@ namespace BSFiberConcrete.DeformationDiagram
         /// <summary>
         /// Сохранить диаграмму
         /// </summary>
-        public static string SaveChart(System.Windows.Forms.DataVisualization.Charting.Chart chart, string pictureName)
+        public static string SaveChart(System.Windows.Forms.DataVisualization.Charting.Chart chart, string pictureName = null)
         {
-            string pathToPicture = pictureName + ".png";
-            chart.SaveImage(pathToPicture, System.Windows.Forms.DataVisualization.Charting.ChartImageFormat.Png);
-            ;
-            return Directory.GetCurrentDirectory() + "\\" + pathToPicture;
+            if (pictureName == null)
+            { pictureName = "DeformDiagram" + ".png"; }
+            else
+            { pictureName = pictureName + ".png"; }
+            chart.SaveImage(pictureName, System.Windows.Forms.DataVisualization.Charting.ChartImageFormat.Png);
+            return Directory.GetCurrentDirectory() + "\\" + pictureName;
         }
 
 
