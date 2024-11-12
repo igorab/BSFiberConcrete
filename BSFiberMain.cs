@@ -6,6 +6,7 @@ using BSFiberConcrete.DeformationDiagram;
 using BSFiberConcrete.Lib;
 using BSFiberConcrete.Report;
 using BSFiberConcrete.Section;
+using BSFiberConcrete.Section.MeshSettingsOfBeamSection;
 using BSFiberConcrete.UnitsOfMeasurement;
 using BSFiberConcrete.UnitsOfMeasurement.PhysicalQuantities;
 using SQLitePCL;
@@ -125,6 +126,8 @@ namespace BSFiberConcrete
         /// </summary>
         private void CalcTypeShow()
         {
+            tabFiber.TabPages.Remove(tabPageOld);
+            
             if (CalcType == CalcType.Static)
             {
                 btnStaticEqCalc.Visible = true;
@@ -3100,6 +3103,12 @@ namespace BSFiberConcrete
         private void numEf_ValueChanged(object sender, EventArgs e)
         {
             E_fb_value(numE_beton.Value, numEfiber.Value, numMu_fv.Value);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            MeshSettings meshSettings = new MeshSettings();
+            meshSettings.ShowDialog();
         }
     }
 }
