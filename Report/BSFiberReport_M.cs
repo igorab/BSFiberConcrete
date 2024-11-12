@@ -72,7 +72,6 @@ namespace BSFiberConcrete
             report.CalcResults2Group = m_ReportData.m_CalcResults2Group;
             report.ImageStream       = m_ReportData.ImageStream;
             report.Messages          = m_ReportData.m_Messages;
-            report.Path2BeamDiagrams = null;
             report._unitConverter    = m_ReportData.UnitConverter;
         }
 

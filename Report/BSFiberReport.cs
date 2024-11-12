@@ -31,7 +31,10 @@ namespace BSFiberConcrete
         public Dictionary<string, double> CalcResults2Group { set { m_CalcResults2Group = value; } }
         public Dictionary<string, double> Reinforcement { set { m_Reinforcement = value; } }
         public List<string> Messages { set { m_Messages = value; }}
-        public List<string> Path2BeamDiagrams { set { m_Path2BeamDiagrams = value; } }
+        public List<string> PictureToHeadReport { set { m_PictureToHeadReport = value; } }
+        public List<string> PictureToBodyReport { set { m_PictureToBodyReport = value; } }
+
+
         public BeamSection BeamSection { set { m_BeamSection = value; } }
         public bool UseReinforcement { get; set; }
 
@@ -45,6 +48,10 @@ namespace BSFiberConcrete
         protected Dictionary<string, double> m_Reinforcement;
         protected List<string> m_Messages;
         protected List<string> m_Path2BeamDiagrams;
+        protected List<string> m_PictureToHeadReport;
+        protected List<string> m_PictureToBodyReport;
+
+
 
         protected BeamSection m_BeamSection { get; set; }
 
@@ -223,6 +230,22 @@ namespace BSFiberConcrete
                 w.WriteLine("<br>");
 
             }
+
+            if (m_PictureToHeadReport != null && m_PictureToHeadReport.Count > 0)
+            {
+                // добавление картинок в отчет
+                w.WriteLine("<Table border=1 bordercolor = darkblue>");
+                foreach (string pathToBeamDiagram in m_PictureToHeadReport)
+                {
+                    w.WriteLine("<tr>");
+                    w.WriteLine("<td>");
+                    w.WriteLine($"<img src =\"{pathToBeamDiagram}\">");
+                    w.WriteLine("</td>");
+                    w.WriteLine("</tr>");
+                }
+                w.WriteLine("</Table>");
+                w.WriteLine("<br>");
+            }
         }
 
         /// <summary>
@@ -324,12 +347,14 @@ namespace BSFiberConcrete
                     }
                     else if (_pair.Value < 0.001)
                     {
-                        w.WriteLine($"<td width={bv} align=center colspan=2> {_pair.Value.ToString("E")} </td>");
+                        string bgColor = ColorForUtilizationFactor(_pair);
+                        w.WriteLine($"<td width={bv} align=center colspan=2 {bgColor}>{_pair.Value.ToString("E")} </td>");
                         w.WriteLine($"<td width={bv} align=center colspan=2>{UConv(_pair.Key, _pair.Value)} </td>");
                     }
                     else
                     {
-                        w.WriteLine($"<td width={bv} align=center colspan=2> {Math.Round(_pair.Value, 4)} </td>");
+                        string bgColor = ColorForUtilizationFactor(_pair);
+                        w.WriteLine($"<td width={bv} align=center colspan=2 {bgColor}>{Math.Round(_pair.Value, 6)} </td>");
                         w.WriteLine($"<td width={bv} align=center colspan=2> {UConv(_pair.Key, _pair.Value)} </td>");
                     }
 
@@ -343,6 +368,22 @@ namespace BSFiberConcrete
             else
             {
                 w.WriteLine("<th>Расчет не выполнен</th>");
+            }
+
+            if (m_PictureToBodyReport != null && m_PictureToBodyReport.Count > 0)
+            {
+                // добавление картинок в отчет
+                w.WriteLine("<Table border=1 bordercolor = darkblue>");
+                foreach (string pathToBeamDiagram in m_PictureToBodyReport)
+                {
+                    w.WriteLine("<tr>");
+                    w.WriteLine("<td>");
+                    w.WriteLine($"<img src =\"{pathToBeamDiagram}\">");
+                    w.WriteLine("</td>");
+                    w.WriteLine("</tr>");
+                }
+                w.WriteLine("</Table>");
+                w.WriteLine("<br>");
             }
         }
 

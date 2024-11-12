@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -48,12 +49,10 @@ namespace BSBeamCalculator
         public DiagramResult result;
 
         //public CalculateBeamDiagram beamDiagram;
+        public Chart diagramQ;
+        public Chart diagramM;
+        public Chart diagramU;
 
-
-        /// <summary>
-        /// Путь для сохранения картинки
-        /// </summary>
-        public List<string> path2BeamDiagrams;
 
 
         /// <summary>
@@ -61,28 +60,25 @@ namespace BSBeamCalculator
         /// </summary>
         private int _numChart = 1;
 
-        public BeamDiagram(List<string> path2Diagrams = null )
+        public BeamDiagram()
         {
-            path2BeamDiagrams = path2Diagrams;
         }
 
         public List<Chart> RunCalculation()
         {
             List<Chart> forceChart = new List<Chart>();
 
-            if (path2BeamDiagrams != null)
-            { path2BeamDiagrams.Clear(); }
 
             SimpleBeamDiagramCase simpleDiagram = new SimpleBeamDiagramCase(supportType, loadType);
             double[][] values_xQ_xM = simpleDiagram.CalculateValuesForDiagram(l, x1, 0, f);
             result = new DiagramResult(values_xQ_xM);
 
             string[] names1 = { "Сила", "см", "кг", "BeamDiagramQ" };
-            Chart Q = CreteChart(result.pointQ[0].ToList(), result.pointQ[1].ToList(), names1, System.Drawing.Color.Blue);
+            diagramQ = CreteChart(result.pointQ[0].ToList(), result.pointQ[1].ToList(), names1, System.Drawing.Color.Blue);
             string[] names2 = { "Момент", "см", "кг*см", "BeamDiagramM" };
-            Chart M = CreteChart(result.pointM[0].ToList(), result.pointM[1].ToList(), names2, System.Drawing.Color.Red);
-            forceChart.Add(M);
-            forceChart.Add(Q);
+            diagramM = CreteChart(result.pointM[0].ToList(), result.pointM[1].ToList(), names2, System.Drawing.Color.Red);
+            forceChart.Add(diagramQ);
+            forceChart.Add(diagramM);
 
             return forceChart;
 
@@ -198,7 +194,7 @@ namespace BSBeamCalculator
         /// <summary>
         /// Построить график прогибов по расчетным значениям
         /// </summary>
-        public double  CalculateDeflectionDiagram(List<double> X, List<double> valueMomentInX, List<double> valuesStiffnesOnSection)
+        public double  CalculateDeflectionDiagram(List<double> X, List<double> valueMomentInX, List<double> valuesStiffnessOnSection)
         {
             double deflexionMax = 0;
             // график прогибов по расчетным значениям
@@ -206,7 +202,7 @@ namespace BSBeamCalculator
             List<double> XForChart = new List<double>();
             for (int i = 1; X.Count > i; i = i + 2)
             {
-                double u = this.CalculateDeflectionAtPoint(valueMomentInX, X, valuesStiffnesOnSection, i);
+                double u = this.CalculateDeflectionAtPoint(valueMomentInX, X, valuesStiffnessOnSection, i);
                 U.Add(u * 10); // перевод из см в мм 
                 XForChart.Add(X[i]);
                 if (deflexionMax > u * 10) // значение прогиба с минусом
@@ -214,7 +210,7 @@ namespace BSBeamCalculator
             }
             string[] names = { "Прогиб", "см", "мм", "BeamDiagramU" };
             //this.CreteChart(XForChart, U, names);
-            this.CreteChart(XForChart, U, names, System.Drawing.Color.Green);
+            diagramU = this.CreteChart(XForChart, U, names, System.Drawing.Color.Green);
             return deflexionMax;
         }
 
@@ -311,8 +307,6 @@ namespace BSBeamCalculator
             chart.ChartAreas[0].AxisY.TitleFont = axisFont;
             chart.Series[sName].Color = color;
 
-
-            SaveChart(chart, name2Save);
             return chart;
         }
 
@@ -320,34 +314,14 @@ namespace BSBeamCalculator
         /// <summary>
         /// Сохранить диаграмму
         /// </summary>
-        public void SaveChart(System.Windows.Forms.DataVisualization.Charting.Chart chart, string pictureName)
+        public string SaveChart(System.Windows.Forms.DataVisualization.Charting.Chart chart, string pictureName = null)
         {
-            if (path2BeamDiagrams != null)
-            {
-                string pathToPicture = pictureName + ".png";
-                chart.SaveImage(pathToPicture, System.Windows.Forms.DataVisualization.Charting.ChartImageFormat.Png);
-                // little bit костыльно
-                if (pictureName == "BeamDiagramU")
-                { 
-                    if (path2BeamDiagrams.Count > 2)
-                    {
-                        path2BeamDiagrams[2] = pathToPicture;
-                        return;
-                    }
-                }
-                if (pictureName == "SimpleBeamDiagramU")
-                {
-                    if (path2BeamDiagrams.Count > 3)
-                    {
-                        path2BeamDiagrams[3] = pathToPicture;
-                        return;
-                    }
-                }
-
-
-                path2BeamDiagrams.Add(pathToPicture);
-            }
-            _numChart++;
+            if (pictureName == null)
+            { pictureName = "BeamDiagram" + ".png"; }
+            else
+            { pictureName = pictureName + ".png"; }
+            chart.SaveImage(pictureName, System.Windows.Forms.DataVisualization.Charting.ChartImageFormat.Png);
+            return Directory.GetCurrentDirectory() + "\\" + pictureName;
         }
     }
 
