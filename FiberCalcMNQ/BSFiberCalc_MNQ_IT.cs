@@ -25,7 +25,7 @@
                 m_ImgCalc = "Incline_Q.PNG";
 
                 // Расчет на действие поперечной силы вдоль оси X
-                _ = Calculate_Qx(b, h);
+                _ = Calculate_Qcx(b, h);
                 
                 // Расчет на действие моментов относительно оси Y
                 _ = Calculate_Mc(b, h);                

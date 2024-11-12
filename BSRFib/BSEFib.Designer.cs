@@ -29,13 +29,13 @@
         private void InitializeComponent()
         {
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.labelEfb = new System.Windows.Forms.Label();
             this.labelEb = new System.Windows.Forms.Label();
             this.labelEf = new System.Windows.Forms.Label();
             this.labelMu_fv = new System.Windows.Forms.Label();
             this.numEb = new System.Windows.Forms.NumericUpDown();
             this.numEf = new System.Windows.Forms.NumericUpDown();
             this.numMu_fv = new System.Windows.Forms.NumericUpDown();
-            this.labelEfb = new System.Windows.Forms.Label();
             this.numEfb = new System.Windows.Forms.NumericUpDown();
             this.tableLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numEb)).BeginInit();
@@ -52,11 +52,11 @@
             this.tableLayoutPanel.Controls.Add(this.labelEfb, 0, 4);
             this.tableLayoutPanel.Controls.Add(this.labelEb, 0, 1);
             this.tableLayoutPanel.Controls.Add(this.labelEf, 0, 2);
-            this.tableLayoutPanel.Controls.Add(this.labelMu_fv, 0, 3);
             this.tableLayoutPanel.Controls.Add(this.numEb, 1, 1);
             this.tableLayoutPanel.Controls.Add(this.numEf, 1, 2);
             this.tableLayoutPanel.Controls.Add(this.numMu_fv, 1, 3);
             this.tableLayoutPanel.Controls.Add(this.numEfb, 1, 4);
+            this.tableLayoutPanel.Controls.Add(this.labelMu_fv, 0, 3);
             this.tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel.Name = "tableLayoutPanel";
@@ -68,6 +68,16 @@
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel.Size = new System.Drawing.Size(346, 238);
             this.tableLayoutPanel.TabIndex = 0;
+            // 
+            // labelEfb
+            // 
+            this.labelEfb.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.labelEfb.AutoSize = true;
+            this.labelEfb.Location = new System.Drawing.Point(64, 206);
+            this.labelEfb.Name = "labelEfb";
+            this.labelEfb.Size = new System.Drawing.Size(26, 13);
+            this.labelEfb.TabIndex = 6;
+            this.labelEfb.Text = "E fb";
             // 
             // labelEb
             // 
@@ -158,16 +168,6 @@
             this.numMu_fv.Size = new System.Drawing.Size(120, 20);
             this.numMu_fv.TabIndex = 5;
             this.numMu_fv.ValueChanged += new System.EventHandler(this.numMu_fv_ValueChanged);
-            // 
-            // labelEfb
-            // 
-            this.labelEfb.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.labelEfb.AutoSize = true;
-            this.labelEfb.Location = new System.Drawing.Point(64, 206);
-            this.labelEfb.Name = "labelEfb";
-            this.labelEfb.Size = new System.Drawing.Size(26, 13);
-            this.labelEfb.TabIndex = 6;
-            this.labelEfb.Text = "E fb";
             // 
             // numEfb
             // 

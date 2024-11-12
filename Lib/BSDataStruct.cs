@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace BSFiberConcrete
@@ -180,9 +181,21 @@ namespace BSFiberConcrete
         public double Efb => Eb * (1 - mu_fv) + Ef * mu_fv;
 
         /// <summary>
-        /// Модуль упругости фибробетона - введен вручную
+        /// Модуль упругости фибробетона на растяжение - c формы
         /// </summary>
-        public double Efib { get; set; }
+        public double E_fbt { get; set; }
+
+        public Fiber() { }
+
+        public Fiber(Fiber _fiber)
+        {
+            this.e_tot = _fiber.e_tot;
+            this.Ef    = _fiber.Ef;
+            this.Eb    = _fiber.Eb;
+            this.mu_fv = _fiber.mu_fv;
+            this.omega = _fiber.omega;
+            this.E_fbt  = _fiber.E_fbt;
+        }
 
         public object Clone()
         {
@@ -278,7 +291,7 @@ namespace BSFiberConcrete
             }
         }
         
-        public double Dzeta_R(double omega, double eps_fb2) => omega / (1 + Epsilon_s / eps_fb2);
+        public double Dzeta_R(double omega, double eps_fb2) => (eps_fb2!=0) ?omega / (1 + Epsilon_s / eps_fb2)  :0 ;
 
         public object Clone()
         {

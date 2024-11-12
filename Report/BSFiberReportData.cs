@@ -1,5 +1,6 @@
 ﻿using BSFiberConcrete.BSRFib;
 using BSFiberConcrete.UnitsOfMeasurement;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -34,6 +35,6 @@ namespace BSFiberConcrete
             m_Messages = _BSFibCalc.Msg;
             m_PhysParams = _BSFibCalc.PhysicalParameters();
             UnitConverter = _UnitConverter;
-        }
+        }        
     }
 }

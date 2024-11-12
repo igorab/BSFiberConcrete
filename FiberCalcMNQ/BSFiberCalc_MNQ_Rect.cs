@@ -46,7 +46,7 @@ namespace BSFiberConcrete
         /// <summary>
         /// Расчет внецентренно сжатых элементов (6.1.13)
         /// </summary>
-        protected new void Calculate_N()
+        public new void Calculate_N()
         {
             N_In = true;
             base.Calculate_N();            
@@ -81,7 +81,7 @@ namespace BSFiberConcrete
         {
             m_ImgCalc = "Incline_Q.PNG";
 
-            base.Calculate_Qx(b, h);
+            base.Calculate_Qcx(b, h);
 
             base.Calculate_Qy(h, b);
         }

@@ -43,7 +43,7 @@ namespace BSFiberConcrete
             {
                 double s_w_max, Qx_ult;
                 double Q_max      = Q_Ult(b, h);
-                (s_w_max, Qx_ult) = Calculate_Qx(b, h);
+                (s_w_max, Qx_ult) = Calculate_Qcx(b, h);
                 
                 UtilRate_Qx = (Qx_ult != 0) ? m_Efforts["Qx"] / Qx_ult : 0;
 
@@ -70,10 +70,10 @@ namespace BSFiberConcrete
             return ok;
         }
        
-        protected override (double, double) Calculate_Qx(double _b, double _h)
+        public override (double, double) Calculate_Qcx(double _b, double _h)
         {
             // Растояние до цента тяжести растянутой арматуры, см
-            double a = Rebar.a;
+            double a = Rebar?.a ?? 0;
             // рабочая высота сечения по растянутой арматуре
             double h0 = _h - a;
             // Расчетные значения сопротивления  на сжатиие по B30 СП63

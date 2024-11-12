@@ -166,7 +166,7 @@ namespace BSFiberConcrete
                 m_ImgCalc = "Incline_Q.PNG";
 
                 // Расчет на действие поперечной силы
-                Calculate_Qx(b, h);
+                Calculate_Qcx(b, h);
 
                 // Расчет на действие моментов
                 Calculate_Mc(b, h);

@@ -26,6 +26,18 @@ namespace BSFiberConcrete
 
         public const double Fi = 0.9;
 
+        /// <summary>
+        /// Вычислить модуль упругости фибробетона на растяжение
+        /// </summary>
+        /// <param name="_Eb">Модуль упругости бетона</param>
+        /// <param name="_Ef">Модуль упругости фибры</param>
+        /// <param name="_mu_fv">Коэффициент фиброового армирования</param>
+        /// <returns>Модуль упругости фибробетона на растяжение</returns>
+        public static double E_fb(double _Eb, double _Ef, double _mu_fv)
+        {
+            double e_fb = _Eb * (1 - _mu_fv) + _Ef * _mu_fv;
+            return e_fb;
+        }
 
         /// <summary>
         /// Прочности фибробетона на растяжение
