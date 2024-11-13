@@ -165,6 +165,7 @@ namespace BSFiberConcrete
                 if (Values_B != null )
                 {
                     double measured_value = Values_B[i];
+                    poly.LineColor = ScottPlot.Colors.White;
 
                     if (measured_value > UltMin && measured_value < UltMax)
                         poly.FillColor = ScottPlot.Colors.Green;
@@ -219,6 +220,7 @@ namespace BSFiberConcrete
                 if (Values_B != null && Values_B.Count == cnt)
                 {                                        
                     double measured_value = Values_B[idx];
+                    poly.LineColor = ScottPlot.Colors.White;
 
                     if (measured_value > UltMin && measured_value < UltMax)
                         poly.FillColor = ScottPlot.Colors.Green;
