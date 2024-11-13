@@ -457,11 +457,12 @@
       <DependentUpon>DrawBeamSection.cs</DependentUpon>
     </Compile>
     <Compile Include="Section\DrawBeamSection\MeshDraw.cs" />
-    <Compile Include="Section\MeshSettingsOfBeamSection\MeshSettings.cs">
+    <Compile Include="Section\MeshSettingsOfBeamSection\MeshSectionSettings.cs" />
+    <Compile Include="Section\MeshSettingsOfBeamSection\MeshSettingsView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Section\MeshSettingsOfBeamSection\MeshSettings.Designer.cs">
-      <DependentUpon>MeshSettings.cs</DependentUpon>
+    <Compile Include="Section\MeshSettingsOfBeamSection\MeshSettingsView.Designer.cs">
+      <DependentUpon>MeshSettingsView.cs</DependentUpon>
     </Compile>
     <Compile Include="Setup\BSDeflectionsUlt.cs">
       <SubType>Form</SubType>
@@ -597,8 +598,8 @@
     <EmbeddedResource Include="Section\DrawBeamSection\DrawBeamSection.resx">
       <DependentUpon>DrawBeamSection.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Section\MeshSettingsOfBeamSection\MeshSettings.resx">
-      <DependentUpon>MeshSettings.cs</DependentUpon>
+    <EmbeddedResource Include="Section\MeshSettingsOfBeamSection\MeshSettingsView.resx">
+      <DependentUpon>MeshSettingsView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Setup\BSDeflectionsUlt.resx">
       <DependentUpon>BSDeflectionsUlt.cs</DependentUpon>

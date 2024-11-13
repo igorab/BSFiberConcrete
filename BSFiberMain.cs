@@ -105,6 +105,9 @@ namespace BSFiberConcrete
 
         private bool UseRebar => checkBoxRebar.Checked;
 
+        private MeshSectionSettings _beamSectionMeshSettings;
+
+
         /// <summary>
         /// конструктор
         /// </summary>
@@ -1264,8 +1267,8 @@ namespace BSFiberConcrete
                 ["R2"] = 0,
                 //
                 //Mesh
-                ["ny"] = (int)numMeshNY.Value,
-                ["nz"] = (int)numMeshNX.Value, // в алгоритме плосткость сечения YOZ
+                ["ny"] = _beamSectionMeshSettings.NY,
+                ["nz"] = _beamSectionMeshSettings.NX, // в алгоритме плосткость сечения YOZ
 
                 // beton
                 ["Eb0"] = (double)numE_beton.Value, // сжатие
@@ -1548,10 +1551,10 @@ namespace BSFiberConcrete
             ndmSetup.BetonTypeId = (cmbTypeMaterial.SelectedIndex == 1) ? 1 : 0;
             ndmSetup.UseRebar = checkBoxRebar.Checked;
             ndmSetup.RebarType = Convert.ToString(cmbRebarClass.SelectedItem);
-            ndmSetup.N = (int) numMeshNX.Value;
-            ndmSetup.M = (int) numMeshNY.Value;
-            ndmSetup.MinAngle = (double)numMinAngle.Value;
-            ndmSetup.MaxArea = (double)numMaxArea.Value;
+            ndmSetup.N = _beamSectionMeshSettings.NX;
+            ndmSetup.M = _beamSectionMeshSettings.NY;
+            ndmSetup.MinAngle = _beamSectionMeshSettings.MinAngle;
+            ndmSetup.MaxArea = _beamSectionMeshSettings.MaxArea;
 
             BSData.SaveNDMSetup(ndmSetup);
 
@@ -1567,11 +1570,13 @@ namespace BSFiberConcrete
             //checkBoxRebar.Checked = ndmSetup.UseRebar;
             //cmbRebarClass.SelectedItem = ndmSetup.RebarType ;
 
-            numMeshNX.Value  = ndmSetup.N;
-            numMeshNY.Value =  ndmSetup.M;
-            numMinAngle.Value = (decimal) ndmSetup.MinAngle;
-            numMaxArea.Value = (decimal) ndmSetup.MaxArea;
-            
+            //numMeshNX.Value  = ndmSetup.N;
+            //numMeshNY.Value =  ndmSetup.M;
+            //numMinAngle.Value = (decimal) ndmSetup.MinAngle;
+            //numMaxArea.Value = (decimal) ndmSetup.MaxArea;
+
+            _beamSectionMeshSettings = new MeshSectionSettings(ndmSetup.N, ndmSetup.M, ndmSetup.MinAngle, ndmSetup.MaxArea);
+
             return ndmSetup;
         }
 
@@ -1816,7 +1821,7 @@ namespace BSFiberConcrete
                 // материал
                 fiberCalc_Deform.Beam.Mat = beamMaterial;
                 // параметры расчета:  (кол-во точек разбиения )
-                fiberCalc_Deform.SetParams(new double[] { (int)numMeshNX.Value, (int)numMeshNX.Value });
+                fiberCalc_Deform.SetParams(new double[] { _beamSectionMeshSettings.NX, _beamSectionMeshSettings .NX});
                 //
                 // рассчитать                
 
@@ -2340,7 +2345,7 @@ namespace BSFiberConcrete
 
             if (BSHelper.IsRectangled(m_BeamSection))
             {
-                mDraw = new MeshDraw((int)numMeshNX.Value, (int)numMeshNY.Value);
+                mDraw = new MeshDraw(_beamSectionMeshSettings.NX, _beamSectionMeshSettings.NY);
                 mDraw.MosaicMode = _Mode;
                 mDraw.UltMax = _ultMax;
                 mDraw.UltMin = _ultMin;
@@ -2399,12 +2404,12 @@ namespace BSFiberConcrete
             string pathToSvgFile;
             double[] sz = BeamWidtHeight(out double b, out double h, out double area);
             
-            BSMesh.Nx = (int)numMeshNX.Value;
-            BSMesh.Ny = (int)numMeshNY.Value;
+            BSMesh.Nx = _beamSectionMeshSettings.NX;
+            BSMesh.Ny = _beamSectionMeshSettings.NY;
             double meshSize = Math.Max(BSMesh.Nx, BSMesh.Ny);
 
-            BSMesh.MinAngle = (double)numMinAngle.Value;
-            Tri.MinAngle = (double)numMinAngle.Value;            
+            BSMesh.MinAngle = _beamSectionMeshSettings.MinAngle;
+            Tri.MinAngle = _beamSectionMeshSettings.MinAngle;            
             BSMesh.MaxArea = 0;
 
             if (meshSize > 0)
@@ -3108,7 +3113,7 @@ namespace BSFiberConcrete
 
         private void button1_Click(object sender, EventArgs e)
         {
-            MeshSettings meshSettings = new MeshSettings();
+            MeshSettingsView meshSettings = new MeshSettingsView(_beamSectionMeshSettings);
             meshSettings.ShowDialog();
         }
     }
