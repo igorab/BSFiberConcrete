@@ -101,11 +101,21 @@ namespace BSFiberConcrete
         [DisplayName("Предельная поперечная сила, [кг]"), Description("Res")]
         public double Q_ult { get; protected set; }
 
+        [DisplayName("Предельная поперечная сила Qy, [кг]"), Description("Res")]
+        public double Qy_ult { get; protected set; }
+
+        [DisplayName("Предельная поперечная сила Qx, [кг]"), Description("Res")]
+        public double Qx_ult { get; protected set; }
+
+
         [DisplayName("Коэффициент использования по Qx, [СП 360 П6.1.28]")]
         public double UtilRate_Qx { get; protected set; }
 
         [DisplayName("Коэффициент использования по Qy, [СП 360 П6.1.28]")]
         public double UtilRate_Qy { get; protected set; }
+
+        [DisplayName("Коэффициент использования по Q, [СП 360 П6.1.28]")]
+        public double UtilRate_Q { get; protected set; }
 
         [DisplayName("Коэффициент использования по моменту My, [СП 360 П6.1.30]")]
         public double UtilRate_My { get; protected set; }

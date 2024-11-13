@@ -39,16 +39,26 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BSSectionChart));
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanelSection = new System.Windows.Forms.TableLayoutPanel();
             this.btnDel = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
             this.chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.dataGrid = new System.Windows.Forms.DataGridView();
+            this.numDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.xDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.yDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pointBS = new System.Windows.Forms.BindingSource(this.components);
             this.labelSection = new System.Windows.Forms.Label();
             this.labelRods = new System.Windows.Forms.Label();
             this.bSRodDataGridView = new System.Windows.Forms.DataGridView();
+            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.X = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Y = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Dnom = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.D = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.RodBS = new System.Windows.Forms.BindingSource(this.components);
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.labelArea = new System.Windows.Forms.Label();
             this.numArea = new System.Windows.Forms.NumericUpDown();
@@ -62,31 +72,23 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.tableLayoutPanelChart = new System.Windows.Forms.TableLayoutPanel();
             this.btnDraw = new System.Windows.Forms.Button();
+            this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.btnSaveChart = new System.Windows.Forms.Button();
-            this.buttonClose = new System.Windows.Forms.Button();
-            this.btnCalc = new System.Windows.Forms.Button();
             this.btnMesh = new System.Windows.Forms.Button();
-            this.numDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.xDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.yDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pointBS = new System.Windows.Forms.BindingSource(this.components);
-            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.X = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Y = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.D = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.RodBS = new System.Windows.Forms.BindingSource(this.components);
+            this.btnCalc = new System.Windows.Forms.Button();
+            this.buttonClose = new System.Windows.Forms.Button();
             this.tableLayoutPanel.SuspendLayout();
             this.tableLayoutPanelSection.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pointBS)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bSRodDataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RodBS)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numArea)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAreaRebar)).BeginInit();
             this.tableLayoutButtonRods.SuspendLayout();
             this.tableLayoutPanelChart.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pointBS)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.RodBS)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel
@@ -94,8 +96,8 @@
             this.tableLayoutPanel.ColumnCount = 4;
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65F));
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5F));
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 69.38406F));
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 0.7246377F));
             this.tableLayoutPanel.Controls.Add(this.tableLayoutPanelSection, 0, 2);
             this.tableLayoutPanel.Controls.Add(this.chart, 2, 1);
             this.tableLayoutPanel.Controls.Add(this.dataGrid, 0, 1);
@@ -111,7 +113,7 @@
             this.tableLayoutPanel.RowCount = 3;
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.865772F));
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 95.13423F));
-            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 104F));
+            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 54F));
             this.tableLayoutPanel.Size = new System.Drawing.Size(1104, 717);
             this.tableLayoutPanel.TabIndex = 0;
             // 
@@ -122,12 +124,11 @@
             this.tableLayoutPanelSection.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanelSection.Controls.Add(this.btnDel, 1, 0);
             this.tableLayoutPanelSection.Controls.Add(this.btnAdd, 0, 0);
-            this.tableLayoutPanelSection.Location = new System.Drawing.Point(3, 615);
+            this.tableLayoutPanelSection.Location = new System.Drawing.Point(3, 665);
             this.tableLayoutPanelSection.Name = "tableLayoutPanelSection";
-            this.tableLayoutPanelSection.RowCount = 2;
+            this.tableLayoutPanelSection.RowCount = 1;
             this.tableLayoutPanelSection.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanelSection.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanelSection.Size = new System.Drawing.Size(104, 99);
+            this.tableLayoutPanelSection.Size = new System.Drawing.Size(104, 49);
             this.tableLayoutPanelSection.TabIndex = 5;
             // 
             // btnDel
@@ -170,7 +171,7 @@
             legend1.Name = "Legend";
             legend1.Title = "Контуры";
             this.chart.Legends.Add(legend1);
-            this.chart.Location = new System.Drawing.Point(333, 32);
+            this.chart.Location = new System.Drawing.Point(333, 35);
             this.chart.Name = "chart";
             series1.BorderWidth = 3;
             series1.ChartArea = "ChartArea";
@@ -198,7 +199,7 @@
             this.chart.Series.Add(series2);
             this.chart.Series.Add(series3);
             this.chart.Series.Add(series4);
-            this.chart.Size = new System.Drawing.Size(711, 577);
+            this.chart.Size = new System.Drawing.Size(759, 624);
             this.chart.TabIndex = 0;
             title1.Name = "TitleX";
             title1.Text = "Геометрия сечения и распололжение арматуры";
@@ -217,17 +218,45 @@
             this.xDataGridViewTextBoxColumn,
             this.yDataGridViewTextBoxColumn});
             this.dataGrid.DataSource = this.pointBS;
-            this.dataGrid.Location = new System.Drawing.Point(3, 32);
+            this.dataGrid.Location = new System.Drawing.Point(3, 35);
             this.dataGrid.Name = "dataGrid";
             this.dataGrid.RowHeadersVisible = false;
-            this.dataGrid.Size = new System.Drawing.Size(104, 577);
+            this.dataGrid.Size = new System.Drawing.Size(104, 624);
             this.dataGrid.TabIndex = 2;
+            // 
+            // numDataGridViewTextBoxColumn
+            // 
+            this.numDataGridViewTextBoxColumn.DataPropertyName = "Num";
+            this.numDataGridViewTextBoxColumn.HeaderText = "N";
+            this.numDataGridViewTextBoxColumn.Name = "numDataGridViewTextBoxColumn";
+            this.numDataGridViewTextBoxColumn.ToolTipText = "Номер узла";
+            this.numDataGridViewTextBoxColumn.Width = 20;
+            // 
+            // xDataGridViewTextBoxColumn
+            // 
+            this.xDataGridViewTextBoxColumn.DataPropertyName = "X";
+            this.xDataGridViewTextBoxColumn.HeaderText = "X";
+            this.xDataGridViewTextBoxColumn.Name = "xDataGridViewTextBoxColumn";
+            this.xDataGridViewTextBoxColumn.ToolTipText = "X, см";
+            this.xDataGridViewTextBoxColumn.Width = 30;
+            // 
+            // yDataGridViewTextBoxColumn
+            // 
+            this.yDataGridViewTextBoxColumn.DataPropertyName = "Y";
+            this.yDataGridViewTextBoxColumn.HeaderText = "Y";
+            this.yDataGridViewTextBoxColumn.Name = "yDataGridViewTextBoxColumn";
+            this.yDataGridViewTextBoxColumn.ToolTipText = "Y, см";
+            this.yDataGridViewTextBoxColumn.Width = 30;
+            // 
+            // pointBS
+            // 
+            this.pointBS.DataSource = typeof(BSFiberConcrete.Section.BSPoint);
             // 
             // labelSection
             // 
             this.labelSection.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelSection.AutoSize = true;
-            this.labelSection.Location = new System.Drawing.Point(3, 8);
+            this.labelSection.Location = new System.Drawing.Point(3, 9);
             this.labelSection.Name = "labelSection";
             this.labelSection.Size = new System.Drawing.Size(49, 13);
             this.labelSection.TabIndex = 6;
@@ -238,7 +267,7 @@
             this.labelRods.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelRods.AutoSize = true;
             this.labelRods.ForeColor = System.Drawing.Color.Blue;
-            this.labelRods.Location = new System.Drawing.Point(113, 8);
+            this.labelRods.Location = new System.Drawing.Point(113, 9);
             this.labelRods.Name = "labelRods";
             this.labelRods.Size = new System.Drawing.Size(76, 13);
             this.labelRods.TabIndex = 7;
@@ -262,13 +291,44 @@
             this.Dnom,
             this.D});
             this.bSRodDataGridView.DataSource = this.RodBS;
-            this.bSRodDataGridView.Location = new System.Drawing.Point(113, 32);
+            this.bSRodDataGridView.Location = new System.Drawing.Point(113, 35);
             this.bSRodDataGridView.Name = "bSRodDataGridView";
             this.bSRodDataGridView.RowHeadersVisible = false;
-            this.bSRodDataGridView.Size = new System.Drawing.Size(214, 577);
+            this.bSRodDataGridView.Size = new System.Drawing.Size(214, 624);
             this.bSRodDataGridView.TabIndex = 7;
             this.bSRodDataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.bSRodDataGridView_CellValueChanged);
             this.bSRodDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.bSRodDataGridView_CellValueChanged);
+            // 
+            // Id
+            // 
+            this.Id.DataPropertyName = "Id";
+            this.Id.HeaderText = "Id";
+            this.Id.Name = "Id";
+            this.Id.ToolTipText = "Номер стержня";
+            this.Id.Visible = false;
+            this.Id.Width = 20;
+            // 
+            // X
+            // 
+            this.X.DataPropertyName = "CG_X";
+            dataGridViewCellStyle1.Format = "N2";
+            dataGridViewCellStyle1.NullValue = "0";
+            this.X.DefaultCellStyle = dataGridViewCellStyle1;
+            this.X.HeaderText = "X (h)";
+            this.X.Name = "X";
+            this.X.ToolTipText = "X, по ширине сечения, см";
+            this.X.Width = 50;
+            // 
+            // Y
+            // 
+            this.Y.DataPropertyName = "CG_Y";
+            dataGridViewCellStyle2.Format = "N2";
+            dataGridViewCellStyle2.NullValue = "0";
+            this.Y.DefaultCellStyle = dataGridViewCellStyle2;
+            this.Y.HeaderText = "Y (b)";
+            this.Y.Name = "Y";
+            this.Y.ToolTipText = "Y, по высоте сечения, см";
+            this.Y.Width = 50;
             // 
             // Dnom
             // 
@@ -295,6 +355,21 @@
             this.Dnom.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.Dnom.ToolTipText = "Номинальный диаметр";
             this.Dnom.Width = 50;
+            // 
+            // D
+            // 
+            this.D.DataPropertyName = "D";
+            dataGridViewCellStyle3.Format = "N2";
+            dataGridViewCellStyle3.NullValue = "0";
+            this.D.DefaultCellStyle = dataGridViewCellStyle3;
+            this.D.HeaderText = "D";
+            this.D.Name = "D";
+            this.D.ToolTipText = "Диаметр, см";
+            this.D.Width = 30;
+            // 
+            // RodBS
+            // 
+            this.RodBS.DataSource = typeof(BSFiberConcrete.BSRod);
             // 
             // tableLayoutPanel1
             // 
@@ -399,12 +474,11 @@
             this.tableLayoutButtonRods.Controls.Add(this.btnAddRod, 1, 0);
             this.tableLayoutButtonRods.Controls.Add(this.btnSave, 0, 0);
             this.tableLayoutButtonRods.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutButtonRods.Location = new System.Drawing.Point(113, 615);
+            this.tableLayoutButtonRods.Location = new System.Drawing.Point(113, 665);
             this.tableLayoutButtonRods.Name = "tableLayoutButtonRods";
-            this.tableLayoutButtonRods.RowCount = 2;
+            this.tableLayoutButtonRods.RowCount = 1;
             this.tableLayoutButtonRods.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutButtonRods.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutButtonRods.Size = new System.Drawing.Size(214, 99);
+            this.tableLayoutButtonRods.Size = new System.Drawing.Size(214, 49);
             this.tableLayoutButtonRods.TabIndex = 9;
             // 
             // btnDelRod
@@ -448,148 +522,111 @@
             // 
             // tableLayoutPanelChart
             // 
-            this.tableLayoutPanelChart.ColumnCount = 3;
-            this.tableLayoutPanelChart.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.53381F));
-            this.tableLayoutPanelChart.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.46619F));
-            this.tableLayoutPanelChart.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 536F));
+            this.tableLayoutPanelChart.ColumnCount = 7;
+            this.tableLayoutPanelChart.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.59242F));
+            this.tableLayoutPanelChart.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 74.40759F));
+            this.tableLayoutPanelChart.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 74F));
+            this.tableLayoutPanelChart.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 87F));
+            this.tableLayoutPanelChart.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 82F));
+            this.tableLayoutPanelChart.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 69F));
+            this.tableLayoutPanelChart.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 236F));
             this.tableLayoutPanelChart.Controls.Add(this.btnDraw, 0, 0);
             this.tableLayoutPanelChart.Controls.Add(this.btnSaveChart, 1, 0);
-            this.tableLayoutPanelChart.Controls.Add(this.buttonClose, 2, 1);
-            this.tableLayoutPanelChart.Controls.Add(this.btnCalc, 1, 1);
-            this.tableLayoutPanelChart.Controls.Add(this.btnMesh, 0, 1);
+            this.tableLayoutPanelChart.Controls.Add(this.btnMesh, 2, 0);
+            this.tableLayoutPanelChart.Controls.Add(this.btnCalc, 3, 0);
+            this.tableLayoutPanelChart.Controls.Add(this.buttonClose, 6, 0);
             this.tableLayoutPanelChart.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelChart.Location = new System.Drawing.Point(333, 615);
+            this.tableLayoutPanelChart.Location = new System.Drawing.Point(333, 665);
             this.tableLayoutPanelChart.Name = "tableLayoutPanelChart";
-            this.tableLayoutPanelChart.RowCount = 2;
+            this.tableLayoutPanelChart.RowCount = 1;
             this.tableLayoutPanelChart.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanelChart.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanelChart.Size = new System.Drawing.Size(711, 99);
+            this.tableLayoutPanelChart.Size = new System.Drawing.Size(759, 49);
             this.tableLayoutPanelChart.TabIndex = 10;
             // 
             // btnDraw
             // 
+            this.btnDraw.ImageKey = "update.png";
+            this.btnDraw.ImageList = this.imageList;
             this.btnDraw.Location = new System.Drawing.Point(3, 3);
             this.btnDraw.Name = "btnDraw";
-            this.btnDraw.Size = new System.Drawing.Size(82, 38);
+            this.btnDraw.Size = new System.Drawing.Size(42, 38);
             this.btnDraw.TabIndex = 1;
-            this.btnDraw.Text = "Построить сечение";
             this.btnDraw.UseVisualStyleBackColor = true;
             this.btnDraw.Click += new System.EventHandler(this.btnDraw_Click);
             // 
+            // imageList
+            // 
+            this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
+            this.imageList.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList.Images.SetKeyName(0, "CM.png");
+            this.imageList.Images.SetKeyName(1, "Command.png");
+            this.imageList.Images.SetKeyName(2, "Editions.png");
+            this.imageList.Images.SetKeyName(3, "FileOpen.png");
+            this.imageList.Images.SetKeyName(4, "Files.png");
+            this.imageList.Images.SetKeyName(5, "Icons.png");
+            this.imageList.Images.SetKeyName(6, "Info.png");
+            this.imageList.Images.SetKeyName(7, "Layers.png");
+            this.imageList.Images.SetKeyName(8, "Menu.png");
+            this.imageList.Images.SetKeyName(9, "Properties.png");
+            this.imageList.Images.SetKeyName(10, "Property.png");
+            this.imageList.Images.SetKeyName(11, "Remove.png");
+            this.imageList.Images.SetKeyName(12, "Settings.png");
+            this.imageList.Images.SetKeyName(13, "Storages.png");
+            this.imageList.Images.SetKeyName(14, "TIMClasses.png");
+            this.imageList.Images.SetKeyName(15, "Transmute.png");
+            this.imageList.Images.SetKeyName(16, "ViewMap.png");
+            this.imageList.Images.SetKeyName(17, "balka_rect.ico");
+            this.imageList.Images.SetKeyName(18, "Mesh.png");
+            this.imageList.Images.SetKeyName(19, "MeshRed.png");
+            this.imageList.Images.SetKeyName(20, "MeshBlack.png");
+            this.imageList.Images.SetKeyName(21, "update.png");
+            this.imageList.Images.SetKeyName(22, "save.png");
+            this.imageList.Images.SetKeyName(23, "reabr.png");
+            // 
             // btnSaveChart
             // 
-            this.btnSaveChart.Location = new System.Drawing.Point(91, 3);
+            this.btnSaveChart.ImageIndex = 22;
+            this.btnSaveChart.ImageList = this.imageList;
+            this.btnSaveChart.Location = new System.Drawing.Point(57, 3);
             this.btnSaveChart.Name = "btnSaveChart";
-            this.btnSaveChart.Size = new System.Drawing.Size(80, 38);
+            this.btnSaveChart.Size = new System.Drawing.Size(45, 38);
             this.btnSaveChart.TabIndex = 2;
-            this.btnSaveChart.Text = "Сохранить";
             this.btnSaveChart.UseVisualStyleBackColor = true;
             this.btnSaveChart.Click += new System.EventHandler(this.btnSaveChart_Click);
+            // 
+            // btnMesh
+            // 
+            this.btnMesh.ImageKey = "Mesh.png";
+            this.btnMesh.ImageList = this.imageList;
+            this.btnMesh.Location = new System.Drawing.Point(214, 3);
+            this.btnMesh.Name = "btnMesh";
+            this.btnMesh.Size = new System.Drawing.Size(44, 38);
+            this.btnMesh.TabIndex = 5;
+            this.btnMesh.UseVisualStyleBackColor = true;
+            this.btnMesh.Click += new System.EventHandler(this.btnMesh_Click);
+            // 
+            // btnCalc
+            // 
+            this.btnCalc.ImageKey = "CM.png";
+            this.btnCalc.ImageList = this.imageList;
+            this.btnCalc.Location = new System.Drawing.Point(288, 3);
+            this.btnCalc.Name = "btnCalc";
+            this.btnCalc.Size = new System.Drawing.Size(48, 38);
+            this.btnCalc.TabIndex = 4;
+            this.btnCalc.UseVisualStyleBackColor = true;
+            this.btnCalc.Click += new System.EventHandler(this.btnCalc_Click);
             // 
             // buttonClose
             // 
             this.buttonClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonClose.Location = new System.Drawing.Point(628, 52);
+            this.buttonClose.ImageList = this.imageList;
+            this.buttonClose.Location = new System.Drawing.Point(697, 3);
             this.buttonClose.Name = "buttonClose";
-            this.buttonClose.Size = new System.Drawing.Size(80, 38);
+            this.buttonClose.Size = new System.Drawing.Size(59, 38);
             this.buttonClose.TabIndex = 3;
             this.buttonClose.Text = "Закрыть";
             this.buttonClose.UseVisualStyleBackColor = true;
             this.buttonClose.Click += new System.EventHandler(this.buttonClose_Click);
-            // 
-            // btnCalc
-            // 
-            this.btnCalc.Location = new System.Drawing.Point(91, 52);
-            this.btnCalc.Name = "btnCalc";
-            this.btnCalc.Size = new System.Drawing.Size(80, 38);
-            this.btnCalc.TabIndex = 4;
-            this.btnCalc.Text = "Рассчитать";
-            this.btnCalc.UseVisualStyleBackColor = true;
-            this.btnCalc.Click += new System.EventHandler(this.btnCalc_Click);
-            // 
-            // btnMesh
-            // 
-            this.btnMesh.Location = new System.Drawing.Point(3, 52);
-            this.btnMesh.Name = "btnMesh";
-            this.btnMesh.Size = new System.Drawing.Size(82, 38);
-            this.btnMesh.TabIndex = 5;
-            this.btnMesh.Text = "Сетка";
-            this.btnMesh.UseVisualStyleBackColor = true;
-            this.btnMesh.Click += new System.EventHandler(this.btnMesh_Click);
-            // 
-            // numDataGridViewTextBoxColumn
-            // 
-            this.numDataGridViewTextBoxColumn.DataPropertyName = "Num";
-            this.numDataGridViewTextBoxColumn.HeaderText = "N";
-            this.numDataGridViewTextBoxColumn.Name = "numDataGridViewTextBoxColumn";
-            this.numDataGridViewTextBoxColumn.ToolTipText = "Номер узла";
-            this.numDataGridViewTextBoxColumn.Width = 20;
-            // 
-            // xDataGridViewTextBoxColumn
-            // 
-            this.xDataGridViewTextBoxColumn.DataPropertyName = "X";
-            this.xDataGridViewTextBoxColumn.HeaderText = "X";
-            this.xDataGridViewTextBoxColumn.Name = "xDataGridViewTextBoxColumn";
-            this.xDataGridViewTextBoxColumn.ToolTipText = "X, см";
-            this.xDataGridViewTextBoxColumn.Width = 30;
-            // 
-            // yDataGridViewTextBoxColumn
-            // 
-            this.yDataGridViewTextBoxColumn.DataPropertyName = "Y";
-            this.yDataGridViewTextBoxColumn.HeaderText = "Y";
-            this.yDataGridViewTextBoxColumn.Name = "yDataGridViewTextBoxColumn";
-            this.yDataGridViewTextBoxColumn.ToolTipText = "Y, см";
-            this.yDataGridViewTextBoxColumn.Width = 30;
-            // 
-            // pointBS
-            // 
-            this.pointBS.DataSource = typeof(BSFiberConcrete.Section.BSPoint);
-            // 
-            // Id
-            // 
-            this.Id.DataPropertyName = "Id";
-            this.Id.HeaderText = "Id";
-            this.Id.Name = "Id";
-            this.Id.ToolTipText = "Номер стержня";
-            this.Id.Visible = false;
-            this.Id.Width = 20;
-            // 
-            // X
-            // 
-            this.X.DataPropertyName = "CG_X";
-            dataGridViewCellStyle1.Format = "N2";
-            dataGridViewCellStyle1.NullValue = "0";
-            this.X.DefaultCellStyle = dataGridViewCellStyle1;
-            this.X.HeaderText = "X (h)";
-            this.X.Name = "X";
-            this.X.ToolTipText = "X, по ширине сечения, см";
-            this.X.Width = 50;
-            // 
-            // Y
-            // 
-            this.Y.DataPropertyName = "CG_Y";
-            dataGridViewCellStyle2.Format = "N2";
-            dataGridViewCellStyle2.NullValue = "0";
-            this.Y.DefaultCellStyle = dataGridViewCellStyle2;
-            this.Y.HeaderText = "Y (b)";
-            this.Y.Name = "Y";
-            this.Y.ToolTipText = "Y, по высоте сечения, см";
-            this.Y.Width = 50;
-            // 
-            // D
-            // 
-            this.D.DataPropertyName = "D";
-            dataGridViewCellStyle3.Format = "N2";
-            dataGridViewCellStyle3.NullValue = "0";
-            this.D.DefaultCellStyle = dataGridViewCellStyle3;
-            this.D.HeaderText = "D";
-            this.D.Name = "D";
-            this.D.ToolTipText = "Диаметр, см";
-            this.D.Width = 30;
-            // 
-            // RodBS
-            // 
-            this.RodBS.DataSource = typeof(BSFiberConcrete.BSRod);
             // 
             // BSSectionChart
             // 
@@ -606,15 +643,15 @@
             this.tableLayoutPanelSection.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pointBS)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bSRodDataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RodBS)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numArea)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAreaRebar)).EndInit();
             this.tableLayoutButtonRods.ResumeLayout(false);
             this.tableLayoutPanelChart.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pointBS)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.RodBS)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -657,5 +694,6 @@
         private System.Windows.Forms.Button buttonClose;
         private System.Windows.Forms.Button btnCalc;
         private System.Windows.Forms.Button btnMesh;
+        private System.Windows.Forms.ImageList imageList;
     }
 }

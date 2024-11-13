@@ -165,17 +165,11 @@ namespace BSFiberConcrete.Section
                 PointsSection = BSSection.SectionPoints;
                 m_RodPoints = BSSection.RodPoints;               
             }
-            else if (m_BeamSection == BeamSection.IBeam ||                      
-                     m_BeamSection == BeamSection.LBeam)
+            else if (BSHelper.IsITL(m_BeamSection))
             {                
                 BSSection.IBeam(Sz, out PointsSection, out Origin);
                 m_RodPoints = BSSection.RodPoints;
-            }
-            else if (m_BeamSection == BeamSection.TBeam)
-            {
-                BSSection.IBeam(Sz, out PointsSection, out PointF Origin);
-                m_RodPoints = BSSection.RodPoints;
-            }
+            }            
             else if (m_BeamSection == BeamSection.Ring)
             {
                 PointsSection = new List<PointF>();
@@ -360,12 +354,35 @@ namespace BSFiberConcrete.Section
             }
         }
 
-        
+        private void InitToolTips()
+        {
+            // Установка высплывающего текста
+            System.Windows.Forms.ToolTip tlTip = new System.Windows.Forms.ToolTip();
+            
+            tlTip.AutoPopDelay = 5000;
+            tlTip.InitialDelay = 1000;
+            tlTip.ReshowDelay  = 50;
+            // Force the ToolTip text to be displayed whether or not the form is active.
+            tlTip.ShowAlways = true;
+            // Set up the ToolTip text for the Button and Checkbox.
+            tlTip.SetToolTip(this.btnDraw, "Обновить (перерисовать) сечение");
+            tlTip.SetToolTip(this.btnSaveChart, "Cохранить геометрию сечения");
+            tlTip.SetToolTip(this.btnMesh, "Сетка");
+            tlTip.SetToolTip(this.btnCalc, "Рассчитать сечение по НДМ");
+            tlTip.SetToolTip(this.buttonClose, "Закрыть форму");
+            tlTip.SetToolTip(this.btnAddRod, "Произвольное сечение");
+            tlTip.SetToolTip(this.btnDelRod, "Результаты расчета");
+            tlTip.SetToolTip(this.btnSave, "Сохранить расстановку арматуры");
+        }
+
+
         private void BSSectionChart_Load(object sender, EventArgs e)
         {
             try
             {
                 InitControls();
+
+                InitToolTips();
 
                 InitDataSource();
 
@@ -650,12 +667,15 @@ namespace BSFiberConcrete.Section
         /// сетка
         /// </summary>        
         private void btnMesh_Click(object sender, EventArgs e)
-        {            
+        {
             try
             {
                 string pathToSvgFile = GenerateMesh();
-                
-                Process.Start(new ProcessStartInfo { FileName = pathToSvgFile, UseShellExecute = true });
+
+                if (File.Exists(pathToSvgFile))
+                { 
+                    Process.Start(new ProcessStartInfo { FileName = pathToSvgFile, UseShellExecute = true });
+                }
             }
             catch (Exception _e)
             {

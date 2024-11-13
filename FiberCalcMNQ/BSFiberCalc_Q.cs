@@ -41,7 +41,7 @@ namespace BSFiberConcrete
         {
             if (m_Efforts["Qx"] != 0)
             {
-                double s_w_max, Qx_ult;
+                double s_w_max;
                 double Q_max      = Q_Ult(b, h);
                 (s_w_max, Qx_ult) = Calculate_Qcx(b, h);
                 
@@ -54,7 +54,7 @@ namespace BSFiberConcrete
 
             if (m_Efforts["Qy"] != 0)
             {
-                double s_w_max, Qy_ult;
+                double s_w_max;
                 double Q_max       = Q_Ult(h, b);
                 (s_w_max, Qy_ult)  = Calculate_Qy(h, b);
 
@@ -72,90 +72,92 @@ namespace BSFiberConcrete
        
         public override (double, double) Calculate_Qcx(double _b, double _h)
         {
-            // Растояние до цента тяжести растянутой арматуры, см
-            double a = Rebar?.a ?? 0;
-            // рабочая высота сечения по растянутой арматуре
-            double h0 = _h - a;
-            // Расчетные значения сопротивления  на сжатиие по B30 СП63
-            Rfb = R_fb();
+            return base.Calculate_Qcx(_b, _h);
+
+            //// Растояние до цента тяжести растянутой арматуры, см
+            //double a = Rebar?.a ?? 0;
+            //// рабочая высота сечения по растянутой арматуре
+            //double h0 = _h - a;
+            //// Расчетные значения сопротивления  на сжатиие по B30 СП63
+            //Rfb = R_fb();
             
-            // Расчет элементов по наклонным сечениям на действие поперечных сил
-            // Минимальная длина проекции(см)
-            double c_min = h0;
-            // Максимальная длина проекции(см)
-            double c_max = 4 * h0;
-            double dC = 1;
-            // Минимальная длина проекции для формулы
-            double c0_max = 2 * h0;
+            //// Расчет элементов по наклонным сечениям на действие поперечных сил
+            //// Минимальная длина проекции(см)
+            //double c_min = h0;
+            //// Максимальная длина проекции(см)
+            //double c_max = 4 * h0;
+            //double dC = 1;
+            //// Минимальная длина проекции для формулы
+            //double c0_max = 2 * h0;
 
-            List<double> lst_C = new List<double>();
-            InitC(ref lst_C, c_min, c_max, dC);
+            //List<double> lst_C = new List<double>();
+            //InitC(ref lst_C, c_min, c_max, dC);
 
-            // Расчетное сопротивление сталефибробетона осевому растяжению
-            double Rfbt = Rfbtn / Yft * Yb1 * Yb5;
+            //// Расчетное сопротивление сталефибробетона осевому растяжению
+            //double Rfbt = Rfbtn / Yft * Yb1 * Yb5;
 
-            // поперечная сила, воспр сталефибробетоном
-            double Qfb_i;
+            //// поперечная сила, воспр сталефибробетоном
+            //double Qfb_i;
 
-            List<double> lstQ_fb = new List<double>();
+            //List<double> lstQ_fb = new List<double>();
 
-            foreach (double _c in lst_C)
-            {
-                if (_c == 0) continue;
+            //foreach (double _c in lst_C)
+            //{
+            //    if (_c == 0) continue;
 
-                Qfb_i = 1.5d * Rfbt * _b * h0 * h0 / _c; // 6.76
+            //    Qfb_i = 1.5d * Rfbt * _b * h0 * h0 / _c; // 6.76
 
-                // условие на 0.5..2.5
-                var Qult25 = 2.5 * Rfbt * _b * h0;
-                var Qult05 = 0.5 * Rfbt * _b * h0;
+            //    // условие на 0.5..2.5
+            //    var Qult25 = 2.5 * Rfbt * _b * h0;
+            //    var Qult05 = 0.5 * Rfbt * _b * h0;
 
-                if (Qfb_i >= Qult25)
-                {
-                    Qfb_i = Qult25;
-                }
-                else if (Qfb_i <= Qult05)
-                {
-                    Qfb_i = Qult05;
-                }
+            //    if (Qfb_i >= Qult25)
+            //    {
+            //        Qfb_i = Qult25;
+            //    }
+            //    else if (Qfb_i <= Qult05)
+            //    {
+            //        Qfb_i = Qult05;
+            //    }
 
-                lstQ_fb.Add(Qfb_i);
-            }
+            //    lstQ_fb.Add(Qfb_i);
+            //}
 
-            // Qfb - максимальная поперечная сила, воспринимаемая сталефибробетоном в наклонном сечении
-            double Qfb = (lstQ_fb.Count > 0) ? lstQ_fb.Max() : 0;
+            //// Qfb - максимальная поперечная сила, воспринимаемая сталефибробетоном в наклонном сечении
+            //double Qfb = (lstQ_fb.Count > 0) ? lstQ_fb.Max() : 0;
 
-            // Максимальный шаг поперечной арматуры см
-            double s_w_max = (Qx > 0) ? Rfbt * _b * h0 * h0 / Qx : 0;
+            //// Максимальный шаг поперечной арматуры см
+            //double s_w_max = (Qx > 0) ? Rfbt * _b * h0 * h0 / Qx : 0;
             
-            // усилие в поперечной арматуре на единицу длины элемента
-            double q_sw = (Rebar.Sw_X != 0) ? Rebar.Rsw_X * Rebar.Asw_X / Rebar.Sw_X : 0; // 6.78 
+            //// усилие в поперечной арматуре на единицу длины элемента
+            //double q_sw = (Rebar.Sw_X != 0) ? Rebar.Rsw_X * Rebar.Asw_X / Rebar.Sw_X : 0; // 6.78 
 
-            // условие учета поперечной арматуры
-            if (q_sw < 0.25 * Rfbt * _b)
-                q_sw = 0;
+            //// условие учета поперечной арматуры
+            //if (q_sw < 0.25 * Rfbt * _b)
+            //    q_sw = 0;
 
-            // поперечная сила, воспринимаемая поперечной арматурой в наклонном сечении
-            double Qsw = 0;
-            List<double> lst_Qsw = new List<double>();
-            foreach (double _c in lst_C)
-            {
-                if (_c > c0_max)
-                    Qsw = 0.75 * q_sw * c0_max;
-                else
-                    Qsw = 0.75 * q_sw * _c;  // 6.77
+            //// поперечная сила, воспринимаемая поперечной арматурой в наклонном сечении
+            //double Qsw = 0;
+            //List<double> lst_Qsw = new List<double>();
+            //foreach (double _c in lst_C)
+            //{
+            //    if (_c > c0_max)
+            //        Qsw = 0.75 * q_sw * c0_max;
+            //    else
+            //        Qsw = 0.75 * q_sw * _c;  // 6.77
 
-                lst_Qsw.Add(Qsw);
-            }
+            //    lst_Qsw.Add(Qsw);
+            //}
 
-            List<double> lst_Q_ult = new List<double>();
-            for (int i = 0; i < lst_Qsw.Count; i++)
-            {
-                lst_Q_ult.Add(lstQ_fb[i] + lst_Qsw[i]);
-            }
+            //List<double> lst_Q_ult = new List<double>();
+            //for (int i = 0; i < lst_Qsw.Count; i++)
+            //{
+            //    lst_Q_ult.Add(lstQ_fb[i] + lst_Qsw[i]);
+            //}
 
-            double Qx_ult = Qfb + Qsw; // 6.75
+            //double Qx_ult = Qfb + Qsw; // 6.75
            
-            return (s_w_max, Qx_ult);
+            //return (s_w_max, Qx_ult);
         }
 
         /// <summary>
@@ -252,6 +254,25 @@ namespace BSFiberConcrete
         public BSFiberCalc_QxQy()
         {
         }
+
+        public override Dictionary<string, double> Results()
+        {
+            Dictionary<string, double> dictRes = new Dictionary<string, double>()
+            {
+                { DN(typeof(BSFiberCalc_MNQ), "Q_ult"), Q_ult },
+                { DN(typeof(BSFiberCalc_MNQ), "UtilRate_Qx"), UtilRate_Qx},
+
+
+                //{ DN(typeof(BSFiberCalc_MNQ), "Q_ult"), Q_ult },
+                //{ DN(typeof(BSFiberCalc_MNQ), "UtilRate_Qy"), UtilRate_Qy},
+
+                //{ DN(typeof(BSFiberCalc_MNQ), "Q_ult"), Q_ult },
+                //{ DN(typeof(BSFiberCalc_MNQ), "UtilRate_Q"), UtilRate_Q},                
+            };
+
+            return dictRes;
+        }
+
 
         /// <summary>
         /// 6.1.27 Расчет изгибаемых элементов по бетонной полосе между наклонными сечениями

@@ -56,7 +56,14 @@ namespace BSFiberConcrete
             m_FiberCalc = _fiberCalc;
             m_BeamSection = m_FiberCalc.BeamSectionType();            
             m_Messages = _fiberCalc.Msg;
-            m_Efforts = new Dictionary<string, double> (_fiberCalc.m_Efforts);
+            //m_Efforts = new Dictionary<string, double>(_fiberCalc.m_Efforts);
+            m_Efforts = new Dictionary<string, double>()
+            {
+                {"My,[кг*см]", _fiberCalc.m_Efforts["My"]},
+                {"N, [кг]", _fiberCalc.m_Efforts["N"]},
+                {"Qx, [кг]", _fiberCalc.m_Efforts["Qx"]}
+            };
+
             ImageCalc = _fiberCalc.ImageCalc();
 
             GetPropertiesAttr();

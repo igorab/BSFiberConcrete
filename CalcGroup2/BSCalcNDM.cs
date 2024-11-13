@@ -237,7 +237,7 @@ namespace BSFiberConcrete.CalcGroup2
             }
         }
 
-        private BeamSection m_BeamSection = BeamSection.Rect;
+        private BeamSection m_BeamSection; // = BeamSection.Rect;
 
         #region Поля, свойства  - данные для расчета
         // Продольная сила, кН, - сжатие

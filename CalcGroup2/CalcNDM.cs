@@ -61,9 +61,13 @@ namespace BSFiberConcrete
 
         private void Init()
         {
+            if (D == null) return;
+
             // для прямоугольных и тавровых сечений привязка к центу нижней грани 
-            if (BSHelper.IsRectangled(m_BeamSection)) 
-                LeftX = -D["b"] / 2.0;
+            if (BSHelper.IsRectangled(m_BeamSection))
+            {
+                LeftX = D.ContainsKey("b") ? -D["b"] / 2.0 : 0;
+            }
 
             double _qty, _area;
             
@@ -76,7 +80,7 @@ namespace BSFiberConcrete
 
             My0 = D["My"];
             Mx0 = D["Mz"];
-            N0 = D["N"];
+            N0  = D["N"];
         }
 
         ///

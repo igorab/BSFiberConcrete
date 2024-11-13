@@ -24,6 +24,7 @@ using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using TriangleNet.Topology.DCEL;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace BSFiberConcrete
 {
@@ -112,21 +113,38 @@ namespace BSFiberConcrete
         {
             InitializeComponent();
 
-            m_Beam = new Dictionary<string, double>();
-            m_Table = new DataTable();
-
+            m_Beam       = new Dictionary<string, double>();
+            m_Table      = new DataTable();
             m_BSLoadData = new BSFiberLoadData();
-            m_MatFiber = new BSMatFiber();
-
-            m_Iniv = new Dictionary<string, double>() { ["Mx"] = 0, ["My"] = 0, ["N"] = 0, ["Qx"] = 0, ["Qy"] = 0, ["eN"] = 0, ["Ml"] = 0 };
+            m_MatFiber   = new BSMatFiber();
+            m_Iniv       = new Dictionary<string, double>() { 
+                ["Mx"] = 0, ["My"] = 0, ["N"] = 0, ["Qx"] = 0, ["Qy"] = 0, ["eN"] = 0, ["Ml"] = 0 
+            };
         }
+
+        [Conditional("DEBUG")]
+        private void IsDebugCheck(ref bool isDebug)
+        {
+            isDebug = true;        
+        }
+
+        [Conditional("RELEASE")]
+        private void IsReleaseCheck(ref bool isDebug)
+        {
+            isDebug = true;
+        }
+
 
         /// <summary>
         /// Дизайн формы в зависимости от вида расчета
         /// </summary>
         private void CalcTypeShow()
         {
-            tabFiber.TabPages.Remove(tabPageOld);
+            bool isDebug = false;
+            IsDebugCheck(ref isDebug);
+
+            if (!isDebug)
+                tabFiber.TabPages.Remove(tabPageOld);
             
             if (CalcType == CalcType.Static)
             {
@@ -244,7 +262,6 @@ namespace BSFiberConcrete
             toolTip1.SetToolTip(this.btnRing, "Кольцевое сечение");
             toolTip1.SetToolTip(btnCustomSection, "Произвольное сечение");
             toolTip1.SetToolTip(btnCalcResults, "Результаты расчета");
-
         }
 
         // арматура
@@ -1020,30 +1037,29 @@ namespace BSFiberConcrete
         ///  Расчет по наклонному сечению на действие Q
         /// </summary>        
         private Dictionary<string, double> FiberCalculate_QxQy(Dictionary<string, double> _MNQ, double[] _sz)
-        {            
-            BSFiberCalc_QxQy fiberCalc = new BSFiberCalc_QxQy
-            {
-                UseRebar = true,
-                Shear = true
-            };
-
-            fiberCalc.SetFiberFromLoadData(m_BSLoadData.Fiber);
-
-            fiberCalc.MatFiber  = m_MatFiber;           
-            
-            fiberCalc.BetonType = BSQuery.BetonTypeFind(); 
-
-            // передать данные по арматуре
-            fiberCalc.Rebar     = InitRebarFromForm();             
-
+        {                        
             double[] prms = new double[9];
-            InitStrengthFactorsFromForm(prms);            
-            fiberCalc.SetParams(prms);                       
+            InitStrengthFactorsFromForm(prms);
+            Fiber fiber = new Fiber(m_BSLoadData.Fiber)
+            {
+                Ef = (double)numEfiber.Value,
+                Eb = (double)numE_beton.Value,
+                E_fbt = (double)numE_fbt.Value,
+                mu_fv = (double)numMu_fv.Value
+            };
+            var betonType = BSQuery.BetonTypeFind(comboBetonType.SelectedIndex);
+
+            BSFiberCalc_QxQy fiberCalc = new BSFiberCalc_QxQy();
+            fiberCalc.MatFiber      = m_MatFiber;
+            fiberCalc.UseRebar      = UseRebar;
+            fiberCalc.Rebar         = InitRebarFromForm();
+            fiberCalc.BetonType     = betonType;
+            fiberCalc.UnitConverter = _UnitConverter;
+            fiberCalc.SetFiberFromLoadData(fiber);
             fiberCalc.SetSize(_sz);
-            // передаем усилия и связанные с ними велечины
-            fiberCalc.SetEfforts(_MNQ);
-            // расчет на усилие вне сечения            
-            fiberCalc.N_Out = fiberCalc.h / 2.0 < fiberCalc.Get_e_tot;
+            fiberCalc.SetParams(prms);
+            fiberCalc.SetEfforts(_MNQ);            
+            fiberCalc.SetN_Out();
 
             bool calcOk = fiberCalc.Calculate();
 
@@ -1099,7 +1115,6 @@ namespace BSFiberConcrete
             var betonType = BSQuery.BetonTypeFind(comboBetonType.SelectedIndex);
 
             // проверка на модули упругости!
-
             Rebar rebar = (Rebar)m_BSLoadData.Rebar.Clone();
             InitRebarValues(ref rebar);
 
@@ -1324,7 +1339,7 @@ namespace BSFiberConcrete
                 b = beam_sizes[0];
                 h = beam_sizes[1];
             }
-            else if (_beamSection == BeamSection.IBeam)
+            else if (BSHelper.IsITL(_beamSection))
             {
                 D["bf"] = beam_sizes[0];
                 D["hf"] = beam_sizes[1];
@@ -1971,7 +1986,7 @@ namespace BSFiberConcrete
                     }
                     else if (BSHelper.IsITL(m_BeamSection))
                     {
-                        calcRes = CalcNDM(BeamSection.IBeam);
+                        calcRes = CalcNDM(m_BeamSection);
                     }
                     else if (m_BeamSection == BeamSection.Ring)
                     {

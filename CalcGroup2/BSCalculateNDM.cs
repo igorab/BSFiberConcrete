@@ -30,7 +30,7 @@ namespace BSFiberConcrete.CalcGroup2
                 n = InitRectangleSection(b, h, -b / 2.0);
                 m = InitReinforcement(-b / 2.0);
             }
-            else if (m_BeamSection == BeamSection.IBeam)
+            else if (BSHelper.IsITL(m_BeamSection))
             {
                 n = InitIBeamSection(bf, hf, bw, hw, b1f, h1f);
                 m = InitReinforcement(-b / 2.0);
@@ -250,7 +250,7 @@ namespace BSFiberConcrete.CalcGroup2
                 Dyz.Add(dyz);
 
                 denomK = Dyy[j] * Dzz[j] - Math.Pow(Dyz[j], 2);
-                if (denomK == 0)
+                if (denomK == 0 || double.IsNaN(denomK))
                 {
                     err = 1;
                     break;
