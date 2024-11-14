@@ -9,7 +9,6 @@ using BSFiberConcrete.Section;
 using BSFiberConcrete.Section.MeshSettingsOfBeamSection;
 using BSFiberConcrete.UnitsOfMeasurement;
 using BSFiberConcrete.UnitsOfMeasurement.PhysicalQuantities;
-using SQLitePCL;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,10 +19,9 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
+using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
-using TriangleNet.Topology.DCEL;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace BSFiberConcrete
@@ -147,8 +145,13 @@ namespace BSFiberConcrete
             IsDebugCheck(ref isDebug);
 
             if (!isDebug)
-                tabFiber.TabPages.Remove(tabPageOld);
-            
+            {
+                tabFiber.TabPages.Remove(tabPageAdmin);
+                btnSaveFormData.Visible = false;
+            }
+           
+            //RefreshSectionChart();
+
             if (CalcType == CalcType.Static)
             {
                 btnStaticEqCalc.Visible = true;
@@ -158,6 +161,7 @@ namespace BSFiberConcrete
                 tabFiber.TabPages.Remove(tabPageNDM);
                 tabFiber.TabPages.Remove(tabPBeam);
                 btnCustomSection.Enabled = false;
+                btnMeshSettings.Visible = false;
 
             }
             else if (CalcType == CalcType.Nonlinear)
@@ -166,9 +170,9 @@ namespace BSFiberConcrete
                 btnCalc_Deform.Visible = true;
                 gridEfforts.Columns["Mx"].Visible = true;
                 gridEfforts.Columns["Qy"].Visible = true;
-                tabFiber.TabPages.Remove(tabPBeam);
-                //tableLayoutAreaRebar.Visible = false;
+                tabFiber.TabPages.Remove(tabPBeam);                
                 btnCustomSection.Enabled = true;
+                btnMeshSettings.Visible = true;
             }
             else if (CalcType == CalcType.BeamCalc)
             {
@@ -246,25 +250,24 @@ namespace BSFiberConcrete
 
         /// <summary>
         /// подсказки
+        /// Установка высплывающего текста
         /// </summary>
         private void InitToolTips()
-        {
-            // Установка высплывающего текста
-            System.Windows.Forms.ToolTip toolTip1 = new System.Windows.Forms.ToolTip();
-            // Set up the delays for the ToolTip.
-            toolTip1.AutoPopDelay = 5000;
-            toolTip1.InitialDelay = 1000;
-            toolTip1.ReshowDelay = 50;
-            // Force the ToolTip text to be displayed whether or not the form is active.
-            toolTip1.ShowAlways = true;
-            // Set up the ToolTip text for the Button and Checkbox.
-            toolTip1.SetToolTip(this.btnRectang, "Прямоугольное сечение");
-            toolTip1.SetToolTip(this.btnTSection, "Тавровое сечение \"Верхняя полка\"");
-            toolTip1.SetToolTip(this.btnLSection, "Тавровое сечение \"Нижняя полка\"");
-            toolTip1.SetToolTip(this.btnIBeam, "Двутавровое сечение");
-            toolTip1.SetToolTip(this.btnRing, "Кольцевое сечение");
-            toolTip1.SetToolTip(btnCustomSection, "Произвольное сечение");
-            toolTip1.SetToolTip(btnCalcResults, "Результаты расчета");
+        {           
+            System.Windows.Forms.ToolTip tlTip = new System.Windows.Forms.ToolTip();            
+            tlTip.AutoPopDelay = 5000;
+            tlTip.InitialDelay = 1000;
+            tlTip.ReshowDelay = 50;            
+            tlTip.ShowAlways = true;
+            
+            tlTip.SetToolTip(this.btnRectang, "Прямоугольное сечение");
+            tlTip.SetToolTip(this.btnTSection, "Тавровое сечение \"Верхняя полка\"");
+            tlTip.SetToolTip(this.btnLSection, "Тавровое сечение \"Нижняя полка\"");
+            tlTip.SetToolTip(this.btnIBeam, "Двутавровое сечение");
+            tlTip.SetToolTip(this.btnRing, "Кольцевое сечение");
+            tlTip.SetToolTip(btnCustomSection, "Произвольное сечение");
+            tlTip.SetToolTip(btnCalcResults, "Результаты расчета");
+            tlTip.SetToolTip(btnMeshSettings, "Настройка густоты расчетной сетки");            
         }
 
         // арматура
@@ -474,9 +477,16 @@ namespace BSFiberConcrete
             }
             else if (BSHelper.IsITL(m_BeamSection))
             {
-                _w = Math.Max(sz[0], sz[4]);
+                //_w = Math.Max(sz[0], sz[4]);
+                _w = sz[2];
                 _h = sz[1] + sz[3] + sz[5];
                 _area = sz[0] * sz[1] + sz[2] * sz[3] + sz[4] * sz[5];
+            }
+            else if (m_BeamSection == BeamSection.Any)
+            {
+                _w = 0;
+                _h = 0;
+                _area = 0;
             }
             else
             {
@@ -776,10 +786,14 @@ namespace BSFiberConcrete
             dataGridSection.DataSource = m_Table;
 
             foreach (DataGridViewColumn column in dataGridSection.Columns)
-            { column.SortMode = DataGridViewColumnSortMode.NotSortable; }
+            {
+                column.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
 
             picBeton.Image = global::BSFiberConcrete.Properties.Resources.FiberBeton;
             picBeton.SizeMode = PictureBoxSizeMode.StretchImage;
+
+            RefreshSectionChart(m_BeamSection);
         }
 
         // прямоугольное сечение
@@ -793,8 +807,7 @@ namespace BSFiberConcrete
         /// </summary>
         /// <param name="_T_L">Тип полки</param>
         private void TSection(char _T_L)
-        {
-            // TODO доработать использование переменных m_BeamSection и m_BeamSectionReport
+        {            
             if (_T_L == 'T')
             {
                 m_BeamSection = BeamSection.TBeam;
@@ -818,6 +831,8 @@ namespace BSFiberConcrete
                 column.SortMode = DataGridViewColumnSortMode.NotSortable;
 
             picBeton.SizeMode = PictureBoxSizeMode.StretchImage;
+
+            RefreshSectionChart(m_BeamSection);
         }
 
         // тавровое сечение
@@ -842,8 +857,12 @@ namespace BSFiberConcrete
             dataGridSection.DataSource = m_Table;
 
             foreach (DataGridViewColumn column in dataGridSection.Columns)
-            { column.SortMode = DataGridViewColumnSortMode.NotSortable; }
+            { 
+                column.SortMode = DataGridViewColumnSortMode.NotSortable; 
+            }
             picBeton.Image = global::BSFiberConcrete.Properties.Resources.Ring;
+
+            RefreshSectionChart(m_BeamSection);
         }
 
         // двутавровое сечение
@@ -855,12 +874,15 @@ namespace BSFiberConcrete
             m_Table = FiberMainFormHelper.GetTableFromBeamSections(m_InitBeamSectionsGeometry, m_BeamSection);
             dataGridSection.DataSource = m_Table;
 
-            foreach (DataGridViewColumn column in dataGridSection.Columns) {
+            foreach (DataGridViewColumn column in dataGridSection.Columns) 
+            {
                 column.SortMode = DataGridViewColumnSortMode.NotSortable;
             }
 
             picBeton.Image = global::BSFiberConcrete.Properties.Resources.IBeam;
             picBeton.SizeMode = PictureBoxSizeMode.StretchImage;
+
+            RefreshSectionChart(m_BeamSection);
         }
 
         /// <summary>
@@ -1383,7 +1405,6 @@ namespace BSFiberConcrete
             _D["Humi"]  = cmbWetAir.SelectedIndex;
         }
 
-
         /// <summary>
         /// Сохранение Параметров, для формы BeamDiagram
         /// </summary>
@@ -1467,8 +1488,6 @@ namespace BSFiberConcrete
             return deflexionMax;
         }
 
-
-
         /// <summary>
         /// Создать картинки для отчета заглавной части отчета
         /// </summary>
@@ -1513,9 +1532,7 @@ namespace BSFiberConcrete
                 pathToPictures.Add(pathToPicture);
             }
             calcResults[0].PictureForHeaderReport = pathToPictures;
-
         }
-
 
         public void CreatePictureForBodyReport(List<BSCalcResultNDM> calcResultsNDM)
         {
@@ -1552,8 +1569,6 @@ namespace BSFiberConcrete
                     calcResNDM.PictureForBodyReport = pathToPictures;
                 }
             }
-
-
         }
 
         /// <summary>
@@ -1566,10 +1581,10 @@ namespace BSFiberConcrete
             ndmSetup.BetonTypeId = (cmbTypeMaterial.SelectedIndex == 1) ? 1 : 0;
             ndmSetup.UseRebar = checkBoxRebar.Checked;
             ndmSetup.RebarType = Convert.ToString(cmbRebarClass.SelectedItem);
-            ndmSetup.N = _beamSectionMeshSettings.NX;
-            ndmSetup.M = _beamSectionMeshSettings.NY;
-            ndmSetup.MinAngle = _beamSectionMeshSettings.MinAngle;
-            ndmSetup.MaxArea = _beamSectionMeshSettings.MaxArea;
+            ndmSetup.N = _beamSectionMeshSettings?.NX??0;
+            ndmSetup.M = _beamSectionMeshSettings?.NY??0;
+            ndmSetup.MinAngle = _beamSectionMeshSettings?.MinAngle??0;
+            ndmSetup.MaxArea = _beamSectionMeshSettings?.MaxArea??0;
 
             BSData.SaveNDMSetup(ndmSetup);
 
@@ -1579,22 +1594,11 @@ namespace BSFiberConcrete
         private NDMSetup NDMSetupInitFormValues()
         {
             NDMSetup ndmSetup = BSData.LoadNDMSetup();
-
-            // нужна ли инициализация?
-            //cmbTypeMaterial.SelectedIndex = ndmSetup.BetonTypeId;
-            //checkBoxRebar.Checked = ndmSetup.UseRebar;
-            //cmbRebarClass.SelectedItem = ndmSetup.RebarType ;
-
-            //numMeshNX.Value  = ndmSetup.N;
-            //numMeshNY.Value =  ndmSetup.M;
-            //numMinAngle.Value = (decimal) ndmSetup.MinAngle;
-            //numMaxArea.Value = (decimal) ndmSetup.MaxArea;
-
+            
             _beamSectionMeshSettings = new MeshSectionSettings(ndmSetup.N, ndmSetup.M, ndmSetup.MinAngle, ndmSetup.MaxArea);
 
             return ndmSetup;
         }
-
 
         /// <summary>
         /// Сохранить данные для формы BeamDiagram
@@ -2090,7 +2094,11 @@ namespace BSFiberConcrete
         private void btnSaveParams_Click(object sender, EventArgs e)
         {
             try
-            {                
+            {
+                NDMSetupValuesFromForm();
+
+                RefreshSectionChart(m_BeamSection);
+
                 FormParamsSaveData();
 
                 BSData.UpdateBeamSectionGeometry(m_InitBeamSectionsGeometry);                
@@ -2275,16 +2283,13 @@ namespace BSFiberConcrete
                 numYb2.Value = 0.9M;
         }
 
-        /// <summary>
-        ///  Конструктор сечений
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnSection_Click(object sender, EventArgs e)
+        private void RefreshSectionChart(BeamSection _beamSection)
         {
-            NDMSetupValuesFromForm();
+            //NDMSetupValuesFromForm();
+            m_SectionChart = new BSSectionChart(_beamSection);
+            m_SectionChart.Dock = DockStyle.Top;            
+            //m_SectionChart.m_BeamSection = _beamSection;
 
-            m_SectionChart = new BSSectionChart(m_BeamSection);            
             var sz = BeamWidtHeight(out double b, out double h, out double _area);
 
             m_SectionChart.RebarClass = cmbRebarClass.SelectedItem.ToString();
@@ -2292,12 +2297,26 @@ namespace BSFiberConcrete
             m_SectionChart.Hght = (float)h;
             m_SectionChart.Sz = sz;
             m_SectionChart.NumArea = _area;
-            m_SectionChart.a_t_Nx = (int) numN_w_X.Value;
-            m_SectionChart.ShowDialog(); //.Show();
+            m_SectionChart.a_t_Nx = (int)numN_w_X.Value;
+            //m_SectionChart.FormReload();
+            // m_SectionChart.ShowDialog(); //.Show();
+
+            panelSectionDraw.Controls.Clear();
+            panelSectionDraw.Controls.Add(m_SectionChart);
 
             m_ImageStream = m_SectionChart.GetImageStream;
         }
 
+
+        /// <summary>
+        ///  Конструктор сечений
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnSection_Click(object sender, EventArgs e)
+        {
+            RefreshSectionChart(m_BeamSection);
+        }
 
         /// <summary>
         /// По результатам расчета Создать поверхность MeshDraw с разбитыми на элементы участками
@@ -2407,14 +2426,10 @@ namespace BSFiberConcrete
             return mDraw;
         }
 
-
-
-
-
-            /// <summary>
-            /// Покрыть сечение сеткой
-            /// </summary>
-            private string GenerateMesh(ref TriangleNet.Geometry.Point _CG)
+        /// <summary>
+        /// Покрыть сечение сеткой
+        /// </summary>
+        private string GenerateMesh(ref TriangleNet.Geometry.Point _CG)
         {
             string pathToSvgFile;
             double[] sz = BeamWidtHeight(out double b, out double h, out double area);
@@ -2465,7 +2480,7 @@ namespace BSFiberConcrete
             else if (BSHelper.IsITL(m_BeamSection))
             {
                 List<PointF> pts;
-                BSSection.IBeam(sz, out pts, out PointF _center);
+                BSSection.IBeam(sz, out pts, out PointF _center, out PointF _left);
                 _CG = new TriangleNet.Geometry.Point(_center.X, _center.Y);
 
                 pathToSvgFile = BSCalcLib.Tri.CreateSectionContour(pts, BSMesh.MaxArea);
@@ -2474,7 +2489,7 @@ namespace BSFiberConcrete
             else if (m_BeamSection == BeamSection.Any)
             {
                 List<PointF> pts;
-                BSSection.IBeam(sz, out pts, out PointF _center); // TODO доработать до произвольного сечения
+                BSSection.IBeam(sz, out pts, out PointF _center, out PointF _left); // TODO доработать до произвольного сечения
                 _CG = new TriangleNet.Geometry.Point(_center.X, _center.Y);
 
                 pathToSvgFile = BSCalcLib.Tri.CreateSectionContour(pts, BSMesh.MaxArea);
@@ -2949,20 +2964,11 @@ namespace BSFiberConcrete
         private void btnCustomSection_Click(object sender, EventArgs e)
         {
             NDMSetupValuesFromForm();
-
-            BSSectionChart sectionChart = new BSSectionChart(BeamSection.Any)
-            {
-                Wdth = 0,
-                Hght = 0,
-                NumArea = 0,
-                RebarClass = cmbRebarClass.Text
-            };
-
-            sectionChart.DictCalcParams = DictCalcParams(BeamSection.Any);
-
-            sectionChart.ShowDialog();
+            m_BeamSection = BeamSection.Any;
+            RefreshSectionChart(BeamSection.Any);
+            m_SectionChart.DictCalcParams = DictCalcParams(BeamSection.Any);
+            tabFiber.SelectedTab = tabPageNDM;
         }
-
 
         /// <summary>
         /// Проверить не превышение коэффициентов использования

@@ -439,7 +439,7 @@
     <Compile Include="Report\BSReport.cs" />
     <Compile Include="Section\BSSection.cs" />
     <Compile Include="Section\BSSectionChart.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Section\BSSectionChart.Designer.cs">
       <DependentUpon>BSSectionChart.cs</DependentUpon>

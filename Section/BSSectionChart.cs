@@ -17,7 +17,7 @@ namespace BSFiberConcrete.Section
     /// <summary>
     /// Отрисовать сечение, назначить арматуру
     /// </summary>
-    public partial class BSSectionChart : Form
+    public partial class BSSectionChart : UserControl
     {
         public List<PointF> RodPoints
         {
@@ -27,7 +27,7 @@ namespace BSFiberConcrete.Section
 
         const string UserSection = "UserSection";
         public Dictionary<string, double> DictCalcParams { private get; set;}
-        public BeamSection m_BeamSection { get; private set; }
+        public BeamSection m_BeamSection { get; set; }
                 
         /// <summary>
         /// Класс используемой арматуры
@@ -167,7 +167,7 @@ namespace BSFiberConcrete.Section
             }
             else if (BSHelper.IsITL(m_BeamSection))
             {                
-                BSSection.IBeam(Sz, out PointsSection, out Origin);
+                BSSection.IBeam(Sz, out PointsSection, out PointF _Center,  out Origin);
                 m_RodPoints = BSSection.RodPoints;
             }            
             else if (m_BeamSection == BeamSection.Ring)
@@ -368,15 +368,13 @@ namespace BSFiberConcrete.Section
             tlTip.SetToolTip(this.btnDraw, "Обновить (перерисовать) сечение");
             tlTip.SetToolTip(this.btnSaveChart, "Cохранить геометрию сечения");
             tlTip.SetToolTip(this.btnMesh, "Сетка");
-            tlTip.SetToolTip(this.btnCalc, "Рассчитать сечение по НДМ");
-            tlTip.SetToolTip(this.buttonClose, "Закрыть форму");
+            tlTip.SetToolTip(this.btnCalc, "Рассчитать сечение по НДМ");            
             tlTip.SetToolTip(this.btnAddRod, "Произвольное сечение");
             tlTip.SetToolTip(this.btnDelRod, "Результаты расчета");
             tlTip.SetToolTip(this.btnSave, "Сохранить расстановку арматуры");
         }
 
-
-        private void BSSectionChart_Load(object sender, EventArgs e)
+        public void FormReload()
         {
             try
             {
@@ -387,7 +385,7 @@ namespace BSFiberConcrete.Section
                 InitDataSource();
 
                 DrawFromDatasource();
-               
+
             }
             catch (Exception _e)
             {
@@ -395,8 +393,16 @@ namespace BSFiberConcrete.Section
             }
         }
 
+
+        private void BSSectionChart_Load(object sender, EventArgs e)
+        {
+            FormReload();
+        }
+
         private void InitControls()
         {
+            //chart.
+
             if (m_BeamSection == BeamSection.Any)
             {
                 dataGrid.Enabled = true;
@@ -553,9 +559,8 @@ namespace BSFiberConcrete.Section
                 }
 
                 // TODO доделать
-                List<NdmSection> bsSec = new List<NdmSection>();
-
-                BindingList<BSPoint> p =(BindingList<BSPoint>)pointBS.List;
+                List<NdmSection>     bsSec = new List<NdmSection>();
+                BindingList<BSPoint> p = (BindingList<BSPoint>)pointBS.List;
 
                 int idxN = 0;
                 foreach (var pt in p)
@@ -578,7 +583,7 @@ namespace BSFiberConcrete.Section
 
         private void buttonClose_Click(object sender, EventArgs e)
         {
-            Close();
+            // Close();
         }
 
         /// <summary>
@@ -682,6 +687,5 @@ namespace BSFiberConcrete.Section
                 MessageBox.Show(_e.Message);
             }
         }
-        
     }
 }
