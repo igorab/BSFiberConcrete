@@ -32,9 +32,6 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
 
             InitializeComponent();
             
-            // устанавливаем привязку полей
-
-
             lab_Rb.DataBindings.Add(new Binding("Text", _model.Beton, "Rb", true, DataSourceUpdateMode.OnPropertyChanged));
             lab_Rb_ser.DataBindings.Add(new Binding("Text", _model.Beton, "Rb_ser", true, DataSourceUpdateMode.OnPropertyChanged));
             lab_Rbt.DataBindings.Add(new Binding("Text", _model.Beton, "Rbt", true, DataSourceUpdateMode.OnPropertyChanged));

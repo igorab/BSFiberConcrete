@@ -15,6 +15,8 @@ namespace BSFiberConcrete.BSRFib
 {
     public class BSRFibLabReport
     {
+
+        private const int bk = 800, bv = 200;
         public MemoryStream ChartImage { get; set; }
         
         public Dictionary<string, double> LabResults { get; set; }
@@ -86,7 +88,7 @@ namespace BSFiberConcrete.BSRFib
 
             w.WriteLine(@"<style>
                td{
-                    border: solid 1px silver;
+                    <!--border: solid 1px silver;-->
                     text-align: left;
                 }
                 </style>");
@@ -109,9 +111,10 @@ namespace BSFiberConcrete.BSRFib
                 foreach (var _pair in InputData)
                 {
                     w.WriteLine("<tr>");
-                    w.WriteLine($"<td><b>{_pair.Key}</b></td>");
-                    w.WriteLine($"<td> {_pair.Value}</td>");
+                    w.WriteLine($"<td width={bk}><b>{_pair.Key}</b></td>");
+                    w.WriteLine($"<td width={bv}> {_pair.Value}</td>");
                     w.WriteLine("</tr>");
+
                 }
                 w.WriteLine("</tr>");
                 w.WriteLine("</Table>");
@@ -126,8 +129,8 @@ namespace BSFiberConcrete.BSRFib
                 foreach (var _pair in LabResults)
                 {
                     w.WriteLine("<tr>");
-                    w.WriteLine($"<td><b>{_pair.Key}</b></td>");
-                    w.WriteLine($"<td> {_pair.Value}</td>");
+                    w.WriteLine($"<td width={bk}><b>{_pair.Key}</b></td>");
+                    w.WriteLine($"<td width={bv}> {_pair.Value}</td>");
                     w.WriteLine("</tr>");
                 }
 
@@ -144,8 +147,8 @@ namespace BSFiberConcrete.BSRFib
                 foreach (var _pair in LabItems)
                 {
                     w.WriteLine("<tr>");
-                    w.WriteLine($"<td><b>{_pair.Key}</b></td>");
-                    w.WriteLine($"<td> {_pair.Value}</td>");
+                    w.WriteLine($"<td width={bk}><b>{_pair.Key}</b></td>");
+                    w.WriteLine($"<td width={bv}> {_pair.Value}</td>");
                     w.WriteLine("</tr>");
                 }
 
@@ -167,8 +170,8 @@ namespace BSFiberConcrete.BSRFib
                 foreach (FaF pair in ChartData)
                 {
                     w.WriteLine("<tr>");
-                    w.WriteLine($"<td><b>{pair.F }</b></td>");
-                    w.WriteLine($"<td colspan=2> {pair.aF} </td>");
+                    w.WriteLine($"<td width={bk}><b>{pair.F }</b></td>");
+                    w.WriteLine($"<td width={bv} colspan=2> {pair.aF} </td>");
                     w.WriteLine("</tr>");
                 }
                 w.WriteLine("</Table>");
