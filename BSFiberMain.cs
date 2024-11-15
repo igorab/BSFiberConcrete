@@ -163,6 +163,13 @@ namespace BSFiberConcrete
                 btnCustomSection.Enabled = false;
                 btnMeshSettings.Visible = false;
 
+                labelCalculation.Text = BSFiberLib.TxtStaticEqCalc;
+                tableLayoutPanelLRebar.Visible = true;
+
+                num_s_w_Y.Enabled = false;
+                cmbDw_Y.Enabled = false;
+                numN_w_Y.Enabled = false;
+
             }
             else if (CalcType == CalcType.Nonlinear)
             {
@@ -173,6 +180,9 @@ namespace BSFiberConcrete
                 tabFiber.TabPages.Remove(tabPBeam);                
                 btnCustomSection.Enabled = true;
                 btnMeshSettings.Visible = true;
+
+                labelCalculation.Text = BSFiberLib.TxtCalc_Deform;
+                tableLayoutPanelLRebar.Visible = false;
             }
             else if (CalcType == CalcType.BeamCalc)
             {
@@ -267,7 +277,9 @@ namespace BSFiberConcrete
             tlTip.SetToolTip(this.btnRing, "Кольцевое сечение");
             tlTip.SetToolTip(btnCustomSection, "Произвольное сечение");
             tlTip.SetToolTip(btnCalcResults, "Результаты расчета");
-            tlTip.SetToolTip(btnMeshSettings, "Настройка густоты расчетной сетки");            
+            tlTip.SetToolTip(btnMeshSettings, "Настройка густоты расчетной сетки");
+            tlTip.SetToolTip(this.btnStaticEqCalc, BSFiberLib.TxtStaticEqCalc);
+            tlTip.SetToolTip(this.btnCalc_Deform, BSFiberLib.TxtCalc_Deform);
         }
 
         // арматура
@@ -365,9 +377,7 @@ namespace BSFiberConcrete
                 FiberConcrete    = BSData.LoadFiberConcreteTable();
 
                 dataGridSection.DataSource = m_Table;   
-                
-                flowLayoutPanelRebar.Enabled = true;
-
+                                
                 DefaultMaterialParameters();
 
                 cmbDeformDiagram.SelectedIndex = (int)DeformDiagramType.D3Linear;
@@ -1927,7 +1937,7 @@ namespace BSFiberConcrete
 
             if (m_SectionChart == null || m_SectionChart.m_BeamSection != m_BeamSection)
             {            
-                message += "Нажмите кнопку Сечение и задайте диаметры и расстановку стержней арматуры.\n";
+                message += "Перейдите на закладку Сечение и задайте диаметры и расстановку стержней арматуры.\n";
             }
 
             if (_lstD.Count == 0)
@@ -2274,9 +2284,7 @@ namespace BSFiberConcrete
         }
 
         private void checkBoxRebar_CheckedChanged(object sender, EventArgs e)
-        {
-            flowLayoutPanelRebar.Enabled = (checkBoxRebar.Checked == true);
-
+        {            
             if (checkBoxRebar.Checked)
                 numYb2.Value = 1.0M;
             else
@@ -2285,6 +2293,8 @@ namespace BSFiberConcrete
 
         private void RefreshSectionChart(BeamSection _beamSection)
         {
+            if (CalcType == CalcType.Static) return;
+
             //NDMSetupValuesFromForm();
             m_SectionChart = new BSSectionChart(_beamSection);
             m_SectionChart.Dock = DockStyle.Top;            
@@ -3136,6 +3146,20 @@ namespace BSFiberConcrete
         {
             MeshSettingsView meshSettings = new MeshSettingsView(_beamSectionMeshSettings);
             meshSettings.ShowDialog();
+        }
+
+        private void num_s_w_X_ValueChanged(object sender, EventArgs e)
+        {            
+        }
+
+        private void numEsw_X_ValueChanged(object sender, EventArgs e)
+        {
+            labelEswMPa.Text = string.Format("{0} МПа ", BSHelper.Kgsm2MPa((double)numEsw_X.Value));
+        }
+
+        private void tabRebar_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

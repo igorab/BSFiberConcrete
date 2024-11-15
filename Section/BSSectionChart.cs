@@ -371,7 +371,7 @@ namespace BSFiberConcrete.Section
             tlTip.SetToolTip(this.btnCalc, "Рассчитать сечение по НДМ");            
             tlTip.SetToolTip(this.btnAddRod, "Произвольное сечение");
             tlTip.SetToolTip(this.btnDelRod, "Результаты расчета");
-            tlTip.SetToolTip(this.btnSave, "Сохранить расстановку арматуры");
+            tlTip.SetToolTip(this.btnSave, "Сохранить расстановку арматуры");            
         }
 
         public void FormReload()
@@ -508,7 +508,7 @@ namespace BSFiberConcrete.Section
 
         private void labelRods_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Задайте привязку арматуры - укажите координаты стержней");
+            MessageBox.Show("Задайте привязку продольной арматуры - укажите координаты стержней");
         }
 
         /// <summary>

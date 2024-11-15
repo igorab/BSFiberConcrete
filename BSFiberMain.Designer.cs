@@ -30,11 +30,11 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BSFiberMain));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabFiber = new System.Windows.Forms.TabControl();
             this.tabParams = new System.Windows.Forms.TabPage();
             this.groupVar = new System.Windows.Forms.GroupBox();
@@ -144,27 +144,40 @@
             this.btnEffortsAddRow = new System.Windows.Forms.Button();
             this.btnEffortsRefresh = new System.Windows.Forms.Button();
             this.tabRebar = new System.Windows.Forms.TabPage();
-            this.flowLayoutPanelRebar = new System.Windows.Forms.FlowLayoutPanel();
-            this.tableLayoutPanelRebar = new System.Windows.Forms.TableLayoutPanel();
-            this.cmbRebarSquare = new System.Windows.Forms.ComboBox();
-            this.cmbRebarDiameters = new System.Windows.Forms.ComboBox();
-            this.num_a1 = new System.Windows.Forms.NumericUpDown();
-            this.num_a = new System.Windows.Forms.NumericUpDown();
+            this.tableLayoutPanelTRebar = new System.Windows.Forms.TableLayoutPanel();
             this.labelN_w_X = new System.Windows.Forms.Label();
-            this.labelRebarClass = new System.Windows.Forms.Label();
-            this.numAs1 = new System.Windows.Forms.NumericUpDown();
+            this.labelD_w_X = new System.Windows.Forms.Label();
+            this.cmbDw_X = new System.Windows.Forms.ComboBox();
+            this.label_s_w = new System.Windows.Forms.Label();
+            this.label_s_w_Y = new System.Windows.Forms.Label();
+            this.num_s_w_Y = new System.Windows.Forms.NumericUpDown();
+            this.labelD_w_Y = new System.Windows.Forms.Label();
+            this.cmbDw_Y = new System.Windows.Forms.ComboBox();
+            this.labelN_w_Y = new System.Windows.Forms.Label();
+            this.numN_w_Y = new System.Windows.Forms.NumericUpDown();
+            this.numN_w_X = new System.Windows.Forms.NumericUpDown();
+            this.num_s_w_X = new System.Windows.Forms.NumericUpDown();
+            this.tableLayoutPanelLRebar = new System.Windows.Forms.TableLayoutPanel();
+            this.cmbRebarSquare = new System.Windows.Forms.ComboBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.cmbRebarDiameters = new System.Windows.Forms.ComboBox();
             this.numAs = new System.Windows.Forms.NumericUpDown();
-            this.label19 = new System.Windows.Forms.Label();
-            this.cmbRebarClass = new System.Windows.Forms.ComboBox();
-            this.label22 = new System.Windows.Forms.Label();
+            this.num_a1 = new System.Windows.Forms.NumericUpDown();
             this.label24 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.labelRs = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
+            this.num_a = new System.Windows.Forms.NumericUpDown();
+            this.label22 = new System.Windows.Forms.Label();
+            this.numAs1 = new System.Windows.Forms.NumericUpDown();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.labelRebarStaticCalc = new System.Windows.Forms.Label();
+            this.tableLayoutPanelRebar = new System.Windows.Forms.TableLayoutPanel();
+            this.labelRebarClass = new System.Windows.Forms.Label();
+            this.cmbRebarClass = new System.Windows.Forms.ComboBox();
+            this.labelRs = new System.Windows.Forms.Label();
             this.numRs = new System.Windows.Forms.NumericUpDown();
             this.labelRsMPa = new System.Windows.Forms.Label();
             this.labelEsw = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
             this.numEsw_X = new System.Windows.Forms.NumericUpDown();
             this.labelRsw = new System.Windows.Forms.Label();
             this.numRsw_X = new System.Windows.Forms.NumericUpDown();
@@ -183,25 +196,14 @@
             this.numRsn = new System.Windows.Forms.NumericUpDown();
             this.numRscn = new System.Windows.Forms.NumericUpDown();
             this.label26 = new System.Windows.Forms.Label();
-            this.label_s_w = new System.Windows.Forms.Label();
-            this.num_s_w_X = new System.Windows.Forms.NumericUpDown();
             this.label25 = new System.Windows.Forms.Label();
             this.cmbTRebarClass_Y = new System.Windows.Forms.ComboBox();
-            this.label_s_w_Y = new System.Windows.Forms.Label();
-            this.num_s_w_Y = new System.Windows.Forms.NumericUpDown();
             this.numRsw_Y = new System.Windows.Forms.NumericUpDown();
             this.numEsw_Y = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.labelN_w_Y = new System.Windows.Forms.Label();
-            this.numN_w_Y = new System.Windows.Forms.NumericUpDown();
-            this.labelD_w_X = new System.Windows.Forms.Label();
-            this.numN_w_X = new System.Windows.Forms.NumericUpDown();
-            this.labelD_w_Y = new System.Windows.Forms.Label();
-            this.cmbDw_X = new System.Windows.Forms.ComboBox();
-            this.cmbDw_Y = new System.Windows.Forms.ComboBox();
             this.label2gr = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
+            this.labelRebarClasses = new System.Windows.Forms.Label();
             this.tabPageNDM = new System.Windows.Forms.TabPage();
             this.panelSectionDraw = new System.Windows.Forms.Panel();
             this.tabPBeam = new System.Windows.Forms.TabPage();
@@ -254,6 +256,7 @@
             this.btnLSection = new System.Windows.Forms.Button();
             this.btnCustomSection = new System.Windows.Forms.Button();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.labelTRebarX = new System.Windows.Forms.Label();
             this.tabFiber.SuspendLayout();
             this.tabParams.SuspendLayout();
             this.groupVar.SuspendLayout();
@@ -292,12 +295,17 @@
             ((System.ComponentModel.ISupportInitialize)(this.num_Ml1_M1)).BeginInit();
             this.panel1.SuspendLayout();
             this.tabRebar.SuspendLayout();
-            this.flowLayoutPanelRebar.SuspendLayout();
-            this.tableLayoutPanelRebar.SuspendLayout();
+            this.tableLayoutPanelTRebar.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.num_s_w_Y)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numN_w_Y)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numN_w_X)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.num_s_w_X)).BeginInit();
+            this.tableLayoutPanelLRebar.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numAs)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_a1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_a)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAs1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numAs)).BeginInit();
+            this.tableLayoutPanelRebar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numRs)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numEsw_X)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numRsw_X)).BeginInit();
@@ -305,12 +313,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numRsc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numRsn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numRscn)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.num_s_w_X)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.num_s_w_Y)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numRsw_Y)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numEsw_Y)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numN_w_Y)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numN_w_X)).BeginInit();
             this.tabPageNDM.SuspendLayout();
             this.tabPageAdmin.SuspendLayout();
             this.tableLayoutMesh.SuspendLayout();
@@ -597,7 +601,7 @@
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 38.94231F));
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 113F));
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 116F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 101F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 105F));
             this.tableLayoutPanel6.Controls.Add(this.labelWetAir, 2, 0);
             this.tableLayoutPanel6.Controls.Add(this.cmbWetAir, 3, 0);
             this.tableLayoutPanel6.Controls.Add(this.lblBetonClass, 0, 0);
@@ -626,7 +630,7 @@
             // 
             this.labelWetAir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.labelWetAir.AutoSize = true;
-            this.labelWetAir.Location = new System.Drawing.Point(407, 10);
+            this.labelWetAir.Location = new System.Drawing.Point(403, 10);
             this.labelWetAir.Name = "labelWetAir";
             this.labelWetAir.Size = new System.Drawing.Size(107, 26);
             this.labelWetAir.TabIndex = 20;
@@ -642,7 +646,7 @@
             "40-75",
             "Ниже 40",
             "Не учитывать"});
-            this.cmbWetAir.Location = new System.Drawing.Point(520, 12);
+            this.cmbWetAir.Location = new System.Drawing.Point(516, 12);
             this.cmbWetAir.Name = "cmbWetAir";
             this.cmbWetAir.Size = new System.Drawing.Size(110, 21);
             this.cmbWetAir.TabIndex = 21;
@@ -654,7 +658,7 @@
             this.lblBetonClass.AutoSize = true;
             this.lblBetonClass.Location = new System.Drawing.Point(3, 10);
             this.lblBetonClass.Name = "lblBetonClass";
-            this.lblBetonClass.Size = new System.Drawing.Size(241, 26);
+            this.lblBetonClass.Size = new System.Drawing.Size(238, 26);
             this.lblBetonClass.TabIndex = 3;
             this.lblBetonClass.Text = "Класс фибробетона (ост сопротивление), Bft3,n";
             // 
@@ -663,9 +667,9 @@
             this.cmbBetonClass.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbBetonClass.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBetonClass.FormattingEnabled = true;
-            this.cmbBetonClass.Location = new System.Drawing.Point(250, 12);
+            this.cmbBetonClass.Location = new System.Drawing.Point(247, 12);
             this.cmbBetonClass.Name = "cmbBetonClass";
-            this.cmbBetonClass.Size = new System.Drawing.Size(151, 21);
+            this.cmbBetonClass.Size = new System.Drawing.Size(150, 21);
             this.cmbBetonClass.TabIndex = 4;
             this.cmbBetonClass.SelectedIndexChanged += new System.EventHandler(this.cmbBetonClass_SelectedIndexChanged);
             // 
@@ -674,9 +678,9 @@
             this.cmbBftn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbBftn.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBftn.FormattingEnabled = true;
-            this.cmbBftn.Location = new System.Drawing.Point(250, 58);
+            this.cmbBftn.Location = new System.Drawing.Point(247, 58);
             this.cmbBftn.Name = "cmbBftn";
-            this.cmbBftn.Size = new System.Drawing.Size(151, 21);
+            this.cmbBftn.Size = new System.Drawing.Size(150, 21);
             this.cmbBftn.TabIndex = 9;
             this.cmbBftn.SelectedIndexChanged += new System.EventHandler(this.cmbBftn_SelectedIndexChanged);
             // 
@@ -686,7 +690,7 @@
             this.labelBftn.AutoSize = true;
             this.labelBftn.Location = new System.Drawing.Point(3, 62);
             this.labelBftn.Name = "labelBftn";
-            this.labelBftn.Size = new System.Drawing.Size(241, 13);
+            this.labelBftn.Size = new System.Drawing.Size(238, 13);
             this.labelBftn.TabIndex = 4;
             this.labelBftn.Text = "Класс фибробетона (растяжение) Bft,n";
             // 
@@ -696,7 +700,7 @@
             this.labelBfn.AutoSize = true;
             this.labelBfn.Location = new System.Drawing.Point(3, 109);
             this.labelBfn.Name = "labelBfn";
-            this.labelBfn.Size = new System.Drawing.Size(241, 13);
+            this.labelBfn.Size = new System.Drawing.Size(238, 13);
             this.labelBfn.TabIndex = 5;
             this.labelBfn.Text = "Класс фибробетона (cжатие), Bf,n";
             // 
@@ -705,9 +709,9 @@
             this.cmbBfn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbBfn.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBfn.FormattingEnabled = true;
-            this.cmbBfn.Location = new System.Drawing.Point(250, 105);
+            this.cmbBfn.Location = new System.Drawing.Point(247, 105);
             this.cmbBfn.Name = "cmbBfn";
-            this.cmbBfn.Size = new System.Drawing.Size(151, 21);
+            this.cmbBfn.Size = new System.Drawing.Size(150, 21);
             this.cmbBfn.TabIndex = 8;
             this.cmbBfn.SelectedIndexChanged += new System.EventHandler(this.cmbBfn_SelectedIndexChanged);
             // 
@@ -715,7 +719,7 @@
             // 
             this.lbE_beton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.lbE_beton.AutoSize = true;
-            this.lbE_beton.Location = new System.Drawing.Point(407, 109);
+            this.lbE_beton.Location = new System.Drawing.Point(403, 109);
             this.lbE_beton.Name = "lbE_beton";
             this.lbE_beton.Size = new System.Drawing.Size(107, 13);
             this.lbE_beton.TabIndex = 12;
@@ -726,7 +730,7 @@
             this.numE_beton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.numE_beton.DecimalPlaces = 4;
             this.numE_beton.Enabled = false;
-            this.numE_beton.Location = new System.Drawing.Point(520, 106);
+            this.numE_beton.Location = new System.Drawing.Point(516, 106);
             this.numE_beton.Maximum = new decimal(new int[] {
             1316134912,
             2328,
@@ -747,7 +751,7 @@
             this.numE_fbt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.numE_fbt.DecimalPlaces = 4;
             this.numE_fbt.Enabled = false;
-            this.numE_fbt.Location = new System.Drawing.Point(520, 59);
+            this.numE_fbt.Location = new System.Drawing.Point(516, 59);
             this.numE_fbt.Maximum = new decimal(new int[] {
             1316134912,
             2328,
@@ -772,7 +776,7 @@
             // 
             this.lbE_fbt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.lbE_fbt.AutoSize = true;
-            this.lbE_fbt.Location = new System.Drawing.Point(407, 62);
+            this.lbE_fbt.Location = new System.Drawing.Point(403, 62);
             this.lbE_fbt.Name = "lbE_fbt";
             this.lbE_fbt.Size = new System.Drawing.Size(107, 13);
             this.lbE_fbt.TabIndex = 10;
@@ -784,7 +788,7 @@
             this.lbE_beton_info.AutoSize = true;
             this.lbE_beton_info.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lbE_beton_info.ForeColor = System.Drawing.SystemColors.MenuHighlight;
-            this.lbE_beton_info.Location = new System.Drawing.Point(636, 109);
+            this.lbE_beton_info.Location = new System.Drawing.Point(632, 109);
             this.lbE_beton_info.Name = "lbE_beton_info";
             this.lbE_beton_info.Size = new System.Drawing.Size(13, 13);
             this.lbE_beton_info.TabIndex = 14;
@@ -798,7 +802,7 @@
             this.lbE_fb_info.AutoSize = true;
             this.lbE_fb_info.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lbE_fb_info.ForeColor = System.Drawing.SystemColors.MenuHighlight;
-            this.lbE_fb_info.Location = new System.Drawing.Point(636, 62);
+            this.lbE_fb_info.Location = new System.Drawing.Point(632, 62);
             this.lbE_fb_info.Name = "lbE_fb_info";
             this.lbE_fb_info.Size = new System.Drawing.Size(13, 13);
             this.lbE_fb_info.TabIndex = 15;
@@ -815,7 +819,7 @@
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 17.67956F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 133F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 71F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 107F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 111F));
             this.tableLayoutPanel4.Controls.Add(this.numRfbt3n, 2, 0);
             this.tableLayoutPanel4.Controls.Add(this.labelRfbt3n, 1, 0);
             this.tableLayoutPanel4.Controls.Add(this.labelRfbt2n, 1, 1);
@@ -847,7 +851,7 @@
             this.numRfbt3n.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.numRfbt3n.DecimalPlaces = 2;
             this.numRfbt3n.Enabled = false;
-            this.numRfbt3n.Location = new System.Drawing.Point(429, 10);
+            this.numRfbt3n.Location = new System.Drawing.Point(425, 10);
             this.numRfbt3n.Maximum = new decimal(new int[] {
             1000000000,
             0,
@@ -867,7 +871,7 @@
             // 
             this.labelRfbt3n.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelRfbt3n.AutoSize = true;
-            this.labelRfbt3n.Location = new System.Drawing.Point(354, 13);
+            this.labelRfbt3n.Location = new System.Drawing.Point(351, 13);
             this.labelRfbt3n.Name = "labelRfbt3n";
             this.labelRfbt3n.Size = new System.Drawing.Size(45, 13);
             this.labelRfbt3n.TabIndex = 3;
@@ -877,7 +881,7 @@
             // 
             this.labelRfbt2n.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelRfbt2n.AutoSize = true;
-            this.labelRfbt2n.Location = new System.Drawing.Point(354, 53);
+            this.labelRfbt2n.Location = new System.Drawing.Point(351, 53);
             this.labelRfbt2n.Name = "labelRfbt2n";
             this.labelRfbt2n.Size = new System.Drawing.Size(45, 13);
             this.labelRfbt2n.TabIndex = 15;
@@ -888,7 +892,7 @@
             this.numRfbt2n.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.numRfbt2n.DecimalPlaces = 2;
             this.numRfbt2n.Enabled = false;
-            this.numRfbt2n.Location = new System.Drawing.Point(429, 50);
+            this.numRfbt2n.Location = new System.Drawing.Point(425, 50);
             this.numRfbt2n.Maximum = new decimal(new int[] {
             1000000000,
             0,
@@ -908,7 +912,7 @@
             // 
             this.labelRfbt3nMPa.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelRfbt3nMPa.AutoSize = true;
-            this.labelRfbt3nMPa.Location = new System.Drawing.Point(597, 13);
+            this.labelRfbt3nMPa.Location = new System.Drawing.Point(593, 13);
             this.labelRfbt3nMPa.Name = "labelRfbt3nMPa";
             this.labelRfbt3nMPa.Size = new System.Drawing.Size(30, 13);
             this.labelRfbt3nMPa.TabIndex = 17;
@@ -918,7 +922,7 @@
             // 
             this.labelRfbt2nMPa.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelRfbt2nMPa.AutoSize = true;
-            this.labelRfbt2nMPa.Location = new System.Drawing.Point(597, 53);
+            this.labelRfbt2nMPa.Location = new System.Drawing.Point(593, 53);
             this.labelRfbt2nMPa.Name = "labelRfbt2nMPa";
             this.labelRfbt2nMPa.Size = new System.Drawing.Size(30, 13);
             this.labelRfbt2nMPa.TabIndex = 18;
@@ -930,7 +934,7 @@
             this.labelRfbt2nDescr.AutoSize = true;
             this.labelRfbt2nDescr.Location = new System.Drawing.Point(3, 47);
             this.labelRfbt2nDescr.Name = "labelRfbt2nDescr";
-            this.labelRfbt2nDescr.Size = new System.Drawing.Size(345, 26);
+            this.labelRfbt2nDescr.Size = new System.Drawing.Size(342, 26);
             this.labelRfbt2nDescr.TabIndex = 14;
             this.labelRfbt2nDescr.Text = "Нормативное остаточное сопротивление осевому растяжению, кг/см2";
             // 
@@ -940,7 +944,7 @@
             this.labelRfbt3nDescr.AutoSize = true;
             this.labelRfbt3nDescr.Location = new System.Drawing.Point(3, 7);
             this.labelRfbt3nDescr.Name = "labelRfbt3nDescr";
-            this.labelRfbt3nDescr.Size = new System.Drawing.Size(345, 26);
+            this.labelRfbt3nDescr.Size = new System.Drawing.Size(342, 26);
             this.labelRfbt3nDescr.TabIndex = 5;
             this.labelRfbt3nDescr.Text = "Нормативное остаточное сопротивление осевому растяжению, кг/см2";
             // 
@@ -950,7 +954,7 @@
             this.label23.AutoSize = true;
             this.label23.Location = new System.Drawing.Point(3, 93);
             this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(345, 13);
+            this.label23.Size = new System.Drawing.Size(342, 13);
             this.label23.TabIndex = 13;
             this.label23.Text = "Нормативное значение сопротивления растяжению, кг/см2";
             // 
@@ -958,7 +962,7 @@
             // 
             this.labelRfbn.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelRfbn.AutoSize = true;
-            this.labelRfbn.Location = new System.Drawing.Point(354, 134);
+            this.labelRfbn.Location = new System.Drawing.Point(351, 134);
             this.labelRfbn.Name = "labelRfbn";
             this.labelRfbn.Size = new System.Drawing.Size(36, 13);
             this.labelRfbn.TabIndex = 2;
@@ -968,7 +972,7 @@
             // 
             this.labelRfbtn.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelRfbtn.AutoSize = true;
-            this.labelRfbtn.Location = new System.Drawing.Point(354, 93);
+            this.labelRfbtn.Location = new System.Drawing.Point(351, 93);
             this.labelRfbtn.Name = "labelRfbtn";
             this.labelRfbtn.Size = new System.Drawing.Size(39, 13);
             this.labelRfbtn.TabIndex = 11;
@@ -979,7 +983,7 @@
             this.numRfbt_n.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.numRfbt_n.DecimalPlaces = 2;
             this.numRfbt_n.Enabled = false;
-            this.numRfbt_n.Location = new System.Drawing.Point(429, 90);
+            this.numRfbt_n.Location = new System.Drawing.Point(425, 90);
             this.numRfbt_n.Maximum = new decimal(new int[] {
             1000000000,
             0,
@@ -1001,7 +1005,7 @@
             this.label10.AutoSize = true;
             this.label10.Location = new System.Drawing.Point(3, 134);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(345, 13);
+            this.label10.Size = new System.Drawing.Size(342, 13);
             this.label10.TabIndex = 4;
             this.label10.Text = "Нормативное значение сопротивления  на сжатие, кг/см2";
             // 
@@ -1010,7 +1014,7 @@
             this.numRfb_n.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.numRfb_n.DecimalPlaces = 2;
             this.numRfb_n.Enabled = false;
-            this.numRfb_n.Location = new System.Drawing.Point(429, 131);
+            this.numRfb_n.Location = new System.Drawing.Point(425, 131);
             this.numRfb_n.Maximum = new decimal(new int[] {
             1000000000,
             0,
@@ -1030,7 +1034,7 @@
             // 
             this.labelRfbnMPa.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelRfbnMPa.AutoSize = true;
-            this.labelRfbnMPa.Location = new System.Drawing.Point(597, 134);
+            this.labelRfbnMPa.Location = new System.Drawing.Point(593, 134);
             this.labelRfbnMPa.Name = "labelRfbnMPa";
             this.labelRfbnMPa.Size = new System.Drawing.Size(30, 13);
             this.labelRfbnMPa.TabIndex = 19;
@@ -1040,7 +1044,7 @@
             // 
             this.labelRfbtnMPa.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelRfbtnMPa.AutoSize = true;
-            this.labelRfbtnMPa.Location = new System.Drawing.Point(597, 93);
+            this.labelRfbtnMPa.Location = new System.Drawing.Point(593, 93);
             this.labelRfbtnMPa.Name = "labelRfbtnMPa";
             this.labelRfbtnMPa.Size = new System.Drawing.Size(30, 13);
             this.labelRfbtnMPa.TabIndex = 20;
@@ -1057,7 +1061,7 @@
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 128F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 57F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 113F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 102F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 106F));
             this.tableLayoutPanel5.Controls.Add(this.numMu_fv, 7, 0);
             this.tableLayoutPanel5.Controls.Add(this.labelMu_fv, 6, 0);
             this.tableLayoutPanel5.Controls.Add(this.numEfiber, 5, 0);
@@ -1078,7 +1082,7 @@
             // 
             this.numMu_fv.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numMu_fv.DecimalPlaces = 4;
-            this.numMu_fv.Location = new System.Drawing.Point(522, 6);
+            this.numMu_fv.Location = new System.Drawing.Point(518, 6);
             this.numMu_fv.Maximum = new decimal(new int[] {
             -1530494976,
             232830,
@@ -1103,7 +1107,7 @@
             // 
             this.labelMu_fv.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelMu_fv.AutoSize = true;
-            this.labelMu_fv.Location = new System.Drawing.Point(491, 10);
+            this.labelMu_fv.Location = new System.Drawing.Point(487, 10);
             this.labelMu_fv.Name = "labelMu_fv";
             this.labelMu_fv.Size = new System.Drawing.Size(25, 13);
             this.labelMu_fv.TabIndex = 9;
@@ -1113,7 +1117,7 @@
             // 
             this.numEfiber.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numEfiber.DecimalPlaces = 4;
-            this.numEfiber.Location = new System.Drawing.Point(337, 6);
+            this.numEfiber.Location = new System.Drawing.Point(333, 6);
             this.numEfiber.Maximum = new decimal(new int[] {
             -1530494976,
             232830,
@@ -1138,7 +1142,7 @@
             // 
             this.labelEf.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelEf.AutoSize = true;
-            this.labelEf.Location = new System.Drawing.Point(269, 10);
+            this.labelEf.Location = new System.Drawing.Point(265, 10);
             this.labelEf.Name = "labelEf";
             this.labelEf.Size = new System.Drawing.Size(62, 13);
             this.labelEf.TabIndex = 7;
@@ -1155,9 +1159,9 @@
             "Мелкозернистый Б",
             "Мелкозернистый В",
             "Легкий"});
-            this.comboBetonType.Location = new System.Drawing.Point(84, 6);
+            this.comboBetonType.Location = new System.Drawing.Point(82, 6);
             this.comboBetonType.Name = "comboBetonType";
-            this.comboBetonType.Size = new System.Drawing.Size(52, 21);
+            this.comboBetonType.Size = new System.Drawing.Size(50, 21);
             this.comboBetonType.TabIndex = 1;
             this.comboBetonType.SelectedIndexChanged += new System.EventHandler(this.comboBetonType_SelectedIndexChanged);
             // 
@@ -1165,7 +1169,7 @@
             // 
             this.label21.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(147, 10);
+            this.label21.Location = new System.Drawing.Point(143, 10);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(18, 13);
             this.label21.TabIndex = 5;
@@ -1182,7 +1186,7 @@
             "c",
             "d",
             "e"});
-            this.cmbFib_i.Location = new System.Drawing.Point(171, 6);
+            this.cmbFib_i.Location = new System.Drawing.Point(167, 6);
             this.cmbFib_i.Name = "cmbFib_i";
             this.cmbFib_i.Size = new System.Drawing.Size(87, 21);
             this.cmbFib_i.TabIndex = 6;
@@ -1192,9 +1196,9 @@
             // 
             this.lblBetonType.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblBetonType.AutoSize = true;
-            this.lblBetonType.Location = new System.Drawing.Point(3, 3);
+            this.lblBetonType.Location = new System.Drawing.Point(3, 0);
             this.lblBetonType.Name = "lblBetonType";
-            this.lblBetonType.Size = new System.Drawing.Size(74, 26);
+            this.lblBetonType.Size = new System.Drawing.Size(68, 33);
             this.lblBetonType.TabIndex = 2;
             this.lblBetonType.Text = "Вид фибробетона";
             // 
@@ -1523,7 +1527,7 @@
             this.tableLayoutPanelForces.ColumnCount = 3;
             this.tableLayoutPanelForces.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.13587F));
             this.tableLayoutPanelForces.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 74.86413F));
-            this.tableLayoutPanelForces.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 282F));
+            this.tableLayoutPanelForces.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 290F));
             this.tableLayoutPanelForces.Controls.Add(this.tableLayoutPanelForceUnits, 1, 0);
             this.tableLayoutPanelForces.Controls.Add(this.btnFactors, 0, 2);
             this.tableLayoutPanelForces.Controls.Add(this.labelEffortSigns, 0, 0);
@@ -1556,12 +1560,12 @@
             this.tableLayoutPanelForceUnits.Controls.Add(this.cmbMomentOfForceUnit, 2, 0);
             this.tableLayoutPanelForceUnits.Controls.Add(this.labelMomentOfForceUnit, 1, 0);
             this.tableLayoutPanelForceUnits.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelForceUnits.Location = new System.Drawing.Point(203, 2);
+            this.tableLayoutPanelForceUnits.Location = new System.Drawing.Point(201, 2);
             this.tableLayoutPanelForceUnits.Margin = new System.Windows.Forms.Padding(1);
             this.tableLayoutPanelForceUnits.Name = "tableLayoutPanelForceUnits";
             this.tableLayoutPanelForceUnits.RowCount = 1;
             this.tableLayoutPanelForceUnits.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelForceUnits.Size = new System.Drawing.Size(596, 24);
+            this.tableLayoutPanelForceUnits.Size = new System.Drawing.Size(590, 24);
             this.tableLayoutPanelForceUnits.TabIndex = 5;
             // 
             // labelMNQ
@@ -1579,7 +1583,7 @@
             // 
             this.labelForceUnit.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelForceUnit.AutoSize = true;
-            this.labelForceUnit.Location = new System.Drawing.Point(400, 5);
+            this.labelForceUnit.Location = new System.Drawing.Point(395, 5);
             this.labelForceUnit.Name = "labelForceUnit";
             this.labelForceUnit.Size = new System.Drawing.Size(32, 13);
             this.labelForceUnit.TabIndex = 6;
@@ -1591,10 +1595,10 @@
             this.cmbForceUnit.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cmbForceUnit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbForceUnit.FormattingEnabled = true;
-            this.cmbForceUnit.Location = new System.Drawing.Point(441, 1);
+            this.cmbForceUnit.Location = new System.Drawing.Point(436, 1);
             this.cmbForceUnit.Margin = new System.Windows.Forms.Padding(1);
             this.cmbForceUnit.Name = "cmbForceUnit";
-            this.cmbForceUnit.Size = new System.Drawing.Size(59, 21);
+            this.cmbForceUnit.Size = new System.Drawing.Size(58, 21);
             this.cmbForceUnit.TabIndex = 9;
             this.cmbForceUnit.SelectedIndexChanged += new System.EventHandler(this.cmbForceUnit_SelectedIndexChanged);
             // 
@@ -1603,17 +1607,17 @@
             this.cmbMomentOfForceUnit.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cmbMomentOfForceUnit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbMomentOfForceUnit.FormattingEnabled = true;
-            this.cmbMomentOfForceUnit.Location = new System.Drawing.Point(278, 1);
+            this.cmbMomentOfForceUnit.Location = new System.Drawing.Point(275, 1);
             this.cmbMomentOfForceUnit.Margin = new System.Windows.Forms.Padding(1);
             this.cmbMomentOfForceUnit.Name = "cmbMomentOfForceUnit";
-            this.cmbMomentOfForceUnit.Size = new System.Drawing.Size(59, 21);
+            this.cmbMomentOfForceUnit.Size = new System.Drawing.Size(58, 21);
             this.cmbMomentOfForceUnit.TabIndex = 10;
             this.cmbMomentOfForceUnit.SelectedIndexChanged += new System.EventHandler(this.cmbMomentOfForceUnit_SelectedIndexChanged);
             // 
             // labelMomentOfForceUnit
             // 
             this.labelMomentOfForceUnit.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.labelMomentOfForceUnit.Location = new System.Drawing.Point(188, 5);
+            this.labelMomentOfForceUnit.Location = new System.Drawing.Point(186, 5);
             this.labelMomentOfForceUnit.Name = "labelMomentOfForceUnit";
             this.labelMomentOfForceUnit.Size = new System.Drawing.Size(50, 13);
             this.labelMomentOfForceUnit.TabIndex = 5;
@@ -1666,54 +1670,54 @@
             this.Qx,
             this.Qy});
             this.gridEfforts.GridColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.gridEfforts.Location = new System.Drawing.Point(205, 31);
+            this.gridEfforts.Location = new System.Drawing.Point(203, 31);
             this.gridEfforts.Name = "gridEfforts";
             this.gridEfforts.RowHeadersWidth = 20;
-            this.gridEfforts.Size = new System.Drawing.Size(592, 187);
+            this.gridEfforts.Size = new System.Drawing.Size(586, 187);
             this.gridEfforts.TabIndex = 2;
             this.gridEfforts.SelectionChanged += new System.EventHandler(this.gridEfforts_SelectionChanged);
             // 
             // Mx
             // 
-            dataGridViewCellStyle1.Format = "N2";
-            dataGridViewCellStyle1.NullValue = "0";
-            this.Mx.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle21.Format = "N2";
+            dataGridViewCellStyle21.NullValue = "0";
+            this.Mx.DefaultCellStyle = dataGridViewCellStyle21;
             this.Mx.HeaderText = "Mx, кг*мм";
             this.Mx.Name = "Mx";
             this.Mx.ToolTipText = "Момент относительно оси X";
             // 
             // My
             // 
-            dataGridViewCellStyle2.Format = "N2";
-            dataGridViewCellStyle2.NullValue = "0";
-            this.My.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle22.Format = "N2";
+            dataGridViewCellStyle22.NullValue = "0";
+            this.My.DefaultCellStyle = dataGridViewCellStyle22;
             this.My.HeaderText = "My, кг*мм";
             this.My.Name = "My";
             this.My.ToolTipText = "Момент отн оси Y";
             // 
             // N
             // 
-            dataGridViewCellStyle3.Format = "N2";
-            dataGridViewCellStyle3.NullValue = "0";
-            this.N.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle23.Format = "N2";
+            dataGridViewCellStyle23.NullValue = "0";
+            this.N.DefaultCellStyle = dataGridViewCellStyle23;
             this.N.HeaderText = "N, кг";
             this.N.Name = "N";
             this.N.ToolTipText = "Продольная сила";
             // 
             // Qx
             // 
-            dataGridViewCellStyle4.Format = "N2";
-            dataGridViewCellStyle4.NullValue = "0";
-            this.Qx.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle24.Format = "N2";
+            dataGridViewCellStyle24.NullValue = "0";
+            this.Qx.DefaultCellStyle = dataGridViewCellStyle24;
             this.Qx.HeaderText = "Qx, кг";
             this.Qx.Name = "Qx";
             this.Qx.ToolTipText = "Поперечная сила вдоль оси X";
             // 
             // Qy
             // 
-            dataGridViewCellStyle5.Format = "N2";
-            dataGridViewCellStyle5.NullValue = "0";
-            this.Qy.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle25.Format = "N2";
+            dataGridViewCellStyle25.NullValue = "0";
+            this.Qy.DefaultCellStyle = dataGridViewCellStyle25;
             this.Qy.HeaderText = "Qy, кг";
             this.Qy.Name = "Qy";
             this.Qy.ToolTipText = "Поперечная сила вдоль оси Y";
@@ -1730,23 +1734,23 @@
             this.tableLayoutPanel10.Controls.Add(this.num_eN, 1, 1);
             this.tableLayoutPanel10.Controls.Add(this.num_Ml1_M1, 1, 2);
             this.tableLayoutPanel10.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel10.Location = new System.Drawing.Point(804, 31);
+            this.tableLayoutPanel10.Location = new System.Drawing.Point(796, 31);
             this.tableLayoutPanel10.Name = "tableLayoutPanel10";
             this.tableLayoutPanel10.RowCount = 4;
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel10.Size = new System.Drawing.Size(277, 187);
+            this.tableLayoutPanel10.Size = new System.Drawing.Size(285, 187);
             this.tableLayoutPanel10.TabIndex = 6;
             // 
             // labelRandomEccentricity
             // 
             this.labelRandomEccentricity.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelRandomEccentricity.AutoSize = true;
-            this.labelRandomEccentricity.Location = new System.Drawing.Point(3, 3);
+            this.labelRandomEccentricity.Location = new System.Drawing.Point(3, 10);
             this.labelRandomEccentricity.Name = "labelRandomEccentricity";
-            this.labelRandomEccentricity.Size = new System.Drawing.Size(109, 39);
+            this.labelRandomEccentricity.Size = new System.Drawing.Size(123, 26);
             this.labelRandomEccentricity.TabIndex = 6;
             this.labelRandomEccentricity.Text = "Случайный эксцентриситет, e0 см";
             // 
@@ -1775,7 +1779,7 @@
             this.numRandomEccentricity.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numRandomEccentricity.DecimalPlaces = 4;
             this.numRandomEccentricity.Enabled = false;
-            this.numRandomEccentricity.Location = new System.Drawing.Point(129, 13);
+            this.numRandomEccentricity.Location = new System.Drawing.Point(133, 13);
             this.numRandomEccentricity.Maximum = new decimal(new int[] {
             10000000,
             0,
@@ -1794,7 +1798,7 @@
             // 
             this.num_eN.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.num_eN.DecimalPlaces = 4;
-            this.num_eN.Location = new System.Drawing.Point(129, 59);
+            this.num_eN.Location = new System.Drawing.Point(133, 59);
             this.num_eN.Maximum = new decimal(new int[] {
             100000000,
             0,
@@ -1813,7 +1817,7 @@
             // 
             this.num_Ml1_M1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.num_Ml1_M1.DecimalPlaces = 4;
-            this.num_Ml1_M1.Location = new System.Drawing.Point(129, 105);
+            this.num_Ml1_M1.Location = new System.Drawing.Point(133, 105);
             this.num_Ml1_M1.Maximum = new decimal(new int[] {
             100000000,
             0,
@@ -1834,11 +1838,11 @@
             this.panel1.Controls.Add(this.btnEffortsAddRow);
             this.panel1.Controls.Add(this.btnEffortsRefresh);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(202, 222);
+            this.panel1.Location = new System.Drawing.Point(200, 222);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
             this.panel1.Padding = new System.Windows.Forms.Padding(1);
-            this.panel1.Size = new System.Drawing.Size(598, 33);
+            this.panel1.Size = new System.Drawing.Size(592, 33);
             this.panel1.TabIndex = 7;
             // 
             // btnEffortsDelRow
@@ -1879,7 +1883,9 @@
             // 
             // tabRebar
             // 
-            this.tabRebar.Controls.Add(this.flowLayoutPanelRebar);
+            this.tabRebar.Controls.Add(this.tableLayoutPanelTRebar);
+            this.tabRebar.Controls.Add(this.tableLayoutPanelLRebar);
+            this.tabRebar.Controls.Add(this.tableLayoutPanelRebar);
             this.tabRebar.Location = new System.Drawing.Point(4, 22);
             this.tabRebar.Name = "tabRebar";
             this.tabRebar.Padding = new System.Windows.Forms.Padding(3);
@@ -1887,705 +1893,58 @@
             this.tabRebar.TabIndex = 3;
             this.tabRebar.Text = "Арматура";
             this.tabRebar.UseVisualStyleBackColor = true;
+            this.tabRebar.Click += new System.EventHandler(this.tabRebar_Click);
             // 
-            // flowLayoutPanelRebar
+            // tableLayoutPanelTRebar
             // 
-            this.flowLayoutPanelRebar.Controls.Add(this.tableLayoutPanelRebar);
-            this.flowLayoutPanelRebar.Controls.Add(this.label20);
-            this.flowLayoutPanelRebar.Dock = System.Windows.Forms.DockStyle.Top;
-            this.flowLayoutPanelRebar.FlowDirection = System.Windows.Forms.FlowDirection.BottomUp;
-            this.flowLayoutPanelRebar.Location = new System.Drawing.Point(3, 3);
-            this.flowLayoutPanelRebar.Name = "flowLayoutPanelRebar";
-            this.flowLayoutPanelRebar.Size = new System.Drawing.Size(1108, 396);
-            this.flowLayoutPanelRebar.TabIndex = 8;
-            // 
-            // tableLayoutPanelRebar
-            // 
-            this.tableLayoutPanelRebar.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-            this.tableLayoutPanelRebar.ColumnCount = 8;
-            this.tableLayoutPanelRebar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 61.64875F));
-            this.tableLayoutPanelRebar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 38.35125F));
-            this.tableLayoutPanelRebar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 113F));
-            this.tableLayoutPanelRebar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 139F));
-            this.tableLayoutPanelRebar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 103F));
-            this.tableLayoutPanelRebar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 99F));
-            this.tableLayoutPanelRebar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 235F));
-            this.tableLayoutPanelRebar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 133F));
-            this.tableLayoutPanelRebar.Controls.Add(this.cmbRebarSquare, 7, 5);
-            this.tableLayoutPanelRebar.Controls.Add(this.cmbRebarDiameters, 7, 4);
-            this.tableLayoutPanelRebar.Controls.Add(this.num_a1, 7, 3);
-            this.tableLayoutPanelRebar.Controls.Add(this.num_a, 7, 2);
-            this.tableLayoutPanelRebar.Controls.Add(this.labelN_w_X, 0, 9);
-            this.tableLayoutPanelRebar.Controls.Add(this.labelRebarClass, 0, 0);
-            this.tableLayoutPanelRebar.Controls.Add(this.numAs1, 7, 1);
-            this.tableLayoutPanelRebar.Controls.Add(this.numAs, 7, 0);
-            this.tableLayoutPanelRebar.Controls.Add(this.label19, 6, 3);
-            this.tableLayoutPanelRebar.Controls.Add(this.cmbRebarClass, 1, 0);
-            this.tableLayoutPanelRebar.Controls.Add(this.label22, 6, 4);
-            this.tableLayoutPanelRebar.Controls.Add(this.label24, 6, 5);
-            this.tableLayoutPanelRebar.Controls.Add(this.label18, 6, 2);
-            this.tableLayoutPanelRebar.Controls.Add(this.labelRs, 0, 1);
-            this.tableLayoutPanelRebar.Controls.Add(this.label17, 6, 1);
-            this.tableLayoutPanelRebar.Controls.Add(this.numRs, 1, 1);
-            this.tableLayoutPanelRebar.Controls.Add(this.labelRsMPa, 2, 1);
-            this.tableLayoutPanelRebar.Controls.Add(this.labelEsw, 0, 6);
-            this.tableLayoutPanelRebar.Controls.Add(this.label15, 6, 0);
-            this.tableLayoutPanelRebar.Controls.Add(this.numEsw_X, 1, 6);
-            this.tableLayoutPanelRebar.Controls.Add(this.labelRsw, 0, 5);
-            this.tableLayoutPanelRebar.Controls.Add(this.numRsw_X, 1, 5);
-            this.tableLayoutPanelRebar.Controls.Add(this.labelEswMPa, 2, 6);
-            this.tableLayoutPanelRebar.Controls.Add(this.labelRswMPa, 2, 5);
-            this.tableLayoutPanelRebar.Controls.Add(this.labelTRebarClass, 0, 4);
-            this.tableLayoutPanelRebar.Controls.Add(this.cmbTRebarClass_X, 1, 4);
-            this.tableLayoutPanelRebar.Controls.Add(this.label5, 0, 3);
-            this.tableLayoutPanelRebar.Controls.Add(this.numEs, 1, 3);
-            this.tableLayoutPanelRebar.Controls.Add(this.labelEsMPa, 2, 3);
-            this.tableLayoutPanelRebar.Controls.Add(this.numRsc, 1, 2);
-            this.tableLayoutPanelRebar.Controls.Add(this.labelRsс, 0, 2);
-            this.tableLayoutPanelRebar.Controls.Add(this.labelRsсMPa, 2, 2);
-            this.tableLayoutPanelRebar.Controls.Add(this.labelRsn, 3, 1);
-            this.tableLayoutPanelRebar.Controls.Add(this.labelRsсn, 3, 2);
-            this.tableLayoutPanelRebar.Controls.Add(this.numRsn, 4, 1);
-            this.tableLayoutPanelRebar.Controls.Add(this.numRscn, 4, 2);
-            this.tableLayoutPanelRebar.Controls.Add(this.label26, 3, 0);
-            this.tableLayoutPanelRebar.Controls.Add(this.label_s_w, 0, 7);
-            this.tableLayoutPanelRebar.Controls.Add(this.num_s_w_X, 1, 7);
-            this.tableLayoutPanelRebar.Controls.Add(this.label25, 3, 4);
-            this.tableLayoutPanelRebar.Controls.Add(this.cmbTRebarClass_Y, 4, 4);
-            this.tableLayoutPanelRebar.Controls.Add(this.label_s_w_Y, 3, 7);
-            this.tableLayoutPanelRebar.Controls.Add(this.num_s_w_Y, 4, 7);
-            this.tableLayoutPanelRebar.Controls.Add(this.numRsw_Y, 4, 5);
-            this.tableLayoutPanelRebar.Controls.Add(this.numEsw_Y, 4, 6);
-            this.tableLayoutPanelRebar.Controls.Add(this.label3, 3, 5);
-            this.tableLayoutPanelRebar.Controls.Add(this.label4, 3, 6);
-            this.tableLayoutPanelRebar.Controls.Add(this.labelN_w_Y, 3, 9);
-            this.tableLayoutPanelRebar.Controls.Add(this.numN_w_Y, 4, 9);
-            this.tableLayoutPanelRebar.Controls.Add(this.labelD_w_X, 0, 8);
-            this.tableLayoutPanelRebar.Controls.Add(this.numN_w_X, 1, 9);
-            this.tableLayoutPanelRebar.Controls.Add(this.labelD_w_Y, 3, 8);
-            this.tableLayoutPanelRebar.Controls.Add(this.cmbDw_X, 1, 8);
-            this.tableLayoutPanelRebar.Controls.Add(this.cmbDw_Y, 4, 8);
-            this.tableLayoutPanelRebar.Controls.Add(this.label2gr, 4, 0);
-            this.tableLayoutPanelRebar.Location = new System.Drawing.Point(3, 53);
-            this.tableLayoutPanelRebar.Name = "tableLayoutPanelRebar";
-            this.tableLayoutPanelRebar.RowCount = 10;
-            this.tableLayoutPanelRebar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
-            this.tableLayoutPanelRebar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
-            this.tableLayoutPanelRebar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
-            this.tableLayoutPanelRebar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
-            this.tableLayoutPanelRebar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
-            this.tableLayoutPanelRebar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.81081F));
-            this.tableLayoutPanelRebar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 13.60294F));
-            this.tableLayoutPanelRebar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.86765F));
-            this.tableLayoutPanelRebar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
-            this.tableLayoutPanelRebar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
-            this.tableLayoutPanelRebar.Size = new System.Drawing.Size(1075, 340);
-            this.tableLayoutPanelRebar.TabIndex = 7;
-            // 
-            // cmbRebarSquare
-            // 
-            this.cmbRebarSquare.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.cmbRebarSquare.Enabled = false;
-            this.cmbRebarSquare.FormattingEnabled = true;
-            this.cmbRebarSquare.Location = new System.Drawing.Point(943, 175);
-            this.cmbRebarSquare.Name = "cmbRebarSquare";
-            this.cmbRebarSquare.Size = new System.Drawing.Size(112, 21);
-            this.cmbRebarSquare.TabIndex = 9;
-            // 
-            // cmbRebarDiameters
-            // 
-            this.cmbRebarDiameters.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.cmbRebarDiameters.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbRebarDiameters.FormattingEnabled = true;
-            this.cmbRebarDiameters.Location = new System.Drawing.Point(943, 143);
-            this.cmbRebarDiameters.Name = "cmbRebarDiameters";
-            this.cmbRebarDiameters.Size = new System.Drawing.Size(112, 21);
-            this.cmbRebarDiameters.TabIndex = 8;
-            this.cmbRebarDiameters.SelectedIndexChanged += new System.EventHandler(this.cmbRebarDiameters_SelectedIndexChanged);
-            // 
-            // num_a1
-            // 
-            this.num_a1.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.num_a1.DecimalPlaces = 2;
-            this.num_a1.Location = new System.Drawing.Point(943, 109);
-            this.num_a1.Name = "num_a1";
-            this.num_a1.Size = new System.Drawing.Size(112, 20);
-            this.num_a1.TabIndex = 7;
-            // 
-            // num_a
-            // 
-            this.num_a.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.num_a.DecimalPlaces = 2;
-            this.num_a.Location = new System.Drawing.Point(943, 75);
-            this.num_a.Name = "num_a";
-            this.num_a.Size = new System.Drawing.Size(112, 20);
-            this.num_a.TabIndex = 6;
+            this.tableLayoutPanelTRebar.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
+            this.tableLayoutPanelTRebar.ColumnCount = 4;
+            this.tableLayoutPanelTRebar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 47.63948F));
+            this.tableLayoutPanelTRebar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 52.36052F));
+            this.tableLayoutPanelTRebar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 115F));
+            this.tableLayoutPanelTRebar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 111F));
+            this.tableLayoutPanelTRebar.Controls.Add(this.labelN_w_X, 0, 3);
+            this.tableLayoutPanelTRebar.Controls.Add(this.labelD_w_X, 0, 2);
+            this.tableLayoutPanelTRebar.Controls.Add(this.cmbDw_X, 1, 2);
+            this.tableLayoutPanelTRebar.Controls.Add(this.label_s_w, 0, 1);
+            this.tableLayoutPanelTRebar.Controls.Add(this.label_s_w_Y, 2, 1);
+            this.tableLayoutPanelTRebar.Controls.Add(this.num_s_w_Y, 3, 1);
+            this.tableLayoutPanelTRebar.Controls.Add(this.labelD_w_Y, 2, 2);
+            this.tableLayoutPanelTRebar.Controls.Add(this.cmbDw_Y, 3, 2);
+            this.tableLayoutPanelTRebar.Controls.Add(this.labelN_w_Y, 2, 3);
+            this.tableLayoutPanelTRebar.Controls.Add(this.numN_w_Y, 3, 3);
+            this.tableLayoutPanelTRebar.Controls.Add(this.numN_w_X, 1, 3);
+            this.tableLayoutPanelTRebar.Controls.Add(this.num_s_w_X, 1, 1);
+            this.tableLayoutPanelTRebar.Controls.Add(this.labelTRebarX, 0, 0);
+            this.tableLayoutPanelTRebar.Location = new System.Drawing.Point(50, 287);
+            this.tableLayoutPanelTRebar.Name = "tableLayoutPanelTRebar";
+            this.tableLayoutPanelTRebar.RowCount = 4;
+            this.tableLayoutPanelTRebar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 42.22222F));
+            this.tableLayoutPanelTRebar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 57.77778F));
+            this.tableLayoutPanelTRebar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanelTRebar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
+            this.tableLayoutPanelTRebar.Size = new System.Drawing.Size(457, 109);
+            this.tableLayoutPanelTRebar.TabIndex = 10;
             // 
             // labelN_w_X
             // 
             this.labelN_w_X.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelN_w_X.AutoSize = true;
-            this.labelN_w_X.Location = new System.Drawing.Point(73, 313);
+            this.labelN_w_X.Location = new System.Drawing.Point(30, 88);
             this.labelN_w_X.Name = "labelN_w_X";
             this.labelN_w_X.Size = new System.Drawing.Size(75, 13);
             this.labelN_w_X.TabIndex = 39;
             this.labelN_w_X.Text = "стержней, шт";
             // 
-            // labelRebarClass
-            // 
-            this.labelRebarClass.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.labelRebarClass.AutoSize = true;
-            this.labelRebarClass.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelRebarClass.Location = new System.Drawing.Point(4, 11);
-            this.labelRebarClass.Name = "labelRebarClass";
-            this.labelRebarClass.Size = new System.Drawing.Size(87, 13);
-            this.labelRebarClass.TabIndex = 0;
-            this.labelRebarClass.Text = "Продольная: ";
-            // 
-            // numAs1
-            // 
-            this.numAs1.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.numAs1.DecimalPlaces = 4;
-            this.numAs1.Location = new System.Drawing.Point(943, 41);
-            this.numAs1.Name = "numAs1";
-            this.numAs1.Size = new System.Drawing.Size(112, 20);
-            this.numAs1.TabIndex = 1;
-            // 
-            // numAs
-            // 
-            this.numAs.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.numAs.DecimalPlaces = 4;
-            this.numAs.Location = new System.Drawing.Point(943, 7);
-            this.numAs.Name = "numAs";
-            this.numAs.Size = new System.Drawing.Size(112, 20);
-            this.numAs.TabIndex = 0;
-            // 
-            // label19
-            // 
-            this.label19.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(707, 113);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(202, 13);
-            this.label19.TabIndex = 5;
-            this.label19.Text = "Расст. до ц.т. сжатой арматуры, а\', см";
-            // 
-            // cmbRebarClass
-            // 
-            this.cmbRebarClass.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmbRebarClass.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbRebarClass.FormattingEnabled = true;
-            this.cmbRebarClass.Items.AddRange(new object[] {
-            "A240",
-            "A400",
-            "A500",
-            "B500",
-            "Bp500"});
-            this.cmbRebarClass.Location = new System.Drawing.Point(155, 7);
-            this.cmbRebarClass.Name = "cmbRebarClass";
-            this.cmbRebarClass.Size = new System.Drawing.Size(87, 21);
-            this.cmbRebarClass.TabIndex = 1;
-            this.cmbRebarClass.SelectedIndexChanged += new System.EventHandler(this.cmbRebarClass_SelectedIndexChanged);
-            // 
-            // label22
-            // 
-            this.label22.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(707, 147);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(147, 13);
-            this.label22.TabIndex = 10;
-            this.label22.Text = "Номинальный диаметр, мм";
-            // 
-            // label24
-            // 
-            this.label24.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(707, 179);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(136, 13);
-            this.label24.TabIndex = 11;
-            this.label24.Text = "Расчетная площадь, мм2";
-            // 
-            // label18
-            // 
-            this.label18.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(707, 79);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(220, 13);
-            this.label18.TabIndex = 4;
-            this.label18.Text = "Расст. до ц.т. растянутой арматуры  a, см";
-            // 
-            // labelRs
-            // 
-            this.labelRs.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.labelRs.AutoSize = true;
-            this.labelRs.Location = new System.Drawing.Point(4, 45);
-            this.labelRs.Name = "labelRs";
-            this.labelRs.Size = new System.Drawing.Size(65, 13);
-            this.labelRs.TabIndex = 2;
-            this.labelRs.Text = "R s, кг/см2";
-            // 
-            // label17
-            // 
-            this.label17.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(707, 45);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(190, 13);
-            this.label17.TabIndex = 3;
-            this.label17.Text = "Площадь сжатой арматуры A\'s, см2";
-            // 
-            // numRs
-            // 
-            this.numRs.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.numRs.DecimalPlaces = 2;
-            this.numRs.Location = new System.Drawing.Point(155, 41);
-            this.numRs.Maximum = new decimal(new int[] {
-            -727379968,
-            232,
-            0,
-            0});
-            this.numRs.Name = "numRs";
-            this.numRs.Size = new System.Drawing.Size(87, 20);
-            this.numRs.TabIndex = 3;
-            this.numRs.ValueChanged += new System.EventHandler(this.numRs_ValueChanged);
-            // 
-            // labelRsMPa
-            // 
-            this.labelRsMPa.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.labelRsMPa.AutoSize = true;
-            this.labelRsMPa.BackColor = System.Drawing.Color.Transparent;
-            this.labelRsMPa.Location = new System.Drawing.Point(326, 45);
-            this.labelRsMPa.Name = "labelRsMPa";
-            this.labelRsMPa.Size = new System.Drawing.Size(30, 13);
-            this.labelRsMPa.TabIndex = 8;
-            this.labelRsMPa.Text = "МПа";
-            // 
-            // labelEsw
-            // 
-            this.labelEsw.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.labelEsw.AutoSize = true;
-            this.labelEsw.Location = new System.Drawing.Point(73, 212);
-            this.labelEsw.Name = "labelEsw";
-            this.labelEsw.Size = new System.Drawing.Size(75, 13);
-            this.labelEsw.TabIndex = 11;
-            this.labelEsw.Text = "E, sw, кг/см2";
-            // 
-            // label15
-            // 
-            this.label15.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(707, 11);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(214, 13);
-            this.label15.TabIndex = 2;
-            this.label15.Text = "Площадь растянутой арматуры As,  см2 ";
-            // 
-            // numEsw_X
-            // 
-            this.numEsw_X.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.numEsw_X.DecimalPlaces = 2;
-            this.numEsw_X.Location = new System.Drawing.Point(155, 209);
-            this.numEsw_X.Maximum = new decimal(new int[] {
-            -727379968,
-            232,
-            0,
-            0});
-            this.numEsw_X.Name = "numEsw_X";
-            this.numEsw_X.Size = new System.Drawing.Size(87, 20);
-            this.numEsw_X.TabIndex = 13;
-            // 
-            // labelRsw
-            // 
-            this.labelRsw.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.labelRsw.AutoSize = true;
-            this.labelRsw.Location = new System.Drawing.Point(72, 179);
-            this.labelRsw.Name = "labelRsw";
-            this.labelRsw.Size = new System.Drawing.Size(76, 13);
-            this.labelRsw.TabIndex = 7;
-            this.labelRsw.Text = "R, sw, кг/см2";
-            // 
-            // numRsw_X
-            // 
-            this.numRsw_X.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.numRsw_X.DecimalPlaces = 2;
-            this.numRsw_X.Location = new System.Drawing.Point(155, 175);
-            this.numRsw_X.Maximum = new decimal(new int[] {
-            1215752192,
-            23,
-            0,
-            0});
-            this.numRsw_X.Name = "numRsw_X";
-            this.numRsw_X.Size = new System.Drawing.Size(87, 20);
-            this.numRsw_X.TabIndex = 6;
-            this.numRsw_X.ValueChanged += new System.EventHandler(this.numRsw_ValueChanged);
-            // 
-            // labelEswMPa
-            // 
-            this.labelEswMPa.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.labelEswMPa.AutoSize = true;
-            this.labelEswMPa.BackColor = System.Drawing.Color.Transparent;
-            this.labelEswMPa.Location = new System.Drawing.Point(326, 212);
-            this.labelEswMPa.Name = "labelEswMPa";
-            this.labelEswMPa.Size = new System.Drawing.Size(30, 13);
-            this.labelEswMPa.TabIndex = 15;
-            this.labelEswMPa.Text = "МПа";
-            // 
-            // labelRswMPa
-            // 
-            this.labelRswMPa.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.labelRswMPa.AutoSize = true;
-            this.labelRswMPa.BackColor = System.Drawing.Color.White;
-            this.labelRswMPa.Location = new System.Drawing.Point(326, 179);
-            this.labelRswMPa.Name = "labelRswMPa";
-            this.labelRswMPa.Size = new System.Drawing.Size(30, 13);
-            this.labelRswMPa.TabIndex = 9;
-            this.labelRswMPa.Text = "МПа";
-            // 
-            // labelTRebarClass
-            // 
-            this.labelTRebarClass.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.labelTRebarClass.AutoSize = true;
-            this.labelTRebarClass.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelTRebarClass.Location = new System.Drawing.Point(4, 147);
-            this.labelTRebarClass.Name = "labelTRebarClass";
-            this.labelTRebarClass.Size = new System.Drawing.Size(102, 13);
-            this.labelTRebarClass.TabIndex = 4;
-            this.labelTRebarClass.Text = "Поперечная - X:";
-            // 
-            // cmbTRebarClass_X
-            // 
-            this.cmbTRebarClass_X.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmbTRebarClass_X.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbTRebarClass_X.FormattingEnabled = true;
-            this.cmbTRebarClass_X.Items.AddRange(new object[] {
-            "A240",
-            "A400",
-            "A500",
-            "B500",
-            "Bp500"});
-            this.cmbTRebarClass_X.Location = new System.Drawing.Point(155, 143);
-            this.cmbTRebarClass_X.Name = "cmbTRebarClass_X";
-            this.cmbTRebarClass_X.Size = new System.Drawing.Size(87, 21);
-            this.cmbTRebarClass_X.TabIndex = 5;
-            this.cmbTRebarClass_X.SelectedIndexChanged += new System.EventHandler(this.cmbTRebarClass_SelectedIndexChanged);
-            // 
-            // label5
-            // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(4, 113);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(144, 13);
-            this.label5.TabIndex = 10;
-            this.label5.Text = "E s, кг/см2";
-            // 
-            // numEs
-            // 
-            this.numEs.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.numEs.DecimalPlaces = 2;
-            this.numEs.Location = new System.Drawing.Point(155, 109);
-            this.numEs.Maximum = new decimal(new int[] {
-            1000000000,
-            0,
-            0,
-            0});
-            this.numEs.Name = "numEs";
-            this.numEs.Size = new System.Drawing.Size(87, 20);
-            this.numEs.TabIndex = 12;
-            this.numEs.Value = new decimal(new int[] {
-            2039431,
-            0,
-            0,
-            0});
-            this.numEs.ValueChanged += new System.EventHandler(this.numEs_ValueChanged);
-            // 
-            // labelEsMPa
-            // 
-            this.labelEsMPa.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.labelEsMPa.AutoSize = true;
-            this.labelEsMPa.BackColor = System.Drawing.Color.Transparent;
-            this.labelEsMPa.Location = new System.Drawing.Point(326, 113);
-            this.labelEsMPa.Name = "labelEsMPa";
-            this.labelEsMPa.Size = new System.Drawing.Size(30, 13);
-            this.labelEsMPa.TabIndex = 14;
-            this.labelEsMPa.Text = "МПа";
-            // 
-            // numRsc
-            // 
-            this.numRsc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.numRsc.DecimalPlaces = 2;
-            this.numRsc.Location = new System.Drawing.Point(155, 75);
-            this.numRsc.Maximum = new decimal(new int[] {
-            1215752192,
-            23,
-            0,
-            0});
-            this.numRsc.Name = "numRsc";
-            this.numRsc.Size = new System.Drawing.Size(87, 20);
-            this.numRsc.TabIndex = 17;
-            this.numRsc.ValueChanged += new System.EventHandler(this.numRsc_ValueChanged);
-            // 
-            // labelRsс
-            // 
-            this.labelRsс.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.labelRsс.AutoSize = true;
-            this.labelRsс.Location = new System.Drawing.Point(4, 79);
-            this.labelRsс.Name = "labelRsс";
-            this.labelRsс.Size = new System.Drawing.Size(71, 13);
-            this.labelRsс.TabIndex = 16;
-            this.labelRsс.Text = "R sc, кг/см2";
-            // 
-            // labelRsсMPa
-            // 
-            this.labelRsсMPa.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.labelRsсMPa.AutoSize = true;
-            this.labelRsсMPa.Location = new System.Drawing.Point(326, 79);
-            this.labelRsсMPa.Name = "labelRsсMPa";
-            this.labelRsсMPa.Size = new System.Drawing.Size(30, 13);
-            this.labelRsсMPa.TabIndex = 18;
-            this.labelRsсMPa.Text = "МПа";
-            // 
-            // labelRsn
-            // 
-            this.labelRsn.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.labelRsn.AutoSize = true;
-            this.labelRsn.Location = new System.Drawing.Point(363, 45);
-            this.labelRsn.Name = "labelRsn";
-            this.labelRsn.Size = new System.Drawing.Size(74, 13);
-            this.labelRsn.TabIndex = 19;
-            this.labelRsn.Text = "R s, n кг/см2";
-            // 
-            // labelRsсn
-            // 
-            this.labelRsсn.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.labelRsсn.AutoSize = true;
-            this.labelRsсn.Location = new System.Drawing.Point(363, 79);
-            this.labelRsсn.Name = "labelRsсn";
-            this.labelRsсn.Size = new System.Drawing.Size(83, 13);
-            this.labelRsсn.TabIndex = 20;
-            this.labelRsсn.Text = "R sc, n, кг/см2";
-            // 
-            // numRsn
-            // 
-            this.numRsn.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.numRsn.DecimalPlaces = 2;
-            this.numRsn.Location = new System.Drawing.Point(503, 41);
-            this.numRsn.Maximum = new decimal(new int[] {
-            -727379968,
-            232,
-            0,
-            0});
-            this.numRsn.Name = "numRsn";
-            this.numRsn.Size = new System.Drawing.Size(96, 20);
-            this.numRsn.TabIndex = 21;
-            // 
-            // numRscn
-            // 
-            this.numRscn.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.numRscn.DecimalPlaces = 2;
-            this.numRscn.Location = new System.Drawing.Point(503, 75);
-            this.numRscn.Maximum = new decimal(new int[] {
-            1215752192,
-            23,
-            0,
-            0});
-            this.numRscn.Name = "numRscn";
-            this.numRscn.Size = new System.Drawing.Size(96, 20);
-            this.numRscn.TabIndex = 22;
-            // 
-            // label26
-            // 
-            this.label26.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label26.AutoSize = true;
-            this.label26.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label26.Location = new System.Drawing.Point(363, 11);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(102, 13);
-            this.label26.TabIndex = 23;
-            this.label26.Text = "Норм. значения";
-            // 
-            // label_s_w
-            // 
-            this.label_s_w.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label_s_w.AutoSize = true;
-            this.label_s_w.Location = new System.Drawing.Point(51, 248);
-            this.label_s_w.Name = "label_s_w";
-            this.label_s_w.Size = new System.Drawing.Size(97, 13);
-            this.label_s_w.TabIndex = 24;
-            this.label_s_w.Text = "Шаг по X: s_w, см";
-            // 
-            // num_s_w_X
-            // 
-            this.num_s_w_X.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.num_s_w_X.DecimalPlaces = 2;
-            this.num_s_w_X.Location = new System.Drawing.Point(155, 245);
-            this.num_s_w_X.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            this.num_s_w_X.Name = "num_s_w_X";
-            this.num_s_w_X.Size = new System.Drawing.Size(87, 20);
-            this.num_s_w_X.TabIndex = 25;
-            // 
-            // label25
-            // 
-            this.label25.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label25.AutoSize = true;
-            this.label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label25.Location = new System.Drawing.Point(363, 147);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(102, 13);
-            this.label25.TabIndex = 26;
-            this.label25.Text = "Поперечная - Y:";
-            // 
-            // cmbTRebarClass_Y
-            // 
-            this.cmbTRebarClass_Y.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmbTRebarClass_Y.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbTRebarClass_Y.FormattingEnabled = true;
-            this.cmbTRebarClass_Y.Items.AddRange(new object[] {
-            "A240",
-            "A400",
-            "A500",
-            "B500",
-            "Bp500"});
-            this.cmbTRebarClass_Y.Location = new System.Drawing.Point(503, 143);
-            this.cmbTRebarClass_Y.Name = "cmbTRebarClass_Y";
-            this.cmbTRebarClass_Y.Size = new System.Drawing.Size(97, 21);
-            this.cmbTRebarClass_Y.TabIndex = 27;
-            this.cmbTRebarClass_Y.SelectedIndexChanged += new System.EventHandler(this.cmbTRebarClass_Y_SelectedIndexChanged);
-            // 
-            // label_s_w_Y
-            // 
-            this.label_s_w_Y.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label_s_w_Y.AutoSize = true;
-            this.label_s_w_Y.Location = new System.Drawing.Point(399, 248);
-            this.label_s_w_Y.Name = "label_s_w_Y";
-            this.label_s_w_Y.Size = new System.Drawing.Size(97, 13);
-            this.label_s_w_Y.TabIndex = 28;
-            this.label_s_w_Y.Text = "Шаг по Y: s_w, см";
-            // 
-            // num_s_w_Y
-            // 
-            this.num_s_w_Y.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.num_s_w_Y.DecimalPlaces = 2;
-            this.num_s_w_Y.Location = new System.Drawing.Point(503, 245);
-            this.num_s_w_Y.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            this.num_s_w_Y.Name = "num_s_w_Y";
-            this.num_s_w_Y.Size = new System.Drawing.Size(97, 20);
-            this.num_s_w_Y.TabIndex = 29;
-            // 
-            // numRsw_Y
-            // 
-            this.numRsw_Y.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.numRsw_Y.DecimalPlaces = 2;
-            this.numRsw_Y.Location = new System.Drawing.Point(503, 175);
-            this.numRsw_Y.Maximum = new decimal(new int[] {
-            1215752192,
-            23,
-            0,
-            0});
-            this.numRsw_Y.Name = "numRsw_Y";
-            this.numRsw_Y.Size = new System.Drawing.Size(97, 20);
-            this.numRsw_Y.TabIndex = 30;
-            // 
-            // numEsw_Y
-            // 
-            this.numEsw_Y.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.numEsw_Y.DecimalPlaces = 2;
-            this.numEsw_Y.Location = new System.Drawing.Point(503, 209);
-            this.numEsw_Y.Maximum = new decimal(new int[] {
-            -727379968,
-            232,
-            0,
-            0});
-            this.numEsw_Y.Name = "numEsw_Y";
-            this.numEsw_Y.Size = new System.Drawing.Size(97, 20);
-            this.numEsw_Y.TabIndex = 31;
-            // 
-            // label3
-            // 
-            this.label3.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(420, 179);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(76, 13);
-            this.label3.TabIndex = 32;
-            this.label3.Text = "R, sw, кг/см2";
-            // 
-            // label4
-            // 
-            this.label4.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(421, 212);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(75, 13);
-            this.label4.TabIndex = 33;
-            this.label4.Text = "E, sw, кг/см2";
-            // 
-            // labelN_w_Y
-            // 
-            this.labelN_w_Y.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.labelN_w_Y.AutoSize = true;
-            this.labelN_w_Y.Location = new System.Drawing.Point(421, 313);
-            this.labelN_w_Y.Name = "labelN_w_Y";
-            this.labelN_w_Y.Size = new System.Drawing.Size(75, 13);
-            this.labelN_w_Y.TabIndex = 36;
-            this.labelN_w_Y.Text = "стержней, шт";
-            // 
-            // numN_w_Y
-            // 
-            this.numN_w_Y.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.numN_w_Y.Location = new System.Drawing.Point(503, 310);
-            this.numN_w_Y.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            this.numN_w_Y.Name = "numN_w_Y";
-            this.numN_w_Y.Size = new System.Drawing.Size(97, 20);
-            this.numN_w_Y.TabIndex = 35;
-            // 
             // labelD_w_X
             // 
             this.labelD_w_X.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelD_w_X.AutoSize = true;
-            this.labelD_w_X.Location = new System.Drawing.Point(73, 280);
+            this.labelD_w_X.Location = new System.Drawing.Point(30, 61);
             this.labelD_w_X.Name = "labelD_w_X";
             this.labelD_w_X.Size = new System.Drawing.Size(75, 13);
             this.labelD_w_X.TabIndex = 38;
             this.labelD_w_X.Text = "Диаметр, мм";
-            // 
-            // numN_w_X
-            // 
-            this.numN_w_X.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.numN_w_X.Location = new System.Drawing.Point(155, 310);
-            this.numN_w_X.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            this.numN_w_X.Name = "numN_w_X";
-            this.numN_w_X.Size = new System.Drawing.Size(87, 20);
-            this.numN_w_X.TabIndex = 37;
-            // 
-            // labelD_w_Y
-            // 
-            this.labelD_w_Y.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.labelD_w_Y.AutoSize = true;
-            this.labelD_w_Y.Location = new System.Drawing.Point(421, 280);
-            this.labelD_w_Y.Name = "labelD_w_Y";
-            this.labelD_w_Y.Size = new System.Drawing.Size(75, 13);
-            this.labelD_w_Y.TabIndex = 34;
-            this.labelD_w_Y.Text = "Диаметр, мм";
             // 
             // cmbDw_X
             // 
@@ -2608,10 +1967,54 @@
             "32",
             "36",
             "40"});
-            this.cmbDw_X.Location = new System.Drawing.Point(155, 276);
+            this.cmbDw_X.Location = new System.Drawing.Point(112, 58);
             this.cmbDw_X.Name = "cmbDw_X";
-            this.cmbDw_X.Size = new System.Drawing.Size(87, 21);
+            this.cmbDw_X.Size = new System.Drawing.Size(112, 21);
             this.cmbDw_X.TabIndex = 40;
+            // 
+            // label_s_w
+            // 
+            this.label_s_w.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.label_s_w.AutoSize = true;
+            this.label_s_w.Location = new System.Drawing.Point(8, 32);
+            this.label_s_w.Name = "label_s_w";
+            this.label_s_w.Size = new System.Drawing.Size(97, 13);
+            this.label_s_w.TabIndex = 24;
+            this.label_s_w.Text = "Шаг по X: s_w, см";
+            // 
+            // label_s_w_Y
+            // 
+            this.label_s_w_Y.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.label_s_w_Y.AutoSize = true;
+            this.label_s_w_Y.Location = new System.Drawing.Point(243, 32);
+            this.label_s_w_Y.Name = "label_s_w_Y";
+            this.label_s_w_Y.Size = new System.Drawing.Size(97, 13);
+            this.label_s_w_Y.TabIndex = 28;
+            this.label_s_w_Y.Text = "Шаг по Y: s_w, см";
+            // 
+            // num_s_w_Y
+            // 
+            this.num_s_w_Y.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.num_s_w_Y.DecimalPlaces = 2;
+            this.num_s_w_Y.Location = new System.Drawing.Point(347, 29);
+            this.num_s_w_Y.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.num_s_w_Y.Name = "num_s_w_Y";
+            this.num_s_w_Y.Size = new System.Drawing.Size(106, 20);
+            this.num_s_w_Y.TabIndex = 29;
+            // 
+            // labelD_w_Y
+            // 
+            this.labelD_w_Y.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.labelD_w_Y.AutoSize = true;
+            this.labelD_w_Y.Location = new System.Drawing.Point(265, 61);
+            this.labelD_w_Y.Name = "labelD_w_Y";
+            this.labelD_w_Y.Size = new System.Drawing.Size(75, 13);
+            this.labelD_w_Y.TabIndex = 34;
+            this.labelD_w_Y.Text = "Диаметр, мм";
             // 
             // cmbDw_Y
             // 
@@ -2634,32 +2037,685 @@
             "32",
             "36",
             "40"});
-            this.cmbDw_Y.Location = new System.Drawing.Point(503, 276);
+            this.cmbDw_Y.Location = new System.Drawing.Point(347, 58);
             this.cmbDw_Y.Name = "cmbDw_Y";
-            this.cmbDw_Y.Size = new System.Drawing.Size(97, 21);
+            this.cmbDw_Y.Size = new System.Drawing.Size(106, 21);
             this.cmbDw_Y.TabIndex = 41;
+            // 
+            // labelN_w_Y
+            // 
+            this.labelN_w_Y.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.labelN_w_Y.AutoSize = true;
+            this.labelN_w_Y.Location = new System.Drawing.Point(265, 88);
+            this.labelN_w_Y.Name = "labelN_w_Y";
+            this.labelN_w_Y.Size = new System.Drawing.Size(75, 13);
+            this.labelN_w_Y.TabIndex = 36;
+            this.labelN_w_Y.Text = "стержней, шт";
+            // 
+            // numN_w_Y
+            // 
+            this.numN_w_Y.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.numN_w_Y.Location = new System.Drawing.Point(347, 84);
+            this.numN_w_Y.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.numN_w_Y.Name = "numN_w_Y";
+            this.numN_w_Y.Size = new System.Drawing.Size(106, 20);
+            this.numN_w_Y.TabIndex = 35;
+            // 
+            // numN_w_X
+            // 
+            this.numN_w_X.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.numN_w_X.Location = new System.Drawing.Point(112, 84);
+            this.numN_w_X.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.numN_w_X.Name = "numN_w_X";
+            this.numN_w_X.Size = new System.Drawing.Size(112, 20);
+            this.numN_w_X.TabIndex = 37;
+            // 
+            // num_s_w_X
+            // 
+            this.num_s_w_X.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.num_s_w_X.DecimalPlaces = 2;
+            this.num_s_w_X.Location = new System.Drawing.Point(112, 29);
+            this.num_s_w_X.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.num_s_w_X.Name = "num_s_w_X";
+            this.num_s_w_X.Size = new System.Drawing.Size(112, 20);
+            this.num_s_w_X.TabIndex = 25;
+            this.num_s_w_X.ValueChanged += new System.EventHandler(this.num_s_w_X_ValueChanged);
+            // 
+            // tableLayoutPanelLRebar
+            // 
+            this.tableLayoutPanelLRebar.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
+            this.tableLayoutPanelLRebar.ColumnCount = 2;
+            this.tableLayoutPanelLRebar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanelLRebar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanelLRebar.Controls.Add(this.cmbRebarSquare, 1, 6);
+            this.tableLayoutPanelLRebar.Controls.Add(this.label15, 0, 1);
+            this.tableLayoutPanelLRebar.Controls.Add(this.cmbRebarDiameters, 1, 5);
+            this.tableLayoutPanelLRebar.Controls.Add(this.numAs, 1, 1);
+            this.tableLayoutPanelLRebar.Controls.Add(this.num_a1, 1, 4);
+            this.tableLayoutPanelLRebar.Controls.Add(this.label24, 0, 6);
+            this.tableLayoutPanelLRebar.Controls.Add(this.label17, 0, 3);
+            this.tableLayoutPanelLRebar.Controls.Add(this.num_a, 1, 2);
+            this.tableLayoutPanelLRebar.Controls.Add(this.label22, 0, 5);
+            this.tableLayoutPanelLRebar.Controls.Add(this.numAs1, 1, 3);
+            this.tableLayoutPanelLRebar.Controls.Add(this.label19, 0, 4);
+            this.tableLayoutPanelLRebar.Controls.Add(this.label18, 0, 2);
+            this.tableLayoutPanelLRebar.Controls.Add(this.labelRebarStaticCalc, 0, 0);
+            this.tableLayoutPanelLRebar.Location = new System.Drawing.Point(650, 25);
+            this.tableLayoutPanelLRebar.Name = "tableLayoutPanelLRebar";
+            this.tableLayoutPanelLRebar.RowCount = 7;
+            this.tableLayoutPanelLRebar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.tableLayoutPanelLRebar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 42.85714F));
+            this.tableLayoutPanelLRebar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 57.14286F));
+            this.tableLayoutPanelLRebar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 43F));
+            this.tableLayoutPanelLRebar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
+            this.tableLayoutPanelLRebar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.tableLayoutPanelLRebar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 39F));
+            this.tableLayoutPanelLRebar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanelLRebar.Size = new System.Drawing.Size(315, 294);
+            this.tableLayoutPanelLRebar.TabIndex = 9;
+            // 
+            // cmbRebarSquare
+            // 
+            this.cmbRebarSquare.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.cmbRebarSquare.Enabled = false;
+            this.cmbRebarSquare.FormattingEnabled = true;
+            this.cmbRebarSquare.Location = new System.Drawing.Point(161, 262);
+            this.cmbRebarSquare.Name = "cmbRebarSquare";
+            this.cmbRebarSquare.Size = new System.Drawing.Size(112, 21);
+            this.cmbRebarSquare.TabIndex = 9;
+            // 
+            // label15
+            // 
+            this.label15.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(4, 42);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(117, 26);
+            this.label15.TabIndex = 2;
+            this.label15.Text = "Площадь растянутой арматуры As,  см2 ";
+            // 
+            // cmbRebarDiameters
+            // 
+            this.cmbRebarDiameters.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.cmbRebarDiameters.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbRebarDiameters.FormattingEnabled = true;
+            this.cmbRebarDiameters.Location = new System.Drawing.Point(161, 225);
+            this.cmbRebarDiameters.Name = "cmbRebarDiameters";
+            this.cmbRebarDiameters.Size = new System.Drawing.Size(112, 21);
+            this.cmbRebarDiameters.TabIndex = 8;
+            this.cmbRebarDiameters.SelectedIndexChanged += new System.EventHandler(this.cmbRebarDiameters_SelectedIndexChanged);
+            // 
+            // numAs
+            // 
+            this.numAs.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.numAs.DecimalPlaces = 4;
+            this.numAs.Location = new System.Drawing.Point(161, 45);
+            this.numAs.Name = "numAs";
+            this.numAs.Size = new System.Drawing.Size(112, 20);
+            this.numAs.TabIndex = 0;
+            // 
+            // num_a1
+            // 
+            this.num_a1.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.num_a1.DecimalPlaces = 2;
+            this.num_a1.Location = new System.Drawing.Point(161, 190);
+            this.num_a1.Name = "num_a1";
+            this.num_a1.Size = new System.Drawing.Size(112, 20);
+            this.num_a1.TabIndex = 7;
+            // 
+            // label24
+            // 
+            this.label24.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(4, 266);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(136, 13);
+            this.label24.TabIndex = 11;
+            this.label24.Text = "Расчетная площадь, мм2";
+            // 
+            // label17
+            // 
+            this.label17.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(4, 145);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(150, 26);
+            this.label17.TabIndex = 3;
+            this.label17.Text = "Площадь сжатой арматуры A\'s, см2";
+            // 
+            // num_a
+            // 
+            this.num_a.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.num_a.DecimalPlaces = 2;
+            this.num_a.Location = new System.Drawing.Point(161, 97);
+            this.num_a.Name = "num_a";
+            this.num_a.Size = new System.Drawing.Size(112, 20);
+            this.num_a.TabIndex = 6;
+            // 
+            // label22
+            // 
+            this.label22.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(4, 229);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(147, 13);
+            this.label22.TabIndex = 10;
+            this.label22.Text = "Номинальный диаметр, мм";
+            // 
+            // numAs1
+            // 
+            this.numAs1.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.numAs1.DecimalPlaces = 4;
+            this.numAs1.Location = new System.Drawing.Point(161, 148);
+            this.numAs1.Name = "numAs1";
+            this.numAs1.Size = new System.Drawing.Size(112, 20);
+            this.numAs1.TabIndex = 1;
+            // 
+            // label19
+            // 
+            this.label19.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(4, 187);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(118, 26);
+            this.label19.TabIndex = 5;
+            this.label19.Text = "Расст. до ц.т. сжатой арматуры, а\', см";
+            // 
+            // label18
+            // 
+            this.label18.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(4, 94);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(138, 26);
+            this.label18.TabIndex = 4;
+            this.label18.Text = "Расст. до ц.т. растянутой арматуры  a, см";
+            // 
+            // labelRebarStaticCalc
+            // 
+            this.labelRebarStaticCalc.AutoSize = true;
+            this.labelRebarStaticCalc.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.tableLayoutPanelLRebar.SetColumnSpan(this.labelRebarStaticCalc, 2);
+            this.labelRebarStaticCalc.Location = new System.Drawing.Point(4, 1);
+            this.labelRebarStaticCalc.Name = "labelRebarStaticCalc";
+            this.labelRebarStaticCalc.Size = new System.Drawing.Size(303, 26);
+            this.labelRebarStaticCalc.TabIndex = 12;
+            this.labelRebarStaticCalc.Text = "Количество продольной арматуры для расчета по методу статического равновесия";
+            // 
+            // tableLayoutPanelRebar
+            // 
+            this.tableLayoutPanelRebar.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.tableLayoutPanelRebar.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
+            this.tableLayoutPanelRebar.ColumnCount = 5;
+            this.tableLayoutPanelRebar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 55.70776F));
+            this.tableLayoutPanelRebar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 44.29224F));
+            this.tableLayoutPanelRebar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 108F));
+            this.tableLayoutPanelRebar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 116F));
+            this.tableLayoutPanelRebar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 136F));
+            this.tableLayoutPanelRebar.Controls.Add(this.labelRebarClass, 0, 1);
+            this.tableLayoutPanelRebar.Controls.Add(this.cmbRebarClass, 1, 1);
+            this.tableLayoutPanelRebar.Controls.Add(this.labelRs, 0, 2);
+            this.tableLayoutPanelRebar.Controls.Add(this.numRs, 1, 2);
+            this.tableLayoutPanelRebar.Controls.Add(this.labelRsMPa, 2, 2);
+            this.tableLayoutPanelRebar.Controls.Add(this.labelEsw, 0, 7);
+            this.tableLayoutPanelRebar.Controls.Add(this.numEsw_X, 1, 7);
+            this.tableLayoutPanelRebar.Controls.Add(this.labelRsw, 0, 6);
+            this.tableLayoutPanelRebar.Controls.Add(this.numRsw_X, 1, 6);
+            this.tableLayoutPanelRebar.Controls.Add(this.labelEswMPa, 2, 7);
+            this.tableLayoutPanelRebar.Controls.Add(this.labelRswMPa, 2, 6);
+            this.tableLayoutPanelRebar.Controls.Add(this.labelTRebarClass, 0, 5);
+            this.tableLayoutPanelRebar.Controls.Add(this.cmbTRebarClass_X, 1, 5);
+            this.tableLayoutPanelRebar.Controls.Add(this.label5, 0, 4);
+            this.tableLayoutPanelRebar.Controls.Add(this.numEs, 1, 4);
+            this.tableLayoutPanelRebar.Controls.Add(this.labelEsMPa, 2, 4);
+            this.tableLayoutPanelRebar.Controls.Add(this.numRsc, 1, 3);
+            this.tableLayoutPanelRebar.Controls.Add(this.labelRsс, 0, 3);
+            this.tableLayoutPanelRebar.Controls.Add(this.labelRsсMPa, 2, 3);
+            this.tableLayoutPanelRebar.Controls.Add(this.labelRsn, 3, 2);
+            this.tableLayoutPanelRebar.Controls.Add(this.labelRsсn, 3, 3);
+            this.tableLayoutPanelRebar.Controls.Add(this.numRsn, 4, 2);
+            this.tableLayoutPanelRebar.Controls.Add(this.numRscn, 4, 3);
+            this.tableLayoutPanelRebar.Controls.Add(this.label26, 3, 1);
+            this.tableLayoutPanelRebar.Controls.Add(this.label25, 3, 5);
+            this.tableLayoutPanelRebar.Controls.Add(this.cmbTRebarClass_Y, 4, 5);
+            this.tableLayoutPanelRebar.Controls.Add(this.numRsw_Y, 4, 6);
+            this.tableLayoutPanelRebar.Controls.Add(this.numEsw_Y, 4, 7);
+            this.tableLayoutPanelRebar.Controls.Add(this.label3, 3, 6);
+            this.tableLayoutPanelRebar.Controls.Add(this.label4, 3, 7);
+            this.tableLayoutPanelRebar.Controls.Add(this.label2gr, 4, 1);
+            this.tableLayoutPanelRebar.Controls.Add(this.labelRebarClasses, 0, 0);
+            this.tableLayoutPanelRebar.Location = new System.Drawing.Point(50, 25);
+            this.tableLayoutPanelRebar.Name = "tableLayoutPanelRebar";
+            this.tableLayoutPanelRebar.RowCount = 8;
+            this.tableLayoutPanelRebar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanelRebar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
+            this.tableLayoutPanelRebar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
+            this.tableLayoutPanelRebar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
+            this.tableLayoutPanelRebar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
+            this.tableLayoutPanelRebar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.90323F));
+            this.tableLayoutPanelRebar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.52074F));
+            this.tableLayoutPanelRebar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.90323F));
+            this.tableLayoutPanelRebar.Size = new System.Drawing.Size(564, 238);
+            this.tableLayoutPanelRebar.TabIndex = 7;
+            // 
+            // labelRebarClass
+            // 
+            this.labelRebarClass.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.labelRebarClass.AutoSize = true;
+            this.labelRebarClass.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelRebarClass.Location = new System.Drawing.Point(4, 30);
+            this.labelRebarClass.Name = "labelRebarClass";
+            this.labelRebarClass.Size = new System.Drawing.Size(87, 13);
+            this.labelRebarClass.TabIndex = 0;
+            this.labelRebarClass.Text = "Продольная: ";
+            // 
+            // cmbRebarClass
+            // 
+            this.cmbRebarClass.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbRebarClass.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbRebarClass.FormattingEnabled = true;
+            this.cmbRebarClass.Items.AddRange(new object[] {
+            "A240",
+            "A400",
+            "A500",
+            "B500",
+            "Bp500"});
+            this.cmbRebarClass.Location = new System.Drawing.Point(115, 26);
+            this.cmbRebarClass.Name = "cmbRebarClass";
+            this.cmbRebarClass.Size = new System.Drawing.Size(81, 21);
+            this.cmbRebarClass.TabIndex = 1;
+            this.cmbRebarClass.SelectedIndexChanged += new System.EventHandler(this.cmbRebarClass_SelectedIndexChanged);
+            // 
+            // labelRs
+            // 
+            this.labelRs.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.labelRs.AutoSize = true;
+            this.labelRs.Location = new System.Drawing.Point(4, 60);
+            this.labelRs.Name = "labelRs";
+            this.labelRs.Size = new System.Drawing.Size(65, 13);
+            this.labelRs.TabIndex = 2;
+            this.labelRs.Text = "R s, кг/см2";
+            // 
+            // numRs
+            // 
+            this.numRs.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.numRs.DecimalPlaces = 2;
+            this.numRs.Enabled = false;
+            this.numRs.Location = new System.Drawing.Point(115, 56);
+            this.numRs.Maximum = new decimal(new int[] {
+            -727379968,
+            232,
+            0,
+            0});
+            this.numRs.Name = "numRs";
+            this.numRs.Size = new System.Drawing.Size(81, 20);
+            this.numRs.TabIndex = 3;
+            this.numRs.ValueChanged += new System.EventHandler(this.numRs_ValueChanged);
+            // 
+            // labelRsMPa
+            // 
+            this.labelRsMPa.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.labelRsMPa.AutoSize = true;
+            this.labelRsMPa.BackColor = System.Drawing.Color.Transparent;
+            this.labelRsMPa.Location = new System.Drawing.Point(275, 60);
+            this.labelRsMPa.Name = "labelRsMPa";
+            this.labelRsMPa.Size = new System.Drawing.Size(30, 13);
+            this.labelRsMPa.TabIndex = 8;
+            this.labelRsMPa.Text = "МПа";
+            // 
+            // labelEsw
+            // 
+            this.labelEsw.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.labelEsw.AutoSize = true;
+            this.labelEsw.Location = new System.Drawing.Point(33, 212);
+            this.labelEsw.Name = "labelEsw";
+            this.labelEsw.Size = new System.Drawing.Size(75, 13);
+            this.labelEsw.TabIndex = 11;
+            this.labelEsw.Text = "E, sw, кг/см2";
+            // 
+            // numEsw_X
+            // 
+            this.numEsw_X.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.numEsw_X.DecimalPlaces = 2;
+            this.numEsw_X.Enabled = false;
+            this.numEsw_X.Location = new System.Drawing.Point(115, 209);
+            this.numEsw_X.Maximum = new decimal(new int[] {
+            -727379968,
+            232,
+            0,
+            0});
+            this.numEsw_X.Name = "numEsw_X";
+            this.numEsw_X.Size = new System.Drawing.Size(81, 20);
+            this.numEsw_X.TabIndex = 13;
+            this.numEsw_X.ValueChanged += new System.EventHandler(this.numEsw_X_ValueChanged);
+            // 
+            // labelRsw
+            // 
+            this.labelRsw.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.labelRsw.AutoSize = true;
+            this.labelRsw.Location = new System.Drawing.Point(32, 180);
+            this.labelRsw.Name = "labelRsw";
+            this.labelRsw.Size = new System.Drawing.Size(76, 13);
+            this.labelRsw.TabIndex = 7;
+            this.labelRsw.Text = "R, sw, кг/см2";
+            // 
+            // numRsw_X
+            // 
+            this.numRsw_X.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.numRsw_X.DecimalPlaces = 2;
+            this.numRsw_X.Enabled = false;
+            this.numRsw_X.Location = new System.Drawing.Point(115, 176);
+            this.numRsw_X.Maximum = new decimal(new int[] {
+            1215752192,
+            23,
+            0,
+            0});
+            this.numRsw_X.Name = "numRsw_X";
+            this.numRsw_X.Size = new System.Drawing.Size(81, 20);
+            this.numRsw_X.TabIndex = 6;
+            this.numRsw_X.ValueChanged += new System.EventHandler(this.numRsw_ValueChanged);
+            // 
+            // labelEswMPa
+            // 
+            this.labelEswMPa.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.labelEswMPa.AutoSize = true;
+            this.labelEswMPa.BackColor = System.Drawing.Color.Transparent;
+            this.labelEswMPa.Location = new System.Drawing.Point(275, 212);
+            this.labelEswMPa.Name = "labelEswMPa";
+            this.labelEswMPa.Size = new System.Drawing.Size(30, 13);
+            this.labelEswMPa.TabIndex = 15;
+            this.labelEswMPa.Text = "МПа";
+            // 
+            // labelRswMPa
+            // 
+            this.labelRswMPa.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.labelRswMPa.AutoSize = true;
+            this.labelRswMPa.BackColor = System.Drawing.Color.White;
+            this.labelRswMPa.Location = new System.Drawing.Point(275, 180);
+            this.labelRswMPa.Name = "labelRswMPa";
+            this.labelRswMPa.Size = new System.Drawing.Size(30, 13);
+            this.labelRswMPa.TabIndex = 9;
+            this.labelRswMPa.Text = "МПа";
+            // 
+            // labelTRebarClass
+            // 
+            this.labelTRebarClass.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.labelTRebarClass.AutoSize = true;
+            this.labelTRebarClass.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelTRebarClass.Location = new System.Drawing.Point(4, 150);
+            this.labelTRebarClass.Name = "labelTRebarClass";
+            this.labelTRebarClass.Size = new System.Drawing.Size(102, 13);
+            this.labelTRebarClass.TabIndex = 4;
+            this.labelTRebarClass.Text = "Поперечная - X:";
+            // 
+            // cmbTRebarClass_X
+            // 
+            this.cmbTRebarClass_X.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbTRebarClass_X.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbTRebarClass_X.FormattingEnabled = true;
+            this.cmbTRebarClass_X.Items.AddRange(new object[] {
+            "A240",
+            "A400",
+            "A500",
+            "B500",
+            "Bp500"});
+            this.cmbTRebarClass_X.Location = new System.Drawing.Point(115, 146);
+            this.cmbTRebarClass_X.Name = "cmbTRebarClass_X";
+            this.cmbTRebarClass_X.Size = new System.Drawing.Size(81, 21);
+            this.cmbTRebarClass_X.TabIndex = 5;
+            this.cmbTRebarClass_X.SelectedIndexChanged += new System.EventHandler(this.cmbTRebarClass_SelectedIndexChanged);
+            // 
+            // label5
+            // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(4, 120);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(104, 13);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "E s, кг/см2";
+            // 
+            // numEs
+            // 
+            this.numEs.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.numEs.DecimalPlaces = 2;
+            this.numEs.Enabled = false;
+            this.numEs.Location = new System.Drawing.Point(115, 116);
+            this.numEs.Maximum = new decimal(new int[] {
+            1000000000,
+            0,
+            0,
+            0});
+            this.numEs.Name = "numEs";
+            this.numEs.Size = new System.Drawing.Size(81, 20);
+            this.numEs.TabIndex = 12;
+            this.numEs.Value = new decimal(new int[] {
+            2039431,
+            0,
+            0,
+            0});
+            this.numEs.ValueChanged += new System.EventHandler(this.numEs_ValueChanged);
+            // 
+            // labelEsMPa
+            // 
+            this.labelEsMPa.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.labelEsMPa.AutoSize = true;
+            this.labelEsMPa.BackColor = System.Drawing.Color.Transparent;
+            this.labelEsMPa.Location = new System.Drawing.Point(275, 120);
+            this.labelEsMPa.Name = "labelEsMPa";
+            this.labelEsMPa.Size = new System.Drawing.Size(30, 13);
+            this.labelEsMPa.TabIndex = 14;
+            this.labelEsMPa.Text = "МПа";
+            // 
+            // numRsc
+            // 
+            this.numRsc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.numRsc.DecimalPlaces = 2;
+            this.numRsc.Enabled = false;
+            this.numRsc.Location = new System.Drawing.Point(115, 86);
+            this.numRsc.Maximum = new decimal(new int[] {
+            1215752192,
+            23,
+            0,
+            0});
+            this.numRsc.Name = "numRsc";
+            this.numRsc.Size = new System.Drawing.Size(81, 20);
+            this.numRsc.TabIndex = 17;
+            this.numRsc.ValueChanged += new System.EventHandler(this.numRsc_ValueChanged);
+            // 
+            // labelRsс
+            // 
+            this.labelRsс.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.labelRsс.AutoSize = true;
+            this.labelRsс.Location = new System.Drawing.Point(4, 90);
+            this.labelRsс.Name = "labelRsс";
+            this.labelRsс.Size = new System.Drawing.Size(71, 13);
+            this.labelRsс.TabIndex = 16;
+            this.labelRsс.Text = "R sc, кг/см2";
+            // 
+            // labelRsсMPa
+            // 
+            this.labelRsсMPa.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.labelRsсMPa.AutoSize = true;
+            this.labelRsсMPa.Location = new System.Drawing.Point(275, 90);
+            this.labelRsсMPa.Name = "labelRsсMPa";
+            this.labelRsсMPa.Size = new System.Drawing.Size(30, 13);
+            this.labelRsсMPa.TabIndex = 18;
+            this.labelRsсMPa.Text = "МПа";
+            // 
+            // labelRsn
+            // 
+            this.labelRsn.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.labelRsn.AutoSize = true;
+            this.labelRsn.Location = new System.Drawing.Point(312, 60);
+            this.labelRsn.Name = "labelRsn";
+            this.labelRsn.Size = new System.Drawing.Size(74, 13);
+            this.labelRsn.TabIndex = 19;
+            this.labelRsn.Text = "R s, n кг/см2";
+            // 
+            // labelRsсn
+            // 
+            this.labelRsсn.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.labelRsсn.AutoSize = true;
+            this.labelRsсn.Location = new System.Drawing.Point(312, 90);
+            this.labelRsсn.Name = "labelRsсn";
+            this.labelRsсn.Size = new System.Drawing.Size(83, 13);
+            this.labelRsсn.TabIndex = 20;
+            this.labelRsсn.Text = "R sc, n, кг/см2";
+            // 
+            // numRsn
+            // 
+            this.numRsn.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.numRsn.DecimalPlaces = 2;
+            this.numRsn.Enabled = false;
+            this.numRsn.Location = new System.Drawing.Point(429, 56);
+            this.numRsn.Maximum = new decimal(new int[] {
+            -727379968,
+            232,
+            0,
+            0});
+            this.numRsn.Name = "numRsn";
+            this.numRsn.Size = new System.Drawing.Size(96, 20);
+            this.numRsn.TabIndex = 21;
+            // 
+            // numRscn
+            // 
+            this.numRscn.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.numRscn.DecimalPlaces = 2;
+            this.numRscn.Enabled = false;
+            this.numRscn.Location = new System.Drawing.Point(429, 86);
+            this.numRscn.Maximum = new decimal(new int[] {
+            1215752192,
+            23,
+            0,
+            0});
+            this.numRscn.Name = "numRscn";
+            this.numRscn.Size = new System.Drawing.Size(96, 20);
+            this.numRscn.TabIndex = 22;
+            // 
+            // label26
+            // 
+            this.label26.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label26.AutoSize = true;
+            this.label26.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label26.Location = new System.Drawing.Point(312, 30);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(102, 13);
+            this.label26.TabIndex = 23;
+            this.label26.Text = "Норм. значения";
+            // 
+            // label25
+            // 
+            this.label25.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label25.AutoSize = true;
+            this.label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label25.Location = new System.Drawing.Point(312, 150);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(102, 13);
+            this.label25.TabIndex = 26;
+            this.label25.Text = "Поперечная - Y:";
+            // 
+            // cmbTRebarClass_Y
+            // 
+            this.cmbTRebarClass_Y.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbTRebarClass_Y.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbTRebarClass_Y.FormattingEnabled = true;
+            this.cmbTRebarClass_Y.Items.AddRange(new object[] {
+            "A240",
+            "A400",
+            "A500",
+            "B500",
+            "Bp500"});
+            this.cmbTRebarClass_Y.Location = new System.Drawing.Point(429, 146);
+            this.cmbTRebarClass_Y.Name = "cmbTRebarClass_Y";
+            this.cmbTRebarClass_Y.Size = new System.Drawing.Size(131, 21);
+            this.cmbTRebarClass_Y.TabIndex = 27;
+            this.cmbTRebarClass_Y.SelectedIndexChanged += new System.EventHandler(this.cmbTRebarClass_Y_SelectedIndexChanged);
+            // 
+            // numRsw_Y
+            // 
+            this.numRsw_Y.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.numRsw_Y.DecimalPlaces = 2;
+            this.numRsw_Y.Enabled = false;
+            this.numRsw_Y.Location = new System.Drawing.Point(429, 176);
+            this.numRsw_Y.Maximum = new decimal(new int[] {
+            1215752192,
+            23,
+            0,
+            0});
+            this.numRsw_Y.Name = "numRsw_Y";
+            this.numRsw_Y.Size = new System.Drawing.Size(131, 20);
+            this.numRsw_Y.TabIndex = 30;
+            // 
+            // numEsw_Y
+            // 
+            this.numEsw_Y.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.numEsw_Y.DecimalPlaces = 2;
+            this.numEsw_Y.Enabled = false;
+            this.numEsw_Y.Location = new System.Drawing.Point(429, 209);
+            this.numEsw_Y.Maximum = new decimal(new int[] {
+            -727379968,
+            232,
+            0,
+            0});
+            this.numEsw_Y.Name = "numEsw_Y";
+            this.numEsw_Y.Size = new System.Drawing.Size(131, 20);
+            this.numEsw_Y.TabIndex = 31;
+            // 
+            // label3
+            // 
+            this.label3.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(346, 180);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(76, 13);
+            this.label3.TabIndex = 32;
+            this.label3.Text = "R, sw, кг/см2";
+            // 
+            // label4
+            // 
+            this.label4.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(347, 212);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(75, 13);
+            this.label4.TabIndex = 33;
+            this.label4.Text = "E, sw, кг/см2";
             // 
             // label2gr
             // 
             this.label2gr.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label2gr.AutoSize = true;
             this.label2gr.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2gr.Location = new System.Drawing.Point(503, 11);
+            this.label2gr.Location = new System.Drawing.Point(429, 30);
             this.label2gr.Name = "label2gr";
             this.label2gr.Size = new System.Drawing.Size(66, 13);
             this.label2gr.TabIndex = 42;
             this.label2gr.Text = "(2 группа)";
             // 
-            // label20
+            // labelRebarClasses
             // 
-            this.label20.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label20.BackColor = System.Drawing.Color.LightSteelBlue;
-            this.label20.Location = new System.Drawing.Point(438, 29);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(205, 21);
-            this.label20.TabIndex = 8;
-            this.label20.Text = "Задать параметры арматуры";
-            this.label20.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelRebarClasses.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.labelRebarClasses.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.tableLayoutPanelRebar.SetColumnSpan(this.labelRebarClasses, 3);
+            this.labelRebarClasses.Location = new System.Drawing.Point(52, 1);
+            this.labelRebarClasses.Name = "labelRebarClasses";
+            this.labelRebarClasses.Size = new System.Drawing.Size(205, 20);
+            this.labelRebarClasses.TabIndex = 8;
+            this.labelRebarClasses.Text = "Задать класс арматуры";
+            this.labelRebarClasses.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // tabPageNDM
             // 
@@ -2669,7 +2725,7 @@
             this.tabPageNDM.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageNDM.Size = new System.Drawing.Size(1114, 471);
             this.tabPageNDM.TabIndex = 4;
-            this.tabPageNDM.Text = "НДМ";
+            this.tabPageNDM.Text = "Сечение (НДМ)";
             this.tabPageNDM.UseVisualStyleBackColor = true;
             // 
             // panelSectionDraw
@@ -3136,7 +3192,7 @@
             // 
             this.btnMeshSettings.ImageKey = "Settings.png";
             this.btnMeshSettings.ImageList = this.imageList;
-            this.btnMeshSettings.Location = new System.Drawing.Point(240, 82);
+            this.btnMeshSettings.Location = new System.Drawing.Point(293, 84);
             this.btnMeshSettings.Name = "btnMeshSettings";
             this.btnMeshSettings.Size = new System.Drawing.Size(50, 49);
             this.btnMeshSettings.TabIndex = 13;
@@ -3211,16 +3267,12 @@
             // 
             this.btnCalc_Deform.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCalc_Deform.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnCalc_Deform.ImageKey = "CM.png";
             this.btnCalc_Deform.ImageList = this.imageList;
-            this.btnCalc_Deform.Location = new System.Drawing.Point(39, 82);
+            this.btnCalc_Deform.Location = new System.Drawing.Point(189, 84);
             this.btnCalc_Deform.Name = "btnCalc_Deform";
-            this.btnCalc_Deform.Size = new System.Drawing.Size(195, 49);
+            this.btnCalc_Deform.Size = new System.Drawing.Size(90, 50);
             this.btnCalc_Deform.TabIndex = 9;
-            this.btnCalc_Deform.Text = "..по нелинейной деформационной модели";
-            this.btnCalc_Deform.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnCalc_Deform.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnCalc_Deform.UseVisualStyleBackColor = true;
             this.btnCalc_Deform.Click += new System.EventHandler(this.btnCalc_Deform_Click);
             // 
@@ -3228,24 +3280,21 @@
             // 
             this.btnStaticEqCalc.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnStaticEqCalc.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnStaticEqCalc.ImageIndex = 1;
+            this.btnStaticEqCalc.ImageKey = "Command.png";
             this.btnStaticEqCalc.ImageList = this.imageList;
-            this.btnStaticEqCalc.Location = new System.Drawing.Point(39, 35);
+            this.btnStaticEqCalc.Location = new System.Drawing.Point(94, 84);
             this.btnStaticEqCalc.Name = "btnStaticEqCalc";
-            this.btnStaticEqCalc.Size = new System.Drawing.Size(195, 41);
+            this.btnStaticEqCalc.Size = new System.Drawing.Size(90, 50);
             this.btnStaticEqCalc.TabIndex = 7;
-            this.btnStaticEqCalc.Text = "..на действие  My, N,  Q ";
             this.btnStaticEqCalc.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnStaticEqCalc.UseVisualStyleBackColor = true;
             this.btnStaticEqCalc.Click += new System.EventHandler(this.btnStaticEqCalc_Click);
             // 
             // labelCalculation
             // 
-            this.labelCalculation.AutoSize = true;
-            this.labelCalculation.Location = new System.Drawing.Point(3, 19);
+            this.labelCalculation.Location = new System.Drawing.Point(3, 29);
             this.labelCalculation.Name = "labelCalculation";
-            this.labelCalculation.Size = new System.Drawing.Size(71, 13);
+            this.labelCalculation.Size = new System.Drawing.Size(400, 30);
             this.labelCalculation.TabIndex = 3;
             this.labelCalculation.Text = "Рассчитать..";
             // 
@@ -3306,6 +3355,17 @@
             // openFileDialog
             // 
             this.openFileDialog.FileName = "openFileDialog1";
+            // 
+            // labelTRebarX
+            // 
+            this.labelTRebarX.AutoSize = true;
+            this.labelTRebarX.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.tableLayoutPanelTRebar.SetColumnSpan(this.labelTRebarX, 2);
+            this.labelTRebarX.Location = new System.Drawing.Point(4, 1);
+            this.labelTRebarX.Name = "labelTRebarX";
+            this.labelTRebarX.Size = new System.Drawing.Size(188, 13);
+            this.labelTRebarX.TabIndex = 42;
+            this.labelTRebarX.Text = "Расстановка поперечной арматуры";
             // 
             // BSFiberMain
             // 
@@ -3369,13 +3429,20 @@
             ((System.ComponentModel.ISupportInitialize)(this.num_Ml1_M1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.tabRebar.ResumeLayout(false);
-            this.flowLayoutPanelRebar.ResumeLayout(false);
-            this.tableLayoutPanelRebar.ResumeLayout(false);
-            this.tableLayoutPanelRebar.PerformLayout();
+            this.tableLayoutPanelTRebar.ResumeLayout(false);
+            this.tableLayoutPanelTRebar.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.num_s_w_Y)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numN_w_Y)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numN_w_X)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.num_s_w_X)).EndInit();
+            this.tableLayoutPanelLRebar.ResumeLayout(false);
+            this.tableLayoutPanelLRebar.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numAs)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_a1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_a)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAs1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numAs)).EndInit();
+            this.tableLayoutPanelRebar.ResumeLayout(false);
+            this.tableLayoutPanelRebar.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numRs)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numEsw_X)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numRsw_X)).EndInit();
@@ -3383,12 +3450,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numRsc)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numRsn)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numRscn)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.num_s_w_X)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.num_s_w_Y)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numRsw_Y)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numEsw_Y)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numN_w_Y)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numN_w_X)).EndInit();
             this.tabPageNDM.ResumeLayout(false);
             this.tabPageAdmin.ResumeLayout(false);
             this.tableLayoutMesh.ResumeLayout(false);
@@ -3404,7 +3467,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numEps_fb_ult)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridSection)).EndInit();
             this.panelCalc.ResumeLayout(false);
-            this.panelCalc.PerformLayout();
             this.flowLayoutPanelArea.ResumeLayout(false);
             this.flowLayoutBtns.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -3514,7 +3576,6 @@
         private System.Windows.Forms.Label labelRfbtnMPa;
         private System.Windows.Forms.Label labelRsMPa;
         private System.Windows.Forms.Label labelRswMPa;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelRebar;
         private System.Windows.Forms.Button btnMesh;
         private System.Windows.Forms.TabPage tabPageNDM;
         private System.Windows.Forms.Label labelMesh;
@@ -3572,7 +3633,7 @@
         private System.Windows.Forms.Label label34;
         private System.Windows.Forms.Label label_s_w;
         private System.Windows.Forms.NumericUpDown num_s_w_X;
-        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label labelRebarClasses;
         private System.Windows.Forms.Label label38;
         private System.Windows.Forms.Label label35;
         private System.Windows.Forms.Label label36;
@@ -3632,6 +3693,10 @@
         private System.Windows.Forms.Label labelSection;
         private System.Windows.Forms.Button btnNDMCrc;
         private System.Windows.Forms.Panel panelSectionDraw;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelLRebar;
+        private System.Windows.Forms.Label labelRebarStaticCalc;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelTRebar;
+        private System.Windows.Forms.Label labelTRebarX;
     }
 }
 
