@@ -112,50 +112,78 @@ namespace BSFiberConcrete.Section
         /// </summary>
         private void InitTRebar(int _N)
         {
+            if (_N == 0) return;
+
             float y0 = 0 + as_t + Origin.Y, 
                   yh = h - as_t + Origin.Y;
 
-            float x0 = b / (_N + 1);
-            float x1 = _N * x0;
-            float x2 = (_N + 1) * x0;
+            float[] x = new float[_N];
 
-            x0 += Origin.X;
-            x1 += Origin.X;
-            x2 += Origin.X;
+            x[0] = b / (_N + 1);
 
+            for (int i = 1; i < _N; i++)            
+                x[i] = (i+1) * x[0];
+
+            for (int i = 0; i < _N; i++)
+                x[i] += Origin.X;
+            
             if (_N == 1)
             {                
-                PointsTRebar.Add(new PointF(x0, y0));
-                PointsTRebar.Add(new PointF(x0, yh));
+                PointsTRebar.Add(new PointF(x[0], y0));
+                PointsTRebar.Add(new PointF(x[0], yh));
             }
             else if (_N == 2)
             {                                
-                PointsTRebar.Add(new PointF(x0, y0));
-                PointsTRebar.Add(new PointF(x1, y0));
+                PointsTRebar.Add(new PointF(x[0], y0));
+                PointsTRebar.Add(new PointF(x[1], y0));
 
-                PointsTRebar.Add(new PointF(x1, yh));
-                PointsTRebar.Add(new PointF(x0, yh));
+                PointsTRebar.Add(new PointF(x[1], yh));
+                PointsTRebar.Add(new PointF(x[0], yh));
 
-                PointsTRebar.Add(new PointF(x0, y0));
+                PointsTRebar.Add(new PointF(x[0], y0));
             }
             else if (_N == 3)
             {                                
-                PointsTRebar.Add(new PointF(x0, y0));
-                PointsTRebar.Add(new PointF(x1, y0));
+                PointsTRebar.Add(new PointF(x[0], y0));
+                PointsTRebar.Add(new PointF(x[1], y0));
 
-                PointsTRebar.Add(new PointF(x1, yh));
-                PointsTRebar.Add(new PointF(x0, yh));
+                PointsTRebar.Add(new PointF(x[1], yh));
+                PointsTRebar.Add(new PointF(x[0], yh));
 
-                PointsTRebar.Add(new PointF(x0, y0));
-                PointsTRebar.Add(new PointF(x2, y0));
+                PointsTRebar.Add(new PointF(x[0], y0));
+                PointsTRebar.Add(new PointF(x[2], y0));
 
-                PointsTRebar.Add(new PointF(x2, yh));
-                PointsTRebar.Add(new PointF(x0, yh));
+                PointsTRebar.Add(new PointF(x[2], yh));
+                PointsTRebar.Add(new PointF(x[0], yh));
 
-                PointsTRebar.Add(new PointF(x0, y0));                
+                PointsTRebar.Add(new PointF(x[0], y0));                
             }
-        }
+            else if (_N == 4)
+            {
+                PointsTRebar.Add(new PointF(x[0], y0));
+                PointsTRebar.Add(new PointF(x[1], y0));
 
+                PointsTRebar.Add(new PointF(x[1], yh));
+                PointsTRebar.Add(new PointF(x[0], yh));
+
+                PointsTRebar.Add(new PointF(x[0], y0));
+                PointsTRebar.Add(new PointF(x[2], y0));
+
+                PointsTRebar.Add(new PointF(x[2], yh));
+                PointsTRebar.Add(new PointF(x[0], yh));
+
+                PointsTRebar.Add(new PointF(x[0], y0));
+                PointsTRebar.Add(new PointF(x[3], y0));
+
+                PointsTRebar.Add(new PointF(x[3], yh));
+                PointsTRebar.Add(new PointF(x[0], yh));
+
+
+                PointsTRebar.Add(new PointF(x[0], y0));
+            }
+
+
+        }
 
         private void InitPoints()
         {
