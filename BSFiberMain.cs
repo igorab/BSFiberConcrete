@@ -2295,28 +2295,36 @@ namespace BSFiberConcrete
         {
             if (CalcType == CalcType.Static) return;
 
-            //NDMSetupValuesFromForm();
-            m_SectionChart = new BSSectionChart(_beamSection);
-            m_SectionChart.Dock = DockStyle.Top;            
-            //m_SectionChart.m_BeamSection = _beamSection;
+            if (m_SectionChart == null)
+                m_SectionChart = new BSSectionChart(_beamSection);
+            else
+                m_SectionChart.InitValues(_beamSection); 
 
+            m_SectionChart.Dock       = DockStyle.Top;            
+            //m_SectionChart.m_BeamSection = _beamSection;
             var sz = BeamWidtHeight(out double b, out double h, out double _area);
 
             m_SectionChart.RebarClass = cmbRebarClass.SelectedItem.ToString();
-            m_SectionChart.Wdth = (float)b;
-            m_SectionChart.Hght = (float)h;
-            m_SectionChart.Sz = sz;
-            m_SectionChart.NumArea = _area;
-            m_SectionChart.a_t_Nx = (int)numN_w_X.Value;
-            //m_SectionChart.FormReload();
-            // m_SectionChart.ShowDialog(); //.Show();
+            m_SectionChart.Wdth       = (float)b;
+            m_SectionChart.Hght       = (float)h;
+            m_SectionChart.Sz         = sz;
+            m_SectionChart.NumArea    = _area;
+            m_SectionChart.a_t_Nx     = (int)numN_w_X.Value;
 
-            panelSectionDraw.Controls.Clear();
-            panelSectionDraw.Controls.Add(m_SectionChart);
+            //m_SectionChart.FormReload();
+
+            if (panelSectionDraw.Controls.Contains(m_SectionChart))
+            {
+                m_SectionChart.FormReload();
+            }
+            else
+            {
+                panelSectionDraw.Controls.Clear();
+                panelSectionDraw.Controls.Add(m_SectionChart);
+            }
 
             m_ImageStream = m_SectionChart.GetImageStream;
         }
-
 
         /// <summary>
         ///  Конструктор сечений
