@@ -2023,7 +2023,7 @@ namespace BSFiberConcrete
                         calcResults.Add(calcRes);
                     }
                 }
-
+                
                 CreatePictureForHeaderReport(calcResults);
                 CreatePictureForBodyReport(calcResults);
 

@@ -72,7 +72,7 @@ namespace BSFiberConcrete
         /// <summary>
         ///  Верхняя часть отчета
         /// </summary>        
-        protected virtual void Header(StreamWriter w)
+        public virtual void Header(StreamWriter w)
         {
             w.WriteLine("<html>");
             w.WriteLine($"<H1>{ReportName}</H1>");
@@ -163,7 +163,7 @@ namespace BSFiberConcrete
         /// <summary>
         /// Основная часть отчета
         /// </summary>        
-        protected virtual void ReportBody(StreamWriter w)
+        public virtual void ReportBody(StreamWriter w)
         {
             if (m_PhysParams != null)
             {
@@ -251,7 +251,7 @@ namespace BSFiberConcrete
         /// <summary>
         /// Нагрузки
         /// </summary>        
-        protected virtual void ReportEfforts(StreamWriter w)
+        public void ReportEfforts(StreamWriter w)
         {
             if (m_Efforts != null)
             {
@@ -284,7 +284,7 @@ namespace BSFiberConcrete
             }
         }
 
-        protected virtual void ReportResult(StreamWriter w)
+        public virtual void ReportResult(StreamWriter w)
         {            
             w.WriteLine("<H2>Расчет:</H2>");
             if (m_CalcResults2Group != null)
@@ -437,8 +437,7 @@ namespace BSFiberConcrete
             return _img;
         }
 
-
-        protected virtual void Footer(StreamWriter w)
+        public virtual void Footer(StreamWriter w)
         {
             if (m_Messages != null)
             {
