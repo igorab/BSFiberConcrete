@@ -1153,9 +1153,8 @@ namespace BSFiberConcrete
             Rebar rebar = (Rebar)m_BSLoadData.Rebar.Clone();
             InitRebarValues(ref rebar);
 
-            List<BSFiberReportData> calcResults_M = new List<BSFiberReportData>();
-            List<BSFiberReport_N> calcResults_N = new List<BSFiberReport_N>();
-
+            List<BSFiberReportData> calcResults_MNQ = new List<BSFiberReportData>();
+            
             BSFiberCalc_MNQ FibCalc_MNQ(Dictionary<string, double> _MNQ)
             {
                 BSFiberCalc_MNQ fibCalc = BSFiberCalc_MNQ.Construct(m_BeamSection);
@@ -1206,7 +1205,7 @@ namespace BSFiberConcrete
                     //FibCalc_M.m_CalcResults1Group.Add("Момент по наклонному сечению", Mc_ult);
                     //FibCalc_M.m_CalcResults1Group.Add("Коэфф исп момента по накл сечению [6.1.30]", UtilRate_Mc);
 
-                    calcResults_M.Add(FibCalc_M);
+                    calcResults_MNQ.Add(FibCalc_M);
                 }                
                 else if (_N > 0 && _Qx == 0)
                 {
@@ -1222,14 +1221,13 @@ namespace BSFiberConcrete
                         (Mc_ult, UtilRate_Mc) = fiberCalc_N.Calculate_Mc();
                     }
 
-                    BSFiberReport_N report = new BSFiberReport_N() { _unitConverter = _UnitConverter };
+                    BSFiberReport_N report = new BSFiberReport_N() { };
                     report.InitFromFiberCalc(fiberCalc_N);
-
-                    // расчет по второй группе предельных состояний                    
-                    var calcResults2Group    = FiberCalculate_Cracking();
+                    BSFiberCalc_Cracking calcResults2Group    = FiberCalculate_Cracking();
                     report.CalcResults2Group = calcResults2Group.Results();
-
-                    calcResults_N.Add(report);
+                    
+                    calcResults_MNQ.Add(report.GetBSFiberReportData());
+                    
                 }                
                 else if (_Qx != 0)
                 {
@@ -1253,13 +1251,13 @@ namespace BSFiberConcrete
                     BSFiberCalc_Cracking calcResults2Group = FiberCalculate_Cracking();
                     fiberCalc_Qc.CalcResults2Group         = calcResults2Group.Results();
 
-                    BSFiberReport_MNQ.FiberReport_Qc(fiberCalc_Qc, ++iRep);                    
+                    var report = BSFiberReport_MNQ.FiberReport_Qc(fiberCalc_Qc, ++iRep);
+
+                    calcResults_MNQ.Add(report.GetBSFiberReportData());
                 }                                
             }
 
-            BSFiberReport_M.RunMultiReport(ref iRep, calcResults_M);
-
-            BSFiberReport_N.RunMultiReport(ref iRep, calcResults_N);
+            BSFiberReport_M.RunMultiReport( calcResults_MNQ);            
         }
 
         private void btnFactors_Click(object sender, EventArgs e)

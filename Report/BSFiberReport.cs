@@ -13,6 +13,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.Remoting.Messaging;
 using BSFiberConcrete.UnitsOfMeasurement;
+using BSFiberConcrete.Report;
 
 namespace BSFiberConcrete
 {
@@ -68,6 +69,21 @@ namespace BSFiberConcrete
         }
 
         private const int bk = 800, bv = 200;
+
+        public void InitFromBSFiberReportData(BSFiberReport_N fiberReport)
+        {
+            Efforts           = fiberReport.m_Efforts;
+            CalcResults1Group = fiberReport.m_CalcResults1Group;
+            CalcResults2Group = fiberReport.m_CalcResults2Group;
+        }
+
+
+        public void InitFromBSFiberReportData(BSFiberReportData fiberReport)
+        {
+            Efforts           = fiberReport.m_Efforts;
+            CalcResults1Group = fiberReport.m_CalcResults1Group;
+            CalcResults2Group = fiberReport.m_CalcResults2Group;
+        }
 
         /// <summary>
         ///  Верхняя часть отчета
@@ -286,7 +302,7 @@ namespace BSFiberConcrete
 
         public virtual void ReportResult(StreamWriter w)
         {            
-            w.WriteLine("<H2>Расчет:</H2>");
+            w.WriteLine("Расчет:");
             if (m_CalcResults2Group != null)
                 w.WriteLine("<H3>Расчет по 1-й группе предельных состояний:</H3>");
             if (m_CalcResults1Group != null)
