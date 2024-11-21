@@ -28,7 +28,9 @@ namespace BSFiberConcrete
         [DisplayName("Высота верхней полки, h1f, [см]")]
         public double h1f { get; protected set; }
 
-        public override double Width => Math.Max(bf, bw);
+        [DisplayName("Ширина сечения b, [см]")]
+        public override double Width => Math.Max(bf, b1f);
+        [DisplayName("Высота сечения , [см]")]
         public override double Height => hf + hw + h1f;
 
         // Центр тяжести сечения

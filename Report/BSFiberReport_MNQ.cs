@@ -37,7 +37,6 @@ namespace BSFiberConcrete
             return report;
 
             //string pathToHtmlFile = report.CreateReport(_irep);
-
             //System.Diagnostics.Process.Start(pathToHtmlFile);
         }
 
@@ -45,14 +44,14 @@ namespace BSFiberConcrete
         {
             BSFiberReportData data = new BSFiberReportData
             {
-                BeamSection = m_BeamSection,
-                UseReinforcement = UseReinforcement,
-                m_Coeffs = m_Coeffs,
-                m_Efforts = m_Efforts,
-                m_GeomParams = m_GeomParams,
-                m_Messages = m_Messages,
-                m_PhysParams = m_PhysParams,
-                UnitConverter = _unitConverter,
+                BeamSection       = m_BeamSection,
+                UseReinforcement  = UseReinforcement,
+                m_Coeffs          = m_Coeffs,
+                m_Efforts         = m_Efforts,
+                m_GeomParams      = m_GeomParams,
+                m_Messages        = m_Messages,
+                m_PhysParams      = m_PhysParams,
+                UnitConverter     = _unitConverter,
                 // результат расчета по первой группе предельных состояний
                 m_CalcResults1Group = m_CalcResults1Group,
                 // результат расчета по второй группе предельных состояний

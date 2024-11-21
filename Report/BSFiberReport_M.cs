@@ -92,9 +92,8 @@ namespace BSFiberConcrete
                                 report.InitFromBSFiberReportData(fiberReport);                                
                                 report.ReportEfforts(w);                                
                                 report.ReportResult(w);
-                            }
-                            
-                            report.Footer(w);
+                                report.Footer(w);
+                            }                                                        
                         }
 
                         pathToHtmlFile = fs.Name;

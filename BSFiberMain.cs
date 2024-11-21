@@ -276,10 +276,11 @@ namespace BSFiberConcrete
             tlTip.SetToolTip(this.btnIBeam, "Двутавровое сечение");
             tlTip.SetToolTip(this.btnRing, "Кольцевое сечение");
             tlTip.SetToolTip(btnCustomSection, "Произвольное сечение");
-            tlTip.SetToolTip(btnCalcResults, "Результаты расчета");
+            tlTip.SetToolTip(btnCalcResults, "Сохранить данные");
+            tlTip.SetToolTip(btnOpenCalcFile, "Загрузить данные из файла");
             tlTip.SetToolTip(btnMeshSettings, "Настройка густоты расчетной сетки");
             tlTip.SetToolTip(this.btnStaticEqCalc, BSFiberLib.TxtStaticEqCalc);
-            tlTip.SetToolTip(this.btnCalc_Deform, BSFiberLib.TxtCalc_Deform);
+            tlTip.SetToolTip(this.btnCalc_Deform, BSFiberLib.TxtCalc_Deform);            
         }
 
         // арматура
@@ -2874,6 +2875,7 @@ namespace BSFiberConcrete
         private void btnNDMCrc_Click(object sender, EventArgs e)
         {
             BSCalcNDMCrc calcNDMCrc = new BSCalcNDMCrc();
+            calcNDMCrc.FractureStrengthType = cmbFractureStrength.SelectedIndex;
             calcNDMCrc.Show();
         }
 
@@ -3164,6 +3166,11 @@ namespace BSFiberConcrete
         }
 
         private void tabRebar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnNDMCrc_Click_1(object sender, EventArgs e)
         {
 
         }

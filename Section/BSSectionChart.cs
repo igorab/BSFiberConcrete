@@ -387,6 +387,9 @@ namespace BSFiberConcrete.Section
 
                 DrawFromDatasource(true);
 
+                chart.ChartAreas[0].AxisX.LabelStyle.Format = "{0:0.0}";
+                chart.ChartAreas[0].AxisY.LabelStyle.Format = "{0:0.0}";
+
             }
             catch (Exception _e)
             {

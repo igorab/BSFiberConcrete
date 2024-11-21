@@ -47,8 +47,8 @@
             beam.SetSizes(_t);
             base.m_Beam = this.beam;
             LngthCalc0 = beam.Length;
-            b = beam.b;
-            h = beam.h;
+            b = beam.Width;
+            h = beam.Height;
             I = beam.Jx();
             A = beam.Area();
             y_t = beam.y_t;

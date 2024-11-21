@@ -75,14 +75,15 @@ namespace BSFiberConcrete
             Efforts           = fiberReport.m_Efforts;
             CalcResults1Group = fiberReport.m_CalcResults1Group;
             CalcResults2Group = fiberReport.m_CalcResults2Group;
+            m_Messages        = fiberReport.m_Messages;
         }
 
-
-        public void InitFromBSFiberReportData(BSFiberReportData fiberReport)
+        public void InitFromBSFiberReportData(BSFiberReportData _ReportData)
         {
-            Efforts           = fiberReport.m_Efforts;
-            CalcResults1Group = fiberReport.m_CalcResults1Group;
-            CalcResults2Group = fiberReport.m_CalcResults2Group;
+            Efforts           = _ReportData.m_Efforts;
+            CalcResults1Group = _ReportData.m_CalcResults1Group;
+            CalcResults2Group = _ReportData.m_CalcResults2Group;
+            m_Messages        = _ReportData.m_Messages;
         }
 
         /// <summary>
