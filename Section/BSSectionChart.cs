@@ -11,6 +11,7 @@ using BSCalcLib;
 using System.Diagnostics;
 using BSFiberConcrete.Report;
 using ScottPlot.Colormaps;
+using OpenTK.Graphics.ES11;
 
 namespace BSFiberConcrete.Section
 {
@@ -33,11 +34,8 @@ namespace BSFiberConcrete.Section
         /// Класс используемой арматуры
         /// </summary>
         public string RebarClass { private get; set; }
-
-        public MemoryStream  GetImageStream => m_ImageStream;
-        
-        private MemoryStream m_ImageStream;
-
+        public MemoryStream          GetImageStream => m_ImageStream;        
+        private MemoryStream         m_ImageStream;
         private List<RebarDiameters> m_Diameters;
 
         // Точки на диаграмме для отрисовки стержней арматуры  
@@ -48,10 +46,12 @@ namespace BSFiberConcrete.Section
 
         // точки на диаграмме для отображения отверстия в сечении
         private List<PointF> InnerPoints;
-
         private NDMSetup     NdmSetup;
         private PointF       Origin;
-        public PointF     Center { get; set; }
+
+        private const int amountOfEdges = 40;
+
+        public PointF        Center { get; set; }
         public float Wdth { get { return b; } set { b = value; } }
         public float Hght { get { return h; } set { h = value; } }
 
@@ -115,45 +115,77 @@ namespace BSFiberConcrete.Section
 
             RodBS.DataSource = bsRods;
         }
-
+      
         /// <summary>
         ///  Поперечная арматура
         /// </summary>
         private void InitTRebar(int _N)
         {
             if (_N == 0) return;
+            PointsTRebar.Clear();
 
-            float y0 = 0 + as_t + Origin.Y, 
-                  yh = h - as_t + Origin.Y;
-
-            float[] x = new float[_N];
-
-            x[0] = b / (_N + 1);
-
-            for (int i = 1; i < _N; i++)            
-                x[i] = (i+1) * x[0];
-
-            for (int i = 0; i < _N; i++)
-                x[i] += Origin.X;
-
-            if (_N == 1)
+            if (m_BeamSection == BeamSection.Ring)
             {
-                PointsTRebar.Add(new PointF(x[0], y0));
-                PointsTRebar.Add(new PointF(x[0], yh));
+                double in_r  = Sz[0];
+                double out_r = Sz[1];
+                double dr    = (out_r - in_r) / (_N+1);
+
+                for (int n = 1; n <= _N; n++)
+                {                    
+                    double radius = in_r + n*dr;
+                    PointsTRebar.AddRange(MakeCircle(radius, amountOfEdges));                    
+                }
             }
             else
             {
-                for (int _n = 1; _n < _N; _n++)
+                float y0 = 0 + as_t + Origin.Y,
+                yh = h - as_t + Origin.Y;
+
+                float[] x = new float[_N];
+
+                x[0] = b / (_N + 1);
+
+                for (int i = 1; i < _N; i++)
+                    x[i] = (i + 1) * x[0];
+
+                for (int i = 0; i < _N; i++)
+                    x[i] += Origin.X;
+
+                if (_N == 1)
                 {
                     PointsTRebar.Add(new PointF(x[0], y0));
-                    PointsTRebar.Add(new PointF(x[_n], y0));
-
-                    PointsTRebar.Add(new PointF(x[_n], yh));
                     PointsTRebar.Add(new PointF(x[0], yh));
                 }
+                else
+                {
+                    for (int _n = 1; _n < _N; _n++)
+                    {
+                        PointsTRebar.Add(new PointF(x[0], y0));
+                        PointsTRebar.Add(new PointF(x[_n], y0));
 
-                PointsTRebar.Add(new PointF(x[0], y0));
-            }           
+                        PointsTRebar.Add(new PointF(x[_n], yh));
+                        PointsTRebar.Add(new PointF(x[0], yh));
+                    }
+
+                    PointsTRebar.Add(new PointF(x[0], y0));
+                }
+            }
+        }
+
+        // точки окружности
+        private List<PointF> MakeCircle(double _radius, int _amountOfEdges)
+        {
+            List<PointF> pts = new List<PointF>();
+
+            // внешняя граница
+            for (int k = 0; k <= _amountOfEdges; k++)
+            {
+                double x = Center.X + _radius * Math.Cos(k * 2 * Math.PI / _amountOfEdges);
+                double y = Center.Y + _radius * Math.Sin(k * 2 * Math.PI / _amountOfEdges);
+                pts.Add(new PointF((float)x, (float)y));
+            }
+
+            return pts;
         }
 
         private void InitPoints()
@@ -171,26 +203,17 @@ namespace BSFiberConcrete.Section
             }            
             else if (m_BeamSection == BeamSection.Ring)
             {
-                PointsSection = new List<PointF>();
-                int amountOfEdges = 40;
-
-                double radius =  Sz[1];
+                PointsSection       = new List<PointF>();                
+                double radius       = Sz[1];
                 double inner_radius = Sz[0];
 
-                for (int k = 0; k <= amountOfEdges; k++)
-                {
-                    // внешняя граница
-                    double x = Center.X + radius * Math.Cos(k * 2 * Math.PI / amountOfEdges);
-                    double y = Center.Y + radius * Math.Sin(k * 2 * Math.PI / amountOfEdges);
-                    PointsSection.Add(new PointF((float)x, (float)y));
-                    // отверстие
-                    x = Center.X + inner_radius * Math.Cos(k * 2 * Math.PI / amountOfEdges);
-                    y = Center.Y + inner_radius * Math.Sin(k * 2 * Math.PI / amountOfEdges);
-                    InnerPoints.Add(new PointF((float)x, (float)y));
-                    // арматура
-                    m_RodPoints = new List<PointF>() { new PointF(0, -(h - 4)) };
-                }
-
+                // внешнее кольцо
+                PointsSection = MakeCircle(radius, amountOfEdges);
+                // внутреннее кольцо
+                InnerPoints = MakeCircle(inner_radius, amountOfEdges);
+                // арматура
+                m_RodPoints = new List<PointF>() { new PointF(0, -(h - 4)) };
+                
                 Origin = Center;
             }
             else if (m_BeamSection == BeamSection.Any)
@@ -205,8 +228,7 @@ namespace BSFiberConcrete.Section
                 }
 
                 m_RodPoints = new List<PointF> ();
-
-            }
+            }            
         }
 
         private void InitDataSource()
