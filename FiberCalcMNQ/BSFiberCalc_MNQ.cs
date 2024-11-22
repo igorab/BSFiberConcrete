@@ -98,8 +98,8 @@ namespace BSFiberConcrete
         [DisplayName("Предельный момент, [кг*см]"), Description("Res")]
         public double M_ult { get; protected set; }
 
-        [DisplayName("Предельная поперечная сила, [кг]"), Description("Res")]
-        public double Q_ult { get; protected set; }
+        [DisplayName("Предельная поперечная сила Q, [кг]"), Description("Res")]
+        public double Qc_ult { get; protected set; }
 
         [DisplayName("Предельная поперечная сила Qy, [кг]"), Description("Res")]
         public double Qy_ult { get; protected set; }
@@ -107,15 +107,14 @@ namespace BSFiberConcrete
         [DisplayName("Предельная поперечная сила Qx, [кг]"), Description("Res")]
         public double Qx_ult { get; protected set; }
 
-
         [DisplayName("Коэффициент использования по Qx, [СП 360 П6.1.28]")]
         public double UtilRate_Qx { get; protected set; }
 
         [DisplayName("Коэффициент использования по Qy, [СП 360 П6.1.28]")]
         public double UtilRate_Qy { get; protected set; }
 
-        [DisplayName("Коэффициент использования по Q, [СП 360 П6.1.28]")]
-        public double UtilRate_Q { get; protected set; }
+        [DisplayName("Коэффициент использования Q по полосе между наклонными сечениями, [СП 360 П6.1.27]")]
+        public double UtilRate_Qс { get; protected set; }
 
         [DisplayName("Коэффициент использования по моменту My, [СП 360 П6.1.30]")]
         public double UtilRate_My { get; protected set; }
@@ -532,7 +531,7 @@ namespace BSFiberConcrete
             Rfb = R_fb();
 
             // Предельная перерезывающая сила по полосе между наклонными сечениями
-            double _Q_ult = 0.3 * Rfb * _b * h0; // (6.74)
+            double c_Q_ult = 0.3 * Rfb * _b * h0; // (6.74)
             
             // Расчет элементов по наклонным сечениям на действие поперечных сил
             // Минимальная длина проекции(см)
@@ -618,12 +617,14 @@ namespace BSFiberConcrete
                 lst_Q_ult.Add(lstQ_fb[i] + lst_Qsw[i]);
             }
 
-            Q_ult = Qfb + Qsw; // 6.75
+            Qx_ult = Qfb + Qsw; // 6.75
 
             //Коэффициент использования
-            UtilRate_Qx = (Q_ult != 0) ? m_Efforts["Qx"] / Q_ult : 0;
+            UtilRate_Qx = (Qx_ult != 0) ? m_Efforts["Qx"] / Qx_ult : 0;
 
-            if (_Q_ult <= Q_ult)
+            UtilRate_Qс = (c_Q_ult != 0) ? Qx_ult / c_Q_ult : 0;
+
+            if (c_Q_ult <= Qx_ult)
             {
                 res = "Перерезываюзщая сила превышает предельно допустимую в данном сечении";
                 Msg.Add(res);
@@ -634,7 +635,7 @@ namespace BSFiberConcrete
                 Msg.Add(res);
             }
 
-            return (s_w_max, Q_ult);
+            return (s_w_max, Qx_ult);
         }
 
 
@@ -856,8 +857,9 @@ namespace BSFiberConcrete
                 { DN(typeof(BSFiberCalc_MNQ), "N_ult"), N_ult },
                 { DN(typeof(BSFiberCalc_MNQ), "UtilRate_N"), UtilRate_N },
 
-                { DN(typeof(BSFiberCalc_MNQ), "Q_ult"), Q_ult },
+                { DN(typeof(BSFiberCalc_MNQ), "Qx_ult"), Qx_ult },
                 { DN(typeof(BSFiberCalc_MNQ), "UtilRate_Qx"), UtilRate_Qx },
+                { DN(typeof(BSFiberCalc_MNQ), "UtilRate_Qс"), UtilRate_Qс },
             };
 
             return dictRes;

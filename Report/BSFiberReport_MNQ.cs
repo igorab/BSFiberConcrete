@@ -74,15 +74,16 @@ namespace BSFiberConcrete
 
         public virtual void InitFromFiberCalc(BSFiberCalc_MNQ _fiberCalc)
         {
-            m_FiberCalc = _fiberCalc;
-            m_BeamSection = m_FiberCalc.BeamSectionType();            
-            m_Messages = _fiberCalc.Msg;
-            //m_Efforts = new Dictionary<string, double>(_fiberCalc.m_Efforts);
+            m_FiberCalc    = _fiberCalc;
+            m_BeamSection  = m_FiberCalc.BeamSectionType();            
+            m_Messages     = _fiberCalc.Msg;
+            _unitConverter = _fiberCalc.UnitConverter;
+            
             m_Efforts = new Dictionary<string, double>()
             {
                 {"My,[кг*см]", _fiberCalc.m_Efforts["My"]},
-                {"N, [кг]", _fiberCalc.m_Efforts["N"]},
-                {"Qx, [кг]", _fiberCalc.m_Efforts["Qx"]}
+                {"N, [кг]",    _fiberCalc.m_Efforts["N"]},
+                {"Qx, [кг]",   _fiberCalc.m_Efforts["Qx"]}
             };
 
             ImageCalc = _fiberCalc.ImageCalc();

@@ -27,15 +27,15 @@ namespace BSFiberConcrete.Section
         }
 
         const string UserSection = "UserSection";
-        public Dictionary<string, double> DictCalcParams { private get; set;}
+        public Dictionary<string, double> DictCalcParams { private get; set; }
         public BeamSection m_BeamSection { get; set; }
-                
+
         /// <summary>
         /// Класс используемой арматуры
         /// </summary>
         public string RebarClass { private get; set; }
-        public MemoryStream          GetImageStream => m_ImageStream;        
-        private MemoryStream         m_ImageStream;
+        public MemoryStream GetImageStream => m_ImageStream;
+        private MemoryStream m_ImageStream;
         private List<RebarDiameters> m_Diameters;
 
         // Точки на диаграмме для отрисовки стержней арматуры  
@@ -46,34 +46,37 @@ namespace BSFiberConcrete.Section
 
         // точки на диаграмме для отображения отверстия в сечении
         private List<PointF> InnerPoints;
-        private NDMSetup     NdmSetup;
-        private PointF       Origin;
+        private NDMSetup NdmSetup;
+        private PointF Origin;
 
         private const int amountOfEdges = 40;
 
-        public PointF        Center { get; set; }
+        public PointF Center { get; set; }
         public float Wdth { get { return b; } set { b = value; } }
         public float Hght { get { return h; } set { h = value; } }
 
         public double[] Sz { get; set; }
         public double NumArea { set { numArea.Value = (decimal)value; } get { return (double)numArea.Value; } }
 
+        public Rebar Rebar { get; internal set; }
+
         private float b;
         private float h;
-        
+
         // количество стержней поперечной арматуры
-        public  int a_t_Nx  = 0;
-        private int as_t    = 4; //защитный слой поперечной арматуры 
-        private List<PointF> PointsTRebar;    
+        public int a_t_Nx = 0;
+        public int a_t_Ny = 0;
+        private int as_t = 4; //защитный слой поперечной арматуры 
+        private List<PointF> PointsTRebar;
 
         private const int SerieSection = 0;
-        private const int SerieLRebar  = 1;
-        private const int SerieInnerSection = 2;        
-        private const int SerieTRebar  = 3;
+        private const int SerieLRebar = 1;
+        private const int SerieInnerSection = 2;
+        private const int SerieTRebar = 3;
 
         public BSSectionChart()
         {
-            InitializeComponent();            
+            InitializeComponent();
         }
 
         public BSSectionChart(BeamSection _beamSection)
@@ -92,7 +95,7 @@ namespace BSFiberConcrete.Section
             h = 0;
             b = 0;
             Sz = new double[] { 0, 0, 0, 0, 0, 0 };
-            a_t_Nx = 2;
+            a_t_Nx = 0;
             PointsTRebar = new List<PointF>();
         }
 
@@ -105,35 +108,35 @@ namespace BSFiberConcrete.Section
             if (m_RodPoints == null)
                 return;
 
-            List<BSRod> bsRods =  BSData.LoadBSRod(m_BeamSection);
+            List<BSRod> bsRods = BSData.LoadBSRod(m_BeamSection);
 
             if (bsRods.Count == 0)
             {
                 foreach (var _rod in m_RodPoints)
-                    bsRods.Add(new BSRod() { CG_X = _rod.X, CG_Y = _rod.Y, D = 14.0 } );
+                    bsRods.Add(new BSRod() { CG_X = _rod.X, CG_Y = _rod.Y, D = 14.0 });
             }
 
             RodBS.DataSource = bsRods;
         }
-      
+
         /// <summary>
         ///  Поперечная арматура
         /// </summary>
-        private void InitTRebar(int _N)
+        private void InitTRebar_X(int _N)
         {
             if (_N == 0) return;
             PointsTRebar.Clear();
 
             if (m_BeamSection == BeamSection.Ring)
             {
-                double in_r  = Sz[0];
+                double in_r = Sz[0];
                 double out_r = Sz[1];
-                double dr    = (out_r - in_r) / (_N+1);
+                double dr = (out_r - in_r) / (_N + 1);
 
                 for (int n = 1; n <= _N; n++)
-                {                    
-                    double radius = in_r + n*dr;
-                    PointsTRebar.AddRange(MakeCircle(radius, amountOfEdges));                    
+                {
+                    double radius = in_r + n * dr;
+                    PointsTRebar.AddRange(MakeCircle(radius, amountOfEdges));
                 }
             }
             else
@@ -190,21 +193,21 @@ namespace BSFiberConcrete.Section
 
         private void InitPoints()
         {
-            if (m_BeamSection == BeamSection.Rect)                 
+            if (m_BeamSection == BeamSection.Rect)
             {
-                BSSection.RectangleBeam(Sz, out Origin);                
+                BSSection.RectangleBeam(Sz, out Origin);
                 PointsSection = BSSection.SectionPoints;
-                m_RodPoints   = BSSection.RodPoints;               
+                m_RodPoints = BSSection.RodPoints;
             }
             else if (BSHelper.IsITL(m_BeamSection))
-            {                
-                BSSection.IBeam(Sz, out PointsSection, out PointF _Center,  out Origin);
+            {
+                BSSection.IBeam(Sz, out PointsSection, out PointF _Center, out Origin);
                 m_RodPoints = BSSection.RodPoints;
-            }            
+            }
             else if (m_BeamSection == BeamSection.Ring)
             {
-                PointsSection       = new List<PointF>();                
-                double radius       = Sz[1];
+                PointsSection = new List<PointF>();
+                double radius = Sz[1];
                 double inner_radius = Sz[0];
 
                 // внешнее кольцо
@@ -213,22 +216,31 @@ namespace BSFiberConcrete.Section
                 InnerPoints = MakeCircle(inner_radius, amountOfEdges);
                 // арматура
                 m_RodPoints = new List<PointF>() { new PointF(0, -(h - 4)) };
-                
+
                 Origin = Center;
             }
             else if (m_BeamSection == BeamSection.Any)
             {
                 List<NdmSection> pointsSection = BSData.LoadNdmSection(UserSection);
                 int idx = 0;
-                foreach (NdmSection _pt in pointsSection) 
+                foreach (NdmSection _pt in pointsSection)
                 {
                     idx++;
-                    BSPoint bsPt = new BSPoint(_pt) ;
-                    pointBS.Add(bsPt);                    
+                    BSPoint bsPt = new BSPoint(_pt);
+                    pointBS.Add(bsPt);
                 }
 
-                m_RodPoints = new List<PointF> ();
-            }            
+                m_RodPoints = new List<PointF>();
+            }
+        }
+
+        // расстановка арматуры по оси Y
+        private void InitTRebar_Y(int _t_N)
+        {
+            //chart.Series.Add("Line");
+            //chart.Series["Line"].Points.Add(new DataPoint(-b / 2.0, h / 2.0));
+            //chart.Series["Line"].Points.Add(new DataPoint(b / 2.0, h / 2.0));
+            //chart.Series["Line"].ChartType = SeriesChartType.Line;
         }
 
         private void InitDataSource()
@@ -239,9 +251,13 @@ namespace BSFiberConcrete.Section
             InitPoints();
 
             if (NdmSetup.UseRebar)
+            {
                 InitRods();
 
-            InitTRebar(a_t_Nx);
+                InitTRebar_X(a_t_Nx);
+
+                //InitTRebar_Y(1);
+            }
 
             int idx = 0;
 
@@ -317,6 +333,8 @@ namespace BSFiberConcrete.Section
                 var pt = PointsTRebar[j];
                 serieTRebar.Points.Add(new DataPoint(pt.X, pt.Y));
             }
+
+            InitTRebar_Y(1);
 
             numAreaRebar.Value = (decimal) rods_area;
             m_ImageStream      = new MemoryStream();
@@ -397,12 +415,15 @@ namespace BSFiberConcrete.Section
             tlTip.SetToolTip(this.btnSave, "Сохранить расстановку арматуры");            
         }
 
+        /// <summary>
+        /// Обновить контрол
+        /// </summary>
         public void FormReload()
         {
             try
             {
                 InitControls();
-
+  
                 InitToolTips();
 
                 InitDataSource();
@@ -432,9 +453,11 @@ namespace BSFiberConcrete.Section
                 dataGrid.Enabled = true;
                 btnAdd.Visible = true;
                 btnDel.Visible = true;
+                btnCalc.Enabled = true;
             }
             else
             {
+                btnCalc.Enabled = false;
                 dataGrid.Enabled = false;
 
                 foreach (DataGridViewColumn cl in dataGrid.Columns)

@@ -1678,13 +1678,16 @@ namespace BSFiberConcrete
             CalcNDM calcNDM = new CalcNDM(_beamSection) {setup = _setup, D = _D };            
             calcNDM.Run();
 
-            BSCalcResultNDM calcRes = calcNDM.CalcRes;
+            BSCalcResultNDM calcRes = new BSCalcResultNDM();
+            if (calcNDM.CalcRes != null)
+                calcRes               = calcNDM.CalcRes;            
+
             calcRes.ResQxQy       = resQxQy;
             calcRes.ImageStream   = m_ImageStream;
             calcRes.Coeffs        = m_Coeffs;
             calcRes.UnitConverter = _UnitConverter;
 
-            return calcNDM.CalcRes;           
+            return calcRes;           
         }
 
         /// <summary>
@@ -2300,7 +2303,7 @@ namespace BSFiberConcrete
                 m_SectionChart.InitValues(_beamSection); 
 
             m_SectionChart.Dock       = DockStyle.Top;            
-            //m_SectionChart.m_BeamSection = _beamSection;
+            
             var sz = BeamWidtHeight(out double b, out double h, out double _area);
 
             m_SectionChart.RebarClass = cmbRebarClass.SelectedItem.ToString();
@@ -2308,9 +2311,17 @@ namespace BSFiberConcrete
             m_SectionChart.Hght       = (float)h;
             m_SectionChart.Sz         = sz;
             m_SectionChart.NumArea    = _area;
+            m_SectionChart.Rebar      = InitRebarFromForm();
             m_SectionChart.a_t_Nx     = (int)numN_w_X.Value;
+            m_SectionChart.a_t_Ny     = (int)numN_w_Y.Value;
 
-            //m_SectionChart.FormReload();
+            m_SectionChart.num_s_w_X.Value       = num_s_w_X.Value;
+            m_SectionChart.cmbDw_X.SelectedItem = cmbDw_X.SelectedItem;
+            m_SectionChart.numN_w_X.Value       = numN_w_X.Value;
+
+            m_SectionChart.num_s_w_Y.Value       = num_s_w_Y.Value;
+            m_SectionChart.cmbDw_Y.SelectedItem  = cmbDw_Y.SelectedItem;
+            m_SectionChart.numN_w_Y.Value        =  numN_w_Y.Value;
 
             if (panelSectionDraw.Controls.Contains(m_SectionChart))
             {
