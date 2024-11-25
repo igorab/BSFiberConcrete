@@ -13,6 +13,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.Remoting.Messaging;
 using BSFiberConcrete.UnitsOfMeasurement;
+using BSFiberConcrete.Report;
 
 namespace BSFiberConcrete
 {
@@ -69,10 +70,26 @@ namespace BSFiberConcrete
 
         private const int bk = 800, bv = 200;
 
+        public void InitFromBSFiberReportData(BSFiberReport_N fiberReport)
+        {
+            Efforts           = fiberReport.m_Efforts;
+            CalcResults1Group = fiberReport.m_CalcResults1Group;
+            CalcResults2Group = fiberReport.m_CalcResults2Group;
+            m_Messages        = fiberReport.m_Messages;
+        }
+
+        public void InitFromBSFiberReportData(BSFiberReportData _ReportData)
+        {
+            Efforts           = _ReportData.m_Efforts;
+            CalcResults1Group = _ReportData.m_CalcResults1Group;
+            CalcResults2Group = _ReportData.m_CalcResults2Group;
+            m_Messages        = _ReportData.m_Messages;
+        }
+
         /// <summary>
         ///  Верхняя часть отчета
         /// </summary>        
-        protected virtual void Header(StreamWriter w)
+        public virtual void Header(StreamWriter w)
         {
             w.WriteLine("<html>");
             w.WriteLine($"<H1>{ReportName}</H1>");
@@ -163,7 +180,7 @@ namespace BSFiberConcrete
         /// <summary>
         /// Основная часть отчета
         /// </summary>        
-        protected virtual void ReportBody(StreamWriter w)
+        public virtual void ReportBody(StreamWriter w)
         {
             if (m_PhysParams != null)
             {
@@ -251,7 +268,7 @@ namespace BSFiberConcrete
         /// <summary>
         /// Нагрузки
         /// </summary>        
-        protected virtual void ReportEfforts(StreamWriter w)
+        public void ReportEfforts(StreamWriter w)
         {
             if (m_Efforts != null)
             {
@@ -284,9 +301,9 @@ namespace BSFiberConcrete
             }
         }
 
-        protected virtual void ReportResult(StreamWriter w)
+        public virtual void ReportResult(StreamWriter w)
         {            
-            w.WriteLine("<H2>Расчет:</H2>");
+            w.WriteLine("Расчет:");
             if (m_CalcResults2Group != null)
                 w.WriteLine("<H3>Расчет по 1-й группе предельных состояний:</H3>");
             if (m_CalcResults1Group != null)
@@ -437,8 +454,7 @@ namespace BSFiberConcrete
             return _img;
         }
 
-
-        protected virtual void Footer(StreamWriter w)
+        public virtual void Footer(StreamWriter w)
         {
             if (m_Messages != null)
             {

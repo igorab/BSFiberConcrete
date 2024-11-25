@@ -278,10 +278,11 @@ namespace BSFiberConcrete
             tlTip.SetToolTip(this.btnIBeam, "Двутавровое сечение");
             tlTip.SetToolTip(this.btnRing, "Кольцевое сечение");
             tlTip.SetToolTip(btnCustomSection, "Произвольное сечение");
-            tlTip.SetToolTip(btnCalcResults, "Результаты расчета");
+            tlTip.SetToolTip(btnCalcResults, "Сохранить данные");
+            tlTip.SetToolTip(btnOpenCalcFile, "Загрузить данные из файла");
             tlTip.SetToolTip(btnMeshSettings, "Настройка густоты расчетной сетки");
             tlTip.SetToolTip(this.btnStaticEqCalc, BSFiberLib.TxtStaticEqCalc);
-            tlTip.SetToolTip(this.btnCalc_Deform, BSFiberLib.TxtCalc_Deform);
+            tlTip.SetToolTip(this.btnCalc_Deform, BSFiberLib.TxtCalc_Deform);            
         }
 
         // арматура
@@ -1155,9 +1156,8 @@ namespace BSFiberConcrete
             Rebar rebar = (Rebar)m_BSLoadData.Rebar.Clone();
             InitRebarValues(ref rebar);
 
-            List<BSFiberReportData> calcResults_M = new List<BSFiberReportData>();
-            List<BSFiberReport_N> calcResults_N = new List<BSFiberReport_N>();
-
+            List<BSFiberReportData> calcResults_MNQ = new List<BSFiberReportData>();
+            
             BSFiberCalc_MNQ FibCalc_MNQ(Dictionary<string, double> _MNQ)
             {
                 BSFiberCalc_MNQ fibCalc = BSFiberCalc_MNQ.Construct(m_BeamSection);
@@ -1208,7 +1208,7 @@ namespace BSFiberConcrete
                     //FibCalc_M.m_CalcResults1Group.Add("Момент по наклонному сечению", Mc_ult);
                     //FibCalc_M.m_CalcResults1Group.Add("Коэфф исп момента по накл сечению [6.1.30]", UtilRate_Mc);
 
-                    calcResults_M.Add(FibCalc_M);
+                    calcResults_MNQ.Add(FibCalc_M);
                 }                
                 else if (_N > 0 && _Qx == 0)
                 {
@@ -1224,14 +1224,13 @@ namespace BSFiberConcrete
                         (Mc_ult, UtilRate_Mc) = fiberCalc_N.Calculate_Mc();
                     }
 
-                    BSFiberReport_N report = new BSFiberReport_N() { _unitConverter = _UnitConverter };
+                    BSFiberReport_N report = new BSFiberReport_N() { };
                     report.InitFromFiberCalc(fiberCalc_N);
-
-                    // расчет по второй группе предельных состояний                    
-                    var calcResults2Group    = FiberCalculate_Cracking();
+                    BSFiberCalc_Cracking calcResults2Group    = FiberCalculate_Cracking();
                     report.CalcResults2Group = calcResults2Group.Results();
-
-                    calcResults_N.Add(report);
+                    
+                    calcResults_MNQ.Add(report.GetBSFiberReportData());
+                    
                 }                
                 else if (_Qx != 0)
                 {
@@ -1255,13 +1254,13 @@ namespace BSFiberConcrete
                     BSFiberCalc_Cracking calcResults2Group = FiberCalculate_Cracking();
                     fiberCalc_Qc.CalcResults2Group         = calcResults2Group.Results();
 
-                    BSFiberReport_MNQ.FiberReport_Qc(fiberCalc_Qc, ++iRep);                    
+                    var report = BSFiberReport_MNQ.FiberReport_Qc(fiberCalc_Qc, ++iRep);
+
+                    calcResults_MNQ.Add(report.GetBSFiberReportData());
                 }                                
             }
 
-            BSFiberReport_M.RunMultiReport(ref iRep, calcResults_M);
-
-            BSFiberReport_N.RunMultiReport(ref iRep, calcResults_N);
+            BSFiberReport_M.RunMultiReport( calcResults_MNQ);            
         }
 
         private void btnFactors_Click(object sender, EventArgs e)
@@ -1681,13 +1680,16 @@ namespace BSFiberConcrete
             CalcNDM calcNDM = new CalcNDM(_beamSection) {setup = _setup, D = _D };            
             calcNDM.Run();
 
-            BSCalcResultNDM calcRes = calcNDM.CalcRes;
+            BSCalcResultNDM calcRes = new BSCalcResultNDM();
+            if (calcNDM.CalcRes != null)
+                calcRes               = calcNDM.CalcRes;            
+
             calcRes.ResQxQy       = resQxQy;
             calcRes.ImageStream   = m_ImageStream;
             calcRes.Coeffs        = m_Coeffs;
             calcRes.UnitConverter = _UnitConverter;
 
-            return calcNDM.CalcRes;           
+            return calcRes;           
         }
 
         /// <summary>
@@ -2025,7 +2027,7 @@ namespace BSFiberConcrete
                         calcResults.Add(calcRes);
                     }
                 }
-
+                
                 CreatePictureForHeaderReport(calcResults);
                 CreatePictureForBodyReport(calcResults);
 
@@ -2303,7 +2305,7 @@ namespace BSFiberConcrete
                 m_SectionChart.InitValues(_beamSection); 
 
             m_SectionChart.Dock       = DockStyle.Top;            
-            //m_SectionChart.m_BeamSection = _beamSection;
+            
             var sz = BeamWidtHeight(out double b, out double h, out double _area);
 
             m_SectionChart.RebarClass = cmbRebarClass.SelectedItem.ToString();
@@ -2311,9 +2313,17 @@ namespace BSFiberConcrete
             m_SectionChart.Hght       = (float)h;
             m_SectionChart.Sz         = sz;
             m_SectionChart.NumArea    = _area;
+            m_SectionChart.Rebar      = InitRebarFromForm();
             m_SectionChart.a_t_Nx     = (int)numN_w_X.Value;
+            m_SectionChart.a_t_Ny     = (int)numN_w_Y.Value;
 
-            //m_SectionChart.FormReload();
+            m_SectionChart.num_s_w_X.Value       = num_s_w_X.Value;
+            m_SectionChart.cmbDw_X.SelectedItem = cmbDw_X.SelectedItem;
+            m_SectionChart.numN_w_X.Value       = numN_w_X.Value;
+
+            m_SectionChart.num_s_w_Y.Value       = num_s_w_Y.Value;
+            m_SectionChart.cmbDw_Y.SelectedItem  = cmbDw_Y.SelectedItem;
+            m_SectionChart.numN_w_Y.Value        =  numN_w_Y.Value;
 
             if (panelSectionDraw.Controls.Contains(m_SectionChart))
             {
@@ -2882,6 +2892,7 @@ namespace BSFiberConcrete
         private void btnNDMCrc_Click(object sender, EventArgs e)
         {
             BSCalcNDMCrc calcNDMCrc = new BSCalcNDMCrc();
+            calcNDMCrc.FractureStrengthType = cmbFractureStrength.SelectedIndex;
             calcNDMCrc.Show();
         }
 
@@ -3172,6 +3183,11 @@ namespace BSFiberConcrete
         }
 
         private void tabRebar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnNDMCrc_Click_1(object sender, EventArgs e)
         {
 
         }

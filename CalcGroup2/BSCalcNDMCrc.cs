@@ -18,6 +18,7 @@ namespace BSFiberConcrete.CalcGroup2
     {
         public NdmCrc NdmCrc { get; set; }
 
+        public int FractureStrengthType { get; set; }
         /// <summary>
         /// Тип арматуры
         /// </summary>
@@ -45,6 +46,21 @@ namespace BSFiberConcrete.CalcGroup2
             numPsiS.Value = (decimal)NdmCrc.psi_s;
             numMju_fv.Value = (decimal)NdmCrc.mu_fv;
 
+            if (FractureStrengthType == 0)
+            {
+                numShortDuration.Value = 0.0m;
+                numLongTermExposure.Value = 0.0m;
+            }
+            else if (FractureStrengthType == 1)
+            {
+                numShortDuration.Value = 0.3m;
+                numLongTermExposure.Value = 0.4m;
+            }
+            else if (FractureStrengthType == 2)
+            {
+                numShortDuration.Value = 0.2m;
+                numLongTermExposure.Value = 0.3m;
+            }
         }
 
         private void buttonOk_Click(object sender, EventArgs e)

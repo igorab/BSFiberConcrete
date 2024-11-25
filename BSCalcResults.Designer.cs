@@ -127,7 +127,7 @@
             this.ClientSize = new System.Drawing.Size(834, 473);
             this.Controls.Add(this.tabControl);
             this.Name = "BSCalcResults";
-            this.Text = "Результаты последнего расчета";
+            this.Text = "Сохранить данные";
             this.Load += new System.EventHandler(this.BSCalcResults_Load);
             this.tabControl.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);

@@ -1,6 +1,10 @@
-﻿using BSFiberConcrete.UnitsOfMeasurement;
+﻿using BSFiberConcrete.Report;
+using BSFiberConcrete.UnitsOfMeasurement;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq.Expressions;
+using System.Text;
 using System.Windows;
 
 namespace BSFiberConcrete
@@ -10,49 +14,105 @@ namespace BSFiberConcrete
         private BeamSection m_BeamSection;
         private IEnumerable<string> m_Msg;
         private BSFiberReportData m_ReportData;
+        private bool UseRebar { get; set; }
 
-        public BSFiberReportData BSFibCalc {             
-            set { m_ReportData = value;
-                  m_BeamSection = value.BeamSection;
-                  m_Msg = value.m_Messages; } 
+        private List<BSFiberReportData> ListFiberReportData;
+
+        /// <summary>
+        /// данные для формирование общей части отчета
+        /// </summary>
+        public BSFiberReportData BSFibCalc {
+            set
+            {
+                m_ReportData  = value;
+                m_BeamSection = value.BeamSection;
+                m_Msg         = value.m_Messages;
+                UseRebar      = value.UseReinforcement;
+                UnitConverter = value.UnitConverter;
+            }                 
         }
-        public bool UseRebar { get; private set; }
+        
         public LameUnitConverter UnitConverter { get; set; }
 
-        public static void RunMultiReport(ref int iRep, List<BSFiberReportData> _calcResults)
+        /// <summary>
+        /// Отчет по нескольким загружениям 
+        /// </summary>
+        /// <param name="iRep"></param>
+        /// <param name="_calcResults"></param>
+        public static void RunMultiReport(List<BSFiberReportData> _calcResults)
         {
-            foreach (var _FibCalc in _calcResults)
+            if (_calcResults != null && _calcResults.Count > 0)
             {
-                BSFiberReport_M fiberReport_M = new BSFiberReport_M
-                {
-                    UnitConverter = _FibCalc.UnitConverter,
-                    BSFibCalc = _FibCalc
-                };
-
-                fiberReport_M.RunReport(true, _FibCalc.UseReinforcement,  ++iRep);
+                BSFiberReport_M fiberReport_M = new BSFiberReport_M { ListFiberReportData = _calcResults };
+                fiberReport_M.BSFibCalc = _calcResults[0];
+                fiberReport_M.CreateMultiReport();
+            }
+            else
+            {
+                MessageBox.Show("Нет данных для отчета!", "Проверка сечения", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
-        public void RunReport(bool calcOk, bool _useRebar, int _irep = 1)
+        /// <summary>
+        /// сформировать отчет по различным загружениям
+        /// </summary>
+        public void CreateMultiReport()
         {
             try
             {
                 if (m_ReportData == null)
                     throw new Exception("Не выполнен расчет");
 
-                if (calcOk)
-                {
-                    string pathToHtmlFile = CreateReport(_irep, m_BeamSection, _useReinforcement: _useRebar);
+                string  pathToHtmlFile = "";
+                string  _reportName = "";
+                int     LoadIdx = 0;
 
-                    System.Diagnostics.Process.Start(pathToHtmlFile);
-                }
-                else
-                {
-                    string errMsg = "";
-                    foreach (string ms in m_Msg) errMsg += ms + ";\t\n";
+                BSFiberReport report = new BSFiberReport();
+                                
+                if (_reportName != "")
+                    report.ReportName = _reportName;
+                report.BeamSection    = m_BeamSection;              
+                InitReportSections(ref report);
+                                        
+                string filename = "FiberCalculationReport.htm";
+                try
+                {                    
+                    using (FileStream fs = new FileStream(filename, FileMode.Create))
+                    {
+                        using (StreamWriter w = new StreamWriter(fs, Encoding.UTF8))
+                        {
+                            report.Header(w);
 
-                    MessageBox.Show(errMsg);
+                            report.ReportBody(w);
+                            
+                            foreach (BSFiberReportData fiberReport in ListFiberReportData)
+                            {
+                                w.WriteLine($"<H2>Расчет по комбинации загружений: {++LoadIdx}</H2>");
+
+                                report.InitFromBSFiberReportData(fiberReport);                                
+                                report.ReportEfforts(w);                                
+                                report.ReportResult(w);
+                                report.Footer(w);
+                            }                                                        
+                        }
+
+                        pathToHtmlFile = fs.Name;
+                    }
                 }
+                catch (Exception _e)
+                {
+                    MessageBox.Show("Ошибка при формировании отчета: " + _e.Message);
+                    pathToHtmlFile = "";
+                }                        
+                    
+                System.Diagnostics.Process.Start(pathToHtmlFile);
+                                
+                //
+                //    string errMsg = "";
+                //    foreach (string ms in m_Msg) errMsg += ms + ";\t\n";
+
+                //    MessageBox.Show(errMsg);
+                //}
             }
             catch (Exception _e)
             {
@@ -68,11 +128,12 @@ namespace BSFiberConcrete
             report.GeomParams        = m_ReportData.m_GeomParams; 
             report.PhysParams        = m_ReportData.m_PhysParams;
             report.Reinforcement     = m_ReportData.m_Reinforcement;
-            report.CalcResults1Group       = m_ReportData.m_CalcResults1Group;
+            report.CalcResults1Group = m_ReportData.m_CalcResults1Group;
             report.CalcResults2Group = m_ReportData.m_CalcResults2Group;
             report.ImageStream       = m_ReportData.ImageStream;
             report.Messages          = m_ReportData.m_Messages;
             report._unitConverter    = m_ReportData.UnitConverter;
+            report.UseReinforcement = m_ReportData.UseReinforcement;
         }
 
         /// <summary>
@@ -81,14 +142,13 @@ namespace BSFiberConcrete
         /// <param name="_reportName">Заголовок</param>
         /// <param name="_useReinforcement">Используется ли арматура</param>
         /// <returns>Путь к файлу отчета</returns>
-        private string CreateReport(int _fileId,
+        private string CreateReport(int _fileIdx,
                                     BeamSection _BeamSection,
                                     string _reportName = "",
                                     bool _useReinforcement = false)
         {
             try
-            {
-                string path = "";
+            {                
                 BSFiberReport report = new BSFiberReport();
 
                 if (_reportName != "")
@@ -99,13 +159,44 @@ namespace BSFiberConcrete
 
                 InitReportSections(ref report);
 
-                path = report.CreateReport(_fileId);
-                return path;
+                //path = report.CreateReport(_fileId);
+
+                string pathToHtmlFile = "";
+                string filename = "FiberCalculationReport{0}.htm";
+                try
+                {
+                    filename = (_fileIdx == 0) ? string.Format(filename, "") : string.Format(filename, _fileIdx);
+
+                    using (FileStream fs = new FileStream(filename, FileMode.Create))
+                    {
+                        using (StreamWriter w = new StreamWriter(fs, Encoding.UTF8))
+                        {
+                            report.Header(w);
+
+                            report.ReportBody(w);
+
+                            report.ReportEfforts(w);
+
+                            report.ReportResult(w);
+
+                            report.Footer(w);
+                        }
+
+                        pathToHtmlFile = fs.Name;
+                    }
+                }
+                catch (Exception _e)
+                {
+                    MessageBox.Show("Ошибка при формировании отчета: " + _e.Message);
+                    pathToHtmlFile = "";
+                }
+
+                return pathToHtmlFile;                
             }
             catch (Exception _e)
             {
                 throw _e;
             }
-        }
+        }      
     }
 }

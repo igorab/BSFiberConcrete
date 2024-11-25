@@ -129,8 +129,7 @@ namespace BSFiberConcrete
         }
 
         public override Dictionary<string, double> Results()
-        {
-            
+        {            
             Dictionary<string, double>  dictRes =  new Dictionary<string, double>() 
             {
                 { DN(typeof(BSFiberCalc_MNQ), "M_ult"), M_ult },
@@ -139,15 +138,11 @@ namespace BSFiberConcrete
                 { DN(typeof(BSFiberCalc_MNQ), "N_ult"), N_ult },
                 { DN(typeof(BSFiberCalc_MNQ), "UtilRate_N"), UtilRate_N },
 
-                { DN(typeof(BSFiberCalc_MNQ), "Q_ult"), Q_ult },
+                { DN(typeof(BSFiberCalc_MNQ), "Qx_ult"), Qx_ult },
                 { DN(typeof(BSFiberCalc_MNQ), "UtilRate_Qx"), UtilRate_Qx },
+                { DN(typeof(BSFiberCalc_MNQ), "UtilRate_Qс"), UtilRate_Qс },
             };
-            
-            //var xres =  new Dictionary<string, double>() 
-            //{ 
-            //    { "M_ult", M_ult }, { "Q_ult", Q_ult }, { "N_ult", N_ult } 
-            //};
-
+                        
             return dictRes;
         }
     }

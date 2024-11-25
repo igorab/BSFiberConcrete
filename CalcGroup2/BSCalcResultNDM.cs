@@ -329,6 +329,11 @@ namespace BSFiberConcrete
                 InitBeamLength(_D["lgth"], _D["coeflgth"]);
         }
 
+        public BSCalcResultNDM()
+        {
+
+        }
+
         /// <summary>
         /// Результаты расчета по 1 группе предельных состояний
         /// </summary>

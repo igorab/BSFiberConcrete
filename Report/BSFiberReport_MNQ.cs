@@ -18,7 +18,7 @@ namespace BSFiberConcrete
         /// <summary>
         /// Отчет на действие Q по наклонной полосе 
         /// </summary>        
-        public static void FiberReport_Qc(BSFiberCalc_MNQ fiberCalc, int _irep)
+        public static BSFiberReport_MNQ FiberReport_Qc(BSFiberCalc_MNQ fiberCalc, int _irep)
         {
             BSFiberReport_MNQ report = new BSFiberReport_MNQ()
             {
@@ -34,12 +34,33 @@ namespace BSFiberConcrete
             // для расчета по второй группе пред состояний
             report.CalcResults2Group = fiberCalc.CalcResults2Group;
 
-            string pathToHtmlFile = report.CreateReport(_irep);
+            return report;
 
-            System.Diagnostics.Process.Start(pathToHtmlFile);
+            //string pathToHtmlFile = report.CreateReport(_irep);
+            //System.Diagnostics.Process.Start(pathToHtmlFile);
         }
 
+        public BSFiberReportData GetBSFiberReportData()
+        {
+            BSFiberReportData data = new BSFiberReportData
+            {
+                BeamSection       = m_BeamSection,
+                UseReinforcement  = UseReinforcement,
+                m_Coeffs          = m_Coeffs,
+                m_Efforts         = m_Efforts,
+                m_GeomParams      = m_GeomParams,
+                m_Messages        = m_Messages,
+                m_PhysParams      = m_PhysParams,
+                UnitConverter     = _unitConverter,
+                // результат расчета по первой группе предельных состояний
+                m_CalcResults1Group = m_CalcResults1Group,
+                // результат расчета по второй группе предельных состояний
+                m_CalcResults2Group = m_CalcResults2Group
+            };
 
+            return data;
+        }
+    
         public BSFiberReport_MNQ()
         {
             m_PropAttr = new Dictionary<string, string>();
@@ -53,15 +74,16 @@ namespace BSFiberConcrete
 
         public virtual void InitFromFiberCalc(BSFiberCalc_MNQ _fiberCalc)
         {
-            m_FiberCalc = _fiberCalc;
-            m_BeamSection = m_FiberCalc.BeamSectionType();            
-            m_Messages = _fiberCalc.Msg;
-            //m_Efforts = new Dictionary<string, double>(_fiberCalc.m_Efforts);
+            m_FiberCalc    = _fiberCalc;
+            m_BeamSection  = m_FiberCalc.BeamSectionType();            
+            m_Messages     = _fiberCalc.Msg;
+            _unitConverter = _fiberCalc.UnitConverter;
+            
             m_Efforts = new Dictionary<string, double>()
             {
                 {"My,[кг*см]", _fiberCalc.m_Efforts["My"]},
-                {"N, [кг]", _fiberCalc.m_Efforts["N"]},
-                {"Qx, [кг]", _fiberCalc.m_Efforts["Qx"]}
+                {"N, [кг]",    _fiberCalc.m_Efforts["N"]},
+                {"Qx, [кг]",   _fiberCalc.m_Efforts["Qx"]}
             };
 
             ImageCalc = _fiberCalc.ImageCalc();
