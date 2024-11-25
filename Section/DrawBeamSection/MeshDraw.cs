@@ -54,17 +54,39 @@ namespace BSFiberConcrete
         /// Сетки из треугольников
         /// </summary>
         public Mesh TriangleMesh  {  get; private set; }
+        
+        /// <summary>
+        /// ширина для сохранения
+        /// </summary>
+        private int _widthToSave;
+        /// <summary>
+        /// высота для сохранения
+        /// </summary>
+        private int _heightToSave;
+
+
+
+        public ColorScale colorsAndScale;
 
         public MeshDraw(Mesh _triangleMesh)
         {
+            _widthToSave = 500;
+            _heightToSave = 500;
+
             TriangleMesh = _triangleMesh;
         }
 
         public MeshDraw(int _Ny, int _Nz)
         {
+            _widthToSave = 500;
+            _heightToSave = 500;
             Ny = _Ny;
             Nz = _Nz;
+
         }
+
+
+        
 
         /// <summary>
         /// Отрисовка объекта FormsPlot на WinForm'е
@@ -90,20 +112,35 @@ namespace BSFiberConcrete
             drawBS.Show();                
         }
 
+
         /// <summary>
         /// сохранение объекта FormsPlot на картинке
         /// </summary>
         public void SaveToPNG(string title = null, string fullPath = null)
         {
+
+            if (colorsAndScale != null)
+            {
+                Plot myPlot = colorsAndScale.CreateColorScale(MosaicMode);
+                string pathToPicture = "ColorScale.png";
+                myPlot.SavePng(pathToPicture, 100, _heightToSave);
+                // нужно повернуть картинку, иначе она не встает в Plot.Axes.Left.Label.Image
+                Bitmap image = new Bitmap(pathToPicture);
+                image.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                image.Save(pathToPicture, System.Drawing.Imaging.ImageFormat.Png);
+
+                ScottPlot.Image img1 = new ScottPlot.Image(pathToPicture);
+                _formsPlot.Plot.Axes.Left.Label.Image = img1;
+            }
+
             if (_formsPlot == null)
                 return;
-
             if (title != null)
                 _formsPlot.Plot.Title(title);
             if (fullPath == null)
-                _formsPlot.Plot.SavePng("beamSectionMesh.png",600,600);
-            else 
-                _formsPlot.Plot.SavePng(fullPath, 500, 500);
+                _formsPlot.Plot.SavePng("beamSectionMesh.png",_widthToSave, _heightToSave);
+            else
+                _formsPlot.Plot.SavePng(fullPath, _widthToSave, _heightToSave);
         }
 
 
@@ -149,6 +186,25 @@ namespace BSFiberConcrete
         {
             FormsPlot formsPlt = new FormsPlot() { Dock = DockStyle.Fill };
 
+
+            int numOfSegments = 50;
+            int maxValueColor = 255;
+            double maxValue;
+            double minValue;
+
+            if (UltMax >= Values_B.Max())
+            { maxValue = Values_B.Max(); }
+            else { maxValue = UltMax; }
+
+            if (UltMin <= Values_B.Min())
+            { minValue = Values_B.Min(); }
+            else { minValue = UltMin; }
+
+            double deltaPositive = maxValue / numOfSegments;
+            double deltaNegative = minValue / numOfSegments;
+            int deltaRGB = maxValueColor / (numOfSegments - 1);
+
+
             for ( int i = 0; i < TriangleMesh.Triangles.Count; i++)
             {
                 // отрисовка гемеотри треугольника
@@ -162,37 +218,27 @@ namespace BSFiberConcrete
                 }
                 ScottPlot.Plottables.Polygon poly = formsPlt.Plot.Add.Polygon(points);
 
-                if (Values_B != null )
+                if (Values_B != null)
                 {
-                    double measured_value = Values_B[i];
-                    poly.LineColor = ScottPlot.Colors.White;
-
-                    if (measured_value > UltMin && measured_value < UltMax)
-                        poly.FillColor = ScottPlot.Colors.Green;
-                    else if (measured_value >= UltMax)
-                        poly.FillColor = ScottPlot.Colors.Red;
-                    else if (measured_value <= UltMin)
-                        poly.FillColor = ScottPlot.Colors.Violet;
-                    else
-                        poly.FillColor = ScottPlot.Colors.Green;
+                    colorsAndScale.ColorThePolygon(poly,Values_B[i], MosaicMode);
                 }
             }
-
-            formsPlt.Plot.Axes.SquareUnits();  
-
+            formsPlt.Plot.Axes.SquareUnits();
             _formsPlot = formsPlt;
-
             return formsPlt;
         }
                 
+      
+
+
         /// <summary>
         ///  Покрытие прямоугольниками
         /// </summary>
         /// <param name="sz"></param>
         /// <param name="_bs"></param>
         /// <returns></returns>
-        public FormsPlot CreateRectanglePlot(double[] sz, BeamSection _bs)
-        {            
+        public FormsPlot CreateRectanglePlot1(double[] sz, BeamSection _bs)
+        {
             var msh = new BSCalcLib.MeshRect(Ny, Nz);
 
             if (_bs == BeamSection.Rect)
@@ -201,42 +247,30 @@ namespace BSFiberConcrete
                 msh.IBeamSection(sz[0], sz[1], sz[2], sz[3], sz[4], sz[5]);
 
             FormsPlot formsPlot = new FormsPlot() { Dock = DockStyle.Fill };
-            formsPlot.Plot.Axes.SquareUnits();
+            //formsPlot.Plot.Axes.SquareUnits();
 
             int idx = 0;
             int cnt = msh.rectangleFs.Count;
+
             foreach (RectangleF tr in msh.rectangleFs)
             {
-                ScottPlot.Coordinates[] points = new ScottPlot.Coordinates[] 
-                { 
+                ScottPlot.Coordinates[] points = new ScottPlot.Coordinates[]
+                {
                     new ScottPlot.Coordinates(tr.Left, tr.Bottom),
                     new ScottPlot.Coordinates(tr.Right, tr.Bottom),
                     new ScottPlot.Coordinates(tr.Right, tr.Top),
                     new ScottPlot.Coordinates(tr.Left, tr.Top)
                 };
-                                                        
+
                 ScottPlot.Plottables.Polygon poly = formsPlot.Plot.Add.Polygon(points);
-
                 if (Values_B != null && Values_B.Count == cnt)
-                {                                        
+                {
                     double measured_value = Values_B[idx];
-                    poly.LineColor = ScottPlot.Colors.White;
-
-                    if (measured_value > UltMin && measured_value < UltMax)
-                        poly.FillColor = ScottPlot.Colors.Green;
-                    else if (measured_value >= UltMax)
-                        poly.FillColor = ScottPlot.Colors.Red;
-                    else if (measured_value <= UltMin)
-                        poly.FillColor = ScottPlot.Colors.Violet;
-                    else
-                        poly.FillColor = ScottPlot.Colors.Green;
+                    colorsAndScale.ColorThePolygon(poly,Values_B[idx], MosaicMode);
                 }
-
                 idx++;
             }
-
             _formsPlot = formsPlot;
-
             return formsPlot;
         }
     }

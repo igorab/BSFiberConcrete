@@ -6,9 +6,11 @@ using BSFiberConcrete.DeformationDiagram;
 using BSFiberConcrete.Lib;
 using BSFiberConcrete.Report;
 using BSFiberConcrete.Section;
+using BSFiberConcrete.Section.DrawBeamSection;
 using BSFiberConcrete.Section.MeshSettingsOfBeamSection;
 using BSFiberConcrete.UnitsOfMeasurement;
 using BSFiberConcrete.UnitsOfMeasurement.PhysicalQuantities;
+using ScottPlot.Colormaps;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -1568,7 +1570,7 @@ namespace BSFiberConcrete
                 {
                     string pictureName = $"beamSectionMeshStress{i}";
                     pathToPicture = Directory.GetCurrentDirectory() + "\\" + pictureName + ".png";
-                    MeshDraw mDraw = CreateMosaic(2, calcResNDM.Sig_B, calcResNDM.Sig_S, calcResNDM.Rfbt, BSHelper.kgssm2kNsm(calcResNDM.Rfb), BSHelper.kgssm2kNsm(calcResNDM.Rs));
+                    MeshDraw mDraw = CreateMosaic(2, calcResNDM.Sig_B, calcResNDM.Sig_S, calcResNDM.Rfbt, -BSHelper.kgssm2kNsm(calcResNDM.Rfb), BSHelper.kgssm2kNsm(calcResNDM.Rs));
                     mDraw.SaveToPNG("Напряжения", pathToPicture);
 
                     pathToPictures.Add(pathToPicture);
@@ -2406,7 +2408,9 @@ namespace BSFiberConcrete
                 mDraw.e_s_ult = _e_s_ult;
                 mDraw.Values_B = _valuesB;
                 mDraw.Values_S = _valuesS;
-                mDraw.CreateRectanglePlot(sz, m_BeamSection);
+                mDraw.colorsAndScale = new ColorScale(_valuesB, _ultMax, _ultMin);
+                mDraw.CreateRectanglePlot1(sz, m_BeamSection);
+
             }
             else if (m_BeamSection == BeamSection.Ring)
             {
@@ -2422,6 +2426,7 @@ namespace BSFiberConcrete
                 mDraw.e_s_ult = _e_s_ult;
                 mDraw.Values_B = _valuesB;
                 mDraw.Values_S = _valuesS;
+                mDraw.colorsAndScale = new ColorScale(_valuesB, _ultMax, _ultMin);
                 mDraw.PaintSectionMesh();
             }
             else if (m_BeamSection == BeamSection.Any) //заданное пользователем сечение
@@ -2438,6 +2443,7 @@ namespace BSFiberConcrete
                 mDraw.e_s_ult = _e_s_ult;
                 mDraw.Values_B = _valuesB;
                 mDraw.Values_S = _valuesS;
+                mDraw.colorsAndScale = new ColorScale(_valuesB, _ultMax, _ultMin);
                 mDraw.PaintSectionMesh();
             }
 
