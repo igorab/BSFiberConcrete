@@ -17,7 +17,9 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Diagnostics;
+using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -3044,7 +3046,18 @@ namespace BSFiberConcrete
 
         private void btnEffortsAddRow_Click(object sender, EventArgs e)
         {
+            // добавление новой строчки
             gridEfforts.Rows.Add();
+
+            // нужно явно задать нулевые значения
+            DataGridViewColumnCollection columns = gridEfforts.Columns;
+            for (int j = 0; columns.Count > j; j++)
+            {
+                DataGridViewCellStyle jCellStyle = columns[j].DefaultCellStyle;
+                DataGridViewCell jCell = gridEfforts.Rows[gridEfforts.Rows.Count - 1].Cells[j];
+                //jCell.Style = jCellStyle;
+                jCell.Value = 0;
+            }
         }
 
         private void btnEffortsDelRow_Click(object sender, EventArgs e)
@@ -3191,5 +3204,57 @@ namespace BSFiberConcrete
         {
 
         }
+
+
+        /// <summary>
+        /// метод для события EditingControlShowing DataGridView, Вызывает TextBox_KeyPress
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DataGridView_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            System.Windows.Forms.TextBox _columnTextBox = e.Control as System.Windows.Forms.TextBox;
+            if (_columnTextBox != null)
+            { _columnTextBox.KeyPress += TextBox_KeyPress; }
+        }
+
+
+        /// <summary>
+        /// Допускает ввод только чисел
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar)
+                && !char.IsDigit(e.KeyChar)
+                && e.KeyChar != '.'
+                && e.KeyChar != ','
+                && e.KeyChar != '-')
+            {
+                e.Handled = true;
+            }
+        }
+
+
+        /// <summary>
+        /// Метод для события CellValidating объектов DataGridView
+        /// Разрешает ввод изменения, только если значение преобразуется в double
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DataGridView_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        {
+            //string sep = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
+            string tmpStringValue = e.FormattedValue.ToString();
+            double result;
+                if (tmpStringValue.Contains(","))
+                { tmpStringValue = tmpStringValue.Replace(",", "."); }
+            if (!double.TryParse(tmpStringValue, out result))
+            {
+                e.Cancel = true;
+            }
+        }
+
     }
 }
