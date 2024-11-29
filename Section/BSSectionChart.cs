@@ -10,8 +10,6 @@ using BSFiberConcrete.Lib;
 using BSCalcLib;
 using System.Diagnostics;
 using BSFiberConcrete.Report;
-using ScottPlot.Colormaps;
-using OpenTK.Graphics.ES11;
 
 namespace BSFiberConcrete.Section
 {
@@ -221,13 +219,14 @@ namespace BSFiberConcrete.Section
             }
             else if (m_BeamSection == BeamSection.Any)
             {
-                List<NdmSection> pointsSection = BSData.LoadNdmSection(UserSection);
+                PointsSection = new List<PointF>();
+                List<NdmSection> userSection = BSData.LoadNdmSection(UserSection);
                 int idx = 0;
-                foreach (NdmSection _pt in pointsSection)
+                pointBS.Clear();
+                foreach (NdmSection _pt in userSection)
                 {
                     idx++;
-                    BSPoint bsPt = new BSPoint(_pt);
-                    pointBS.Add(bsPt);
+                    PointsSection.Add(new PointF((float)_pt.X, (float)_pt.Y));                    
                 }
 
                 m_RodPoints = new List<PointF>();
@@ -450,17 +449,17 @@ namespace BSFiberConcrete.Section
         {            
             if (m_BeamSection == BeamSection.Any)
             {
-                dataGrid.Enabled = true;
+                dataGridSection.Enabled = true;
                 btnAdd.Visible = true;
                 btnDel.Visible = true;
-                btnCalc.Enabled = true;
+                //btnCalc.Enabled = true;
             }
             else
             {
-                btnCalc.Enabled = false;
-                dataGrid.Enabled = false;
+                //btnCalc.Enabled = false;
+                dataGridSection.Enabled = false;
 
-                foreach (DataGridViewColumn cl in dataGrid.Columns)
+                foreach (DataGridViewColumn cl in dataGridSection.Columns)
                     cl.ReadOnly = true;
             }
 

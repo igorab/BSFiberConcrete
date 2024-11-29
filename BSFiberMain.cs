@@ -441,6 +441,13 @@ namespace BSFiberConcrete
         private double[] BeamSizes(double _length = 0)
         {
             double[] sz = new double[2];
+
+            if (m_BeamSection == BeamSection.Any)
+            {
+                return sz;
+            }
+
+            double bf = 0, hf = 0, bw, hw, b1f = 0, h1f = 0;            
             foreach (DataRow r in m_Table.Rows)
             {
                 sz = new double[r.ItemArray.Length + 1];
@@ -452,8 +459,7 @@ namespace BSFiberConcrete
                 }
                 sz[idx] = _length;
             }
-
-            double bf = 0, hf = 0, bw, hw, b1f = 0, h1f = 0;
+            
             if (m_BeamSection == BeamSection.TBeam)
             {
                 bw = sz[0]; hw = sz[1]; b1f = sz[2]; h1f = sz[3];
@@ -506,7 +512,7 @@ namespace BSFiberConcrete
             }
             else
             {
-                throw new Exception("Неопределен тип сечения");
+                throw new Exception("Не определен тип сечения");
             }
 
             return sz;
@@ -1681,8 +1687,12 @@ namespace BSFiberConcrete
             NDMSetup _setup = NDMSetupValuesFromForm();                
            
             // расчет:
-            CalcNDM calcNDM = new CalcNDM(_beamSection) {setup = _setup, D = _D };            
-            calcNDM.Run();
+            CalcNDM calcNDM = new CalcNDM(_beamSection) {setup = _setup, D = _D }; 
+            
+            if (_beamSection == BeamSection.Any)
+                calcNDM.RunGroup1();
+            else
+                calcNDM.Run();
 
             BSCalcResultNDM calcRes = new BSCalcResultNDM();
             if (calcNDM.CalcRes != null)
@@ -1985,7 +1995,7 @@ namespace BSFiberConcrete
 
             return true;
         }
-
+        
         /// <summary>
         /// Расчет по НДМ            
         /// </summary>        
@@ -3002,10 +3012,15 @@ namespace BSFiberConcrete
         /// </summary>        
         private void btnCustomSection_Click(object sender, EventArgs e)
         {
-            NDMSetupValuesFromForm();
             m_BeamSection = BeamSection.Any;
-            RefreshSectionChart(BeamSection.Any);
-            m_SectionChart.DictCalcParams = DictCalcParams(BeamSection.Any);
+            dataGridSection.DataSource = null;
+
+            //NDMSetupValuesFromForm();
+
+            picBeton.Image = null;
+
+            RefreshSectionChart(m_BeamSection);
+            
             tabFiber.SelectedTab = tabPageNDM;
         }
 
