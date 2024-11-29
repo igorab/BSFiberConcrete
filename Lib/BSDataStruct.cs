@@ -75,6 +75,7 @@ namespace BSFiberConcrete
         public int BetonTypeId { get; set; }
         public bool UseRebar { get; set; }
         public string RebarType { get; set; }
+        public int FractureStressType { get; set; }
     }
 
 

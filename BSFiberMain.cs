@@ -231,6 +231,7 @@ namespace BSFiberConcrete
 
             tbLength.Text                 = Convert.ToString(prms.Length);
             cmbEffectiveLengthFactor.Text = Convert.ToString(prms.LengthCoef);
+            cmbFractureStrength.SelectedIndex = 0;
 
             cmbFib_i.Text         = prms.Fib_i;
             comboBetonType.Text   = prms.BetonType;
@@ -1598,6 +1599,7 @@ namespace BSFiberConcrete
             ndmSetup.M = _beamSectionMeshSettings?.NY??0;
             ndmSetup.MinAngle = _beamSectionMeshSettings?.MinAngle??0;
             ndmSetup.MaxArea = _beamSectionMeshSettings?.MaxArea??0;
+            ndmSetup.FractureStressType = cmbFractureStrength.SelectedIndex;
 
             BSData.SaveNDMSetup(ndmSetup);
 
