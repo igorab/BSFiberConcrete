@@ -685,7 +685,7 @@ namespace BSFiberConcrete.Section
         /// </summary>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        private string GenerateMesh()
+        public string GenerateMesh()
         {
             //if (m_BeamSection != BeamSection.Any) return "";
             BSMesh.Nx        = NdmSetup.N;

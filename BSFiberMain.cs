@@ -2032,7 +2032,7 @@ namespace BSFiberConcrete
                     }
                     else if (m_BeamSection == BeamSection.Any)
                     {
-                        GenerateMesh(ref CG);
+                        m_SectionChart.GenerateMesh();
                         calcRes = CalcNDM(BeamSection.Any);
                     }
 
@@ -2397,12 +2397,6 @@ namespace BSFiberConcrete
         }
 
 
-
-
-
-
-
-
         /// <summary>
         ///  Разбиение сечения на конечные элементы
         /// </summary>
@@ -2455,8 +2449,8 @@ namespace BSFiberConcrete
             }
             else if (m_BeamSection == BeamSection.Any) //заданное пользователем сечение
             {
-                TriangleNet.Geometry.Point cg = new TriangleNet.Geometry.Point();
-                _ = GenerateMesh(ref cg);
+                //TriangleNet.Geometry.Point cg = new TriangleNet.Geometry.Point();
+                m_SectionChart.GenerateMesh();
 
                 mDraw = new MeshDraw(Tri.Mesh);
                 mDraw.MosaicMode = _Mode;
