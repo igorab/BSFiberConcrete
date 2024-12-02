@@ -56,14 +56,21 @@ namespace BSFiberConcrete.Section
         public double[] Sz { get; set; }
         public double NumArea { set { numArea.Value = (decimal)value; } get { return (double)numArea.Value; } }
 
-        public Rebar Rebar { get; internal set; }
+        public Rebar Rebar 
+        { 
+            set { m_Rebar = value;}
+            get 
+            {
+                m_Rebar = RebarFromControl();
+                return m_Rebar;
+            }  
+        }
+
+        private Rebar m_Rebar;
 
         private float b;
         private float h;
-
-        // количество стержней поперечной арматуры
-        public int a_t_Nx = 0;
-        public int a_t_Ny = 0;
+                
         private int as_t = 4; //защитный слой поперечной арматуры 
         private List<PointF> PointsTRebar;
 
@@ -92,11 +99,48 @@ namespace BSFiberConcrete.Section
             InnerPoints = new List<PointF>();
             h = 0;
             b = 0;
-            Sz = new double[] { 0, 0, 0, 0, 0, 0 };
-            a_t_Nx = 0;
+            Sz = new double[] { 0, 0, 0, 0, 0, 0 };            
             PointsTRebar = new List<PointF>();
         }
 
+        private Rebar RebarFromControl()
+        {
+            double Asw_X = (double)numN_w_X.Value * BSHelper.AreaCircle(double.Parse(Convert.ToString(cmbDw_X.SelectedItem)) / 10.0);
+            double Asw_Y = (double)numN_w_X.Value * BSHelper.AreaCircle(double.Parse(Convert.ToString(cmbDw_Y.SelectedItem)) / 10.0);
+
+            // Арматура из настроек формы
+            Rebar rebar = new Rebar()
+            {
+                // ПРОДОЛЬНАЯ
+                // модуль упругости
+                Es = m_Rebar.Es,
+
+                // Площадь
+                // растянутая
+                As = m_Rebar.As,
+                // сжатая
+                As1 = m_Rebar.As1,
+                // расстояние до ц.т.
+                // растянутая
+                a = m_Rebar.a,
+                // сжатая
+                a1 = m_Rebar.a1,
+
+                // поперечная по X
+                Rsw_X = m_Rebar.Rsw_X,
+                Esw_X = m_Rebar.Esw_X,
+                Sw_X = (double)num_s_w_X.Value,
+                Asw_X = Asw_X,
+
+                // поперечная по Y
+                Rsw_Y = m_Rebar.Rsw_Y,
+                Esw_Y = m_Rebar.Esw_Y,
+                Sw_Y = (double)num_s_w_Y.Value,
+                Asw_Y = Asw_Y,
+            };
+
+            return rebar;
+        }
 
         /// <summary>
         /// Стержни арматуры
@@ -253,7 +297,7 @@ namespace BSFiberConcrete.Section
             {
                 InitRods();
 
-                InitTRebar_X(a_t_Nx);
+                InitTRebar_X((int)numN_w_X.Value);
 
                 //InitTRebar_Y(1);
             }
@@ -281,6 +325,8 @@ namespace BSFiberConcrete.Section
         {
             if (chart.Series.Count < 4)
                 throw new Exception("Необходимо создать 4 ряда диаграммы");
+
+            m_Rebar = RebarFromControl();
 
             if (_clear)
             {
@@ -333,7 +379,7 @@ namespace BSFiberConcrete.Section
                 serieTRebar.Points.Add(new DataPoint(pt.X, pt.Y));
             }
 
-            InitTRebar_Y(1);
+            InitTRebar_Y(m_Rebar.N_Y);
 
             numAreaRebar.Value = (decimal) rods_area;
             m_ImageStream      = new MemoryStream();
@@ -465,6 +511,15 @@ namespace BSFiberConcrete.Section
 
             numArea.Enabled = false;
             numAreaRebar.Enabled = false;
+
+            // поперечная арматура
+            num_s_w_X.Value       = (decimal) m_Rebar.Sw_X; 
+            cmbDw_X.SelectedItem  = m_Rebar.Dw_X.ToString();
+            numN_w_X.Value        = m_Rebar.N_X;
+
+            num_s_w_Y.Value       = (decimal)m_Rebar.Sw_Y;
+            cmbDw_Y.SelectedItem  = m_Rebar.Dw_Y.ToString();
+            numN_w_Y.Value        = m_Rebar.N_Y;
         }
 
         private void Save2PolyFile()

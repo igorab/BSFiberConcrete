@@ -984,12 +984,7 @@ namespace BSFiberConcrete
                     tmpEfforts["e0"] = (double)numRandomEccentricity.Value;
                     _MNQ.Add(tmpEfforts);
                 }                
-            }
-
-            //if (_MNQ.Count == 0)
-            //{
-            //    //_MNQ = new List<Dictionary<string, double>>() {new Dictionary<string, double>{ ["My"] = 0, ["Mx"] = 0, ["N"] = 0, ["Qx"] = 0, ["Qy"] = 0, ["Ml"] = 0, ["eN"] = 0, ["e0"] = 0}};
-            //}
+            }           
         }
 
         /// <summary>
@@ -1008,7 +1003,7 @@ namespace BSFiberConcrete
             if (_MNQ.Count > 0)
                 return _MNQ[0];
 
-            return new Dictionary<string, double>() { };// ["My"] = 0, ["Mx"] = 0, ["N"] = 0, ["Qx"] = 0, ["Qy"] = 0, ["Ml"] = 0, ["eN"] = 0, ["e0"] = 0 };
+            return new Dictionary<string, double>() { };
         }
 
         /// <summary>
@@ -1018,10 +1013,10 @@ namespace BSFiberConcrete
         private Rebar InitRebarFromForm()
         {
             double Asw_X = (double)numN_w_X.Value * BSHelper.AreaCircle(double.Parse(cmbDw_X.SelectedItem.ToString()) / 10.0);
-            double Asw_Y = (double)numN_w_X.Value * BSHelper.AreaCircle(double.Parse(cmbDw_Y.SelectedItem.ToString()) / 10.0);
+            double Asw_Y = (double)numN_w_Y.Value * BSHelper.AreaCircle(double.Parse(cmbDw_Y.SelectedItem.ToString()) / 10.0);
 
             // Арматура из настроек формы
-            Rebar _Rebar = new Rebar()
+            Rebar rebar = new Rebar()
             {
                 // ПРОДОЛЬНАЯ
                 // модуль упругости
@@ -1029,7 +1024,7 @@ namespace BSFiberConcrete
 
                 // Площадь
                 // растянутая
-                As  = (double)numAs.Value,
+                As = (double)numAs.Value,
                 // сжатая
                 As1 = (double)numAs1.Value,
                 // расстояние до ц.т.
@@ -1037,47 +1032,50 @@ namespace BSFiberConcrete
                 a = (double)num_a.Value,
                 // сжатая
                 a1 = (double)num_a1.Value,
-                                
+
                 // поперечная по X
-                Rsw_X   = (double)numRsw_X.Value,
-                Esw_X   = (double)numEsw_X.Value,
-                Sw_X    = (double)num_s_w_X.Value,
-                Asw_X   = Asw_X,
+                Rsw_X = (double)numRsw_X.Value,
+                Esw_X = (double)numEsw_X.Value,
+                Sw_X  = (double)num_s_w_X.Value,
+                N_X   = (int)numN_w_X.Value,
+                Dw_X  = int.Parse(cmbDw_X.SelectedItem.ToString()),
+                Asw_X = Asw_X,
                 
                 // поперечная по Y
                 Rsw_Y = (double)numRsw_Y.Value,
                 Esw_Y = (double)numEsw_Y.Value,                
                 Sw_Y  = (double)num_s_w_Y.Value,
+                N_Y   = (int)numN_w_Y.Value,
+                Dw_Y  = int.Parse(cmbDw_X.SelectedItem.ToString()),
                 Asw_Y = Asw_Y,                
             };
 
-            return _Rebar;
+            return rebar;
         }
 
         /// <summary>
-        ///  Введенные пользователем значения по арматуре
+        ///  Введенные пользователем значения по арматуре для статического расчета по одному направлению
         /// </summary>
         /// <param name="_Rebar"></param>
-        private void InitRebarValues(ref Rebar _Rebar)
+        private void InitRebarValuesForStaticCalc(ref Rebar _Rebar)
         {
             // площади растянутой и сжатой арматуры - задаются для метода статического равновесия
             // для расчета по НДМ - через форму задания сечения
             _Rebar.As = (double)numAs.Value;
             _Rebar.As1 = (double)numAs1.Value;
+
             // расстояния до ц.т.
             _Rebar.a = (double)num_a.Value;
             _Rebar.a1 = (double)num_a1.Value;
+
             // модули упругости арматуры
             // продольной
             _Rebar.Es = (double)numEs.Value;
             // поперечной
             _Rebar.Esw_X = (double)numEsw_X.Value;
-            //TODO Шаг поперечной арматуры
-            _Rebar.Sw_X = (double) num_s_w_X.Value;
-            _Rebar.Sw_Y = (double)num_s_w_Y.Value;
-            // 
-            //_Rebar.Asw_X = 1;
-            //_Rebar.Asw_Y = 1;
+
+            // Шаг поперечной арматуры
+            _Rebar.Sw_X = (double)num_s_w_X.Value;                        
         }
               
         /// <summary>
@@ -1095,11 +1093,11 @@ namespace BSFiberConcrete
                 mu_fv = (double)numMu_fv.Value
             };
             var betonType = BSQuery.BetonTypeFind(comboBetonType.SelectedIndex);
-
+            
             BSFiberCalc_QxQy fiberCalc = new BSFiberCalc_QxQy();
             fiberCalc.MatFiber      = m_MatFiber;
             fiberCalc.UseRebar      = UseRebar;
-            fiberCalc.Rebar         = InitRebarFromForm();
+            fiberCalc.Rebar         = m_SectionChart.Rebar; // поперечная амрматура из полей в контроле m_SectionChart
             fiberCalc.BetonType     = betonType;
             fiberCalc.UnitConverter = _UnitConverter;
             fiberCalc.SetFiberFromLoadData(fiber);
@@ -1163,7 +1161,7 @@ namespace BSFiberConcrete
 
             // проверка на модули упругости!
             Rebar rebar = (Rebar)m_BSLoadData.Rebar.Clone();
-            InitRebarValues(ref rebar);
+            InitRebarValuesForStaticCalc(ref rebar);
 
             List<BSFiberReportData> calcResults_MNQ = new List<BSFiberReportData>();
             
@@ -1301,7 +1299,7 @@ namespace BSFiberConcrete
                 // enforces
                 ["N"]  = MNQ.ContainsKey("N")  ?  -MNQ["N"]: 0,
                 ["My"] = MNQ.ContainsKey("My") ?  MNQ["My"]: 0,
-                ["Mz"] = MNQ.ContainsKey("Mz") ?  MNQ["Mz"]: 0,
+                ["Mz"] = MNQ.ContainsKey("Mx") ?  MNQ["Mx"]: 0,
                 ["Qx"] = MNQ.ContainsKey("Qx") ?  MNQ["Qx"]: 0,
                 ["Qy"] = MNQ.ContainsKey("Qy") ?  MNQ["Qy"]: 0,
                 //
@@ -1640,7 +1638,7 @@ namespace BSFiberConcrete
 
 
         /// <summary>
-        /// Расчет на действие поперечных сил
+        /// Расчет на действие поперечных сил действующих по двум направлениям
         /// </summary>
         private Dictionary<string, double> CalcQxQy()
         {            
@@ -1653,17 +1651,7 @@ namespace BSFiberConcrete
             if (dMNQ["Qx"] == 0 && dMNQ["Qy"] == 0)
             {
                 return null;
-            }
-            else if (dMNQ["Qx"] != 0 && num_s_w_X.Value <= 0)
-            {
-                MessageBox.Show("Задайте шаг арматуры по X", "Расчет на Qx", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return null;
-            }
-            else if (dMNQ["Qy"] != 0 && num_s_w_Y.Value <= 0)
-            {
-                MessageBox.Show("Задайте шаг арматуры по Y", "Расчет на Qy", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return null;
-            }
+            }            
 
             double   beamLngth = InitBeamLength(true);
             double[] sz        = BeamSizes(beamLngth);
@@ -2328,16 +2316,14 @@ namespace BSFiberConcrete
             m_SectionChart.Sz         = sz;
             m_SectionChart.NumArea    = _area;
             m_SectionChart.Rebar      = InitRebarFromForm();
-            m_SectionChart.a_t_Nx     = (int)numN_w_X.Value;
-            m_SectionChart.a_t_Ny     = (int)numN_w_Y.Value;
+            
+            //m_SectionChart.num_s_w_X.Value       = num_s_w_X.Value;
+            //m_SectionChart.cmbDw_X.SelectedItem = cmbDw_X.SelectedItem;
+            //m_SectionChart.numN_w_X.Value       = numN_w_X.Value;
 
-            m_SectionChart.num_s_w_X.Value       = num_s_w_X.Value;
-            m_SectionChart.cmbDw_X.SelectedItem = cmbDw_X.SelectedItem;
-            m_SectionChart.numN_w_X.Value       = numN_w_X.Value;
-
-            m_SectionChart.num_s_w_Y.Value       = num_s_w_Y.Value;
-            m_SectionChart.cmbDw_Y.SelectedItem  = cmbDw_Y.SelectedItem;
-            m_SectionChart.numN_w_Y.Value        =  numN_w_Y.Value;
+            //m_SectionChart.num_s_w_Y.Value       = num_s_w_Y.Value;
+            //m_SectionChart.cmbDw_Y.SelectedItem  = cmbDw_Y.SelectedItem;
+            //m_SectionChart.numN_w_Y.Value        =  numN_w_Y.Value;
 
             if (panelSectionDraw.Controls.Contains(m_SectionChart))
             {

@@ -192,7 +192,7 @@ namespace BSFiberConcrete
 
             if (ok)
             {                
-                if (setup.UseRebar) 
+                if (setup.UseRebar && setup.FractureStressType > 0) 
                 {
                     // расчет по 2 группе с арматурой:
                     double mx0 = Mx0, my0= My0, n0 = N0;

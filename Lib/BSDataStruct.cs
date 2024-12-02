@@ -237,11 +237,23 @@ namespace BSFiberConcrete
         /// Шаг по оси X
         /// </summary>
         public double Sw_X { get; set; }
-
+        /// <summary>
+        /// количество стержней по оси X
+        /// </summary>
+        public int N_X { get; set; }
+        /// <summary>
+        /// номинальный диаметр
+        /// </summary>
+        public int Dw_X { get; set; }
         /// <summary>
         /// Шаг по оси Y
         /// </summary>
         public double Sw_Y { get; set; }
+        /// <summary>
+        /// количество стержней по оси Y
+        /// </summary>
+        public int N_Y { get; set; }
+        public int Dw_Y { get; set; }
         public double Esw_Y { get; set; }
         public double Rsw_Y { get; set; }
         public double Asw_Y { get; set; }
