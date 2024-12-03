@@ -1684,7 +1684,7 @@ namespace BSFiberConcrete
 
             BSCalcResultNDM calcRes = new BSCalcResultNDM();
             if (calcNDM.CalcRes != null)
-                calcRes               = calcNDM.CalcRes;            
+                calcRes = calcNDM.CalcRes;            
 
             calcRes.ResQxQy       = resQxQy;
             calcRes.ImageStream   = m_ImageStream;

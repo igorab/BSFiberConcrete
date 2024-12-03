@@ -187,7 +187,7 @@
             this.tableLayoutPanel3.ColumnCount = 3;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35.13514F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 64.86487F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 225F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 229F));
             this.tableLayoutPanel3.Controls.Add(this.labelScheme, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.cmbScheme, 1, 0);
             this.tableLayoutPanel3.Controls.Add(this.chboxReinforcement, 2, 0);
@@ -202,7 +202,7 @@
             // 
             this.labelScheme.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelScheme.AutoSize = true;
-            this.labelScheme.Location = new System.Drawing.Point(19, 10);
+            this.labelScheme.Location = new System.Drawing.Point(18, 10);
             this.labelScheme.Name = "labelScheme";
             this.labelScheme.Size = new System.Drawing.Size(39, 13);
             this.labelScheme.TabIndex = 0;
@@ -219,7 +219,7 @@
             "г",
             "д",
             "е"});
-            this.cmbScheme.Location = new System.Drawing.Point(64, 6);
+            this.cmbScheme.Location = new System.Drawing.Point(63, 6);
             this.cmbScheme.Name = "cmbScheme";
             this.cmbScheme.Size = new System.Drawing.Size(34, 21);
             this.cmbScheme.TabIndex = 1;
@@ -229,7 +229,7 @@
             // 
             this.chboxReinforcement.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.chboxReinforcement.AutoSize = true;
-            this.chboxReinforcement.Location = new System.Drawing.Point(177, 8);
+            this.chboxReinforcement.Location = new System.Drawing.Point(173, 8);
             this.chboxReinforcement.Name = "chboxReinforcement";
             this.chboxReinforcement.Size = new System.Drawing.Size(75, 17);
             this.chboxReinforcement.TabIndex = 2;

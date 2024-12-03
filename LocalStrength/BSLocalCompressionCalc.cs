@@ -10,6 +10,7 @@ namespace BSFiberConcrete.LocalStrength
 {
     public class BSLocalCompressionCalc : BSLocalStrengthCalc
     {
+        protected double N;
         protected double psi;
         protected double Afbloc;
         protected double Afbmax;
@@ -34,8 +35,11 @@ namespace BSFiberConcrete.LocalStrength
         // шаг сеток косвенного армирования
         protected double s;
 
-        // Предельная сила смятия
+        // Предельная сила сжатия
         protected double Nult;
+
+        // Коэффициент использования сечения
+        protected double UtilRate;
 
         protected double mu_s_xy;
         // коэффициент косвенного армирования
@@ -47,13 +51,14 @@ namespace BSFiberConcrete.LocalStrength
         private void DCalcResult()
         {
             Dc = new Dictionary<string, double>()
-            {
+            {                
                 ["Afbloc"] = Afbloc,
                 ["Afbmax"] = Afbmax,
                 ["Rfb"] = Rfb,
                 ["fi_fb"] = fi_fb,
                 ["Rfbloc"] = Rfbloc,
                 ["Nult"] = Nult,
+                ["UtilRate"] = UtilRate,
 
                 ["lx"] = lx,
                 ["ly"] = ly,
@@ -79,9 +84,9 @@ namespace BSFiberConcrete.LocalStrength
             Dictionary<string, double> D = new Dictionary<string, double>();
             foreach (var item in m_DS) D[item.VarName] = item.Value;
 
-            (a1, a2, c, Yb1, Yb2, Yb3, Yb5, Rfbn, Yb, Rfbt, psi, Afbloc, Afbmax, Rfb, fi_fb, Rfbloc, Nult) =
-                (D["a1"], D["a2"], D["c"], D["Yb1"], D["Yb2"], D["Yb3"], D["Yb5"], D["Rfbn"], D["Yb"],
-                 D["Rfbt"], D["psi"], D["Afbloc"], D["Afbmax"], D["Rfb"], D["fi_fb"], D["Rfbloc"], D["Nult"]);
+            (N, a1, a2, c, Yb1, Yb2, Yb3, Yb5, Rfbn, Yb, Rfbt, psi, Afbloc, Afbmax, Rfb, fi_fb, Rfbloc, Nult, UtilRate) =
+                (D["N"], D["a1"], D["a2"], D["c"], D["Yb1"], D["Yb2"], D["Yb3"], D["Yb5"], D["Rfbn"], D["Yb"],
+                 D["Rfbt"], D["psi"], D["Afbloc"], D["Afbmax"], D["Rfb"], D["fi_fb"], D["Rfbloc"], D["Nult"], D["UtilRate"]);
 
             // Аматура
             (a, Rs_xy, nx, ny, Asx, Asy, lx, ly, s) =
@@ -106,7 +111,7 @@ namespace BSFiberConcrete.LocalStrength
 
         public override bool RunCalc()
         {
-            (Afbloc, Afbmax, Rfb, fi_fb, Rfbloc, Nult) = (0, 0, 0, 0, 0, 0);
+            (Afbloc, Afbmax, Rfb, fi_fb, Rfbloc, Nult, UtilRate) = (0, 0, 0, 0, 0, 0, 0);
 
             bool ok = base.RunCalc();
             if (!ok)
@@ -137,6 +142,8 @@ namespace BSFiberConcrete.LocalStrength
                 Rfbloc = fi_fb * Rfb;
 
                 Nult = psi * Rfbloc * Afbloc;
+
+                UtilRate = Nult!=0 ? Math.Round(N / Nult, 4) : 0;
                                 
                 if (UseReinforcement)
                 {
