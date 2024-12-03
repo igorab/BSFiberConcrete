@@ -75,7 +75,7 @@
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnDel = new System.Windows.Forms.Button();
-            this.dataGrid = new System.Windows.Forms.DataGridView();
+            this.dataGridSection = new System.Windows.Forms.DataGridView();
             this.numDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.xDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.yDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -103,7 +103,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.num_s_w_X)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numN_w_Y)).BeginInit();
             this.tableLayoutPanel5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridSection)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pointBS)).BeginInit();
             this.tableLayoutPanel4.SuspendLayout();
             this.tableLayoutPanelAreas.SuspendLayout();
@@ -126,7 +126,7 @@
             this.tableLayoutPanel.Controls.Add(this.tableLayoutPanel2, 5, 1);
             this.tableLayoutPanel.Controls.Add(this.tableLayoutPanelRebar, 2, 1);
             this.tableLayoutPanel.Controls.Add(this.tableLayoutPanel5, 1, 1);
-            this.tableLayoutPanel.Controls.Add(this.dataGrid, 0, 1);
+            this.tableLayoutPanel.Controls.Add(this.dataGridSection, 0, 1);
             this.tableLayoutPanel.Controls.Add(this.tableLayoutPanel4, 3, 1);
             this.tableLayoutPanel.Controls.Add(this.tableLayoutPanelAreas, 4, 0);
             this.tableLayoutPanel.Location = new System.Drawing.Point(0, 0);
@@ -155,7 +155,7 @@
             series1.ChartArea = "ChartArea";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             series1.Legend = "Legend";
-            series1.Name = "Сечение";
+            series1.Name = "Сечение внеш";
             series2.BorderWidth = 3;
             series2.ChartArea = "ChartArea";
             series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
@@ -167,7 +167,7 @@
             series3.ChartArea = "ChartArea";
             series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             series3.Legend = "Legend";
-            series3.Name = "сечение";
+            series3.Name = "сечение внут";
             series4.ChartArea = "ChartArea";
             series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             series4.Color = System.Drawing.Color.Green;
@@ -234,6 +234,7 @@
             this.btnCalc.Size = new System.Drawing.Size(30, 36);
             this.btnCalc.TabIndex = 4;
             this.btnCalc.UseVisualStyleBackColor = true;
+            this.btnCalc.Visible = false;
             this.btnCalc.Click += new System.EventHandler(this.btnCalc_Click);
             // 
             // imageList
@@ -444,7 +445,6 @@
             // 
             this.num_s_w_Y.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.num_s_w_Y.DecimalPlaces = 2;
-            this.num_s_w_Y.Enabled = false;
             this.num_s_w_Y.Location = new System.Drawing.Point(103, 101);
             this.num_s_w_Y.Maximum = new decimal(new int[] {
             100000,
@@ -468,7 +468,6 @@
             // numN_w_X
             // 
             this.numN_w_X.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.numN_w_X.Enabled = false;
             this.numN_w_X.Location = new System.Drawing.Point(103, 74);
             this.numN_w_X.Maximum = new decimal(new int[] {
             100000,
@@ -503,7 +502,6 @@
             // 
             this.num_s_w_X.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.num_s_w_X.DecimalPlaces = 2;
-            this.num_s_w_X.Enabled = false;
             this.num_s_w_X.Location = new System.Drawing.Point(103, 23);
             this.num_s_w_X.Maximum = new decimal(new int[] {
             100000,
@@ -539,7 +537,6 @@
             // 
             this.cmbDw_X.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbDw_X.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbDw_X.Enabled = false;
             this.cmbDw_X.FormattingEnabled = true;
             this.cmbDw_X.Items.AddRange(new object[] {
             "0",
@@ -576,7 +573,6 @@
             // 
             this.cmbDw_Y.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbDw_Y.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbDw_Y.Enabled = false;
             this.cmbDw_Y.FormattingEnabled = true;
             this.cmbDw_Y.Items.AddRange(new object[] {
             "0",
@@ -602,7 +598,6 @@
             // numN_w_Y
             // 
             this.numN_w_Y.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.numN_w_Y.Enabled = false;
             this.numN_w_Y.Location = new System.Drawing.Point(103, 150);
             this.numN_w_Y.Maximum = new decimal(new int[] {
             100000,
@@ -662,23 +657,23 @@
             this.btnDel.Visible = false;
             this.btnDel.Click += new System.EventHandler(this.btnDel_Click);
             // 
-            // dataGrid
+            // dataGridSection
             // 
-            this.dataGrid.AllowUserToAddRows = false;
-            this.dataGrid.AllowUserToDeleteRows = false;
-            this.dataGrid.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.dataGrid.AutoGenerateColumns = false;
-            this.dataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridSection.AllowUserToAddRows = false;
+            this.dataGridSection.AllowUserToDeleteRows = false;
+            this.dataGridSection.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.dataGridSection.AutoGenerateColumns = false;
+            this.dataGridSection.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridSection.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.numDataGridViewTextBoxColumn,
             this.xDataGridViewTextBoxColumn,
             this.yDataGridViewTextBoxColumn});
-            this.dataGrid.DataSource = this.pointBS;
-            this.dataGrid.Location = new System.Drawing.Point(3, 32);
-            this.dataGrid.Name = "dataGrid";
-            this.dataGrid.RowHeadersVisible = false;
-            this.dataGrid.Size = new System.Drawing.Size(135, 359);
-            this.dataGrid.TabIndex = 2;
+            this.dataGridSection.DataSource = this.pointBS;
+            this.dataGridSection.Location = new System.Drawing.Point(3, 32);
+            this.dataGridSection.Name = "dataGridSection";
+            this.dataGridSection.RowHeadersVisible = false;
+            this.dataGridSection.Size = new System.Drawing.Size(135, 359);
+            this.dataGridSection.TabIndex = 2;
             // 
             // numDataGridViewTextBoxColumn
             // 
@@ -770,7 +765,7 @@
             this.tableLayoutPanelAreas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 44F));
             this.tableLayoutPanelAreas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 133F));
             this.tableLayoutPanelAreas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 114F));
-            this.tableLayoutPanelAreas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 37F));
+            this.tableLayoutPanelAreas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 56F));
             this.tableLayoutPanelAreas.Controls.Add(this.labelArea, 0, 0);
             this.tableLayoutPanelAreas.Controls.Add(this.numArea, 1, 0);
             this.tableLayoutPanelAreas.Controls.Add(this.label_area, 3, 0);
@@ -788,7 +783,7 @@
             // 
             this.labelArea.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelArea.AutoSize = true;
-            this.labelArea.Location = new System.Drawing.Point(27, 5);
+            this.labelArea.Location = new System.Drawing.Point(18, 5);
             this.labelArea.Name = "labelArea";
             this.labelArea.Size = new System.Drawing.Size(54, 13);
             this.labelArea.TabIndex = 0;
@@ -799,21 +794,21 @@
             this.numArea.AccessibleName = "NumArea";
             this.numArea.DecimalPlaces = 4;
             this.numArea.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numArea.Location = new System.Drawing.Point(87, 3);
+            this.numArea.Location = new System.Drawing.Point(78, 3);
             this.numArea.Maximum = new decimal(new int[] {
             -1486618624,
             232830643,
             0,
             0});
             this.numArea.Name = "numArea";
-            this.numArea.Size = new System.Drawing.Size(88, 20);
+            this.numArea.Size = new System.Drawing.Size(78, 20);
             this.numArea.TabIndex = 1;
             // 
             // label_area
             // 
             this.label_area.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label_area.AutoSize = true;
-            this.label_area.Location = new System.Drawing.Point(245, 5);
+            this.label_area.Location = new System.Drawing.Point(226, 5);
             this.label_area.Name = "label_area";
             this.label_area.Size = new System.Drawing.Size(107, 13);
             this.label_area.TabIndex = 3;
@@ -823,7 +818,7 @@
             // 
             this.labelAreaRebarUnits.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelAreaRebarUnits.AutoSize = true;
-            this.labelAreaRebarUnits.Location = new System.Drawing.Point(472, 5);
+            this.labelAreaRebarUnits.Location = new System.Drawing.Point(453, 5);
             this.labelAreaRebarUnits.Name = "labelAreaRebarUnits";
             this.labelAreaRebarUnits.Size = new System.Drawing.Size(27, 13);
             this.labelAreaRebarUnits.TabIndex = 4;
@@ -834,7 +829,7 @@
             this.numAreaRebar.AccessibleName = "NumArea";
             this.numAreaRebar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.numAreaRebar.DecimalPlaces = 4;
-            this.numAreaRebar.Location = new System.Drawing.Point(358, 3);
+            this.numAreaRebar.Location = new System.Drawing.Point(339, 3);
             this.numAreaRebar.Maximum = new decimal(new int[] {
             -1530494976,
             232830,
@@ -848,7 +843,7 @@
             // 
             this.labelAreaUnits.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelAreaUnits.AutoSize = true;
-            this.labelAreaUnits.Location = new System.Drawing.Point(181, 5);
+            this.labelAreaUnits.Location = new System.Drawing.Point(162, 5);
             this.labelAreaUnits.Name = "labelAreaUnits";
             this.labelAreaUnits.Size = new System.Drawing.Size(27, 13);
             this.labelAreaUnits.TabIndex = 2;
@@ -876,7 +871,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.num_s_w_X)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numN_w_Y)).EndInit();
             this.tableLayoutPanel5.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridSection)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pointBS)).EndInit();
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanelAreas.ResumeLayout(false);
@@ -892,7 +887,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart;
         private System.Windows.Forms.Button btnDraw;
-        private System.Windows.Forms.DataGridView dataGrid;
+        private System.Windows.Forms.DataGridView dataGridSection;
         private System.Windows.Forms.BindingSource pointBS;
         private System.Windows.Forms.Button btnDel;
         private System.Windows.Forms.Button btnAdd;
