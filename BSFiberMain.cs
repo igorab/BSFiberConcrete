@@ -1561,7 +1561,7 @@ namespace BSFiberConcrete
                     string pictureName = $"beamSectionMeshDeform{i}";
                     pathToPicture = Directory.GetCurrentDirectory() + "\\" + pictureName + ".png";
                     MeshDraw mDraw = CreateMosaic(1, calcResNDM.Eps_B, calcResNDM.Eps_S, (double)numEps_fbt_ult.Value, -(double)numEps_fb_ult.Value, calcResNDM.Rs);
-                    mDraw.SaveToPNG("Деформации", pathToPicture);
+                    mDraw.SaveToPNG("Относительные деформации", pathToPicture);
 
                     pathToPictures.Add(pathToPicture);
                 }
@@ -3245,11 +3245,19 @@ namespace BSFiberConcrete
         /// <param name="e"></param>
         private void DataGridView_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
-            //string sep = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
+            string sep = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
             string tmpStringValue = e.FormattedValue.ToString();
             double result;
+            if (sep == ".")
+            {
                 if (tmpStringValue.Contains(","))
                 { tmpStringValue = tmpStringValue.Replace(",", "."); }
+            }
+            if (sep == ",")
+            {
+                if (tmpStringValue.Contains("."))
+                { tmpStringValue = tmpStringValue.Replace(".", ","); }
+            }
             if (!double.TryParse(tmpStringValue, out result))
             {
                 e.Cancel = true;

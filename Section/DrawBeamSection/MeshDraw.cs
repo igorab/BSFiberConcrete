@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Core.Metadata.Edm;
+using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -121,7 +122,12 @@ namespace BSFiberConcrete
 
             if (colorsAndScale != null)
             {
-                Plot myPlot = colorsAndScale.CreateColorScale(MosaicMode);
+                Plot myPlot = null;
+                if (title == "Напряжения")
+                { myPlot = colorsAndScale.CreateColorScale(MosaicMode, "МПа"); }
+                else
+                { myPlot = colorsAndScale.CreateColorScale(MosaicMode); }
+
                 string pathToPicture = "ColorScale.png";
                 myPlot.SavePng(pathToPicture, 100, _heightToSave);
                 // нужно повернуть картинку, иначе она не встает в Plot.Axes.Left.Label.Image
