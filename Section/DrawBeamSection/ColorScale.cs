@@ -74,7 +74,7 @@ namespace BSFiberConcrete.Section.DrawBeamSection
         /// </summary>
         /// <param name="typeOfColor"></param>
         /// <returns></returns>
-        public Plot CreateColorScale(int typeOfColor)
+        public Plot CreateColorScale(int typeOfColor, string xLabel = null)
         {
             List<Bar> positiveBars = new List<Bar>();
             List<Bar> negativeBars = new List<Bar>();
@@ -101,6 +101,9 @@ namespace BSFiberConcrete.Section.DrawBeamSection
             myPlot.Axes.Bottom.MinorTickStyle.Length = 0;
             myPlot.Grid.XAxisStyle.IsVisible = false;
             myPlot.Grid.YAxisStyle.IsVisible = false;
+            if (xLabel != null)
+            { myPlot.XLabel(xLabel); }
+
             return myPlot;
         }
 

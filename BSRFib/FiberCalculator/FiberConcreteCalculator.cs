@@ -369,15 +369,26 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
                 return;
             }
 
+
+
             // назначение расчетного коэф фибрового армирования
             //  если mu_fv = 0 выполнять расчет по минимальному значению
             if (_mu_fv == 0)
             { 
-                mu_fv = mu_fv_min; 
+                mu_fv = mu_fv_min;
+
+                if (mu_fv < 0.005)
+                {
+                    message = "Минимальное значение Коэф. фибрового армирования, принятое в качестве расчетного, должно быть больше 0.005.";
+                    _msgToReport.Add(message);
+                    return;
+                }
             }
             else
             { 
                 mu_fv = _mu_fv;
+
+
                 if (mu_fv_min > 0.02)
                 {
                     message = "Значение Коэф. фибрового армирования не должно превышать 0.02.";
@@ -385,13 +396,22 @@ namespace BSFiberConcrete.BSRFib.FiberCalculator
                     return;
                 }
 
-            }
-            // сравнить mu_fv с верхней нижней диапазона 
-            if (mu_fv < 0.005)
-            {
-                message = "Значение Коэф. фибрового армирования должно быть больше 0.005.";
-                _msgToReport.Add(message);
-                return;
+                if (mu_fv < mu_fv_min)
+                {
+                    message = "Значение Коэф. фибрового армирования должно быть больше минимального значения Коэф. фибрового армирования";
+                    _msgToReport.Add(message);
+                    return;
+                }
+
+                // сравнить mu_fv с верхней нижней диапазона 
+                if (mu_fv < 0.005)
+                {
+                    message = "Значение Коэф. фибрового армирования должно быть больше 0.005.";
+                    _msgToReport.Add(message);
+                    return;
+                }
+
+
             }
 
             A_min = 4 * d_f_red / (mu_fv * Kor);
