@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using TriangleNet;
 using TriangleNet.Topology;
+using BSFiberConcrete.Lib;
 
 namespace BSFiberConcrete
 {
@@ -22,9 +23,9 @@ namespace BSFiberConcrete
     /// Для отрисовки используется NuGet ScottPlot
     /// </summary>
     public class MeshDraw
-    {        
+    {
         private FormsPlot _formsPlot;
-                
+
         // шаг сетки
         private int Ny; // горизонтальная ось
         private int Nz; // вертикальная ось
@@ -34,9 +35,9 @@ namespace BSFiberConcrete
         public int MosaicMode { private get; set; }
 
         /// верхняя граница
-        public double UltMax {private get; set; }
+        public double UltMax { private get; set; }
         /// нижняя граница
-        public double UltMin {private get; set; }
+        public double UltMin { private get; set; }
         /// <summary>
         /// предел по арматуре
         /// </summary>
@@ -54,8 +55,8 @@ namespace BSFiberConcrete
         /// <summary>
         /// Сетки из треугольников
         /// </summary>
-        public Mesh TriangleMesh  {  get; private set; }
-        
+        public Mesh TriangleMesh { get; private set; }
+
         /// <summary>
         /// ширина для сохранения
         /// </summary>
@@ -87,7 +88,7 @@ namespace BSFiberConcrete
         }
 
 
-        
+
 
         /// <summary>
         /// Отрисовка объекта FormsPlot на WinForm'е
@@ -105,12 +106,12 @@ namespace BSFiberConcrete
             drawBS.Rs_Value = Rs_Ult;
             drawBS.e_st_ult = e_st_ult;
             drawBS.e_s_ult = e_s_ult;
-            drawBS.e_fbt_max = (Values_B!=null)? Values_B.Max() : 0;
-            drawBS.e_fb_max = (Values_B != null) ? Values_B.Min() :0;
-            drawBS.e_st_max = (Values_S != null)? Values_S.Max() : 0;
-            drawBS.e_s_max = (Values_S != null) ? Values_S.Min() :0;
+            drawBS.e_fbt_max = (Values_B != null) ? Values_B.Max() : 0;
+            drawBS.e_fb_max = (Values_B != null) ? Values_B.Min() : 0;
+            drawBS.e_st_max = (Values_S != null) ? Values_S.Max() : 0;
+            drawBS.e_s_max = (Values_S != null) ? Values_S.Min() : 0;
 
-            drawBS.Show();                
+            drawBS.Show();
         }
 
 
@@ -144,7 +145,7 @@ namespace BSFiberConcrete
             if (title != null)
                 _formsPlot.Plot.Title(title);
             if (fullPath == null)
-                _formsPlot.Plot.SavePng("beamSectionMesh.png",_widthToSave, _heightToSave);
+                _formsPlot.Plot.SavePng("beamSectionMesh.png", _widthToSave, _heightToSave);
             else
                 _formsPlot.Plot.SavePng(fullPath, _widthToSave, _heightToSave);
         }
@@ -211,7 +212,7 @@ namespace BSFiberConcrete
             int deltaRGB = maxValueColor / (numOfSegments - 1);
 
 
-            for ( int i = 0; i < TriangleMesh.Triangles.Count; i++)
+            for (int i = 0; i < TriangleMesh.Triangles.Count; i++)
             {
                 // отрисовка гемеотри треугольника
                 Triangle tr = TriangleMesh.Triangles.ToArray()[i];
@@ -226,15 +227,15 @@ namespace BSFiberConcrete
 
                 if (Values_B != null)
                 {
-                    colorsAndScale.ColorThePolygon(poly,Values_B[i], MosaicMode);
+                    colorsAndScale.ColorThePolygon(poly, Values_B[i], MosaicMode);
                 }
             }
             formsPlt.Plot.Axes.SquareUnits();
             _formsPlot = formsPlt;
             return formsPlt;
         }
-                
-      
+
+
 
 
         /// <summary>
@@ -272,12 +273,75 @@ namespace BSFiberConcrete
                 if (Values_B != null && Values_B.Count == cnt)
                 {
                     double measured_value = Values_B[idx];
-                    colorsAndScale.ColorThePolygon(poly,Values_B[idx], MosaicMode);
+                    colorsAndScale.ColorThePolygon(poly, Values_B[idx], MosaicMode);
                 }
                 idx++;
             }
             _formsPlot = formsPlot;
             return formsPlot;
+        }
+
+
+
+        /// <summary>
+        /// Отрисовать стержень арматуры
+        /// </summary>
+        public void DrawReinforcementBar(BeamSection numOfBeamSection)
+        { 
+            // получение арматуры 
+            List<BSRod> bsRods = BSData.LoadBSRod(numOfBeamSection);
+
+            if (bsRods.Count != Values_S.Count)
+            { return; }
+
+            if (_formsPlot == null)
+            { _formsPlot = new FormsPlot() { Dock = DockStyle.Fill }; }
+
+            Plot myPlot = _formsPlot.Plot;
+
+            for (int i = 0; bsRods.Count > i; i ++)
+            {
+                double x = bsRods[i].CG_X;
+                double y = bsRods[i].CG_Y;
+
+                // place a marker at the point
+                var marker = myPlot.Add.Marker(x, y);
+                marker.Color = Colors.Black;
+                marker.MarkerSize = 19;
+                // place a styled text label at the point
+                var txt = myPlot.Add.Text($"{i+1}", x, y);
+                //txt.LabelFontSize = 16;
+                //txt.LabelBorderColor = new ScottPlot.Color(181, 184, 177, 0);
+                //txt.LabelBorderColor = new ScottPlot.Color(181, 184, 177, 0);
+
+                //txt.LabelBackgroundColor = new ScottPlot.Color(255, 0, 0, 0);
+                //txt.LabelBorderWidth = 0;
+                //txt.LabelFontColor = Colors.Red;
+
+                //txt.LabelPadding = 2;
+                txt.LabelBold = true;
+                txt.LabelFontColor = ScottPlot.Colors.White;
+                //txt.LabelShadowColor = Colors.Black;
+                //txt.LabelBackgroundColor = Colors.White;
+
+                //txt.LabelBackgroundColor = marker.Color.WithAlpha(.5);
+
+                // смещение текстовой метки на заданное количество пикселей
+                txt.OffsetY = -8;
+                if (i < 9)
+                {
+                    txt.OffsetX = -4;
+                }
+                else if (i >= 9 && i < 99)
+                { 
+                    txt.OffsetX = -8;
+
+                }
+            }
+
+
+
+
         }
     }
 }
