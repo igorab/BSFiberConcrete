@@ -235,8 +235,6 @@ namespace BSFiberConcrete
         }
                 
       
-
-
         /// <summary>
         ///  Покрытие прямоугольниками
         /// </summary>
@@ -248,9 +246,14 @@ namespace BSFiberConcrete
             var msh = new BSCalcLib.MeshRect(Ny, Nz);
 
             if (_bs == BeamSection.Rect)
-                msh.Rectangle(sz[0], sz[1]);
+            {
+                //msh.Rectangle(sz[0], sz[1]);
+                msh.Rectangle(sz[0], sz[1], -sz[0]/2.0);
+            }
             else if (BSHelper.IsITL(_bs))
+            {
                 msh.IBeamSection(sz[0], sz[1], sz[2], sz[3], sz[4], sz[5]);
+            }
 
             FormsPlot formsPlot = new FormsPlot() { Dock = DockStyle.Fill };
             //formsPlot.Plot.Axes.SquareUnits();

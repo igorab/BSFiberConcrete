@@ -27,7 +27,7 @@ namespace BSFiberConcrete.CalcGroup2
 
             if (m_BeamSection == BeamSection.Rect)
             {
-                n = InitRectangleSection(b, h, -b / 2.0);
+                n = InitRectangleSection(b, h, -b / 2.0);                
                 m = InitReinforcement(-b / 2.0);
             }
             else if (BSHelper.IsITL(m_BeamSection))
