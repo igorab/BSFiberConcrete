@@ -1,4 +1,5 @@
 ﻿using BSFiberConcrete.Lib;
+using Microsoft.VisualBasic;
 using ScottPlot.AxisLimitManagers;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,6 @@ namespace BSFiberConcrete.LocalStrength
         protected double Afb;
         protected double Ffb_ult;
 
-
         // Усилия:
         // сила продавливания
         protected double F;
@@ -40,6 +40,9 @@ namespace BSFiberConcrete.LocalStrength
         protected double Wfbx;
         // Момент сопротивления расчетного контура сталефибробетона при продавливании вокруг Y
         protected double Wfby;
+        // арматуры
+        protected double Wsw_x;
+        protected double Wsw_y;
 
         //Предельный изгибающий момент бетона
         protected double Mfb_x_ult;
@@ -243,35 +246,40 @@ namespace BSFiberConcrete.LocalStrength
 
         // расчет элементов на продавливание при действии сосредоточенной силы с арматурой
         public override bool ReinforcementCalc()
-        {
-            // Длина расчетного контура №2
-            double ca2 = a1 + 4 * h0;
-            // Ширина расчетного контура №2
-            double cb2 = a2 + 4 * h0;
-
-            // Периметр контура расчетного поперечного сечения(см)
-            u = 2 * ca2 + 2 * cb2;
-
-            // Площадь расчетного поперечного сечения(см)
-            Afb = u * h0;
-
-            // Предельное усилие, воспринимаемое сталефибробетоном по второму контуру. (кг)
-            Ffb_ult = Rfbt * Afb;
-
-            q_sw = Asw * Rsw / sw;
-
-            Fsw_ult = 0.8* q_sw * u;
-
-            Fult = Ffb_ult + Fsw_ult;
-
+        {            
             // Коэфициент использования
             if (F != 0 && (Mx == 0 && My == 0))
             {
+                // Длина расчетного контура №2
+                double ca2 = a1 + 4 * h0;
+                // Ширина расчетного контура №2
+                double cb2 = a2 + 4 * h0;
+
+                // Периметр контура расчетного поперечного сечения(см)
+                u = 2 * ca2 + 2 * cb2;
+
+                // Площадь расчетного поперечного сечения(см)
+                Afb = u * h0;
+
+                // Предельное усилие, воспринимаемое сталефибробетоном по второму контуру. (кг)
+                Ffb_ult = Rfbt * Afb;
+
+                q_sw = Asw * Rsw / sw;
+
+                Fsw_ult = 0.8 * q_sw * u;
+
+                Fult = Ffb_ult + Fsw_ult;
+
+
                 FMxMy_uc = F / Fult;
             }
-            else if (F != 0 || Mx != 0 || My != 0)
+            else if (Mx != 0 || My != 0)
             {
                 RunReinforcementCalcFMxMy();
+            }
+            else
+            {                
+                return false;
             }
 
             return true;
@@ -281,6 +289,27 @@ namespace BSFiberConcrete.LocalStrength
         // расчет элементов на продавливание при действии сосредоточенных сил и моментов c арматурой
         public bool RunReinforcementCalcFMxMy()
         {
+            // Длина расчетного контура
+            double a = a1 +  h0;
+            // Ширина расчетного контура №2
+            double b = a2 +  h0;
+
+            // Периметр контура расчетного поперечного сечения(см)
+            u = 2 * a + 2 * b;
+
+            // Площадь расчетного поперечного сечения(см)
+            Afb = u * h0;
+
+            // Предельное усилие, воспринимаемое сталефибробетоном по второму контуру. (кг)
+            Ffb_ult = Rfbt * Afb;
+
+            q_sw = (sw!=0) ? Asw * Rsw / sw : 0;
+
+            Fsw_ult = 0.8 * q_sw * u;
+
+            Fult = Ffb_ult + Fsw_ult;
+            
+
             double Lx = a2 + h0;
             double Ly = a1 + h0;
 
@@ -296,19 +325,24 @@ namespace BSFiberConcrete.LocalStrength
             // Момент сопротивления расчетного контура сталефибробетона при продавливании вокруг Y
             Wfby = Ifby / x_max;
 
+            // СП 6.1.40 Момент сопротивления поперечной арматуры при продавленвании (если поперечная арматура расположена равномерно)
+            Wsw_x = Wfbx;
+            Wsw_y = Wfby;
+
             //Предельный изгибающий момент бетона
             Mfb_x_ult = Rfbt * Wfbx * h0;
             // арматуры
-            Msw_x_ult = 0;
+            Msw_x_ult = 0.8 * q_sw * Wsw_x;
 
             //Предельный изгибающий момент бетона
             Mfb_y_ult = Rfbt * Wfby * h0;
             // арматуры
-            Msw_y_ult = 0;
+            Msw_y_ult = 0.8 * q_sw * Wsw_y;
 
-            FMxMy_uc = (Fult!=0) ? F / Fult : 0 +
-                       (Mfb_x_ult + Msw_x_ult) != 0 ?  Mx / (Mfb_x_ult + Msw_x_ult) : 0 +
-                       (Mfb_y_ult + Msw_y_ult) != 0 ?  My / (Mfb_y_ult + Msw_y_ult) : 0;
+            // условие прочности. Сумма должна быть <= 1
+            FMxMy_uc = ((Fult !=0) ? F / Fult : 0) +
+                       ((Mfb_x_ult + Msw_x_ult) != 0 ?  Mx / (Mfb_x_ult + Msw_x_ult) : 0) +
+                       ((Mfb_y_ult + Msw_y_ult) != 0 ?  My / (Mfb_y_ult + Msw_y_ult) : 0);
 
             return true;
         }
