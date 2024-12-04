@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Security.AccessControl;
 using System.Text;
@@ -94,6 +97,36 @@ namespace BSFiberConcrete
             return _BeamSection == BeamSection.TBeam ||
                    _BeamSection == BeamSection.LBeam ||
                    _BeamSection == BeamSection.IBeam;
+        }
+
+        
+        public static string MakeImageSrcData(Image _image, string _filename = "img.png")
+        {
+            if (_image == null) return "";
+
+            string _img = "";
+           
+            try
+            {
+                using (Image img = _image)
+                {
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        img.Save(ms, ImageFormat.Png);
+
+                        byte[] imgBytes = ms.ToArray();
+                        string _extension = Path.GetExtension(_filename).Replace(".", "").ToLower();
+
+                        _img = String.Format("\"data:image/{0};base64, {1}\" alt = \"{2}\" ", _extension, Convert.ToBase64String(imgBytes), _filename);
+                    }
+                }
+            }
+            catch (Exception _e)
+            {
+                _img = _e.Message;
+            }
+
+            return _img;
         }
 
 

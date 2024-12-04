@@ -3,6 +3,7 @@ using ScottPlot.AxisLimitManagers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.SymbolStore;
+using System.Drawing;
 using System.Drawing.Text;
 using System.Linq;
 using System.Text;
@@ -312,11 +313,22 @@ namespace BSFiberConcrete.LocalStrength
             return true;
         }
 
-
-
         public override string SampleDescr()
         {
             return "Расчет элементов на продавливание";
         }
+
+        public override Image ImageScheme()
+        {
+            Image img;
+
+            if (UseReinforcement)
+                img = Properties.Resources.SchemePunchReinf;
+            else
+                img = Properties.Resources.SchemePunch;
+
+            return img;
+        }
+
     }
 }

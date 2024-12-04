@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -15,21 +16,30 @@ namespace BSFiberConcrete.LocalStrength
     public partial class BSLocalStrength : Form
     {
         public BSLocalStrengthCalc StrengthCalc {  get; set; }
-        public bool IsShowScheme { get; set; }
+        public TypeOfLocalStrengthCalc TypeOfCalc { get; set; }
+
+        public bool IsShowScheme 
+        { 
+            get 
+            { 
+                if (TypeOfCalc == TypeOfLocalStrengthCalc.Compression)
+                    return true;
+                else
+                    return false;
+            } 
+        }
 
         private BindingList<LocalStress> Ds;
 
 
         public BSLocalStrength()
         {
-            InitializeComponent();
-
-            IsShowScheme = true;
+            InitializeComponent();            
         }
        
         private void btnCalc_Click(object sender, EventArgs e)
         {
-            StrengthCalc.UseReinforcement = chboxReinforcement.Checked;            
+            StrengthCalc.UseReinforcement = checkBoxReinf.Checked;            
             StrengthCalc.Scheme = cmbScheme.SelectedIndex + 1;
 
             StrengthCalc.RunCalc();
@@ -48,9 +58,8 @@ namespace BSFiberConcrete.LocalStrength
 
             localStressBindingSource.DataSource = Ds;
 
-            chboxReinforcement_CheckedChanged(null, null);
-            
-            labelScheme.Visible = IsShowScheme;
+            chboxReinforcement_CheckedChanged(null, null);            
+            //labelScheme.Visible = IsShowScheme;
             cmbScheme.Visible = IsShowScheme;            
         }
 
@@ -60,7 +69,8 @@ namespace BSFiberConcrete.LocalStrength
             strengthReport.ReportName = StrengthCalc.ReportName();
             strengthReport.SampleName = StrengthCalc.SampleName();
             strengthReport.SampleDescr = StrengthCalc.SampleDescr();
-
+            strengthReport.ImageScheme = StrengthCalc.ImageScheme();
+            
             if (localStressBindingSource.DataSource is BindingList<LocalStress>)
             {
                 var ds = (BindingList<LocalStress>)localStressBindingSource.DataSource;
@@ -100,7 +110,7 @@ namespace BSFiberConcrete.LocalStrength
                     {
                         try
                         {
-                            if (chboxReinforcement.Checked == true)
+                            if (checkBoxReinf.Checked == true)
                                 row.Visible = true;
                             else
                                 row.Visible = false;
@@ -112,6 +122,51 @@ namespace BSFiberConcrete.LocalStrength
             }
             catch
             { }            
+        }
+
+        private void labelSchemeHelp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            try
+            { 
+                Form form = new Form();
+                form.Text = "Расчетная схема";
+
+                PictureBox pictureBox = new PictureBox();
+                pictureBox.Name = "pictureBoxImg";
+                pictureBox.Location = new Point(10, 10);
+                pictureBox.Size = new Size(600, 600);                
+                pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+
+                if (TypeOfCalc == TypeOfLocalStrengthCalc.Compression)
+                    pictureBox.Image = Properties.Resources.SchemeStress;
+                else if (TypeOfCalc == TypeOfLocalStrengthCalc.Punch)
+                {
+                    if (checkBoxReinf.Checked == true)
+                        pictureBox.Image = Properties.Resources.SchemePunchReinf;
+                    else
+                        pictureBox.Image = Properties.Resources.SchemePunch;
+                }
+                Label labelTxt = new Label();
+                labelTxt.Name = "labelTxt";
+
+                if (TypeOfCalc == TypeOfLocalStrengthCalc.Compression)
+                    labelTxt.Text = "Схемы для расчета элементов на местное сжатие при различном положении местной нагрузки";
+                else if (TypeOfCalc == TypeOfLocalStrengthCalc.Punch)                
+                    labelTxt.Text = "Схемы для расчета элементов на продавливание";
+                
+                labelTxt.Font = new Font(labelTxt.Font.FontFamily, 12);
+                labelTxt.Location = new Point(pictureBox.Left, pictureBox.Height + 20);
+                labelTxt.Size = new Size(labelTxt.PreferredWidth, labelTxt.PreferredHeight);
+
+                form.Size = new Size(pictureBox.Width + 50, pictureBox.Height + 100);
+                form.Controls.Add(pictureBox);
+                form.Controls.Add(labelTxt);            
+                form.ShowDialog();             
+            }
+            catch  (Exception ex) 
+            {
+                MessageBox.Show(ex.Message);
+            }           
         }
     }
 }

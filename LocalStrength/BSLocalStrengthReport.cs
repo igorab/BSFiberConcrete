@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace BSFiberConcrete.LocalStrength
 {
@@ -18,6 +19,9 @@ namespace BSFiberConcrete.LocalStrength
         public string SampleDescr {private get; set; }
         public string SampleName {private get; set; }
         public Dictionary<string, double> CalcResults { get; private set; }
+        public Image ImageScheme { get; internal set; }
+
+        public MemoryStream ImageStream { get; internal set; }
 
         public void RunReport()
         {
@@ -81,6 +85,12 @@ namespace BSFiberConcrete.LocalStrength
 
             w.WriteLine("</head>");
             w.WriteLine("<body>");
+                       
+            if (ImageScheme != null)
+            {
+                string img = BSHelper.MakeImageSrcData(ImageScheme, "ImageScheme.png");
+                w.WriteLine($"<table><tr><td> <img src={img}/ width=\"500\" height=\"500\"> </td></tr> </table>");
+            }
 
             if (CalcResults != null)
             {

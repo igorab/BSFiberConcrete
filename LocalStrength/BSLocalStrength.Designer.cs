@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BSLocalStrength));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGridLocalStrength = new System.Windows.Forms.DataGridView();
             this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tableLayoutPanelMain = new System.Windows.Forms.TableLayoutPanel();
@@ -42,10 +42,12 @@
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.labelScheme = new System.Windows.Forms.Label();
             this.cmbScheme = new System.Windows.Forms.ComboBox();
-            this.chboxReinforcement = new System.Windows.Forms.CheckBox();
+            this.checkBoxReinf = new System.Windows.Forms.CheckBox();
+            this.labelSchemeHelp = new System.Windows.Forms.LinkLabel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.imageListCalcScheme = new System.Windows.Forms.ImageList(this.components);
             this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.varDescrDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.varNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -184,13 +186,15 @@
             // 
             // tableLayoutPanel3
             // 
-            this.tableLayoutPanel3.ColumnCount = 3;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35.13514F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 64.86487F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 229F));
+            this.tableLayoutPanel3.ColumnCount = 4;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.07407F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.92593F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 271F));
             this.tableLayoutPanel3.Controls.Add(this.labelScheme, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.cmbScheme, 1, 0);
-            this.tableLayoutPanel3.Controls.Add(this.chboxReinforcement, 2, 0);
+            this.tableLayoutPanel3.Controls.Add(this.checkBoxReinf, 3, 0);
+            this.tableLayoutPanel3.Controls.Add(this.labelSchemeHelp, 2, 0);
             this.tableLayoutPanel3.Location = new System.Drawing.Point(23, 31);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
@@ -202,7 +206,7 @@
             // 
             this.labelScheme.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelScheme.AutoSize = true;
-            this.labelScheme.Location = new System.Drawing.Point(18, 10);
+            this.labelScheme.Location = new System.Drawing.Point(5, 10);
             this.labelScheme.Name = "labelScheme";
             this.labelScheme.Size = new System.Drawing.Size(39, 13);
             this.labelScheme.TabIndex = 0;
@@ -210,7 +214,7 @@
             // 
             // cmbScheme
             // 
-            this.cmbScheme.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.cmbScheme.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbScheme.FormattingEnabled = true;
             this.cmbScheme.Items.AddRange(new object[] {
             "а",
@@ -219,23 +223,36 @@
             "г",
             "д",
             "е"});
-            this.cmbScheme.Location = new System.Drawing.Point(63, 6);
+            this.cmbScheme.Location = new System.Drawing.Point(50, 6);
             this.cmbScheme.Name = "cmbScheme";
-            this.cmbScheme.Size = new System.Drawing.Size(34, 21);
+            this.cmbScheme.Size = new System.Drawing.Size(43, 21);
             this.cmbScheme.TabIndex = 1;
             this.cmbScheme.Text = "а";
             // 
-            // chboxReinforcement
+            // checkBoxReinf
             // 
-            this.chboxReinforcement.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.chboxReinforcement.AutoSize = true;
-            this.chboxReinforcement.Location = new System.Drawing.Point(173, 8);
-            this.chboxReinforcement.Name = "chboxReinforcement";
-            this.chboxReinforcement.Size = new System.Drawing.Size(75, 17);
-            this.chboxReinforcement.TabIndex = 2;
-            this.chboxReinforcement.Text = "Арматура";
-            this.chboxReinforcement.UseVisualStyleBackColor = true;
-            this.chboxReinforcement.CheckedChanged += new System.EventHandler(this.chboxReinforcement_CheckedChanged);
+            this.checkBoxReinf.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.checkBoxReinf.AutoSize = true;
+            this.checkBoxReinf.Location = new System.Drawing.Point(131, 8);
+            this.checkBoxReinf.Name = "checkBoxReinf";
+            this.checkBoxReinf.Size = new System.Drawing.Size(75, 17);
+            this.checkBoxReinf.TabIndex = 2;
+            this.checkBoxReinf.Text = "Арматура";
+            this.checkBoxReinf.UseVisualStyleBackColor = true;
+            this.checkBoxReinf.CheckedChanged += new System.EventHandler(this.chboxReinforcement_CheckedChanged);
+            // 
+            // labelSchemeHelp
+            // 
+            this.labelSchemeHelp.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.labelSchemeHelp.AutoSize = true;
+            this.labelSchemeHelp.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelSchemeHelp.Location = new System.Drawing.Point(99, 7);
+            this.labelSchemeHelp.Name = "labelSchemeHelp";
+            this.labelSchemeHelp.Size = new System.Drawing.Size(19, 20);
+            this.labelSchemeHelp.TabIndex = 3;
+            this.labelSchemeHelp.TabStop = true;
+            this.labelSchemeHelp.Text = "?";
+            this.labelSchemeHelp.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.labelSchemeHelp_LinkClicked);
             // 
             // tableLayoutPanel1
             // 
@@ -281,6 +298,12 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Результат расчета";
             // 
+            // imageListCalcScheme
+            // 
+            this.imageListCalcScheme.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListCalcScheme.ImageStream")));
+            this.imageListCalcScheme.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageListCalcScheme.Images.SetKeyName(0, "ShemeStress.PNG");
+            // 
             // idDataGridViewTextBoxColumn
             // 
             this.idDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
@@ -313,9 +336,9 @@
             // 
             this.valueDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             this.valueDataGridViewTextBoxColumn.DataPropertyName = "Value";
-            dataGridViewCellStyle1.Format = "N4";
-            dataGridViewCellStyle1.NullValue = null;
-            this.valueDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Format = "N4";
+            dataGridViewCellStyle2.NullValue = null;
+            this.valueDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
             this.valueDataGridViewTextBoxColumn.HeaderText = "Значение";
             this.valueDataGridViewTextBoxColumn.Name = "valueDataGridViewTextBoxColumn";
             this.valueDataGridViewTextBoxColumn.Width = 80;
@@ -360,7 +383,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.Label labelScheme;
         private System.Windows.Forms.ComboBox cmbScheme;
-        private System.Windows.Forms.CheckBox chboxReinforcement;
+        private System.Windows.Forms.CheckBox checkBoxReinf;
         private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn varDescrDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn varNameDataGridViewTextBoxColumn;
@@ -369,5 +392,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.LinkLabel labelSchemeHelp;
+        private System.Windows.Forms.ImageList imageListCalcScheme;
     }
 }

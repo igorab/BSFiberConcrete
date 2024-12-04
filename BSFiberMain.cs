@@ -1210,11 +1210,7 @@ namespace BSFiberConcrete
                     var resMc =  fiberCalc_Mc.Results_Mc();
                     foreach (var r in resMc)
                         FibCalc_M.m_CalcResults1Group.Add(r.Key, r.Value);
-
-                    // [6.1.7] [6.1.30]                    
-                    //FibCalc_M.m_CalcResults1Group.Add("Момент по наклонному сечению", Mc_ult);
-                    //FibCalc_M.m_CalcResults1Group.Add("Коэфф исп момента по накл сечению [6.1.30]", UtilRate_Mc);
-
+                    
                     calcResults_MNQ.Add(FibCalc_M);
                 }                
                 else if (_N > 0 && _Qx == 0)

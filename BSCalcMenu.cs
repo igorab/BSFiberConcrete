@@ -164,7 +164,7 @@ namespace BSCalcMenu
             BSLocalCompressionCalc compressionCalc = new BSLocalCompressionCalc();
             compressionCalc.InitDataSource();
             BSLocalStrength localStrength = new BSLocalStrength();
-            localStrength.IsShowScheme = true;
+            localStrength.TypeOfCalc = TypeOfLocalStrengthCalc.Compression;            
             localStrength.StrengthCalc = compressionCalc;
             localStrength.Show();                        
         }
@@ -177,7 +177,7 @@ namespace BSCalcMenu
             BSLocalPunchCalc punchCalc = new BSLocalPunchCalc();
             punchCalc.InitDataSource();            
             BSLocalStrength localStrength = new BSLocalStrength();
-            localStrength.IsShowScheme = false;
+            localStrength.TypeOfCalc = TypeOfLocalStrengthCalc.Punch;            
             localStrength.StrengthCalc = punchCalc;            
             localStrength.Show();                        
         }

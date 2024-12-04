@@ -2,12 +2,16 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace BSFiberConcrete.LocalStrength
 {
+    /// <summary>
+    /// Расчет сжатие (смятие)
+    /// </summary>
     public class BSLocalCompressionCalc : BSLocalStrengthCalc
     {
         protected double N;
@@ -193,6 +197,12 @@ namespace BSFiberConcrete.LocalStrength
                 return "Расчет сталефибробетонных элементов на местное сжатие c арматурой";
             else
                 return "Расчет сталефибробетонных элементов на местное сжатие без арматуры";
+        }
+
+        public override Image ImageScheme()
+        {
+            Image img = global::BSFiberConcrete.Properties.Resources.SchemeStress;
+            return img;
         }
     }
 }

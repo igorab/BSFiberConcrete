@@ -1,6 +1,7 @@
 ﻿using BSFiberConcrete.Lib;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -8,6 +9,15 @@ using System.Threading.Tasks;
 
 namespace BSFiberConcrete.LocalStrength
 {
+    public enum TypeOfLocalStrengthCalc
+    {
+        Compression,
+        Punch
+    }
+
+    /// <summary>
+    /// базовый класс для расчетов на местное действие нагрузок (сжатие (смятие), продавливание )
+    /// </summary>
     public class BSLocalStrengthCalc
     {
         protected List<LocalStress> m_DS;
@@ -227,6 +237,9 @@ namespace BSFiberConcrete.LocalStrength
             return _ly;
         }
 
-
+        public virtual Image ImageScheme()
+        {
+            return Properties.Resources.SchemeStress;
+        }
     }
 }
