@@ -187,6 +187,8 @@ namespace BSFiberConcrete
 
                 labelCalculation.Text = BSFiberLib.TxtCalc_Deform;
                 tableLayoutPanelLRebar.Visible = false;
+
+                tableLayoutPanelTRebar.Visible = false;
             }
             else if (CalcType == CalcType.BeamCalc)
             {
