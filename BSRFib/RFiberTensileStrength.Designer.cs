@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RFiberTensileStrength));
             this.dataGridFFF = new System.Windows.Forms.DataGridView();
             this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -51,9 +51,9 @@
             this.numRFbtn = new System.Windows.Forms.NumericUpDown();
             this.labelCalc = new System.Windows.Forms.Label();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnDelCalc = new System.Windows.Forms.Button();
             this.btnCalculate = new System.Windows.Forms.Button();
             this.btnReport = new System.Windows.Forms.Button();
-            this.btnDelCalc = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridFFF)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fibLabBindingSource)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
@@ -68,14 +68,14 @@
             // dataGridFFF
             // 
             this.dataGridFFF.AutoGenerateColumns = false;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridFFF.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridFFF.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridFFF.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridFFF.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.idDataGridViewTextBoxColumn,
@@ -89,7 +89,7 @@
             this.dataGridFFF.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridFFF.Location = new System.Drawing.Point(3, 3);
             this.dataGridFFF.Name = "dataGridFFF";
-            this.dataGridFFF.Size = new System.Drawing.Size(663, 488);
+            this.dataGridFFF.Size = new System.Drawing.Size(663, 494);
             this.dataGridFFF.TabIndex = 0;
             // 
             // idDataGridViewTextBoxColumn
@@ -157,8 +157,8 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 82F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1000, 576);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 39F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1000, 539);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // tableLayoutPanel2
@@ -187,14 +187,14 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 59F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 132F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 168F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(325, 488);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(325, 494);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
             // labelRfbt2n
             // 
             this.labelRfbt2n.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelRfbt2n.AutoSize = true;
-            this.labelRfbt2n.Location = new System.Drawing.Point(11, 48);
+            this.labelRfbt2n.Location = new System.Drawing.Point(11, 54);
             this.labelRfbt2n.Name = "labelRfbt2n";
             this.labelRfbt2n.Size = new System.Drawing.Size(48, 13);
             this.labelRfbt2n.TabIndex = 0;
@@ -204,7 +204,7 @@
             // 
             this.labelRfbt3n.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelRfbt3n.AutoSize = true;
-            this.labelRfbt3n.Location = new System.Drawing.Point(11, 96);
+            this.labelRfbt3n.Location = new System.Drawing.Point(11, 102);
             this.labelRfbt3n.Name = "labelRfbt3n";
             this.labelRfbt3n.Size = new System.Drawing.Size(48, 13);
             this.labelRfbt3n.TabIndex = 1;
@@ -214,7 +214,7 @@
             // 
             this.labelRFbtn.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelRFbtn.AutoSize = true;
-            this.labelRFbtn.Location = new System.Drawing.Point(17, 151);
+            this.labelRFbtn.Location = new System.Drawing.Point(17, 157);
             this.labelRFbtn.Name = "labelRFbtn";
             this.labelRFbtn.Size = new System.Drawing.Size(42, 13);
             this.labelRFbtn.TabIndex = 2;
@@ -224,7 +224,7 @@
             // 
             this.pictureBoxBeamLab.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBoxBeamLab.Image = global::BSFiberConcrete.Properties.Resources.BeamLab;
-            this.pictureBoxBeamLab.Location = new System.Drawing.Point(65, 322);
+            this.pictureBoxBeamLab.Location = new System.Drawing.Point(65, 328);
             this.pictureBoxBeamLab.Name = "pictureBoxBeamLab";
             this.pictureBoxBeamLab.Size = new System.Drawing.Size(257, 163);
             this.pictureBoxBeamLab.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -235,7 +235,7 @@
             // 
             this.numRfbt2n.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numRfbt2n.DecimalPlaces = 4;
-            this.numRfbt2n.Location = new System.Drawing.Point(65, 45);
+            this.numRfbt2n.Location = new System.Drawing.Point(65, 51);
             this.numRfbt2n.Maximum = new decimal(new int[] {
             -727379968,
             232,
@@ -254,7 +254,7 @@
             // 
             this.numRfbt3n.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numRfbt3n.DecimalPlaces = 4;
-            this.numRfbt3n.Location = new System.Drawing.Point(65, 92);
+            this.numRfbt3n.Location = new System.Drawing.Point(65, 98);
             this.numRfbt3n.Maximum = new decimal(new int[] {
             -727379968,
             232,
@@ -273,7 +273,7 @@
             // 
             this.numRFbtn.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numRFbtn.DecimalPlaces = 4;
-            this.numRFbtn.Location = new System.Drawing.Point(65, 147);
+            this.numRFbtn.Location = new System.Drawing.Point(65, 153);
             this.numRFbtn.Maximum = new decimal(new int[] {
             -727379968,
             232,
@@ -292,7 +292,7 @@
             // 
             this.labelCalc.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelCalc.AutoSize = true;
-            this.labelCalc.Location = new System.Drawing.Point(65, 17);
+            this.labelCalc.Location = new System.Drawing.Point(65, 21);
             this.labelCalc.Name = "labelCalc";
             this.labelCalc.Size = new System.Drawing.Size(45, 13);
             this.labelCalc.TabIndex = 6;
@@ -300,28 +300,41 @@
             // 
             // tableLayoutPanel3
             // 
-            this.tableLayoutPanel3.ColumnCount = 2;
+            this.tableLayoutPanel3.ColumnCount = 3;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Controls.Add(this.btnDelCalc, 0, 1);
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 225F));
             this.tableLayoutPanel3.Controls.Add(this.btnCalculate, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.btnReport, 1, 0);
+            this.tableLayoutPanel3.Controls.Add(this.btnDelCalc, 2, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 497);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 503);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 2;
+            this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(663, 76);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(663, 33);
             this.tableLayoutPanel3.TabIndex = 2;
             this.tableLayoutPanel3.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel3_Paint);
+            // 
+            // btnDelCalc
+            // 
+            this.btnDelCalc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDelCalc.Image = ((System.Drawing.Image)(resources.GetObject("btnDelCalc.Image")));
+            this.btnDelCalc.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnDelCalc.Location = new System.Drawing.Point(567, 3);
+            this.btnDelCalc.Name = "btnDelCalc";
+            this.btnDelCalc.Size = new System.Drawing.Size(93, 23);
+            this.btnDelCalc.TabIndex = 2;
+            this.btnDelCalc.Text = "Удалить";
+            this.btnDelCalc.UseVisualStyleBackColor = true;
+            this.btnDelCalc.Click += new System.EventHandler(this.btnDelCalc_Click);
             // 
             // btnCalculate
             // 
             this.btnCalculate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCalculate.Image = ((System.Drawing.Image)(resources.GetObject("btnCalculate.Image")));
             this.btnCalculate.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCalculate.Location = new System.Drawing.Point(235, 3);
+            this.btnCalculate.Location = new System.Drawing.Point(123, 3);
             this.btnCalculate.Name = "btnCalculate";
             this.btnCalculate.Size = new System.Drawing.Size(93, 23);
             this.btnCalculate.TabIndex = 0;
@@ -334,7 +347,7 @@
             this.btnReport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnReport.Image = ((System.Drawing.Image)(resources.GetObject("btnReport.Image")));
             this.btnReport.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnReport.Location = new System.Drawing.Point(567, 3);
+            this.btnReport.Location = new System.Drawing.Point(342, 3);
             this.btnReport.Name = "btnReport";
             this.btnReport.Size = new System.Drawing.Size(93, 23);
             this.btnReport.TabIndex = 1;
@@ -342,24 +355,11 @@
             this.btnReport.UseVisualStyleBackColor = true;
             this.btnReport.Click += new System.EventHandler(this.btnReport_Click);
             // 
-            // btnDelCalc
-            // 
-            this.btnDelCalc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDelCalc.Image = ((System.Drawing.Image)(resources.GetObject("btnDelCalc.Image")));
-            this.btnDelCalc.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnDelCalc.Location = new System.Drawing.Point(235, 41);
-            this.btnDelCalc.Name = "btnDelCalc";
-            this.btnDelCalc.Size = new System.Drawing.Size(93, 23);
-            this.btnDelCalc.TabIndex = 2;
-            this.btnDelCalc.Text = "Удалить";
-            this.btnDelCalc.UseVisualStyleBackColor = true;
-            this.btnDelCalc.Click += new System.EventHandler(this.btnDelCalc_Click);
-            // 
             // RFiberTensileStrength
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1000, 576);
+            this.ClientSize = new System.Drawing.Size(1000, 539);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "RFiberTensileStrength";
             this.Text = "Определение прочности на растяжение";
