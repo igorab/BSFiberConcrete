@@ -2414,7 +2414,7 @@ namespace BSFiberConcrete
                 mDraw.Values_S = _valuesS;
                 mDraw.colorsAndScale = new ColorScale(_valuesB, _ultMax, _ultMin);
                 mDraw.CreateRectanglePlot1(sz, m_BeamSection);
-                //mDraw.DrawReinforcementBar(m_BeamSection);
+                mDraw.DrawReinforcementBar(m_BeamSection);
 
             }
             else if (m_BeamSection == BeamSection.Ring)
@@ -2433,6 +2433,8 @@ namespace BSFiberConcrete
                 mDraw.Values_S = _valuesS;
                 mDraw.colorsAndScale = new ColorScale(_valuesB, _ultMax, _ultMin);
                 mDraw.PaintSectionMesh();
+                mDraw.DrawReinforcementBar(m_BeamSection);
+
             }
             else if (m_BeamSection == BeamSection.Any) //заданное пользователем сечение
             {
@@ -2450,6 +2452,8 @@ namespace BSFiberConcrete
                 mDraw.Values_S = _valuesS;
                 mDraw.colorsAndScale = new ColorScale(_valuesB, _ultMax, _ultMin);
                 mDraw.PaintSectionMesh();
+                mDraw.DrawReinforcementBar(m_BeamSection);
+
             }
 
             return mDraw;

@@ -210,8 +210,9 @@ namespace BSFiberConcrete.CalcGroup2
         /// <param name="_bD"></param>
         /// <param name="_bX"></param>
         /// <param name="_bY"></param>
-        public void SetRods(List<double> _bD, List<double> _bX, List<double> _bY )
+        public void SetRods(List<double> _bD, List<double> _bX, List<double> _bY)
         {
+            RebarDiametersByIndex = _bD;
             if (_bD == null) return;
 
             ds.Clear();
@@ -219,6 +220,8 @@ namespace BSFiberConcrete.CalcGroup2
             y0s.Clear();
             z0s.Clear();
             
+
+
             int idx = 0;
             foreach (var d in _bD)
             {
@@ -229,6 +232,8 @@ namespace BSFiberConcrete.CalcGroup2
                 y0s.Add(_bY[idx]);
                 idx++;
             }
+
+
         }
         
         public BeamSection BeamSection  {
@@ -376,6 +381,11 @@ namespace BSFiberConcrete.CalcGroup2
         /// деформации в арматуре 
         /// </summary>
         public List<double> EpsilonSResult { get; private set; }
+
+        /// <summary>
+        /// диаметры арматуры соответствующие номерам стержней арматуры
+        /// </summary>
+        public List<double> RebarDiametersByIndex { get; set; }
 
         #region разбивка сечения на элементы
         // массив привязок бетонных эл-в к вспомогательной оси y0
