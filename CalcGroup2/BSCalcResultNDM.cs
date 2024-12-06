@@ -95,6 +95,12 @@ namespace BSFiberConcrete
         public List<double> Eps_B { get; set; } // бетон
         public List<double> Eps_S { get; set; } // арматура
 
+        /// <summary>
+        /// диаметры арматуры соответствующие номерам стержней арматуры
+        /// </summary>
+        public List<double> RebarDiametersByIndex { get; set; } 
+
+
         #endregion
 
         #region 2 группа предельных состояний
@@ -552,8 +558,42 @@ namespace BSFiberConcrete
             Sig_S = bsCalc1.SigmaSResult;
             Eps_B = bsCalc1.EpsilonBResult;
             Eps_S = bsCalc1.EpsilonSResult;
-
+            RebarDiametersByIndex = bsCalc1.RebarDiametersByIndex;
             ErrorIdx.Add(bsCalc1.Err);
         }
     }
+
+
+    /// <summary>
+    /// Стержень арматуры
+    /// </summary>
+    public class ReinforcementBar
+    {
+        /// <summary>
+        /// Номер стержня арматуры
+        /// </summary> 
+        public int IndexOfBar { get; set; }
+
+        /// <summary>
+        /// Напряжение в арматуре
+        /// </summary>
+        public double Sig { get; set; }
+
+        /// <summary>
+        /// Относительная деформация в арматуре
+        /// </summary>
+        public double Eps { get; set; }
+
+        /// <summary>
+        /// Диаметр стержня арматуры
+        /// </summary>
+        public double Diameter { get; set; }
+
+        /// <summary>
+        /// Класс Арматуры
+        /// </summary>
+        public string Type { get; set; }
+
+    }
 }
+

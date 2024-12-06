@@ -53,6 +53,9 @@ namespace BSFiberConcrete
         protected List<string> m_PictureToBodyReport;
 
 
+        public List<ReinforcementBar> ReinforcingBars;
+
+
 
         protected BeamSection m_BeamSection { get; set; }
 
@@ -402,6 +405,41 @@ namespace BSFiberConcrete
                 w.WriteLine("</Table>");
                 w.WriteLine("<br>");
             }
+
+            if (ReinforcingBars != null)
+            {
+                if (ReinforcingBars.Count != 0)
+                {
+
+                    w.WriteLine("<Table border=2 bordercolor = darkblue>");
+                    w.WriteLine("<tr>");
+
+                    // Заголовок таблицы
+                    w.WriteLine("<tr>");
+                    w.WriteLine($"<td width={bk/4}> Номер стержня </td>");
+                    w.WriteLine($"<td width={bk/4}> Диаметр </td>");
+                    w.WriteLine($"<td width={bk/4}> Относительная деформация</td>");
+                    w.WriteLine($"<td width={bk/4}>Напряжение</td>");
+                    w.WriteLine("</tr>");
+
+
+                    foreach (ReinforcementBar value in ReinforcingBars)
+                    {
+                        w.WriteLine("<tr>");
+                        w.WriteLine($"<td width={bk / 4}>{value.IndexOfBar}</td>");
+                        w.WriteLine($"<td width={bk / 4}>{value.Diameter}</td>");
+                        w.WriteLine($"<td width={bk / 4}>{value.Eps}</td>");
+                        w.WriteLine($"<td width={bk / 4}>{value.Sig}</td>");
+                        w.WriteLine("</tr>");
+                    }
+
+                    w.WriteLine("</tr>");
+                    w.WriteLine("</Table>");
+                    w.WriteLine("<br>");
+
+                }
+
+            }
         }
 
         
@@ -580,6 +618,26 @@ namespace BSFiberConcrete
             return bgColor; 
         }
 
+
+        public void CreateRebarTable(List<double> Diameters, List<double> Eps_S, List<double> Sig_S)
+        {
+            if ((Eps_S.Count == Sig_S.Count) && (Diameters.Count == Eps_S.Count))
+            {
+                if (ReinforcingBars == null) { ReinforcingBars = new List<ReinforcementBar>(); }
+                ReinforcingBars.Clear();
+
+                for (int i = 0; i < Diameters.Count; i++)
+                {
+                    ReinforcingBars.Add(new ReinforcementBar()
+                    {
+                        IndexOfBar = i + 1,
+                        Sig = Sig_S[i],
+                        Eps = Eps_S[i],
+                        Diameter = Diameters[i]
+                    });
+                 }
+            }                
+        }
 
     }
 }

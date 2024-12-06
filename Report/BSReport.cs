@@ -17,7 +17,7 @@ namespace BSFiberConcrete.Report
         private BeamSection m_BeamSection;
 
         private Dictionary<string, double> m_Beam;
-        
+
         private LameUnitConverter _UnitConverter;
 
         public BSCalcResultNDM CalcRes { get; set; }
@@ -47,7 +47,7 @@ namespace BSFiberConcrete.Report
             {
                 using (StreamWriter w = new StreamWriter(path2file, true, Encoding.UTF8))
                 {
-                    w.WriteLine($"<H2>Результат расчета по комбинациям загружений: {i+1}</H2>");
+                    w.WriteLine($"<H2>Результат расчета по комбинациям загружений: {i + 1}</H2>");
                 }
                 bSReport = new BSReport(m_BeamSection);
                 bSReport.CalcRes = calcResults[i];
@@ -61,9 +61,9 @@ namespace BSFiberConcrete.Report
         public BSReport(BeamSection _beamSection)
         {
             m_BeamSection = _beamSection;
-            m_Beam = new Dictionary<string, double>();            
+            m_Beam = new Dictionary<string, double>();
         }
-        
+
         private void InitReportSections(ref BSFiberReport report)
         {
             if (CalcRes == null) return;
@@ -81,6 +81,7 @@ namespace BSFiberConcrete.Report
             report.PictureToHeadReport = CalcRes.PictureForHeaderReport;
             report.PictureToBodyReport = CalcRes.PictureForBodyReport;
 
+            report.CreateRebarTable(CalcRes.RebarDiametersByIndex, CalcRes.Eps_S, CalcRes.Sig_S);
 
             report._unitConverter = CalcRes.UnitConverter;
         }
@@ -188,7 +189,7 @@ namespace BSFiberConcrete.Report
         public void CreateReportNDM()
         {
             try
-            {                
+            {
                 string reportName = "";
                 try
                 {
@@ -202,7 +203,7 @@ namespace BSFiberConcrete.Report
                 }
 
                 string pathToHtmlFile = CreateReport(1, m_BeamSection, reportName);
-                
+
                 System.Diagnostics.Process.Start(pathToHtmlFile);
             }
             catch (Exception _e)
@@ -211,4 +212,7 @@ namespace BSFiberConcrete.Report
             }
         }
     }
+
+
+
 }

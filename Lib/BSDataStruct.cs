@@ -777,7 +777,7 @@ namespace BSFiberConcrete
 
 
     /// <summary>
-    /// Клас описывает диаметр[мм] и площадь[мм2] для Класса арматуры
+    /// Класc описывает диаметр[мм] и площадь[мм2] для Класса арматуры
     /// </summary>
     public class RebarDiameters
     { 
