@@ -951,5 +951,25 @@ namespace BSFiberConcrete.Lib
                 throw new Exception("Не удалось сохранить значения в БД");
             }
         }
+
+        internal static void DeleteRFibLab(string calcId)
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    cnn.Open();
+                    using (var tr = cnn.BeginTransaction())
+                    {
+                        int cnt = cnn.Execute($"DELETE FROM RFibLab WHERE Id = '{calcId}'");
+                        tr.Commit();
+                    }
+                }
+            }
+            catch (Exception _e)
+            {
+                MessageBox.Show(_e.Message);
+            };
+        }
     }
 }

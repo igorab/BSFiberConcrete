@@ -696,6 +696,9 @@
     <Content Include="Resources\Ring_N_Rods.PNG">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\SchemePunch.PNG" />
+    <None Include="Resources\SchemePunchReinf.PNG" />
+    <Content Include="Resources\ShemeStress.PNG" />
     <Content Include="Resources\TBeam.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

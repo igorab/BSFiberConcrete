@@ -130,12 +130,14 @@ namespace BSFiberConcrete.Section
                 Rsw_X = m_Rebar.Rsw_X,
                 Esw_X = m_Rebar.Esw_X,
                 Sw_X = (double)num_s_w_X.Value,
+                N_X = (int)numN_w_X.Value,
                 Asw_X = Asw_X,
-
+                
                 // поперечная по Y
                 Rsw_Y = m_Rebar.Rsw_Y,
                 Esw_Y = m_Rebar.Esw_Y,
                 Sw_Y = (double)num_s_w_Y.Value,
+                N_Y  = (int) numN_w_Y.Value,
                 Asw_Y = Asw_Y,
             };
 
@@ -388,7 +390,9 @@ namespace BSFiberConcrete.Section
         }
 
         private void btnDraw_Click(object sender, EventArgs e)
-        {            
+        {
+            InitTRebar_X((int)numN_w_X.Value);
+
             DrawFromDatasource(true);            
         }
 

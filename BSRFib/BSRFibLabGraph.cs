@@ -14,9 +14,13 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using Series = System.Windows.Forms.DataVisualization.Charting.Series;
+using Microsoft.VisualBasic;
 
 namespace BSFiberConcrete
 {
+    /// <summary>
+    /// График нагрузка-перемещение
+    /// </summary>
     public partial class BSRFibLabGraph : Form
     {
         private BindingList<FaF> Qds;
@@ -32,6 +36,12 @@ namespace BSFiberConcrete
               
         private void BSGraph_Load(object sender, EventArgs e)
         {
+            var m_DsFibLab = new List<FibLab>(BSData.LoadRFibLab());
+            foreach (var item in m_DsFibLab)
+            {
+                cmbBarSample.Items.Add(item.Id);
+            }
+            
             List<FaF> listFaF = BSData.LoadRChartFaF();
 
             Qds = new BindingList<FaF>(listFaF);
@@ -52,12 +62,7 @@ namespace BSFiberConcrete
             series.ChartType = SeriesChartType.Spline;
                                   
             ChartFaF.DataSource = Qds;
-            ChartFaF.DataBind();
-
-            //foreach (var item in q)
-            //{
-            //    series.Points.AddXY(item.aF, item.F);
-            //}                       
+            ChartFaF.DataBind();             
         }
 
         private FibLab CalcF()
@@ -94,7 +99,7 @@ namespace BSFiberConcrete
             BSQuery.SaveFibLab(new List<FibLab> { flab });
         }
 
-        
+        // добавить в базу
         private void btnDSAdd_Click(object sender, EventArgs e)
         {
             try
@@ -233,6 +238,36 @@ namespace BSFiberConcrete
             labReport.ChartData = Qds.ToList();
 
             labReport.RunReport(); 
+        }
+
+        private void btnDelCalc_Click(object sender, EventArgs e)
+        {
+            string CalcId = cmbBarSample.SelectedItem.ToString();
+
+            if (MessageBox.Show($"Удалить расчеты для {CalcId}?", "Предупреждение", 
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.OK)
+            {                                
+                BSData.DeleteRFibLab(CalcId);
+            }
+        }
+
+        private void btnAddBarSample_Click(object sender, EventArgs e)
+        {
+            string input = Interaction.InputBox("Введите название образца", "Образец", "", 10, 10);
+
+            if (!string.IsNullOrEmpty(input))
+            {
+                if (!cmbBarSample.Items.Contains(input))
+                    cmbBarSample.Items.Add(input);
+
+                cmbBarSample.SelectedItem = input;
+                txtBarSample.Text = input;
+            }
+        }
+
+        private void cmbBarSample_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            txtBarSample.Text = cmbBarSample.SelectedItem.ToString();
         }
     }
 }
