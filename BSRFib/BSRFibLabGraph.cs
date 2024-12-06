@@ -15,6 +15,8 @@ using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using Series = System.Windows.Forms.DataVisualization.Charting.Series;
 using Microsoft.VisualBasic;
+using OpenTK.Graphics.ES20;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Menu;
 
 namespace BSFiberConcrete
 {
@@ -36,21 +38,45 @@ namespace BSFiberConcrete
               
         private void BSGraph_Load(object sender, EventArgs e)
         {
+            ToolTips();
+
+            FibLab CurItem = new FibLab();
             var m_DsFibLab = new List<FibLab>(BSData.LoadRFibLab());
             foreach (var item in m_DsFibLab)
             {
-                cmbBarSample.Items.Add(item.Id);
+                CurItem = item;
+                cmbBarSample.Items.Add(CurItem.Id);
             }
-            
-            List<FaF> listFaF = BSData.LoadRChartFaF();
+
+            cmbBarSample.SelectedItem = CurItem.Id;
+
+            //InitData(CurItem.Id);
+        }
+
+        //Отобразить данные по испытаниям образца
+        private void InitData(string  _CurItemId)
+        {
+            List<FaF> listFaF = BSData.LoadRChartFaF(_CurItemId);
 
             Qds = new BindingList<FaF>(listFaF);
-                        
+
             gridFaF.DataSource = Qds;
             gridFaF.ReadOnly = false;
             gridFaF.AllowUserToAddRows = false;
             gridFaF.Refresh();
-            
+        }
+
+        private void ToolTips()
+        {
+            toolTip.SetToolTip(this.btnAddBarSample, "Добавить новый образец для испытаний");
+            toolTip.SetToolTip(this.btnDelCalc, "Удалить образец и данные испытаний");
+            toolTip.SetToolTip(this.btnDrawChartAndCalc, "Построить график");
+            toolTip.SetToolTip(this.btnDSAdd, "Добавить строку");
+            toolTip.SetToolTip(this.btnDSDel, "Удалить строку");
+            toolTip.SetToolTip(this.btnDSDataFromFile, "Загрузить данные испытаний из файла");
+            toolTip.SetToolTip(this.btnDSSave, "Сохранить");
+            toolTip.SetToolTip(this.btnDSSave2File, "Сохранить в файл");
+            toolTip.SetToolTip(this.btnPrint, "Построить отчет");
         }
 
         /// <summary>
@@ -68,15 +94,19 @@ namespace BSFiberConcrete
         private FibLab CalcF()
         {
             BSRFibLabTensile labTensile = new BSRFibLabTensile();
+
+            if (Qds == null || Qds.Count == 0)
+                return null;
+
             labTensile.DsFaF = Qds.ToList();
 
             FibLab fibLab = new FibLab()
             {
                 Id = txtBarSample.Text,
                 L = (double) numL.Value,
-                B = (double)numB.Value,
+                B = (double) numB.Value,
 
-                Fel = Qds.Max(_x => _x.F),
+                Fel = Qds.Count > 0 ? Qds.Max(_x => _x.F) : 0,
                 F05 = labTensile.F05(),
                 F25 = labTensile.F25(),
             };
@@ -96,10 +126,11 @@ namespace BSFiberConcrete
             FibLab flab = CalcF();
 
             // сохранить результаты
-            BSQuery.SaveFibLab(new List<FibLab> { flab });
+            if (flab != null)
+                BSQuery.SaveFibLab(new List<FibLab> { flab });
         }
 
-        // добавить в базу
+        // добавить строку
         private void btnDSAdd_Click(object sender, EventArgs e)
         {
             try
@@ -107,7 +138,11 @@ namespace BSFiberConcrete
                 int mx = Qds.Max(x => x.Num) + 1;
                 double mxaF = Qds.Max(x => x.aF) + 0.01;
 
-                FaF item = new FaF() { Num = mx, F = 5, aF = mxaF };
+                FaF item = new FaF() 
+                { 
+                    Num = mx, F = 5, aF = mxaF, LabId = cmbBarSample.SelectedItem.ToString() 
+                };
+
                 Qds.Add(item);
                 gridFaF.DataSource = Qds;
 
@@ -124,7 +159,9 @@ namespace BSFiberConcrete
             DialogResult dialogResult = MessageBox.Show("Сохранить данные?");
 
             if (dialogResult == DialogResult.OK)
-                BSQuery.SaveFaF(Qds.ToList());
+            {
+                BSQuery.SaveFaF(Qds.ToList(), cmbBarSample.SelectedItem.ToString());
+            }
         }
       
         private void btnDSOpen_Click(object sender, EventArgs e)
@@ -212,7 +249,7 @@ namespace BSFiberConcrete
         {
             BSRFibLabReport labReport = new BSRFibLabReport();
 
-            labReport.ReportName = "Лаборатория";
+            labReport.ReportName = "Определение остаточной прочности сталефибробетона на растяжение";
             labReport.SampleName = this.Text;
             labReport.SampleDescr = "Образец: " + txtBarSample.Text;
 
@@ -253,21 +290,30 @@ namespace BSFiberConcrete
 
         private void btnAddBarSample_Click(object sender, EventArgs e)
         {
-            string input = Interaction.InputBox("Введите название образца", "Образец", "", 10, 10);
+            string input = Interaction.InputBox("Введите название образца", "Приложение Б", "", 10, 10);
 
             if (!string.IsNullOrEmpty(input))
             {
-                if (!cmbBarSample.Items.Contains(input))
+                if (cmbBarSample.Items.Contains(input))
+                {
+                    MessageBox.Show("Образец с таким называнием уже существует", "Приложение Б", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else
+                {
                     cmbBarSample.Items.Add(input);
-
-                cmbBarSample.SelectedItem = input;
-                txtBarSample.Text = input;
+                    cmbBarSample.SelectedItem = input;
+                    txtBarSample.Text = input;
+                }
             }
         }
 
         private void cmbBarSample_SelectedIndexChanged(object sender, EventArgs e)
         {
-            txtBarSample.Text = cmbBarSample.SelectedItem.ToString();
+            string curItemId = cmbBarSample.SelectedItem.ToString();
+
+            txtBarSample.Text = curItemId;
+
+            InitData(curItemId);
         }
     }
 }

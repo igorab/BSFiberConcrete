@@ -666,6 +666,7 @@
     <Content Include="Resources\LBeam.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\line-chart.png" />
     <Content Include="Resources\Logo-300x67.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

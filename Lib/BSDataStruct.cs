@@ -612,6 +612,8 @@ namespace BSFiberConcrete
         /// </summary>
         public  double F { get; set; }
 
+        public string LabId { get; set; }
+
         public FaF()
         {
         }

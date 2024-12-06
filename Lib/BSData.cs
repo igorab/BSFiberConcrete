@@ -571,13 +571,18 @@ namespace BSFiberConcrete.Lib
             }
         }
 
-        public static List<FaF> LoadRChartFaF()
+        /// <summary>
+        ///  Данные по испытаниям образца (приложение "б")
+        /// </summary>
+        /// <param name="_LabId">Образец</param>
+        /// <returns></returns>
+        public static List<FaF> LoadRChartFaF(string _LabId)
         {
             try
             {
                 using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
                 {
-                    var output = cnn.Query<FaF>("select * from RChartFaF", new DynamicParameters());
+                    var output = cnn.Query<FaF>($"select * from RChartFaF where LabId = '{_LabId}'", new DynamicParameters());
                     return output.ToList();
                 }
             }

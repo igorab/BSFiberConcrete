@@ -221,7 +221,8 @@ namespace BSFiberConcrete.Lib
             return rb;
         }
 
-        public static void SaveFaF(List<FaF> _ds)
+        //График "нагрузка-перемещение внешних граней надреза"
+        public static void SaveFaF(List<FaF> _ds, string _LabId)
         {
             try
             {
@@ -234,11 +235,11 @@ namespace BSFiberConcrete.Lib
                         {
                             if (BSQuery.RFaF_Find(fa.Num).Num != 0)
                             {
-                                int cnt = cnn.Execute("update RChartFaF set aF = @aF, F = @F where Num = @Num ", fa, tr);
+                                int cnt = cnn.Execute("update RChartFaF set aF = @aF, F = @F, LabId = @LabId where Num = @Num ", fa, tr);
                             }
                             else
                             {
-                                int cnt = cnn.Execute("insert into RChartFaF (Num, aF, F) values(@Num, @aF, @F)", fa, tr);
+                                int cnt = cnn.Execute($"insert into RChartFaF (Num, aF, F, LabId) values(@Num, @aF, @F, {_LabId}))", fa, tr);
                             }
                         }
                         tr.Commit();
@@ -272,6 +273,8 @@ namespace BSFiberConcrete.Lib
 
         public static void SaveFibLab(List<FibLab> _ds)
         {
+            if (_ds == null) return;
+
             try
             {
                 using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
