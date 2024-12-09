@@ -2314,15 +2314,7 @@ namespace BSFiberConcrete
             m_SectionChart.Sz         = sz;
             m_SectionChart.NumArea    = _area;
             m_SectionChart.Rebar      = InitRebarFromForm();
-            
-            //m_SectionChart.num_s_w_X.Value       = num_s_w_X.Value;
-            //m_SectionChart.cmbDw_X.SelectedItem = cmbDw_X.SelectedItem;
-            //m_SectionChart.numN_w_X.Value       = numN_w_X.Value;
-
-            //m_SectionChart.num_s_w_Y.Value       = num_s_w_Y.Value;
-            //m_SectionChart.cmbDw_Y.SelectedItem  = cmbDw_Y.SelectedItem;
-            //m_SectionChart.numN_w_Y.Value        =  numN_w_Y.Value;
-
+                        
             if (panelSectionDraw.Controls.Contains(m_SectionChart))
             {
                 m_SectionChart.FormReload();

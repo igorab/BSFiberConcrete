@@ -72,12 +72,14 @@ namespace BSFiberConcrete.Section
         private float h;
                 
         private int as_t = 4; //защитный слой поперечной арматуры 
-        private List<PointF> PointsTRebar;
+        private List<PointF> PointsTRebar_X;
+        private List<PointF> PointsTRebar_Y;
 
         private const int SerieSection = 0;
         private const int SerieLRebar = 1;
         private const int SerieInnerSection = 2;
-        private const int SerieTRebar = 3;
+        private const int SerieTRebar_X = 3;
+        private const int SerieTRebar_Y = 4;
 
         public BSSectionChart()
         {
@@ -100,7 +102,8 @@ namespace BSFiberConcrete.Section
             h = 0;
             b = 0;
             Sz = new double[] { 0, 0, 0, 0, 0, 0 };            
-            PointsTRebar = new List<PointF>();
+            PointsTRebar_X = new List<PointF>();
+            PointsTRebar_Y = new List<PointF>();
         }
 
         private Rebar RebarFromControl()
@@ -164,12 +167,12 @@ namespace BSFiberConcrete.Section
         }
 
         /// <summary>
-        ///  Поперечная арматура
+        ///  Поперечная арматура по оси X
         /// </summary>
         private void InitTRebar_X(int _N)
         {
             if (_N == 0) return;
-            PointsTRebar.Clear();
+            PointsTRebar_X.Clear();
 
             if (m_BeamSection == BeamSection.Ring)
             {
@@ -180,7 +183,7 @@ namespace BSFiberConcrete.Section
                 for (int n = 1; n <= _N; n++)
                 {
                     double radius = in_r + n * dr;
-                    PointsTRebar.AddRange(MakeCircle(radius, amountOfEdges));
+                    PointsTRebar_X.AddRange(MakeCircle(radius, amountOfEdges));
                 }
             }
             else
@@ -200,21 +203,21 @@ namespace BSFiberConcrete.Section
 
                 if (_N == 1)
                 {
-                    PointsTRebar.Add(new PointF(x[0], y0));
-                    PointsTRebar.Add(new PointF(x[0], yh));
+                    PointsTRebar_X.Add(new PointF(x[0], y0));
+                    PointsTRebar_X.Add(new PointF(x[0], yh));
                 }
                 else
                 {
                     for (int _n = 1; _n < _N; _n++)
                     {
-                        PointsTRebar.Add(new PointF(x[0], y0));
-                        PointsTRebar.Add(new PointF(x[_n], y0));
+                        PointsTRebar_X.Add(new PointF(x[0], y0));
+                        PointsTRebar_X.Add(new PointF(x[_n], y0));
 
-                        PointsTRebar.Add(new PointF(x[_n], yh));
-                        PointsTRebar.Add(new PointF(x[0], yh));
+                        PointsTRebar_X.Add(new PointF(x[_n], yh));
+                        PointsTRebar_X.Add(new PointF(x[0], yh));
                     }
 
-                    PointsTRebar.Add(new PointF(x[0], y0));
+                    PointsTRebar_X.Add(new PointF(x[0], y0));
                 }
             }
         }
@@ -235,6 +238,9 @@ namespace BSFiberConcrete.Section
             return pts;
         }
 
+        /// <summary>
+        /// построить контур сечения по точкам
+        /// </summary>
         private void InitPoints()
         {
             if (m_BeamSection == BeamSection.Rect)
@@ -272,20 +278,31 @@ namespace BSFiberConcrete.Section
                 foreach (NdmSection _pt in userSection)
                 {
                     idx++;
-                    PointsSection.Add(new PointF((float)_pt.X, (float)_pt.Y));                    
+                    PointsSection.Add(new PointF((float)_pt.X, (float)_pt.Y));                                        
                 }
+
+                b = PointsSection.Max(var => var.X) - PointsSection.Min(var => var.X);
+                h = PointsSection.Max(var => var.Y) - PointsSection.Min(var => var.Y);
 
                 m_RodPoints = new List<PointF>();
             }
         }
 
-        // расстановка арматуры по оси Y
-        private void InitTRebar_Y(int _t_N)
+        /// <summary>
+        /// расстановка арматуры по оси Y
+        /// </summary>
+        /// <param name="_N">количество стержней </param>
+        private void InitTRebar_Y(int _N)
         {
-            //chart.Series.Add("Line");
-            //chart.Series["Line"].Points.Add(new DataPoint(-b / 2.0, h / 2.0));
-            //chart.Series["Line"].Points.Add(new DataPoint(b / 2.0, h / 2.0));
-            //chart.Series["Line"].ChartType = SeriesChartType.Line;
+            if (_N == 0) return;
+            PointsTRebar_Y.Clear();
+
+            if (_N == 1)
+            {
+                PointsTRebar_Y.Add(new PointF(-b / 2.0f, h / 2.0f));
+
+                PointsTRebar_Y.Add(new PointF(b / 2.0f, h / 2.0f));
+            }                       
         }
 
         private void InitDataSource()
@@ -301,7 +318,7 @@ namespace BSFiberConcrete.Section
 
                 InitTRebar_X((int)numN_w_X.Value);
 
-                //InitTRebar_Y(1);
+                InitTRebar_Y((int)numN_w_Y.Value);
             }
 
             int idx = 0;
@@ -373,15 +390,21 @@ namespace BSFiberConcrete.Section
                 serieRods.Points.Add(new DataPoint(rod_pt.X, rod_pt.Y));
             }
 
-            // поперечная арматура
-            Series serieTRebar = chart.Series[SerieTRebar];
-            for (int j = 0; j < PointsTRebar.Count; j++)
+            // поперечная арматура по X
+            Series serieTRebar = chart.Series[SerieTRebar_X];
+            for (int j = 0; j < PointsTRebar_X.Count; j++)
             {
-                var pt = PointsTRebar[j];
+                var pt = PointsTRebar_X[j];
                 serieTRebar.Points.Add(new DataPoint(pt.X, pt.Y));
             }
 
-            InitTRebar_Y(m_Rebar.N_Y);
+            // поперечная арматура по Y
+            Series serieTRebar_Y = chart.Series[SerieTRebar_Y];
+            for (int j = 0; j < PointsTRebar_Y.Count; j++)
+            {
+                var pt = PointsTRebar_Y[j];
+                serieTRebar_Y.Points.Add(new DataPoint(pt.X, pt.Y));
+            }
 
             numAreaRebar.Value = (decimal) rods_area;
             m_ImageStream      = new MemoryStream();
@@ -392,6 +415,8 @@ namespace BSFiberConcrete.Section
         private void btnDraw_Click(object sender, EventArgs e)
         {
             InitTRebar_X((int)numN_w_X.Value);
+
+            InitTRebar_Y((int)numN_w_Y.Value);
 
             DrawFromDatasource(true);            
         }
