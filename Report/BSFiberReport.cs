@@ -394,14 +394,15 @@ namespace BSFiberConcrete
             {
                 // добавление картинок в отчет
                 w.WriteLine("<Table border=1 bordercolor = darkblue>");
+                w.WriteLine("<tr>");
+
                 foreach (string pathToBeamDiagram in m_PictureToBodyReport)
                 {
-                    w.WriteLine("<tr>");
                     w.WriteLine("<td>");
                     w.WriteLine($"<img src =\"{pathToBeamDiagram}\">");
                     w.WriteLine("</td>");
-                    w.WriteLine("</tr>");
                 }
+                w.WriteLine("</tr>");
                 w.WriteLine("</Table>");
                 w.WriteLine("<br>");
             }
@@ -419,17 +420,20 @@ namespace BSFiberConcrete
                     w.WriteLine($"<td width={bk/4}> Номер стержня </td>");
                     w.WriteLine($"<td width={bk/4}> Диаметр </td>");
                     w.WriteLine($"<td width={bk/4}> Относительная деформация</td>");
-                    w.WriteLine($"<td width={bk/4}>Напряжение</td>");
+                    w.WriteLine($"<td width={bk/4}>Напряжение, кг/см2</td>");
                     w.WriteLine("</tr>");
 
 
                     foreach (ReinforcementBar value in ReinforcingBars)
                     {
+
                         w.WriteLine("<tr>");
                         w.WriteLine($"<td width={bk / 4}>{value.IndexOfBar}</td>");
                         w.WriteLine($"<td width={bk / 4}>{value.Diameter}</td>");
-                        w.WriteLine($"<td width={bk / 4}>{value.Eps}</td>");
-                        w.WriteLine($"<td width={bk / 4}>{value.Sig}</td>");
+                        //w.WriteLine($"<td width={bk / 4}>{string.Format("{0:E2}", value.Eps)}</td>");
+                        w.WriteLine($"<td width={bk / 4}>{convertDoubleToString(value.Eps)}</td>");
+                        w.WriteLine($"<td width={bk / 4}>{convertDoubleToString(value.Sig)}</td>");
+
                         w.WriteLine("</tr>");
                     }
 
@@ -637,6 +641,20 @@ namespace BSFiberConcrete
                     });
                  }
             }                
+        }
+
+        public static string convertDoubleToString(double value)
+        {
+            string strValue = "";
+            if (Math.Abs(value) < 0.00001)
+            {
+                strValue = value.ToString("E");
+            }
+            else
+            {
+                strValue = Math.Round(value, 6).ToString();
+            }
+            return strValue;
         }
 
     }
