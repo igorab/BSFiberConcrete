@@ -125,7 +125,7 @@ namespace BSFiberConcrete
             {
                 Plot myPlot = null;
                 if (title == "Напряжения")
-                { myPlot = colorsAndScale.CreateColorScale(MosaicMode, "МПа"); }
+                { myPlot = colorsAndScale.CreateColorScale(MosaicMode, "кг/см2"); }
                 else
                 { myPlot = colorsAndScale.CreateColorScale(MosaicMode); }
 
