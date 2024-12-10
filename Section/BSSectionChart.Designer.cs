@@ -175,6 +175,7 @@
             series4.Color = System.Drawing.Color.Green;
             series4.Legend = "Legend";
             series4.Name = "Поперечное арм X";
+            series5.BorderWidth = 2;
             series5.ChartArea = "ChartArea";
             series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             series5.Color = System.Drawing.Color.Green;
@@ -699,7 +700,7 @@
             this.tableLayoutPanelAreas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 44F));
             this.tableLayoutPanelAreas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 133F));
             this.tableLayoutPanelAreas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 114F));
-            this.tableLayoutPanelAreas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 78F));
+            this.tableLayoutPanelAreas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 102F));
             this.tableLayoutPanelAreas.Controls.Add(this.labelArea, 0, 0);
             this.tableLayoutPanelAreas.Controls.Add(this.numArea, 1, 0);
             this.tableLayoutPanelAreas.Controls.Add(this.label_area, 3, 0);
@@ -717,9 +718,9 @@
             // 
             this.labelArea.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelArea.AutoSize = true;
-            this.labelArea.Location = new System.Drawing.Point(7, 5);
+            this.labelArea.Location = new System.Drawing.Point(8, 0);
             this.labelArea.Name = "labelArea";
-            this.labelArea.Size = new System.Drawing.Size(54, 13);
+            this.labelArea.Size = new System.Drawing.Size(42, 23);
             this.labelArea.TabIndex = 0;
             this.labelArea.Text = "Площадь";
             // 
@@ -728,21 +729,21 @@
             this.numArea.AccessibleName = "NumArea";
             this.numArea.DecimalPlaces = 4;
             this.numArea.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numArea.Location = new System.Drawing.Point(67, 3);
+            this.numArea.Location = new System.Drawing.Point(56, 3);
             this.numArea.Maximum = new decimal(new int[] {
             -1486618624,
             232830643,
             0,
             0});
             this.numArea.Name = "numArea";
-            this.numArea.Size = new System.Drawing.Size(67, 20);
+            this.numArea.Size = new System.Drawing.Size(54, 20);
             this.numArea.TabIndex = 1;
             // 
             // label_area
             // 
             this.label_area.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label_area.AutoSize = true;
-            this.label_area.Location = new System.Drawing.Point(204, 5);
+            this.label_area.Location = new System.Drawing.Point(180, 5);
             this.label_area.Name = "label_area";
             this.label_area.Size = new System.Drawing.Size(107, 13);
             this.label_area.TabIndex = 3;
@@ -752,7 +753,7 @@
             // 
             this.labelAreaRebarUnits.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelAreaRebarUnits.AutoSize = true;
-            this.labelAreaRebarUnits.Location = new System.Drawing.Point(431, 5);
+            this.labelAreaRebarUnits.Location = new System.Drawing.Point(407, 5);
             this.labelAreaRebarUnits.Name = "labelAreaRebarUnits";
             this.labelAreaRebarUnits.Size = new System.Drawing.Size(27, 13);
             this.labelAreaRebarUnits.TabIndex = 4;
@@ -763,7 +764,7 @@
             this.numAreaRebar.AccessibleName = "NumArea";
             this.numAreaRebar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.numAreaRebar.DecimalPlaces = 4;
-            this.numAreaRebar.Location = new System.Drawing.Point(317, 3);
+            this.numAreaRebar.Location = new System.Drawing.Point(293, 3);
             this.numAreaRebar.Maximum = new decimal(new int[] {
             -1530494976,
             232830,
@@ -777,7 +778,7 @@
             // 
             this.labelAreaUnits.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelAreaUnits.AutoSize = true;
-            this.labelAreaUnits.Location = new System.Drawing.Point(140, 5);
+            this.labelAreaUnits.Location = new System.Drawing.Point(116, 5);
             this.labelAreaUnits.Name = "labelAreaUnits";
             this.labelAreaUnits.Size = new System.Drawing.Size(27, 13);
             this.labelAreaUnits.TabIndex = 2;
