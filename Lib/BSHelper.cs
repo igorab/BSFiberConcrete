@@ -27,6 +27,10 @@ namespace BSFiberConcrete
         // конвертор сил
         public static double Kg2T(double _kg) => _kg * 0.001d;
         public static double kN2Kgs(double? _kN) => _kN * 101.97162129779284d ?? 0;
+
+        public static double NU2U(double? _N, double _coef = 1.0) => _N * _coef ?? 0;
+        public static double MU2U(double? _M, double _coef = 1.0) => _M * _coef ?? 0;
+
         public static double Kgs2kN(double _kgs, int _rnd = 0) => (_rnd >0) ? Math.Round(_kgs * 0.00980665d, _rnd) : _kgs * 0.00980665d;        
 
         // конвертор моментов
@@ -44,10 +48,15 @@ namespace BSFiberConcrete
         public static double MPA2kNsm2(double? _mpa) => 0.1d * _mpa ?? 0;
         public static double kNsm2toMPa(double _KNsm2) => 10d * _KNsm2 ;
 
-        public static double Kgssm2ToKNsm2(double _kgssm2) => _kgssm2 * 0.00980664999999998d;
+        // конвертор сопротивлений
+        public static double RU2U(double _kgssm2, double _coef = 1.0) => _kgssm2 * _coef /* 0.00980664999999998d*/;
+
         public static double Kgssm2ToKNsm2(double _kgssm2, int _dec) => Math.Round(_kgssm2 * 0.00980664999999998d ,_dec) ;
 
-        public static double KNsm2ToKgssm2(double? _KNsm2) => _KNsm2 * 101.97162129779d ?? 0;
+        /// <summary>
+        /// конвертор напряжений
+        /// </summary>        
+        public static double SigU2U(double? _KNsm2, double _coef = 1.0) => _KNsm2 * _coef /*101.97162129779d*/ ?? 0;
 
         public static double Kgsm2MPa(double? _val, int _dec = 2) => Math.Round( 0.098067d * _val ?? 0, _dec);
 

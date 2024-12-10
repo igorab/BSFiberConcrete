@@ -86,9 +86,9 @@ namespace BSFiberConcrete.CalcGroup2
         /// <param name="_N"></param>
         public void SetMN(double _Mx, double _My, double _N)
         {
-            Mz0 = BSHelper.kgssm2kNsm(_Mx);
-            My0 = BSHelper.kgssm2kNsm(_My);            
-            N0 = BSHelper.Kgs2kN(_N);
+            Mz0 = BSHelper.MU2U(_Mx);
+            My0 = BSHelper.MU2U(_My);            
+            N0 = BSHelper.NU2U(_N);
         }
 
         public void SetSizes(Dictionary<string, double> _D)
@@ -111,11 +111,11 @@ namespace BSFiberConcrete.CalcGroup2
         public void SetE(Dictionary<string, double> _D)
         {
             // fiber beton - pressure
-            Eb0 = BSHelper.Kgssm2ToKNsm2(_D["Eb0"]);
+            Eb0 = BSHelper.RU2U(_D["Eb0"]);
             // fiber beton - tension
-            Ebt = BSHelper.Kgssm2ToKNsm2(_D["Ebt"]);
+            Ebt = BSHelper.RU2U(_D["Ebt"]);
             // steel / rebar
-            Es0 = BSHelper.Kgssm2ToKNsm2(_D["Es0"]);
+            Es0 = BSHelper.RU2U(_D["Es0"]);
         }
 
         public void Deform_e(Dictionary<string, double> _D)
@@ -150,27 +150,27 @@ namespace BSFiberConcrete.CalcGroup2
         public void SetRGroup1(Dictionary<string, double> _D)
         {
             // сжатие
-            Rbc = BSHelper.Kgssm2ToKNsm2(_D["Rbc"]);
+            Rbc = BSHelper.RU2U(_D["Rbc"]);
             // растяжение
-            Rfbt = BSHelper.Kgssm2ToKNsm2(_D["Rbt"]);
-            Rfbt2 = BSHelper.Kgssm2ToKNsm2(_D["Rbt2"]);
-            Rfbt3 = BSHelper.Kgssm2ToKNsm2(_D["Rbt3"]);
+            Rfbt = BSHelper.RU2U(_D["Rbt"]);
+            Rfbt2 = BSHelper.RU2U(_D["Rbt2"]);
+            Rfbt3 = BSHelper.RU2U(_D["Rbt3"]);
 
-            Rsc = BSHelper.Kgssm2ToKNsm2(_D["Rsc"]);
-            Rst = BSHelper.Kgssm2ToKNsm2(_D["Rst"]);
+            Rsc = BSHelper.RU2U(_D["Rsc"]);
+            Rst = BSHelper.RU2U(_D["Rst"]);
         }
 
         public void SetRGroup2(Dictionary<string, double> _D)
         {
             // сжатие
-            Rbc = BSHelper.Kgssm2ToKNsm2(_D["Rbcn"]);
+            Rbc = BSHelper.RU2U(_D["Rbcn"]);
             // растяжение
-            Rfbt = BSHelper.Kgssm2ToKNsm2(_D["Rbtn"]);
-            Rfbt2 = BSHelper.Kgssm2ToKNsm2(_D["Rbt2n"]);
-            Rfbt3 = BSHelper.Kgssm2ToKNsm2(_D["Rbt3n"]);
+            Rfbt = BSHelper.RU2U(_D["Rbtn"]);
+            Rfbt2 = BSHelper.RU2U(_D["Rbt2n"]);
+            Rfbt3 = BSHelper.RU2U(_D["Rbt3n"]);
 
-            Rsc = BSHelper.Kgssm2ToKNsm2(_D["Rscn"]);
-            Rst = BSHelper.Kgssm2ToKNsm2(_D["Rstn"]);
+            Rsc = BSHelper.RU2U(_D["Rscn"]);
+            Rst = BSHelper.RU2U(_D["Rstn"]);
         }
 
         // параметры для расчета

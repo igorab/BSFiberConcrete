@@ -357,14 +357,14 @@ namespace BSFiberConcrete
             rx = _D1gr["rz"];
 
             // растяжение
-            sigmaB = BSHelper.KNsm2ToKgssm2(_D1gr["sigB"]);
-            sigmaS = BSHelper.KNsm2ToKgssm2(_D1gr["sigS"]);
+            sigmaB = BSHelper.SigU2U(_D1gr["sigB"]);
+            sigmaS = BSHelper.SigU2U(_D1gr["sigS"]);
             e_fb_max = _D1gr["epsB"];
             e_s_max = _D1gr["epsS"];
 
             // сжатие
-            sigmaB_p = BSHelper.KNsm2ToKgssm2(_D1gr["sigB_p"]);
-            sigmaS_p = BSHelper.KNsm2ToKgssm2(_D1gr["sigS_p"]);
+            sigmaB_p = BSHelper.SigU2U(_D1gr["sigB_p"]);
+            sigmaS_p = BSHelper.SigU2U(_D1gr["sigS_p"]);
             e_fb_max_p = _D1gr["epsB_p"];
             e_s_max_p = _D1gr["epsS_p"];
 
@@ -372,9 +372,9 @@ namespace BSFiberConcrete
             Eps_s_ult = _D1gr["esc0"];
 
             // проверка усилий
-            Mx_calc = BSHelper.KNsm2ToKgssm2(_D1gr["Mx"]);
-            My_calc = BSHelper.KNsm2ToKgssm2(_D1gr["My"]);            
-            N_calc = BSHelper.kN2Kgs(_D1gr["N"]);
+            Mx_calc = BSHelper.SigU2U(_D1gr["Mx"]);
+            My_calc = BSHelper.SigU2U(_D1gr["My"]);            
+            N_calc = BSHelper.NU2U(_D1gr["N"]);
 
             // использование
             // сжатие
@@ -543,7 +543,7 @@ namespace BSFiberConcrete
             AddToResult("Ky_crc", Ky_crc, BSFiberLib.CG2, false);
 
             Res2Group.Add("<b>--------Усилия:--------</b>", double.NaN);
-            AddToResult("M_crc", BSHelper.kNsm2kgssm(M_crc), BSFiberLib.CG2, false);
+            AddToResult("M_crc", BSHelper.MU2U(M_crc), BSFiberLib.CG2, false);
             AddToResult("sig_s_crc", sig_s_crc, BSFiberLib.CG2, false);
 
             Res2Group.Add("<b>--------Трещины:--------</b>", double.NaN);

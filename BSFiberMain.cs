@@ -2337,42 +2337,7 @@ namespace BSFiberConcrete
         {
             RefreshSectionChart(m_BeamSection);
         }
-
-        /// <summary>
-        /// По результатам расчета Создать поверхность MeshDraw с разбитыми на элементы участками
-        /// </summary>
-        /// <param name="_CalcResNDM"></param>
-        private void ShowMosaic(BSCalcResultNDM _CalcResNDM)
-        {
-            int mode = comboMosaic.SelectedIndex;
-            MeshDraw mDraw = null;
-
-            if (mode == 1)
-            {
-                //ShowMosaic(mode, _CalcResNDM.Eps_B, _CalcResNDM.Eps_S, (double)numEps_fbt_ult.Value, -(double)numEps_fb_ult.Value, _CalcResNDM.Rs);
-                mDraw = CreateMosaic(mode, _CalcResNDM.Eps_B, _CalcResNDM.Eps_S, (double)numEps_fbt_ult.Value, -(double)numEps_fb_ult.Value, _CalcResNDM.Rs);
-            }
-            else if (mode == 2)
-            {
-                //ShowMosaic(mode, _CalcResNDM.Sig_B, _CalcResNDM.Sig_S,  _CalcResNDM.Rfbt, BSHelper.kgssm2kNsm(_CalcResNDM.Rfb), BSHelper.kgssm2kNsm(_CalcResNDM.Rs));
-                mDraw = CreateMosaic(mode, _CalcResNDM.Sig_B, _CalcResNDM.Sig_S, _CalcResNDM.Rfbt, BSHelper.kgssm2kNsm(_CalcResNDM.Rfb), BSHelper.kgssm2kNsm(_CalcResNDM.Rs));
-            }
-            else if (mode == 3)
-            {
-                //ShowMosaic(mode, _CalcResNDM.Eps_B, _CalcResNDM.Eps_S);
-                mDraw = CreateMosaic(mode, _CalcResNDM.Eps_B, _CalcResNDM.Eps_S);
-            }
-            else if (mode == 4)
-            {
-                //ShowMosaic(mode, _CalcResNDM.Sig_B, _CalcResNDM.Sig_S);
-                mDraw = CreateMosaic(mode, _CalcResNDM.Sig_B, _CalcResNDM.Sig_S);
-            }
-
-            if (mDraw != null)
-                mDraw.ShowMesh();
-        }
-
-
+        
         /// <summary>
         ///  Разбиение сечения на конечные элементы
         /// </summary>
