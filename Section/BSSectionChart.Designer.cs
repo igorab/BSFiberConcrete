@@ -295,6 +295,7 @@
             this.btnSaveChart.Size = new System.Drawing.Size(30, 34);
             this.btnSaveChart.TabIndex = 2;
             this.btnSaveChart.UseVisualStyleBackColor = true;
+            this.btnSaveChart.Visible = false;
             this.btnSaveChart.Click += new System.EventHandler(this.btnSaveChart_Click);
             // 
             // btnDraw
@@ -641,19 +642,17 @@
             // tableLayoutPanel4
             // 
             this.tableLayoutPanel4.ColumnCount = 1;
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Controls.Add(this.btnSave, 0, 1);
-            this.tableLayoutPanel4.Controls.Add(this.btnDelRod, 0, 3);
-            this.tableLayoutPanel4.Controls.Add(this.btnAddRod, 0, 2);
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel4.Controls.Add(this.btnSave, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.btnAddRod, 0, 1);
+            this.tableLayoutPanel4.Controls.Add(this.btnDelRod, 0, 2);
             this.tableLayoutPanel4.Location = new System.Drawing.Point(408, 32);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-            this.tableLayoutPanel4.RowCount = 5;
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 47.76119F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 52.23881F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37F));
+            this.tableLayoutPanel4.RowCount = 3;
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 39F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 18F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(30, 160);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(30, 118);
             this.tableLayoutPanel4.TabIndex = 16;
             // 
             // btnSave
@@ -661,17 +660,18 @@
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnSave.ImageIndex = 22;
             this.btnSave.ImageList = this.imageList;
-            this.btnSave.Location = new System.Drawing.Point(3, 35);
+            this.btnSave.Location = new System.Drawing.Point(3, 3);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(24, 29);
+            this.btnSave.Size = new System.Drawing.Size(24, 26);
             this.btnSave.TabIndex = 4;
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Visible = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnDelRod
             // 
             this.btnDelRod.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnDelRod.Location = new System.Drawing.Point(3, 107);
+            this.btnDelRod.Location = new System.Drawing.Point(3, 74);
             this.btnDelRod.Name = "btnDelRod";
             this.btnDelRod.Size = new System.Drawing.Size(24, 30);
             this.btnDelRod.TabIndex = 6;
@@ -682,7 +682,7 @@
             // btnAddRod
             // 
             this.btnAddRod.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnAddRod.Location = new System.Drawing.Point(3, 70);
+            this.btnAddRod.Location = new System.Drawing.Point(3, 35);
             this.btnAddRod.Name = "btnAddRod";
             this.btnAddRod.Size = new System.Drawing.Size(24, 31);
             this.btnAddRod.TabIndex = 5;
@@ -697,10 +697,10 @@
             this.tableLayoutPanelAreas.ColumnCount = 6;
             this.tableLayoutPanelAreas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 47.05882F));
             this.tableLayoutPanelAreas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 52.94118F));
-            this.tableLayoutPanelAreas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 44F));
-            this.tableLayoutPanelAreas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 133F));
+            this.tableLayoutPanelAreas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 51F));
+            this.tableLayoutPanelAreas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 127F));
             this.tableLayoutPanelAreas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 114F));
-            this.tableLayoutPanelAreas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 102F));
+            this.tableLayoutPanelAreas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 70F));
             this.tableLayoutPanelAreas.Controls.Add(this.labelArea, 0, 0);
             this.tableLayoutPanelAreas.Controls.Add(this.numArea, 1, 0);
             this.tableLayoutPanelAreas.Controls.Add(this.label_area, 3, 0);
@@ -716,11 +716,11 @@
             // 
             // labelArea
             // 
-            this.labelArea.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.labelArea.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.labelArea.AutoSize = true;
-            this.labelArea.Location = new System.Drawing.Point(8, 0);
+            this.labelArea.Location = new System.Drawing.Point(3, 5);
             this.labelArea.Name = "labelArea";
-            this.labelArea.Size = new System.Drawing.Size(42, 23);
+            this.labelArea.Size = new System.Drawing.Size(62, 13);
             this.labelArea.TabIndex = 0;
             this.labelArea.Text = "Площадь";
             // 
@@ -729,23 +729,23 @@
             this.numArea.AccessibleName = "NumArea";
             this.numArea.DecimalPlaces = 4;
             this.numArea.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numArea.Location = new System.Drawing.Point(56, 3);
+            this.numArea.Location = new System.Drawing.Point(71, 3);
             this.numArea.Maximum = new decimal(new int[] {
             -1486618624,
             232830643,
             0,
             0});
             this.numArea.Name = "numArea";
-            this.numArea.Size = new System.Drawing.Size(54, 20);
+            this.numArea.Size = new System.Drawing.Size(70, 20);
             this.numArea.TabIndex = 1;
             // 
             // label_area
             // 
-            this.label_area.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.label_area.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.label_area.AutoSize = true;
-            this.label_area.Location = new System.Drawing.Point(180, 5);
+            this.label_area.Location = new System.Drawing.Point(198, 5);
             this.label_area.Name = "label_area";
-            this.label_area.Size = new System.Drawing.Size(107, 13);
+            this.label_area.Size = new System.Drawing.Size(121, 13);
             this.label_area.TabIndex = 3;
             this.label_area.Text = "Площадь арматуры";
             // 
@@ -753,7 +753,7 @@
             // 
             this.labelAreaRebarUnits.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelAreaRebarUnits.AutoSize = true;
-            this.labelAreaRebarUnits.Location = new System.Drawing.Point(407, 5);
+            this.labelAreaRebarUnits.Location = new System.Drawing.Point(439, 5);
             this.labelAreaRebarUnits.Name = "labelAreaRebarUnits";
             this.labelAreaRebarUnits.Size = new System.Drawing.Size(27, 13);
             this.labelAreaRebarUnits.TabIndex = 4;
@@ -764,7 +764,7 @@
             this.numAreaRebar.AccessibleName = "NumArea";
             this.numAreaRebar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.numAreaRebar.DecimalPlaces = 4;
-            this.numAreaRebar.Location = new System.Drawing.Point(293, 3);
+            this.numAreaRebar.Location = new System.Drawing.Point(325, 3);
             this.numAreaRebar.Maximum = new decimal(new int[] {
             -1530494976,
             232830,
@@ -776,11 +776,11 @@
             // 
             // labelAreaUnits
             // 
-            this.labelAreaUnits.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.labelAreaUnits.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.labelAreaUnits.AutoSize = true;
-            this.labelAreaUnits.Location = new System.Drawing.Point(116, 5);
+            this.labelAreaUnits.Location = new System.Drawing.Point(147, 5);
             this.labelAreaUnits.Name = "labelAreaUnits";
-            this.labelAreaUnits.Size = new System.Drawing.Size(27, 13);
+            this.labelAreaUnits.Size = new System.Drawing.Size(45, 13);
             this.labelAreaUnits.TabIndex = 2;
             this.labelAreaUnits.Text = "см2";
             // 

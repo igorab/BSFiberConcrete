@@ -445,32 +445,39 @@ namespace BSFiberConcrete.Section
 
                 serieTRebar_Y.Points.Add(dpt);
             }
-
-            //var ePt = new DataPoint(0, 0);
-            //ePt.IsEmpty = true;
-            //serieTRebar_Y.Points.Add(ePt);
-
-            //for (int j = 0; j < PointsTRebar_Y.Count; j++)
-            //{
-            //    var pt = PointsTRebar_Y[j];
-
-            //    serieTRebar_Y.Points.Add(new DataPoint(pt.X/2.0, pt.Y/2.0));
-            //}
-
-
+            
             numAreaRebar.Value = (decimal) rods_area;
+
             m_ImageStream      = new MemoryStream();
 
             chart.SaveImage(m_ImageStream, ChartImageFormat.Png);
         }
 
-        private void btnDraw_Click(object sender, EventArgs e)
+        public void RedrawSection()
         {
             InitTRebar_X((int)numN_w_X.Value);
 
             InitTRebar_Y((int)numN_w_Y.Value);
 
-            DrawFromDatasource(true);            
+            DrawFromDatasource(true);
+
+            SaveRods2DB();
+
+            SaveSection();
+        }
+
+
+        // перерисовать сечение
+        private void btnDraw_Click(object sender, EventArgs e)
+        {
+            try
+            {
+               RedrawSection();
+            }
+            catch (Exception _e)
+            {
+                MessageBox.Show(_e.Message);
+            }
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -659,7 +666,7 @@ namespace BSFiberConcrete.Section
         {
             try
             {
-                RodBS.AddNew();
+                RodBS.AddNew();                
             }
             catch (Exception _e)
             {
@@ -675,7 +682,7 @@ namespace BSFiberConcrete.Section
         {
             try
             {
-                RodBS.RemoveAt(RodBS.Count - 1);
+                RodBS.RemoveAt(RodBS.Count - 1);                
             }
             catch (Exception _e)
             {
@@ -728,34 +735,36 @@ namespace BSFiberConcrete.Section
             }           
         }
 
+        /// <summary>
+        /// сохранить контур сечения
+        /// </summary>
+        private void SaveSection()
+        {
+            List<NdmSection> bsSec = new List<NdmSection>();
+
+            BindingList<BSPoint> p = (BindingList<BSPoint>)pointBS.List;
+
+            int idxN = 0;
+            foreach (var pt in p)
+            {
+                NdmSection ndmSection = new NdmSection();
+                ndmSection.Num = UserSection;
+                ndmSection.N = ++idxN;
+                ndmSection.X = pt.X;
+                ndmSection.Y = pt.Y;
+                bsSec.Add(ndmSection);
+            }
+
+            BSData.SaveSection(bsSec, UserSection);
+        }
                
         private void btnSaveChart_Click(object sender, EventArgs e)
         {            
             try
-            {
-                if (RodBS == null || RodBS.List == null || RodBS.List.Count == 0)
-                {
-                    //List<BSRod> bSRods = (List<BSRod>)RodBS.List;
+            {               
+                SaveRods2DB();
 
-                    //BSData.SaveRods(bSRods, BSBeamSection);
-                }
-
-                // TODO доделать
-                List<NdmSection>     bsSec = new List<NdmSection>();
-                BindingList<BSPoint> p = (BindingList<BSPoint>)pointBS.List;
-
-                int idxN = 0;
-                foreach (var pt in p)
-                {
-                    NdmSection ndmSection = new NdmSection();
-                    ndmSection.Num = UserSection;
-                    ndmSection.N = ++idxN;
-                    ndmSection.X =  pt.X;
-                    ndmSection.Y = pt.Y;
-                    bsSec.Add(ndmSection);
-                }    
-
-                BSData.SaveSection(bsSec, UserSection);
+                SaveSection();                
             }
             catch (Exception ex) 
             {

@@ -1989,6 +1989,8 @@ namespace BSFiberConcrete
         {                        
             try
             {
+                m_SectionChart.RedrawSection();
+
                 List<BSCalcResultNDM> calcResults = new List<BSCalcResultNDM>();
                  
                 GetEffortsFromForm(out List<Dictionary<string, double>> lstMNQ);
@@ -3221,5 +3223,9 @@ namespace BSFiberConcrete
             }
         }
 
+        private void tabFiber_TabIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
