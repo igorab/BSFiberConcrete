@@ -1574,7 +1574,7 @@ namespace BSFiberConcrete
                 {
                     string pictureName = $"beamSectionMeshStress{i}";
                     pathToPicture = Directory.GetCurrentDirectory() + "\\" + pictureName + ".png";
-                    MeshDraw mDraw = CreateMosaic(2, calcResNDM.Sig_B, calcResNDM.Sig_S, calcResNDM.Rfbt, -BSHelper.kgssm2kNsm(calcResNDM.Rfb), BSHelper.kgssm2kNsm(calcResNDM.Rs));
+                    MeshDraw mDraw = CreateMosaic(2, calcResNDM.Sig_B, calcResNDM.Sig_S, calcResNDM.Rfbt, -calcResNDM.Rfb, BSHelper.kgssm2kNsm(calcResNDM.Rs));
                     mDraw.SaveToPNG("Напряжения", pathToPicture);
 
                     pathToPictures.Add(pathToPicture);

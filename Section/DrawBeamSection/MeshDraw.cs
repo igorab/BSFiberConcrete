@@ -140,6 +140,10 @@ namespace BSFiberConcrete
                 _formsPlot.Plot.Axes.Left.Label.Image = img1;
             }
 
+            //_formsPlot.Plot.Axes.SetLimits(-40, 40, 0, 80);   // установить границу отображения осей
+            //_formsPlot.Plot.Axes.AutoScale();                 // автоматическое определение границы отображения осей
+            // formsPlt.Plot.Axes.SquareUnits()                 // масштаб осей 1 к 1 
+
             if (_formsPlot == null)
                 return;
             if (title != null)
@@ -230,7 +234,8 @@ namespace BSFiberConcrete
                     colorsAndScale.ColorThePolygon(poly, Values_B[i], MosaicMode);
                 }
             }
-            formsPlt.Plot.Axes.SquareUnits();
+
+            // formsPlt.Plot.Axes.SquareUnits(); // нет !!! Иначе будут проблемы с определением диапазона отображаемого простроанства 
             _formsPlot = formsPlt;
             return formsPlt;
         }
@@ -343,10 +348,6 @@ namespace BSFiberConcrete
 
                 }
             }
-
-
-
-
         }
     }
 }
