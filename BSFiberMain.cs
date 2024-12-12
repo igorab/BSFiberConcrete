@@ -2026,6 +2026,7 @@ namespace BSFiberConcrete
 
                     if (calcRes != null)
                     {
+                        calcRes.ImageStream = m_SectionChart.GetImageStream;
                         calcResults.Add(calcRes);
                     }
                 }
@@ -2956,9 +2957,7 @@ namespace BSFiberConcrete
         {
             m_BeamSection = BeamSection.Any;
             dataGridSection.DataSource = null;
-
-            //NDMSetupValuesFromForm();
-
+            
             picBeton.Image = null;
 
             RefreshSectionChart(m_BeamSection);

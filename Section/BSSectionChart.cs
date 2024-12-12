@@ -285,8 +285,16 @@ namespace BSFiberConcrete.Section
                     PointsSection.Add(new PointF((float)_pt.X, (float)_pt.Y));
                 }
 
-                b = PointsSection.Max(var => var.X) - PointsSection.Min(var => var.X);
-                h = PointsSection.Max(var => var.Y) - PointsSection.Min(var => var.Y);
+                if (PointsSection.Count > 0)
+                {
+                    b = PointsSection.Max(var => var.X) - PointsSection.Min(var => var.X) ;
+                    h = PointsSection.Max(var => var.Y) - PointsSection.Min(var => var.Y);
+                }
+                else
+                {
+                    b = 0;
+                    h = 0;
+                }
 
                 m_RodPoints = new List<PointF>();
             }
@@ -373,7 +381,7 @@ namespace BSFiberConcrete.Section
         }
        
         /// <summary>
-        /// построить сечение
+        /// построить сечение по точкам
         /// </summary>
         /// <param name="_clear"></param>
         private void DrawFromDatasource(bool _clear = false)
@@ -405,6 +413,7 @@ namespace BSFiberConcrete.Section
                 rods_area += _rod.As;
             }
 
+            // сечение внешний контур
             Series serieSection = chart.Series[SerieSection];
             for (int j = 0; j < points.Count; j++)
             {
@@ -412,6 +421,7 @@ namespace BSFiberConcrete.Section
                 serieSection.Points.Add(new DataPoint(pt.X, pt.Y));
             }
 
+            // внутренний контур сечения
             Series serieInnerSection = chart.Series[SerieInnerSection];
             foreach (var p in InnerPoints)
             {                
@@ -503,7 +513,7 @@ namespace BSFiberConcrete.Section
         /// </summary>
         private void SaveRods2DB()
         {
-            if (RodBS == null || RodBS.List == null || RodBS.List.Count == 0)
+            if (RodBS == null || RodBS.List == null )
                 return;
 
             List<BSRod> bSRods = (List<BSRod>) RodBS.List; 
@@ -573,20 +583,33 @@ namespace BSFiberConcrete.Section
             }
         }
 
+        [Conditional("DEBUG")]
+        private void IsDebugCheck(ref bool isDebug)
+        {
+            isDebug = true;
+        }
+
 
         private void BSSectionChart_Load(object sender, EventArgs e)
         {
             FormReload();
+
+            bool _isdebug = false;
+            IsDebugCheck(ref _isdebug);
+            btnCalc.Visible = _isdebug;
         }
 
         private void InitControls()
         {            
             if (m_BeamSection == BeamSection.Any)
             {
-                dataGridSection.Enabled = true;
+                dataGridSection.Enabled = true;                
                 btnAdd.Visible = true;
                 btnDel.Visible = true;
                 //btnCalc.Enabled = true;
+                foreach (DataGridViewColumn cl in dataGridSection.Columns)
+                    cl.ReadOnly = false;
+
             }
             else
             {
@@ -643,20 +666,6 @@ namespace BSFiberConcrete.Section
                 1
                   1   1.5 1.5
              */
-        }
-
-        private void BSSectionChart_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            try
-            {
-                SaveRods2DB();
-
-                Save2PolyFile();
-            }
-            catch (Exception _e)
-            {
-                MessageBox.Show(_e.Message);
-            }
         }
 
         /// <summary>
@@ -812,17 +821,11 @@ namespace BSFiberConcrete.Section
         private void BeamSectionFromPoints(ref List<PointF> _PointsSection, PointF _center)
         {                                              
             BindingList<BSPoint> bspoints = (BindingList<BSPoint>)pointBS.List;           
+
             foreach (BSPoint pt in bspoints)
             {             
                 _PointsSection.Add(new PointF(pt.X, pt.Y));
-            }
-            
-            //RodPoints = new List<PointF>();
-
-            //foreach (BSPoint rod in RodBS)
-            //{
-            //    RodPoints.Add(new PointF(rod.X, rod.Y));
-            //}            
+            }          
         }
 
         /// <summary>
@@ -831,14 +834,15 @@ namespace BSFiberConcrete.Section
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
         public string GenerateMesh()
-        {
-            //if (m_BeamSection != BeamSection.Any) return "";
+        {            
             BSMesh.Nx        = NdmSetup.N;
             BSMesh.Ny        = NdmSetup.M;
             BSMesh.MinAngle  = NdmSetup.MinAngle;
             Tri.MinAngle     = NdmSetup.MinAngle;
             BSMesh.MaxArea   = NdmSetup.MaxArea;
+
             List<PointF> pts = new List<PointF>();
+
             BeamSectionFromPoints(ref pts, Center);
 
             string pathToSvgFile = Tri.CreateSectionContour(pts, BSMesh.MaxArea);

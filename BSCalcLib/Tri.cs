@@ -18,6 +18,7 @@ namespace BSCalcLib
         public static double MinAngle { get; set; }
         
         public static List<double> triAreas;
+
         public static List<Point> triCGs;
 
         /// <summary>
@@ -34,6 +35,11 @@ namespace BSCalcLib
             MinAngle = 25.0;            
             Oxy = new Point() {ID = 0, X = 0, Y = 0 };
             FilePath = Path.Combine(Environment.CurrentDirectory, "Templates");
+        }
+
+        public bool Contains(double x, double y)
+        {
+            return false;
         }
 
         /// <summary>
@@ -100,9 +106,18 @@ namespace BSCalcLib
         }
 
         public static Polygon MakePolygon(List<System.Drawing.PointF> _points)
-        {           
+        {
             Polygon poly = new Polygon();
 
+            Contour contour = MakeContour(_points);
+
+            poly.Add(contour);
+
+            return poly;
+        }
+
+        private static Contour MakeContour(List<System.Drawing.PointF> _points)
+        {
             Vertex[] vrtx = new Vertex[_points.Count];
 
             int vIdx = 0;
@@ -111,10 +126,9 @@ namespace BSCalcLib
                 vrtx[vIdx] = new Vertex(point.X, point.Y, 1);
                 vIdx++;
             };
-            
-            poly.Add(new Contour(vrtx, 1));
 
-            return poly;                       
+            var contour = new Contour(vrtx, 1);
+            return contour;
         }
 
 
@@ -127,7 +141,7 @@ namespace BSCalcLib
         {
             if (_points.Count == 0) return "";
 
-            var poly = MakePolygon(_points);
+            Polygon poly = MakePolygon(_points);
             
             ConstraintOptions options = new ConstraintOptions() { ConformingDelaunay = true };
             
@@ -174,14 +188,19 @@ namespace BSCalcLib
         {
             var p = new Polygon();
 
+            Contour cont_outer = new Contour(new Vertex[4]
+                {
+                    new Vertex(0.0, 0.0, 1),
+                    new Vertex(3.0, 0.0, 1),
+                    new Vertex(3.0, 3.0, 1),
+                    new Vertex(0.0, 3.0, 1)
+                });
+
+            //cont_outer.FindInteriorPoint()
+
+
             // Add the outer box contour with boundary marker 1.
-            p.Add(new Contour(new Vertex[4]
-            {
-                new Vertex(0.0, 0.0, 1),
-                new Vertex(3.0, 0.0, 1),
-                new Vertex(3.0, 3.0, 1),
-                new Vertex(0.0, 3.0, 1)
-            }, 1));
+            p.Add(cont_outer, 1);
 
             // Add the inner box contour with boundary marker 2.
             p.Add(new Contour(new Vertex[4]
@@ -192,6 +211,7 @@ namespace BSCalcLib
                 new Vertex(1.0, 2.0, 2)
                 }, 2)
             , new Point(1.5, 1.5)); // Make it a hole.
+            
         }
     }
 

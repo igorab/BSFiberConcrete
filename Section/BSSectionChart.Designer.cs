@@ -74,8 +74,8 @@
             this.dataGridSection = new System.Windows.Forms.DataGridView();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.btnSave = new System.Windows.Forms.Button();
-            this.btnDelRod = new System.Windows.Forms.Button();
             this.btnAddRod = new System.Windows.Forms.Button();
+            this.btnDelRod = new System.Windows.Forms.Button();
             this.tableLayoutPanelAreas = new System.Windows.Forms.TableLayoutPanel();
             this.labelArea = new System.Windows.Forms.Label();
             this.numArea = new System.Windows.Forms.NumericUpDown();
@@ -668,17 +668,6 @@
             this.btnSave.Visible = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // btnDelRod
-            // 
-            this.btnDelRod.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnDelRod.Location = new System.Drawing.Point(3, 74);
-            this.btnDelRod.Name = "btnDelRod";
-            this.btnDelRod.Size = new System.Drawing.Size(24, 30);
-            this.btnDelRod.TabIndex = 6;
-            this.btnDelRod.Text = "-";
-            this.btnDelRod.UseVisualStyleBackColor = true;
-            this.btnDelRod.Click += new System.EventHandler(this.btnDelRod_Click);
-            // 
             // btnAddRod
             // 
             this.btnAddRod.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -690,6 +679,17 @@
             this.btnAddRod.UseVisualStyleBackColor = true;
             this.btnAddRod.Click += new System.EventHandler(this.btnAddRod_Click);
             // 
+            // btnDelRod
+            // 
+            this.btnDelRod.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnDelRod.Location = new System.Drawing.Point(3, 74);
+            this.btnDelRod.Name = "btnDelRod";
+            this.btnDelRod.Size = new System.Drawing.Size(24, 30);
+            this.btnDelRod.TabIndex = 6;
+            this.btnDelRod.Text = "-";
+            this.btnDelRod.UseVisualStyleBackColor = true;
+            this.btnDelRod.Click += new System.EventHandler(this.btnDelRod_Click);
+            // 
             // tableLayoutPanelAreas
             // 
             this.tableLayoutPanelAreas.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -700,7 +700,7 @@
             this.tableLayoutPanelAreas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 51F));
             this.tableLayoutPanelAreas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 127F));
             this.tableLayoutPanelAreas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 114F));
-            this.tableLayoutPanelAreas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 70F));
+            this.tableLayoutPanelAreas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 81F));
             this.tableLayoutPanelAreas.Controls.Add(this.labelArea, 0, 0);
             this.tableLayoutPanelAreas.Controls.Add(this.numArea, 1, 0);
             this.tableLayoutPanelAreas.Controls.Add(this.label_area, 3, 0);
@@ -720,7 +720,7 @@
             this.labelArea.AutoSize = true;
             this.labelArea.Location = new System.Drawing.Point(3, 5);
             this.labelArea.Name = "labelArea";
-            this.labelArea.Size = new System.Drawing.Size(62, 13);
+            this.labelArea.Size = new System.Drawing.Size(57, 13);
             this.labelArea.TabIndex = 0;
             this.labelArea.Text = "Площадь";
             // 
@@ -729,21 +729,21 @@
             this.numArea.AccessibleName = "NumArea";
             this.numArea.DecimalPlaces = 4;
             this.numArea.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numArea.Location = new System.Drawing.Point(71, 3);
+            this.numArea.Location = new System.Drawing.Point(66, 3);
             this.numArea.Maximum = new decimal(new int[] {
             -1486618624,
             232830643,
             0,
             0});
             this.numArea.Name = "numArea";
-            this.numArea.Size = new System.Drawing.Size(70, 20);
+            this.numArea.Size = new System.Drawing.Size(64, 20);
             this.numArea.TabIndex = 1;
             // 
             // label_area
             // 
             this.label_area.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.label_area.AutoSize = true;
-            this.label_area.Location = new System.Drawing.Point(198, 5);
+            this.label_area.Location = new System.Drawing.Point(187, 5);
             this.label_area.Name = "label_area";
             this.label_area.Size = new System.Drawing.Size(121, 13);
             this.label_area.TabIndex = 3;
@@ -753,7 +753,7 @@
             // 
             this.labelAreaRebarUnits.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelAreaRebarUnits.AutoSize = true;
-            this.labelAreaRebarUnits.Location = new System.Drawing.Point(439, 5);
+            this.labelAreaRebarUnits.Location = new System.Drawing.Point(428, 5);
             this.labelAreaRebarUnits.Name = "labelAreaRebarUnits";
             this.labelAreaRebarUnits.Size = new System.Drawing.Size(27, 13);
             this.labelAreaRebarUnits.TabIndex = 4;
@@ -764,7 +764,7 @@
             this.numAreaRebar.AccessibleName = "NumArea";
             this.numAreaRebar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.numAreaRebar.DecimalPlaces = 4;
-            this.numAreaRebar.Location = new System.Drawing.Point(325, 3);
+            this.numAreaRebar.Location = new System.Drawing.Point(314, 3);
             this.numAreaRebar.Maximum = new decimal(new int[] {
             -1530494976,
             232830,
@@ -778,7 +778,7 @@
             // 
             this.labelAreaUnits.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.labelAreaUnits.AutoSize = true;
-            this.labelAreaUnits.Location = new System.Drawing.Point(147, 5);
+            this.labelAreaUnits.Location = new System.Drawing.Point(136, 5);
             this.labelAreaUnits.Name = "labelAreaUnits";
             this.labelAreaUnits.Size = new System.Drawing.Size(45, 13);
             this.labelAreaUnits.TabIndex = 2;
@@ -897,7 +897,6 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart chart;
         private System.Windows.Forms.Button btnDraw;
         private System.Windows.Forms.DataGridView dataGridSection;
-        private System.Windows.Forms.BindingSource pointBS;
         private System.Windows.Forms.Button btnDel;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Label labelSection;
@@ -944,5 +943,6 @@
         public System.Windows.Forms.NumericUpDown num_s_w_Y;
         public System.Windows.Forms.ComboBox cmbDw_Y;
         public System.Windows.Forms.NumericUpDown numN_w_Y;
+        public System.Windows.Forms.BindingSource pointBS;
     }
 }
