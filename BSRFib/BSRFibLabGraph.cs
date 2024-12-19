@@ -72,9 +72,9 @@ namespace BSFiberConcrete
             toolTip.SetToolTip(this.btnDelCalc, "Удалить образец и данные испытаний");
             toolTip.SetToolTip(this.btnDrawChartAndCalc, "Построить график");
             toolTip.SetToolTip(this.btnDSAdd, "Добавить строку");
-            toolTip.SetToolTip(this.btnDSDel, "Удалить строку");
+            toolTip.SetToolTip(this.btnDSDel, "Удалить последнюю строку");
             toolTip.SetToolTip(this.btnDSDataFromFile, "Загрузить данные испытаний из файла");
-            toolTip.SetToolTip(this.btnDSSave, "Сохранить");
+            toolTip.SetToolTip(this.btnDSSave, "Сохранить в базу данных");
             toolTip.SetToolTip(this.btnDSSave2File, "Сохранить в файл");
             toolTip.SetToolTip(this.btnPrint, "Построить отчет");
         }
@@ -208,7 +208,7 @@ namespace BSFiberConcrete
         private void btnDSSave2File_Click(object sender, EventArgs e)
         {            
             SaveFileDialog dlg = new SaveFileDialog();
-            dlg.FileName = "Document"; // Default file name
+            dlg.FileName = cmbBarSample.Text; // Default file name
             dlg.DefaultExt = ".txt"; // Default file extension
             dlg.Filter = "Text documents (.txt)|*.txt"; // Filter files by extension
 
@@ -282,7 +282,7 @@ namespace BSFiberConcrete
             string CalcId = cmbBarSample.SelectedItem.ToString();
 
             if (MessageBox.Show($"Удалить расчеты для {CalcId}?", "Предупреждение", 
-                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.OK)
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {                                
                 BSData.DeleteRFibLab(CalcId);
             }
@@ -314,6 +314,11 @@ namespace BSFiberConcrete
             txtBarSample.Text = curItemId;
 
             InitData(curItemId);
+        }
+
+        private void BSRFibLabGraph_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            BSQuery.SaveFaF(Qds.ToList(), cmbBarSample.SelectedItem.ToString());
         }
     }
 }

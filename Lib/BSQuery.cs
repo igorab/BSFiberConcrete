@@ -239,7 +239,7 @@ namespace BSFiberConcrete.Lib
                             }
                             else
                             {
-                                int cnt = cnn.Execute($"insert into RChartFaF (Num, aF, F, LabId) values(@Num, @aF, @F, {_LabId}))", fa, tr);
+                                int cnt = cnn.Execute($"insert into RChartFaF (Num, aF, F, LabId) values(@Num, @aF, @F, '{_LabId}')", fa, tr);
                             }
                         }
                         tr.Commit();

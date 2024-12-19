@@ -957,7 +957,7 @@ namespace BSFiberConcrete.Lib
             }
         }
 
-        internal static void DeleteRFibLab(string calcId)
+        internal static void DeleteRFibLab(string _LabId)
         {
             try
             {
@@ -966,7 +966,10 @@ namespace BSFiberConcrete.Lib
                     cnn.Open();
                     using (var tr = cnn.BeginTransaction())
                     {
-                        int cnt = cnn.Execute($"DELETE FROM RFibLab WHERE Id = '{calcId}'");
+                        int cnt = cnn.Execute($"DELETE FROM RFibLab WHERE Id = '{_LabId}'");
+
+                        cnt = cnn.Execute($"DELETE FROM RChartFaF WHERE LabId = '{_LabId}'");
+
                         tr.Commit();
                     }
                 }

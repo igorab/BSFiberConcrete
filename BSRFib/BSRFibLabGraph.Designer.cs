@@ -29,19 +29,19 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BSRFibLabGraph));
             this.ChartFaF = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.gridFaF = new System.Windows.Forms.DataGridView();
             this.tableLayoutPanelGrid = new System.Windows.Forms.TableLayoutPanel();
             this.btnDSSave = new System.Windows.Forms.Button();
+            this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.btnDSDataFromFile = new System.Windows.Forms.Button();
             this.btnDSSave2File = new System.Windows.Forms.Button();
-            this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.btnDSDel = new System.Windows.Forms.Button();
             this.btnDSAdd = new System.Windows.Forms.Button();
             this.tableLayoutPanelBarSample = new System.Windows.Forms.TableLayoutPanel();
@@ -92,29 +92,29 @@
             // 
             // ChartFaF
             // 
-            chartArea1.Name = "ChartArea1";
-            this.ChartFaF.ChartAreas.Add(chartArea1);
+            chartArea2.Name = "ChartArea1";
+            this.ChartFaF.ChartAreas.Add(chartArea2);
             this.ChartFaF.DataSource = this.faFBindingSource;
             this.ChartFaF.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend1.Name = "aFL";
-            legend1.Title = "Fi-aFi";
-            this.ChartFaF.Legends.Add(legend1);
+            legend2.Name = "aFL";
+            legend2.Title = "Fi-aFi";
+            this.ChartFaF.Legends.Add(legend2);
             this.ChartFaF.Location = new System.Drawing.Point(290, 51);
             this.ChartFaF.Name = "ChartFaF";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series1.EmptyPointStyle.AxisLabel = "Fi";
-            series1.Legend = "aFL";
-            series1.Name = "AFSerie";
-            series1.XValueMember = "aF";
-            series1.YValueMembers = "F";
-            this.ChartFaF.Series.Add(series1);
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series2.EmptyPointStyle.AxisLabel = "Fi";
+            series2.Legend = "aFL";
+            series2.Name = "AFSerie";
+            series2.XValueMember = "aF";
+            series2.YValueMembers = "F";
+            this.ChartFaF.Series.Add(series2);
             this.ChartFaF.Size = new System.Drawing.Size(648, 502);
             this.ChartFaF.TabIndex = 0;
             this.ChartFaF.Text = "aF";
-            title1.Name = "aF";
-            title1.Text = "Нагрузка-перемещение внешних граней надреза";
-            this.ChartFaF.Titles.Add(title1);
+            title2.Name = "aF";
+            title2.Text = "Нагрузка-перемещение внешних граней надреза";
+            this.ChartFaF.Titles.Add(title2);
             // 
             // tableLayoutPanel
             // 
@@ -157,22 +157,22 @@
             // tableLayoutPanelGrid
             // 
             this.tableLayoutPanelGrid.ColumnCount = 6;
-            this.tableLayoutPanelGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanelGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 47.16981F));
-            this.tableLayoutPanelGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 52.83019F));
-            this.tableLayoutPanelGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 46F));
-            this.tableLayoutPanelGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 48F));
-            this.tableLayoutPanelGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 49F));
-            this.tableLayoutPanelGrid.Controls.Add(this.btnDSSave, 2, 0);
-            this.tableLayoutPanelGrid.Controls.Add(this.btnDSDataFromFile, 1, 0);
+            this.tableLayoutPanelGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+            this.tableLayoutPanelGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+            this.tableLayoutPanelGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+            this.tableLayoutPanelGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+            this.tableLayoutPanelGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+            this.tableLayoutPanelGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 54F));
             this.tableLayoutPanelGrid.Controls.Add(this.btnDSSave2File, 3, 0);
             this.tableLayoutPanelGrid.Controls.Add(this.btnDSDel, 5, 0);
             this.tableLayoutPanelGrid.Controls.Add(this.btnDSAdd, 4, 0);
+            this.tableLayoutPanelGrid.Controls.Add(this.btnDSDataFromFile, 2, 0);
+            this.tableLayoutPanelGrid.Controls.Add(this.btnDSSave, 0, 0);
             this.tableLayoutPanelGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelGrid.Location = new System.Drawing.Point(4, 560);
             this.tableLayoutPanelGrid.Name = "tableLayoutPanelGrid";
             this.tableLayoutPanelGrid.RowCount = 1;
-            this.tableLayoutPanelGrid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanelGrid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanelGrid.Size = new System.Drawing.Size(279, 39);
             this.tableLayoutPanelGrid.TabIndex = 6;
             // 
@@ -181,36 +181,12 @@
             this.btnDSSave.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnDSSave.ImageIndex = 23;
             this.btnDSSave.ImageList = this.imageList;
-            this.btnDSSave.Location = new System.Drawing.Point(96, 3);
+            this.btnDSSave.Location = new System.Drawing.Point(5, 3);
             this.btnDSSave.Name = "btnDSSave";
             this.btnDSSave.Size = new System.Drawing.Size(37, 33);
             this.btnDSSave.TabIndex = 5;
             this.btnDSSave.UseVisualStyleBackColor = true;
             this.btnDSSave.Click += new System.EventHandler(this.btnDSSave_Click);
-            // 
-            // btnDSDataFromFile
-            // 
-            this.btnDSDataFromFile.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.btnDSDataFromFile.ImageKey = "save-button.png";
-            this.btnDSDataFromFile.ImageList = this.imageList;
-            this.btnDSDataFromFile.Location = new System.Drawing.Point(39, 3);
-            this.btnDSDataFromFile.Name = "btnDSDataFromFile";
-            this.btnDSDataFromFile.Size = new System.Drawing.Size(38, 33);
-            this.btnDSDataFromFile.TabIndex = 6;
-            this.btnDSDataFromFile.UseVisualStyleBackColor = true;
-            this.btnDSDataFromFile.Click += new System.EventHandler(this.btnDSOpen_Click);
-            // 
-            // btnDSSave2File
-            // 
-            this.btnDSSave2File.ImageIndex = 15;
-            this.btnDSSave2File.ImageList = this.imageList;
-            this.btnDSSave2File.Location = new System.Drawing.Point(139, 3);
-            this.btnDSSave2File.Name = "btnDSSave2File";
-            this.btnDSSave2File.Size = new System.Drawing.Size(38, 33);
-            this.btnDSSave2File.TabIndex = 7;
-            this.btnDSSave2File.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnDSSave2File.UseVisualStyleBackColor = true;
-            this.btnDSSave2File.Click += new System.EventHandler(this.btnDSSave2File_Click);
             // 
             // imageList
             // 
@@ -241,6 +217,30 @@
             this.imageList.Images.SetKeyName(22, "save-button.png");
             this.imageList.Images.SetKeyName(23, "save-icon.png");
             // 
+            // btnDSDataFromFile
+            // 
+            this.btnDSDataFromFile.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.btnDSDataFromFile.ImageKey = "save-button.png";
+            this.btnDSDataFromFile.ImageList = this.imageList;
+            this.btnDSDataFromFile.Location = new System.Drawing.Point(94, 3);
+            this.btnDSDataFromFile.Name = "btnDSDataFromFile";
+            this.btnDSDataFromFile.Size = new System.Drawing.Size(38, 33);
+            this.btnDSDataFromFile.TabIndex = 6;
+            this.btnDSDataFromFile.UseVisualStyleBackColor = true;
+            this.btnDSDataFromFile.Click += new System.EventHandler(this.btnDSOpen_Click);
+            // 
+            // btnDSSave2File
+            // 
+            this.btnDSSave2File.ImageIndex = 15;
+            this.btnDSSave2File.ImageList = this.imageList;
+            this.btnDSSave2File.Location = new System.Drawing.Point(138, 3);
+            this.btnDSSave2File.Name = "btnDSSave2File";
+            this.btnDSSave2File.Size = new System.Drawing.Size(38, 33);
+            this.btnDSSave2File.TabIndex = 7;
+            this.btnDSSave2File.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnDSSave2File.UseVisualStyleBackColor = true;
+            this.btnDSSave2File.Click += new System.EventHandler(this.btnDSSave2File_Click);
+            // 
             // btnDSDel
             // 
             this.btnDSDel.Anchor = System.Windows.Forms.AnchorStyles.Right;
@@ -257,7 +257,7 @@
             // 
             this.btnDSAdd.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnDSAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnDSAdd.Location = new System.Drawing.Point(190, 3);
+            this.btnDSAdd.Location = new System.Drawing.Point(185, 3);
             this.btnDSAdd.Name = "btnDSAdd";
             this.btnDSAdd.Size = new System.Drawing.Size(37, 33);
             this.btnDSAdd.TabIndex = 4;
@@ -468,7 +468,7 @@
             this.tableLayoutPanelCalcRes.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 59F));
             this.tableLayoutPanelCalcRes.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 122F));
             this.tableLayoutPanelCalcRes.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanelCalcRes.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 175F));
+            this.tableLayoutPanelCalcRes.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 185F));
             this.tableLayoutPanelCalcRes.Controls.Add(this.lblF05, 0, 0);
             this.tableLayoutPanelCalcRes.Controls.Add(this.numF05, 1, 0);
             this.tableLayoutPanelCalcRes.Controls.Add(this.lblF25, 2, 0);
@@ -486,7 +486,7 @@
             // 
             this.lblF05.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.lblF05.AutoSize = true;
-            this.lblF05.Location = new System.Drawing.Point(9, 15);
+            this.lblF05.Location = new System.Drawing.Point(6, 15);
             this.lblF05.Name = "lblF05";
             this.lblF05.Size = new System.Drawing.Size(48, 13);
             this.lblF05.TabIndex = 0;
@@ -496,21 +496,21 @@
             // 
             this.numF05.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numF05.DecimalPlaces = 4;
-            this.numF05.Location = new System.Drawing.Point(63, 12);
+            this.numF05.Location = new System.Drawing.Point(60, 12);
             this.numF05.Maximum = new decimal(new int[] {
             1215752192,
             23,
             0,
             0});
             this.numF05.Name = "numF05";
-            this.numF05.Size = new System.Drawing.Size(111, 20);
+            this.numF05.Size = new System.Drawing.Size(110, 20);
             this.numF05.TabIndex = 3;
             // 
             // lblF25
             // 
             this.lblF25.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.lblF25.AutoSize = true;
-            this.lblF25.Location = new System.Drawing.Point(191, 15);
+            this.lblF25.Location = new System.Drawing.Point(181, 15);
             this.lblF25.Name = "lblF25";
             this.lblF25.Size = new System.Drawing.Size(48, 13);
             this.lblF25.TabIndex = 1;
@@ -520,7 +520,7 @@
             // 
             this.numF25.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numF25.DecimalPlaces = 4;
-            this.numF25.Location = new System.Drawing.Point(245, 12);
+            this.numF25.Location = new System.Drawing.Point(235, 12);
             this.numF25.Maximum = new decimal(new int[] {
             1215752192,
             23,
@@ -534,7 +534,7 @@
             // 
             this.lblFeL.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.lblFeL.AutoSize = true;
-            this.lblFeL.Location = new System.Drawing.Point(370, 15);
+            this.lblFeL.Location = new System.Drawing.Point(360, 15);
             this.lblFeL.Name = "lblFeL";
             this.lblFeL.Size = new System.Drawing.Size(41, 13);
             this.lblFeL.TabIndex = 2;
@@ -544,7 +544,7 @@
             // 
             this.numFel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numFel.DecimalPlaces = 4;
-            this.numFel.Location = new System.Drawing.Point(417, 12);
+            this.numFel.Location = new System.Drawing.Point(407, 12);
             this.numFel.Maximum = new decimal(new int[] {
             1215752192,
             23,
@@ -620,6 +620,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "BSRFibLabGraph";
             this.Text = "График \"нагрузка-перемещение внешних граней надреза\"";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BSRFibLabGraph_FormClosing);
             this.Load += new System.EventHandler(this.BSGraph_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ChartFaF)).EndInit();
             this.tableLayoutPanel.ResumeLayout(false);
