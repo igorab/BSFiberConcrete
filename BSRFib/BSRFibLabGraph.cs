@@ -135,8 +135,8 @@ namespace BSFiberConcrete
         {
             try
             {
-                int mx = Qds.Max(x => x.Num) + 1;
-                double mxaF = Qds.Max(x => x.aF) + 0.01;
+                int mx = ((Qds.Count > 0) ?  Qds.Max(x => x.Num) : 0 ) + 1;
+                double mxaF = ((Qds.Count > 0) ? Qds.Max(x => x.aF) : 0) + 0.01;
 
                 FaF item = new FaF() 
                 { 

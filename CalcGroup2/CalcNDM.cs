@@ -14,7 +14,7 @@ namespace BSFiberConcrete
         private double My0, Mx0, N0;
 
         // данные с формы
-        public Dictionary<string, double> D;
+        public Dictionary<string, double> Dprm { get; set; }
 
         public NDMSetup setup { get; set; }
 
@@ -61,26 +61,26 @@ namespace BSFiberConcrete
 
         private void Init()
         {
-            if (D == null) return;
+            if (Dprm == null) return;
 
             // для прямоугольных и тавровых сечений привязка к центу нижней грани 
             if (BSHelper.IsRectangled(m_BeamSection))
             {
-                LeftX = D.ContainsKey("b") ? -D["b"] / 2.0 : 0;
+                LeftX = Dprm.ContainsKey("b") ? -Dprm["b"] / 2.0 : 0;
             }
 
             double _qty, _area;
             
             (lD, lX, lY, _qty, _area) = BSCalcNDM.ReinforcementBinding(m_BeamSection, LeftX, 0, setup.UseRebar);
 
-            if (!D.ContainsKey("rods_qty"))
-                D.Add("rods_qty", _qty);
-            if (!D.ContainsKey("rods_area"))
-                D.Add("rods_area", _area);
+            if (!Dprm.ContainsKey("rods_qty"))
+                Dprm.Add("rods_qty", _qty);
+            if (!Dprm.ContainsKey("rods_area"))
+                Dprm.Add("rods_area", _area);
 
-            My0 = D["My"];
-            Mx0 = D["Mz"];
-            N0  = D["N"];
+            My0 = Dprm["My"];
+            Mx0 = Dprm["Mz"];
+            N0  = Dprm["N"];
         }
 
         ///
@@ -91,7 +91,7 @@ namespace BSFiberConcrete
             Init();
             BSCalcNDM bsCalcGR1 = new BSCalcNDM(GR1, m_BeamSection, setup);
             bsCalcGR1.SetMN(Mx0, My0, N0);
-            bsCalcGR1.SetParamsGroup1(D);
+            bsCalcGR1.SetParamsGroup1(Dprm);
             bsCalcGR1.MzMyNUp(_coefM);
             bsCalcGR1.SetRods(lD, lX, lY);
             bsCalcGR1.Run();
@@ -105,7 +105,7 @@ namespace BSFiberConcrete
         private BSCalcNDM BSCalcGr2(double _Mx, double _My, double _N)
         {
             BSCalcNDM bscalc = new BSCalcNDM(GR2, m_BeamSection, setup);
-            bscalc.SetParamsGroup2(D);
+            bscalc.SetParamsGroup2(Dprm);
             bscalc.SetMN(_Mx, _My, _N);
             bscalc.MzMyNUp(1.0); 
             bscalc.SetRods(lD, lX, lY);
@@ -119,10 +119,10 @@ namespace BSFiberConcrete
         {
             NdmCrc ndmCrc = BSData.LoadNdmCrc();
             ndmCrc.InitFi2(setup.RebarType);
-            ndmCrc.InitFi3(D["N"]);
+            ndmCrc.InitFi3(Dprm["N"]);
            
             BSCalcNDM bscalc = new BSCalcNDM(GR2, m_BeamSection, setup);
-            bscalc.SetParamsGroup2(D);
+            bscalc.SetParamsGroup2(Dprm);
             bscalc.SetMN(Mx0, My0, N0);
             bscalc.MzMyNUp(_coefM);
             bscalc.NdmCrc = ndmCrc;
@@ -143,7 +143,7 @@ namespace BSFiberConcrete
         {            
             Init();
             BSCalcNDM bsCalcGR1 = new BSCalcNDM(GR1, m_BeamSection, setup);
-            bsCalcGR1.SetParamsGroup1(D);
+            bsCalcGR1.SetParamsGroup1(Dprm);
             bsCalcGR1.SetMN(0, _My, 0);
             bsCalcGR1.SetRods(lD, lX, lY);
             bsCalcGR1.Run();
@@ -160,8 +160,8 @@ namespace BSFiberConcrete
             BSCalcNDM bsCalcGR1 = BSCalcGr1();
             
             m_CalcRes = new BSCalcResultNDM(bsCalcGR1.Results);
-            m_CalcRes.InitFromCalcNDM(bsCalcGR1);
-            m_CalcRes.InitCalcParams(D);
+            m_CalcRes.InitCalcParams(Dprm);
+            m_CalcRes.InitFromCalcNDM(bsCalcGR1);           
             m_CalcRes.ResultsMsg1Group(ref m_Message);
 
             return true;
@@ -171,7 +171,7 @@ namespace BSFiberConcrete
         {
             bool res = true;
 
-            if (D["Mz"] == 0 && D["My"] == 0 && D["N"] == 0)
+            if (Dprm["Mz"] == 0 && Dprm["My"] == 0 && Dprm["N"] == 0)
             {
                 res = false;
             }            

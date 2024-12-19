@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace BSFiberConcrete.CalcGroup2
 {    
     public partial class BSCalcNDM
-    {
+    {        
         /// <summary>
         ///  рассчитать
         /// </summary>

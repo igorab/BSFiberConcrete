@@ -52,7 +52,7 @@ namespace BSFiberConcrete.CalcGroup2
             est2 = 0.025;
 
             //Предельные деформационные параметры арматуры
-            e_s_ult = 0.025;
+            //e_s_ult = 0.025;
         }
 
         /// <summary>
@@ -220,8 +220,6 @@ namespace BSFiberConcrete.CalcGroup2
             y0s.Clear();
             z0s.Clear();
             
-
-
             int idx = 0;
             foreach (var d in _bD)
             {
@@ -232,8 +230,6 @@ namespace BSFiberConcrete.CalcGroup2
                 y0s.Add(_bY[idx]);
                 idx++;
             }
-
-
         }
         
         public BeamSection BeamSection  {
@@ -298,7 +294,7 @@ namespace BSFiberConcrete.CalcGroup2
         private double efbt3;
 
         //СП 6.1.24
-        private double e_s_ult;
+        //private double e_s_ult;
         private double e_fb_ult = 0;
         private double e_fbt_ult = 0;
 
@@ -343,6 +339,10 @@ namespace BSFiberConcrete.CalcGroup2
         public double a_crc { get; private set; }
         public List<double> A_Crc { get; private set; }
         #endregion
+
+        // предельный деформации фибробетона по СП 
+        public double Eps_fbt_ult => efbt1;
+        public double Eps_fb_ult => -ebc0;
 
         // коэффициенты использоввания:
         //-- по деформациям фибробетона на сжатие

@@ -795,7 +795,7 @@ namespace BSFiberConcrete.Section
         {
             Dictionary<string, double> dictParams = DictCalcParams;
                         
-            CalcNDM calcNDM = new CalcNDM(m_BeamSection) { setup = NdmSetup, D = dictParams };
+            CalcNDM calcNDM = new CalcNDM(m_BeamSection) { setup = NdmSetup, Dprm = dictParams };
             calcNDM.RunGroup1();
 
             return calcNDM.CalcRes;                                    

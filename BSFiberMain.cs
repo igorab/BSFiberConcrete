@@ -10,23 +10,20 @@ using BSFiberConcrete.Section.DrawBeamSection;
 using BSFiberConcrete.Section.MeshSettingsOfBeamSection;
 using BSFiberConcrete.UnitsOfMeasurement;
 using BSFiberConcrete.UnitsOfMeasurement.PhysicalQuantities;
-using ScottPlot.Colormaps;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Diagnostics;
-using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+
 
 namespace BSFiberConcrete
 {
@@ -1341,14 +1338,14 @@ namespace BSFiberConcrete
                 // сжатие
                 ["ebc0"] = 0,
                 ["ebc2"] = 0.0035d,
-                ["eb_ult"] = (double)numEps_fb_ult.Value,
+                ["eb_ult"] = 0.0035d,
 
                 // растяжение
                 ["ebt0"] = 0,
                 ["ebt1"] = 0,
                 ["ebt2"] = 0,
                 ["ebt3"] = 0,
-                ["ebt_ult"] = (double)numEps_fbt_ult.Value,
+                ["ebt_ult"] = 0.015d,
                 // арматура steel                
                 ["Es0"] = (double)numEs.Value,
                 // нормативные 
@@ -1448,7 +1445,7 @@ namespace BSFiberConcrete
 
             foreach (double my in _My)
             {
-                CalcNDM calcNDM = new CalcNDM(m_BeamSection) { setup = ndmSetup, D = dictParams };
+                CalcNDM calcNDM = new CalcNDM(m_BeamSection) { setup = ndmSetup, Dprm = dictParams };
                 Dictionary<string, double> res = calcNDM.RunMy(my);
 
                 if (res != null)
@@ -1552,7 +1549,7 @@ namespace BSFiberConcrete
 
         public void CreatePictureForBodyReport(List<BSCalcResultNDM> calcResultsNDM)
         {
-            for(int i = 0; calcResultsNDM.Count > i; i++)
+            for (int i = 0; calcResultsNDM.Count > i; i++)
             {
                 BSCalcResultNDM calcResNDM = calcResultsNDM[i];
 
@@ -1563,7 +1560,8 @@ namespace BSFiberConcrete
                 {
                     string pictureName = $"beamSectionMeshDeform{i}";
                     pathToPicture = Directory.GetCurrentDirectory() + "\\" + pictureName + ".png";
-                    MeshDraw mDraw = CreateMosaic(1, calcResNDM.Eps_B, calcResNDM.Eps_S, (double)numEps_fbt_ult.Value, -(double)numEps_fb_ult.Value, calcResNDM.Rs);
+                    //MeshDraw mDraw = CreateMosaic(1, calcResNDM.Eps_B, calcResNDM.Eps_S, (double)numEps_fbt_ult.Value, -(double)numEps_fb_ult.Value, calcResNDM.Rs);
+                    MeshDraw mDraw = CreateMosaic(1, calcResNDM.Eps_B, calcResNDM.Eps_S, calcResNDM.Eps_fbt_ult, calcResNDM.Eps_fb_ult, calcResNDM.Rs);
                     mDraw.SaveToPNG("Относительные деформации", pathToPicture);
 
                     pathToPictures.Add(pathToPicture);
@@ -1673,7 +1671,7 @@ namespace BSFiberConcrete
             NDMSetup _setup = NDMSetupValuesFromForm();                
            
             // расчет:
-            CalcNDM calcNDM = new CalcNDM(_beamSection) {setup = _setup, D = _D }; 
+            CalcNDM calcNDM = new CalcNDM(_beamSection) {setup = _setup, Dprm = _D }; 
             
             if (_beamSection == BeamSection.Any)
                 calcNDM.RunGroup1();
@@ -1841,8 +1839,8 @@ namespace BSFiberConcrete
                     e_b1_red = c_eps_b1_red,
                     e_b1 = c_eps_b1,
                     e_b2 = c_eps_b2,
-                    Eps_fb_ult = (double)numEps_fb_ult.Value,
-                    Eps_fbt_ult = (double)numEps_fbt_ult.Value,
+                    Eps_fb_ult = 0.0035d,
+                    Eps_fbt_ult = 0.015d,
                 };
 
                 // задать свойства бетона
@@ -1907,29 +1905,7 @@ namespace BSFiberConcrete
                 MessageBox.Show("Ошибка в отчете " + _e.Message);
             }
         }
-
-      
-        private bool ValidateNDMCalc(Dictionary<string, double> _D)
-        {
-            if (m_SectionChart == null || m_SectionChart.m_BeamSection != m_BeamSection)
-            {
-                MessageBox.Show("Нажмите кнопку Сечение и задайте диаметры и расстановку стержней арматуры.", 
-                    "Расчет по НДМ", 
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return false;
-            }
-
-            if (_D["Mz"] == 0 && _D["My"] == 0 && _D["N"] == 0 &&  _D["Qx"] == 0 &&  _D["Qy"] == 0)
-            {
-                MessageBox.Show("Требуется задать моменты Mx My или силу N или поперчные силы Qx Qy ", "Расчет по НДМ",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
-
-            return true;
-        }
-
-
+              
         /// <summary>
         /// Валидация данных перед проведением расчета по деф. модели
         /// </summary>
@@ -2318,15 +2294,13 @@ namespace BSFiberConcrete
             m_SectionChart.NumArea    = _area;
             m_SectionChart.Rebar      = InitRebarFromForm();
                         
-            if (panelSectionDraw.Controls.Contains(m_SectionChart))
-            {
-                m_SectionChart.FormReload();
-            }
-            else
+            if (!panelSectionDraw.Controls.Contains(m_SectionChart))            
             {
                 panelSectionDraw.Controls.Clear();
                 panelSectionDraw.Controls.Add(m_SectionChart);
             }
+
+            m_SectionChart.FormReload();
 
             m_ImageStream = m_SectionChart.GetImageStream;
         }
@@ -2557,16 +2531,7 @@ namespace BSFiberConcrete
             double et0 = 0;
             double et2 = 0;
             double et3 = 0;
-
-            //if (typeMaterial == BSHelper.Concrete)
-            //{
-            //    // Характеристики по сжатию
-            //    R_n = (double)numRfb_n.Value;       // Rb_n 
-            //    e0 = (double)numEps_fb0.Value;      // eb0
-            //    e2 = (double)numEps_fb2.Value;      // eb2
-            //    E = (double)numEfb.Value;           // Eb
-
-            //}
+            
             if (typeMaterial == BSHelper.FiberConcrete)
             {
                 // Характеристики по сжатию такие же как у бетона
@@ -2592,13 +2557,7 @@ namespace BSFiberConcrete
                 Et = (double)numEs.Value;           //
                 // Характеристики по сжатию
                 R_n = (double)numRsc.Value;
-                E = Et;
-
-                // значения забираются с другой формы
-                //e0 = et0;
-                //e2 = et2;
-                //et0 = 0; // (double)numEpsilonS0.Value;
-                //et2 = 0; //(double)numEpsilonS2.Value;
+                E = Et;               
             }
             else
             {
@@ -2834,8 +2793,6 @@ namespace BSFiberConcrete
                 $"{BSHelper.Kgssm2ToKNsm2((double)numE_fbt.Value, 2)} КН/см2 \n", 
                 "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-
-
 
         private void picEffortsSign_Click(object sender, EventArgs e)
         {

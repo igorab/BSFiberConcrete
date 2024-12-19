@@ -48,7 +48,7 @@ namespace BSFiberConcrete
         public double sigmaS { get; private set; }
 
         [DisplayName("Максимальная относительная деформация в фибробетоне, [.]")]
-        public double e_fb_max { get; private set; }
+        public double e_fbt_max { get; private set; }
 
         [DisplayName("---Коэффициент использования по деформации в фибробетоне (растяжение), [СП360 6.1.24]")]
         public double UtilRate_e_fbt { get; private set; }
@@ -94,12 +94,11 @@ namespace BSFiberConcrete
         // деформации
         public List<double> Eps_B { get; set; } // бетон
         public List<double> Eps_S { get; set; } // арматура
-
+        
         /// <summary>
         /// диаметры арматуры соответствующие номерам стержней арматуры
         /// </summary>
         public List<double> RebarDiametersByIndex { get; set; } 
-
 
         #endregion
 
@@ -238,10 +237,7 @@ namespace BSFiberConcrete
                     { DN("Rfbtn"), Rfbtn },
                     // расч
                     { DN("Rfb"), Rfb },
-                    { DN("Rfbt"), Rfbt },
-
-                    { DN("Eps_fb_ult"), Eps_fb_ult},
-
+                    { DN("Rfbt"), Rfbt },                    
                     { DN("Es"),    Es },
                     { DN("Rs"),    Rs },                    
                     { DN("Eps_s_ult"), Eps_s_ult }
@@ -322,8 +318,8 @@ namespace BSFiberConcrete
             Es    = _D["Es0"];
             Rs    = _D["Rscn"];
 
-            Eps_fbt_ult = _D["ebt_ult"];
-            Eps_fb_ult  = _D["eb_ult"];
+            //Eps_fbt_ult = _D["ebt_ult"];
+            //Eps_fb_ult  = _D["eb_ult"];
             //Eps_s_ult = _D["es_ult"];
 
             if (_D.ContainsKey("rods_qty"))
@@ -359,7 +355,7 @@ namespace BSFiberConcrete
             // растяжение
             sigmaB = BSHelper.SigU2U(_D1gr["sigB"]);
             sigmaS = BSHelper.SigU2U(_D1gr["sigS"]);
-            e_fb_max = _D1gr["epsB"];
+            e_fbt_max = _D1gr["epsB"];
             e_s_max = _D1gr["epsS"];
 
             // сжатие
@@ -467,7 +463,7 @@ namespace BSFiberConcrete
             // растяжение
             Res1Group.Add("<b>--------Растяжение:--------</b>", double.NaN);
             AddToResult("sigmaB", sigmaB);            
-            AddToResult("e_fb_max", e_fb_max);
+            AddToResult("e_fbt_max", e_fbt_max);
             AddToResult("UtilRate_e_fbt", UtilRate_e_fbt);
             
             AddToResult("sigmaS", sigmaS);
@@ -510,11 +506,19 @@ namespace BSFiberConcrete
         /// <param name="_Message"></param>
         public void ResultsMsg1Group(ref List<string> _Message)
         {
-            bool res_fb = e_fb_max <= Eps_fb_ult;
-            if (res_fb)
-                Msg.Add(string.Format("Проверка сечения по фибробетону пройдена. e_fb_max={0} <= e_fb_ult={1} ", Math.Round(e_fb_max, 6), Eps_fb_ult));
+            // растяжение (e > 0)
+            bool res_fbt = e_fbt_max <= Eps_fbt_ult;
+            if (res_fbt)
+                Msg.Add(string.Format("Проверка сечения по фибробетону на растяжение пройдена e_fbt_max <= e_fbt_ult : {0} <= {1} ", Math.Round(e_fbt_max, 8), Math.Round(Eps_fbt_ult,8)));
             else
-                Msg.Add(string.Format("Не пройдена проверка сечения по фибробетону. e_fb_max={0} <= e_fb_ult={1} ", Math.Round(e_fb_max, 6), Eps_fb_ult));
+                Msg.Add(string.Format("Не пройдена проверка сечения по фибробетону на растяжение e_fbt_max <= e_fbt_ult: {0} > {1} ", Math.Round(e_fbt_max, 8), Math.Round(Eps_fbt_ult,8)));
+
+            // сжатие (e < 0)
+            bool res_fb = e_fb_max_p >= Eps_fb_ult;
+            if (res_fb)
+                Msg.Add(string.Format("Проверка сечения по фибробетону на сжатие пройдена e_fb_max >= e_fb_ult: {0} >= {1} ", Math.Round(e_fb_max_p, 8), Math.Round(Eps_fb_ult, 8)));
+            else
+                Msg.Add(string.Format("Не пройдена проверка сечения по фибробетону на сжатие. e_fb_max >= e_fb_ult: {0} < {1} ", Math.Round(e_fb_max_p, 8), Math.Round(Eps_fb_ult,8)));
 
             bool res_s = e_s_max <= Eps_s_ult;
             if (res_s)
@@ -558,6 +562,10 @@ namespace BSFiberConcrete
             Sig_S = bsCalc1.SigmaSResult;
             Eps_B = bsCalc1.EpsilonBResult;
             Eps_S = bsCalc1.EpsilonSResult;
+
+            Eps_fbt_ult = bsCalc1.Eps_fbt_ult; // раст
+            Eps_fb_ult  = bsCalc1.Eps_fb_ult; // сжатие
+
             RebarDiametersByIndex = bsCalc1.RebarDiametersByIndex;
             ErrorIdx.Add(bsCalc1.Err);
         }
