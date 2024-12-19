@@ -10,6 +10,7 @@ using BSFiberConcrete.Lib;
 using BSCalcLib;
 using System.Diagnostics;
 using BSFiberConcrete.Report;
+using System.Text;
 
 namespace BSFiberConcrete.Section
 {
@@ -869,10 +870,17 @@ namespace BSFiberConcrete.Section
             try
             {
                 string pathToSvgFile = GenerateMesh();
-
                 if (File.Exists(pathToSvgFile))
-                { 
-                    Process.Start(new ProcessStartInfo { FileName = pathToSvgFile, UseShellExecute = true });
+                {
+                    string path2file = "BeamSectionMesh.htm";
+                    File.CreateText(path2file).Dispose();
+                    using (StreamWriter w = new StreamWriter(path2file, true, Encoding.UTF8))
+                    {
+                        w.WriteLine("<html>");
+                        w.WriteLine($"<img src = \"{pathToSvgFile}\"/>");
+                        w.WriteLine("</html>");
+                    }
+                    Process.Start(new ProcessStartInfo { FileName = path2file, UseShellExecute = true });
                 }
             }
             catch (Exception _e)
