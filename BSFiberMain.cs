@@ -21,8 +21,10 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 
 namespace BSFiberConcrete
@@ -184,8 +186,11 @@ namespace BSFiberConcrete
 
                 labelCalculation.Text = BSFiberLib.TxtCalc_Deform;
                 tableLayoutPanelLRebar.Visible = false;
-
                 tableLayoutPanelTRebar.Visible = false;
+
+                checkBoxRebar.Checked = true;
+                checkBoxRebar.Visible = false;
+
             }
             else if (CalcType == CalcType.BeamCalc)
             {
@@ -1035,8 +1040,8 @@ namespace BSFiberConcrete
                 // поперечная по X
                 Rsw_X = (double)numRsw_X.Value,
                 Esw_X = (double)numEsw_X.Value,
-                Sw_X  = (double)num_s_w_X.Value,
-                N_X   = (int)numN_w_X.Value,
+                Sw_X = (double)num_s_w_X.Value,
+                N_X = 0, // (int)numN_w_X.Value,
                 Dw_X  = int.Parse(cmbDw_X.SelectedItem.ToString()),
                 Asw_X = Asw_X,
                 
@@ -1044,7 +1049,7 @@ namespace BSFiberConcrete
                 Rsw_Y = (double)numRsw_Y.Value,
                 Esw_Y = (double)numEsw_Y.Value,                
                 Sw_Y  = (double)num_s_w_Y.Value,
-                N_Y   = (int)numN_w_Y.Value,
+                N_Y   = 0, //(int)numN_w_Y.Value,
                 Dw_Y  = int.Parse(cmbDw_X.SelectedItem.ToString()),
                 Asw_Y = Asw_Y,                
             };
@@ -2311,16 +2316,7 @@ namespace BSFiberConcrete
             m_ImageStream = m_SectionChart.GetImageStream;
         }
 
-        /// <summary>
-        ///  Конструктор сечений
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnSection_Click(object sender, EventArgs e)
-        {
-            RefreshSectionChart(m_BeamSection);
-        }
-        
+              
         /// <summary>
         ///  Разбиение сечения на конечные элементы
         /// </summary>
@@ -3188,6 +3184,22 @@ namespace BSFiberConcrete
         private void tabFiber_TabIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void tabFiber_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            bool selected = checkBoxRebar.Checked;
+
+            if (tabFiber.SelectedTab == tabRebar)
+            {                
+                tableLayoutPanelRebar.Enabled = selected;
+                tableLayoutPanelLRebar.Enabled = selected;
+                tableLayoutPanelTRebar.Enabled = selected;                
+            }
+            else if (tabFiber.SelectedTab == tabPageNDM)
+            {
+
+            }
         }
     }
 }

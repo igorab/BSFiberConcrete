@@ -37,9 +37,7 @@ namespace BSFiberConcrete
         }
               
         private void BSGraph_Load(object sender, EventArgs e)
-        {
-            ToolTips();
-
+        {            
             FibLab CurItem = new FibLab();
             var m_DsFibLab = new List<FibLab>(BSData.LoadRFibLab());
             foreach (var item in m_DsFibLab)
@@ -49,6 +47,8 @@ namespace BSFiberConcrete
             }
 
             cmbBarSample.SelectedItem = CurItem.Id;
+
+            ToolTips();
 
             //InitData(CurItem.Id);
         }
@@ -69,8 +69,8 @@ namespace BSFiberConcrete
         private void ToolTips()
         {
             toolTip.SetToolTip(this.btnAddBarSample, "Добавить новый образец для испытаний");
-            toolTip.SetToolTip(this.btnDelCalc, "Удалить образец и данные испытаний");
-            toolTip.SetToolTip(this.btnDrawChartAndCalc, "Построить график");
+            toolTip.SetToolTip(this.btnDelCalc, $"Удалить образец и данные испытаний") ;
+            toolTip.SetToolTip(this.btnDrawChartAndCalc, "Рассчитать, Построить график");
             toolTip.SetToolTip(this.btnDSAdd, "Добавить строку");
             toolTip.SetToolTip(this.btnDSDel, "Удалить последнюю строку");
             toolTip.SetToolTip(this.btnDSDataFromFile, "Загрузить данные испытаний из файла");
@@ -127,7 +127,11 @@ namespace BSFiberConcrete
 
             // сохранить результаты
             if (flab != null)
+            {
+                BSQuery.SaveFaF(Qds.ToList(), cmbBarSample.SelectedItem.ToString());
+
                 BSQuery.SaveFibLab(new List<FibLab> { flab });
+            }
         }
 
         // добавить строку
@@ -135,12 +139,25 @@ namespace BSFiberConcrete
         {
             try
             {
-                int mx = ((Qds.Count > 0) ?  Qds.Max(x => x.Num) : 0 ) + 1;
+                int mx;
+
+                if (Qds.Count > 0)
+                {
+                    mx = Qds.Max(x => x.Num)  + 1;
+                }
+                else
+                {
+                    mx = BSData.RChartFaFMaxId() + 1;
+                }
+                
                 double mxaF = ((Qds.Count > 0) ? Qds.Max(x => x.aF) : 0) + 0.01;
 
                 FaF item = new FaF() 
                 { 
-                    Num = mx, F = 5, aF = mxaF, LabId = cmbBarSample.SelectedItem.ToString() 
+                    Num = mx, 
+                    F = 5, 
+                    aF = mxaF, 
+                    LabId = cmbBarSample.SelectedItem.ToString() 
                 };
 
                 Qds.Add(item);
@@ -285,6 +302,9 @@ namespace BSFiberConcrete
                     MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {                                
                 BSData.DeleteRFibLab(CalcId);
+
+                Qds.Clear();
+                gridFaF.Refresh();
             }
         }
 

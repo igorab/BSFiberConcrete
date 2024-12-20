@@ -172,8 +172,12 @@ namespace BSFiberConcrete.Section
         /// </summary>
         private void InitTRebar_X(int _N)
         {
-            if (_N == 0) return;
             PointsTRebar_X.Clear();
+
+            if (_N == 0)
+            {                
+                return;
+            }
 
             if (m_BeamSection == BeamSection.Any)
             {
@@ -307,8 +311,12 @@ namespace BSFiberConcrete.Section
         /// <param name="_N">количество стержней </param>
         private void InitTRebar_Y(int _N)
         {
-            if (_N == 0) return;
             PointsTRebar_Y.Clear();
+
+            if (_N == 0)
+            {                
+                return;
+            }
 
             if (m_BeamSection == BeamSection.Ring || m_BeamSection == BeamSection.Any)
             {
@@ -554,8 +562,8 @@ namespace BSFiberConcrete.Section
             tlTip.SetToolTip(this.btnSaveChart, "Cохранить геометрию сечения");
             tlTip.SetToolTip(this.btnMesh, "Сетка");
             tlTip.SetToolTip(this.btnCalc, "Рассчитать сечение по НДМ");            
-            tlTip.SetToolTip(this.btnAddRod, "Произвольное сечение");
-            tlTip.SetToolTip(this.btnDelRod, "Результаты расчета");
+            tlTip.SetToolTip(this.btnAddRod, "Добавить стержень продольной арматуры");
+            tlTip.SetToolTip(this.btnDelRod, "Удалить стержень (последняя строка)");
             tlTip.SetToolTip(this.btnSave, "Сохранить расстановку арматуры");            
         }
 

@@ -592,6 +592,24 @@ namespace BSFiberConcrete.Lib
             }
         }
 
+        public static int RChartFaFMaxId()
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    var output = cnn.Query<int>($"select max(Num) MaxNum from RChartFaF ", new DynamicParameters());
+                    return output.ToList()[0];
+                }
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
+
+
         public static List<FibLab> LoadRFibLab()
         {
             try
