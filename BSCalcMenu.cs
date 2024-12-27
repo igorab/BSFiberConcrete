@@ -3,11 +3,14 @@ using BSFiberConcrete.BSRFib;
 using BSFiberConcrete.BSRFib.FiberCalculator;
 using BSFiberConcrete.Calc;
 using BSFiberConcrete.Inform.Rebar;
+using BSFiberConcrete.Lib;
 using BSFiberConcrete.LocalStrength;
 using BSFiberConcrete.Section;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using System.Text.Json;
 using System.Windows.Forms;
 
 namespace BSCalcMenu
@@ -220,6 +223,19 @@ namespace BSCalcMenu
         {
             ViewCalcOfLenRebar calcOfLenRebar = new ViewCalcOfLenRebar();
             calcOfLenRebar.Show();
+        }
+
+        private void BSCalcMenu_Load(object sender, EventArgs e)
+        {            
+            string path = Path.Combine(Environment.CurrentDirectory, "Templates\\BSConfig.json");
+            Dictionary<string, string> config = new Dictionary<string, string>() ;
+
+            using (FileStream fs = new FileStream(path, FileMode.Open))
+            {
+                config = JsonSerializer.Deserialize< Dictionary<string, string>> (fs);
+
+                BSData.ConfigId = config["ConfigId"];
+            }
         }
     }
 }

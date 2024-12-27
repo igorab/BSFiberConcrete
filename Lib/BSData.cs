@@ -8,11 +8,14 @@ using System.Linq;
 using System.Windows.Forms;
 using Dapper;
 using Microsoft.Data.Sqlite;
+using System.Windows.Markup;
 
 namespace BSFiberConcrete.Lib
 {
     public class BSData
     {
+        public static string ConfigId { get; set; }
+
         public static string ResourcePath(string _file) => Path.Combine(Environment.CurrentDirectory, "Resources", _file);  
 
         public static string DataPath(string _file)  => Path.Combine(Environment.CurrentDirectory, "Data", _file); 
@@ -32,14 +35,21 @@ namespace BSFiberConcrete.Lib
             return ok;
         }
 
+        static BSData()
+        {
+            ConfigId = "Default";
+            //ConfigId = "Fiber297";
+            //ConfigId = "Fiber405";
+        }
+
         /// <summary>
         /// Подключение к БД
         /// </summary>
         /// <param name="id"></param>
         /// <returns>Строка подключения</returns>
-        public static string  LoadConnectionString(string id = "Default")
-        {
-            string s = ConfigurationManager.ConnectionStrings[id]?.ConnectionString;
+        public static string  LoadConnectionString()
+        {            
+            string s = ConfigurationManager.ConnectionStrings[ConfigId]?.ConnectionString;
             if (string.IsNullOrEmpty(s))
                 s = connectionString;
             return s;

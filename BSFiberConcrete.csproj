@@ -618,6 +618,12 @@
       <DependentUpon>FormForTest.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="BSClassDiagram.cd" />
+    <None Include="Data\Fiber297.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Fiber405.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="DeformationDiagram\UserControls\ClassDiagram1.cd" />
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
@@ -711,6 +717,9 @@
     <Content Include="Templates\BSInit.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Templates\BSConfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -769,4 +778,9 @@
   <Import Project="packages\SkiaSharp.NativeAssets.Win32.2.88.9\build\net462\SkiaSharp.NativeAssets.Win32.targets" Condition="Exists('packages\SkiaSharp.NativeAssets.Win32.2.88.9\build\net462\SkiaSharp.NativeAssets.Win32.targets')" />
   <Import Project="packages\HarfBuzzSharp.NativeAssets.Linux.7.3.0.3\build\net462\HarfBuzzSharp.NativeAssets.Linux.targets" Condition="Exists('packages\HarfBuzzSharp.NativeAssets.Linux.7.3.0.3\build\net462\HarfBuzzSharp.NativeAssets.Linux.targets')" />
   <Import Project="packages\SkiaSharp.NativeAssets.Linux.NoDependencies.2.88.9\build\net462\SkiaSharp.NativeAssets.Linux.NoDependencies.targets" Condition="Exists('packages\SkiaSharp.NativeAssets.Linux.NoDependencies.2.88.9\build\net462\SkiaSharp.NativeAssets.Linux.NoDependencies.targets')" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties templates_4bsconfig_1json__JsonSchema="" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>
