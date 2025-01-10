@@ -37,7 +37,7 @@ namespace BSFiberConcrete.Lib
 
         static BSData()
         {
-            ConfigId = "Default";
+            ConfigId = "Fiber";
             //ConfigId = "Fiber297";
             //ConfigId = "Fiber405";
         }

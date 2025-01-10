@@ -375,13 +375,19 @@ namespace BSFiberConcrete
             cmbTRebarClass_Y.SelectedItem = BSFiberLib.RebarClassDefault;
         }
 
+        public void InitHeader(string _info, string _normDoc)
+        {
+            labelInfo.Text = _info;
+            labelNormDoc.Text = _normDoc;
+        }
+
         // глобальные настройки
         public void BSFiberMain_Load(object sender, EventArgs e)
         {
             try
             {
                 InitToolTips();
-               
+                
                 m_RebarDiameters = BSData.LoadRebarDiameters();                
                 m_Rebar          = BSData.LoadRebar();
                 FiberConcrete    = BSData.LoadFiberConcreteTable();

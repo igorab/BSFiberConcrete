@@ -9,6 +9,7 @@ using BSFiberConcrete.Section;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Text.Json;
 using System.Windows.Forms;
@@ -59,44 +60,30 @@ namespace BSCalcMenu
         {            
             BSFiberMain bsFiberMain = new BSFiberMain();
             bsFiberMain.CalcType = CalcType.Static;
+            bsFiberMain.InitHeader(labelInfo.Text, labelNormDoc.Text);
             bsFiberMain.Show();
         }
 
         private void btnFiberClass_Click(object sender, EventArgs e)
-        {
-            //BSFiberSetup bsFiberSetup = new BSFiberSetup();
-            //bsFiberSetup.TabPageIdx = 0;
-            //bsFiberSetup.Show();                                                                                                        
+        {                                                                                         
             FiberConcreteInform fcInforn = new FiberConcreteInform();
             fcInforn.Show();
         }
 
         private void btnRebarClass_Click(object sender, EventArgs e)
-        {
-            //BSFiberSetup bsFiberSetup = new BSFiberSetup();
-            //bsFiberSetup.TabPageIdx = 1;
-            //bsFiberSetup.Show();
-
+        {          
             RebarInform rebarInform = new RebarInform();
             rebarInform.Show();
         }
 
         private void btnCoefY_Click(object sender, EventArgs e)
-        {
-            //BSFiberSetup bsFiberSetup = new BSFiberSetup();
-            //bsFiberSetup.TabPageIdx = 2;
-            //bsFiberSetup.Show();
-
+        {           
             CoefInform  coefInform = new CoefInform();
             coefInform.Show();
         }
 
         private void btnBetonClass_Click(object sender, EventArgs e)
-        {
-            //BSFiberSetup bsFiberSetup = new BSFiberSetup();
-            //bsFiberSetup.TabPageIdx = 3;
-            //bsFiberSetup.Show();
-
+        {          
             ConcreteInform сoncreteInform = new ConcreteInform();
             сoncreteInform.Show();
         }
@@ -105,6 +92,7 @@ namespace BSCalcMenu
         {
             BSFiberMain bsFiberMain = new BSFiberMain();
             bsFiberMain.CalcType = CalcType.Nonlinear;
+            bsFiberMain.InitHeader(labelInfo.Text, labelNormDoc.Text);
             bsFiberMain.Show();
         }
 
@@ -121,14 +109,11 @@ namespace BSCalcMenu
         }
 
         private void btnBeamCalc_Click(object sender, EventArgs e)
-        {
-            //BeamCalculatorForm beamCalculator = new BeamCalculatorForm();
-            //beamCalculator.Show();
-
+        {            
             BSFiberMain bsFiberMain = new BSFiberMain();
             bsFiberMain.CalcType = CalcType.BeamCalc;
+            bsFiberMain.InitHeader(labelInfo.Text, labelNormDoc.Text);
             bsFiberMain.Show();
-
         }
 
         private void btnSectionDraw_Click(object sender, EventArgs e)
@@ -145,10 +130,7 @@ namespace BSCalcMenu
         }
 
         private void btnRFbtFiber_Click(object sender, EventArgs e)
-        {
-            //BSRFiber bSRFiber = new BSRFiber();
-            //bSRFiber.Show();
-
+        {           
             ViewFiberConcreteCalc viewFiberConcreteCalc = new ViewFiberConcreteCalc();
             viewFiberConcreteCalc.Show();
         }
@@ -225,6 +207,23 @@ namespace BSCalcMenu
             calcOfLenRebar.Show();
         }
 
+        private void InitHeader()
+        {
+            if (BSData.ConfigId == "Fiber297")
+            {
+                labelInfo.Text = "Конструкции фибробетонные с неметаллической фиброй и стальной арматурой";
+                labelInfo.BackColor =  Color.BurlyWood;
+                labelNormDoc.Text = "СП297.1325800.2017";
+
+            }
+            else if (BSData.ConfigId == "Fiber405")
+            {
+                labelInfo.Text = "Конструкции фибробетонные с неметаллической фиброй и полимерной арматурой";
+                labelInfo.BackColor = Color.Beige;
+                labelNormDoc.Text = "СП405.1325800.2018";
+            }
+        }
+
         private void BSCalcMenu_Load(object sender, EventArgs e)
         {            
             string path = Path.Combine(Environment.CurrentDirectory, "Templates\\BSConfig.json");
@@ -236,6 +235,8 @@ namespace BSCalcMenu
 
                 BSData.ConfigId = config["ConfigId"];
             }
+
+            InitHeader();
         }
     }
 }
