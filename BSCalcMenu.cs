@@ -209,18 +209,23 @@ namespace BSCalcMenu
 
         private void InitHeader()
         {
-            if (BSData.ConfigId == "Fiber297")
+            if (BSData.ConfigId == BSFiberLib.Config297)
             {
                 labelInfo.Text = "Конструкции фибробетонные с неметаллической фиброй и стальной арматурой";
                 labelInfo.BackColor =  Color.BurlyWood;
                 labelNormDoc.Text = "СП297.1325800.2017";
-
             }
-            else if (BSData.ConfigId == "Fiber405")
+            else if (BSData.ConfigId == BSFiberLib.Config405)
             {
                 labelInfo.Text = "Конструкции фибробетонные с неметаллической фиброй и полимерной арматурой";
                 labelInfo.BackColor = Color.Beige;
                 labelNormDoc.Text = "СП405.1325800.2018";
+            }
+            else if (BSData.ConfigId == BSFiberLib.ConfigDefault)
+            {
+                labelInfo.Text = "Конструкции фибробетонные с металлической фиброй и стальной арматурой";
+                labelInfo.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+                labelNormDoc.Text = "СП360.1325800.2017";
             }
         }
 

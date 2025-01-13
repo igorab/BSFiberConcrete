@@ -29,52 +29,57 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CoefInform));
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.panelCoefInform = new System.Windows.Forms.Panel();
+            this.pictureBoxCoefInform = new System.Windows.Forms.PictureBox();
+            this.panelCoefInform.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCoefInform)).BeginInit();
             this.SuspendLayout();
             // 
-            // panel1
+            // panelCoefInform
             // 
-            this.panel1.AutoScroll = true;
-            this.panel1.Controls.Add(this.pictureBox1);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(864, 461);
-            this.panel1.TabIndex = 0;
+            this.panelCoefInform.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelCoefInform.AutoScroll = true;
+            this.panelCoefInform.Controls.Add(this.pictureBoxCoefInform);
+            this.panelCoefInform.Location = new System.Drawing.Point(0, 0);
+            this.panelCoefInform.Name = "panelCoefInform";
+            this.panelCoefInform.Size = new System.Drawing.Size(784, 486);
+            this.panelCoefInform.TabIndex = 0;
             // 
-            // pictureBox1
+            // pictureBoxCoefInform
             // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(12, 12);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(749, 415);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
+            this.pictureBoxCoefInform.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBoxCoefInform.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxCoefInform.Image")));
+            this.pictureBoxCoefInform.Location = new System.Drawing.Point(12, 12);
+            this.pictureBoxCoefInform.Name = "pictureBoxCoefInform";
+            this.pictureBoxCoefInform.Size = new System.Drawing.Size(749, 440);
+            this.pictureBoxCoefInform.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBoxCoefInform.TabIndex = 0;
+            this.pictureBoxCoefInform.TabStop = false;
             // 
             // CoefInform
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(864, 461);
-            this.Controls.Add(this.panel1);
+            this.ClientSize = new System.Drawing.Size(864, 498);
+            this.Controls.Add(this.panelCoefInform);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(880, 500);
             this.Name = "CoefInform";
-            this.Text = "Коэффициент условий работы";
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.Text = "Коэффициенты условий работы";
+            this.panelCoefInform.ResumeLayout(false);
+            this.panelCoefInform.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCoefInform)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Panel panelCoefInform;
+        private System.Windows.Forms.PictureBox pictureBoxCoefInform;
     }
 }

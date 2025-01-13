@@ -7,11 +7,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BSFiberConcrete;
+using System.Reflection.Emit;
 
 namespace BSFiberConcrete
 {
     public class BSFiberLib
     {
+        /// <summary>
+        /// Фибробетон с металлической фиброй и металлической арматурой, расчет по СП360
+        /// </summary>        
+        public const string ConfigDefault = "Fiber";
+        /// <summary>
+        /// Фибробетон с неметаллической фиброй и металлической арматурой, расчет по СП297
+        /// </summary>
+        public const string Config297 = "Fiber297";
+        /// <summary>
+        /// Фибробетон с неметаллической фиброй и полимерной арматурой, расчет по СП405
+        /// </summary>
+        public const string Config405 = "Fiber405";        
+
         /// <summary>
         /// 1 группа предельных состояний
         /// </summary>
@@ -28,7 +42,6 @@ namespace BSFiberConcrete
 
         public const string TxtStaticEqCalc = "Расчет изгибаемых элементов, внецентренно сжатых элементов по методу статического равновесия. Расчет элементов по наклонным сечениям";
         public const string TxtCalc_Deform = "Расчет по прочности нормальных сечений на основе нелинейной деформационной модели";
-
 
         /// <summary>
         /// Вычислить модуль упругости фибробетона на растяжение
