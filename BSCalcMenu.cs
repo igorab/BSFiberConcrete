@@ -207,25 +207,41 @@ namespace BSCalcMenu
             calcOfLenRebar.Show();
         }
 
-        private void InitHeader()
-        {
+        private void InitConfig()
+        {            
             if (BSData.ConfigId == BSFiberLib.Config297)
             {
-                labelInfo.Text = "Конструкции фибробетонные с неметаллической фиброй и стальной арматурой";
-                labelInfo.BackColor =  Color.BurlyWood;
-                labelNormDoc.Text = "СП297.1325800.2017";
+                BSData.ProgConfig = new ProgConfig()
+                {
+                    ConfigId = BSData.ConfigId,
+                    Name = "Конструкции фибробетонные с неметаллической фиброй и стальной арматурой",
+                    BackColor = Color.BurlyWood,
+                    NormDoc = "СП297.1325800.2017"
+                };                
             }
             else if (BSData.ConfigId == BSFiberLib.Config405)
             {
-                labelInfo.Text = "Конструкции фибробетонные с неметаллической фиброй и полимерной арматурой";
-                labelInfo.BackColor = Color.Beige;
-                labelNormDoc.Text = "СП405.1325800.2018";
+                BSData.ProgConfig = new ProgConfig()
+                {
+                    ConfigId = BSData.ConfigId,
+                    Name = "Конструкции фибробетонные с неметаллической фиброй и полимерной арматурой",
+                    BackColor = Color.BurlyWood,
+                    NormDoc = "СП405.1325800.2018"
+                };                
             }
             else if (BSData.ConfigId == BSFiberLib.ConfigDefault)
             {
-                labelInfo.Text = "Конструкции фибробетонные с металлической фиброй и стальной арматурой";
-                labelInfo.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-                labelNormDoc.Text = "СП360.1325800.2017";
+                BSData.ProgConfig = new ProgConfig()
+                {
+                    ConfigId = BSData.ConfigId,
+                    Name = "Конструкции фибробетонные с металлической фиброй и стальной арматурой",
+                    BackColor = SystemColors.GradientInactiveCaption,
+                    NormDoc = "СП360.1325800.2017"
+                };                
+            }
+            else
+            {
+                throw new Exception("Укажите корректную конфигурацию системы");
             }
         }
 
@@ -241,7 +257,11 @@ namespace BSCalcMenu
                 BSData.ConfigId = config["ConfigId"];
             }
 
-            InitHeader();
+            InitConfig();
+
+            labelInfo.Text      = BSData.ProgConfig.Name;
+            labelInfo.BackColor = BSData.ProgConfig.BackColor;
+            labelNormDoc.Text   = BSData.ProgConfig.NormDoc;
         }
     }
 }

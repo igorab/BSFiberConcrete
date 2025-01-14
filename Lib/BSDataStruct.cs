@@ -6,6 +6,26 @@ using System.Windows.Forms;
 namespace BSFiberConcrete
 {
     /// <summary>
+    ///  Конфигурация
+    /// </summary>
+    public struct ProgConfig
+    {
+        /// <summary>
+        /// Конфигурация соответствует базе данных
+        /// </summary>
+        public string ConfigId { get; set; }
+        /// <summary>
+        /// Описание
+        /// </summary>
+        public string  Name { get; set; } 
+        public  System.Drawing.Color BackColor { get; set; }
+        /// <summary>
+        /// Нормативный документ
+        /// </summary>
+        public string   NormDoc { get; set; }
+    }
+
+    /// <summary>
     /// доступ к таблице Params
     /// </summary>
     public class FormParams

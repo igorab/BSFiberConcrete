@@ -33,7 +33,7 @@ namespace BSFiberConcrete
         [DisplayName("Предельный момент сечения, [кг*см]")]
         public double Mult { get; protected set; }
 
-        [DisplayName("Коэффициент использования по усилию, [СП 360 П6.1.9]")]
+        [DisplayName("Коэффициент использования по усилию, [П6.1.9]")]
         public double UtilRate { get; protected set; }
 
         private double h;

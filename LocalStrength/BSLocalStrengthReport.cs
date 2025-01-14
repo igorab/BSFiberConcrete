@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
 using System.Windows.Forms;
 using System.Drawing;
+using BSFiberConcrete.Lib;
 
 namespace BSFiberConcrete.LocalStrength
 {
@@ -63,7 +64,7 @@ namespace BSFiberConcrete.LocalStrength
             w.WriteLine("<html>");
             w.WriteLine("<head>");
             w.WriteLine($"<H1>{ReportName}</H1>");
-            w.WriteLine("<H4>Расчет выполнен по СП 360.1325800.2017</H4>");
+            w.WriteLine($"<H4>Расчет выполнен по {BSData.ProgConfig.NormDoc}</H4>");
             w.WriteLine($"<H2>{SampleDescr}</H2>");
             w.WriteLine($"<H3>{SampleName}</H3>");
 

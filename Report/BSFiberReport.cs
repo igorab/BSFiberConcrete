@@ -14,6 +14,7 @@ using System.Drawing.Imaging;
 using System.Runtime.Remoting.Messaging;
 using BSFiberConcrete.UnitsOfMeasurement;
 using BSFiberConcrete.Report;
+using BSFiberConcrete.Lib;
 
 namespace BSFiberConcrete
 {
@@ -96,7 +97,7 @@ namespace BSFiberConcrete
         {
             w.WriteLine("<html>");
             w.WriteLine($"<H1>{ReportName}</H1>");
-            w.WriteLine("<H4>Расчет выполнен по СП 360.1325800.2017</H4>");
+            w.WriteLine($"<H4>Расчет выполнен по {BSData.ProgConfig.NormDoc}</H4>");
 
             string beamDescr = typeof(BeamSection).GetCustomAttribute<DescriptionAttribute > (true).Description;
             string beamSection = BSHelper.EnumDescription(m_BeamSection);

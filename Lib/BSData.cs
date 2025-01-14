@@ -16,6 +16,8 @@ namespace BSFiberConcrete.Lib
     {
         public static string ConfigId { get; set; }
 
+        public static ProgConfig ProgConfig { get; set; }
+
         public static string ResourcePath(string _file) => Path.Combine(Environment.CurrentDirectory, "Resources", _file);  
 
         public static string DataPath(string _file)  => Path.Combine(Environment.CurrentDirectory, "Data", _file); 
@@ -37,9 +39,7 @@ namespace BSFiberConcrete.Lib
 
         static BSData()
         {
-            ConfigId = "Fiber";
-            //ConfigId = "Fiber297";
-            //ConfigId = "Fiber405";
+            ConfigId = BSFiberLib.ConfigDefault;            
         }
 
         /// <summary>

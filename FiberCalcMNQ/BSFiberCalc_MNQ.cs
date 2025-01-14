@@ -107,25 +107,25 @@ namespace BSFiberConcrete
         [DisplayName("Предельная поперечная сила Qx, [кг]"), Description("Res")]
         public double Qx_ult { get; protected set; }
 
-        [DisplayName("Коэффициент использования по Qx, [СП 360 П6.1.28]")]
+        [DisplayName("Коэффициент использования по Qx, [П6.1.28]")]
         public double UtilRate_Qx { get; protected set; }
 
-        [DisplayName("Коэффициент использования по Qy, [СП 360 П6.1.28]")]
+        [DisplayName("Коэффициент использования по Qy, [П6.1.28]")]
         public double UtilRate_Qy { get; protected set; }
 
-        [DisplayName("Коэффициент использования Q по полосе между наклонными сечениями, [СП 360 П6.1.27]")]
+        [DisplayName("Коэффициент использования Q по полосе между наклонными сечениями, [П6.1.27]")]
         public double UtilRate_Qс { get; protected set; }
 
-        [DisplayName("Коэффициент использования по моменту My, [СП 360 П6.1.30]")]
+        [DisplayName("Коэффициент использования по моменту My, [П6.1.30]")]
         public double UtilRate_My { get; protected set; }
 
-        [DisplayName("Коэффициент использования по моменту Mx, [СП 360 П6.1.30]")]
+        [DisplayName("Коэффициент использования по моменту Mx, [П6.1.30]")]
         public double UtilRate_Mx { get; protected set; }
 
         [DisplayName("Предельная продольная сила N, [кг]"), Description("Res")]
         public double N_ult { get; protected set; }
 
-        [DisplayName("Коэффициент использования по усилию N, [СП 360 П6.1.14 П6.1.15]")]
+        [DisplayName("Коэффициент использования по усилию N, [П6.1.14 П6.1.15]")]
         public double UtilRate_N { get; protected set; }
 
         public string DN(Type _T, string _property) => _T.GetProperty(_property).GetCustomAttribute<DisplayNameAttribute>().DisplayName;
