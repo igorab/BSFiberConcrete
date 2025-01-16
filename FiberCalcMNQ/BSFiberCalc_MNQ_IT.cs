@@ -1,5 +1,16 @@
 ﻿namespace BSFiberConcrete
 {
+    public class BSFiberCalc_MNQ_IT_T: BSFiberCalc_MNQ_IT
+    {
+        public override BeamSection BeamSectionType() => BeamSection.TBeam;
+    }
+
+    public class BSFiberCalc_MNQ_IT_L : BSFiberCalc_MNQ_IT
+    {
+        public override BeamSection BeamSectionType() => BeamSection.LBeam;
+    }
+
+
     // Расчет балки двутаврового сечения на внецентренное сжатие
     public class BSFiberCalc_MNQ_IT : BSFiberCalc_MNQ
     {

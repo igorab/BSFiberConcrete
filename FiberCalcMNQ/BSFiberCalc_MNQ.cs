@@ -260,7 +260,12 @@ namespace BSFiberConcrete
             }
             else if (BSHelper.IsITL(_BeamSection))                   
             {
-                fiberCalc = new BSFiberCalc_MNQ_IT();
+                if (BeamSection.TBeam == _BeamSection)
+                    fiberCalc = new BSFiberCalc_MNQ_IT_T();
+                else if (BeamSection.LBeam == _BeamSection)
+                    fiberCalc = new BSFiberCalc_MNQ_IT_L();
+                else
+                    fiberCalc = new BSFiberCalc_MNQ_IT();
             }
             else
             {

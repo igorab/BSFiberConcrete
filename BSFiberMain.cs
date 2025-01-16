@@ -1178,6 +1178,7 @@ namespace BSFiberConcrete
             BSFiberCalc_MNQ FibCalc_MNQ(Dictionary<string, double> _MNQ)
             {
                 BSFiberCalc_MNQ fibCalc = BSFiberCalc_MNQ.Construct(m_BeamSection);
+                //fibCalc.bea
                 fibCalc.MatFiber      = m_MatFiber;
                 fibCalc.UseRebar      = UseRebar;
                 fibCalc.Rebar         = UseRebar ? rebar : null;
@@ -1212,15 +1213,20 @@ namespace BSFiberConcrete
                 {
                     // расчет на чистый изгиб
                     BSFiberReportData  FibCalc_M    = FiberCalculate_M(_M, prms);
+                    FibCalc_M.BeamSection = m_BeamSection; // TEST
+
                     // расчет по наклонной полосе на действие момента [6.1.7]
                     BSFiberCalc_MNQ    fiberCalc_Mc = FibCalc_MNQ(_MNQ);
                     
                     (Mc_ult, UtilRate_Mc) = fiberCalc_Mc.Calculate_Mc();
 
-                    var resMc =  fiberCalc_Mc.Results_Mc();
+                    Dictionary<string, double> resMc =  fiberCalc_Mc.Results_Mc();
+
                     foreach (var r in resMc)
+                    {
                         FibCalc_M.m_CalcResults1Group.Add(r.Key, r.Value);
-                    
+                    }
+
                     calcResults_MNQ.Add(FibCalc_M);
                 }                
                 else if (_N > 0 && _Qx == 0)
