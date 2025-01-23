@@ -51,6 +51,27 @@ namespace BSFiberConcrete.Lib
             return bt;
         }
 
+        /// <summary>
+        /// Выборка Таблицы 2 выборка классов фибробетона по остаточной прочности на растяжение
+        /// </summary>
+        /// <returns></returns>
+        public static List<BSFiberBeton> LoadBSFiberBeton()
+        {
+            List<BSFiberBeton> bt = new List<BSFiberBeton>();
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    string query = "select * from BSFiberBeton";
+                    var output = cnn.Query<BSFiberBeton>(query, new DynamicParameters());
+                    bt = output.ToList();
+                }
+            }
+            catch { }
+            return bt;
+        }
+
+
 
         /// <summary>
         /// Найти строку из таблицы ТЯЖЕЛОГО бетона

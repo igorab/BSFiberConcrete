@@ -352,7 +352,7 @@ namespace BSFiberConcrete
             cmbBetonClass.DataSource = BSFiberLib.BetonList;
             cmbBetonClass.DisplayMember = "Name";
             cmbBetonClass.ValueMember = "Name";
-            cmbBetonClass.SelectedValue = BSFiberLib.BetonList[5].Name;
+            cmbBetonClass.SelectedValue = "B3,5i";
 
             m_Beton = BSData.LoadBetonData(0);
             cmbBfn.DataSource = m_Beton;
