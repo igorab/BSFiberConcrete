@@ -367,12 +367,16 @@ namespace BSFiberConcrete
 
         private void DefaultMaterialParameters()
         {
-            cmbFib_i.SelectedIndex        = 0;
-            comboBetonType.SelectedIndex  = 0;
-            cmbRebarClass.SelectedItem    = BSFiberLib.RebarClassDefault;
+            cmbFib_i.SelectedIndex          = 0;
+            comboBetonType.SelectedIndex    = 0;
             cmbTypeMaterial.SelectedIndex = 0;
-            cmbTRebarClass_X.SelectedItem = BSFiberLib.RebarClassDefault;
-            cmbTRebarClass_Y.SelectedItem = BSFiberLib.RebarClassDefault;
+
+            cmbRebarClass.SelectedIndex     = 0;
+            //cmbRebarClass.SelectedItem    = BSFiberLib.RebarClassDefault;
+            cmbTRebarClass_X.SelectedIndex  = 0;
+            //cmbTRebarClass_X.SelectedItem = BSFiberLib.RebarClassDefault;
+            cmbTRebarClass_Y.SelectedIndex  = 0;
+            //cmbTRebarClass_Y.SelectedItem = BSFiberLib.RebarClassDefault;
         }
 
         public void InitHeader(string _info, string _normDoc)
@@ -391,6 +395,10 @@ namespace BSFiberConcrete
                 m_RebarDiameters = BSData.LoadRebarDiameters();                
                 m_Rebar          = BSData.LoadRebar();
                 FiberConcrete    = BSData.LoadFiberConcreteTable();
+
+                string[] classNameRebar = m_Rebar.Select(rebar => rebar.ID).ToArray();
+                cmbRebarClass.Items.AddRange(classNameRebar);
+
 
                 dataGridSection.DataSource = m_Table;   
                                 
@@ -2212,34 +2220,17 @@ namespace BSFiberConcrete
                 }
             }
 
-            # region Выбираем список диаметров и площадь в зависимости от класса арматуры
-            double? valueDiameterPreviosRebar = null;
-            int newSelectedIndex = 0;
-            if (cmbRebarDiameters.Items.Count > 0)
+            //Выбираем список диаметров и площадей в зависимости от класса арматуры
+            UpdateReinforcementDiameters(cmbRebarClass.Text, cmbRebarDiameters, cmbRebarSquare);
+            if (m_SectionChart != null)
             {
-                valueDiameterPreviosRebar = (double)cmbRebarDiameters.Items[cmbRebarDiameters.SelectedIndex];
-                cmbRebarDiameters.Items.Clear();
-                cmbRebarSquare.Items.Clear();
+                m_SectionChart.Rebar = InitRebarFromForm();
+                m_SectionChart.RebarClass = cmbRebarClass.SelectedItem.ToString();
+
+                m_SectionChart.UpdateRebarClass();
             }
-            List<object> diametersForRebar = new List<object>();
-            List<object> squareForRebar = new List<object>();
-            foreach (RebarDiameters tmpRebarD in m_RebarDiameters)
-            {
-                if (tmpRebarD.TypeRebar == cmbRebarClass.Text)
-                {
-                    diametersForRebar.Add(tmpRebarD.Diameter);
-                    squareForRebar.Add(tmpRebarD.Square);
-                    if ((valueDiameterPreviosRebar != null) && (tmpRebarD.Diameter == valueDiameterPreviosRebar))
-                    {
-                        newSelectedIndex = diametersForRebar.Count - 1;
-                    }
-                }
-            }
-            cmbRebarSquare.Items.AddRange(squareForRebar.ToArray());
-            cmbRebarSquare.SelectedIndex = newSelectedIndex;
-            cmbRebarDiameters.Items.AddRange(diametersForRebar.ToArray());
-            cmbRebarDiameters.SelectedIndex = newSelectedIndex;
-            #endregion          
+
+
         }
 
         private void cmbTRebarClass_SelectedIndexChanged(object sender, EventArgs e)
@@ -2328,7 +2319,48 @@ namespace BSFiberConcrete
             m_ImageStream = m_SectionChart.GetImageStream;
         }
 
-              
+
+        /// <summary>
+        /// Обновить список диаметров и площадей арматуры при изменении класса арматуры
+        /// </summary>
+        /// <param name="newTypeRebar"> новый класс арматуры</param>
+        /// <param name="boxOfDiameters"> выпадающий список диаметров</param>
+        /// <param name="boxOfSquares"> выпадающий список площадей (опционально)</param>
+        private void UpdateReinforcementDiameters(string newTypeRebar, System.Windows.Forms.ComboBox boxOfDiameters, System.Windows.Forms.ComboBox boxOfSquares = null)
+        {
+
+            double? valueDiameterPreviosRebar = null;
+            int newSelectedIndex = 0;
+            if (boxOfDiameters.Items.Count > 0)
+            {
+                valueDiameterPreviosRebar = (double)boxOfDiameters.Items[boxOfDiameters.SelectedIndex];
+                boxOfDiameters.Items.Clear();
+                if (boxOfSquares != null)
+                    boxOfSquares.Items.Clear();
+            }
+            List<object> diametersForRebar = new List<object>();
+            List<object> squareForRebar = new List<object>();
+            foreach (RebarDiameters tmpRebarD in m_RebarDiameters)
+            {
+                if (tmpRebarD.TypeRebar == newTypeRebar)
+                {
+                    diametersForRebar.Add(tmpRebarD.Diameter);
+                    squareForRebar.Add(tmpRebarD.Square);
+                    if ((valueDiameterPreviosRebar != null) && (tmpRebarD.Diameter == valueDiameterPreviosRebar))
+                    {
+                        newSelectedIndex = diametersForRebar.Count - 1;
+                    }
+                }
+            }
+
+            if (boxOfSquares != null)
+                boxOfSquares.Items.AddRange(squareForRebar.ToArray());
+
+            boxOfDiameters.Items.AddRange(diametersForRebar.ToArray());
+            boxOfDiameters.SelectedIndex = newSelectedIndex;
+        }
+
+
         /// <summary>
         ///  Разбиение сечения на конечные элементы
         /// </summary>
@@ -2643,14 +2675,15 @@ namespace BSFiberConcrete
         }
       
         /// <summary>
-        /// обновление плоащди сечения в зависимости от изменения диаметра
+        /// обновление площади сечения в зависимости от изменения диаметра
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void cmbRebarDiameters_SelectedIndexChanged(object sender, EventArgs e)
         {
             int previosIndexRebarDiameter = cmbRebarDiameters.SelectedIndex;
-            cmbRebarSquare.SelectedIndex = previosIndexRebarDiameter;
+            if (cmbRebarSquare.Items.Count >= previosIndexRebarDiameter)
+                cmbRebarSquare.SelectedIndex = previosIndexRebarDiameter;
         }
         
         // модуль упругости для фибробетона на растяжение
@@ -2660,7 +2693,7 @@ namespace BSFiberConcrete
         }
 
         /// <summary>
-        /// Запуск расчета по второй грппе предельных состояний
+        /// Запуск расчета по второй группе предельных состояний
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

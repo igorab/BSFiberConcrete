@@ -161,11 +161,34 @@ namespace BSFiberConcrete.Section
             if (bsRods.Count == 0)
             {
                 foreach (var _rod in m_RodPoints)
-                    bsRods.Add(new BSRod() { CG_X = _rod.X, CG_Y = _rod.Y, D = 14.0 });
+                {
+                    bsRods.Add(new BSRod()
+                    {
+                        CG_X = _rod.X,
+                        CG_Y = _rod.Y,
+                        D = m_Diameters[0].Diameter / 10,
+                        Dnom = m_Diameters[0].Diameter.ToString()
+                    });
+                }
+            }
+
+            // проверка, чтобы значения диаметров из базы соответсвовали текущему списку диаметров
+            List<string> listDiameters = m_Diameters.Select(s => s.Diameter.ToString()).ToList();
+            foreach (BSRod tmpBSRod in bsRods)
+            {
+                if (!listDiameters.Contains(tmpBSRod.Dnom))
+                {
+                    tmpBSRod.D = m_Diameters[0].Diameter / 10;
+                    tmpBSRod.Dnom = m_Diameters[0].Diameter.ToString();
+                }
             }
 
             RodBS.DataSource = bsRods;
+
+            if (Dnom.Items.Count == 0) // должно отрабатывать только при первом вызове этого метода
+                Dnom.Items.AddRange(listDiameters.ToArray());
         }
+
 
         /// <summary>
         ///  Поперечная арматура по оси X
@@ -684,7 +707,14 @@ namespace BSFiberConcrete.Section
         {
             try
             {
-                RodBS.AddNew();                
+                //RodBS.AddNew();
+                RodBS.Add(new BSRod()
+                {
+                    CG_X = 0,
+                    CG_Y = 0,
+                    D = m_Diameters[0].Diameter / 10,
+                    Dnom = m_Diameters[0].Diameter.ToString()
+                });
             }
             catch (Exception _e)
             {
@@ -895,6 +925,58 @@ namespace BSFiberConcrete.Section
             {
                 MessageBox.Show(_e.Message);
             }
+        }
+
+
+        // Обновить установленный класс продольной арматуры
+        public void UpdateRebarClass()
+        {
+            m_Diameters = BSData.DiametersOfTypeRebar(RebarClass);
+            List<string> newListDiameters = m_Diameters.Select(s => s.Diameter.ToString()).ToList();
+
+            Dnom.Items.Add(m_Diameters[0].Diameter.ToString());
+            foreach (BSRod tmpBSRod in RodBS)
+            {
+                if (!newListDiameters.Contains(tmpBSRod.Dnom))
+                {
+                    tmpBSRod.D = m_Diameters[0].Diameter / 10;
+                    tmpBSRod.Dnom = m_Diameters[0].Diameter.ToString();
+                }
+            }
+
+            Dnom.Items.Clear();
+            Dnom.Items.AddRange(newListDiameters.ToArray());
+
+            //List<double> selectedDiameters = new List<double>();
+            //foreach (DataGridViewRow row in bSRodDataGridView.Rows)
+            //{
+            //    var test = row;
+            //    if (row.Cells[Dnom.Index].Value != null)
+            //    {
+            //        //double tmpValue = 0;
+            //        //double.TryParse(row.Cells[Dnom.Index].Value.ToString(), out tmpValue);
+            //        //selectedDiameters.Add(tmpValue);
+            //        string selectedValue = row.Cells[Dnom.Index].Value.ToString();
+            //        if (double.TryParse(selectedValue, out double test2))
+            //        { 
+            //            selectedDiameters.Add(test2);
+            //        }
+            //        //row.Cells[Dnom.Index]
+            //    }
+            //    row.Cells[Dnom.Index].Value = m_Diameters[0].Diameter.ToString();
+            //}
+            //Dnom.Items.Clear();
+            //List<string> newListDiameters = m_Diameters.Select(s => s.Diameter.ToString()).ToList();
+            //Dnom.Items.AddRange(newListDiameters);
+            //BSRod test = new BSRod()
+            //{
+            //    D = m_Diameters[0].Diameter,
+            //    Dnom = Convert.ToString(m_Diameters[0].Diameter / 10)
+            //};
+            //BSRodsforBinding.Add(test);
+            //bSRodDataGridView.Rows.Add();
+            // Программно изменяем значение в выпадающем списке
+            //bSRodDataGridView.Rows[bSRodDataGridView.Rows.Count - 1].Cells["comboBoxColumn"].Value = m_Diameters[0]; // Устанавливаем значение
         }
     }
 }
