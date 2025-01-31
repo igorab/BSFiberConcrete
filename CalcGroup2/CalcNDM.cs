@@ -92,7 +92,7 @@ namespace BSFiberConcrete
             BSCalcNDM bsCalcGR1 = new BSCalcNDM(GR1, m_BeamSection, setup);
             bsCalcGR1.SetMN(Mx0, My0, N0);
             bsCalcGR1.SetParamsGroup1(Dprm);
-            bsCalcGR1.MzMyNUp(_coefM);
+            bsCalcGR1.MxMyNUp(_coefM);
             bsCalcGR1.SetRods(lD, lX, lY);
             bsCalcGR1.Run();
 
@@ -107,7 +107,7 @@ namespace BSFiberConcrete
             BSCalcNDM bscalc = new BSCalcNDM(GR2, m_BeamSection, setup);
             bscalc.SetParamsGroup2(Dprm);
             bscalc.SetMN(_Mx, _My, _N);
-            bscalc.MzMyNUp(1.0); 
+            bscalc.MxMyNUp(1.0); 
             bscalc.SetRods(lD, lX, lY);
             bscalc.Run();
 
@@ -124,7 +124,7 @@ namespace BSFiberConcrete
             BSCalcNDM bscalc = new BSCalcNDM(GR2, m_BeamSection, setup);
             bscalc.SetParamsGroup2(Dprm);
             bscalc.SetMN(Mx0, My0, N0);
-            bscalc.MzMyNUp(_coefM);
+            bscalc.MxMyNUp(_coefM);
             bscalc.NdmCrc = ndmCrc;
             bscalc.SetRods(lD, lX, lY);
             bscalc.SetE_S_Crc(_E_s_crc);

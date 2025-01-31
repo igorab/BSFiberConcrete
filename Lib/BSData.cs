@@ -188,7 +188,7 @@ namespace BSFiberConcrete.Lib
             {
                 using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
                 {
-                    var output = cnn.Query<FiberBft>("select * from FiberBft", new DynamicParameters());
+                    var output = cnn.Query<FiberBft>("select * from FiberBft order by Rfbtn", new DynamicParameters());
                     return output.ToList();
                 }
             }

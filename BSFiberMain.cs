@@ -3213,5 +3213,41 @@ namespace BSFiberConcrete
 
             }
         }
+
+        private void labelBetonClass_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show($"Нормативные и расчетные характеристики {BSData.ProgConfig.NormDoc}" +
+                $"П 5.2.2",
+                "Материалы", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void lblBetonClass_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show($"{BSData.ProgConfig.NormDoc} П 5.2.4" +
+               $" Таблица 1. Классы фибробетона по остаточной прочности на растяжение.\n" +
+               $" i - Индекс подкласса",
+               "Вид бетона", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void lblBetonClass_MouseMove(object sender, MouseEventArgs e)
+        {
+            System.Windows.Forms.Cursor.Current = Cursors.Hand;
+        }
+
+        private void labelBetonClass_MouseMove(object sender, MouseEventArgs e)
+        {
+            System.Windows.Forms.Cursor.Current = Cursors.Hand;
+        }
+
+        private void labelRfbDescr_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show($"{BSData.ProgConfig.NormDoc} П 5.2.5", 
+              "Нормативные значения", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void labelRfbDescr_MouseMove(object sender, MouseEventArgs e)
+        {
+            System.Windows.Forms.Cursor.Current = Cursors.Hand;
+        }
     }
 }
