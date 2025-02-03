@@ -53,7 +53,6 @@
             this.btnDraw = new System.Windows.Forms.Button();
             this.tableLayoutPanelRebar = new System.Windows.Forms.TableLayoutPanel();
             this.bSRodDataGridView = new System.Windows.Forms.DataGridView();
-            this.Dnom = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.tableLayoutPanelTrebar = new System.Windows.Forms.TableLayoutPanel();
             this.num_s_w_Y = new System.Windows.Forms.NumericUpDown();
             this.label_s_w_Y = new System.Windows.Forms.Label();
@@ -83,6 +82,7 @@
             this.labelAreaRebarUnits = new System.Windows.Forms.Label();
             this.numAreaRebar = new System.Windows.Forms.NumericUpDown();
             this.labelAreaUnits = new System.Windows.Forms.Label();
+            this.Dnom = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.X = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Y = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -346,16 +346,6 @@
             this.bSRodDataGridView.TabIndex = 7;
             this.bSRodDataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.bSRodDataGridView_CellValueChanged);
             this.bSRodDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.bSRodDataGridView_CellValueChanged);
-            // 
-            // Dnom
-            // 
-            this.Dnom.DataPropertyName = "Dnom";
-            this.Dnom.HeaderText = "D, ном, мм";
-            this.Dnom.Name = "Dnom";
-            this.Dnom.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Dnom.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.Dnom.ToolTipText = "Номинальный диаметр";
-            this.Dnom.Width = 50;
             // 
             // tableLayoutPanelTrebar
             // 
@@ -652,7 +642,7 @@
             this.tableLayoutPanelAreas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 51F));
             this.tableLayoutPanelAreas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 127F));
             this.tableLayoutPanelAreas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 114F));
-            this.tableLayoutPanelAreas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 109F));
+            this.tableLayoutPanelAreas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 111F));
             this.tableLayoutPanelAreas.Controls.Add(this.labelArea, 0, 0);
             this.tableLayoutPanelAreas.Controls.Add(this.numArea, 1, 0);
             this.tableLayoutPanelAreas.Controls.Add(this.label_area, 3, 0);
@@ -672,7 +662,7 @@
             this.labelArea.AutoSize = true;
             this.labelArea.Location = new System.Drawing.Point(3, 0);
             this.labelArea.Name = "labelArea";
-            this.labelArea.Size = new System.Drawing.Size(43, 23);
+            this.labelArea.Size = new System.Drawing.Size(42, 23);
             this.labelArea.TabIndex = 0;
             this.labelArea.Text = "Площадь";
             // 
@@ -681,21 +671,21 @@
             this.numArea.AccessibleName = "NumArea";
             this.numArea.DecimalPlaces = 4;
             this.numArea.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numArea.Location = new System.Drawing.Point(52, 3);
+            this.numArea.Location = new System.Drawing.Point(51, 3);
             this.numArea.Maximum = new decimal(new int[] {
             -1486618624,
             232830643,
             0,
             0});
             this.numArea.Name = "numArea";
-            this.numArea.Size = new System.Drawing.Size(50, 20);
+            this.numArea.Size = new System.Drawing.Size(49, 20);
             this.numArea.TabIndex = 1;
             // 
             // label_area
             // 
             this.label_area.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.label_area.AutoSize = true;
-            this.label_area.Location = new System.Drawing.Point(159, 5);
+            this.label_area.Location = new System.Drawing.Point(157, 5);
             this.label_area.Name = "label_area";
             this.label_area.Size = new System.Drawing.Size(121, 13);
             this.label_area.TabIndex = 3;
@@ -705,7 +695,7 @@
             // 
             this.labelAreaRebarUnits.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelAreaRebarUnits.AutoSize = true;
-            this.labelAreaRebarUnits.Location = new System.Drawing.Point(400, 5);
+            this.labelAreaRebarUnits.Location = new System.Drawing.Point(398, 5);
             this.labelAreaRebarUnits.Name = "labelAreaRebarUnits";
             this.labelAreaRebarUnits.Size = new System.Drawing.Size(27, 13);
             this.labelAreaRebarUnits.TabIndex = 4;
@@ -716,7 +706,7 @@
             this.numAreaRebar.AccessibleName = "NumArea";
             this.numAreaRebar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.numAreaRebar.DecimalPlaces = 4;
-            this.numAreaRebar.Location = new System.Drawing.Point(286, 3);
+            this.numAreaRebar.Location = new System.Drawing.Point(284, 3);
             this.numAreaRebar.Maximum = new decimal(new int[] {
             -1530494976,
             232830,
@@ -730,11 +720,21 @@
             // 
             this.labelAreaUnits.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.labelAreaUnits.AutoSize = true;
-            this.labelAreaUnits.Location = new System.Drawing.Point(108, 5);
+            this.labelAreaUnits.Location = new System.Drawing.Point(106, 5);
             this.labelAreaUnits.Name = "labelAreaUnits";
             this.labelAreaUnits.Size = new System.Drawing.Size(45, 13);
             this.labelAreaUnits.TabIndex = 2;
             this.labelAreaUnits.Text = "см2";
+            // 
+            // Dnom
+            // 
+            this.Dnom.DataPropertyName = "Dnom";
+            this.Dnom.HeaderText = "D, ном, мм";
+            this.Dnom.Name = "Dnom";
+            this.Dnom.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Dnom.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Dnom.ToolTipText = "Номинальный диаметр";
+            this.Dnom.Width = 50;
             // 
             // Id
             // 
