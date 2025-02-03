@@ -75,7 +75,7 @@ namespace BSFiberConcrete.CalcGroup2
             NdmCrc = new NdmCrc();
             //Mesh
             ny = Setup.N;
-            nz = Setup.M;            
+            nx = Setup.M;            
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace BSFiberConcrete.CalcGroup2
         /// <param name="_N"></param>
         public void SetMN(double _Mx, double _My, double _N)
         {
-            Mz0 = BSHelper.MU2U(_Mx);
+            Mx0 = BSHelper.MU2U(_Mx);
             My0 = BSHelper.MU2U(_My);            
             N0 = BSHelper.NU2U(_N);
         }
@@ -194,12 +194,12 @@ namespace BSFiberConcrete.CalcGroup2
         /// увеличить усилия на занданный коэффициент
         /// </summary>
         /// <param name="_coef">коэффициент</param>
-        public void MzMyNUp(double _coef)
+        public void MxMyNUp(double _coef)
         {
             if (_coef == 0)
                 return;
 
-            Mz0 *= _coef;
+            Mx0 *= _coef;
             My0 *= _coef ;
             N0  *=  _coef;            
         }
@@ -218,7 +218,7 @@ namespace BSFiberConcrete.CalcGroup2
             ds.Clear();
             d_nom.Clear();
             y0s.Clear();
-            z0s.Clear();
+            x0s.Clear();
             
             int idx = 0;
             foreach (var d in _bD)
@@ -226,7 +226,7 @@ namespace BSFiberConcrete.CalcGroup2
                 ds.Add(d);
                 d_nom.Add(d * 10); // mm
 
-                z0s.Add(_bX[idx]);
+                x0s.Add(_bX[idx]);
                 y0s.Add(_bY[idx]);
                 idx++;
             }
@@ -238,15 +238,15 @@ namespace BSFiberConcrete.CalcGroup2
             }
         }
 
-        private BeamSection m_BeamSection; // = BeamSection.Rect;
+        private BeamSection m_BeamSection; 
 
         #region Поля, свойства  - данные для расчета
         // Продольная сила, кН, - сжатие
         private double N0 = 0;
         // Момент отн. оси Y, кН*см
         private double My0 = 0; 
-        // Момент отн. оси Z, кН*см
-        private double Mz0 = 0;
+        // Момент отн. оси X, кН*см
+        private double Mx0 = 0;
         // Ширина сечения, см
         private double b = 0; 
         // высота сечения, см
@@ -257,9 +257,9 @@ namespace BSFiberConcrete.CalcGroup2
         private double r1, R2;
 
         // число элементов вдоль y, шт
-        private int ny = 0; // 4;
-        // число элементов вдоль z шт.
-        private int nz = 0; //4;
+        private int ny = 0; 
+        // число элементов вдоль x шт.
+        private int nx = 0; 
 
         // диаметры арматурных стержней
         private readonly List<double> d_nom = new List<double>() {};
@@ -267,7 +267,7 @@ namespace BSFiberConcrete.CalcGroup2
 
         // привязки арматуры
         private readonly List<double> y0s = new List<double>() {};
-        private readonly List<double> z0s = new List<double>() {};
+        private readonly List<double> x0s = new List<double>() {};
 
         // Параметры материалов        
         //Начальный модуль бетона, кН/см2
@@ -314,15 +314,15 @@ namespace BSFiberConcrete.CalcGroup2
         private double est2 = 0;
 
         private List<double> My;
-        private List<double> Mz;
+        private List<double> Mx;
 
         // проверка сечения на усилия                
-        public  double Mzint { get; private set; }
+        public double Mxint { get; private set; }
         public double Myint { get; private set; }
         public double Nint { get; private set; }
 
         // моменты образования трещины        
-        public double Mz_crc { get; private set; }
+        public double Mx_crc { get; private set; }
         public double My_crc { get; private set; }       
         public double N_crc { get; private set; }
 
@@ -391,8 +391,8 @@ namespace BSFiberConcrete.CalcGroup2
         // массив привязок бетонных эл-в к вспомогательной оси y0
         private List<double> y0b = new List<double>();
 
-        // массив привязок бетонных эл-в к вспомогательной оси z0
-        private List<double> z0b = new List<double>();
+        // массив привязок бетонных эл-в к вспомогательной оси x0
+        private List<double> x0b = new List<double>();
 
         // массив площадей элементов
         private List<double> Ab = new List<double>();
@@ -405,7 +405,7 @@ namespace BSFiberConcrete.CalcGroup2
         {
             Ab = new List<double>();
             y0b = new List<double>();
-            z0b = new List<double>();
+            x0b = new List<double>();
             As = new List<double>();
             A_Crc = new List<double>();
         }

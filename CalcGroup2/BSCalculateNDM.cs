@@ -16,7 +16,7 @@ namespace BSFiberConcrete.CalcGroup2
         {
             #region Enforces initialization
             My = new List<double> { My0 };
-            Mz = new List<double> { Mz0 };
+            Mx = new List<double> { Mx0 };
             #endregion
 
             InitDeformParams();
@@ -75,7 +75,7 @@ namespace BSFiberConcrete.CalcGroup2
 
             // Вычисляем положение начального (геометрического) центра тяжести
             var numcy = Ab.Zip(y0b, (A, y) => A * y).Sum();
-            var numcz = Ab.Zip(z0b, (A, z) => A * z).Sum();
+            var numcz = Ab.Zip(x0b, (A, z) => A * z).Sum();
             double denomc = Ab.Sum(A => A);
             double cy = numcy / denomc;
             ycm.Add(cy);
@@ -93,13 +93,13 @@ namespace BSFiberConcrete.CalcGroup2
             for (int k = 0; k < n; k++)
             {
                 yb[0].Add(y0b[k] - ycm[0]);
-                zb[0].Add(z0b[k] - zcm[0]);
+                zb[0].Add(x0b[k] - zcm[0]);
             }
 
             for (int l = 0; l < m; l++)
             {
                 ys[0].Add(y0s[l] - ycm[0]);
-                zs[0].Add(z0s[l] - zcm[0]);
+                zs[0].Add(x0s[l] - zcm[0]);
             }
 
             /// Создаем массивы упруго-геометрических характеристик
@@ -142,8 +142,8 @@ namespace BSFiberConcrete.CalcGroup2
             ep0.Add(N0 / Dxx[0]);
             double denomK = Dyy[0] * Dzz[0] - Math.Pow(Dyz[0], 2);
 
-            Ky.Add((Mz[0] * Dyy[0] + My[0] * Dyz[0]) / denomK);
-            Kz.Add(-(My[0] * Dzz[0] + Mz[0] * Dyz[0]) / denomK);
+            Ky.Add((Mx[0] * Dyy[0] + My[0] * Dyz[0]) / denomK);
+            Kz.Add(-(My[0] * Dzz[0] + Mx[0] * Dyz[0]) / denomK);
 
             //создаем массивы для деформаций бетона и арматуры   
             List<List<double>> epB = new List<List<double>>() { new List<double>() };
@@ -209,9 +209,9 @@ namespace BSFiberConcrete.CalcGroup2
                         Es[j].ZipThree(As, y0s, (E, A, y0) => E * A * y0).Sum() -
                         Ebs[j].ZipThree(As, y0s, (E, A, y0) => E * A * y0).Sum();
 
-                numcz = Eb[j].ZipThree(Ab, z0b, (E, A, z0) => E * A * z0).Sum() +
-                        Es[j].ZipThree(As, z0s, (E, A, z0) => E * A * z0).Sum() -
-                        Ebs[j].ZipThree(As, z0s, (E, A, z0) => E * A * z0).Sum();
+                numcz = Eb[j].ZipThree(Ab, x0b, (E, A, z0) => E * A * z0).Sum() +
+                        Es[j].ZipThree(As, x0s, (E, A, z0) => E * A * z0).Sum() -
+                        Ebs[j].ZipThree(As, x0s, (E, A, z0) => E * A * z0).Sum();
 
                 ycm.Add(numcy / Dxx[j]);
                 zcm.Add(numcz / Dxx[j]);
@@ -222,7 +222,7 @@ namespace BSFiberConcrete.CalcGroup2
                 for (int k = 0; k < n; k++)
                 {
                     yb[j].Add(y0b[k] - ycm[j]);
-                    zb[j].Add(z0b[k] - zcm[j]);
+                    zb[j].Add(x0b[k] - zcm[j]);
                 }
 
                 ys.Add(new List<double>());
@@ -230,7 +230,7 @@ namespace BSFiberConcrete.CalcGroup2
                 for (int l = 0; l < m; l++)
                 {
                     ys[j].Add(y0s[l] - ycm[j]);
-                    zs[j].Add(z0s[l] - zcm[j]);
+                    zs[j].Add(x0s[l] - zcm[j]);
                 }
 
                 // пересчитываем жесткости
@@ -257,12 +257,12 @@ namespace BSFiberConcrete.CalcGroup2
                 }
                 // Пересчитываем моменты
                 My.Add(My[0] + N0 * (zcm[j] - zcm[0]));
-                Mz.Add(Mz[0] - N0 * (ycm[j] - ycm[0]));
+                Mx.Add(Mx[0] - N0 * (ycm[j] - ycm[0]));
 
                 // Пересчитываем параметры деформаций
                 ep0.Add(N0 / Dxx[j]);
-                Ky.Add((Mz[j] * Dyy[j] + My[j] * Dyz[j]) / denomK);
-                Kz.Add(-(My[j] * Dzz[j] + Mz[j] * Dyz[j]) / denomK);
+                Ky.Add((Mx[j] * Dyy[j] + My[j] * Dyz[j]) / denomK);
+                Kz.Add(-(My[j] * Dzz[j] + Mx[j] * Dyz[j]) / denomK);
 
                 // Пересчитываем деформации
                 epB.Add(new List<double>());
@@ -293,7 +293,7 @@ namespace BSFiberConcrete.CalcGroup2
                 Myint = -(sigB[j].ZipThree(Ab, zb[j], (s, A, z) => s * A * z).Sum() + sigS[j].ZipThree(As, zs[j], (s, A, z) => s * A * z).Sum() -
                             sigBS[j].ZipThree(As, zs[j], (s, A, z) => s * A * z).Sum());
 
-                Mzint = sigB[j].ZipThree(Ab, yb[j], (s, A, y) => s * A * y).Sum() + sigS[j].ZipThree(As, ys[j], (s, A, y) => s * A * y).Sum() -
+                Mxint = sigB[j].ZipThree(Ab, yb[j], (s, A, y) => s * A * y).Sum() + sigS[j].ZipThree(As, ys[j], (s, A, y) => s * A * y).Sum() -
                         sigBS[j].ZipThree(As, ys[j], (s, A, y) => s * A * y).Sum();
 
                 //  Расчеты по 2 группе предельных состояний
@@ -310,7 +310,7 @@ namespace BSFiberConcrete.CalcGroup2
                     // Трещина возникла:
                     //-- определяем моменты трещинообразования
                     My_crc = My.Max(); 
-                    Mz_crc = Mz.Max();
+                    Mx_crc = Mx.Max();
                     N_crc = 0;
                     
                     //-- рассчитываем ширину раскрытия трещины
@@ -367,7 +367,7 @@ namespace BSFiberConcrete.CalcGroup2
             Myint = -(sigB[jend].ZipThree(Ab, zb[jend], (s, A, z) => s * A * z).Sum() + sigS[jend].ZipThree(As, zs[jend], (s, A, z) => s * A * z).Sum() -
                         sigBS[jend].ZipThree(As, zs[jend], (s, A, z) => s * A * z).Sum());
 
-            Mzint = sigB[jend].ZipThree(Ab, yb[jend], (s, A, y) => s * A * y).Sum() + sigS[jend].ZipThree(As, ys[jend], (s, A, y) => s * A * y).Sum() -
+            Mxint = sigB[jend].ZipThree(Ab, yb[jend], (s, A, y) => s * A * y).Sum() + sigS[jend].ZipThree(As, ys[jend], (s, A, y) => s * A * y).Sum() -
                     sigBS[jend].ZipThree(As, ys[jend], (s, A, y) => s * A * y).Sum();
 
             // растяжение: 
@@ -435,7 +435,7 @@ namespace BSFiberConcrete.CalcGroup2
 
                 // проверка усилий
                 ["My"] = Myint,
-                ["Mx"] = Mzint,
+                ["Mx"] = Mxint,
                 ["N"] = Nint,
                 // использование материала:
                 // -- растяжение:
@@ -448,7 +448,7 @@ namespace BSFiberConcrete.CalcGroup2
                 // трещиностойкость
                 // --моменты трещинообразования
                 ["My_crc"] =  My_crc,
-                ["Mx_crc"] =  Mz_crc,
+                ["Mx_crc"] =  Mx_crc,
                 // -- ширина раскрытия трещины
                 ["es_crc"] = es_crc,
                 ["sig_s_crc"] = sig_s_crc,
