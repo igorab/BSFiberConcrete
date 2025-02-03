@@ -95,7 +95,7 @@ namespace BSFiberConcrete
         [DisplayName("Коэффициент условия работы Yb5"), Description("Coef")]
         public double Yb5 { get; protected set; }
 
-        [DisplayName("Предельный момент, [кг*см]"), Description("Res")]
+        [DisplayName("Предельный момент My (проверка по наклонному сечению), [кг*см]"), Description("Res")]
         public double M_ult { get; protected set; }
 
         [DisplayName("Предельная поперечная сила Q, [кг]"), Description("Res")]

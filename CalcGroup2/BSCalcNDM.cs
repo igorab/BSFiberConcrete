@@ -357,7 +357,7 @@ namespace BSFiberConcrete.CalcGroup2
         // максимальное число итераций
         private int jmax = 20000;
         // Максимальная абсолютная погрешность
-        private double tolmax = Math.Pow(10, -6);
+        private double tolmax = Math.Pow(10, -9);
         private int err = 0;
 
         private Dictionary<string, double> m_Results = new Dictionary<string, double>();
