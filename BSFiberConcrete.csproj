@@ -598,6 +598,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Section\BSSectionChart.resx">
       <DependentUpon>BSSectionChart.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Section\BSSectionDraw.resx">
       <DependentUpon>BSSectionDraw.cs</DependentUpon>

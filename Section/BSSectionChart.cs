@@ -30,9 +30,18 @@ namespace BSFiberConcrete.Section
         public BeamSection m_BeamSection { get; set; }
 
         /// <summary>
-        /// Класс используемой арматуры
+        /// Класс используемой продольной арматуры 
         /// </summary>
         public string RebarClass { private get; set; }
+        /// <summary>
+        /// Класс используемой поперечной арматуры по X
+        /// </summary>
+        public string RebarClassX { private get; set; }
+        /// <summary>
+        /// Класс используемой поперечной арматуры по Y
+        /// </summary>
+        public string RebarClassY { private get; set; }
+
         public MemoryStream GetImageStream => m_ImageStream;
         private MemoryStream m_ImageStream;
         private List<RebarDiameters> m_Diameters;
@@ -161,11 +170,43 @@ namespace BSFiberConcrete.Section
             if (bsRods.Count == 0)
             {
                 foreach (var _rod in m_RodPoints)
-                    bsRods.Add(new BSRod() { CG_X = _rod.X, CG_Y = _rod.Y, D = 14.0 });
+                {
+                    bsRods.Add(new BSRod()
+                    {
+                        CG_X = _rod.X,
+                        CG_Y = _rod.Y,
+                        D = m_Diameters[0].Diameter / 10,
+                        Dnom = m_Diameters[0].Diameter.ToString()
+                    });
+                }
             }
 
+            // проверка, чтобы значения диаметров из базы соответствовали текущему списку диаметров
+            List<string> listDiameters = m_Diameters.Select(s => s.Diameter.ToString()).ToList();
+            foreach (BSRod tmpBSRod in bsRods)
+            {
+                if (!listDiameters.Contains(tmpBSRod.Dnom))
+                {
+                    tmpBSRod.D = m_Diameters[0].Diameter / 10;
+                    tmpBSRod.Dnom = m_Diameters[0].Diameter.ToString();
+                }
+            }
             RodBS.DataSource = bsRods;
+
+
+            // должны отрабатывать только при первом вызове этого метода
+
+            // поперечная арматура
+            if (Dnom.Items.Count == 0) 
+                Dnom.Items.AddRange(listDiameters.ToArray());
+            // продольная арматура по x
+            if (cmbDw_X.Items.Count == 0)
+                UpdateRebarClassX();
+            // продольная арматура по Y
+            if (cmbDw_Y.Items.Count == 0)
+                UpdateRebarClassY();
         }
+
 
         /// <summary>
         ///  Поперечная арматура по оси X
@@ -634,11 +675,9 @@ namespace BSFiberConcrete.Section
 
             // поперечная арматура
             num_s_w_X.Value       = (decimal) m_Rebar.Sw_X; 
-            cmbDw_X.SelectedItem  = m_Rebar.Dw_X.ToString();
             numN_w_X.Value        = m_Rebar.N_X;
 
             num_s_w_Y.Value       = (decimal)m_Rebar.Sw_Y;
-            cmbDw_Y.SelectedItem  = m_Rebar.Dw_Y.ToString();
             numN_w_Y.Value        = m_Rebar.N_Y;
         }
 
@@ -684,7 +723,14 @@ namespace BSFiberConcrete.Section
         {
             try
             {
-                RodBS.AddNew();                
+                //RodBS.AddNew();
+                RodBS.Add(new BSRod()
+                {
+                    CG_X = 0,
+                    CG_Y = 0,
+                    D = m_Diameters[0].Diameter / 10,
+                    Dnom = m_Diameters[0].Diameter.ToString()
+                });
             }
             catch (Exception _e)
             {
@@ -895,6 +941,73 @@ namespace BSFiberConcrete.Section
             {
                 MessageBox.Show(_e.Message);
             }
+        }
+
+
+        /// <summary>
+        /// Обновить установленный класс поперечной арматуры
+        /// производится установка выбранного значения
+        /// </summary>
+        /// <param name="TRebarClass"> название класса арматуры</param>
+        /// <param name="comboboxToUpdate"></param>
+        public void UpdateTransverseRebarClass(string TRebarClass, System.Windows.Forms.ComboBox comboboxToUpdate)
+        {
+            List<RebarDiameters> rebarClassXDiameters = BSData.DiametersOfTypeRebar(TRebarClass);
+            List<string> newDiameters = rebarClassXDiameters.Select(s => s.Diameter.ToString()).ToList();
+            object selectedValue = null;
+            if (comboboxToUpdate.Items.Count != 0)
+            {
+                if (newDiameters.Contains(comboboxToUpdate.SelectedItem))
+                {
+                    selectedValue = comboboxToUpdate.SelectedItem;
+                }
+                comboboxToUpdate.Items.Clear();
+            }
+
+            comboboxToUpdate.Items.AddRange(rebarClassXDiameters.Select(s => s.Diameter.ToString()).ToArray());
+
+            if (selectedValue == null)
+            { comboboxToUpdate.SelectedIndex = 0; }
+            else { comboboxToUpdate.SelectedItem = selectedValue; }
+        }
+
+
+        /// <summary>
+        /// Обновить установленный класс поперечной арматуры по X
+        /// </summary>
+        public void UpdateRebarClassX()
+        {
+            UpdateTransverseRebarClass(RebarClassX, cmbDw_X);
+        }
+
+
+        /// <summary>
+        /// Обновить установленный класс поперечной арматуры по Y
+        /// </summary>
+        public void UpdateRebarClassY()
+        {
+            UpdateTransverseRebarClass(RebarClassY, cmbDw_Y);
+        }
+
+
+        // Обновить установленный класс продольной арматуры
+        public void UpdateRebarClass()
+        {
+            m_Diameters = BSData.DiametersOfTypeRebar(RebarClass);
+            List<string> newListDiameters = m_Diameters.Select(s => s.Diameter.ToString()).ToList();
+
+            Dnom.Items.Add(m_Diameters[0].Diameter.ToString());
+            foreach (BSRod tmpBSRod in RodBS)
+            {
+                if (!newListDiameters.Contains(tmpBSRod.Dnom))
+                {
+                    tmpBSRod.D = m_Diameters[0].Diameter / 10;
+                    tmpBSRod.Dnom = m_Diameters[0].Diameter.ToString();
+                }
+            }
+
+            Dnom.Items.Clear();
+            Dnom.Items.AddRange(newListDiameters.ToArray());
         }
     }
 }
