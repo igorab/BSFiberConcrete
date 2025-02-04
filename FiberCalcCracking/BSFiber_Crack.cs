@@ -15,7 +15,7 @@ using System.Xml.Linq;
 namespace BSFiberConcrete
 {
     /// <summary>
-    /// Класс для расчета стальфибробетоннных элементов по образованияю трещин
+    /// Класс для расчета сталефибробетоннных элементов по образованию трещин
     /// </summary>
     internal class BSFiberCalc_Cracking : IBSFiberCalculation
     {

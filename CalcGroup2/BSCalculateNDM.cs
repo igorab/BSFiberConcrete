@@ -75,7 +75,7 @@ namespace BSFiberConcrete.CalcGroup2
 
             // Вычисляем положение начального (геометрического) центра тяжести
             double num_c_y = Ab.Zip(y0b, (A, y) => A * y).Sum();
-            double num_c_x = Ab.Zip(x0b, (A, z) => A * z).Sum();
+            double num_c_x = Ab.Zip(x0b, (A, x) => A * x).Sum();
 
             double denomc = Ab.Sum(A => A);
             double cy = num_c_y / denomc;
@@ -213,9 +213,9 @@ namespace BSFiberConcrete.CalcGroup2
                         Es[j].ZipThree(As, y0s, (E, A, y0) => E * A * y0).Sum() -
                         Ebs[j].ZipThree(As, y0s, (E, A, y0) => E * A * y0).Sum();
 
-                num_c_x = Eb[j].ZipThree(Ab, x0b, (E, A, z0) => E * A * z0).Sum() +
-                        Es[j].ZipThree(As, x0s, (E, A, z0) => E * A * z0).Sum() -
-                        Ebs[j].ZipThree(As, x0s, (E, A, z0) => E * A * z0).Sum();
+                num_c_x = Eb[j].ZipThree(Ab, x0b, (E, A, x0) => E * A * x0).Sum() +
+                        Es[j].ZipThree(As, x0s, (E, A, x0) => E * A * x0).Sum() -
+                        Ebs[j].ZipThree(As, x0s, (E, A, x0) => E * A * x0).Sum();
 
                 y_cm.Add(num_c_y / Dxx[j]);
                 x_cm.Add(num_c_x / Dxx[j]);
@@ -238,20 +238,20 @@ namespace BSFiberConcrete.CalcGroup2
                 }
 
                 // пересчитываем жесткости
-                double dyy = Eb[j].ZipThree(Ab, xb[j], (E, A, z) => E * A * z * z).Sum() +
-                                Es[j].ZipThree(As, xs[j], (E, A, z) => E * A * z * z).Sum() -
-                                Ebs[j].ZipThree(As, xs[j], (E, A, z) => E * A * z * z).Sum();
+                double dyy = Eb[j].ZipThree(Ab, xb[j], (E, A, x) => E * A * x * x).Sum() +
+                                Es[j].ZipThree(As, xs[j], (E, A, x) => E * A * x * x).Sum() -
+                                Ebs[j].ZipThree(As, xs[j], (E, A, x) => E * A * x * x).Sum();
                 Dyy.Add(dyy);
 
-                double dzz = Eb[j].ZipThree(Ab, yb[j], (E, A, y) => E * A * y * y).Sum() +
+                double dxx = Eb[j].ZipThree(Ab, yb[j], (E, A, y) => E * A * y * y).Sum() +
                                 Es[j].ZipThree(As, ys[j], (E, A, y) => E * A * y * y).Sum() -
                                 Ebs[j].ZipThree(As, ys[j], (E, A, y) => E * A * y * y).Sum();
-                Dzz.Add(dzz);
+                Dzz.Add(dxx);
 
-                double dyz = Eb[j].ZipFour(Ab, yb[j], xb[j], (E, A, y, z) => E * A * y * z).Sum() +
-                                Es[j].ZipFour(As, ys[j], xs[j], (E, A, y, z) => E * A * y * z).Sum() -
-                                Ebs[j].ZipFour(As, ys[j], xs[j], (E, A, y, z) => E * A * y * z).Sum();
-                Dyz.Add(dyz);
+                double dyx = Eb[j].ZipFour(Ab, yb[j], xb[j], (E, A, y, x) => E * A * y * x).Sum() +
+                                Es[j].ZipFour(As, ys[j], xs[j], (E, A, y, x) => E * A * y * x).Sum() -
+                                Ebs[j].ZipFour(As, ys[j], xs[j], (E, A, y, x) => E * A * y * x).Sum();
+                Dyz.Add(dyx);
 
                 denomK = Dyy[j] * Dzz[j] - Math.Pow(Dyz[j], 2);
                 if (denomK == 0 || double.IsNaN(denomK))
@@ -294,8 +294,8 @@ namespace BSFiberConcrete.CalcGroup2
                 Nint = sigB[j].Zip(Ab, (s, A) => s * A).Sum() + sigS[j].Zip(As, (s, A) => s * A).Sum() -
                         sigBS[j].Zip(As, (s, A) => s * A).Sum();
 
-                Myint = -(sigB[j].ZipThree(Ab, xb[j], (s, A, z) => s * A * z).Sum() + sigS[j].ZipThree(As, xs[j], (s, A, z) => s * A * z).Sum() -
-                            sigBS[j].ZipThree(As, xs[j], (s, A, z) => s * A * z).Sum());
+                Myint = -(sigB[j].ZipThree(Ab, xb[j], (s, A, x) => s * A * x).Sum() + sigS[j].ZipThree(As, xs[j], (s, A, x) => s * A * x).Sum() -
+                            sigBS[j].ZipThree(As, xs[j], (s, A, x) => s * A * x).Sum());
 
                 Mxint = sigB[j].ZipThree(Ab, yb[j], (s, A, y) => s * A * y).Sum() + sigS[j].ZipThree(As, ys[j], (s, A, y) => s * A * y).Sum() -
                         sigBS[j].ZipThree(As, ys[j], (s, A, y) => s * A * y).Sum();
@@ -368,7 +368,7 @@ namespace BSFiberConcrete.CalcGroup2
             Nint = sigB[jend].Zip(Ab, (s, A) => s * A).Sum() + sigS[jend].Zip(As, (s, A) => s * A).Sum() -
                     sigBS[jend].Zip(As, (s, A) => s * A).Sum();
 
-            Myint = -(sigB[jend].ZipThree(Ab, xb[jend], (s, A, z) => s * A * z).Sum() + sigS[jend].ZipThree(As, xs[jend], (s, A, z) => s * A * z).Sum() -
+            Myint = -(sigB[jend].ZipThree(Ab, xb[jend], (s, A, x) => s * A * x).Sum() + sigS[jend].ZipThree(As, xs[jend], (s, A, x) => s * A * x).Sum() -
                         sigBS[jend].ZipThree(As, xs[jend], (s, A, z) => s * A * z).Sum());
 
             Mxint = sigB[jend].ZipThree(Ab, yb[jend], (s, A, y) => s * A * y).Sum() + sigS[jend].ZipThree(As, ys[jend], (s, A, y) => s * A * y).Sum() -

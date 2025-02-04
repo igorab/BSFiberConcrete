@@ -2012,10 +2012,14 @@ namespace BSFiberConcrete
 
                     if (m_BeamSection == BeamSection.Rect)
                     {
+                        //FiberCalculate_Cracking();
+
                         calcRes = CalcNDM(BeamSection.Rect);
                     }
                     else if (BSHelper.IsITL(m_BeamSection))
                     {
+                        //FiberCalculate_Cracking();
+
                         calcRes = CalcNDM(m_BeamSection);
                     }
                     else if (m_BeamSection == BeamSection.Ring)

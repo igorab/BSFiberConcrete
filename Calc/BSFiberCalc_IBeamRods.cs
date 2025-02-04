@@ -129,10 +129,11 @@ namespace BSFiberConcrete
 
             (Mult, x) = Calc_Mult(_h0: h - Rod.a, _h: h, _a: Rod.a, _a1: Rod.a1);
 
+            //Коэффициент использования
+            UtilRate = (Mult != 0) ? m_Efforts["My"] / Mult : 0;
+
             InfoCheckM(Mult);
-
-            Mult = BSHelper.Kgsm2Tm(Mult);
-
+            
             return true;
         }
     }
