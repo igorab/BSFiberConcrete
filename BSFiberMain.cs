@@ -21,6 +21,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
@@ -773,6 +774,69 @@ namespace BSFiberConcrete
             return null;
         }
 
+        /// <summary>
+        ///  расчет по 2 группе предельных состояний
+        /// </summary>
+        /// <returns></returns>
+        private Dictionary<string, double> FiberCalculateGroup2(BSCalcResultNDM calcRes)
+        {
+            bool calcOk;
+
+            try
+            {
+                BSBeam bsBeam = BSBeam.construct(m_BeamSection);
+
+                bsBeam.SetSizes(BeamSizes());
+
+                Dictionary<string, double> MNQ = GetEffortsForCalc();
+
+                BSFiberCalc_Cracking calc_Cracking = new BSFiberCalc_Cracking(MNQ)
+                {
+                    Beam = bsBeam,
+                    typeOfBeamSection = m_BeamSection
+                };
+
+                double _As = calcRes.As_t;
+                double _a_s = (double)num_a.Value;
+
+                double _As1 = calcRes.As1_p;                 
+                double _a_s1 = (double)num_a1.Value;
+
+                // задать тип арматуры
+                calc_Cracking.MatRebar = new BSMatRod((double)numEs.Value)
+                {
+                    RCls = cmbRebarClass.Text,
+                    Rs   = (double)numRs.Value,
+                    e_s0 = 0,
+                    e_s2 = 0,
+                    As   = _As,
+                    As1  = _As1,
+                    a_s  = _a_s,
+                    a_s1 = _a_s1,
+                    Reinforcement = checkBoxRebar.Checked
+                };
+
+                SetFiberMaterialProperties();
+
+                calc_Cracking.MatFiber = m_MatFiber;
+                calc_Cracking.SetParams(new double[] { 10, 1 });
+
+                calcOk = calc_Cracking.Calculate();
+                
+                var msgs = calc_Cracking.Msg;
+
+                Dictionary<string, double> res = calc_Cracking.ResGr2();
+                               
+                return res;
+            }
+            catch (Exception _e)
+            {
+                MessageBox.Show("Ошибка в расчете: " + _e.Message);
+            }
+
+            return null;
+        }
+
         private void InitReportSections(ref BSFiberReport report)
         {
             report.Beam = m_Beam;
@@ -1480,7 +1544,7 @@ namespace BSFiberConcrete
                 Dictionary<string, double> res = calcNDM.RunMy(my);
 
                 if (res != null)
-                    bendingStiffness.Add(Math.Abs(my / res["Kz"]));
+                    bendingStiffness.Add(Math.Abs(my / res["Kx"]));
             }
 
             return bendingStiffness;
@@ -1708,17 +1772,30 @@ namespace BSFiberConcrete
             NDMSetup _setup = NDMSetupValuesFromForm();                
            
             // расчет:
-            CalcNDM calcNDM = new CalcNDM(_beamSection) {setup = _setup, Dprm = _D }; 
-            
+            CalcNDM calcNDM = new CalcNDM(_beamSection) {setup = _setup, Dprm = _D };
+
+            Dictionary<string, double> resGr2 = null;
+
             if (_beamSection == BeamSection.Any)
+            {
                 calcNDM.RunGroup1();
+            }
+            else if (BSHelper.IsRectangled(_beamSection))
+            {
+                calcNDM.RunGroup1();
+                
+                resGr2 = FiberCalculateGroup2(calcNDM.CalcRes);
+            }
             else
+            {
                 calcNDM.Run();
+            }
 
             BSCalcResultNDM calcRes = new BSCalcResultNDM();
             if (calcNDM.CalcRes != null)
-                calcRes = calcNDM.CalcRes;            
-
+                calcRes = calcNDM.CalcRes;
+            if (resGr2 != null)
+                calcRes.SetRes2Group(resGr2, true, true);
             calcRes.ResQxQy       = resQxQy;
             calcRes.ImageStream   = m_ImageStream;
             calcRes.Coeffs        = m_Coeffs;
@@ -2019,15 +2096,11 @@ namespace BSFiberConcrete
                     BSCalcResultNDM calcRes = null;
 
                     if (m_BeamSection == BeamSection.Rect)
-                    {
-                        //FiberCalculate_Cracking();
-
+                    {                        
                         calcRes = CalcNDM(BeamSection.Rect);
                     }
                     else if (BSHelper.IsITL(m_BeamSection))
-                    {
-                        //FiberCalculate_Cracking();
-
+                    {                     
                         calcRes = CalcNDM(m_BeamSection);
                     }
                     else if (m_BeamSection == BeamSection.Ring)

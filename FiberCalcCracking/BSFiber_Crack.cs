@@ -39,24 +39,7 @@ namespace BSFiberConcrete
         public BSMatFiber MatFiber { get { return m_Fiber; } set { m_Fiber = value; } }
         // свойства арматуры
         public BSMatRod MatRebar { get { return m_Rod; } set { m_Rod = value; } }
-
-
-        //public virtual Dictionary<string, double> Coeffs
-        //{
-        //    get
-        //    {
-        //        return new Dictionary<string, double>() { { "Yft", MatFiber.Yft }, { "Yb", MatFiber.Yb }, { "Yb1", MatFiber.Yb1 }, { "Yb2", MatFiber.Yb2 }, { "Yb3", MatFiber.Yb3 }, { "Yb5", MatFiber.Yb5 } };
-        //    }
-        //}
-
-        //public virtual Dictionary<string, double> PhysParams
-        //{
-        //    get
-        //    {
-        //        return new Dictionary<string, double> { { "Rfbt3n", MatFiber.Rfbt3n }, { "B", MatFiber.B }, { "Rfbn", MatFiber.Rfbn } };
-        //    }
-        //}
-
+        
         public Dictionary<string, double> Efforts;
 
 
@@ -100,10 +83,7 @@ namespace BSFiberConcrete
 
             Msg = new List<string>();
             resultDictionary = new Dictionary<string, double>();
-
-            //CreateResTable();
-            //AddRowInResTable("", "Mx", Mx, "кг*см2");
-            //AddRowInResTable("", "N", N, "кг");
+            
         }
 
         /// <summary>
@@ -185,6 +165,20 @@ namespace BSFiberConcrete
 
         # endregion 
 
+        /// <summary>
+        ///  Результаты в расчете по НДМ
+        /// </summary>
+        /// <returns></returns>
+        public Dictionary<string, double> ResGr2()
+        {
+            return new Dictionary<string, double> {
+                ["Ky"] = double.NaN,
+                ["Kx"] = double.NaN,
+                ["My_crc"] = _M_crc,
+                ["sig_s_crc"] = double.NaN,
+                ["a_crc"] = _a_crc 
+            };
+        }
 
 
         /// <summary>
@@ -627,38 +621,5 @@ namespace BSFiberConcrete
             resultTable.Rows.Add(row);
         }
 
-    }
-
-
-
-    //[Description("Тип нагрузки")]
-    //public enum LoadBeamType
-    //{
-    //    [Description("Нагрузка не определена")]
-    //    None = 0,
-    //    [Description("Сосредоточенная сила")]
-    //    Concentrated = 1,
-    //    [Description("Распределенная нагрузка")]
-    //    Distributed = 2,
-    //}
-
-
-    //[Description("Тип закрепления балки")]
-    //public enum SupportBeamType
-    //{
-    //    [Description("Не определено")]
-    //    None = 0,
-    //    [Description("Жестко защемленная - Свободная")]
-    //    Fixed_No = 1,
-    //    [Description("Свободная - Жестко защемленная")]
-    //    No_Fixed = 2,
-    //    [Description("Жестко защемленная - Жестко защемленная")]
-    //    Fixed_Fixed = 3,
-    //    [Description("Жестко защемленная - Шарнирно подвижная")]
-    //    Fixed_Movable = 4,
-    //    [Description("Шарнирно подвижная - Жестко защемленная")]
-    //    Movable_Fixed = 5,
-    //    [Description("Шарнирно неподвижная - Шарнирно подвижная")]
-    //    Pinned_Movable = 6,
-    //}
+    }    
 }

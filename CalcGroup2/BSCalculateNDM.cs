@@ -381,7 +381,7 @@ namespace BSFiberConcrete.CalcGroup2
             // деформации:
             double epsB_t = NuNTo0(epB[jend].Maximum());
             double epsS_t = NuNTo0(epS[jend].Maximum());
-
+            
             // сжатие: 
             // напряжения:
             double sigB_p = NuNTo0(sigB[jend].Minimum());
@@ -389,7 +389,25 @@ namespace BSFiberConcrete.CalcGroup2
             // деформации:
             double epsB_p = NuNTo0(epB[jend].Minimum());
             double epsS_p = NuNTo0(epS[jend].Minimum());
-            
+             
+            // Площадь растянутой арматуры
+            double As_t = 0;
+            // расст то ц.т. растянутой арматуры
+            double a_s_t = 0;
+            // Площадь сжатой арматуры
+            double As1_p = 0;
+            // расст то ц.т. сжатой арматуры
+            double a_s1_p = 0;
+
+            for (int i = 0; i < As.Count; i++)
+            {
+                if (epS[jend][i] >= 0)
+                    As_t += As[i];
+
+                if (epS[jend][i] <= 0)
+                    As1_p += As[i];
+            }    
+
             // СП 6.1.25 для эпюры с одним знаком
             if (Setup.UseRebar == false && Math.Sign(sigB_t) == Math.Sign(sigB_p))
             {
@@ -418,8 +436,8 @@ namespace BSFiberConcrete.CalcGroup2
                 ["Ky"] = Ky[jend],
                 ["ry"] = 1 / Ky[jend],
 
-                ["Kz"] = Kx[jend],
-                ["rz"] = 1 / Kx[jend],
+                ["Kx"] = Kx[jend],
+                ["rx"] = 1 / Kx[jend],
 
                 // растяжение
                 ["sigB"] = sigB_t,
@@ -458,6 +476,13 @@ namespace BSFiberConcrete.CalcGroup2
                 ["es_crc"] = es_crc,
                 ["sig_s_crc"] = sig_s_crc,
                 ["a_crc"] = a_crc,
+
+                // арматура
+                ["As_t"]   = As_t,
+                ["a_s_t"]  = a_s_t, 
+                ["As1_p"]  = As1_p,  
+                ["a_s1_p"] = a_s1_p,
+
                 // число итераций:
                 ["ItersCnt"] = jend
             };

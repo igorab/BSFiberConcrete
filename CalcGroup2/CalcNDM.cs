@@ -115,63 +115,7 @@ namespace BSFiberConcrete
             return bscalc;
         }
 
-        //TODO Расчет по 2 группе для прямоугольных и тавровых сечений
-        private BSFiberCalc_Cracking FiberCalculate_Cracking()
-        {
-            bool calcOk;
-            try
-            {
-                BSBeam bsBeam = BSBeam.construct(m_BeamSection);
-
-            //    bsBeam.SetSizes(BeamSizes());
-
-            //    Dictionary<string, double> MNQ = GetEffortsForCalc();
-
-            //    BSFiberCalc_Cracking calc_Cracking = new BSFiberCalc_Cracking(MNQ)
-            //    {
-            //        Beam = bsBeam,
-            //        typeOfBeamSection = m_BeamSection
-            //    };
-
-            //    // задать тип арматуры
-            //    calc_Cracking.MatRebar = new BSMatRod((double)numEs.Value)
-            //    {
-            //        RCls = cmbRebarClass.Text,
-            //        Rs = (double)numRs.Value,
-            //        e_s0 = 0,
-            //        e_s2 = 0,
-            //        As = (double)numAs.Value,
-            //        As1 = (double)numAs1.Value,
-            //        a_s = (double)num_a.Value,
-            //        a_s1 = (double)num_a1.Value,
-            //        Reinforcement = checkBoxRebar.Checked
-            //    };
-
-            //    //SetFiberMaterialProperties();
-
-            //    calc_Cracking.MatFiber = m_MatFiber;
-            //    calc_Cracking.SetParams(new double[] { 10, 1 });
-
-            //    calcOk = calc_Cracking.Calculate();
-
-            //    if (m_Message == null) m_Message = new List<string>();
-            //    m_Message.AddRange(calc_Cracking.Msg);
-
-            //    //if (calcOk)
-            //    //    m_CalcResults2Group = calc_Cracking.Results();
-
-            //    return calc_Cracking;
-            }
-            catch (Exception _e)
-            {
-            //    //MessageBox.Show("Ошибка в расчете: " + _e.Message);
-            }
-
-            return null;
-        }
-
-
-
+        
         // Расчет по 2 группе предельных состояний - ширина раскрытия трещины           
         BSCalcNDM BSCalcGr2_a_Crc(double _coefM, List<double> _E_s_crc = null)
         {
