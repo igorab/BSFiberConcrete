@@ -779,7 +779,8 @@ namespace BSFiberConcrete.Section
                     {
                         if (d_nom > 0)
                         {
-                            double ar = m_Diameters.Find(_D => _D.Diameter == d_nom).Square;
+                            //* 100 перевод из см^2 в мм^2
+                            double ar = m_Diameters.Find(_D => _D.Diameter == d_nom).Square * 100;
 
                             double d_fact = BSHelper.DCircle(ar);
 

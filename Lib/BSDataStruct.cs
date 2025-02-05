@@ -805,8 +805,14 @@ namespace BSFiberConcrete
     
         public string TypeRebar { get; set; }
 
+        /// <summary>
+        /// Диаметр из стандартного ряда, мм
+        /// </summary>
         public double Diameter { get; set; }    
 
+        /// <summary>
+        /// Площадь в см
+        /// </summary>
         public double Square { get; set; }
     }
 
