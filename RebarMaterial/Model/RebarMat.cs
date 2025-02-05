@@ -12,8 +12,6 @@ namespace BSFiberConcrete
     public class RebarMat : ViewModelBase
     {
 
-        private List<string> _rebarNames = new List<string>() { "A240", "A400", "A500", "B500", "Bp500" };
-
         private Dictionary<string, double> _rebarHita_1 = new Dictionary<string, double>()
         {
             { "A240", 2.5},
@@ -238,7 +236,8 @@ namespace BSFiberConcrete
         private void LoadRebarDB()
         {
             List<Rebar> tmpList = BSData.LoadRebar();
-            _DataRebarType = tmpList.Where(p => _rebarNames.Contains(p.ID)).ToList();
+            //_DataRebarType = tmpList.Where(p => _rebarNames.Contains(p.ID)).ToList();
+            _DataRebarType = tmpList;
         }
 
 
@@ -278,7 +277,7 @@ namespace BSFiberConcrete
             }
             _indexRebarDiameter = index;
             Diameter = _selectedDiameters[index].Diameter;
-            Square = _selectedDiameters[index].Square * 100;// перевод из см в мм 
+            Square = _selectedDiameters[index].Square * 100;// перевод из см^2 в мм^2 
             us = 2 * Math.PI * Diameter / 2;
             CalculateHita_2();
         }
@@ -318,8 +317,12 @@ namespace BSFiberConcrete
 
 
         private void CalculateHita_1()
-        { 
-            _rebarHita_1.TryGetValue(_typeRebar, out double hita_1);
+        {
+            if (!_rebarHita_1.TryGetValue(_typeRebar, out double hita_1))
+            {
+                hita_1 = 1.5; // для гладкой арматуры (это настройка для полимерной арматуры)
+            }
+
             Hita_1 = hita_1;
         }
 
