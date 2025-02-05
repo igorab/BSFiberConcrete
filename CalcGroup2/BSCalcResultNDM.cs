@@ -78,6 +78,19 @@ namespace BSFiberConcrete
         [DisplayName("---Коэффициент использования по деформации в арматуре (сжатие), [П6.1.21]")]
         public double UtilRate_e_s_p { get; private set; }
 
+        [DisplayName("---Площадь растянутой арматуры, см2 ")]
+        public double As_t { get; private set; }
+
+        [DisplayName("---Площадь сжатой арматуры, см2 ")]
+        public double As1_p { get; private set; }
+
+        [DisplayName("---Расстояние до Ц.Т. растянутой арматуры, см")]
+        public double a_s_t { get; private set; }
+
+        [DisplayName("---Расстояние до Ц.Т. сжатой арматуры, см")]
+        public double a_s_p { get; private set; }
+
+
         // проверка по усилиям
 
         [DisplayName("Момент Мx, [кг*см]")]
@@ -122,7 +135,7 @@ namespace BSFiberConcrete
         public List<string> Msg { get; set; }
         
         private Dictionary<string, double> Res1Group { get; set; }
-        private Dictionary<string, double> Res2Group { get; set; }
+        private Dictionary<string, double> Res2Group {get; set; }
 
         public List<int> ErrorIdx { get; set; }
 
@@ -349,8 +362,8 @@ namespace BSFiberConcrete
             eps_0 = _D1gr["ep0"];
             Ky = _D1gr["Ky"];
             ry = _D1gr["ry"];
-            Kx = _D1gr["Kz"];
-            rx = _D1gr["rz"];
+            Kx = _D1gr["Kx"];
+            rx = _D1gr["rx"];
 
             // растяжение
             sigmaB = BSHelper.SigU2U(_D1gr["sigB"]);
@@ -370,7 +383,7 @@ namespace BSFiberConcrete
             // проверка усилий
             Mx_calc = BSHelper.SigU2U(_D1gr["Mx"]);
             My_calc = BSHelper.SigU2U(_D1gr["My"]);            
-            N_calc = BSHelper.NU2U(_D1gr["N"]);
+            N_calc  = BSHelper.NU2U(_D1gr["N"]);
 
             // использование
             // сжатие
@@ -379,6 +392,12 @@ namespace BSFiberConcrete
             // растяжение
             UtilRate_e_fbt = _D1gr["UR_fb_t"];
             UtilRate_e_st = _D1gr["UR_s_t"];
+
+            // арматура
+            As_t = _D1gr["As_t"];
+            a_s_t = _D1gr["a_s_t"];
+            As1_p = _D1gr["As1_p"];
+            a_s_p = _D1gr["a_s1_p"];
 
             Msg = new List<string>();
             Res1Group = new Dictionary<string, double>();
@@ -396,8 +415,8 @@ namespace BSFiberConcrete
             // кривизна
             if (_D2gr.ContainsKey("Ky"))
                 Ky_crc = _D2gr["Ky"];
-            if (_D2gr.ContainsKey("Kz"))
-                Kx_crc = _D2gr["Kz"];
+            if (_D2gr.ContainsKey("Kx"))
+                Kx_crc = _D2gr["Kx"];
 
             if (Rods_qty > 0)
             {
@@ -424,7 +443,7 @@ namespace BSFiberConcrete
         private void AddToResult(string _attr, double _value, int _group = 1, bool _truncate = true)
         {
             Dictionary<string, double> res = (_group == 1) ? Res1Group : Res2Group;
-
+            
             if (_truncate && (Math.Abs(_value) < 10e-15 || Math.Abs(_value) > 10e15))
             {
                 return;
@@ -542,16 +561,20 @@ namespace BSFiberConcrete
         public Dictionary<string, double> GetResults2Group()
         {
             Res2Group = new Dictionary<string, double>();
-            Res2Group.Add("<b>--------Изгиб:--------</b>", double.NaN);
-            AddToResult("Kx_crc", Kx_crc, BSFiberLib.CG2, false);            
-            AddToResult("Ky_crc", Ky_crc, BSFiberLib.CG2, false);
+            Res2Group.Add("<b>--------Изгиб:--------</b>", double.NaN);            
+            if (!double.IsNaN(Kx_crc))
+                AddToResult("Kx_crc", Kx_crc, BSFiberLib.CG2, false);
+            if (!double.IsNaN(Ky_crc))
+                AddToResult("Ky_crc", Ky_crc, BSFiberLib.CG2, false);
 
             Res2Group.Add("<b>--------Усилия:--------</b>", double.NaN);
             AddToResult("M_crc", BSHelper.MU2U(M_crc), BSFiberLib.CG2, false);
-            AddToResult("sig_s_crc", sig_s_crc, BSFiberLib.CG2, false);
+            if (!double.IsNaN(sig_s_crc))
+                AddToResult("sig_s_crc", sig_s_crc, BSFiberLib.CG2, false);
 
             Res2Group.Add("<b>--------Трещины:--------</b>", double.NaN);
-            AddToResult("a_crc", a_crc, BSFiberLib.CG2, false);
+            if (!double.IsNaN(a_crc))
+                AddToResult("a_crc", a_crc, BSFiberLib.CG2, false);
 
             return Res2Group;
         }
