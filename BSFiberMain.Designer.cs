@@ -2358,7 +2358,6 @@
             // 
             // tableLayoutPanelRebar
             // 
-            this.tableLayoutPanelRebar.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.tableLayoutPanelRebar.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.tableLayoutPanelRebar.ColumnCount = 5;
             this.tableLayoutPanelRebar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 59.03614F));

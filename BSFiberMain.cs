@@ -205,6 +205,14 @@ namespace BSFiberConcrete
                 gridEfforts.Columns["Mx"].Visible = false;
                 gridEfforts.Columns["Qy"].Visible = false;
                 gridEfforts.Columns["N"].Visible = false;
+
+
+                labelCalculation.Text = BSFiberLib.TxtCalc_Deform;
+                tableLayoutPanelLRebar.Visible = false;
+                tableLayoutPanelTRebar.Visible = false;
+
+                checkBoxRebar.Checked = true;
+                checkBoxRebar.Visible = false;
                 //for (int i = 0; i < gridEfforts.ColumnCount; i++)
                 //{
                 //    gridEfforts[i, 0].Value = "0";
