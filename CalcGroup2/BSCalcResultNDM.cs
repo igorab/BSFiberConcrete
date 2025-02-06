@@ -85,10 +85,10 @@ namespace BSFiberConcrete
         public double As1_p { get; private set; }
 
         [DisplayName("---Расстояние до Ц.Т. растянутой арматуры, см")]
-        public double a_s_t { get; private set; }
+        public double h0_t { get; private set; }
 
         [DisplayName("---Расстояние до Ц.Т. сжатой арматуры, см")]
-        public double a_s_p { get; private set; }
+        public double h01_p { get; private set; }
 
 
         // проверка по усилиям
@@ -395,9 +395,9 @@ namespace BSFiberConcrete
 
             // арматура
             As_t = _D1gr["As_t"];
-            a_s_t = _D1gr["a_s_t"];
+            h0_t = _D1gr["h0_t"];
             As1_p = _D1gr["As1_p"];
-            a_s_p = _D1gr["a_s1_p"];
+            h01_p = _D1gr["h01_p"];
 
             Msg = new List<string>();
             Res1Group = new Dictionary<string, double>();

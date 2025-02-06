@@ -746,7 +746,6 @@ namespace BSFiberConcrete
                 SetFiberMaterialProperties();
                 
                 calc_Cracking.MatFiber = m_MatFiber;
-                calc_Cracking.SetParams(new double[] { 10, 1 });                
 
                 calcOk = calc_Cracking.Calculate();
                 
@@ -789,9 +788,11 @@ namespace BSFiberConcrete
                 };
 
                 double _As = calcRes.As_t;
+                double h0 = calcRes.h0_t;
                 double _a_s = (double)num_a.Value;
 
-                double _As1 = calcRes.As1_p;                 
+                double _As1 = calcRes.As1_p;
+                double h01 = calcRes.h01_p;
                 double _a_s1 = (double)num_a1.Value;
 
                 // задать тип арматуры
@@ -804,16 +805,17 @@ namespace BSFiberConcrete
                     As   = _As,
                     As1  = _As1,
                     a_s  = _a_s,
+                    h0_t = h0,
                     a_s1 = _a_s1,
+                    h0_p = h01,
                     Reinforcement = checkBoxRebar.Checked
                 };
 
                 SetFiberMaterialProperties();
 
                 calc_Cracking.MatFiber = m_MatFiber;
-                calc_Cracking.SetParams(new double[] { 10, 1 });
-
-                calcOk = calc_Cracking.Calculate();
+                
+                calcOk = calc_Cracking.CalculateNDN();
                 
                 var msgs = calc_Cracking.Msg;
 
