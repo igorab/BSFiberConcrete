@@ -119,7 +119,11 @@ namespace BSFiberConcrete
         [DisplayName("П6.2.13. Момент возникновения трещины, [кг*см]")]
         public double M_crc { get; set; }
 
-        [DisplayName("П6.2.31. Кривизна 1/Rx, [1/см]")]
+        [DisplayName("Коэффициент использования по M_crc")]
+        public double UtilRate_M_crc { get; set; }
+
+
+        [DisplayName("П6.2.24. Кривизна 1/Rx, [1/см]")]
         public double Kx_crc { get; set; }
 
         [DisplayName("П6.2.31. Кривизна 1/Ry, [1/см]")]
@@ -130,6 +134,10 @@ namespace BSFiberConcrete
 
         [DisplayName("П6.2.31. Ширина раскрытия трещины, [см]")]
         public double a_crc { get; set; }
+
+        [DisplayName("Предельная ширина раскрытия трещины, [см]")]
+        public double a_crc_ult { get; set; }
+
         #endregion
 
         public List<string> Msg { get; set; }
@@ -425,6 +433,9 @@ namespace BSFiberConcrete
                     // момент трещинообразования
                     if (_D2gr.ContainsKey("My_crc"))
                         M_crc = _D2gr["My_crc"];
+                    if (_D2gr.ContainsKey("UtilRate_M_crc"))
+                        UtilRate_M_crc = _D2gr["UtilRate_M_crc"];
+
 
                     // напряжение в арматуре (нужно реализовать для каждого стержня)
                     if (_D2gr.ContainsKey("sig_s_crc"))
@@ -436,6 +447,8 @@ namespace BSFiberConcrete
                     // ширина раскрытия трещины
                     if (_D2gr.ContainsKey("a_crc"))
                         a_crc = _D2gr["a_crc"];
+                    if (_D2gr.ContainsKey("a_crc_ult"))
+                        a_crc_ult = _D2gr["a_crc_ult"];
                 }
             }
         }
@@ -560,21 +573,32 @@ namespace BSFiberConcrete
         /// </summary>
         public Dictionary<string, double> GetResults2Group()
         {
-            Res2Group = new Dictionary<string, double>();
-            Res2Group.Add("<b>--------Изгиб:--------</b>", double.NaN);            
+            Res2Group = new Dictionary<string, double>();            
+
+            Res2Group.Add("<b>--------Определение момента образования трещин [П6.2.8..]:--------</b>", double.NaN);
+
+            AddToResult("M_crc", BSHelper.MU2U(M_crc), BSFiberLib.CG2, false);
+
+            AddToResult("UtilRate_M_crc", BSHelper.MU2U(UtilRate_M_crc), BSFiberLib.CG2, false);
+
+            if (!double.IsNaN(sig_s_crc))
+                AddToResult("sig_s_crc", sig_s_crc, BSFiberLib.CG2, false);
+
+            Res2Group.Add("<b>--------Расчет ширины раскрытия трещин [П6.2.14..]:--------</b>", double.NaN);
+            if (!double.IsNaN(a_crc))
+            {
+                AddToResult("a_crc", a_crc, BSFiberLib.CG2, false);
+
+                AddToResult("a_crc_ult", a_crc_ult, BSFiberLib.CG2, false);
+            }
+
+            Res2Group.Add("<b>--------Кривизна фибробетонных элементов [П6.2.22..]:--------</b>", double.NaN);
             if (!double.IsNaN(Kx_crc))
                 AddToResult("Kx_crc", Kx_crc, BSFiberLib.CG2, false);
             if (!double.IsNaN(Ky_crc))
                 AddToResult("Ky_crc", Ky_crc, BSFiberLib.CG2, false);
 
-            Res2Group.Add("<b>--------Усилия:--------</b>", double.NaN);
-            AddToResult("M_crc", BSHelper.MU2U(M_crc), BSFiberLib.CG2, false);
-            if (!double.IsNaN(sig_s_crc))
-                AddToResult("sig_s_crc", sig_s_crc, BSFiberLib.CG2, false);
 
-            Res2Group.Add("<b>--------Трещины:--------</b>", double.NaN);
-            if (!double.IsNaN(a_crc))
-                AddToResult("a_crc", a_crc, BSFiberLib.CG2, false);
 
             return Res2Group;
         }

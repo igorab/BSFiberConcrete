@@ -42,6 +42,8 @@ namespace BSFiberConcrete
         
         public Dictionary<string, double> Efforts;
 
+        private double I_red;
+
         // заданные нагрузки      
         public double Mx;
         public double My;
@@ -55,6 +57,13 @@ namespace BSFiberConcrete
 
         private double _M_crc;
         private double _a_crc;
+
+        private double UtilRate_M_crc;
+        // предельно-допустимая ширина раскрытия трещин
+        // Принимается в зависимости класса арматуры
+        private double a_crc_ult = 0.03;
+
+        private double k_x; // кривизна сечения в плосткости xOz
 
         // Результаты расчета
         public DataTable resultTable;
@@ -127,13 +136,26 @@ namespace BSFiberConcrete
         /// <returns></returns>
         public bool CalculateNDN()
         {
-            CalculateUltM();
+            Calculate_M_crc();
 
             CalculateWidthCrack();
+
+            CalculateCurvature();
 
             return true;
         }
 
+        /// <summary>
+        /// Расчет кривизны сечения
+        /// </summary>
+        private void CalculateCurvature()
+        {
+            double Efb1 = 0.85 * MatFiber.Efb; // 6.133
+
+            double D = I_red * Efb1;
+
+            k_x = (D!=0) ? My / D : 0;
+        }
 
         public virtual bool Calculate()
         {
@@ -177,12 +199,109 @@ namespace BSFiberConcrete
         {
             return new Dictionary<string, double> {
                 ["Ky"] = double.NaN,
-                ["Kx"] = double.NaN,
+                ["Kx"] = k_x,
                 ["My_crc"] = _M_crc,
+                ["UtilRate_M_crc"] = UtilRate_M_crc,
                 ["sig_s_crc"] = double.NaN,
-                ["a_crc"] = _a_crc 
+                ["a_crc"] = _a_crc ,
+                ["a_crc_ult"] = a_crc_ult,                
             };
         }
+
+        /// <summary>
+        ///  расчет момента трещинообразования по данным полученным через НДМ
+        /// </summary>
+        /// <returns></returns>
+        public bool Calculate_M_crc()
+        {            
+            double B = m_Fiber.B;            
+            // Площадь растянутой арматуры
+            double A_s = MatRebar.As;
+            // Площадь сжатой арматуры
+            double A_1s = MatRebar.As1;
+            // Расстояние до центра тяжести растянутой арматуры
+            double h0_t = MatRebar.h0_t;
+            // Расстояние до центра тяжести сжатой арматуры
+            double h0_p = MatRebar.h0_p;
+            // модуль упрогости арматуры
+            double Es = MatRebar.Es; 
+            // нормативное остаточное сопротивление осевому растяжению для bft3i
+            double R_fbt_ser;
+            // модуль упругости фибробетона
+            double Efb = MatFiber.Efb;
+            // Класс бетона            
+            double Y = 1.73 - 0.005 * (B - 15);            
+            // Площадь сечения
+            double A = Beam.Area();
+            // момент инерции сечения 
+            double I = Beam.Jy();
+            // статический момент сечения фибробетона
+            double S = Beam.Sy();
+            ///            
+            R_fbt_ser = MatFiber.Rfbt_ser;
+            ///            
+            
+            // Коэф Привендения арматуры к стальфибробетону
+            double alpha = Es / Efb;                                                                                //  (6.113)
+            // Площадь приведенного поперечного сечения элемента 
+            double A_red = A + A_s * alpha + A_1s * alpha;                                                          //  (6.112)
+
+            double Y_t;
+
+            if (typeOfBeamSection == BeamSection.Ring)
+            {
+                BSBeam_Ring tmpBeam = (BSBeam_Ring)Beam;
+                Y_t = tmpBeam.r2;
+                double r_m = tmpBeam.r_m;
+
+                double SS = (A_s + A_1s) / (Math.PI * 2 * r_m);
+                double Is = Math.PI / 64 * (Math.Pow(2 * (r_m + SS / 2), 4) - Math.Pow(2 * (r_m - SS / 2), 4));
+                I_red = I + alpha * Is;
+            }
+            else
+            {
+                double height = Beam.Height;
+
+                // Статический момент площади приведенного поперечного сечения элемента
+                // относительно наиболее растянутого волокна сталефибробетона
+                double S_t_red = S + alpha * A_s * alpha + alpha * A_1s * h0_p;
+                // Расстояние от центра тяжести приведенного сечения до расстянутой в стадии эксплуатации грани
+                Y_t = S_t_red / A_red;                                                                           //  (6.114)
+
+                // расстояние от центра тяжести приведенного сечения до расстянутой арматуры
+                double Y_s  = h0_t;
+                // расстояние от центра тяжести приведенного сечения до сжатой арматуры
+                double Y_1s = h0_p;
+
+                // Момент инерции растянутой арматуры
+                double I_s = A_s * Y_s * Y_s;
+                // Момент инерции сжатой арматуры
+                double I_1s = A_1s * Y_1s * Y_1s;
+
+                // в сп формула без упоминания alpha
+                I_red = I + alpha * I_s + alpha * I_1s;                                                          // (6.131) не (6.111)
+            }
+
+            double W_red = I_red / Y_t;                                                                               // (6.109)
+
+            double e_x = W_red / A_red;                                                                              // (6.110)
+
+            double e_x_sum = e_x + e0 + eN;
+
+            double W_pl = Y * W_red;                                                                                // (6.108)
+
+            double M_crc = R_fbt_ser * W_pl + N * e_x;                                                              // (6.107)
+            
+            _M_crc         = M_crc;
+            UtilRate_M_crc = (M_crc != 0) ? My / M_crc : 0;
+
+            resultDictionary.Add("Момент образования трещин с учетом неупругих деформаций растянутого сталефибробетона, Mcrc [кг*см2] [П6.2.8]", M_crc);
+            resultDictionary.Add("Коэффициент использования по второй группе предельных состояний [П6.2.4]", UtilRate_M_crc);            
+
+            return true;
+        }
+
+
 
         /// <summary>
         /// Определение момента образования трещин
@@ -250,7 +369,7 @@ namespace BSFiberConcrete
             double A_red = A + A_s * alpha + A_1s * alpha;                                                          //  (6.112)
 
             double Y_t;
-            double I_red;
+            
             if (typeOfBeamSection == BeamSection.Ring)
             {
                 BSBeam_Ring tmpBeam = (BSBeam_Ring)Beam;
@@ -298,10 +417,10 @@ namespace BSFiberConcrete
 
             _M_crc = M_crc;
 
-            //AddRowInResTable("Момент образования трещин с учетом неупругих деформаций растянутого стальфибробетона", "Mcrc", M_crc, "кг*см2");
+            UtilRate_M_crc = (M_crc != 0)? My / M_crc : 0;
 
             resultDictionary.Add("Момент образования трещин с учетом неупругих деформаций растянутого сталефибробетона, Mcrc [кг*см2] [П6.2.8]", M_crc);
-            resultDictionary.Add("Коэффициент использования по второй группе предельных состояний [П6.2.4]", My/M_crc);
+            resultDictionary.Add("Коэффициент использования по второй группе предельных состояний [П6.2.4]", UtilRate_M_crc);
             //resultDictionary.Add("(Значение для отладки) Площадь приведенного поперечного сечения элемента, A_red [см3]", A_red);
             //resultDictionary.Add("(Значение для отладки) Расстояние от центра тяжести приведенного сечения до расстянутой в стадии эксплуатауции грани, Y_t [см]", Y_t);
             //resultDictionary.Add("(Значение для отладки) Момент инерции приведенного поперечного сечения, I_red [см4]", I_red);
@@ -382,11 +501,7 @@ namespace BSFiberConcrete
             // коэф, учитывающий профиль продольной раматуры, для гладкой арматуры: 
             double fi_2  = 0.8;
             double fi_13 = 0.8;
-
-            // предельно-допустимая ширина раскрытия трещин
-            // Принимается в зависимости класса арматуры
-            double a_crc_ult = 0.03;
-
+            
             double epsilon_fb1_red = 0.0015;
             double epslion_fbt2 = 0.004;
 
@@ -474,10 +589,7 @@ namespace BSFiberConcrete
 
             _a_crc = a_crc;
             #endregion
-           
-            //AddRowInResTable("Предельно допустимая ширина раскрытия трещин", "acrc_ult", a_crc_ult, "мм");
-            //AddRowInResTable("Ширина раскрытия трещин от действия внешней нагрузки", "acrc", a_crc, "мм");
-
+                       
             resultDictionary.Add("Ширина раскрытия трещин от действия внешней нагрузки, a_crc [см] [П6.2.14]", a_crc);
             resultDictionary.Add("Предельно допустимая ширина раскрытия трещин, acrc_ult [см] [П6.2.6]", a_crc_ult);
 
