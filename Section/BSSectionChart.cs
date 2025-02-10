@@ -784,7 +784,7 @@ namespace BSFiberConcrete.Section
 
                             double d_fact = BSHelper.DCircle(ar);
 
-                            bSRodDataGridView.Rows[e.RowIndex].Cells["D"].Value = Math.Round(d_fact, 2);
+                            bSRodDataGridView.Rows[e.RowIndex].Cells["D"].Value = Math.Round(d_fact, 2)/10;
                         }
                     }
                     else
