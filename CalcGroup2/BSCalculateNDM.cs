@@ -393,20 +393,44 @@ namespace BSFiberConcrete.CalcGroup2
             // Площадь растянутой арматуры
             double As_t = 0;
             // расст то ц.т. растянутой арматуры
-            double a_s_t = 0;
+            double h0_t = 0;
             // Площадь сжатой арматуры
             double As1_p = 0;
             // расст то ц.т. сжатой арматуры
-            double a_s1_p = 0;
+            double h01_p = 0;
 
+            // положение центра тяжести растянутой и сжатой арматуры
+            double s_t_xcm = 0; //y_cm[jend]
+            double s_p_xcm = 0; // x_cm[jend]; 
+
+            int i_t = 0, i_p = 0;
             for (int i = 0; i < As.Count; i++)
-            {
+            {                
                 if (epS[jend][i] >= 0)
+                {
+                    i_t++;
                     As_t += As[i];
+                    s_t_xcm += xs[jend][i]; 
+                }
 
-                if (epS[jend][i] <= 0)
+                if (epS[jend][i] < 0)
+                {
+                    i_p++;
                     As1_p += As[i];
-            }    
+                    s_p_xcm += xs[jend][i];
+                }
+            }
+            s_t_xcm /= i_t;
+            s_p_xcm /= i_p;
+
+            //рабочая высота сечения (расст от ц.т. сечения до ц.т. арматуры)            
+            h0_t = Math.Abs(s_t_xcm);
+            h01_p = Math.Abs(s_p_xcm);
+
+            for (int l = 0; l < m; l++)
+            {
+                epS[0].Add(ep0[0] + ys[0][l] * Ky[0] + xs[0][l] * Kx[0]);
+            }
 
             // СП 6.1.25 для эпюры с одним знаком
             if (Setup.UseRebar == false && Math.Sign(sigB_t) == Math.Sign(sigB_p))
@@ -479,14 +503,15 @@ namespace BSFiberConcrete.CalcGroup2
 
                 // арматура
                 ["As_t"]   = As_t,
-                ["a_s_t"]  = a_s_t, 
+                ["h0_t"]  = h0_t, 
                 ["As1_p"]  = As1_p,  
-                ["a_s1_p"] = a_s1_p,
+                ["h01_p"] = h01_p,
 
                 // число итераций:
                 ["ItersCnt"] = jend
             };
 
+            
             SigmaBResult = new List<double>(sigB[jend]);
             SigmaSResult = new List<double>(sigS[jend]);
             EpsilonBResult = new List<double>(epB[jend]);
