@@ -421,20 +421,20 @@ namespace BSFiberConcrete
                     w.WriteLine($"<td width={bk/4}> Номер стержня </td>");
                     w.WriteLine($"<td width={bk/4}> Диаметр </td>");
                     w.WriteLine($"<td width={bk/4}> Относительная деформация</td>");
-                    w.WriteLine($"<td width={bk/4}>Напряжение, кг/см2</td>");
+                    w.WriteLine($"<td width={bk/4}> Напряжение, кг/см2</td>");
+                    w.WriteLine($"<td width={bk / 4}> Вид деформации </td>");
                     w.WriteLine("</tr>");
-
 
                     foreach (ReinforcementBar value in ReinforcingBars)
                     {
-
                         w.WriteLine("<tr>");
                         w.WriteLine($"<td width={bk / 4}>{value.IndexOfBar}</td>");
-                        w.WriteLine($"<td width={bk / 4}>{value.Diameter}</td>");
-                        //w.WriteLine($"<td width={bk / 4}>{string.Format("{0:E2}", value.Eps)}</td>");
+                        w.WriteLine($"<td width={bk / 4}>{value.Diameter}</td>");                        
                         w.WriteLine($"<td width={bk / 4}>{convertDoubleToString(value.Eps)}</td>");
                         w.WriteLine($"<td width={bk / 4}>{convertDoubleToString(value.Sig)}</td>");
-
+                        string deformType = "";
+                        if (value.Eps > 0) deformType = "Растяжение"; else if (value.Eps < 0) deformType = "Сжатие"; 
+                        w.WriteLine($"<td width={bk / 4}>{deformType}</td>");
                         w.WriteLine("</tr>");
                     }
 

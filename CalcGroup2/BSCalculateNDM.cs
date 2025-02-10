@@ -447,10 +447,15 @@ namespace BSFiberConcrete.CalcGroup2
 
             // определяем коэффициенты использоввания:
             // -- по деформациям на растяжение            
+            //UtilRate_fb_t = (Rfbt3 != 0) ? sigB_t / Rfbt : 0.0;
+
             UtilRate_fb_t = (efbt1 != 0) ? epsB_t / efbt1 : 0.0;
             UtilRate_s_t = (esc0 != 0) ? epsS_t / esc0 : 0.0;
             // -- по деформациям на cжатие
-            UtilRate_fb_p = (ebc0 != 0) ? epsB_p / ebc0 : 0.0;
+
+            UtilRate_fb_p = (Rbc != 0) ? sigB_p / Rbc : 0.0;
+
+            //UtilRate_fb_p = (ebc0 != 0) ? epsB_p / ebc0 : 0.0;
             UtilRate_s_p = (esc0 != 0) ? epsS_p / esc0 : 0.0;
             
             m_Results = new Dictionary<string, double>
