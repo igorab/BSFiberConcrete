@@ -306,10 +306,10 @@ namespace BSFiberConcrete
             // настройки из БД
             Rebar dbRebar = m_Rebar.Where(x => x.ID == Convert.ToString(cmbRebarClass.SelectedItem))?.First();
             numEs.Value = (decimal)BSHelper.MPA2kgsm2(dbRebar.Es);
-            numAs.Value = (decimal)dbRebar.As;
-            numAs1.Value = (decimal)dbRebar.As1;
-            num_a.Value = (decimal)dbRebar.a;
-            num_a1.Value = (decimal)dbRebar.a1;
+            //numAs.Value = (decimal)dbRebar.As;
+            //numAs1.Value = (decimal)dbRebar.As1;
+            //num_a.Value = (decimal)dbRebar.a;
+            //num_a1.Value = (decimal)dbRebar.a1;
         }
 
         /// <summary>

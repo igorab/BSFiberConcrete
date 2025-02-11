@@ -45,11 +45,11 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.label6 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numMinAngle)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numMeshNX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numMeshNY)).BeginInit();
@@ -62,7 +62,13 @@
             // 
             // numMinAngle
             // 
-            this.numMinAngle.Location = new System.Drawing.Point(303, 158);
+            this.numMinAngle.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.numMinAngle.Location = new System.Drawing.Point(303, 160);
+            this.numMinAngle.Maximum = new decimal(new int[] {
+            360,
+            0,
+            0,
+            0});
             this.numMinAngle.Name = "numMinAngle";
             this.numMinAngle.Size = new System.Drawing.Size(97, 20);
             this.numMinAngle.TabIndex = 2;
@@ -86,6 +92,11 @@
             // 
             this.numMeshNX.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numMeshNX.Location = new System.Drawing.Point(4, 19);
+            this.numMeshNX.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
             this.numMeshNX.Name = "numMeshNX";
             this.numMeshNX.Size = new System.Drawing.Size(97, 20);
             this.numMeshNX.TabIndex = 0;
@@ -99,6 +110,11 @@
             // 
             this.numMeshNY.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numMeshNY.Location = new System.Drawing.Point(4, 76);
+            this.numMeshNY.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
             this.numMeshNY.Name = "numMeshNY";
             this.numMeshNY.Size = new System.Drawing.Size(97, 20);
             this.numMeshNY.TabIndex = 18;
@@ -110,7 +126,13 @@
             // 
             // numMaxArea
             // 
-            this.numMaxArea.Location = new System.Drawing.Point(303, 189);
+            this.numMaxArea.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.numMaxArea.Location = new System.Drawing.Point(303, 192);
+            this.numMaxArea.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
             this.numMaxArea.Name = "numMaxArea";
             this.numMaxArea.Size = new System.Drawing.Size(97, 20);
             this.numMaxArea.TabIndex = 22;
@@ -264,6 +286,26 @@
             this.tableLayoutPanel4.Size = new System.Drawing.Size(452, 219);
             this.tableLayoutPanel4.TabIndex = 10;
             // 
+            // label11
+            // 
+            this.label11.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(303, 9);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(55, 13);
+            this.label11.TabIndex = 26;
+            this.label11.Text = "Значение";
+            // 
+            // label9
+            // 
+            this.label9.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(174, 9);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(58, 13);
+            this.label9.TabIndex = 25;
+            this.label9.Text = "Параметр";
+            // 
             // tableLayoutPanel5
             // 
             this.tableLayoutPanel5.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
@@ -307,26 +349,6 @@
             this.label6.Size = new System.Drawing.Size(71, 13);
             this.label6.TabIndex = 24;
             this.label6.Text = "Тип Сечения";
-            // 
-            // label9
-            // 
-            this.label9.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(174, 9);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(58, 13);
-            this.label9.TabIndex = 25;
-            this.label9.Text = "Параметр";
-            // 
-            // label11
-            // 
-            this.label11.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(303, 9);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(55, 13);
-            this.label11.TabIndex = 26;
-            this.label11.Text = "Значение";
             // 
             // MeshSettingsView
             // 

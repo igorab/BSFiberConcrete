@@ -420,8 +420,10 @@ namespace BSFiberConcrete.CalcGroup2
                     s_p_xcm += xs[jend][i];
                 }
             }
-            s_t_xcm /= i_t;
-            s_p_xcm /= i_p;
+            if (i_t > 0)
+                s_t_xcm /= i_t;
+            if (i_p > 0)
+                s_p_xcm /= i_p;
 
             //рабочая высота сечения (расст от ц.т. сечения до ц.т. арматуры)            
             h0_t = Math.Abs(s_t_xcm);

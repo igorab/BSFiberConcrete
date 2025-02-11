@@ -601,8 +601,7 @@ namespace BSFiberConcrete.Section
             // Set up the ToolTip text for the Button and Checkbox.
             tlTip.SetToolTip(this.btnDraw, "Обновить (перерисовать) сечение");
             tlTip.SetToolTip(this.btnSaveChart, "Cохранить геометрию сечения");
-            tlTip.SetToolTip(this.btnMesh, "Сетка");
-            tlTip.SetToolTip(this.btnCalc, "Рассчитать сечение по НДМ");            
+            tlTip.SetToolTip(this.btnMesh, "Сетка");            
             tlTip.SetToolTip(this.btnAddRod, "Добавить стержень продольной арматуры");
             tlTip.SetToolTip(this.btnDelRod, "Удалить стержень (последняя строка)");
             tlTip.SetToolTip(this.btnSave, "Сохранить расстановку арматуры");            
@@ -646,7 +645,7 @@ namespace BSFiberConcrete.Section
 
             bool _isdebug = false;
             IsDebugCheck(ref _isdebug);
-            btnCalc.Visible = _isdebug;
+            
         }
 
         private void InitControls()
@@ -857,23 +856,7 @@ namespace BSFiberConcrete.Section
             return calcNDM.CalcRes;                                    
         }
 
-        // Запустить расчет
-        private void btnCalc_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                GenerateMesh();
-
-                BSCalcResultNDM calcRes = CalcNDM_MxMyN();
-
-                BSReport.RunFromCode(m_BeamSection, calcRes);
-            }
-            catch (Exception _ex)
-            {
-                MessageBox.Show(_ex.Message);
-            }            
-        }
-
+        
         private void BeamSectionFromPoints(ref List<PointF> _PointsSection, PointF _center)
         {                                              
             BindingList<BSPoint> bspoints = (BindingList<BSPoint>)pointBS.List;           

@@ -42,6 +42,12 @@ namespace BSCalcLib
             return false;
         }
 
+        public static double CalculateTriangleArea(double x1, double y1, double x2, double y2, double x3, double y3)
+        {
+            return Math.Abs(x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) / 2.0;
+        }
+
+
         /// <summary>
         /// Расчетная схема сечения
         /// </summary>
@@ -58,10 +64,9 @@ namespace BSCalcLib
             int triIdx = 0;
             foreach (Triangle tri in Mesh.Triangles)
             {
-                Rectangle rect = tri.Bounds();               
+                Rectangle rect = tri.Bounds();  // !исправить              
                 bounds.Add(rect);
-
-                double a = tri.Area;
+                                
                 int vId0 = tri.GetVertexID(0);
                 int vId1 = tri.GetVertexID(1);
                 int vId2 = tri.GetVertexID(2);
@@ -92,9 +97,12 @@ namespace BSCalcLib
                     X = cg_X, 
                     Y = cg_Y 
                 };
-
+                
                 triCGs.Add(triCG);
-                triAreas.Add((rect.Width * rect.Height)/2.0);
+
+                double trArea = CalculateTriangleArea(v0.X, v0.Y, v1.X, v1.Y, v2.X, v2.Y);
+
+                triAreas.Add(trArea);
 
                 triIdx++;
             }
