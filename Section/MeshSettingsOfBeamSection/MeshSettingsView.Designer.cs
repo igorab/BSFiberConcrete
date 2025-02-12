@@ -65,7 +65,7 @@
             this.numMinAngle.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.numMinAngle.Location = new System.Drawing.Point(303, 160);
             this.numMinAngle.Maximum = new decimal(new int[] {
-            360,
+            50,
             0,
             0,
             0});
@@ -73,7 +73,7 @@
             this.numMinAngle.Size = new System.Drawing.Size(97, 20);
             this.numMinAngle.TabIndex = 2;
             this.numMinAngle.Value = new decimal(new int[] {
-            20,
+            45,
             0,
             0,
             0});

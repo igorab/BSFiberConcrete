@@ -523,7 +523,10 @@ namespace BSFiberConcrete.Section
 
             SaveRods2DB();
 
-            SaveSection();
+            if (m_BeamSection == BeamSection.Any)
+            {
+                SaveSection();
+            }
         }
 
 
@@ -600,8 +603,7 @@ namespace BSFiberConcrete.Section
             tlTip.ShowAlways = true;
             // Set up the ToolTip text for the Button and Checkbox.
             tlTip.SetToolTip(this.btnDraw, "Обновить (перерисовать) сечение");
-            tlTip.SetToolTip(this.btnSaveChart, "Cохранить геометрию сечения");
-            tlTip.SetToolTip(this.btnMesh, "Сетка");            
+            tlTip.SetToolTip(this.btnSaveChart, "Cохранить геометрию сечения");            
             tlTip.SetToolTip(this.btnAddRod, "Добавить стержень продольной арматуры");
             tlTip.SetToolTip(this.btnDelRod, "Удалить стержень (последняя строка)");
             tlTip.SetToolTip(this.btnSave, "Сохранить расстановку арматуры");            
@@ -662,6 +664,8 @@ namespace BSFiberConcrete.Section
             }
             else
             {
+                btnAdd.Visible = false;
+                btnDel.Visible = false;
                 //btnCalc.Enabled = false;
                 dataGridSection.Enabled = false;
 

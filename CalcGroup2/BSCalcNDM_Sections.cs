@@ -125,12 +125,8 @@ namespace BSFiberConcrete.CalcGroup2
         private int InitRingSection(double _r1, double _R2)
         {            
             if (r1 >= R2) throw BSBeam_Ring.RadiiError();              
-            /*
-            BSMesh.Center = new TriangleNet.Geometry.Point(0, 0);
-            _ = BSMesh.GenerateRing(_R2, _r1, false);
-            Tri.Mesh = BSMesh.Mesh;
-            */
-            List<object> Tr = Tri.CalculationScheme();
+            
+            List<object> Tr = Tri.CalculationScheme(false);
             // площади треугольников
             var triAreas = Tri.triAreas;
             // ц.т. треугольников

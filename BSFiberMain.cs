@@ -159,6 +159,7 @@ namespace BSFiberConcrete
             {
                 btnStaticEqCalc.Visible = true;
                 btnCalc_Deform.Visible = false;
+                btnShowMesh.Visible = false;
                 gridEfforts.Columns["Mx"].Visible = false;
                 gridEfforts.Columns["Qy"].Visible = false;
                 tabFiber.TabPages.Remove(tabPageNDM);
@@ -1258,7 +1259,7 @@ namespace BSFiberConcrete
             BSFiberCalc_MNQ FibCalc_MNQ(Dictionary<string, double> _MNQ)
             {
                 BSFiberCalc_MNQ fibCalc = BSFiberCalc_MNQ.Construct(m_BeamSection);
-                //fibCalc.bea
+                
                 fibCalc.MatFiber      = m_MatFiber;
                 fibCalc.UseRebar      = UseRebar;
                 fibCalc.Rebar         = UseRebar ? rebar : null;
@@ -1778,9 +1779,12 @@ namespace BSFiberConcrete
 
             Dictionary<string, double> resGr2 = null;
 
-            if (_beamSection == BeamSection.Any)
+            if (_beamSection == BeamSection.Any || 
+                _beamSection == BeamSection.Ring)
             {
                 calcNDM.RunGroup1();
+
+                resGr2 = FiberCalculateGroup2(calcNDM.CalcRes);
             }
             else if (BSHelper.IsRectangled(_beamSection))
             {
@@ -2567,6 +2571,15 @@ namespace BSFiberConcrete
 
                 _ = Tri.CalculationScheme();
             }
+            else if (BSHelper.IsITL(m_BeamSection))
+            {
+                List<PointF> pts;
+                BSSection.IBeam(sz, out pts, out PointF _center, out PointF _left);
+                _CG = new TriangleNet.Geometry.Point(_center.X, _center.Y);
+
+                pathToSvgFile = BSCalcLib.Tri.CreateSectionContour(pts, BSMesh.MaxArea);
+                _ = Tri.CalculationScheme();
+            }
             else if (m_BeamSection == BeamSection.Ring)
             {
                 _CG = new TriangleNet.Geometry.Point(0, 0);
@@ -2582,24 +2595,17 @@ namespace BSFiberConcrete
 
                 Tri.Mesh = BSMesh.Mesh;
                 _ = Tri.CalculationScheme();
-            }
-            else if (BSHelper.IsITL(m_BeamSection))
-            {
-                List<PointF> pts;
-                BSSection.IBeam(sz, out pts, out PointF _center, out PointF _left);
-                _CG = new TriangleNet.Geometry.Point(_center.X, _center.Y);
-
-                pathToSvgFile = BSCalcLib.Tri.CreateSectionContour(pts, BSMesh.MaxArea);
-                _ = Tri.CalculationScheme();
-            }
+            }           
             else if (m_BeamSection == BeamSection.Any)
             {
-                List<PointF> pts;
-                BSSection.IBeam(sz, out pts, out PointF _center, out PointF _left); // TODO доработать до произвольного сечения
-                _CG = new TriangleNet.Geometry.Point(_center.X, _center.Y);
+                pathToSvgFile = m_SectionChart.GenerateMesh();
 
-                pathToSvgFile = BSCalcLib.Tri.CreateSectionContour(pts, BSMesh.MaxArea);
-                _ = Tri.CalculationScheme(false);
+                //List<PointF> pts;
+                //BSSection.IBeam(sz, out pts, out PointF _center, out PointF _left); // TODO доработать до произвольного сечения
+                //_CG = new TriangleNet.Geometry.Point(_center.X, _center.Y);
+
+                //pathToSvgFile = BSCalcLib.Tri.CreateSectionContour(pts, BSMesh.MaxArea);
+                //_ = Tri.CalculationScheme(false);
             }
             else
             {
@@ -3385,6 +3391,32 @@ namespace BSFiberConcrete
         private void labelRfbDescr_MouseMove(object sender, MouseEventArgs e)
         {
             System.Windows.Forms.Cursor.Current = Cursors.Hand;
+        }
+
+        private void btnShowMesh_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // центр тяжести сечения
+                TriangleNet.Geometry.Point CG = new TriangleNet.Geometry.Point(0.0, 0.0);
+                string pathToSvgFile = GenerateMesh(ref CG);
+                if (File.Exists(pathToSvgFile))
+                {
+                    string path2file = "BeamSectionMesh.htm";
+                    File.CreateText(path2file).Dispose();
+                    using (StreamWriter w = new StreamWriter(path2file, true, Encoding.UTF8))
+                    {
+                        w.WriteLine("<html>");
+                        w.WriteLine($"<img src = \"{pathToSvgFile}\"/>");
+                        w.WriteLine("</html>");
+                    }
+                    Process.Start(new ProcessStartInfo { FileName = path2file, UseShellExecute = true });
+                }
+            }
+            catch (Exception _e)
+            {
+                MessageBox.Show(_e.Message);
+            }
         }
     }
 }

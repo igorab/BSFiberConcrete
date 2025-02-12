@@ -25,8 +25,8 @@ namespace BSFiberConcrete
         //привязка арматуры(по X - высота, по Y ширина балки)
         private double LeftX;
 
-        private List<double> Xs = new List<double>();
-        private List<double> Ys = new List<double>();
+        private List<double> Xs { get; set; }
+        private List<double> Ys { get; set; }
 
         private List<double> lD;
         private List<double> lX;
@@ -39,6 +39,9 @@ namespace BSFiberConcrete
 
         public CalcNDM(BeamSection _BeamSection)
         {
+            Xs = new List<double>();
+            Ys = new List<double>();
+
             m_BeamSection = _BeamSection;
             setup = BSData.LoadNDMSetup();
             LeftX = 0;

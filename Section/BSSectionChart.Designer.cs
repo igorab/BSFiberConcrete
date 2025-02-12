@@ -46,18 +46,12 @@
             this.labelSection = new System.Windows.Forms.Label();
             this.labelRods = new System.Windows.Forms.Label();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.btnMesh = new System.Windows.Forms.Button();
             this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.btnSaveChart = new System.Windows.Forms.Button();
             this.btnDraw = new System.Windows.Forms.Button();
             this.tableLayoutPanelRebar = new System.Windows.Forms.TableLayoutPanel();
             this.bSRodDataGridView = new System.Windows.Forms.DataGridView();
-            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.X = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Y = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Dnom = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.D = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.RodBS = new System.Windows.Forms.BindingSource(this.components);
             this.tableLayoutPanelTrebar = new System.Windows.Forms.TableLayoutPanel();
             this.num_s_w_Y = new System.Windows.Forms.NumericUpDown();
             this.label_s_w_Y = new System.Windows.Forms.Label();
@@ -76,10 +70,6 @@
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnDel = new System.Windows.Forms.Button();
             this.dataGridSection = new System.Windows.Forms.DataGridView();
-            this.numDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.xDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.yDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pointBS = new System.Windows.Forms.BindingSource(this.components);
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnAddRod = new System.Windows.Forms.Button();
@@ -91,12 +81,20 @@
             this.numAreaRebar = new System.Windows.Forms.NumericUpDown();
             this.labelAreaUnits = new System.Windows.Forms.Label();
             this.labelArea = new System.Windows.Forms.Label();
+            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.X = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Y = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.D = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.RodBS = new System.Windows.Forms.BindingSource(this.components);
+            this.numDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.xDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.yDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pointBS = new System.Windows.Forms.BindingSource(this.components);
             this.tableLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart)).BeginInit();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanelRebar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bSRodDataGridView)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.RodBS)).BeginInit();
             this.tableLayoutPanelTrebar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.num_s_w_Y)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numN_w_X)).BeginInit();
@@ -104,11 +102,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.numN_w_Y)).BeginInit();
             this.tableLayoutPanel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridSection)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pointBS)).BeginInit();
             this.tableLayoutPanel4.SuspendLayout();
             this.tableLayoutPanelAreas.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numArea)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAreaRebar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RodBS)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pointBS)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel
@@ -219,7 +218,6 @@
             // 
             this.tableLayoutPanel2.ColumnCount = 1;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Controls.Add(this.btnMesh, 0, 2);
             this.tableLayoutPanel2.Controls.Add(this.btnSaveChart, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.btnDraw, 0, 0);
             this.tableLayoutPanel2.Location = new System.Drawing.Point(957, 32);
@@ -231,17 +229,6 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 42F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(36, 163);
             this.tableLayoutPanel2.TabIndex = 12;
-            // 
-            // btnMesh
-            // 
-            this.btnMesh.ImageKey = "Mesh.png";
-            this.btnMesh.ImageList = this.imageList;
-            this.btnMesh.Location = new System.Drawing.Point(3, 87);
-            this.btnMesh.Name = "btnMesh";
-            this.btnMesh.Size = new System.Drawing.Size(30, 31);
-            this.btnMesh.TabIndex = 5;
-            this.btnMesh.UseVisualStyleBackColor = true;
-            this.btnMesh.Click += new System.EventHandler(this.btnMesh_Click);
             // 
             // imageList
             // 
@@ -333,37 +320,6 @@
             this.bSRodDataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.bSRodDataGridView_CellValueChanged);
             this.bSRodDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.bSRodDataGridView_CellValueChanged);
             // 
-            // Id
-            // 
-            this.Id.DataPropertyName = "Id";
-            this.Id.HeaderText = "Id";
-            this.Id.Name = "Id";
-            this.Id.ToolTipText = "Номер стержня";
-            this.Id.Visible = false;
-            this.Id.Width = 20;
-            // 
-            // X
-            // 
-            this.X.DataPropertyName = "CG_X";
-            dataGridViewCellStyle1.Format = "N2";
-            dataGridViewCellStyle1.NullValue = "0";
-            this.X.DefaultCellStyle = dataGridViewCellStyle1;
-            this.X.HeaderText = "X (h)";
-            this.X.Name = "X";
-            this.X.ToolTipText = "X, по ширине сечения, см";
-            this.X.Width = 50;
-            // 
-            // Y
-            // 
-            this.Y.DataPropertyName = "CG_Y";
-            dataGridViewCellStyle2.Format = "N2";
-            dataGridViewCellStyle2.NullValue = "0";
-            this.Y.DefaultCellStyle = dataGridViewCellStyle2;
-            this.Y.HeaderText = "Y (b)";
-            this.Y.Name = "Y";
-            this.Y.ToolTipText = "Y, по высоте сечения, см";
-            this.Y.Width = 50;
-            // 
             // Dnom
             // 
             this.Dnom.DataPropertyName = "Dnom";
@@ -373,21 +329,6 @@
             this.Dnom.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.Dnom.ToolTipText = "Номинальный диаметр";
             this.Dnom.Width = 50;
-            // 
-            // D
-            // 
-            this.D.DataPropertyName = "D";
-            dataGridViewCellStyle3.Format = "N2";
-            dataGridViewCellStyle3.NullValue = "0";
-            this.D.DefaultCellStyle = dataGridViewCellStyle3;
-            this.D.HeaderText = "D";
-            this.D.Name = "D";
-            this.D.ToolTipText = "Диаметр, см";
-            this.D.Width = 30;
-            // 
-            // RodBS
-            // 
-            this.RodBS.DataSource = typeof(BSFiberConcrete.BSRod);
             // 
             // tableLayoutPanelTrebar
             // 
@@ -623,34 +564,6 @@
             this.dataGridSection.Size = new System.Drawing.Size(135, 359);
             this.dataGridSection.TabIndex = 2;
             // 
-            // numDataGridViewTextBoxColumn
-            // 
-            this.numDataGridViewTextBoxColumn.DataPropertyName = "Num";
-            this.numDataGridViewTextBoxColumn.HeaderText = "N";
-            this.numDataGridViewTextBoxColumn.Name = "numDataGridViewTextBoxColumn";
-            this.numDataGridViewTextBoxColumn.ToolTipText = "Номер узла";
-            this.numDataGridViewTextBoxColumn.Width = 20;
-            // 
-            // xDataGridViewTextBoxColumn
-            // 
-            this.xDataGridViewTextBoxColumn.DataPropertyName = "X";
-            this.xDataGridViewTextBoxColumn.HeaderText = "X";
-            this.xDataGridViewTextBoxColumn.Name = "xDataGridViewTextBoxColumn";
-            this.xDataGridViewTextBoxColumn.ToolTipText = "X, см";
-            this.xDataGridViewTextBoxColumn.Width = 30;
-            // 
-            // yDataGridViewTextBoxColumn
-            // 
-            this.yDataGridViewTextBoxColumn.DataPropertyName = "Y";
-            this.yDataGridViewTextBoxColumn.HeaderText = "Y";
-            this.yDataGridViewTextBoxColumn.Name = "yDataGridViewTextBoxColumn";
-            this.yDataGridViewTextBoxColumn.ToolTipText = "Y, см";
-            this.yDataGridViewTextBoxColumn.Width = 30;
-            // 
-            // pointBS
-            // 
-            this.pointBS.DataSource = typeof(BSFiberConcrete.Section.BSPoint);
-            // 
             // tableLayoutPanel4
             // 
             this.tableLayoutPanel4.ColumnCount = 1;
@@ -712,7 +625,7 @@
             this.tableLayoutPanelAreas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 56F));
             this.tableLayoutPanelAreas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 94F));
             this.tableLayoutPanelAreas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 99F));
-            this.tableLayoutPanelAreas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 84F));
+            this.tableLayoutPanelAreas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 96F));
             this.tableLayoutPanelAreas.Controls.Add(this.numArea, 1, 0);
             this.tableLayoutPanelAreas.Controls.Add(this.label_area, 3, 0);
             this.tableLayoutPanelAreas.Controls.Add(this.labelAreaRebarUnits, 5, 0);
@@ -731,21 +644,21 @@
             this.numArea.AccessibleName = "NumArea";
             this.numArea.DecimalPlaces = 4;
             this.numArea.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numArea.Location = new System.Drawing.Point(73, 3);
+            this.numArea.Location = new System.Drawing.Point(68, 3);
             this.numArea.Maximum = new decimal(new int[] {
             -1486618624,
             232830643,
             0,
             0});
             this.numArea.Name = "numArea";
-            this.numArea.Size = new System.Drawing.Size(97, 20);
+            this.numArea.Size = new System.Drawing.Size(90, 20);
             this.numArea.TabIndex = 1;
             // 
             // label_area
             // 
             this.label_area.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.label_area.AutoSize = true;
-            this.label_area.Location = new System.Drawing.Point(232, 5);
+            this.label_area.Location = new System.Drawing.Point(220, 5);
             this.label_area.Name = "label_area";
             this.label_area.Size = new System.Drawing.Size(88, 13);
             this.label_area.TabIndex = 3;
@@ -755,7 +668,7 @@
             // 
             this.labelAreaRebarUnits.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelAreaRebarUnits.AutoSize = true;
-            this.labelAreaRebarUnits.Location = new System.Drawing.Point(425, 5);
+            this.labelAreaRebarUnits.Location = new System.Drawing.Point(413, 5);
             this.labelAreaRebarUnits.Name = "labelAreaRebarUnits";
             this.labelAreaRebarUnits.Size = new System.Drawing.Size(27, 13);
             this.labelAreaRebarUnits.TabIndex = 4;
@@ -766,7 +679,7 @@
             this.numAreaRebar.AccessibleName = "NumArea";
             this.numAreaRebar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.numAreaRebar.DecimalPlaces = 4;
-            this.numAreaRebar.Location = new System.Drawing.Point(326, 3);
+            this.numAreaRebar.Location = new System.Drawing.Point(314, 3);
             this.numAreaRebar.Maximum = new decimal(new int[] {
             -1530494976,
             232830,
@@ -780,7 +693,7 @@
             // 
             this.labelAreaUnits.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.labelAreaUnits.AutoSize = true;
-            this.labelAreaUnits.Location = new System.Drawing.Point(176, 5);
+            this.labelAreaUnits.Location = new System.Drawing.Point(164, 5);
             this.labelAreaUnits.Name = "labelAreaUnits";
             this.labelAreaUnits.Size = new System.Drawing.Size(50, 13);
             this.labelAreaUnits.TabIndex = 2;
@@ -792,9 +705,83 @@
             this.labelArea.AutoSize = true;
             this.labelArea.Location = new System.Drawing.Point(3, 5);
             this.labelArea.Name = "labelArea";
-            this.labelArea.Size = new System.Drawing.Size(64, 13);
+            this.labelArea.Size = new System.Drawing.Size(59, 13);
             this.labelArea.TabIndex = 0;
             this.labelArea.Text = "Сечение";
+            // 
+            // Id
+            // 
+            this.Id.DataPropertyName = "Id";
+            this.Id.HeaderText = "Id";
+            this.Id.Name = "Id";
+            this.Id.ToolTipText = "Номер стержня";
+            this.Id.Visible = false;
+            this.Id.Width = 20;
+            // 
+            // X
+            // 
+            this.X.DataPropertyName = "CG_X";
+            dataGridViewCellStyle1.Format = "N2";
+            dataGridViewCellStyle1.NullValue = "0";
+            this.X.DefaultCellStyle = dataGridViewCellStyle1;
+            this.X.HeaderText = "X (h)";
+            this.X.Name = "X";
+            this.X.ToolTipText = "X, по ширине сечения, см";
+            this.X.Width = 50;
+            // 
+            // Y
+            // 
+            this.Y.DataPropertyName = "CG_Y";
+            dataGridViewCellStyle2.Format = "N2";
+            dataGridViewCellStyle2.NullValue = "0";
+            this.Y.DefaultCellStyle = dataGridViewCellStyle2;
+            this.Y.HeaderText = "Y (b)";
+            this.Y.Name = "Y";
+            this.Y.ToolTipText = "Y, по высоте сечения, см";
+            this.Y.Width = 50;
+            // 
+            // D
+            // 
+            this.D.DataPropertyName = "D";
+            dataGridViewCellStyle3.Format = "N2";
+            dataGridViewCellStyle3.NullValue = "0";
+            this.D.DefaultCellStyle = dataGridViewCellStyle3;
+            this.D.HeaderText = "D";
+            this.D.Name = "D";
+            this.D.ToolTipText = "Диаметр, см";
+            this.D.Width = 30;
+            // 
+            // RodBS
+            // 
+            this.RodBS.DataSource = typeof(BSFiberConcrete.BSRod);
+            // 
+            // numDataGridViewTextBoxColumn
+            // 
+            this.numDataGridViewTextBoxColumn.DataPropertyName = "Num";
+            this.numDataGridViewTextBoxColumn.HeaderText = "N";
+            this.numDataGridViewTextBoxColumn.Name = "numDataGridViewTextBoxColumn";
+            this.numDataGridViewTextBoxColumn.ToolTipText = "Номер узла";
+            this.numDataGridViewTextBoxColumn.Width = 20;
+            // 
+            // xDataGridViewTextBoxColumn
+            // 
+            this.xDataGridViewTextBoxColumn.DataPropertyName = "X";
+            this.xDataGridViewTextBoxColumn.HeaderText = "X";
+            this.xDataGridViewTextBoxColumn.Name = "xDataGridViewTextBoxColumn";
+            this.xDataGridViewTextBoxColumn.ToolTipText = "X, см";
+            this.xDataGridViewTextBoxColumn.Width = 30;
+            // 
+            // yDataGridViewTextBoxColumn
+            // 
+            this.yDataGridViewTextBoxColumn.DataPropertyName = "Y";
+            this.yDataGridViewTextBoxColumn.HeaderText = "Y";
+            this.yDataGridViewTextBoxColumn.Name = "yDataGridViewTextBoxColumn";
+            this.yDataGridViewTextBoxColumn.ToolTipText = "Y, см";
+            this.yDataGridViewTextBoxColumn.Width = 30;
+            // 
+            // pointBS
+            // 
+            this.pointBS.DataSource = typeof(BSFiberConcrete.Section.BSPoint);
             // 
             // BSSectionChart
             // 
@@ -810,7 +797,6 @@
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanelRebar.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.bSRodDataGridView)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.RodBS)).EndInit();
             this.tableLayoutPanelTrebar.ResumeLayout(false);
             this.tableLayoutPanelTrebar.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.num_s_w_Y)).EndInit();
@@ -819,12 +805,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.numN_w_Y)).EndInit();
             this.tableLayoutPanel5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridSection)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pointBS)).EndInit();
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanelAreas.ResumeLayout(false);
             this.tableLayoutPanelAreas.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numArea)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAreaRebar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RodBS)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pointBS)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -852,7 +839,6 @@
         private System.Windows.Forms.Label labelAreaRebarUnits;
         private System.Windows.Forms.NumericUpDown numAreaRebar;
         private System.Windows.Forms.Button btnSaveChart;
-        private System.Windows.Forms.Button btnMesh;
         private System.Windows.Forms.ImageList imageList;
         private System.Windows.Forms.Button btnDelRod;
         private System.Windows.Forms.Button btnAddRod;
