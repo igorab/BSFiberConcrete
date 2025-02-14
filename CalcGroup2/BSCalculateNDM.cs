@@ -306,6 +306,8 @@ namespace BSFiberConcrete.CalcGroup2
                     //1. проверка на возникновение трещины
                     //2. определение ширины раскрытия трещины, если трещина возникла
 
+                    CalcM_crc();
+
                     // максимальная деформация в сечении
                     double epsBt = epB[j].Maximum();
                     // условие возникновения трещины
@@ -455,9 +457,8 @@ namespace BSFiberConcrete.CalcGroup2
             UtilRate_s_t = (esc0 != 0) ? epsS_t / esc0 : 0.0;
             // -- по деформациям на cжатие
 
-            UtilRate_fb_p = (Rbc != 0) ? sigB_p / Rbc : 0.0;
-
-            //UtilRate_fb_p = (ebc0 != 0) ? epsB_p / ebc0 : 0.0;
+            //UtilRate_fb_p = (Rbc != 0) ? sigB_p / Rbc : 0.0;
+            UtilRate_fb_p = (ebc0 != 0) ? epsB_p / ebc0 : 0.0;
             UtilRate_s_p = (esc0 != 0) ? epsS_p / esc0 : 0.0;
             
             m_Results = new Dictionary<string, double>
@@ -523,6 +524,22 @@ namespace BSFiberConcrete.CalcGroup2
             SigmaSResult = new List<double>(sigS[jend]);
             EpsilonBResult = new List<double>(epB[jend]);
             EpsilonSResult = new List<double>(epS[jend]);
+        }
+
+        /// <summary>
+        /// Определение момента трещинообразования 
+        /// формула 2.20
+        /// </summary>
+        /// <returns>M_crc</returns>        
+        private double CalcM_crc()
+        {
+            double Mcrc = 0;
+            double S = 0;
+            double khi = 0;  // 1/ro
+
+            Mcrc = Rfbt * b * S / (6 * khi * khi) + Eb0 * b;
+
+            return Mcrc;
         }
 
         private double NuNTo0(double _value)

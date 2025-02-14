@@ -13,8 +13,7 @@ namespace BSFiberConcrete.Section.MeshSettingsOfBeamSection
     public partial class MeshSettingsView : Form
     {
 
-
-        public MeshSectionSettings _settings;
+        public MeshSectionSettings _settings { get; set; }
         
         public MeshSettingsView(MeshSectionSettings settings)
         {

@@ -54,7 +54,7 @@ namespace BSFiberConcrete.Section
 
         // точки на диаграмме для отображения отверстия в сечении
         private List<PointF> InnerPoints;
-        private NDMSetup NdmSetup;
+        public NDMSetup NdmSetup { get; set; }
         private PointF Origin;
 
         private const int amountOfEdges = 40;
@@ -839,28 +839,7 @@ namespace BSFiberConcrete.Section
                 MessageBox.Show(ex.Message);
             }
         }
-
-        private void buttonClose_Click(object sender, EventArgs e)
-        {
-            // Close();
-        }
-
-        /// <summary>
-        /// Расчет сечения по НДМ
-        /// </summary>
-        /// <param name="_My"></param>
-        /// <returns></returns>
-        private BSCalcResultNDM CalcNDM_MxMyN()
-        {
-            Dictionary<string, double> dictParams = DictCalcParams;
-                        
-            CalcNDM calcNDM = new CalcNDM(m_BeamSection) { setup = NdmSetup, Dprm = dictParams };
-            calcNDM.RunGroup1();
-
-            return calcNDM.CalcRes;                                    
-        }
-
-        
+                
         private void BeamSectionFromPoints(ref List<PointF> _PointsSection, PointF _center)
         {                                              
             BindingList<BSPoint> bspoints = (BindingList<BSPoint>)pointBS.List;           
@@ -884,11 +863,16 @@ namespace BSFiberConcrete.Section
             Tri.MinAngle     = NdmSetup.MinAngle;
             BSMesh.MaxArea   = NdmSetup.MaxArea;
 
+            return GenerateMesh(BSMesh.MaxArea);
+        }
+
+        public string GenerateMesh(double _MaxArea)
+        {            
             List<PointF> pts = new List<PointF>();
 
             BeamSectionFromPoints(ref pts, Center);
 
-            string pathToSvgFile = Tri.CreateSectionContour(pts, BSMesh.MaxArea);
+            string pathToSvgFile = Tri.CreateSectionContour(pts, _MaxArea);
 
             _ = Tri.CalculationScheme(false);
 
@@ -896,13 +880,15 @@ namespace BSFiberConcrete.Section
             int? nTri = Tri.triCGs?.Count();
 
             if (nTri > 0)
-            {        
+            {
                 // площади треугольников
                 NumArea = Tri.triAreas?.Sum() ?? 0;
             }
-                        
+
             return pathToSvgFile;
         }
+
+
 
         /// <summary>
         /// сетка

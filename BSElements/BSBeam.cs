@@ -32,6 +32,19 @@ namespace BSFiberConcrete
         public virtual double Width { get; }
         public virtual double Height { get; }
 
+        public BSBeam()
+        {
+        }
+
+        public BSBeam(double _Area, double _W_s, double _I_s, double _Jy, double _Jx)
+        {
+            any_Area = _Area;
+            any_W_s  = _W_s;
+            any_I_s  = _I_s;
+            any_Jy   = _Jy;
+            any_Jx   = _Jx;   
+        }
+
         /// <summary>
         /// Центр тяжести сечения
         /// </summary>
@@ -46,29 +59,35 @@ namespace BSFiberConcrete
             return Convert.ToDouble(_As);
         }
 
+        private readonly double any_Area;
+        private readonly double any_W_s;
+        private readonly double any_I_s;
+        private readonly double any_Jy;
+        private readonly double any_Jx;
+
         public virtual double Area()
         {
-            return 0;
+            return any_Area;
         }
 
         public virtual double W_s()
         {
-            return 0;
+            return any_W_s;
         }
 
         public virtual double I_s()
         {
-            return 0;
+            return any_I_s;
         }
 
         public virtual double Jy()
         {
-            return 0;
+            return any_Jy;
         }
 
         public virtual double Jx()
         {
-            return 0;
+            return any_Jx;
         }
 
         /// <summary>
@@ -102,15 +121,9 @@ namespace BSFiberConcrete
         {
             return 0;
         }
-
         
-
         public virtual double y_t => h / 2; 
-        
-        public BSBeam()
-        {            
-        }
-
+               
         public virtual void SetSizes(double[] _t) { }
 
         /// <summary>

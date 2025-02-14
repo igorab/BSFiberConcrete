@@ -107,7 +107,7 @@ namespace BSFiberConcrete
 
         private bool UseRebar => checkBoxRebar.Checked;
 
-        private MeshSectionSettings _beamSectionMeshSettings;
+        private MeshSectionSettings _beamSectionMeshSettings { get; set; }
 
 
         /// <summary>
@@ -784,9 +784,17 @@ namespace BSFiberConcrete
 
             try
             {
-                BSBeam bsBeam = BSBeam.construct(m_BeamSection);
+                BSBeam bsBeam;
 
-                bsBeam.SetSizes(BeamSizes());
+                if (m_BeamSection == BeamSection.Any)
+                {
+                    bsBeam = new BSBeam(0, 0, 0, 0, 0);                    
+                }
+                else
+                {
+                    bsBeam = BSBeam.construct(m_BeamSection);
+                    bsBeam.SetSizes(BeamSizes());
+                }
 
                 Dictionary<string, double> MNQ = GetEffortsForCalc();
 
@@ -1740,7 +1748,7 @@ namespace BSFiberConcrete
         /// <summary>
         /// Расчет на действие поперечных сил действующих по двум направлениям
         /// </summary>
-        private Dictionary<string, double> CalcQxQy()
+        private Dictionary<string, double> CalcQxQy(double[] sz)
         {            
             SetFiberMaterialProperties();
 
@@ -1752,10 +1760,7 @@ namespace BSFiberConcrete
             {
                 return null;
             }            
-
-            double   beamLngth = InitBeamLength(true);
-            double[] sz        = BeamSizes(beamLngth);
-                                    
+                                                
             Dictionary<string, double> resQxQy = FiberCalculate_QxQy(dMNQ, sz);
 
             return resQxQy;            
@@ -1766,7 +1771,16 @@ namespace BSFiberConcrete
         /// </summary>        
         private BSCalcResultNDM CalcNDM(BeamSection _beamSection)
         {
-            Dictionary<string, double> resQxQy = CalcQxQy();
+            double beamLngth = InitBeamLength(true);
+            double[] sz = BeamSizes(beamLngth);
+
+            if (_beamSection == BeamSection.Any)
+            {
+                sz[0] = m_SectionChart.Wdth;
+                sz[1] = m_SectionChart.Hght;
+            }
+
+            Dictionary<string, double> resQxQy = CalcQxQy(sz);
 
             // данные с формы:
             Dictionary<string, double> _D = DictCalcParams(_beamSection);          
@@ -2116,7 +2130,8 @@ namespace BSFiberConcrete
                     }
                     else if (m_BeamSection == BeamSection.Any)
                     {
-                        m_SectionChart.GenerateMesh();
+                        m_SectionChart.GenerateMesh(_beamSectionMeshSettings.MaxArea);
+                        
                         calcRes = CalcNDM(BeamSection.Any);
                     }
 
@@ -2544,19 +2559,12 @@ namespace BSFiberConcrete
             string pathToSvgFile;
             double[] sz = BeamWidtHeight(out double b, out double h, out double area);
             
-            BSMesh.Nx = _beamSectionMeshSettings.NX;
-            BSMesh.Ny = _beamSectionMeshSettings.NY;
-            double meshSize = Math.Max(BSMesh.Nx, BSMesh.Ny);
-
+            BSMesh.Nx       = _beamSectionMeshSettings.NX;
+            BSMesh.Ny       = _beamSectionMeshSettings.NY;            
             BSMesh.MinAngle = _beamSectionMeshSettings.MinAngle;
-            Tri.MinAngle = _beamSectionMeshSettings.MinAngle;            
-            BSMesh.MaxArea = 0;
-
-            if (meshSize > 0)
-            {
-                BSMesh.MaxArea = area / meshSize;
-            }
-
+            Tri.MinAngle    = _beamSectionMeshSettings.MinAngle;
+            BSMesh.MaxArea  = _beamSectionMeshSettings.MaxArea;
+            
             BSMesh.FilePath = Path.Combine(Environment.CurrentDirectory, "Templates");
             Tri.FilePath = BSMesh.FilePath;
             
@@ -2597,15 +2605,8 @@ namespace BSFiberConcrete
                 _ = Tri.CalculationScheme();
             }           
             else if (m_BeamSection == BeamSection.Any)
-            {
-                pathToSvgFile = m_SectionChart.GenerateMesh();
-
-                //List<PointF> pts;
-                //BSSection.IBeam(sz, out pts, out PointF _center, out PointF _left); // TODO доработать до произвольного сечения
-                //_CG = new TriangleNet.Geometry.Point(_center.X, _center.Y);
-
-                //pathToSvgFile = BSCalcLib.Tri.CreateSectionContour(pts, BSMesh.MaxArea);
-                //_ = Tri.CalculationScheme(false);
+            {                
+                pathToSvgFile = m_SectionChart.GenerateMesh(BSMesh.MaxArea);                
             }
             else
             {
@@ -3252,10 +3253,15 @@ namespace BSFiberConcrete
             E_fb_value(numE_beton.Value, numEfiber.Value, numMu_fv.Value);
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnMeshSettings_Click(object sender, EventArgs e)
         {
             MeshSettingsView meshSettings = new MeshSettingsView(_beamSectionMeshSettings);
-            meshSettings.ShowDialog();
+            DialogResult res = meshSettings.ShowDialog();
+            if (res == DialogResult.OK)
+            {
+                NDMSetupValuesFromForm();
+            }
+
         }
 
         private void num_s_w_X_ValueChanged(object sender, EventArgs e)
@@ -3399,6 +3405,9 @@ namespace BSFiberConcrete
             {
                 // центр тяжести сечения
                 TriangleNet.Geometry.Point CG = new TriangleNet.Geometry.Point(0.0, 0.0);
+
+                NDMSetupInitFormValues();
+                
                 string pathToSvgFile = GenerateMesh(ref CG);
                 if (File.Exists(pathToSvgFile))
                 {
