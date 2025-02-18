@@ -165,7 +165,7 @@ namespace BSFiberConcrete
             BSCalcNDM bsCalcGR1 = BSCalcGr1();
             
             m_CalcRes = new BSCalcResultNDM(bsCalcGR1.Results);
-            m_CalcRes.InitCalcParams(Dprm);
+            m_CalcRes.InitCalcParams(Dprm);            
             m_CalcRes.InitFromCalcNDM(bsCalcGR1);           
             m_CalcRes.ResultsMsg1Group(ref m_Message);
 

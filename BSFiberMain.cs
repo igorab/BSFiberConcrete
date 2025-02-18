@@ -788,7 +788,7 @@ namespace BSFiberConcrete
 
                 if (m_BeamSection == BeamSection.Any)
                 {
-                    bsBeam = new BSBeam(0, 0, 0, 0, 0);                    
+                    bsBeam = new BSBeam(calcRes.Area, calcRes.W_s, calcRes.I_s, calcRes.Jy, calcRes.Jx);                    
                 }
                 else
                 {

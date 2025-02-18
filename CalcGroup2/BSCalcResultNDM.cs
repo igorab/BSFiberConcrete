@@ -107,11 +107,11 @@ namespace BSFiberConcrete
         // деформации
         public List<double> Eps_B { get; set; } // бетон
         public List<double> Eps_S { get; set; } // арматура
-        
+
         /// <summary>
         /// диаметры арматуры соответствующие номерам стержней арматуры
         /// </summary>
-        public List<double> RebarDiametersByIndex { get; set; } 
+        public List<double> RebarDiametersByIndex { get; set; }
 
         #endregion
 
@@ -141,9 +141,9 @@ namespace BSFiberConcrete
         #endregion
 
         public List<string> Msg { get; set; }
-        
+
         private Dictionary<string, double> Res1Group { get; set; }
-        private Dictionary<string, double> Res2Group {get; set; }
+        private Dictionary<string, double> Res2Group { get; set; }
 
         public List<int> ErrorIdx { get; set; }
 
@@ -250,7 +250,7 @@ namespace BSFiberConcrete
         {
             get
             {
-                return new Dictionary<string, double> 
+                return new Dictionary<string, double>
                 {
                     { DN("Eb"),  Eb },
                     // норм
@@ -258,9 +258,9 @@ namespace BSFiberConcrete
                     { DN("Rfbtn"), Rfbtn },
                     // расч
                     { DN("Rfb"), Rfb },
-                    { DN("Rfbt"), Rfbt },                    
+                    { DN("Rfbt"), Rfbt },
                     { DN("Es"),    Es },
-                    { DN("Rs"),    Rs },                    
+                    { DN("Rs"),    Rs },
                     { DN("Eps_s_ult"), Eps_s_ult }
                 };
             }
@@ -278,9 +278,9 @@ namespace BSFiberConcrete
                     { DN("Rods_area"), Rods_area }
                 };
             }
-        }         
+        }
 
-        public Dictionary<string, double> GeomParams =>  new Dictionary<string, double>
+        public Dictionary<string, double> GeomParams => new Dictionary<string, double>
         {
             { DN("b"), b },
             { DN("h"), h }
@@ -300,6 +300,26 @@ namespace BSFiberConcrete
 
         public Dictionary<string, double> Coeffs { get; internal set; }
         public LameUnitConverter UnitConverter { get; internal set; }
+        public double Area { get; internal set; }
+        public double W_s { get; internal set; }
+        public double I_s { get; internal set; }
+        public double Jy { get; internal set; }
+        public double Jx { get; internal set; }
+
+        // параметры сечения
+        private void SectionParams(Dictionary<string, double> _D)
+        {
+            if (_D.ContainsKey("Area"))
+                Area = _D["Area"];
+            if (_D.ContainsKey("W_s"))
+                W_s  = _D["W_s"];
+            if (_D.ContainsKey("I_s"))
+                I_s  = _D["I_s"];
+            if (_D.ContainsKey("Jy"))
+                Jy   = _D["Jy"];
+            if (_D.ContainsKey("Jx"))
+                Jx   = _D["Jx"];
+        }
 
         private double InitBeamLength(double _lgth, double _coeflgth)
         {
@@ -406,6 +426,8 @@ namespace BSFiberConcrete
             h0_t = _D1gr["h0_t"];
             As1_p = _D1gr["As1_p"];
             h01_p = _D1gr["h01_p"];
+
+            SectionParams(_D1gr);
 
             Msg = new List<string>();
             Res1Group = new Dictionary<string, double>();

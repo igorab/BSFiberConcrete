@@ -1,4 +1,6 @@
 ﻿using MathNet.Numerics.Statistics;
+using OpenTK.Platform.Windows;
+using ScottPlot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -77,11 +79,11 @@ namespace BSFiberConcrete.CalcGroup2
             double num_c_y = Ab.Zip(y0b, (A, y) => A * y).Sum();
             double num_c_x = Ab.Zip(x0b, (A, x) => A * x).Sum();
 
-            double denomc = Ab.Sum(A => A);
-            double cy = num_c_y / denomc;
+            double area_b = Ab.Sum(A => A);
+            double cy = num_c_y / area_b;
             y_cm.Add(cy);
 
-            double cx = num_c_x / denomc;
+            double cx = num_c_x / area_b;
             x_cm.Add(cx);
 
             // массив привязок бетонных элементов к ц.т., см                
@@ -400,10 +402,29 @@ namespace BSFiberConcrete.CalcGroup2
             double As1_p = 0;
             // расст то ц.т. сжатой арматуры
             double h01_p = 0;
+            // момент инерции арматуры
+            double I_s = 0;
+            // момент сопротивления сечения
+            double W_s = 0;
 
             // положение центра тяжести растянутой и сжатой арматуры
-            double s_t_xcm = 0; //y_cm[jend]
-            double s_p_xcm = 0; // x_cm[jend]; 
+            double s_t_xcm = 0; 
+            double s_p_xcm = 0;
+
+            // момент инерции сечения относительно его ц.т.
+            double Jx = Ab.Zip(y0b, (A, y) => A * y * y).Sum() - area_b * Math.Pow(y_cm[0], 2) ;
+            double Jy = Ab.Zip(x0b, (A, x) => A * x * x).Sum() - area_b * Math.Pow(x_cm[0], 2);
+
+            // расстояние от ц.т. до наиболее растянутого волокна (y_t обозначение в формулах СП)
+            double y_t = 0;
+            y_t = x_cm[jend];
+
+            // момент инерции приведенного сечения относительно его ц.т.
+            double I_red = Jy + I_s;
+            
+            // моменты сопротивления сечения
+            double W_t = Jy / y_t;
+            double W_red = I_red / y_t;
 
             int i_t = 0, i_p = 0;
             for (int i = 0; i < As.Count; i++)
@@ -460,7 +481,7 @@ namespace BSFiberConcrete.CalcGroup2
             //UtilRate_fb_p = (Rbc != 0) ? sigB_p / Rbc : 0.0;
             UtilRate_fb_p = (ebc0 != 0) ? epsB_p / ebc0 : 0.0;
             UtilRate_s_p = (esc0 != 0) ? epsS_p / esc0 : 0.0;
-            
+
             m_Results = new Dictionary<string, double>
             {
                 // деформация, кривизна
@@ -502,18 +523,39 @@ namespace BSFiberConcrete.CalcGroup2
 
                 // трещиностойкость
                 // --моменты трещинообразования
-                ["My_crc"] =  My_crc,
-                ["Mx_crc"] =  Mx_crc,
+                ["My_crc"] = My_crc,
+                ["Mx_crc"] = Mx_crc,
                 // -- ширина раскрытия трещины
                 ["es_crc"] = es_crc,
                 ["sig_s_crc"] = sig_s_crc,
                 ["a_crc"] = a_crc,
 
                 // арматура
-                ["As_t"]   = As_t,
-                ["h0_t"]  = h0_t, 
-                ["As1_p"]  = As1_p,  
+                ["As_t"] = As_t,
+                ["h0_t"] = h0_t,
+                ["As1_p"] = As1_p,
                 ["h01_p"] = h01_p,
+
+                // положение Ц.Т.
+                ["X0_cm"] = x_cm[0],
+                ["Y0_cm"] = y_cm[0],
+
+                ["X_cm"] = x_cm[jend],
+                ["Y_cm"] = y_cm[jend],
+
+                // площадь сечения
+                ["Area"] = area_b,
+
+                // моменты инерции сечения
+                ["Jx"] = Jx,
+                ["Jy"] = Jy,
+                ["I_red"] = I_red,
+                ["I_s"] = I_s,
+
+                // момент сопротивления сечения
+                ["W_t"] = W_t,
+                ["W_red"] = W_red,
+                ["W_s"] = W_s,
 
                 // число итераций:
                 ["ItersCnt"] = jend
