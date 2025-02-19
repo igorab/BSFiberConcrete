@@ -46,8 +46,8 @@
             this.labelSection = new System.Windows.Forms.Label();
             this.labelRods = new System.Windows.Forms.Label();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.btnSaveChart = new System.Windows.Forms.Button();
+            this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.btnDraw = new System.Windows.Forms.Button();
             this.tableLayoutPanelRebar = new System.Windows.Forms.TableLayoutPanel();
             this.bSRodDataGridView = new System.Windows.Forms.DataGridView();
@@ -230,6 +230,18 @@
             this.tableLayoutPanel2.Size = new System.Drawing.Size(36, 163);
             this.tableLayoutPanel2.TabIndex = 12;
             // 
+            // btnSaveChart
+            // 
+            this.btnSaveChart.ImageIndex = 22;
+            this.btnSaveChart.ImageList = this.imageList;
+            this.btnSaveChart.Location = new System.Drawing.Point(3, 45);
+            this.btnSaveChart.Name = "btnSaveChart";
+            this.btnSaveChart.Size = new System.Drawing.Size(30, 34);
+            this.btnSaveChart.TabIndex = 2;
+            this.btnSaveChart.UseVisualStyleBackColor = true;
+            this.btnSaveChart.Visible = false;
+            this.btnSaveChart.Click += new System.EventHandler(this.btnSaveChart_Click);
+            // 
             // imageList
             // 
             this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
@@ -258,18 +270,6 @@
             this.imageList.Images.SetKeyName(21, "update.png");
             this.imageList.Images.SetKeyName(22, "save.png");
             this.imageList.Images.SetKeyName(23, "reabr.png");
-            // 
-            // btnSaveChart
-            // 
-            this.btnSaveChart.ImageIndex = 22;
-            this.btnSaveChart.ImageList = this.imageList;
-            this.btnSaveChart.Location = new System.Drawing.Point(3, 45);
-            this.btnSaveChart.Name = "btnSaveChart";
-            this.btnSaveChart.Size = new System.Drawing.Size(30, 34);
-            this.btnSaveChart.TabIndex = 2;
-            this.btnSaveChart.UseVisualStyleBackColor = true;
-            this.btnSaveChart.Visible = false;
-            this.btnSaveChart.Click += new System.EventHandler(this.btnSaveChart_Click);
             // 
             // btnDraw
             // 
@@ -625,7 +625,7 @@
             this.tableLayoutPanelAreas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 56F));
             this.tableLayoutPanelAreas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 94F));
             this.tableLayoutPanelAreas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 99F));
-            this.tableLayoutPanelAreas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 96F));
+            this.tableLayoutPanelAreas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 113F));
             this.tableLayoutPanelAreas.Controls.Add(this.numArea, 1, 0);
             this.tableLayoutPanelAreas.Controls.Add(this.label_area, 3, 0);
             this.tableLayoutPanelAreas.Controls.Add(this.labelAreaRebarUnits, 5, 0);
@@ -644,21 +644,21 @@
             this.numArea.AccessibleName = "NumArea";
             this.numArea.DecimalPlaces = 4;
             this.numArea.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numArea.Location = new System.Drawing.Point(68, 3);
+            this.numArea.Location = new System.Drawing.Point(61, 3);
             this.numArea.Maximum = new decimal(new int[] {
-            -1486618624,
-            232830643,
+            1874919424,
+            2328306,
             0,
             0});
             this.numArea.Name = "numArea";
-            this.numArea.Size = new System.Drawing.Size(90, 20);
+            this.numArea.Size = new System.Drawing.Size(80, 20);
             this.numArea.TabIndex = 1;
             // 
             // label_area
             // 
             this.label_area.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.label_area.AutoSize = true;
-            this.label_area.Location = new System.Drawing.Point(220, 5);
+            this.label_area.Location = new System.Drawing.Point(203, 5);
             this.label_area.Name = "label_area";
             this.label_area.Size = new System.Drawing.Size(88, 13);
             this.label_area.TabIndex = 3;
@@ -668,7 +668,7 @@
             // 
             this.labelAreaRebarUnits.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelAreaRebarUnits.AutoSize = true;
-            this.labelAreaRebarUnits.Location = new System.Drawing.Point(413, 5);
+            this.labelAreaRebarUnits.Location = new System.Drawing.Point(396, 5);
             this.labelAreaRebarUnits.Name = "labelAreaRebarUnits";
             this.labelAreaRebarUnits.Size = new System.Drawing.Size(27, 13);
             this.labelAreaRebarUnits.TabIndex = 4;
@@ -679,7 +679,7 @@
             this.numAreaRebar.AccessibleName = "NumArea";
             this.numAreaRebar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.numAreaRebar.DecimalPlaces = 4;
-            this.numAreaRebar.Location = new System.Drawing.Point(314, 3);
+            this.numAreaRebar.Location = new System.Drawing.Point(297, 3);
             this.numAreaRebar.Maximum = new decimal(new int[] {
             -1530494976,
             232830,
@@ -693,7 +693,7 @@
             // 
             this.labelAreaUnits.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.labelAreaUnits.AutoSize = true;
-            this.labelAreaUnits.Location = new System.Drawing.Point(164, 5);
+            this.labelAreaUnits.Location = new System.Drawing.Point(147, 5);
             this.labelAreaUnits.Name = "labelAreaUnits";
             this.labelAreaUnits.Size = new System.Drawing.Size(50, 13);
             this.labelAreaUnits.TabIndex = 2;
@@ -703,11 +703,14 @@
             // 
             this.labelArea.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.labelArea.AutoSize = true;
+            this.labelArea.ForeColor = System.Drawing.SystemColors.MenuHighlight;
             this.labelArea.Location = new System.Drawing.Point(3, 5);
             this.labelArea.Name = "labelArea";
-            this.labelArea.Size = new System.Drawing.Size(59, 13);
+            this.labelArea.Size = new System.Drawing.Size(52, 13);
             this.labelArea.TabIndex = 0;
             this.labelArea.Text = "Сечение";
+            this.labelArea.Click += new System.EventHandler(this.labelArea_Click);
+            this.labelArea.MouseMove += new System.Windows.Forms.MouseEventHandler(this.labelArea_MouseMove);
             // 
             // Id
             // 

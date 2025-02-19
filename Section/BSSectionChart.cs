@@ -65,6 +65,12 @@ namespace BSFiberConcrete.Section
 
         public double[] Sz { get; set; }
         public double NumArea { set { numArea.Value = (decimal)value; } get { return (double)numArea.Value; } }
+        public double CF_X;
+        public double CF_Y;
+        public double J_X;
+        public double J_Y;
+        public double W_X_top;
+        public double W_X_low;
 
         public Rebar Rebar
         {
@@ -535,7 +541,9 @@ namespace BSFiberConcrete.Section
         {
             try
             {
-               RedrawSection();
+                RedrawSection();
+
+                GenerateMesh();
             }
             catch (Exception _e)
             {
@@ -883,11 +891,14 @@ namespace BSFiberConcrete.Section
             {
                 // площади треугольников
                 NumArea = Tri.triAreas?.Sum() ?? 0;
+
+                (CF_X, CF_Y) = Tri.СenterOfFigure();
+
+                (J_X, J_Y) = Tri.MomentOfInertia();
             }
 
             return pathToSvgFile;
         }
-
 
 
         /// <summary>
@@ -982,6 +993,19 @@ namespace BSFiberConcrete.Section
 
             Dnom.Items.Clear();
             Dnom.Items.AddRange(newListDiameters.ToArray());
+        }
+
+        private void labelArea_MouseMove(object sender, MouseEventArgs e)
+        {
+            System.Windows.Forms.Cursor.Current = Cursors.Hand;
+        }
+
+        private void labelArea_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show($"Центр тяжести сечения: X = {Math.Round(CF_X, 4)} Y = {Math.Round(CF_Y,4)}\n" +
+                $"Момент инерции : Jx = {Math.Round(J_X, 4)} Jy = {Math.Round(J_Y, 4)}\n" +
+                $"Момент сопротивления: верх Wx = {Math.Round(W_X_top, 4)} низ Wx = {Math.Round(W_X_low, 4)}\n",
+                "Сечение");
         }
     }
 }

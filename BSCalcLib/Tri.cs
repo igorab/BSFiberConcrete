@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using TriangleNet;
 using TriangleNet.Geometry;
 using TriangleNet.IO;
@@ -45,6 +46,58 @@ namespace BSCalcLib
         public static double CalculateTriangleArea(double x1, double y1, double x2, double y2, double x3, double y3)
         {
             return Math.Abs(x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) / 2.0;
+        }
+
+        /// <summary>
+        ///  Центр тяжести
+        /// </summary>
+        /// <returns>X, Y</returns>
+        public static (double, double) СenterOfFigure()
+        {
+            if (triCGs == null || triCGs.Count == 0) return (0, 0);
+
+            int idx = 0;
+            double nomX= 0, nomY=0;
+            double figArea = triAreas.Sum();
+            foreach (var _area in triAreas) 
+            {                
+                nomX += _area * triCGs[idx].Y;
+                nomY += _area * triCGs[idx].X;
+                idx++;
+            }
+
+            double cgX = (figArea != 0)? nomX /figArea  : 0;
+            double cgY = (figArea != 0)? nomY /figArea : 0;
+
+            return (cgX, cgY);
+        }
+
+        /// <summary>
+        /// Момент инерции сечения
+        /// </summary>
+        /// <returns></returns>
+        public static (double, double) MomentOfInertia()
+        {
+            if (triCGs == null || triCGs.Count == 0) return (0, 0);
+
+            int idx = 0;            
+            double figArea = triAreas.Sum();
+
+            double Jx = 0, Jy = 0;
+            double cmX, cmY;
+            (cmX, cmY) = СenterOfFigure();
+
+            foreach (var _area in triAreas)
+            {
+                Jx += _area * Math.Pow(triCGs[idx].Y, 2);
+                Jy += _area * Math.Pow(triCGs[idx].X, 2);
+                idx++;
+            }
+
+            double Jx_c = Jx - Math.Pow(cmX,2) * figArea;
+            double Jy_c = Jy - Math.Pow(cmY, 2) * figArea;
+
+            return (Jx_c, Jy_c);
         }
 
 
