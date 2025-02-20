@@ -48,6 +48,21 @@ namespace BSCalcLib
             return Math.Abs(x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) / 2.0;
         }
 
+        public static double HeightOfFigure()
+        {            
+            double h = Mesh.Bounds.Height;                               
+            return h;
+        }
+
+        public static double WidthOfFigure()
+        {
+            double w = Mesh.Bounds.Width;
+            return w;
+        }
+
+
+
+
         /// <summary>
         ///  Центр тяжести
         /// </summary>
@@ -56,18 +71,20 @@ namespace BSCalcLib
         {
             if (triCGs == null || triCGs.Count == 0) return (0, 0);
 
-            int idx = 0;
-            double nomX= 0, nomY=0;
+            int idx = 0; 
+            // статичесеие моменты:
+            double Sy= 0, Sx=0;
+            // Общая площадь
             double figArea = triAreas.Sum();
             foreach (var _area in triAreas) 
             {                
-                nomX += _area * triCGs[idx].Y;
-                nomY += _area * triCGs[idx].X;
+                Sy += _area * triCGs[idx].X;
+                Sx += _area * triCGs[idx].Y;
                 idx++;
             }
 
-            double cgX = (figArea != 0)? nomX /figArea  : 0;
-            double cgY = (figArea != 0)? nomY /figArea : 0;
+            double cgX = (figArea != 0)? Sy /figArea  : 0;
+            double cgY = (figArea != 0)? Sx /figArea : 0;
 
             return (cgX, cgY);
         }
@@ -94,10 +111,35 @@ namespace BSCalcLib
                 idx++;
             }
 
-            double Jx_c = Jx - Math.Pow(cmX,2) * figArea;
-            double Jy_c = Jy - Math.Pow(cmY, 2) * figArea;
+            double Jx_c = Jx - Math.Pow(cmY, 2) * figArea;
+            double Jy_c = Jy - Math.Pow(cmX, 2) * figArea;
 
             return (Jx_c, Jy_c);
+        }
+
+        /// <summary>
+        ///  Момент сопротивления сечения (по высоте (оси Y))
+        /// </summary>
+        /// <returns>Wx нижнее, Wx верхнее</returns>
+        public static (double, double) ModulusOfSection()
+        {
+            double c_x, c_y;
+            (c_x, c_y) = СenterOfFigure();
+
+            if (c_y == 0) return (0, 0);
+
+            double h = HeightOfFigure();
+
+            double Jx, Jy;
+            (Jx, Jy) = MomentOfInertia();
+
+            double Wx_t, Wx_l;
+            
+            Wx_t =  Jx / (h- c_y);
+
+            Wx_l = Jx / c_y;
+
+            return (Wx_t, Wx_l);
         }
 
 

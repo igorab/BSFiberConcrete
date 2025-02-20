@@ -65,6 +65,9 @@ namespace BSFiberConcrete.Section
 
         public double[] Sz { get; set; }
         public double NumArea { set { numArea.Value = (decimal)value; } get { return (double)numArea.Value; } }
+
+        private double width;
+        private double height;
         public double CF_X;
         public double CF_Y;
         public double J_X;
@@ -892,9 +895,15 @@ namespace BSFiberConcrete.Section
                 // площади треугольников
                 NumArea = Tri.triAreas?.Sum() ?? 0;
 
+                width = Tri.WidthOfFigure();
+
+                height = Tri.HeightOfFigure();
+
                 (CF_X, CF_Y) = Tri.СenterOfFigure();
 
                 (J_X, J_Y) = Tri.MomentOfInertia();
+
+                (W_X_low, W_X_top) = Tri.ModulusOfSection();
             }
 
             return pathToSvgFile;
@@ -1002,9 +1011,11 @@ namespace BSFiberConcrete.Section
 
         private void labelArea_Click(object sender, EventArgs e)
         {
-            MessageBox.Show($"Центр тяжести сечения: X = {Math.Round(CF_X, 4)} Y = {Math.Round(CF_Y,4)}\n" +
+            MessageBox.Show(
+                $"Высота сечения: h = {Math.Round(width, 4)} ширина: b = {Math.Round(height, 4)}\n" +
+                $"Центр тяжести сечения: X = {Math.Round(CF_X, 4)} Y = {Math.Round(CF_Y, 4)}\n" +
                 $"Момент инерции : Jx = {Math.Round(J_X, 4)} Jy = {Math.Round(J_Y, 4)}\n" +
-                $"Момент сопротивления: верх Wx = {Math.Round(W_X_top, 4)} низ Wx = {Math.Round(W_X_low, 4)}\n",
+                $"Момент сопротивления: Wx = {Math.Min(Math.Round(W_X_top, 4), Math.Round(W_X_low, 4))}\n",
                 "Сечение");
         }
     }
