@@ -118,28 +118,33 @@ namespace BSCalcLib
         }
 
         /// <summary>
-        ///  Момент сопротивления сечения (по высоте (оси Y))
+        ///  Момент сопротивления сечения 
         /// </summary>
-        /// <returns>Wx нижнее, Wx верхнее</returns>
-        public static (double, double) ModulusOfSection()
+        /// <returns>Wx нижнее, Wx верхнее  Wy левое,  Wy правое</returns>
+        public static (double, double, double, double) ModulusOfSection()
         {
             double c_x, c_y;
             (c_x, c_y) = СenterOfFigure();
-
-            if (c_y == 0) return (0, 0);
-
+            
             double h = HeightOfFigure();
+            double w = WidthOfFigure();
 
             double Jx, Jy;
             (Jx, Jy) = MomentOfInertia();
 
             double Wx_t, Wx_l;
             
-            Wx_t =  Jx / (h- c_y);
+            Wx_t = ((h - c_y) != 0) ?  Jx / (h- c_y) : 0;
 
-            Wx_l = Jx / c_y;
+            Wx_l = c_y != 0 ? Jx / c_y : 0;
 
-            return (Wx_t, Wx_l);
+            double Wy_l, Wy_r; //TODO протестировать
+
+            Wy_l = ((h - c_x) != 0) ? Jy / (w - c_x) : 0;
+
+            Wy_r = c_x != 0 ? Jy / c_x : 0;
+
+            return (Wx_t, Wx_l, Wy_l, Wy_r);
         }
 
 

@@ -29,18 +29,18 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BSSectionChart));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.labelSection = new System.Windows.Forms.Label();
@@ -79,8 +79,8 @@
             this.label_area = new System.Windows.Forms.Label();
             this.labelAreaRebarUnits = new System.Windows.Forms.Label();
             this.numAreaRebar = new System.Windows.Forms.NumericUpDown();
-            this.labelAreaUnits = new System.Windows.Forms.Label();
             this.labelArea = new System.Windows.Forms.Label();
+            this.labelAreaUnits = new System.Windows.Forms.Label();
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.X = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Y = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -140,56 +140,56 @@
             // 
             this.chart.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
             this.chart.BorderlineWidth = 3;
-            chartArea1.AxisX.Title = "X, см";
-            chartArea1.AxisY.Title = "Y, см";
-            chartArea1.Name = "ChartArea";
-            this.chart.ChartAreas.Add(chartArea1);
+            chartArea2.AxisX.Title = "X, см";
+            chartArea2.AxisY.Title = "Y, см";
+            chartArea2.Name = "ChartArea";
+            this.chart.ChartAreas.Add(chartArea2);
             this.chart.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend1.Name = "Legend";
-            legend1.Title = "Контуры";
-            this.chart.Legends.Add(legend1);
+            legend2.Name = "Legend";
+            legend2.Title = "Контуры";
+            this.chart.Legends.Add(legend2);
             this.chart.Location = new System.Drawing.Point(444, 32);
             this.chart.Name = "chart";
-            series1.BorderWidth = 3;
-            series1.ChartArea = "ChartArea";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series1.Legend = "Legend";
-            series1.Name = "Сечение внеш";
-            series2.BorderWidth = 3;
-            series2.ChartArea = "ChartArea";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series2.EmptyPointStyle.BorderWidth = 3;
-            series2.Legend = "Legend";
-            series2.MarkerSize = 10;
-            series2.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
-            series2.Name = "Армирование";
-            series3.ChartArea = "ChartArea";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series3.Legend = "Legend";
-            series3.Name = "сечение внут";
-            series4.BorderWidth = 2;
-            series4.ChartArea = "ChartArea";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series4.Color = System.Drawing.Color.Green;
-            series4.Legend = "Legend";
-            series4.Name = "Поперечное арм X";
-            series5.BorderWidth = 2;
-            series5.ChartArea = "ChartArea";
-            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series5.Color = System.Drawing.Color.Green;
-            series5.Legend = "Legend";
-            series5.Name = "Поперечное арм Y";
-            this.chart.Series.Add(series1);
-            this.chart.Series.Add(series2);
-            this.chart.Series.Add(series3);
-            this.chart.Series.Add(series4);
-            this.chart.Series.Add(series5);
+            series6.BorderWidth = 3;
+            series6.ChartArea = "ChartArea";
+            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series6.Legend = "Legend";
+            series6.Name = "Сечение внеш";
+            series7.BorderWidth = 3;
+            series7.ChartArea = "ChartArea";
+            series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series7.EmptyPointStyle.BorderWidth = 3;
+            series7.Legend = "Legend";
+            series7.MarkerSize = 10;
+            series7.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
+            series7.Name = "Армирование";
+            series8.ChartArea = "ChartArea";
+            series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series8.Legend = "Legend";
+            series8.Name = "сечение внут";
+            series9.BorderWidth = 2;
+            series9.ChartArea = "ChartArea";
+            series9.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series9.Color = System.Drawing.Color.Green;
+            series9.Legend = "Legend";
+            series9.Name = "Поперечное арм X";
+            series10.BorderWidth = 2;
+            series10.ChartArea = "ChartArea";
+            series10.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series10.Color = System.Drawing.Color.Green;
+            series10.Legend = "Legend";
+            series10.Name = "Поперечное арм Y";
+            this.chart.Series.Add(series6);
+            this.chart.Series.Add(series7);
+            this.chart.Series.Add(series8);
+            this.chart.Series.Add(series9);
+            this.chart.Series.Add(series10);
             this.chart.Size = new System.Drawing.Size(507, 458);
             this.chart.TabIndex = 0;
-            title1.Alignment = System.Drawing.ContentAlignment.TopCenter;
-            title1.Name = "TitleX";
-            title1.Text = "Геометрия сечения и распололжение арматуры";
-            this.chart.Titles.Add(title1);
+            title2.Alignment = System.Drawing.ContentAlignment.TopCenter;
+            title2.Name = "TitleX";
+            title2.Text = "Геометрия сечения и распололжение арматуры";
+            this.chart.Titles.Add(title2);
             // 
             // labelSection
             // 
@@ -625,7 +625,7 @@
             this.tableLayoutPanelAreas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 51F));
             this.tableLayoutPanelAreas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 81F));
             this.tableLayoutPanelAreas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 105F));
-            this.tableLayoutPanelAreas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanelAreas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 105F));
             this.tableLayoutPanelAreas.Controls.Add(this.numArea, 1, 0);
             this.tableLayoutPanelAreas.Controls.Add(this.label_area, 3, 0);
             this.tableLayoutPanelAreas.Controls.Add(this.labelAreaRebarUnits, 5, 0);
@@ -644,21 +644,21 @@
             this.numArea.AccessibleName = "NumArea";
             this.numArea.DecimalPlaces = 4;
             this.numArea.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numArea.Location = new System.Drawing.Point(79, 3);
+            this.numArea.Location = new System.Drawing.Point(76, 3);
             this.numArea.Maximum = new decimal(new int[] {
             1874919424,
             2328306,
             0,
             0});
             this.numArea.Name = "numArea";
-            this.numArea.Size = new System.Drawing.Size(88, 20);
+            this.numArea.Size = new System.Drawing.Size(85, 20);
             this.numArea.TabIndex = 1;
             // 
             // label_area
             // 
             this.label_area.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.label_area.AutoSize = true;
-            this.label_area.Location = new System.Drawing.Point(224, 5);
+            this.label_area.Location = new System.Drawing.Point(218, 5);
             this.label_area.Name = "label_area";
             this.label_area.Size = new System.Drawing.Size(75, 13);
             this.label_area.TabIndex = 3;
@@ -668,7 +668,7 @@
             // 
             this.labelAreaRebarUnits.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelAreaRebarUnits.AutoSize = true;
-            this.labelAreaRebarUnits.Location = new System.Drawing.Point(410, 5);
+            this.labelAreaRebarUnits.Location = new System.Drawing.Point(404, 5);
             this.labelAreaRebarUnits.Name = "labelAreaRebarUnits";
             this.labelAreaRebarUnits.Size = new System.Drawing.Size(27, 13);
             this.labelAreaRebarUnits.TabIndex = 4;
@@ -679,7 +679,7 @@
             this.numAreaRebar.AccessibleName = "NumArea";
             this.numAreaRebar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.numAreaRebar.DecimalPlaces = 4;
-            this.numAreaRebar.Location = new System.Drawing.Point(305, 3);
+            this.numAreaRebar.Location = new System.Drawing.Point(299, 3);
             this.numAreaRebar.Maximum = new decimal(new int[] {
             -1530494976,
             232830,
@@ -689,16 +689,6 @@
             this.numAreaRebar.Size = new System.Drawing.Size(99, 20);
             this.numAreaRebar.TabIndex = 5;
             // 
-            // labelAreaUnits
-            // 
-            this.labelAreaUnits.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelAreaUnits.AutoSize = true;
-            this.labelAreaUnits.Location = new System.Drawing.Point(173, 5);
-            this.labelAreaUnits.Name = "labelAreaUnits";
-            this.labelAreaUnits.Size = new System.Drawing.Size(45, 13);
-            this.labelAreaUnits.TabIndex = 2;
-            this.labelAreaUnits.Text = "см2";
-            // 
             // labelArea
             // 
             this.labelArea.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -706,11 +696,21 @@
             this.labelArea.ForeColor = System.Drawing.SystemColors.MenuHighlight;
             this.labelArea.Location = new System.Drawing.Point(3, 5);
             this.labelArea.Name = "labelArea";
-            this.labelArea.Size = new System.Drawing.Size(70, 13);
+            this.labelArea.Size = new System.Drawing.Size(67, 13);
             this.labelArea.TabIndex = 0;
             this.labelArea.Text = "Сечение";
             this.labelArea.Click += new System.EventHandler(this.labelArea_Click);
             this.labelArea.MouseMove += new System.Windows.Forms.MouseEventHandler(this.labelArea_MouseMove);
+            // 
+            // labelAreaUnits
+            // 
+            this.labelAreaUnits.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelAreaUnits.AutoSize = true;
+            this.labelAreaUnits.Location = new System.Drawing.Point(167, 5);
+            this.labelAreaUnits.Name = "labelAreaUnits";
+            this.labelAreaUnits.Size = new System.Drawing.Size(45, 13);
+            this.labelAreaUnits.TabIndex = 2;
+            this.labelAreaUnits.Text = "см2";
             // 
             // Id
             // 
@@ -724,9 +724,9 @@
             // X
             // 
             this.X.DataPropertyName = "CG_X";
-            dataGridViewCellStyle1.Format = "N2";
-            dataGridViewCellStyle1.NullValue = "0";
-            this.X.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Format = "N2";
+            dataGridViewCellStyle4.NullValue = "0";
+            this.X.DefaultCellStyle = dataGridViewCellStyle4;
             this.X.HeaderText = "X (h)";
             this.X.Name = "X";
             this.X.ToolTipText = "X, по ширине сечения, см";
@@ -735,9 +735,9 @@
             // Y
             // 
             this.Y.DataPropertyName = "CG_Y";
-            dataGridViewCellStyle2.Format = "N2";
-            dataGridViewCellStyle2.NullValue = "0";
-            this.Y.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Format = "N2";
+            dataGridViewCellStyle5.NullValue = "0";
+            this.Y.DefaultCellStyle = dataGridViewCellStyle5;
             this.Y.HeaderText = "Y (b)";
             this.Y.Name = "Y";
             this.Y.ToolTipText = "Y, по высоте сечения, см";
@@ -746,9 +746,9 @@
             // D
             // 
             this.D.DataPropertyName = "D";
-            dataGridViewCellStyle3.Format = "N2";
-            dataGridViewCellStyle3.NullValue = "0";
-            this.D.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.Format = "N2";
+            dataGridViewCellStyle6.NullValue = "0";
+            this.D.DefaultCellStyle = dataGridViewCellStyle6;
             this.D.HeaderText = "D";
             this.D.Name = "D";
             this.D.ToolTipText = "Диаметр, см";

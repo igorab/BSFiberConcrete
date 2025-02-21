@@ -536,6 +536,12 @@ namespace BSFiberConcrete
                 h = tmpBeam.h;
                 h_0 = h - a_1;
             }
+            else if (typeOfBeamSection == BeamSection.Any)
+            {                
+                b = Beam.b;
+                h = Beam.h;
+                h_0 = h - a_1;
+            }
             else
             {
                 b = 0;

@@ -36,13 +36,15 @@ namespace BSFiberConcrete
         {
         }
 
-        public BSBeam(double _Area, double _W_s, double _I_s, double _Jy, double _Jx)
+        public BSBeam(double _Area, double _W_s, double _I_s, double _Jy, double _Jx, double _Sy, double _Sx)
         {
             any_Area = _Area;
             any_W_s  = _W_s;
             any_I_s  = _I_s;
             any_Jy   = _Jy;
-            any_Jx   = _Jx;   
+            any_Jx   = _Jx;
+            any_Sy   = _Sy;
+            any_Sx   = _Sx;
         }
 
         /// <summary>
@@ -64,6 +66,9 @@ namespace BSFiberConcrete
         private readonly double any_I_s;
         private readonly double any_Jy;
         private readonly double any_Jx;
+        private readonly double any_Sy;
+        private readonly double any_Sx;
+
 
         public virtual double Area()
         {
@@ -111,7 +116,7 @@ namespace BSFiberConcrete
         /// <returns></returns>
         public virtual double Sy()
         {
-            return 0;
+            return any_Sy;
         }
         /// <summary>
         /// Статический момент относительно оси oX
@@ -119,7 +124,7 @@ namespace BSFiberConcrete
         /// <returns></returns>
         public virtual double Sx()
         {
-            return 0;
+            return any_Sx;
         }
         
         public virtual double y_t => h / 2; 

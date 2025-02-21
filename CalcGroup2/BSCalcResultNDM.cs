@@ -305,6 +305,9 @@ namespace BSFiberConcrete
         public double I_s { get; internal set; }
         public double Jy { get; internal set; }
         public double Jx { get; internal set; }
+        public double Sy { get; internal set; }
+        public double Sx { get; internal set; }
+
 
         // параметры сечения
         private void SectionParams(Dictionary<string, double> _D)
@@ -319,6 +322,11 @@ namespace BSFiberConcrete
                 Jy   = _D["Jy"];
             if (_D.ContainsKey("Jx"))
                 Jx   = _D["Jx"];
+            if (_D.ContainsKey("Sy"))
+                Sy = _D["Sy"];
+            if (_D.ContainsKey("Sx"))
+                Sx = _D["Sx"];
+
         }
 
         private double InitBeamLength(double _lgth, double _coeflgth)

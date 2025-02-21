@@ -74,6 +74,8 @@ namespace BSFiberConcrete.Section
         public double J_Y;
         public double W_X_top;
         public double W_X_low;
+        public double W_Y_left;
+        public double W_Y_right;
 
         public Rebar Rebar
         {
@@ -903,7 +905,7 @@ namespace BSFiberConcrete.Section
 
                 (J_X, J_Y) = Tri.MomentOfInertia();
 
-                (W_X_low, W_X_top) = Tri.ModulusOfSection();
+                (W_X_low, W_X_top, W_Y_left, W_Y_right) = Tri.ModulusOfSection();
             }
 
             return pathToSvgFile;
@@ -1011,11 +1013,14 @@ namespace BSFiberConcrete.Section
 
         private void labelArea_Click(object sender, EventArgs e)
         {
+            GenerateMesh();
+
             MessageBox.Show(
                 $"Высота сечения: h = {Math.Round(width, 4)} ширина: b = {Math.Round(height, 4)}\n" +
                 $"Центр тяжести сечения: X = {Math.Round(CF_X, 4)} Y = {Math.Round(CF_Y, 4)}\n" +
-                $"Момент инерции : Jx = {Math.Round(J_X, 4)} Jy = {Math.Round(J_Y, 4)}\n" +
-                $"Момент сопротивления: Wx = {Math.Min(Math.Round(W_X_top, 4), Math.Round(W_X_low, 4))}\n",
+                $"Момент инерции : Jx = {Math.Round(J_X, 4)} Jy = {Math.Round(J_Y, 4)}\n" +                
+                $"Момент сопротивления: Wx = {Math.Min(Math.Round(W_X_top, 4), Math.Round(W_X_low, 4))}\n" +
+                $"Момент сопротивления: Wy = {Math.Min(Math.Round(W_Y_left, 4), Math.Round(W_Y_right, 4))}\n",
                 "Сечение");
         }
     }

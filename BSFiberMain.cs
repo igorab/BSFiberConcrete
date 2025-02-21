@@ -788,7 +788,10 @@ namespace BSFiberConcrete
 
                 if (m_BeamSection == BeamSection.Any)
                 {
-                    bsBeam = new BSBeam(calcRes.Area, calcRes.W_s, calcRes.I_s, calcRes.Jy, calcRes.Jx);                    
+                    bsBeam = new BSBeam(calcRes.Area, calcRes.W_s, calcRes.I_s, calcRes.Jy, calcRes.Jx, calcRes.Sx, calcRes.Sy );
+                    bsBeam.b = calcRes.b;
+                    bsBeam.h = calcRes.h;
+
                 }
                 else
                 {
@@ -1797,6 +1800,9 @@ namespace BSFiberConcrete
                 _beamSection == BeamSection.Ring)
             {
                 calcNDM.RunGroup1();
+
+                calcNDM.CalcRes.b = m_SectionChart.Wdth; 
+                calcNDM.CalcRes.h = m_SectionChart.Hght;
 
                 resGr2 = FiberCalculateGroup2(calcNDM.CalcRes);
             }
