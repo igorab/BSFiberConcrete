@@ -484,8 +484,9 @@ namespace BSFiberConcrete.CalcGroup2
 
             m_Results = new Dictionary<string, double>
             {
-                // деформация, кривизна
+                // деформация
                 ["ep0"] = ep0[jend],
+                //  кривизна
                 ["Ky"] = Ky[jend],
                 ["ry"] = 1 / Ky[jend],
 
@@ -505,34 +506,35 @@ namespace BSFiberConcrete.CalcGroup2
                 ["epsS_p"] = epsS_p,
 
                 // предел
-                ["esc0"] = esc0,
-                ["e_fb_ult"] = e_fb_ult,
+                ["esc0"]      = esc0,
+                ["e_fb_ult"]  = e_fb_ult,
                 ["e_fbt_ult"] = e_fbt_ult,
 
                 // проверка усилий
                 ["My"] = Myint,
                 ["Mx"] = Mxint,
-                ["N"] = Nint,
+                ["N"]  = Nint,
+
                 // использование материала:
                 // -- растяжение:
                 ["UR_fb_t"] = UtilRate_fb_t,
-                ["UR_s_t"] = UtilRate_s_t,
+                ["UR_s_t"]  = UtilRate_s_t,
                 // -- сжатие
                 ["UR_fb_p"] = UtilRate_fb_p,
-                ["UR_s_p"] = UtilRate_s_p,
+                ["UR_s_p"]  = UtilRate_s_p,
 
                 // трещиностойкость
                 // --моменты трещинообразования
                 ["My_crc"] = My_crc,
                 ["Mx_crc"] = Mx_crc,
                 // -- ширина раскрытия трещины
-                ["es_crc"] = es_crc,
+                ["es_crc"]    = es_crc,
                 ["sig_s_crc"] = sig_s_crc,
-                ["a_crc"] = a_crc,
+                ["a_crc"]     = a_crc,
 
                 // арматура
-                ["As_t"] = As_t,
-                ["h0_t"] = h0_t,
+                ["As_t"]  = As_t,
+                ["h0_t"]  = h0_t,
                 ["As1_p"] = As1_p,
                 ["h01_p"] = h01_p,
 
@@ -547,23 +549,23 @@ namespace BSFiberConcrete.CalcGroup2
                 ["Area"] = area_b,
 
                 // моменты инерции сечения
-                ["Jx"] = Jx,
-                ["Jy"] = Jy,
+                ["Jx"]    = Jx,
+                ["Jy"]    = Jy,
                 ["I_red"] = I_red,
-                ["I_s"] = I_s,
+                ["I_s"]   = I_s,
 
                 // момент сопротивления сечения
-                ["W_t"] = W_t,
+                ["W_t"]   = W_t,
                 ["W_red"] = W_red,
-                ["W_s"] = W_s,
+                ["W_s"]   = W_s,
 
                 // число итераций:
                 ["ItersCnt"] = jend
             };
-
             
             SigmaBResult = new List<double>(sigB[jend]);
             SigmaSResult = new List<double>(sigS[jend]);
+
             EpsilonBResult = new List<double>(epB[jend]);
             EpsilonSResult = new List<double>(epS[jend]);
         }
