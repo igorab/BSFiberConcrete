@@ -230,7 +230,7 @@ namespace BSFiberConcrete.Section
             {                
                 return;
             }
-
+           
             //if (m_BeamSection == BeamSection.Any)
             //{
             //    return;
@@ -252,7 +252,6 @@ namespace BSFiberConcrete.Section
             {
                 float y0 = 0 + as_t + Origin.Y,
                 yh = height - as_t + Origin.Y;
-
                 float[] x = new float[_N];
 
                 x[0] = width / (_N + 1);
@@ -348,7 +347,7 @@ namespace BSFiberConcrete.Section
                     width = PointsSection.Max(var => var.X) - PointsSection.Min(var => var.X) ;
                     height = PointsSection.Max(var => var.Y) - PointsSection.Min(var => var.Y);
 
-                    //Origin = new PointF(width/8.0f , 0);
+                    Origin = new PointF(0, 0);
                 }
                 else
                 {
@@ -373,20 +372,20 @@ namespace BSFiberConcrete.Section
                 return;
             }
 
-            if (m_BeamSection == BeamSection.Ring /* || m_BeamSection == BeamSection.Any*/)
+            float dx = 0;
+
+            if (m_BeamSection == BeamSection.Ring )
             {
                 return;
             }
-
-            float dx = 0;
-            if (m_BeamSection == BeamSection.Any)
+            else if ( m_BeamSection == BeamSection.Any)
             {
-                dx += Origin.X;
+                dx = width / 2.0f ;
             }
-
+                        
             if (_N == 1)
             {
-                PointsTRebar_Y.Add(new PointF(-(width - as_t) / 2.0f + dx, height / 2.0f));
+                PointsTRebar_Y.Add(new PointF(-(width - as_t ) / 2.0f + dx, height / 2.0f));
                 PointsTRebar_Y.Add(new PointF((width - as_t) / 2.0f + dx, height / 2.0f));
             }
             else if (_N == 2)
@@ -403,7 +402,7 @@ namespace BSFiberConcrete.Section
                 PointsTRebar_Y.Add(new PointF((width - as_t) / 2.0f + dx, height / 4.0f));
                 PointsTRebar_Y.Add(new PointF());
                 PointsTRebar_Y.Add(new PointF(-(width - as_t) / 2.0f + dx, 2* height / 4.0f));
-                PointsTRebar_Y.Add(new PointF((width - as_t) / 2.0f + dx, 2* height / 4.0f));
+                PointsTRebar_Y.Add(new PointF((width - as_t ) / 2.0f + dx, 2* height / 4.0f));
                 PointsTRebar_Y.Add(new PointF());
                 PointsTRebar_Y.Add(new PointF(-(width - as_t) / 2.0f + dx, 3* height / 4.0f));
                 PointsTRebar_Y.Add(new PointF((width - as_t) / 2.0f + dx, 3* height / 4.0f));
@@ -412,8 +411,8 @@ namespace BSFiberConcrete.Section
             {
                 for (int n = 1; n <= _N; n++)
                 {
-                    PointsTRebar_Y.Add(new PointF(-(width - as_t) / 2.0f + dx, height * n / (_N+1)));
-                    PointsTRebar_Y.Add(new PointF((width - as_t) / 2.0f + dx, height * n / (_N+1)));
+                    PointsTRebar_Y.Add(new PointF(-(width - as_t + dx) / 2.0f, height * n / (_N+1)));
+                    PointsTRebar_Y.Add(new PointF((width - as_t + dx) / 2.0f, height * n / (_N+1)));
                     PointsTRebar_Y.Add(new PointF());
                 }
             }           
