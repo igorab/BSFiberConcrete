@@ -1065,8 +1065,8 @@ namespace BSFiberConcrete.Section
                 $"Высота сечения: h = {Math.Round(width, 4)} ширина: b = {Math.Round(height, 4)}\n" +
                 $"Центр тяжести сечения: X = {Math.Round(CF_X, 4)} Y = {Math.Round(CF_Y, 4)}\n" +
                 $"Момент инерции : Jx = {Math.Round(J_X, 4)} Jy = {Math.Round(J_Y, 4)}\n" +                
-                $"Момент сопротивления: Wx = {Math.Min(Math.Round(W_X_top, 4), Math.Round(W_X_low, 4))}\n" +
-                $"Момент сопротивления: Wy = {Math.Min(Math.Round(W_Y_left, 4), Math.Round(W_Y_right, 4))}\n",
+                $"Момент сопротивления: Wx = {Math.Round(W_X_top, 4)} Wx' = {Math.Round(W_X_low, 4)}\n" +
+                $"Момент сопротивления: Wy = {Math.Round(W_Y_left, 4)} Wy' = {Math.Round(W_Y_right, 4)}\n",
                 "Сечение");
         }
 

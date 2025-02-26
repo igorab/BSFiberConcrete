@@ -1838,6 +1838,7 @@ namespace BSFiberConcrete
         [DisplayName("Расчет по прочности нормальных сечений на основе нелинейной деформационной модели")]
         private void CalcDeformNDM()
         {
+            /*
             // центр тяжести сечения
             TriangleNet.Geometry.Point CG = new TriangleNet.Geometry.Point(0.0, 0.0);
 
@@ -1871,8 +1872,7 @@ namespace BSFiberConcrete
             // расстановка арматурных стержней
             List<BSRod> Rods = new List<BSRod>();
 
-            // Усилия Mx, My - моменты, кг*см , N - сила, кг              
-            //GetEffortsFromForm(out List<Dictionary<string, double>> MNQ);
+            // Усилия Mx, My - моменты, кг*см , N - сила, кг                         
             Dictionary<string, double> MNQ = GetEffortsForCalc();
 
             double c_Mx = MNQ["Mx"];
@@ -2018,32 +2018,8 @@ namespace BSFiberConcrete
             catch (Exception _ex)
             {
                 MessageBox.Show(_ex.Message);
-            }
-
-            try
-            {
-                InitBeamLength(true);
-
-                string value = "";
-                try
-                {
-                    MethodBase method = MethodBase.GetCurrentMethod();
-                    DisplayNameAttribute attr = (DisplayNameAttribute)method.GetCustomAttributes(typeof(DisplayNameAttribute), true)[0];
-                    value = attr.DisplayName;
-                }
-                catch
-                {
-                    MessageBox.Show("Не задан атрибут DisplayName метода");
-                }
-
-                string pathToHtmlFile = CreateReport(1, m_BeamSection, value);
-
-                System.Diagnostics.Process.Start(pathToHtmlFile);
-            }
-            catch (Exception _e)
-            {
-                MessageBox.Show("Ошибка в отчете " + _e.Message);
-            }
+            }  
+            */
         }
               
         /// <summary>
