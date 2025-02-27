@@ -428,12 +428,14 @@ namespace BSFiberConcrete.CalcGroup2
 
             int i_t = 0, i_p = 0;
             for (int i = 0; i < As.Count; i++)
-            {                
+            {
+                double _xs_cm = xs[jend][i];
+
                 if (epS[jend][i] >= 0)
                 {
                     i_t++;
-                    As_t += As[i];
-                    s_t_xcm += xs[jend][i]; 
+                    As_t += As[i];                    
+                    s_t_xcm += _xs_cm;                    
                 }
 
                 if (epS[jend][i] < 0)
@@ -442,11 +444,18 @@ namespace BSFiberConcrete.CalcGroup2
                     As1_p += As[i];
                     s_p_xcm += xs[jend][i];
                 }
+
+                I_s += As[i] * _xs_cm * _xs_cm;
             }
             if (i_t > 0)
                 s_t_xcm /= i_t;
             if (i_p > 0)
                 s_p_xcm /= i_p;
+
+            if (s_t_xcm != 0)
+            {
+                W_s = I_s / s_t_xcm;
+            }
 
             //рабочая высота сечения (расст от ц.т. сечения до ц.т. арматуры)            
             h0_t = Math.Abs(s_t_xcm);

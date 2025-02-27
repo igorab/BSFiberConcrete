@@ -322,8 +322,8 @@ namespace BSFiberConcrete
                 Jy   = _D["Jy"];
             if (_D.ContainsKey("Jx"))
                 Jx   = _D["Jx"];
-            if (_D.ContainsKey("Sy"))
-                Sy = _D["Sy"];
+            if (_D.ContainsKey("W_red"))
+                Sy = _D["W_red"];
             if (_D.ContainsKey("Sx"))
                 Sx = _D["Sx"];
 
