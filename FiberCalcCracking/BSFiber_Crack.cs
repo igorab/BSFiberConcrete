@@ -504,7 +504,8 @@ namespace BSFiberConcrete
             double epsilon_fb1_red = 0.0015;
             double epslion_fbt2 = 0.004;
 
-            double d_s = 12 / 100;
+            //TODO константа! - заменить на реальный диаметр арматуры!
+            double d_s = 12.0 / 100.0;
                         
             // длина фибры
             double l_f = 50;

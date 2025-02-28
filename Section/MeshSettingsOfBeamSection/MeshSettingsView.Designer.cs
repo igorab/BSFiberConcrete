@@ -93,6 +93,7 @@
             // numMeshNX
             // 
             this.numMeshNX.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.numMeshNX.DecimalPlaces = 4;
             this.numMeshNX.Location = new System.Drawing.Point(4, 15);
             this.numMeshNX.Maximum = new decimal(new int[] {
             10000,
@@ -111,6 +112,7 @@
             // numMeshNY
             // 
             this.numMeshNY.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.numMeshNY.DecimalPlaces = 4;
             this.numMeshNY.Location = new System.Drawing.Point(4, 66);
             this.numMeshNY.Maximum = new decimal(new int[] {
             10000,
@@ -129,6 +131,7 @@
             // numMaxArea
             // 
             this.numMaxArea.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.numMaxArea.DecimalPlaces = 4;
             this.numMaxArea.Location = new System.Drawing.Point(325, 177);
             this.numMaxArea.Maximum = new decimal(new int[] {
             10000,

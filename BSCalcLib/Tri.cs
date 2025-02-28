@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.AccessControl;
 using TriangleNet;
 using TriangleNet.Geometry;
 using TriangleNet.IO;
@@ -60,6 +61,12 @@ namespace BSCalcLib
             return w;
         }
 
+        public static (double, double, double, double) Bounds()
+        {
+            var bounds = Mesh.Bounds;
+            
+            return (bounds.Left, bounds.Bottom, bounds.Right, bounds.Top);
+        }
 
 
 
@@ -132,17 +139,20 @@ namespace BSCalcLib
             double Jx, Jy;
             (Jx, Jy) = MomentOfInertia();
 
+            double left, bottom, right, top;
+           (left, bottom, right, top) =  Bounds();
+
             double Wx_t, Wx_l;
             
-            Wx_t = ((h - c_y) != 0) ?  Jx / (h- c_y) : 0;
+            Wx_t = (top - c_y != 0) ?  Jx / (top- c_y) : 0;
 
-            Wx_l = c_y != 0 ? Jx / c_y : 0;
+            Wx_l = (c_y - bottom != 0) ? Jx / (c_y - bottom) : 0;
 
-            double Wy_l, Wy_r; //TODO протестировать
+            double Wy_l, Wy_r; 
 
-            Wy_l = ((h - c_x) != 0) ? Jy / (w - c_x) : 0;
+            Wy_l = (c_x- left != 0) ? Jy / (c_x - left) : 0;
 
-            Wy_r = c_x != 0 ? Jy / c_x : 0;
+            Wy_r = (right - c_x != 0) ? Jy / (right - c_x) : 0;
 
             return (Wx_t, Wx_l, Wy_l, Wy_r);
         }
