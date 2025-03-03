@@ -110,8 +110,9 @@ namespace BSFiberConcrete
         }
 
         // статические моменты относительно осей 
-        public override double Sy() => hf * bf * hf / 2 + hw * bw * (hf + hw / 2) + h1f * b1f * (Height - h1f / 2);
-        public override double Sx() => (hf * bf + hw * bw + h1f * b1f) * Width / 2; // не на 100% уверен в формуле
+        // TODO проверить формулы
+        public override double Sy() => hf * bf * hf / 2.0 + hw * bw * (hf + hw / 2.0) + h1f * b1f * (Height - h1f / 2.0);
+        public override double Sx() => (hf * bf + hw * bw + h1f * b1f) * Width / 2.0; 
 
 
         public static Exception SizeError(string _txt)
@@ -128,8 +129,6 @@ namespace BSFiberConcrete
 
             if ((bf > 0 &&  bw > bf) || (b1f > 0 && bw > b1f))
                 throw SizeError("ширина стенки не может быть больше ширины полки");
-
-
         }
     }
 }
