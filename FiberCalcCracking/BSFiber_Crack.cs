@@ -475,13 +475,17 @@ namespace BSFiberConcrete
             a    = MatRebar.a_s;
             a_1  = MatRebar.a_s1;
             Es   = MatRebar.Es;
+            
              
             Efb       = MatFiber.Efb;
             R_fbt_ser = MatFiber.Rfb_ser;
            
             A = Beam.Area();
-            
+
+            double d_rebar = MatRebar.SelectedRebarDiameter;
+
             #region Расчет
+
             // Коэф Привендения арматуры к стальфибробетону
             double alpha = Es / Efb;                                                                                //  (6.113)
             // Площадь приведенного поперечного сечения элемента 
@@ -504,8 +508,8 @@ namespace BSFiberConcrete
             double epsilon_fb1_red = 0.0015;
             double epslion_fbt2 = 0.004;
 
-            //TODO константа! - заменить на реальный диаметр арматуры!
-            double d_s = 12.0 / 100.0;
+            // Диаметр арматуры, перевод из мм в cм
+            double d_s = d_rebar / 10.0;
                         
             // длина фибры
             double l_f = 50;

@@ -738,18 +738,31 @@ namespace BSFiberConcrete
                     typeOfBeamSection = m_BeamSection
                 };
 
+
+                double selectedDiameter = 0;
+                if (cmbRebarDiameters.SelectedItem != null)
+                {
+                    if (!double.TryParse(cmbRebarDiameters.SelectedItem.ToString(), out selectedDiameter))
+                    {
+                        selectedDiameter = 0;
+                    }
+                }
+
+
+
                 // задать тип арматуры
                 calc_Cracking.MatRebar = new BSMatRod((double)numEs.Value)
                 {
-                    RCls  = cmbRebarClass.Text,
-                    Rs    = (double)numRs.Value,
-                    e_s0  = 0,
-                    e_s2  = 0,
-                    As    = (double)numAs.Value,
-                    As1   = (double)numAs1.Value,
-                    a_s   = (double)num_a.Value,
-                    a_s1  = (double)num_a1.Value,
-                    Reinforcement = checkBoxRebar.Checked
+                    RCls = cmbRebarClass.Text,
+                    Rs = (double)numRs.Value,
+                    e_s0 = 0,
+                    e_s2 = 0,
+                    As = (double)numAs.Value,
+                    As1 = (double)numAs1.Value,
+                    a_s = (double)num_a.Value,
+                    a_s1 = (double)num_a1.Value,
+                    Reinforcement = checkBoxRebar.Checked,
+                    SelectedRebarDiameter = selectedDiameter
                 };
 
                 SetFiberMaterialProperties();
