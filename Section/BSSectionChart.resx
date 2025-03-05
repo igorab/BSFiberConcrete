@@ -125,7 +125,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAADU
-        IAAAAk1TRnQBSQFMAgEBGAEAARABDwEQAQ8BEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        IAAAAk1TRnQBSQFMAgEBGAEAAfgBDwH4AQ8BEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAAXADAAEBAQABCAYAARwYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -268,6 +268,29 @@
         AfsB/wHvA/8L
 </value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btnLoadDXF.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAE6
+        8wABOvMBFwsyzAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAF6SURBVEhLxda/
+        S9VRGMfxVxiEg4PYlri5uURTg7Q01FBDg6CCYo1S1NzYj6H/of4CwQYds3QSHayxhmgoWmoMgoTkgYMc
+        Dvd87/Fe4b7h4eE8P87ne+8553u+jJBlPMeLHvYM98qGszCGbXzFW2z2sC38xz6myglauINfuFQmCr5g
+        Fz8wVyb78QQ7ZbAgnv4bJvEUf3G7LOriYXrCLi7jO2bSeBXHWC/qqrSITOA3ZrPYVfzEyyxWpUUk2MAh
+        buEGruFB2hBvyuKSVpFxvMbntAnCPuFjEpovG3JaRGLBu9jD4zKY009kJa1HLHaN93hUBnO6RNbSX/En
+        +ftlQeJDmqdKL5EL6fz8wxIOsJjGEY98zsAisWNu4mI6I+FjHPFzEcmZTq+S8DWGFrmSfkn4GkOLxFs6
+        Tnr4GkOLtDCQyCscdVjkcwYSuY6FDot8Tl+RlvukH+/SPFVab8Ya0Rf9d8tETssdX7Ooj77o79p9p3R9
+        rdQs6qNvNJwAGHxzsRZrsz4AAAAASUVORK5CYII=
+</value>
+  </data>
+  <metadata name="pointBS.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>38, 16</value>
+  </metadata>
+  <metadata name="Dnom.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="RodBS.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>133, 16</value>
+  </metadata>
   <metadata name="Dnom.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>

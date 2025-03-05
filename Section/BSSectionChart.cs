@@ -11,6 +11,8 @@ using BSCalcLib;
 using System.Diagnostics;
 using BSFiberConcrete.Report;
 using System.Text;
+using BSFiberConcrete.Section.DXFReader;
+using System.Threading;
 
 namespace BSFiberConcrete.Section
 {
@@ -664,7 +666,9 @@ namespace BSFiberConcrete.Section
             tlTip.SetToolTip(this.btnSaveChart, "Cохранить геометрию сечения");            
             tlTip.SetToolTip(this.btnAddRod, "Добавить стержень продольной арматуры");
             tlTip.SetToolTip(this.btnDelRod, "Удалить стержень (последняя строка)");
-            tlTip.SetToolTip(this.btnSave, "Сохранить расстановку арматуры");            
+            tlTip.SetToolTip(this.btnSave, "Сохранить расстановку арматуры"); 
+            tlTip.SetToolTip(this.btnLoadDXF, " Загрузить сечение из dxf");
+
         }
 
         /// <summary>
@@ -715,15 +719,19 @@ namespace BSFiberConcrete.Section
                 dataGridSection.Enabled = true;                
                 btnAdd.Visible = true;
                 btnDel.Visible = true;
+                btnLoadDXF.Visible = true;
                 //btnCalc.Enabled = true;
                 foreach (DataGridViewColumn cl in dataGridSection.Columns)
                     cl.ReadOnly = false;
+
 
             }
             else
             {
                 btnAdd.Visible = false;
                 btnDel.Visible = false;
+                btnLoadDXF.Visible = false;
+
                 //btnCalc.Enabled = false;
                 dataGridSection.Enabled = false;
 
@@ -1085,6 +1093,62 @@ namespace BSFiberConcrete.Section
                 $"Площадь нижней зоны:  As = {Math.Round(As, 4)} см2 \n",                 
                 "Продольное армирование");
 
+        }
+
+        /// <summary>
+        /// Загрузить сечение dxf
+        /// </summary>
+        private void btnLoadDXF_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string filePath = "";
+                using (OpenFileDialog openFileDialog = new OpenFileDialog())
+                {
+                    openFileDialog.Filter = "DXF files (*.dxf)|*.dxf|All files (*.*)|*.*";
+                    openFileDialog.Title = "Выберите DXF файл";
+                    if (openFileDialog.ShowDialog() == DialogResult.OK)
+                    { filePath = openFileDialog.FileName; }
+                    else // что-то не окей при загрузке файла
+                    {  return; }
+                }
+
+                if (!filePath.EndsWith(".dxf"))
+                {
+                    MessageBox.Show($"Выбранный файл: \"{filePath}\" не соответствует .dxf");
+                    return;
+                }
+
+                DxfAreaAnalyzer analyzer = new DxfAreaAnalyzer(filePath);
+                analyzer.ParseDXF();
+
+                if (analyzer.Coordinates.Count > 1)
+                {
+                    pointBS.Clear();
+                    int index = 0;
+                    foreach (SimpleCoord p in analyzer.Coordinates)
+                    {
+                        // Приведение double в float!!!
+                        BSPoint bsPt = new BSPoint()
+                        {
+                            Num = index,
+                            X = (float)Math.Round(p.X, 3),
+                            Y = (float)Math.Round(p.Y, 3)
+                        };
+                        pointBS.Add(bsPt);
+                        index++;
+                    }
+                    btnDraw_Click(this, new EventArgs());
+                }
+                else
+                { 
+                    MessageBox.Show("Объектов для загрузки не выявлено.");
+                }
+            }
+            catch (Exception ex) 
+            { 
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
