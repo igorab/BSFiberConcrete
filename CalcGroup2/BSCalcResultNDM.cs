@@ -216,14 +216,7 @@ namespace BSFiberConcrete
 
         private string DN(string _attr) => BSFiberCalculation.DsplN(typeof(BSCalcResultNDM), _attr);
 
-        private Dictionary<int, string> DictErrors = new Dictionary<int, string>()
-        {
-            [-1] = "Достигнута заданная сходимость метода [+]",
-            [0] = "",
-            [1] = "Превышен максимально допустимый предел деформации [-]",
-            [2] = "Достигнуто максимальное число итераций [-]",
-            [3] = "Деформации превысили разумный предел [-]"
-        };
+        private Dictionary<int, string> DictErrors;
 
 
         /// <summary>
@@ -305,6 +298,8 @@ namespace BSFiberConcrete
         public double I_s { get; internal set; }
         public double Jy { get; internal set; }
         public double Jx { get; internal set; }
+        public double X_c { get; internal set; } // центр тяжести
+        public double Y_c { get; internal set; } // центр тяжести
         public double Sy { get; internal set; }
         public double Sx { get; internal set; }
 
@@ -322,6 +317,12 @@ namespace BSFiberConcrete
                 Jy   = _D["Jy"];
             if (_D.ContainsKey("Jx"))
                 Jx   = _D["Jx"];
+
+            if (_D.ContainsKey("X_c"))
+                X_c = _D["X_c"];
+            if (_D.ContainsKey("Y_c"))
+                Y_c = _D["Y_c"];
+
             if (_D.ContainsKey("Sy"))
                 Sy = _D["Sy"];
             if (_D.ContainsKey("Sx"))
@@ -380,9 +381,22 @@ namespace BSFiberConcrete
                 InitBeamLength(_D["lgth"], _D["coeflgth"]);
         }
 
+        private void DErr()
+        {
+            DictErrors = new Dictionary<int, string>()
+            {
+                [-1] = "Достигнута заданная сходимость метода [+]",
+                [0] = "",
+                [1] = "Превышен максимально допустимый предел деформации [-]",
+                [2] = "Достигнуто максимальное число итераций [-]",
+                [3] = "Деформации превысили разумный предел [-]"
+            };
+        }
+
+
         public BSCalcResultNDM()
         {
-
+            DErr();    
         }
 
         /// <summary>
@@ -441,6 +455,8 @@ namespace BSFiberConcrete
             Res1Group = new Dictionary<string, double>();
             Res2Group = new Dictionary<string, double>();
             ErrorIdx = new List<int>();
+
+            DErr();
         }
 
         /// <summary>
