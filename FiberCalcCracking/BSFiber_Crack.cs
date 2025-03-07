@@ -258,22 +258,48 @@ namespace BSFiberConcrete
                 double Is = Math.PI / 64 * (Math.Pow(2 * (r_m + SS / 2), 4) - Math.Pow(2 * (r_m - SS / 2), 4));
                 I_red = I + alpha * Is;
             }
+            else if (typeOfBeamSection == BeamSection.Any)
+            {
+                // Статический момент площади приведенного поперечного сечения элемента
+                // относительно наиболее растянутого волокна сталефибробетона
+                double S_t_red = S + alpha * A_s * h0_t + alpha * A_1s * h0_p;
+                //TODO Получить расчетом по ндм
+                // Расстояние от центра тяжести приведенного сечения до расстянутой в стадии эксплуатации грани
+                Y_t = S_t_red / A_red;                                                                           //  (6.114)
+
+                // расстояние от центра тяжести приведенного сечения до расстянутой арматуры
+                double Y_s = h0_t;
+
+                // расстояние от центра тяжести приведенного сечения до сжатой арматуры
+                double Y_1s = h0_p;
+
+                // Момент инерции растянутой арматуры
+                double I_s = A_s * Y_s * Y_s;
+
+                // Момент инерции сжатой арматуры
+                double I_1s = A_1s * Y_1s * Y_1s;
+
+                // в сп формула без упоминания alpha
+                I_red = I + alpha * I_s + alpha * I_1s;                                                          // (6.131) не (6.111)
+            }
             else
             {                
                 // Статический момент площади приведенного поперечного сечения элемента
                 // относительно наиболее растянутого волокна сталефибробетона
-                double S_t_red = S + alpha * A_s * alpha + alpha * A_1s * h0_p;
+                double S_t_red = S + alpha * A_s * h0_t + alpha * A_1s * h0_p;
 
                 // Расстояние от центра тяжести приведенного сечения до расстянутой в стадии эксплуатации грани
                 Y_t = S_t_red / A_red;                                                                           //  (6.114)
 
                 // расстояние от центра тяжести приведенного сечения до расстянутой арматуры
                 double Y_s  = h0_t;
+
                 // расстояние от центра тяжести приведенного сечения до сжатой арматуры
                 double Y_1s = h0_p;
 
                 // Момент инерции растянутой арматуры
                 double I_s = A_s * Y_s * Y_s;
+
                 // Момент инерции сжатой арматуры
                 double I_1s = A_1s * Y_1s * Y_1s;
 
@@ -475,13 +501,17 @@ namespace BSFiberConcrete
             a    = MatRebar.a_s;
             a_1  = MatRebar.a_s1;
             Es   = MatRebar.Es;
+            
              
             Efb       = MatFiber.Efb;
             R_fbt_ser = MatFiber.Rfb_ser;
            
             A = Beam.Area();
-            
+
+            double d_rebar = MatRebar.SelectedRebarDiameter;
+
             #region Расчет
+
             // Коэф Привендения арматуры к стальфибробетону
             double alpha = Es / Efb;                                                                                //  (6.113)
             // Площадь приведенного поперечного сечения элемента 
@@ -504,7 +534,8 @@ namespace BSFiberConcrete
             double epsilon_fb1_red = 0.0015;
             double epslion_fbt2 = 0.004;
 
-            double d_s = 12 / 100;
+            // Диаметр арматуры, перевод из мм в cм
+            double d_s = d_rebar / 10.0;
                         
             // длина фибры
             double l_f = 50;

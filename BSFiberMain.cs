@@ -738,18 +738,31 @@ namespace BSFiberConcrete
                     typeOfBeamSection = m_BeamSection
                 };
 
+
+                double selectedDiameter = 0;
+                if (cmbRebarDiameters.SelectedItem != null)
+                {
+                    if (!double.TryParse(cmbRebarDiameters.SelectedItem.ToString(), out selectedDiameter))
+                    {
+                        selectedDiameter = 0;
+                    }
+                }
+
+
+
                 // задать тип арматуры
                 calc_Cracking.MatRebar = new BSMatRod((double)numEs.Value)
                 {
-                    RCls  = cmbRebarClass.Text,
-                    Rs    = (double)numRs.Value,
-                    e_s0  = 0,
-                    e_s2  = 0,
-                    As    = (double)numAs.Value,
-                    As1   = (double)numAs1.Value,
-                    a_s   = (double)num_a.Value,
-                    a_s1  = (double)num_a1.Value,
-                    Reinforcement = checkBoxRebar.Checked
+                    RCls = cmbRebarClass.Text,
+                    Rs = (double)numRs.Value,
+                    e_s0 = 0,
+                    e_s2 = 0,
+                    As = (double)numAs.Value,
+                    As1 = (double)numAs1.Value,
+                    a_s = (double)num_a.Value,
+                    a_s1 = (double)num_a1.Value,
+                    Reinforcement = checkBoxRebar.Checked,
+                    SelectedRebarDiameter = selectedDiameter
                 };
 
                 SetFiberMaterialProperties();
@@ -1838,6 +1851,7 @@ namespace BSFiberConcrete
         [DisplayName("Расчет по прочности нормальных сечений на основе нелинейной деформационной модели")]
         private void CalcDeformNDM()
         {
+            /*
             // центр тяжести сечения
             TriangleNet.Geometry.Point CG = new TriangleNet.Geometry.Point(0.0, 0.0);
 
@@ -1871,8 +1885,7 @@ namespace BSFiberConcrete
             // расстановка арматурных стержней
             List<BSRod> Rods = new List<BSRod>();
 
-            // Усилия Mx, My - моменты, кг*см , N - сила, кг              
-            //GetEffortsFromForm(out List<Dictionary<string, double>> MNQ);
+            // Усилия Mx, My - моменты, кг*см , N - сила, кг                         
             Dictionary<string, double> MNQ = GetEffortsForCalc();
 
             double c_Mx = MNQ["Mx"];
@@ -2018,32 +2031,8 @@ namespace BSFiberConcrete
             catch (Exception _ex)
             {
                 MessageBox.Show(_ex.Message);
-            }
-
-            try
-            {
-                InitBeamLength(true);
-
-                string value = "";
-                try
-                {
-                    MethodBase method = MethodBase.GetCurrentMethod();
-                    DisplayNameAttribute attr = (DisplayNameAttribute)method.GetCustomAttributes(typeof(DisplayNameAttribute), true)[0];
-                    value = attr.DisplayName;
-                }
-                catch
-                {
-                    MessageBox.Show("Не задан атрибут DisplayName метода");
-                }
-
-                string pathToHtmlFile = CreateReport(1, m_BeamSection, value);
-
-                System.Diagnostics.Process.Start(pathToHtmlFile);
-            }
-            catch (Exception _e)
-            {
-                MessageBox.Show("Ошибка в отчете " + _e.Message);
-            }
+            }  
+            */
         }
               
         /// <summary>

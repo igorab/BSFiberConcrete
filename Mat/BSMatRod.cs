@@ -63,6 +63,8 @@ namespace BSFiberConcrete
         /// </summary>
         public bool Reinforcement { get; set; }
 
+        public double SelectedRebarDiameter { get; set; }
+
 
     /// <summary>
     /// коэффициент упругости

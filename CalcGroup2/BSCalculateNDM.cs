@@ -418,22 +418,20 @@ namespace BSFiberConcrete.CalcGroup2
             // расстояние от ц.т. до наиболее растянутого волокна (y_t обозначение в формулах СП)
             double y_t = 0;
             y_t = x_cm[jend];
-
-            // момент инерции приведенного сечения относительно его ц.т.
-            double I_red = Jy + I_s;
-            
+                        
             // моменты сопротивления сечения
             double W_t = Jy / y_t;
-            double W_red = I_red / y_t;
-
+           
             int i_t = 0, i_p = 0;
             for (int i = 0; i < As.Count; i++)
-            {                
+            {
+                double _xs_cm = xs[jend][i];
+
                 if (epS[jend][i] >= 0)
                 {
                     i_t++;
-                    As_t += As[i];
-                    s_t_xcm += xs[jend][i]; 
+                    As_t += As[i];                    
+                    s_t_xcm += _xs_cm;                    
                 }
 
                 if (epS[jend][i] < 0)
@@ -442,11 +440,22 @@ namespace BSFiberConcrete.CalcGroup2
                     As1_p += As[i];
                     s_p_xcm += xs[jend][i];
                 }
+
+                I_s += As[i] * _xs_cm * _xs_cm;
             }
             if (i_t > 0)
                 s_t_xcm /= i_t;
             if (i_p > 0)
                 s_p_xcm /= i_p;
+
+            if (s_t_xcm != 0)
+            {
+                W_s = I_s / Math.Abs(s_t_xcm);
+            }
+
+            // момент инерции приведенного сечения относительно его ц.т.
+            double I_red = Jy + I_s;
+            double W_red = I_red / y_t;
 
             //рабочая высота сечения (расст от ц.т. сечения до ц.т. арматуры)            
             h0_t = Math.Abs(s_t_xcm);
