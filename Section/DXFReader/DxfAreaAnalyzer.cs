@@ -17,6 +17,7 @@ using System.Diagnostics;
 using System.Management;
 using System.Runtime.InteropServices;
 using System.Windows;
+using static SkiaSharp.HarfBuzz.SKShaper;
 
 namespace BSFiberConcrete.Section.DXFReader
 {
@@ -49,7 +50,8 @@ namespace BSFiberConcrete.Section.DXFReader
             DxfDocument doc = DxfDocument.Load(_pathToDXF);
             DrawingEntities res = doc.Entities;
 
-            //var tesT = res.All.Where((item,index) => item is netDxf.Entities.Line );
+            //List<EntityObject> allObjectDXF = res.All.ToList();
+            //List<EntityObject> tesT4 = allObjectDXF.Where(testFunc).ToList();
 
             foreach (var entity in res.All)
             {
@@ -62,8 +64,6 @@ namespace BSFiberConcrete.Section.DXFReader
                 }
             }
         }
-
-
 
 
         public static (double, List<SimpleCoord>) CalculateArea(EntityObject entity)
