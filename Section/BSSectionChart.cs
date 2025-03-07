@@ -1150,5 +1150,58 @@ namespace BSFiberConcrete.Section
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void btnLoadDXF_Click_1(object sender, EventArgs e)
+        {
+            try
+            {
+                string filePath = "";
+                using (OpenFileDialog openFileDialog = new OpenFileDialog())
+                {
+                    openFileDialog.Filter = "DXF files (*.dxf)|*.dxf|All files (*.*)|*.*";
+                    openFileDialog.Title = "Выберите DXF файл";
+                    if (openFileDialog.ShowDialog() == DialogResult.OK)
+                    { filePath = openFileDialog.FileName; }
+                    else // что-то не окей при загрузке файла
+                    { return; }
+                }
+
+                if (!filePath.EndsWith(".dxf"))
+                {
+                    MessageBox.Show($"Выбранный файл: \"{filePath}\" не соответствует .dxf");
+                    return;
+                }
+
+                DxfAreaAnalyzer analyzer = new DxfAreaAnalyzer(filePath);
+                analyzer.ParseDXF();
+
+                if (analyzer.Coordinates.Count > 1)
+                {
+                    pointBS.Clear();
+                    int index = 0;
+                    foreach (SimpleCoord p in analyzer.Coordinates)
+                    {
+                        // Приведение double в float!!!
+                        BSPoint bsPt = new BSPoint()
+                        {
+                            Num = index,
+                            X = (float)Math.Round(p.X, 3),
+                            Y = (float)Math.Round(p.Y, 3)
+                        };
+                        pointBS.Add(bsPt);
+                        index++;
+                    }
+                    btnDraw_Click(this, new EventArgs());
+                }
+                else
+                {
+                    MessageBox.Show("Объектов для загрузки не выявлено.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }
