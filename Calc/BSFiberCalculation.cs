@@ -190,6 +190,7 @@ namespace BSFiberConcrete
         {
             switch (_profile)
             {
+                case BeamSection.LBeam:
                 case BeamSection.TBeam:                    
                 case BeamSection.IBeam:
                     if (_reinforcement)
