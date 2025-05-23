@@ -645,40 +645,20 @@ namespace BSFiberConcrete
             m_MatFiber.B = fb.B;
             m_MatFiber.Rfbn = (double) numRfb_n.Value;
 
-            // модуль упругости
-            m_MatFiber.Efb = (double)numE_fbt.Value;
+            // модуль упругости бетона-матрицы
+            m_MatFiber.Eb = (double)numE_beton.Value;
 
             // растяжение:            
             m_MatFiber.Rfbtn = (double)numRfbt_n.Value; // кг/см2           
             m_MatFiber.Rfbt2n = (double)numRfbt2n.Value; // кг/см2
             m_MatFiber.Rfbt3n = (double)numRfbt3n.Value; // кг/см2
 
-            // модуль упругости
+            // модуль упругости фибробетона на растяжение
             m_MatFiber.Efbt = (double)numE_fbt.Value;
+            m_MatFiber.Ef = (double)numEfiber.Value;
+            m_MatFiber.Mu_fv = (double)numMu_fv.Value;
         }
-       
-        private void FiberReport_N(BSFiberCalc_MNQ fiberCalc,  int _irep = 1)
-        {
-            BSFiberReport_N report = new BSFiberReport_N()
-            {
-                BeamSection = m_BeamSection,
-                Messages = m_Message
-            };
-
-            report.InitFromFiberCalc(fiberCalc);
-            // результат расчета по первой группе предельных состояний
-            report.CalcResults1Group = fiberCalc.CalcResults;
-            // результат расчета по второй группе предельных состояний
-            report.CalcResults2Group = m_CalcResults2Group;
-
-            report._unitConverter = _UnitConverter;
-        
-            string pathToHtmlFile = report.CreateReport(_irep);
-
-            System.Diagnostics.Process.Start(pathToHtmlFile);
-        }
-
-
+               
         /// <summary>
         /// Расчет прочности сечения на действие момента
         /// </summary>        
@@ -1402,7 +1382,8 @@ namespace BSFiberConcrete
         {            
             Dictionary<string, double> MNQ = GetEffortsForCalc();
             
-            BSMatFiber mf = new BSMatFiber((double)numE_beton.Value, numYft.Value, numYb.Value, numYb1.Value, numYb2.Value, numYb3.Value, numYb5.Value);
+            BSMatFiber mf = new BSMatFiber(numEfiber.Value, numMu_fv.Value, numE_fbt.Value, numE_beton.Value,
+                                            numYft.Value, numYb.Value, numYb1.Value, numYb2.Value, numYb3.Value, numYb5.Value);
             mf.Rfbn   = (double)numRfb_n.Value;
             mf.Rfbtn  = (double)numRfbt_n.Value;
             mf.Rfbt2n = (double)numRfbt2n.Value;
@@ -1416,7 +1397,7 @@ namespace BSFiberConcrete
                 // enforces
                 ["N"]  = MNQ.ContainsKey("N")  ?  -MNQ["N"]: 0,
                 ["My"] = MNQ.ContainsKey("My") ?  MNQ["My"]: 0,
-                ["Mz"] = MNQ.ContainsKey("Mx") ?  MNQ["Mx"]: 0,
+                ["Mz"] = MNQ.ContainsKey("Mx") ?  MNQ["Mx"]: 0, //TODO MxMz
                 ["Qx"] = MNQ.ContainsKey("Qx") ?  MNQ["Qx"]: 0,
                 ["Qy"] = MNQ.ContainsKey("Qy") ?  MNQ["Qy"]: 0,
                 //
@@ -2918,7 +2899,7 @@ namespace BSFiberConcrete
 
                 double fi_b_cr = BSFiberLib.CalcFi_b_cr(cmbWetAir.SelectedIndex+1, (int)val.B);
 
-                MessageBox.Show($"Модуль упругости на сжатие: \n " +
+                MessageBox.Show($"Начальный модуль упругости бетона-матрицы на сжатие: \n " +
                     $"{BSHelper.Kgsm2MPa((double)numE_beton.Value)} МПа \n" +
                     $"{BSHelper.Kgssm2ToKNsm2((double)numE_beton.Value, 2)} КН/см2 \n" +
                     $"СП 63. Таблица 6.11 \n" +
@@ -3421,6 +3402,19 @@ namespace BSFiberConcrete
             {
                 MessageBox.Show(_e.Message);
             }
+        }
+
+        private void labelEf_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show($"Модуль упругости стальной фибры \n" +
+               $"{BSHelper.Kgsm2MPa((double)numEfiber.Value)} МПа \n" +
+               $"{BSHelper.Kgssm2ToKNsm2((double)numEfiber.Value, 2)} КН/см2 \n",
+               "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void labelEf_MouseMove(object sender, MouseEventArgs e)
+        {
+            System.Windows.Forms.Cursor.Current = Cursors.Hand;
         }
     }
 }

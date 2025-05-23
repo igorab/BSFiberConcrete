@@ -315,7 +315,7 @@ namespace BSFiberConcrete
             k_b = K_b(fi1, delta_e);
 
             // Модуль упругости сталефибробетона п.п. (5.2.7)
-            Efb = MatFiber.Efb; //  m _Fiber.Eb * (1 - m_Fiber.mu_fv) + m_Fiber.Ef * m_Fiber.mu_fv;
+            Efb = m_Fiber.Efb;
 
             //жесткость элемента в предельной по прочности стадии,определяемая по формуле (6.25)
             D = k_b * Efb * I;
@@ -366,7 +366,7 @@ namespace BSFiberConcrete
             k_b = K_b(fi1, delta_e);
 
             // Модуль упругости сталефибробетона п.п. (5.2.7)
-            Efb = MatFiber.Efb;   // m_Fiber.Eb * (1 - m_Fiber.mu_fv) + m_Fiber.Ef * m_Fiber.mu_fv;
+            Efb = m_Fiber.Efb;
 
             //Модуль упругости арматуры
             double? Es = Rebar?.Es;

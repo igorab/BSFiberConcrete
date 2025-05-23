@@ -309,7 +309,6 @@
     <Compile Include="CalcGroup2\BSCalculateNDM.cs" />
     <Compile Include="CalcGroup2\BSExtensions.cs" />
     <Compile Include="CalcGroup2\CalcNDM.cs" />
-    <Compile Include="Calc\BSFiberCalc_Deform.cs" />
     <Compile Include="Calc\BSFiberCalc_IBeamRods.cs" />
     <Compile Include="Calc\BSFiberCalc_NormRods.cs" />
     <Compile Include="Control\FiberMainFormHelper.cs" />
@@ -454,7 +453,6 @@
     <Compile Include="BSFiberSetup.Designer.cs">
       <DependentUpon>BSFiberSetup.cs</DependentUpon>
     </Compile>
-    <Compile Include="Mat\BSMaterial.cs" />
     <Compile Include="BSElements\BSRod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Report\BSFiberReport_N.cs" />

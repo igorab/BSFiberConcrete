@@ -351,7 +351,7 @@ namespace BSFiberConcrete
             b  = _D["b"];
             h  = _D["h"];
 
-            Mx = _D["Mz"];
+            Mx = _D["Mz"]; //TODO Mx Mz
             My = _D["My"];
             N =  _D["N"];
             Qx = _D["Qx"];
