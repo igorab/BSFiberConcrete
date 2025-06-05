@@ -34,9 +34,12 @@ namespace BSFiberConcrete
 
         public override BeamSection BeamSectionType() => BeamSection.IBeam;
         public override bool UseRebar() => true;
-        
 
-        public void GetLTRebar(double[] _MatRod)
+        /// <summary>
+        /// Задание арматуры
+        /// </summary>
+        /// <param name="_MatRod">need refactoring</param>        
+        public void SetLTRebar(double[] _MatRod)
         {            
             int idx = -1;
             MatRod = new BSMatRod();
@@ -49,8 +52,21 @@ namespace BSFiberConcrete
             Rod = new BSRod();
             Rod.a = _MatRod[++idx];
             Rod.a1 = _MatRod[++idx];
+
+            MatRod.a_s = Rod.a;
+            MatRod.a_s1 = Rod.a1;
         }
-        
+
+        public override Dictionary<string, double> Reinforcement()
+        {
+            return new Dictionary<string, double> {
+                { "Es, [кг/см2]", MatRod.Es },
+                { "Rs, [кг/см2]", MatRod.Rs },
+                { "Rsc, [кг/см2]", MatRod.Rsc },
+                { "As, [см2]", MatRod.As }, { "a, [см]", MatRod.a_s }, { "A's, [см2]", MatRod.As1 }, { "a', [см]", MatRod.a_s1 }
+            };
+        }
+
         /// <summary>
         /// высота сжатой зоны 
         /// </summary>        

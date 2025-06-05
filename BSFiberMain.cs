@@ -615,7 +615,7 @@ namespace BSFiberConcrete
 
                 InitTRebar(out double[] _t_rebar);
 
-                //TODO refactoring
+                //need refactoring
                 _bsCalcRods.SetLTRebar(matRod);
             }
             else if (_bsCalc is BSFiberCalc_IBeamRods)
@@ -624,8 +624,8 @@ namespace BSFiberConcrete
 
                 InitTRebar(out double[] _t_rebar);
 
-                //TODO refactoring
-                _bsCalcRods.GetLTRebar(matRod);
+                //need refactoring
+                _bsCalcRods.SetLTRebar(matRod);
             }
         }
 

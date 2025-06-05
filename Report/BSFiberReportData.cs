@@ -31,6 +31,8 @@ namespace BSFiberConcrete
             m_Coeffs = _BSFibCalc.Coeffs;
             m_Efforts = _BSFibCalc.Efforts;
             m_GeomParams = _BSFibCalc.GeomParams();
+            m_Reinforcement = _BSFibCalc.Reinforcement();
+
             m_CalcResults1Group = _BSFibCalc.Results();
             m_Messages = _BSFibCalc.Msg;
             m_PhysParams = _BSFibCalc.PhysicalParameters();

@@ -123,6 +123,16 @@ namespace BSFiberConcrete
         }
 
         /// <summary>
+        /// Армирование
+        /// </summary>
+        /// <returns></returns>
+        public virtual Dictionary<string, double> Reinforcement()
+        {
+            return new Dictionary<string, double>() { };
+        }
+
+
+        /// <summary>
         /// Принимает характерные размеры сечения
         /// </summary>
         /// <param name="_t">Массив - размеры сечения</param>

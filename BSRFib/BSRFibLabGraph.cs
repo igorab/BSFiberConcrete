@@ -15,8 +15,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using Series = System.Windows.Forms.DataVisualization.Charting.Series;
 using Microsoft.VisualBasic;
-using OpenTK.Graphics.ES20;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Menu;
+
 
 namespace BSFiberConcrete
 {

@@ -2,7 +2,6 @@
 using BSFiberConcrete.DeformationDiagram;
 using BSFiberConcrete.UnitsOfMeasurement;
 using MathNet.Numerics.Integration;
-using OpenTK.Graphics.OpenGL;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

@@ -33,6 +33,17 @@ namespace BSFiberConcrete
             }
         }
 
+        public override Dictionary<string, double> Reinforcement()
+        {
+            return new Dictionary<string, double> {
+                { "Es, [кг/см2]", MatRod.Es },
+                { "As, [см2]", MatRod.As }, 
+                { "a, [см]", MatRod.a_s }, 
+                { "A's, [см2]", MatRod.As1 }, 
+                { "a', [см]", MatRod.a_s1 } 
+            };
+        }
+
         public override BeamSection BeamSectionType() => BeamSection.Rect;
 
         public override bool UseRebar() => true;
@@ -76,6 +87,9 @@ namespace BSFiberConcrete
                 a  = _MatRod[++idx],
                 a1 = _MatRod[++idx]
             };
+
+            MatRod.a_s = Rod.a;
+            MatRod.a_s1 = Rod.a1;
         }
 
         //6.5
