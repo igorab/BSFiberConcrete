@@ -21,7 +21,6 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
@@ -843,56 +842,7 @@ namespace BSFiberConcrete
 
             return null;
         }
-
-        private void InitReportSections(ref BSFiberReport report)
-        {
-            report.Beam = m_Beam;
-            report.Coeffs = m_Coeffs;
-            report.Efforts = m_Efforts;
-            report.GeomParams = m_GeomParams;
-            report.PhysParams = m_PhysParams;
-            report.Reinforcement = m_Reinforcement;
-            report.CalcResults1Group = m_CalcResults;
-            report.CalcResults2Group = m_CalcResults2Group;
-            report.ImageStream = m_ImageStream;
-            report.Messages = m_Message;
-            report._unitConverter = _UnitConverter;
-        }
-
-
-        /// <summary>
-        ///  Сформировать отчет
-        /// </summary>
-        /// <param name="_reportName">Заголовок</param>
-        /// <param name="_useReinforcement">Используется ли арматура</param>
-        /// <returns>Путь к файлу отчета</returns>
-        private string CreateReport(int _fileId,
-                                    BeamSection _BeamSection,
-                                    string _reportName = "",
-                                    bool _useReinforcement = false)
-        {
-            try
-            {
-                string path = "";
-                BSFiberReport report = new BSFiberReport();
-
-                if (_reportName != "")
-                    report.ReportName = _reportName;
-
-                report.BeamSection = _BeamSection;
-                report.UseReinforcement = _useReinforcement;
-
-                InitReportSections(ref report);
-
-                path = report.CreateReport(_fileId);
-                return path;
-            }
-            catch (Exception _e)
-            {
-                throw _e;
-            }
-        }
-
+               
         // Прямоугольное сечение
         private void LoadRectangle()
         {
@@ -1823,199 +1773,7 @@ namespace BSFiberConcrete
 
             return calcRes;           
         }
-
-        /// <summary>
-        /// Расчет по прочности нормальных сечений на основе нелинейной деформационной модели
-        /// </summary>
-        /// <param name="_LSD">Группа предельных состояний</param>
-        ///
-        [DisplayName("Расчет по прочности нормальных сечений на основе нелинейной деформационной модели")]
-        private void CalcDeformNDM()
-        {
-            /*
-            // центр тяжести сечения
-            TriangleNet.Geometry.Point CG = new TriangleNet.Geometry.Point(0.0, 0.0);
-
-            DeformDiagramType deformDiagramType = (DeformDiagramType)cmbDeformDiagram.SelectedIndex;
-            DeformMaterialType deformMaterialType = (DeformMaterialType)cmbTypeMaterial.SelectedIndex;
-
-            BSMatFiber beamMaterial;
-
-            // класс фибробетона (бетона) на сжатие
-            string cBt_class = cmbBfn.Text;
-            // Фибробетон:
-            double cRb = (double)numRfb_n.Value; // сопротивление сжатию, кг/см2
-            double cEb = (double)numE_beton.Value; // модуль упругости,  кг/см2
-
-            // диаграмма:
-            // арматура
-            string cR_class = cmbRebarClass.Text;
-            double cRs = (double)numRs.Value; // кг/см2            
-            double cEs = (double)numEs.Value; // кг/см2
-            double c_eps_s0 =  0.00175; 
-            double c_eps_s2 =  0.025; 
-
-            //бетон
-            double c_eps_b1 = 0.0030;
-            double c_eps_b1_red = 0.0030; // уточнить
-            double c_eps_b2 = 0.0035d;
-
-            // длина балки, см 
-            double c_Length = Convert.ToDouble(tbLength.Text);
-
-            // расстановка арматурных стержней
-            List<BSRod> Rods = new List<BSRod>();
-
-            // Усилия Mx, My - моменты, кг*см , N - сила, кг                         
-            Dictionary<string, double> MNQ = GetEffortsForCalc();
-
-            double c_Mx = MNQ["Mx"];
-            double c_My = MNQ["My"];
-            double c_N = MNQ["N"];
-
-            // сечение балки балки, см 
-            double[] beam_sizes = BeamSizes(c_Length);
-
-            var bsBeam = BSBeam.construct(m_BeamSection);
-            bsBeam.SetSizes(beam_sizes);
-            bsBeam.Length = c_Length;
-
-            double c_b = bsBeam.Width;
-            double c_h = bsBeam.Height;
-            m_GeomParams = new Dictionary<string, double> { { "b, см", c_b }, { "h, см", c_h } };
-
-            //смещение начала координат            
-            double dX0, dY0;
-
-            // координаты ц.т. сечения, если т. 0 - левый нижний угол
-            (CG.X, CG.Y) = bsBeam.CG();
-
-            try
-            {
-                BSFiberCalc_Deform fiberCalc_Deform = new BSFiberCalc_Deform(_Mx: c_Mx, _My: c_My, _N: c_N);
-                fiberCalc_Deform.DeformDiagram = deformDiagramType;
-                fiberCalc_Deform.DeformMaterialType = deformMaterialType;
-                fiberCalc_Deform.Beam = bsBeam;
-                // 
-                GenerateMesh(ref CG); // покрыть сечение сеткой
-                //
-                fiberCalc_Deform.CG = CG;
-                fiberCalc_Deform.triAreas = triAreas;
-                fiberCalc_Deform.triCGs = triCGs;
-
-                // Начало координат:
-                dX0 = CG.X;
-                dY0 = CG.Y;
-
-                // задать класс арматуры
-                fiberCalc_Deform.MatRebar = new BSMatRod(cEs)
-                {
-                    RCls = cR_class,
-                    Rsn = (double)numRsn.Value,
-                    Rs = cRs,
-                    Rsc = (double)numRsc.Value,
-                    e_s0 = c_eps_s0,
-                    e_s2 = c_eps_s2
-                };
-
-                m_Reinforcement = new Dictionary<string, double>();
-
-                ///
-                /// расстановка арматурных стержней                
-                /// 
-                Action RodsReinforcement = delegate ()
-                {
-                    // значения из БД
-                    var _rods = BSData.LoadBSRod(m_BeamSection);
-
-                    // количество стержней
-                    int d_qty = _rods.Count;
-
-                    // площадь арматуры
-                    double area_total = 0;
-                    foreach (var lr in _rods)
-                    {
-                        area_total += BSHelper.AreaCircle(lr.D);
-                    }
-
-                    int idx = 0; // Индекс стержня
-                    foreach (var lr in _rods)
-                    {
-                        BSRod rod = new BSRod()
-                        {
-                            Id = idx,
-                            LTType = RebarLTType.Longitudinal,
-                            D = lr.D,
-                            CG_X = -(lr.CG_X),
-                            CG_Y = -(lr.CG_Y - dY0),
-                            MatRod = fiberCalc_Deform.MatRebar,
-                            Nu = 1.0 // на первой итерации задаем 1
-                        };
-
-                        idx++;
-                        Rods.Add(rod);
-                    }
-
-                    fiberCalc_Deform.Rods = Rods;
-
-                    m_Reinforcement.Add("Количество стержней, шт", d_qty);
-                    m_Reinforcement.Add("Площадь арматуры, см2", area_total);
-                };
-
-                beamMaterial = new BSMatFiber(cEb, numYft.Value, numYb.Value, numYb1.Value, numYb2.Value, numYb3.Value, numYb5.Value)
-                {
-                    BTCls = cBt_class,
-                    Nu_fb = 1,
-                    Rfbn = cRb,
-                    Rfbtn = (double)numRfbt_n.Value,
-                    Rfbt2n = (double)numRfbt2n.Value,
-                    Rfbt3n = (double)numRfbt3n.Value,
-                    e_b1_red = c_eps_b1_red,
-                    e_b1 = c_eps_b1,
-                    e_b2 = c_eps_b2,
-                    Eps_fb_ult = 0.0035d,
-                    Eps_fbt_ult = 0.015d,
-                };
-
-                // задать свойства бетона
-                fiberCalc_Deform.MatFiber = beamMaterial;
-                // расстановка стержней арматуры
-                RodsReinforcement();
-                // арматура балки                                                
-                fiberCalc_Deform.Beam.Rods = Rods;
-                // материал
-                fiberCalc_Deform.Beam.Mat = beamMaterial;
-                // параметры расчета:  (кол-во точек разбиения )
-                fiberCalc_Deform.SetParams(new double[] { _beamSectionMeshSettings.NX, _beamSectionMeshSettings .NX});
-                //
-                // рассчитать                
-
-                //fiberCalc_Deform.CalcNDM();
-
-                fiberCalc_Deform.Calculate();
-                //
-                m_Efforts = fiberCalc_Deform.Efforts;
-
-                m_PhysParams = fiberCalc_Deform.PhysParams;
-                // получить результат
-                m_CalcResults = fiberCalc_Deform.Results();
-
-                // Расчет по 2 группе предельных состояний
-                m_CalcResults2Group = fiberCalc_Deform.Result2Group;
-
-                m_Message = fiberCalc_Deform.Msg;
-
-                if (m_CalcResults?.Count > 0)
-                    fiberCalc_Deform.Msg.Add("Расчет успешно выполнен!");
-
-            }
-            catch (Exception _ex)
-            {
-                MessageBox.Show(_ex.Message);
-            }  
-            */
-        }
-              
+                      
         /// <summary>
         /// Валидация данных перед проведением расчета по деф. модели
         /// </summary>
@@ -3253,13 +3011,7 @@ namespace BSFiberConcrete
         {
 
         }
-
-        private void btnNDMCrc_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-
+        
         /// <summary>
         /// метод для события EditingControlShowing DataGridView, Вызывает TextBox_KeyPress
         /// </summary>
